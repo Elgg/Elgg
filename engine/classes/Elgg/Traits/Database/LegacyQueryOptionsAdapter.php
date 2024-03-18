@@ -432,7 +432,6 @@ trait LegacyQueryOptionsAdapter {
 			$clause->comparison = $pair['comparison'];
 			$clause->value_type = $pair['type'];
 			$clause->case_sensitive = $pair['case_sensitive'];
-			$clause->enabled = $pair['enabled'];
 			$clause->access_ids = (array) $pair['access_ids'];
 			$clause->sort_by_calculation = $pair['sort_by_calculation'];
 

@@ -2,14 +2,14 @@
 
 use Elgg\SystemLog\SystemLog;
 
-$user = elgg_get_page_owner_entity();
-if (!$user instanceof ElggUser) {
+$user = elgg_extract('entity', $vars, elgg_get_page_owner_entity()); // page owner for BC reasons
+if (!$user instanceof \ElggUser) {
 	return;
 }
 
 $log = SystemLog::instance()->getAll([
-	'performed_by_guid' => $user->guid,
-	'event' => 'login',
+	'object_id' => $user->guid,
+	'event' => 'login:user',
 	'object_type' => 'user',
 	'limit' => 20,
 ]);
@@ -26,12 +26,8 @@ $body .= '</tr></thead>';
 $body .= '<tbody>';
 
 foreach ($log as $entry) {
-	if ($entry->ip_address) {
-		$ip_address = $entry->ip_address;
-	} else {
-		$ip_address = elgg_echo('unknown');
-	}
-	
+	$ip_address = $entry->ip_address ?: elgg_echo('unknown');
+		
 	$time = date(elgg_echo('friendlytime:date_format'), $entry->time_created);
 	
 	$body .= "<tr><td>{$time}</td><td>{$ip_address}</td></tr>";

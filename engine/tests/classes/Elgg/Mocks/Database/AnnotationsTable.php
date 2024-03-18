@@ -82,7 +82,6 @@ class AnnotationsTable extends DbAnnotations {
 			'value' => $annotation->value,
 			'value_type' => $annotation->value_type,
 			'time_created' => $this->getCurrentTime()->getTimestamp(),
-			'enabled' => $annotation->enabled,
 			'soft_deleted' => $annotation->soft_deleted,
 			'time_soft_deleted' => $annotation->time_soft_deleted,
 		];
@@ -206,8 +205,6 @@ class AnnotationsTable extends DbAnnotations {
 			'owner_guid' => $qb->param($row->owner_guid, ELGG_VALUE_INTEGER),
 			'time_created' => $qb->param($row->time_created, ELGG_VALUE_INTEGER),
 			'access_id' => $qb->param($row->access_id, ELGG_VALUE_INTEGER),
-			'soft_deleted' => $qb->param($row->soft_deleted, ELGG_VALUE_INTEGER),
-			'time_soft_deleted' => $qb->param($row->time_soft_deleted, ELGG_VALUE_INTEGER),
 		]);
 
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([

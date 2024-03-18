@@ -60,6 +60,12 @@ alias for the ``annotations`` table has been changed from ``n_table`` to ``a_tab
 If your code uses very specific clauses (select, where, order_by, etc.) you need to update your code. If you use the
 ``\Elgg\Database\QueryBuilder`` for your query parts you should be ok.
 
+Enabled column
+~~~~~~~~~~~~~~
+
+The ``enabled`` column for annotations has been removed. An annotation is no longer enabled or disabled. 
+You can no longer perform the ``enable`` and ``disable`` API calls on annotations. Other related API functions have been removed.
+
 Entity Icons
 ------------
 
@@ -95,12 +101,18 @@ Changes in functions
 Removed lib functions
 ~~~~~~~~~~~~~~~~~~~~~
 
-* ``elgg_unrequire_css()`` has been removed. Use ``elgg_unregister_external_file('css', $view)`` as replacement.
+* ``elgg_disable_annotations()`` has been removed
+* ``elgg_enable_annotations()`` has been removed
 * ``elgg_set_view_location()`` has been removed
+* ``elgg_unrequire_css()`` has been removed. Use ``elgg_unregister_external_file('css', $view)`` as replacement.
 
 Removed class functions
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+* ``\ElggAnnotation->enable()``
+* ``\ElggAnnotation->disable()``
+* ``\ElggEntity->disableAnnotations()``
+* ``\ElggEntity->enableAnnotations()``
 * ``\ElggEntity->getTags()`` use ``elgg_get_metadata()`` as an alternative.
 
 Lib functions function parameters

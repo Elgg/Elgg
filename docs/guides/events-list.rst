@@ -259,11 +259,8 @@ User events
 **invalidate:after, user**
     Triggered when user's account validation has been revoked.
     
-**login:after, user**
-	Triggered after the user logs in.
-
-**login:before, user**
-    Triggered during login. Returning false prevents the user from logging
+**login, user** |sequence|
+	Triggered when a user is being logged in.
     
 **login:forward, user** |results|
     Filters the URL to which the user will be forwarded after login.
@@ -434,12 +431,6 @@ Annotation events
 
 **delete, annotation**
     Called before annotation is deleted. Return false to prevent deletion.
-
-**disable, annotations**
-	Called when disabling annotations. Return false to prevent disabling.
-	
-**enable, annotation**
-	Called when enabling annotations. Return false to prevent enabling.
 	
 **update, annotation**
     Called after the annotation has been updated. Return false to *delete the annotation.*

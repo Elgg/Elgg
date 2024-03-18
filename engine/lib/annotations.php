@@ -87,32 +87,6 @@ function elgg_delete_annotations(array $options): bool {
 }
 
 /**
- * Disables annotations based on $options.
- *
- * @warning Unlike elgg_get_annotations() this will not accept an empty options array!
- *
- * @param array $options An options array. {@link elgg_get_annotations()}
- * @return bool true on success, false on failure
- * @since 1.8.0
- */
-function elgg_disable_annotations(array $options): bool {
-	return _elgg_services()->annotationsTable->disableAll($options);
-}
-
-/**
- * Enables annotations based on $options.
- *
- * @warning Unlike elgg_get_annotations() this will not accept an empty options array!
- *
- * @param array $options An options array. {@link elgg_get_annotations()}
- * @return bool true on success, false on failure
- * @since 1.8.0
- */
-function elgg_enable_annotations(array $options): bool {
-	return _elgg_services()->annotationsTable->enableAll($options);
-}
-
-/**
  * Check to see if a user has already created an annotation on an object
  *
  * @param int    $entity_guid Entity guid

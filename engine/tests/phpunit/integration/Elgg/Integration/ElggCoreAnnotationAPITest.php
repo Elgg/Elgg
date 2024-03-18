@@ -60,54 +60,6 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 		$this->assertTrue(elgg_delete_annotations($options));
 	}
 
-	public function testElggDisableAnnotations() {
-		$e = $this->createObject();
-
-		for ($i = 0; $i < 30; $i++) {
-			$e->annotate('test_annotation', rand(0, 10000));
-		}
-
-		$options = [
-			'guid' => $e->getGUID(),
-			'limit' => false,
-		];
-
-		$this->assertTrue(elgg_disable_annotations($options));
-
-		$annotations = elgg_get_annotations($options);
-		$this->assertTrue(empty($annotations));
-
-		$annotations = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($options) {
-			return elgg_get_annotations($options);
-		});
-		$this->assertEquals(30, count($annotations));
-	}
-
-	public function testElggEnableAnnotations() {
-		$e = $this->createObject();
-
-		for ($i = 0; $i < 30; $i++) {
-			$e->annotate('test_annotation', rand(0, 10000));
-		}
-
-		$options = [
-			'guid' => $e->getGUID(),
-			'limit' => false,
-		];
-
-		$this->assertTrue(elgg_disable_annotations($options));
-
-		// cannot see any annotations so returns true
-		$this->assertTrue(elgg_enable_annotations($options));
-
-		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($options) {
-			$this->assertTrue(elgg_enable_annotations($options));
-		});
-
-		$annotations = elgg_get_annotations($options);
-		$this->assertEquals(30, count($annotations));
-	}
-
 	public function testElggAnnotationExists() {
 		$e = $this->createObject();
 		$guid = $e->getGUID();
@@ -120,13 +72,6 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 		$this->assertTrue(elgg_annotation_exists($guid, 'test_annotation'));
 		// this metastring should always exist but an annotation of this name should not
 		$this->assertFalse(elgg_annotation_exists($guid, 'email'));
-
-		$options = [
-			'guid' => $guid,
-			'limit' => false,
-		];
-		$this->assertTrue(elgg_disable_annotations($options));
-		$this->assertTrue(elgg_annotation_exists($guid, 'test_annotation'));
 
 		$this->assertTrue($e->delete());
 		$this->assertFalse(elgg_annotation_exists($guid, 'test_annotation'));

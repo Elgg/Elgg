@@ -74,27 +74,7 @@ class ElggAnnotation extends \ElggExtender {
 	public function delete(): bool {
 		return _elgg_services()->annotationsTable->delete($this);
 	}
-
-	/**
-	 * Disable the annotation.
-	 *
-	 * @return bool
-	 * @since 1.8
-	 */
-	public function disable(): bool {
-		return _elgg_services()->annotationsTable->disable($this);
-	}
-
-	/**
-	 * Enable the annotation.
-	 *
-	 * @return bool
-	 * @since 1.8
-	 */
-	public function enable(): bool {
-		return _elgg_services()->annotationsTable->enable($this);
-	}
-
+	
 	/**
 	 * Determines whether or not the user can edit this annotation
 	 *

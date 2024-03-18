@@ -214,39 +214,6 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	}
 
 	/**
-	 * Ensure that \ElggBatch doesn't go into infinite loop when disabling annotations recursively when show hidden is
-	 * enabled.
-	 *
-	 * @see https://github.com/Elgg/Elgg/issues/5952
-	 */
-	public function testDisablingAnnotationsInfiniteLoop() {
-		// let's have some entity
-		$group = $this->createGroup();
-
-		$total = 51;
-		// add some annotations
-		for ($cnt = 0; $cnt < $total; $cnt++) {
-			$group->annotate('test_annotation', 'value_' . $total);
-		}
-
-		// disable them
-		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($group, $total) {
-			elgg_disable_annotations([
-				'guid' => $group->guid,
-				'limit' => $total, //using strict limit to avoid real infinite loop and just see \ElggBatch limiting on it before finishing the work
-			]);
-		});
-		
-		// confirm all being disabled
-		$annotations = $group->getAnnotations([
-			'limit' => $total,
-		]);
-		foreach ($annotations as $annotation) {
-			$this->assertEquals('no', $annotation->enabled);
-		}
-	}
-
-	/**
 	 * @see https://github.com/Elgg/Elgg/issues/6225
 	 */
 	public function testUpdateHandlersCanChangeAttributes() {

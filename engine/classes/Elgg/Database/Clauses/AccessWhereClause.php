@@ -9,50 +9,23 @@ use Elgg\Database\QueryBuilder;
  */
 class AccessWhereClause extends WhereClause {
 
-	/**
-	 * @var string
-	 */
-	public $access_column = 'access_id';
+	public string $access_column = 'access_id';
 
-	/**
-	 * @var string
-	 */
-	public $owner_guid_column = 'owner_guid';
+	public string $owner_guid_column = 'owner_guid';
 
-	/**
-	 * @var string
-	 */
-	public $guid_column = 'guid';
+	public string $guid_column = 'guid';
 
-	/**
-	 * @var string
-	 */
-	public $enabled_column = 'enabled';
+	public string $enabled_column = 'enabled';
 
-	/**
-	 * @var string
-	 */
-	public $soft_deleted_column = 'soft_deleted';
+	public string $soft_deleted_column = 'soft_deleted';
 
-	/**
-	 * @var bool
-	 */
-	public $ignore_access;
+	public ?bool $ignore_access = null;
 
-	/**
-	 * @var bool
-	 */
-	public $use_enabled_clause;
+	public ?bool $use_enabled_clause = null;
+	
+	public ?bool $show_soft_deleted = null;
 
-	/**
-	 * @var bool
-	 */
-	public $show_soft_deleted;
-
-	/**
-	 * @var int
-	 */
-	public $viewer_guid;
+	public ?int $viewer_guid = null;
 
 	/**
 	 * {@inheritdoc}
