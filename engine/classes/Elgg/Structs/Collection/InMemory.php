@@ -12,16 +12,12 @@ use Elgg\Structs\Collection;
  */
 final class InMemory implements Collection {
 	
-	/** @var array */
-	private $items;
-	
 	/**
 	 * Constructor
 	 *
 	 * @param array $items The set of items in the collection
 	 */
-	private function __construct(array $items = []) {
-		$this->items = $items;
+	private function __construct(protected array $items = []) {
 	}
 	
 	/**

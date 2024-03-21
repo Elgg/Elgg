@@ -28,36 +28,6 @@ class Router {
 	use Profilable;
 
 	/**
-	 * @var EventsService
-	 */
-	protected $events;
-
-	/**
-	 * @var RouteCollection
-	 */
-	protected $routes;
-
-	/**
-	 * @var UrlMatcher
-	 */
-	protected $matcher;
-
-	/**
-	 * @var HandlersService
-	 */
-	protected $handlers;
-
-	/**
-	 * @var ResponseFactory
-	 */
-	protected $response;
-
-	/**
-	 * @var Plugins
-	 */
-	protected $plugins;
-
-	/**
 	 * Constructor
 	 *
 	 * @param EventsService   $events   Events service
@@ -68,19 +38,13 @@ class Router {
 	 * @param Plugins         $plugins  Plugins
 	 */
 	public function __construct(
-		EventsService $events,
-		RouteCollection $routes,
-		UrlMatcher $matcher,
-		HandlersService $handlers,
-		ResponseFactory $response,
-		Plugins $plugins
+		protected EventsService $events,
+		protected RouteCollection $routes,
+		protected UrlMatcher $matcher,
+		protected HandlersService $handlers,
+		protected ResponseFactory $response,
+		protected Plugins $plugins
 	) {
-		$this->events = $events;
-		$this->routes = $routes;
-		$this->matcher = $matcher;
-		$this->handlers = $handlers;
-		$this->response = $response;
-		$this->plugins = $plugins;
 	}
 
 	/**
@@ -93,7 +57,7 @@ class Router {
 	 *
 	 * @return boolean Whether the request was routed successfully.
 	 */
-	public function route(HttpRequest $request) {
+	public function route(HttpRequest $request): bool {
 		$this->beginTimer(['build page']);
 
 		$request->validate();

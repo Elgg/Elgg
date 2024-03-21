@@ -23,21 +23,6 @@ class Cli {
 	protected $console;
 
 	/**
-	 * @var EventsService
-	 */
-	protected $events;
-
-	/**
-	 * @var InputInterface
-	 */
-	protected $input;
-
-	/**
-	 * @var OutputInterface
-	 */
-	protected $output;
-
-	/**
 	 * Constructor
 	 *
 	 * @param EventsService   $events Events service
@@ -45,18 +30,14 @@ class Cli {
 	 * @param OutputInterface $output Console output
 	 */
 	public function __construct(
-		EventsService $events,
-		InputInterface $input,
-		OutputInterface $output
+		protected EventsService $events,
+		protected InputInterface $input,
+		protected OutputInterface $output
 	) {
-		
 		$console = new \Elgg\Cli\Application('Elgg', elgg_get_release());
 		$console->setup($input, $output);
 
 		$this->console = $console;
-		$this->events = $events;
-		$this->input = $input;
-		$this->output = $output;
 	}
 
 	/**
@@ -64,7 +45,7 @@ class Cli {
 	 *
 	 * @return void
 	 */
-	protected function bootstrap() {
+	protected function bootstrap(): void {
 		$commands = array_merge($this->getCoreCommands(), $this->getPluginCommands());
 		$commands = $this->events->triggerResults('commands', 'cli', [], $commands);
 
@@ -78,7 +59,7 @@ class Cli {
 	 *
 	 * @return array
 	 */
-	protected function getCoreCommands() {
+	protected function getCoreCommands(): array {
 		$conf = \Elgg\Project\Paths::elgg() . 'engine/cli_commands.php';
 		return \Elgg\Includer::includeFile($conf);
 	}
@@ -88,7 +69,7 @@ class Cli {
 	 *
 	 * @return array
 	 */
-	protected function getPluginCommands() {
+	protected function getPluginCommands(): array {
 		$return = [];
 		
 		$plugins = elgg_get_plugins('active');
@@ -112,7 +93,7 @@ class Cli {
 	 *
 	 * @return void
 	 */
-	public function add($command) {
+	public function add(string $command): void {
 		if (!class_exists($command)) {
 			return;
 		}
@@ -150,7 +131,7 @@ class Cli {
 	 *
 	 * @return void
 	 */
-	public function run(bool $bootstrap = true) {
+	public function run(bool $bootstrap = true): void {
 		if ($bootstrap) {
 			$this->bootstrap();
 		}
@@ -163,7 +144,7 @@ class Cli {
 	 *
 	 * @return InputInterface
 	 */
-	public function getInput() {
+	public function getInput(): InputInterface {
 		return $this->input;
 	}
 
@@ -172,7 +153,7 @@ class Cli {
 	 *
 	 * @return OutputInterface
 	 */
-	public function getOutput() {
+	public function getOutput(): OutputInterface {
 		return $this->output;
 	}
 }

@@ -17,11 +17,6 @@ use Elgg\Exceptions\Plugin\PhpExtensionException;
 class Composer {
 	
 	/**
-	 * @var \ElggPlugin
-	 */
-	protected $plugin;
-	
-	/**
 	 * @var \Eloquent\Composer\Configuration\Element\Configuration
 	 */
 	protected $configuration;
@@ -33,9 +28,7 @@ class Composer {
 	 *
 	 * @throws ComposerException
 	 */
-	public function __construct(\ElggPlugin $plugin) {
-		$this->plugin = $plugin;
-		
+	public function __construct(protected \ElggPlugin $plugin) {
 		try {
 			// need to suppress warning because of deprecated notices that get converted to warnings during phpunit
 			$reader = @new \Eloquent\Composer\Configuration\ConfigurationReader;

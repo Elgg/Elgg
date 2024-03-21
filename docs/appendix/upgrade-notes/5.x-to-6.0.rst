@@ -104,6 +104,8 @@ Removed lib functions
 * ``elgg_disable_annotations()`` has been removed
 * ``elgg_enable_annotations()`` has been removed
 * ``elgg_set_view_location()`` has been removed
+* ``elgg_strrchr()`` has been removed
+* ``elgg_strripos()`` has been removed
 * ``elgg_unrequire_css()`` has been removed. Use ``elgg_unregister_external_file('css', $view)`` as replacement.
 
 Removed class functions

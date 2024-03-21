@@ -37,12 +37,6 @@ class HtmlFormatter {
 	 */
 	public const MENTION_REGEX = '/<a[^>]*?>.*?<\/a>|<.*?>|(^|\s|\!|\.|\?|>|\G)+(@([^\s<&]+))/iu';
 
-	protected ViewsService $views;
-
-	protected EventsService $events;
-	
-	protected AutoParagraph $autop;
-
 	/**
 	 * Output constructor.
 	 *
@@ -51,13 +45,10 @@ class HtmlFormatter {
 	 * @param AutoParagraph $autop  Paragraph wrapper
 	 */
 	public function __construct(
-		ViewsService $views,
-		EventsService $events,
-		AutoParagraph $autop
+		protected ViewsService $views,
+		protected EventsService $events,
+		protected AutoParagraph $autop
 	) {
-		$this->views = $views;
-		$this->events = $events;
-		$this->autop = $autop;
 	}
 
 	/**

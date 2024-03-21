@@ -11,17 +11,13 @@ use Elgg\Exceptions\I18n\InvalidLocaleException;
  * @internal
  */
 final class Locale {
-	
-	/** @var string */
-	private $locale;
-	
+
 	/**
 	 * Use Locale::parse to construct
 	 *
 	 * @param string $locale A string representation of the locale
 	 */
-	private function __construct($locale) {
-		$this->locale = $locale;
+	private function __construct(private string $locale) {
 	}
 	
 	/**
@@ -40,9 +36,9 @@ final class Locale {
 	 *
 	 * @throws InvalidLocaleException
 	 */
-	public static function parse($locale) {
+	public static function parse(string $locale): Locale {
 		if (!preg_match('~^[a-z0-9_]{2,20}$~', $locale)) {
-			throw new InvalidLocaleException("Unrecognized locale: $locale");
+			throw new InvalidLocaleException("Unrecognized locale: {$locale}");
 		}
 		
 		return new Locale($locale);

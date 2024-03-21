@@ -29,41 +29,6 @@ class EmailService {
 	use Loggable;
 
 	/**
-	 * @var Config
-	 */
-	protected $config;
-
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
-
-	/**
-	 * @var TransportInterface
-	 */
-	protected $mailer;
-
-	/**
-	 * @var HtmlFormatter
-	 */
-	protected $html_formatter;
-
-	/**
-	 * @var ImageFetcherService
-	 */
-	protected $image_fetcher;
-
-	/**
-	 * @var ViewsService
-	 */
-	protected $views;
-
-	/**
-	 * @var CssCompiler
-	 */
-	protected $css_compiler;
-
-	/**
 	 * Constructor
 	 *
 	 * @param Config              $config         Config
@@ -75,21 +40,14 @@ class EmailService {
 	 * @param CssCompiler         $css_compiler   Css compiler
 	 */
 	public function __construct(
-			Config $config,
-			EventsService $events,
-			TransportInterface $mailer,
-			HtmlFormatter $html_formatter,
-			ViewsService $views,
-			ImageFetcherService $image_fetcher,
-			CssCompiler $css_compiler
-		) {
-		$this->config = $config;
-		$this->events = $events;
-		$this->mailer = $mailer;
-		$this->html_formatter = $html_formatter;
-		$this->views = $views;
-		$this->image_fetcher = $image_fetcher;
-		$this->css_compiler = $css_compiler;
+		protected Config $config,
+		protected EventsService $events,
+		protected TransportInterface $mailer,
+		protected HtmlFormatter $html_formatter,
+		protected ViewsService $views,
+		protected ImageFetcherService $image_fetcher,
+		protected CssCompiler $css_compiler
+	) {
 	}
 
 	/**
@@ -100,7 +58,7 @@ class EmailService {
 	 * @return bool
 	 * @throws RuntimeException
 	 */
-	public function send(Email $email) {
+	public function send(Email $email): bool {
 		$email = $this->events->triggerResults('prepare', 'system:email', [], $email);
 		if (!$email instanceof Email) {
 			$msg = "'prepare','system:email' event handlers should return an instance of " . Email::class;
@@ -123,8 +81,7 @@ class EmailService {
 	 * @return bool
 	 * @throws RuntimeException
 	 */
-	public function transport(Email $email) {
-
+	public function transport(Email $email): bool {
 		if ($this->events->triggerResults('transport', 'system:email', ['email' => $email], false)) {
 			return true;
 		}

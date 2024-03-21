@@ -17,44 +17,17 @@ class Loop {
 	use Loggable;
 
 	/**
-	 * @var \ElggUpgrade
-	 */
-	protected $upgrade;
-
-	/**
-	 * @var Result
-	 */
-	protected $result;
-
-	/**
 	 * @var Batch|false
 	 */
 	protected $batch;
 
-	/**
-	 * @var int
-	 */
-	protected $max_duration;
+	protected int $max_duration;
 
-	/**
-	 * @var int
-	 */
-	protected $count;
+	protected int $count;
 
-	/**
-	 * @var int
-	 */
-	protected $processed;
+	protected int $processed;
 
-	/**
-	 * @var int
-	 */
-	protected $offset;
-
-	/**
-	 * @var Progress
-	 */
-	protected $progress;
+	protected int $offset;
 
 	/**
 	 * Constructor
@@ -67,13 +40,13 @@ class Loop {
 	 * @throws RuntimeException
 	 */
 	public function __construct(
-		\ElggUpgrade $upgrade,
-		Result $result,
-		Progress $progress,
+		protected \ElggUpgrade $upgrade,
+		protected Result $result,
+		protected Progress $progress,
 		Logger $logger
 	) {
-		$this->upgrade = $upgrade;
-
+		$this->setLogger($logger);
+		
 		// Get the class taking care of the actual upgrading
 		$this->batch = $upgrade->getBatch();
 		if (!$this->batch) {
@@ -82,10 +55,6 @@ class Loop {
 				$upgrade->guid
 			]));
 		}
-
-		$this->result = $result;
-		$this->progress = $progress;
-		$this->logger = $logger;
 
 		$this->count = $this->batch->countItems();
 		$this->processed = (int) $upgrade->processed;

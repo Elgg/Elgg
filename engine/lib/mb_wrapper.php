@@ -78,42 +78,6 @@ function elgg_strpos() {
 }
 
 /**
- * Wrapper function for mb_strrchr(). Falls back to strrchr() if
- * mb_strrchr() isn't available.  Parameters are passed to the
- * wrapped function in the same order they are passed to this
- * function.
- *
- * @return false|string
- * @since 1.7.0
- */
-function elgg_strrchr() {
-	$args = func_get_args();
-	if (is_callable('mb_strrchr')) {
-		return call_user_func_array('mb_strrchr', $args);
-	}
-	
-	return call_user_func_array('strrchr', $args);
-}
-
-/**
- * Wrapper function for mb_strripos(). Falls back to strripos() if
- * mb_strripos() isn't available.  Parameters are passed to the
- * wrapped function in the same order they are passed to this
- * function.
- *
- * @return false|int
- * @since 1.7.0
- */
-function elgg_strripos() {
-	$args = func_get_args();
-	if (is_callable('mb_strripos')) {
-		return call_user_func_array('mb_strripos', $args);
-	}
-	
-	return call_user_func_array('strripos', $args);
-}
-
-/**
  * Wrapper function for mb_strrpos(). Falls back to strrpos() if
  * mb_strrpos() isn't available.  Parameters are passed to the
  * wrapped function in the same order they are passed to this

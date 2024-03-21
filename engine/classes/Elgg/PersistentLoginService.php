@@ -18,30 +18,9 @@ class PersistentLoginService {
 	
 	use TimeUsing;
 	
-	/**
-	 * @var array
-	 */
-	protected $cookie_config;
+	protected array $cookie_config;
 	
-	/**
-	 * @var string
-	 */
-	protected $cookie_token;
-	
-	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
-	
-	/**
-	 * @var \Elgg\Security\Crypto
-	 */
-	protected $crypto;
-	
-	/**
-	 * @var UsersRememberMeCookiesTable
-	 */
-	protected $persistent_cookie_table;
+	protected string $cookie_token;
 	
 	/**
 	 * @var callable
@@ -59,15 +38,12 @@ class PersistentLoginService {
 	 * @param \Elgg\Http\Request          $request      The request
 	 */
 	public function __construct(
-			UsersRememberMeCookiesTable $cookie_table,
-			\ElggSession $session,
-			\Elgg\Security\Crypto $crypto,
-			\Elgg\Config $config,
-			\Elgg\Http\Request $request) {
-		$this->persistent_cookie_table = $cookie_table;
-		$this->session = $session;
-		$this->crypto = $crypto;
-		
+		protected UsersRememberMeCookiesTable $cookie_table,
+		protected \ElggSession $session,
+		protected \Elgg\Security\Crypto $crypto,
+		\Elgg\Config $config,
+		\Elgg\Http\Request $request
+	) {
 		$global_cookies_config = $config->getCookieConfig();
 		
 		$this->cookie_config = $global_cookies_config['remember_me'];
@@ -85,7 +61,7 @@ class PersistentLoginService {
 		$token = $this->generateToken();
 		$hash = $this->hashToken($token);
 
-		$this->persistent_cookie_table->insertHash($user, $hash);
+		$this->cookie_table->insertHash($user, $hash);
 		$this->setCookie($token);
 		$this->setSessionToken($token);
 	}
@@ -98,7 +74,7 @@ class PersistentLoginService {
 	public function removePersistentLogin(): void {
 		if ($this->cookie_token) {
 			$client_hash = $this->hashToken($this->cookie_token);
-			$this->persistent_cookie_table->deleteHash($client_hash);
+			$this->cookie_table->deleteHash($client_hash);
 		}
 
 		$this->setCookie('');
@@ -114,7 +90,7 @@ class PersistentLoginService {
 	 * @return void
 	 */
 	public function handlePasswordChange(\ElggUser $subject, \ElggUser $modifier = null): void {
-		$this->persistent_cookie_table->deleteAllHashes($subject);
+		$this->cookie_table->deleteAllHashes($subject);
 		if (!$modifier || ($modifier->guid !== $subject->guid) || !$this->cookie_token) {
 			return;
 		}
@@ -162,7 +138,7 @@ class PersistentLoginService {
 			return null;
 		}
 		
-		$user_row = $this->persistent_cookie_table->getRowFromHash($hash);
+		$user_row = $this->cookie_table->getRowFromHash($hash);
 		if (empty($user_row)) {
 			return null;
 		}
@@ -185,7 +161,7 @@ class PersistentLoginService {
 		
 		// update the database record
 		// not interested in number of updated rows, as an update in the same second won't update the row
-		$this->persistent_cookie_table->updateHash($user, $this->hashToken($this->cookie_token));
+		$this->cookie_table->updateHash($user, $this->hashToken($this->cookie_token));
 		
 		// also update the cookie lifetime client-side
 		$this->setCookie($this->cookie_token);
@@ -211,7 +187,7 @@ class PersistentLoginService {
 			return false;
 		}
 		
-		return (bool) $this->persistent_cookie_table->deleteExpiredHashes($time->getTimestamp());
+		return (bool) $this->cookie_table->deleteExpiredHashes($time->getTimestamp());
 	}
 
 	/**
