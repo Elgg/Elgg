@@ -11,22 +11,29 @@ if (!$group instanceof \ElggGroup) {
 }
 
 echo elgg_view_field([
-	'#type' => 'search',
-	'name' => 'q',
-	'required' => true,
-	'placeholder' => elgg_echo('groups:search_in_group'),
-	'aria-label' => elgg_echo('groups:search_in_group'), // because we don't add #label
-]);
-
-echo elgg_view_field([
 	'#type' => 'hidden',
 	'name' => 'container_guid',
 	'value' => $group->guid,
 ]);
 
-$footer = elgg_view_field([
-	'#type' => 'submit',
-	'text' => elgg_echo('search:go'),
+echo elgg_view_field([
+	'#type' => 'fieldset',
+	'align' => 'horizontal',
+	'fields' => [
+		[
+			'#type' => 'search',
+			'#class' => 'elgg-field-stretch',
+			'name' => 'q',
+			'required' => true,
+			'class' => 'elgg-input-search',
+			'placeholder' => elgg_echo('groups:search_in_group'),
+			'aria-label' => elgg_echo('groups:search_in_group'), // because we don't add #label
+		],
+		[
+			'#type' => 'submit',
+			'icon' => 'search',
+			'text' => false,
+			'title' => elgg_echo('search:go'),
+		],
+	],
 ]);
-
-elgg_set_form_footer($footer);
