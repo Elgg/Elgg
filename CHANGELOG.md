@@ -1,3 +1,21 @@
+<a name="5.1.5"></a>
+### 5.1.5 (2024-03-22)
+
+#### Contributors
+
+* Jerôme Bakker (7)
+* Jeroen Dalsem (1)
+
+#### Bug fixes
+
+* **core:**
+  * improved friendly title for multibyte characters [6d80fa23f](https://github.com/Elgg/Elgg//commit/6d80fa23ff800e4aa67913dd9c76ab157804120a) closes [#14577](https://github.com/Elgg/Elgg//commit/14577)
+  * no longer set dynamic property on exceptions [21b41a6a6](https://github.com/Elgg/Elgg//commit/21b41a6a693479fa93a7dca24bac71d323eb5dfe)
+* **ckeditor:** do not limit html elements in ckeditor [01bacfc51](https://github.com/Elgg/Elgg//commit/01bacfc515e60c6abf3bc299d89f89150458e811)
+* **plugins:** improved handling of composer version constraints [8dd38c0b7](https://github.com/Elgg/Elgg//commit/8dd38c0b7929de6d5d3e0aba6704fe50316538c6) closes [#14580](https://github.com/Elgg/Elgg//commit/14580)
+* **pages:** correctly disable parent page option [02a4f3bfa](https://github.com/Elgg/Elgg//commit/02a4f3bfa372ec5d103ba48d8b27af23d3b134e8)
+
+
 <a name="5.1.4"></a>
 ### 5.1.4 (2024-01-12)
 
