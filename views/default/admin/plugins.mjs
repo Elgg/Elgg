@@ -110,12 +110,12 @@ function filterPluginCategory(event) {
 	event.preventDefault();
 	
 	// remove selected state from all buttons
-	$(".elgg-admin-plugins-categories > li").removeClass("elgg-state-selected");
+	$('.elgg-admin-plugins-categories > a').removeClass('elgg-state-selected');
 
 	// show plugins with the selected category
-	$(".elgg-plugin").hide();
-	$(".elgg-plugin-category-" + $(this).attr("rel")).show();
-	$(this).closest('li').addClass("elgg-state-selected");
+	$('.elgg-plugin').hide();
+	$('.elgg-plugin-category-' + $(this).attr('rel')).show();
+	$(this).addClass('elgg-state-selected');
 };
 
 initPluginReordering();

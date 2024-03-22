@@ -91,21 +91,18 @@ echo elgg_view('core.css');
 	flex-wrap: wrap;
 	flex-direction: row;
 	margin-top: 1rem;
+	grid-gap: 0.5rem;
 	
-	> li {
-		margin: 0.1rem;
-		display: inline-block;
+	> a {
+		padding: 0.25rem 0.5rem;
+		background: #e6e6ea;
+		border-radius: 3px;
+		font-size:0.85rem;
+		color: #2d3047;
+		text-decoration: none;
 		
-		> a {
-			padding: 0.25rem 0.5rem;
-			background: #e6e6ea;
-			border-radius: 3px;
-			font-size:0.85rem;
-			color: #2d3047;
-			text-decoration: none;
-		}
-		
-		&.elgg-state-selected > a {
+		&.elgg-state-selected,
+		&:hover {
 			color: #fff;
 			background: #2d3047;
 			text-decoration: none;
