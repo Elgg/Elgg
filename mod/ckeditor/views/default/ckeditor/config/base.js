@@ -3,6 +3,14 @@ define(['elgg'], function(elgg) {
 	var topbar_height = $('.elgg-page-topbar').height();
 	
 	return {
+		htmlSupport: {
+			allow: [{
+				name: /.*/,
+				attributes: true,
+				classes: true,
+				styles: true
+			}]
+		},
 		language: elgg.config.current_language,
 		ui: {
 			viewportOffset: {
