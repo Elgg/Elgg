@@ -43,6 +43,7 @@ if (empty($entity_relationships)) {
 		foreach ($relationship_columns as $relationship_col) {
 			$value = $relationship->$relationship_col;
 			$title = null;
+			$class = 'elgg-nowrap';
 			$is_text = true;
 			
 			switch ($relationship_col) {
@@ -64,13 +65,16 @@ if (empty($entity_relationships)) {
 				case 'time_created':
 					$title = Values::normalizeTime($value)->formatLocale(elgg_echo('friendlytime:date_format'));
 					break;
+				case 'relationship':
+					$class = null;
+					break;
 			}
 			
 			if ($is_text) {
 				$value = elgg_view('output/text', ['value' => $value]);
 			}
 			
-			$row[] = elgg_format_element('td', ['title' => $title], $value);
+			$row[] = elgg_format_element('td', ['title' => $title, 'class' => $class], $value);
 		}
 		
 		$row[] = elgg_format_element('td', [], elgg_view('output/url', [

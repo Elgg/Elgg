@@ -35,21 +35,27 @@ if (empty($entity_metadata)) {
 		foreach ($md_columns as $md_col) {
 			$value = $md->$md_col;
 			$title = null;
+			$class = 'elgg-nowrap';
 			
 			switch ($md_col) {
 				case 'time_created':
 					$title = Values::normalizeTime($value)->formatLocale(elgg_echo('friendlytime:date_format'));
 					break;
+				case 'name':
+					$class = null;
+					break;
 				case 'value':
 					if (is_bool($value)) {
 						$value = $value ? 'true' : 'false';
 					}
+					
+					$class = null;
 					break;
 			}
 			
 			$value = elgg_view('output/text', ['value' => $value]);
 			
-			$row[] = elgg_format_element('td', ['title' => $title], $value);
+			$row[] = elgg_format_element('td', ['title' => $title, 'class' => $class], $value);
 		}
 		
 		$row[] = elgg_format_element('td', [], elgg_view('output/url', [
@@ -59,7 +65,7 @@ if (empty($entity_metadata)) {
 			'href' => elgg_http_add_url_query_elements('action/developers/entity_explorer_delete', [
 				'guid' => $entity->guid,
 				'type' => 'metadata',
-				'key' => $md->name,
+				'key' => $md->id,
 			]),
 			'confirm' => true,
 		]));

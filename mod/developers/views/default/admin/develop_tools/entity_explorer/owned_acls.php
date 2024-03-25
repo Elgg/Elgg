@@ -23,7 +23,9 @@ if (empty($acls)) {
 	foreach ($acls as $acl) {
 		$result .= '<tr>';
 		foreach ($acl_columns as $col_name) {
-			$result .= elgg_format_element('td', [], $acl->$col_name);
+			$result .= elgg_format_element('td', [
+				'class' => ($col_name === 'id') ? 'elgg-nowrap' : null,
+			], $acl->$col_name);
 		}
 		
 		$result .= elgg_format_element('td', [], elgg_view('output/url', [

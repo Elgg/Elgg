@@ -24,7 +24,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 	 *
 	 * @return void
 	 */
-	protected function processSettings() {
+	protected function processSettings(): void {
 		$elgg = $this->elgg();
 		$events = $elgg->events;
 		
@@ -63,7 +63,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 
 					// prevent logs from showing up in html mails
 					if (elgg_extract('email', $vars) instanceof \Elgg\Email) {
-						return;
+						return null;
 					}
 					
 					$handler->close();
