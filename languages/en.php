@@ -1799,6 +1799,20 @@ Global variables:
 ------------------------------------------------------------------------',
 	
 /**
+ * Trash
+ */
+	'trash:menu:page' => "Trash",
+	
+	'trash:imprint:actor' => "Deleted by: %s",
+	'trash:imprint:type' => "Type: %s",
+	
+	'trash:owner:title' => "Trash",
+	'trash:owner:title_owner' => "%s's trash",
+	'trash:container:title' => "%s's trash",
+	
+	'trash:no_results' => "No items found in the trash",
+
+/**
  * Miscellaneous
  */
 	'elgg:powered' => "Powered by Elgg",

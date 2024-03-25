@@ -1,0 +1,14 @@
+<?php
+/**
+ * Show all deleted items contained by the given group
+ */
+
+/* @var $group \ElggGroup */
+$group = elgg_get_page_owner_entity();
+
+elgg_push_entity_breadcrumbs($group);
+
+echo elgg_view_page(elgg_echo('trash:container:title', [$group->getDisplayName()]), [
+	'content' => elgg_view('trash/listing/container', ['entity' => $group]),
+	'filter_id' => 'trash',
+]);

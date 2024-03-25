@@ -244,4 +244,20 @@ return [
 		],
 		'walled' => false,
 	],
+	'trash:owner' => [
+		'path' => '/settings/trash/{username}',
+		'resource' => 'trash/owner',
+		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
+			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
+		],
+	],
+	'trash:container' => [
+		'path' => '/trash/container/{guid}',
+		'resource' => 'trash/container',
+		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
+			\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
+		],
+	],
 ];

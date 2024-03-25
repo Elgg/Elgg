@@ -1453,7 +1453,7 @@ abstract class ElggEntity extends \ElggData {
 		
 		get_entity($deleter_guid)?->addRelationship($this->guid, 'deleted_by');
 		
-		$this->disableAnnotations();
+//		$this->disableAnnotations();
 		
 		$deleted = _elgg_services()->entityTable->softDelete($this);
 		
