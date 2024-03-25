@@ -200,10 +200,11 @@ function elgg_get_friendly_title(string $title): string {
 	// titles are often stored HTML encoded
 	$title = html_entity_decode($title ?? '', ENT_QUOTES, 'UTF-8');
 	
-	$title = \Elgg\Translit::urlize($title);
+	// limit length to prevent issues with too long URLS (Request-URI Too Large) #13228
+	// limit the length before urlize() to prevent multibyte chars from being cut of in the middle #14577
+	$title = elgg_substr($title, 0, 100);
 
-	// limit length to prevent issues with too long URLS (Request-URI Too Large)
-	return elgg_substr($title, 0, 100);
+	return \Elgg\Translit::urlize($title);
 }
 
 /**

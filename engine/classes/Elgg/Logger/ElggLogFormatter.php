@@ -14,19 +14,14 @@ class ElggLogFormatter extends LineFormatter {
 	 * {@inheritdoc}
 	 */
 	public function format(array $record): string {
-
 		$context = elgg_extract('context', $record, []);
 		$exception = elgg_extract('exception', $context);
-
 		if ($exception instanceof \Throwable) {
-			$timestamp = isset($exception->timestamp) ? (int) $exception->timestamp : time();
-
 			$dt = new \DateTime();
-			$dt->setTimestamp($timestamp);
 			$record['datetime'] = $dt;
 
 			$eol = PHP_EOL;
-			$message = "Exception at time {$timestamp}:{$eol}{$exception->getMessage()}{$eol}";
+			$message = "Exception at time {$dt->getTimestamp()}:{$eol}{$exception->getMessage()}{$eol}";
 			$record['message'] = preg_replace('~\R~u', $eol, $message);
 
 			if ($exception instanceof DatabaseException) {
