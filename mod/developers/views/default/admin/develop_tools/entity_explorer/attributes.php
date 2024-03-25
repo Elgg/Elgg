@@ -12,10 +12,8 @@ if (!$entity instanceof \ElggEntity) {
 	return;
 }
 
-$entity_rows = ['type', 'subtype', 'owner_guid', 'container_guid', 'access_id', 'time_created', 'time_updated', 'last_action', 'enabled'];
-
 $rows = [];
-foreach ($entity_rows as $entity_row) {
+foreach (\ElggEntity::PRIMARY_ATTR_NAMES as $entity_row) {
 	$row = [];
 	$row[] = elgg_format_element('td', [], $entity_row);
 	
@@ -23,6 +21,8 @@ foreach ($entity_rows as $entity_row) {
 	$is_text = true;
 	$value = $entity->$entity_row;
 	switch ($entity_row) {
+		case 'guid':
+			continue(2);
 		case 'owner_guid':
 		case 'container_guid':
 			$is_text = false;
@@ -40,9 +40,9 @@ foreach ($entity_rows as $entity_row) {
 			break;
 		case 'access_id':
 			$title = elgg_get_readable_access_level($value);
-			
 			break;
 		case 'time_created':
+		case 'time_deleted':
 		case 'time_updated':
 		case 'last_action':
 			$title = Values::normalizeTime($value)->formatLocale(elgg_echo('friendlytime:date_format'));

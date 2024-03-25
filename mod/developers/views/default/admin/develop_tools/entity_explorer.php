@@ -14,7 +14,7 @@ if (empty($guid)) {
 	return;
 }
 
-echo elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
+echo elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($guid) {
 	$entity = get_entity($guid);
 	if (!$entity) {
 		return elgg_echo('notfound');

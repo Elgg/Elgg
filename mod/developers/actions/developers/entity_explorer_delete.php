@@ -1,6 +1,6 @@
 <?php
 
-return elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() {
+return elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() {
 
 	$guid = (int) get_input('guid');
 	$type = get_input('type');
