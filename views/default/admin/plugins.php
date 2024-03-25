@@ -37,8 +37,31 @@ if ($list_only) {
 	return;
 }
 
+$categories = [];
+
+foreach ($installed_plugins as $plugin) {
+	if (!$plugin->isValid()) {
+		if ($plugin->isActive()) {
+			if (elgg_get_config('auto_disable_plugins')) {
+				try {
+					// force disable and warn
+					$plugin->deactivate();
+					
+					elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(), elgg_echo('ElggPlugin:InvalidAndDeactivated', [$plugin->getID()]));
+				} catch (\Elgg\Exceptions\PluginException $e) {
+					// do nothing
+				}
+			}
+		}
+		
+		continue;
+	}
+	
+	$categories = array_merge($categories, $plugin->getCategories());
+}
+
 echo elgg_view('admin/plugins/categories', [
-	'plugins' => $installed_plugins,
+	'categories' => $categories,
 	'active_filter' => $active_filter,
 ]);
 
@@ -50,14 +73,11 @@ elgg_register_menu_item('title', [
 	'data-desired-state' => 'active',
 ]);
 elgg_register_menu_item('title', [
-	'name' => 'dactivate-all',
+	'name' => 'deactivate-all',
 	'href' => elgg_generate_action_url('admin/plugins/deactivate_all'),
 	'text' => elgg_echo('admin:plugins:deactivate_all'),
 	'link_class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
 	'data-desired-state' => 'inactive',
 ]);
 
-
-echo elgg_format_element('div', [
-	'id' => 'elgg-plugin-list',
-], $plugins_list);
+echo elgg_format_element('div', ['id' => 'elgg-plugin-list'], $plugins_list);
