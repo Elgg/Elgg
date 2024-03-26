@@ -128,7 +128,7 @@ class ElggPage extends ElggObject {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function delete(bool $recursive = true): bool {
+	public function delete(bool $recursive = true, bool $persistent = null): bool {
 		$parent_guid = $this->getParentGUID();
 		$guid = $this->guid;
 
@@ -153,7 +153,7 @@ class ElggPage extends ElggObject {
 			});
 		};
 
-		$result = parent::delete($recursive);
+		$result = parent::delete($recursive, $persistent);
 
 		if ($result) {
 			$move_children();

@@ -26,8 +26,8 @@ class ElggComment extends \ElggObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function delete(bool $recursive = true): bool {
-		$result = parent::delete($recursive);
+	public function delete(bool $recursive = true, bool $persistent = null): bool {
+		$result = parent::delete($recursive, $persistent);
 		
 		if ($result) {
 			// remove the threaded comments directly below this comment

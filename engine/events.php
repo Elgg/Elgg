@@ -267,8 +267,10 @@ return [
 			'Elgg\Menus\Annotation::registerDelete' => [],
 		],
 		'menu:entity' => [
-			'Elgg\Menus\Entity::registerDelete' => [],
 			'Elgg\Menus\Entity::registerEdit' => [],
+			'Elgg\Menus\Entity::registerDelete' => [],
+			'Elgg\Menus\Entity::registerTrash' => [],
+			'Elgg\Menus\Entity::registerRestore' => [],
 			'Elgg\Menus\Entity::registerUserHoverAdminSection' => [],
 			'Elgg\Menus\UserHover::registerLoginAs' => [],
 		],

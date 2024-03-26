@@ -53,6 +53,8 @@ class EntityTable {
 
 	protected array $deleted_guids = [];
 	
+	protected array $trashed_guids = [];
+	
 	protected array $entity_classes = [];
 
 	/**
@@ -166,8 +168,6 @@ class EntityTable {
 			'time_created' => $insert->param($row->time_created, ELGG_VALUE_TIMESTAMP),
 			'time_updated' => $insert->param($row->time_updated, ELGG_VALUE_TIMESTAMP),
 			'last_action' => $insert->param($row->last_action, ELGG_VALUE_TIMESTAMP),
-			'deleted' => $insert->param($row->deleted, ELGG_VALUE_STRING),
-			'time_deleted' => $insert->param($row->time_deleted, ELGG_VALUE_INTEGER),
 		]);
 
 		return $this->db->insertData($insert);
@@ -188,8 +188,6 @@ class EntityTable {
 			->set('access_id', $update->param($row->access_id, ELGG_VALUE_ID))
 			->set('time_created', $update->param($row->time_created, ELGG_VALUE_TIMESTAMP))
 			->set('time_updated', $update->param($row->time_updated, ELGG_VALUE_TIMESTAMP))
-			->set('deleted', $update->param($row->deleted, ELGG_VALUE_STRING))
-			->set('time_deleted', $update->param($row->time_deleted, ELGG_VALUE_TIMESTAMP))
 			->where($update->compare('guid', '=', $guid, ELGG_VALUE_GUID));
 
 		return $this->db->updateData($update);
@@ -469,21 +467,6 @@ class EntityTable {
 	}
 
 	/**
-	 * Soft delete entity
-	 *
-	 * @param \ElggEntity $entity Entity to soft delete
-	 *
-	 * @return bool
-	 */
-	public function softDelete(\ElggEntity $entity): bool {
-		$qb = Update::table(self::TABLE_NAME);
-		$qb->set('deleted', $qb->param('yes', ELGG_VALUE_STRING))
-			->where($qb->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
-
-		return $this->db->updateData($qb);
-	}
-
-	/**
 	 * Restore entity
 	 *
 	 * @param \ElggEntity $entity Entity to restore
@@ -572,6 +555,64 @@ class EntityTable {
 
 		return true;
 	}
+	
+	/**
+	 * Trash an entity (not quite delete but close)
+	 *
+	 * @param \ElggEntity $entity    Entity
+	 * @param bool        $recursive Trash all owned and contained entities
+	 *
+	 * @return bool
+	 */
+	public function trash(\ElggEntity $entity, bool $recursive = true): bool {
+		$guid = $entity->guid;
+		if (!$guid) {
+			return false;
+		}
+		
+		if ($entity->deleted === 'yes') {
+			// already trashed
+			return true;
+		}
+		
+		return $this->events->triggerSequence('trash', $entity->type, $entity, function(\ElggEntity $entity) use ($recursive) {
+			$unban_after = false;
+			if ($entity instanceof \ElggUser && !$entity->isBanned()) {
+				// temporarily ban to prevent using the site during disable
+				$entity->ban();
+				$unban_after = true;
+			}
+			
+			$this->trashed_guids[] = $entity->guid;
+			
+			if ($recursive) {
+				$this->trashRelatedEntities($entity);
+			}
+			
+			$deleter_guid = elgg_get_logged_in_user_guid();
+			if (!empty($deleter_guid)) {
+				$entity->addRelationship($deleter_guid, 'delete_by');
+			}
+			
+			$qb = Update::table(self::TABLE_NAME);
+			$qb->set('deleted', $qb->param('yes', ELGG_VALUE_STRING))
+			   ->where($qb->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
+			
+			$trashed = $this->db->updateData($qb);
+			
+			$entity->updateTimeDeleted();
+			
+			if ($unban_after) {
+				$entity->unban();
+			}
+			
+			if ($trashed) {
+				$entity->invalidateCache();
+			}
+			
+			return $trashed;
+		});
+	}
 
 	/**
 	 * Deletes entities owned or contained by the entity being deletes
@@ -582,7 +623,7 @@ class EntityTable {
 	 */
 	protected function deleteRelatedEntities(\ElggEntity $entity): void {
 		// Temporarily overriding access controls
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($entity) {
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($entity) {
 			/* @var $batch \ElggBatch */
 			$batch = elgg_get_entities([
 				'wheres' => function (QueryBuilder $qb, $main_alias) use ($entity) {
@@ -612,6 +653,51 @@ class EntityTable {
 				if (!$this->delete($e, true)) {
 					$batch->reportFailure();
 				}
+			}
+		});
+	}
+
+	/**
+	 * Trash entities owned or contained by the entity being trashed
+	 *
+	 * @param \ElggEntity $entity Entity
+	 *
+	 * @return void
+	 */
+	protected function trashRelatedEntities(\ElggEntity $entity): void {
+		// Temporarily overriding access controls
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($entity) {
+			/* @var $batch \ElggBatch */
+			$batch = elgg_get_entities([
+				'wheres' => function (QueryBuilder $qb, $main_alias) use ($entity) {
+					$ors = $qb->merge([
+						$qb->compare("{$main_alias}.owner_guid", '=', $entity->guid, ELGG_VALUE_GUID),
+						$qb->compare("{$main_alias}.container_guid", '=', $entity->guid, ELGG_VALUE_GUID),
+					], 'OR');
+					
+					return $qb->merge([
+						$ors,
+						$qb->compare("{$main_alias}.guid", 'neq', $entity->guid, ELGG_VALUE_GUID),
+					]);
+				},
+				'limit' => false,
+				'batch' => true,
+				'batch_inc_offset' => false,
+			]);
+			
+			/* @var $e \ElggEntity */
+			foreach ($batch as $e) {
+				if (in_array($e->guid, $this->trashed_guids)) {
+					// prevent deadloops, doing this here in case of large deletes which could cause query length issues
+					$batch->reportFailure();
+					continue;
+				}
+				
+				if (!$this->trash($e, true)) {
+					$batch->reportFailure();
+				}
+				
+				$e->addRelationship($entity->guid, 'deleted_with');
 			}
 		});
 	}

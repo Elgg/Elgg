@@ -1,31 +1,29 @@
 <?php
 /**
- * Default entity restore action
+ * Default entity trash action
  */
 
 $guid = (int) get_input('guid');
-$recursive = (bool) get_input('recursive', true);
-
-$entity = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($guid) {
-	return get_entity($guid);
-});
+$entity = get_entity($guid);
 if (!$entity instanceof \ElggEntity) {
-	return elgg_error_response(elgg_echo('entity:restore:item_not_found'));
+	return elgg_error_response(elgg_echo('entity:delete:item_not_found'));
+}
+
+if (!$entity->canDelete() || !$entity->hasCapability('restorable') || $entity instanceof \ElggPlugin || $entity instanceof \ElggSite || $entity instanceof \ElggUser) {
+	return elgg_error_response(elgg_echo('entity:delete:permission_denied'));
 }
 
 set_time_limit(0);
 
 // determine what name to show on success
-$display_name = $entity->getDisplayName() ?: elgg_echo('entity:restore:item');
+$display_name = $entity->getDisplayName() ?: elgg_echo('entity:delete:item');
 
 $type = $entity->getType();
 $subtype = $entity->getSubtype();
 $container = $entity->getContainerEntity();
 
-if ($entity->deleted === 'yes') {
-	if (!$entity->restore($recursive)) {
-		return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));
-	}
+if (!$entity->delete(true, false)) {
+	return elgg_error_response(elgg_echo('entity:delete:fail', [$display_name]));
 }
 
 // determine forward URL
@@ -38,10 +36,10 @@ if (empty($forward_url)) {
 	$forward_url = REFERRER;
 	$referrer_url = elgg_extract('HTTP_REFERER', $_SERVER, '');
 	$site_url = elgg_get_site_url();
-
-	$find_forward_url = function(\ElggEntity $container = null) use ($type, $subtype) {
+	
+	$find_forward_url = function (\ElggEntity $container = null) use ($type, $subtype) {
 		$routes = _elgg_services()->routes;
-
+		
 		// check if there is a collection route (eg. blog/owner/username)
 		$route_name = false;
 		if ($container instanceof \ElggUser) {
@@ -49,27 +47,27 @@ if (empty($forward_url)) {
 		} elseif ($container instanceof \ElggGroup) {
 			$route_name = "collection:{$type}:{$subtype}:group";
 		}
-
+		
 		if ($route_name && $routes->get($route_name)) {
 			$params = $routes->resolveRouteParameters($route_name, $container);
-
+			
 			return elgg_generate_url($route_name, $params);
 		}
-
+		
 		// no route found, fallback to container url
 		if ($container instanceof \ElggEntity) {
 			return $container->getURL();
 		}
-
+		
 		// no container
 		return '';
 	};
-
+	
 	if (!empty($referrer_url) && elgg_strpos($referrer_url, $site_url) === 0) {
 		// referer is on current site
 		$referrer_path = elgg_substr($referrer_url, elgg_strlen($site_url));
 		$segments = explode('/', $referrer_path);
-
+		
 		if (in_array($guid, $segments)) {
 			// referrer URL contains a reference to the entity that will be deleted
 			$forward_url = $find_forward_url($container);
@@ -80,9 +78,9 @@ if (empty($forward_url)) {
 }
 
 $success_keys = [
-	"entity:restore:{$type}:{$subtype}:success",
-	"entity:restore:{$type}:success",
-	'entity:restore:success',
+	"entity:delete:{$type}:{$subtype}:success",
+	"entity:delete:{$type}:success",
+	'entity:delete:success',
 ];
 
 $message = '';

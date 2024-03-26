@@ -233,15 +233,16 @@ class ElggFile extends ElggObject {
 	/**
 	 * Delete this file.
 	 *
-	 * @param bool $follow_symlinks If true, will also delete the target file if the current file is a symlink
+	 * @param bool      $follow_symlinks If true, will also delete the target file if the current file is a symlink
+	 * @param bool|null $persistent      persistently delete the entity (default: check the 'restorable' capability)
 	 *
 	 * @return bool
 	 */
-	public function delete(bool $follow_symlinks = true): bool {
+	public function delete(bool $follow_symlinks = true, bool $persistent = null): bool {
 		$result = $this->getFilestore()->delete($this, $follow_symlinks);
 
 		if ($this->getGUID() && $result) {
-			$result = parent::delete();
+			$result = parent::delete(true, $persistent);
 		}
 
 		return $result;

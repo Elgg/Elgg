@@ -1130,6 +1130,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'preview' => "Preview",
 	'edit' => "Edit",
 	'delete' => "Delete",
+	'trash' => "Trash",
 	'accept' => "Accept",
 	'reject' => "Reject",
 	'decline' => "Decline",
@@ -1305,7 +1306,9 @@ For improved performance, it is recommended that you enable and configure OPcach
 
 	'edit:this' => 'Edit this',
 	'delete:this' => 'Delete this',
+	'trash:this' => 'Trash this',
 	'restore:this' => 'Restore this',
+	'restore:this:move' => 'Restore and move this',
 	'comment:this' => 'Comment on this',
 
 /**
@@ -1313,6 +1316,7 @@ For improved performance, it is recommended that you enable and configure OPcach
  */
 
 	'deleteconfirm' => "Are you sure you want to delete this item?",
+	'trashconfirm' => "Are you sure you want to trash this item?",
 	'restoreconfirm' => "Are you sure you want to restore this item?",
 	'restoreandmoveconfirm'=> "Are you sure you want to restore and move this item?",
 	'deleteconfirm:plural' => "Are you sure you want to delete these items?",

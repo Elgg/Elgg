@@ -450,8 +450,8 @@ class ElggUser extends \ElggEntity {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function delete(bool $recursive = true): bool {
-		$result = parent::delete($recursive);
+	public function delete(bool $recursive = true, bool $persistent = null): bool {
+		$result = parent::delete($recursive, $persistent);
 		if ($result) {
 			// cleanup remember me cookie records
 			_elgg_services()->users_remember_me_cookies_table->deleteAllHashes($this);
