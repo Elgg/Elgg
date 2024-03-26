@@ -49,5 +49,12 @@
 				word-break: normal;
 			}
 		}
+		
+		td,
+		th {
+			&.elgg-nowrap {
+				white-space: nowrap;
+			}
+		}
 	}
 }

@@ -25,7 +25,7 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 			$td = elgg_format_element('pre', [], htmlspecialchars($td, ENT_NOQUOTES, 'UTF-8'));
 		}
 
-		return "<tr class=\"developers-error-log-row\"><th>$th:</th><td>$td</td></tr>";
+		return "<tr><th>{$th}:</th><td>{$td}</td></tr>";
 	}
 
 	/**
@@ -51,7 +51,7 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 		$message_vars['title'] = $level; // help prevent elgg_echo() missing language key recursion
 		
 		if ($exception instanceof \Throwable) {
-			$timestamp = isset($exception->timestamp) ? (int) $exception->timestamp : time();
+			$timestamp = time();
 
 			$dt = new \DateTime();
 			$dt->setTimestamp($timestamp);
@@ -66,14 +66,15 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 				$record['context']['params'] = $exception->getParameters();
 			}
 
-			$message_vars['title'] = "EXCEPTION $timestamp";
+			$message_vars['title'] = "EXCEPTION {$timestamp}";
 		}
+		
+		$message_vars['title'] .= ' - ' . $record['datetime']->format($this->dateFormat);
+		$message_vars['menu'] = $record['channel'];
 		
 		$output = '<table class="elgg-table elgg-table-alt">';
 
 		$output .= $this->addRow('Message', (string) $record['message']);
-		$output .= $this->addRow('Time', $record['datetime']->format($this->dateFormat));
-		$output .= $this->addRow('Channel', $record['channel']);
 
 		if ($record['context']) {
 			foreach ($record['context'] as $key => $value) {

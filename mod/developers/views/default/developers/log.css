@@ -1,6 +1,12 @@
 .developers-log {
 	background-color: #EBF5FF;
-	border: 1px solid #999;
+	border-top: 1px solid #999;
 	color: #666;
-	padding: 20px;
+	padding: 2rem;
+	margin: 0;
+	
+	table:last-child,
+	pre:last-child {
+		margin-bottom: 0;
+	}
 }

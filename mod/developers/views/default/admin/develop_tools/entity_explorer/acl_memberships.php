@@ -48,7 +48,10 @@ if (empty($acls)) {
 				$value = elgg_view('output/text', ['value' => $value]);
 			}
 			
-			$row[] = elgg_format_element('td', ['title' => $title], $value);
+			$row[] = elgg_format_element('td', [
+				'title' => $title,
+				'class' => in_array($col_name, ['id', 'owner_guid']) ? 'elgg-nowrap' : null,
+			], $value);
 		}
 		
 		$rows[] = elgg_format_element('tr', [], implode('', $row));
