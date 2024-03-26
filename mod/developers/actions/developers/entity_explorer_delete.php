@@ -18,7 +18,7 @@ return elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, funct
 	switch ($type) {
 		case 'entity':
 			if (!$entity instanceof \ElggSite) {
-				$entity->delete();
+				$entity->delete(true, true);
 			}
 			break;
 		case 'metadata':

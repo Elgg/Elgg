@@ -1815,6 +1815,8 @@ Global variables:
 	'trash:container:title' => "%s's trash",
 	
 	'trash:no_results' => "No items found in the trash",
+	
+	'trash:notice:retention' => "Trashed items will automatically be removed after %s days.",
 
 /**
  * Miscellaneous

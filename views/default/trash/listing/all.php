@@ -32,6 +32,9 @@ $options['wheres'][] = function(QueryBuilder $qb, $main_alias) {
 	return $qb->compare("{$main_alias}.deleted", '=', 'yes', ELGG_VALUE_STRING);
 };
 
+$vars['options'] = $options;
+echo elgg_view('trash/elements/notice', $vars);
+
 echo elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($options) {
 	return elgg_list_entities($options);
 });

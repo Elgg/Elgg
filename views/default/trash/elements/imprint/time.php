@@ -33,7 +33,7 @@ if (!empty($time_href)) {
 }
 
 echo elgg_view('trash/elements/imprint/element', [
-	'icon_name' => elgg_extract('time_icon', $vars, 'trash'),
+	'icon_name' => elgg_extract('time_icon', $vars, 'trash-alt'),
 	'content' => $content,
 	'class' => 'elgg-listing-time',
 ]);

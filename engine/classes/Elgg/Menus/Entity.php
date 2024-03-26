@@ -127,7 +127,7 @@ class Entity {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'trash',
-			'icon' => 'trash',
+			'icon' => 'trash-alt',
 			'text' => elgg_echo('trash'),
 			'title' => elgg_echo('trash:this'),
 			'href' => elgg_generate_action_url('entity/trash', [
@@ -162,7 +162,7 @@ class Entity {
 		if (!$container instanceof \ElggUser) {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'restore_and_move',
-				'icon' => 'trash-restore',
+				'icon' => 'trash-restore-alt',
 				'text' => elgg_echo('restore:this:move'),
 				'title' => elgg_echo('restore:this'),
 				'href' => elgg_http_add_url_query_elements('ajax/form/entity/chooserestoredestination', [
@@ -177,7 +177,7 @@ class Entity {
 		if ($entity instanceof \ElggGroup) {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'restore_non_recursive',
-				'icon' => 'trash-restore',
+				'icon' => 'trash-restore-alt',
 				'text' => elgg_echo('entity:restore:non_recursive'),
 				'title' => elgg_echo('restore:this'),
 				'href' => elgg_generate_action_url('entity/restore', [
@@ -192,7 +192,7 @@ class Entity {
 		if ($container?->deleted !== 'yes') {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'restore',
-				'icon' => 'trash-restore',
+				'icon' => 'trash-restore-alt',
 				'text' => elgg_echo('restore:this'),
 				'href' => elgg_generate_action_url('entity/restore', [
 					'guid' => $entity->guid,

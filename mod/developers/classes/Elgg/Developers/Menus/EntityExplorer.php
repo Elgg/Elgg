@@ -43,7 +43,7 @@ class EntityExplorer {
 		// delete entity
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'delete',
-			'icon' => 'trash',
+			'icon' => 'trash-alt',
 			'text' => elgg_echo('developers:entity_explorer:delete_entity'),
 			'href' => elgg_generate_action_url('developers/entity_explorer_delete', [
 				'guid' => $entity->guid,
