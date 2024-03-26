@@ -334,7 +334,7 @@ elgg.get_simplecache_url = function(view, subview) {
 	return elgg.normalize_url(path);
 };
 
-$(document).on('click', '*[data-confirm]', function() {
+$(document).on('click', '*[data-confirm]', function(e) {
 	var confirmText = $(this).data('confirm');
 	if (!confirm(confirmText)) {
 		e.preventDefault();
