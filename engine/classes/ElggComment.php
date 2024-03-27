@@ -31,7 +31,7 @@ class ElggComment extends \ElggObject {
 		
 		if ($result) {
 			// remove the threaded comments directly below this comment
-			elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($recursive) {
+			elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($recursive, $persistent) {
 				$children = elgg_get_entities([
 					'type' => 'object',
 					'subtype' => 'comment',
@@ -46,7 +46,7 @@ class ElggComment extends \ElggObject {
 				
 				/* @var $child \ElggComment */
 				foreach ($children as $child) {
-					$child->delete($recursive);
+					$child->delete($recursive, $persistent);
 				}
 			});
 		}

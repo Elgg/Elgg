@@ -90,7 +90,7 @@ class ElggSite extends \ElggEntity {
 	 * @throws SecurityException
 	 */
 	public function delete(bool $recursive = true, bool $persistent = null): bool {
-		if ($this->guid == 1) {
+		if ($this->guid === 1) {
 			throw new SecurityException('You cannot delete the current site');
 		}
 

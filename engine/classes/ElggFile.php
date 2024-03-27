@@ -231,23 +231,21 @@ class ElggFile extends ElggObject {
 	}
 
 	/**
-	 * Delete this file.
-	 *
-	 * @param bool      $follow_symlinks If true, will also delete the target file if the current file is a symlink
-	 * @param bool|null $persistent      persistently delete the entity (default: check the 'restorable' capability)
-	 *
-	 * @return bool
+	 * {@inheritdoc}
 	 */
-	public function delete(bool $follow_symlinks = true, bool $persistent = null): bool {
-		$result = $this->getFilestore()->delete($this, $follow_symlinks);
-
-		if ($this->getGUID() && $result) {
-			$result = parent::delete(true, $persistent);
+	protected function persistentDelete(bool $recursive = true): bool {
+		if ($this->guid) {
+			$result = parent::persistentDelete($recursive);
+			if ($result) {
+				$this->getFilestore()->delete($this);
+			}
+			
+			return $result;
 		}
-
-		return $result;
+		
+		return $this->getFilestore()->delete($this);
 	}
-
+	
 	/**
 	 * Seek a position in the file.
 	 *

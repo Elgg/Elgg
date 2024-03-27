@@ -1604,8 +1604,7 @@ abstract class ElggEntity extends \ElggData {
 	 * the entity.  That means that if the container_guid = $this->guid, the item will
 	 * be deleted regardless of who owns it.
 	 *
-	 * @param bool      $recursive  If true (default) then all entities which are
-	 *                              owned or contained by $this will also be deleted.
+	 * @param bool      $recursive  If true (default) then all entities which are * owned or contained by $this will also be deleted.
 	 * @param bool|null $persistent persistently delete the entity (default: check the 'restorable' capability)
 	 *
 	 * @return bool
@@ -1624,14 +1623,38 @@ abstract class ElggEntity extends \ElggData {
 		
 		try {
 			if ($persistent) {
-				return _elgg_services()->entityTable->delete($this, $recursive);
+				return $this->persistentDelete($recursive);
 			} else {
-				return _elgg_services()->entityTable->trash($this, $recursive);
+				return $this->trash($recursive);
 			}
 		} catch (DatabaseException $ex) {
 			elgg_log($ex, 'ERROR');
 			return false;
 		}
+	}
+	
+	/**
+	 * Permanently delete the entity from the database
+	 *
+	 * @param bool $recursive If true (default) then all entities which are owned or contained by $this will also be deleted.
+	 *
+	 * @return bool
+	 * @since 6.0
+	 */
+	protected function persistentDelete(bool $recursive = true): bool {
+		return _elgg_services()->entityTable->delete($this, $recursive);
+	}
+	
+	/**
+	 * Move the entity to the trash
+	 *
+	 * @param bool $recursive If true (default) then all entities which are owned or contained by $this will also be trashed.
+	 *
+	 * @return bool
+	 * @since 6.0
+	 */
+	protected function trash(bool $recursive = true): bool {
+		return _elgg_services()->entityTable->trash($this, $recursive);
 	}
 
 	/**
