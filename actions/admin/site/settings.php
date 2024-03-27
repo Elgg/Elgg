@@ -82,6 +82,7 @@ if ($trash_retention < 0) {
 }
 
 elgg_save_config('trash_retention', $trash_retention);
+elgg_save_config('trash_enabled', (bool) get_input('trash_enabled'));
 
 elgg_save_config('user_joined_river', get_input('user_joined_river') === 'on');
 elgg_save_config('can_change_username', get_input('can_change_username') === 'on');

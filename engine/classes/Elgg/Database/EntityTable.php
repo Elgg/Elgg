@@ -570,6 +570,10 @@ class EntityTable {
 			return false;
 		}
 		
+		if (!$this->config->trash_enabled) {
+			return $this->delete($entity, $recursive);
+		}
+		
 		if ($entity->deleted === 'yes') {
 			// already trashed
 			return true;

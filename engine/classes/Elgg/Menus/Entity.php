@@ -107,6 +107,10 @@ class Entity {
 	 * @return null|MenuItems
 	 */
 	public static function registerTrash(\Elgg\Event $event): ?MenuItems {
+		if (!elgg_get_config('trash_enabled')) {
+			return null;
+		}
+		
 		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggEntity || $entity instanceof \ElggUser || $entity instanceof \ElggPlugin || $entity instanceof \ElggUpgrade) {
 			// users mostly use the hover menu for their actions
@@ -148,6 +152,10 @@ class Entity {
 	 * @return null|MenuItems
 	 */
 	public static function registerRestore(\Elgg\Event $event): ?MenuItems {
+		if (!elgg_get_config('trash_enabled')) {
+			return null;
+		}
+		
 		$entity = $event->getEntityParam();
 		if ($entity->deleted !== 'yes' || !$entity->canEdit() || !$entity->hasCapability('restorable')) {
 			return null;

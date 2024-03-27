@@ -122,6 +122,7 @@ use Elgg\Traits\Loggable;
  * @property bool          $system_cache_enabled					Is the system cache enabled?
  * @property bool          $testing_mode  							Is the current application running (PHPUnit) tests
  * @property string        $time_format  							Preferred PHP time format
+ * @property bool          $trash_enabled							Is the trash feature enabled
  * @property int           $trash_retention							Number of days before trashed content is removed from the database
  * @property bool          $user_joined_river						Do we need to create a river event when a user joins the site
  * @property string        $view         							Default viewtype (usually not set)
@@ -191,7 +192,6 @@ class Config {
 		'authentication_failures_limit' => 5,
 		'auto_disable_plugins' => true,
 		'batch_run_time_in_secs' => 4,
-		'trash_retention' => 30,
 		'boot_cache_ttl' => 3600,
 		'can_change_username' => false,
 		'class_loader_verify_file_existence' => true,
@@ -236,6 +236,8 @@ class Config {
 		'subresource_integrity_enabled' => false,
 		'system_cache_enabled' => false,
 		'testing_mode' => false,
+		'trash_enabled' => false,
+		'trash_retention' => 30,
 		'user_joined_river' => false,
 		'webp_enabled' => true,
 		'who_can_change_language' => 'everyone',

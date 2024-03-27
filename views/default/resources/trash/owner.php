@@ -3,6 +3,12 @@
  * Show all deleted items owned by the given user
  */
 
+use Elgg\Exceptions\Http\PageNotFoundException;
+
+if (!elgg_get_config('trash_enabled')) {
+	throw new PageNotFoundException();
+}
+
 /* @var $user \ElggUser */
 $user = elgg_get_page_owner_entity();
 

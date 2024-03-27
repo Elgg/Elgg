@@ -67,13 +67,15 @@ class Page {
 		}
 		
 		// add link to group trash
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'trash',
-			'text' => elgg_echo('trash:menu:page'),
-			'href' => elgg_generate_url('trash:container', [
-				'guid' => $page_owner->guid,
-			]),
-		]);
+		if (elgg_get_config('trash_enabled')) {
+			$return[] = \ElggMenuItem::factory([
+				'name' => 'trash',
+				'text' => elgg_echo('trash:menu:page'),
+				'href' => elgg_generate_url('trash:container', [
+					'guid' => $page_owner->guid,
+				]),
+			]);
+		}
 		
 		return $return;
 	}
