@@ -109,6 +109,8 @@ return [
 			'Elgg\Users\Validation::removeUnvalidatedUsers' => [],
 			'Elgg\Users\Validation::notifyAdminsAboutPendingUsers' => [],
 			\Elgg\Users\CleanupPersistentLoginHandler::class => [],
+		],
+		'hourly' => [
 			\Elgg\Entity\RemoveDeletedEntitiesHandler::class => [],
 		],
 		'minute' => [

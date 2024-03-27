@@ -3,6 +3,7 @@
 namespace Elgg\Entity;
 
 use Elgg\Database\QueryBuilder;
+use Elgg\Database\RelationshipsTable;
 
 /**
  * Cleanup deleted entities from the database
@@ -12,7 +13,7 @@ class RemoveDeletedEntitiesHandler {
 	/**
 	 * After a grace period remove deleted entities from the database
 	 *
-	 * @param \Elgg\Event $event 'cron', 'daily'
+	 * @param \Elgg\Event $event 'cron', 'hourly'
 	 *
 	 * @return void
 	 */
@@ -25,25 +26,45 @@ class RemoveDeletedEntitiesHandler {
 		elgg_call(ELGG_SHOW_DELETED_ENTITIES | ELGG_IGNORE_ACCESS, function() use ($retention) {
 			/* @var $entities \ElggBatch */
 			$entities = elgg_get_entities([
-				'type_subtype_pairs' => elgg_entity_types_with_capability('restorable'),
 				'limit' => false,
 				'batch' => true,
 				'batch_inc_offset' => false,
 				'wheres' => [
 					function(QueryBuilder $qb, $main_alias) {
+						// only deleted items
 						return $qb->compare("{$main_alias}.deleted", '=', 'yes', ELGG_VALUE_STRING);
 					},
 					function(QueryBuilder $qb, $main_alias) use ($retention) {
+						// past the retention period
 						return $qb->compare("{$main_alias}.time_deleted", '<', \Elgg\Values::normalizeTimestamp("-{$retention} days"), ELGG_VALUE_TIMESTAMP);
 					},
+					function(QueryBuilder $qb, $main_alias) {
+						// get only the root deleted items (not the related/sub items)
+						// the related items will be deleted with the root item
+						$sub = $qb->subquery(RelationshipsTable::TABLE_NAME);
+						$sub->select('guid_one')
+							->where($qb->compare('relationship', '=', 'deleted_with'));
+						
+						return $qb->compare("{$main_alias}.guid", 'not in', $sub->getSQL());
+					}
+				],
+				'sort_by' => [
+					'property' => 'time_deleted',
+					'direction' => 'ASC',
 				],
 			]);
 			
 			// this could take a while
 			set_time_limit(0);
+			$starttime = microtime(true);
 			
 			/* @var $entity \ElggEntity */
 			foreach ($entities as $entity) {
+				if ((microtime(true) - $starttime) > 300) {
+					// limit the cleanup to 5 minutes per hour
+					break;
+				}
+				
 				if (!$entity->delete(true, true)) {
 					$entities->reportFailure();
 				}
