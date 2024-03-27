@@ -118,6 +118,7 @@ Removed class functions
 Lib functions function parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* ``elgg_get_entity_statistics()`` now requires an ``array`` of ``$options`` to be used by ``elgg_get_entities()``.
 * ``elgg_get_simplecache_url()`` has the second argument (``$subview``) removed. The full ``$view`` name needs to be provided as the first argument.
 
 Miscellaneous API changes

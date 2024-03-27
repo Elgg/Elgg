@@ -6,11 +6,19 @@
  */
 
 $user = elgg_extract('entity', $vars, elgg_get_page_owner_entity()); // page owner for BC reasons
-if (!$user instanceof ElggUser) {
+if (!$user instanceof \ElggUser) {
 	return;
 }
 
-$entity_stats = elgg_get_entity_statistics($user->guid);
+$options = [
+	'owner_guid' => $user->guid,
+];
+
+if (!elgg_is_admin_logged_in()) {
+	$options['type_subtype_pairs'] = elgg_entity_types_with_capability('searchable');
+}
+
+$entity_stats = elgg_get_entity_statistics($options);
 if (empty($entity_stats)) {
 	return;
 }
@@ -30,9 +38,7 @@ foreach ($entity_stats as $type => $subtypes) {
 		$cells[] = elgg_format_element('td', [], elgg_format_element('b', [], "{$label}:"));
 		$cells[] = elgg_format_element('td', [], $count);
 		
-		if (elgg_entity_has_capability($type, $subtype, 'searchable') || elgg_is_admin_logged_in()) {
-			$rows[] = elgg_format_element('tr', [], implode(PHP_EOL, $cells));
-		}
+		$rows[] = elgg_format_element('tr', [], implode(PHP_EOL, $cells));
 	}
 }
 

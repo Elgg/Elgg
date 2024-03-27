@@ -1258,6 +1258,8 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'status:unavailable' => 'Unavailable',
 	'status:active' => 'Active',
 	'status:inactive' => 'Inactive',
+	'status:deleted' => 'Deleted',
+	'status:trashed' => 'Trashed',
 
 /**
  * Generic sorts
