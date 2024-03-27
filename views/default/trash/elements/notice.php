@@ -3,7 +3,7 @@
  * Show a notice about the retention period of trashed items
  */
 
-$retention = (int) elgg_get_config('bin_cleanup_grace_period');
+$retention = (int) elgg_get_config('trash_retention');
 if ($retention < 1) {
 	return;
 }

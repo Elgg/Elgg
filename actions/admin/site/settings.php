@@ -76,6 +76,13 @@ elgg_save_config('comments_per_page', (int) get_input('comments_per_page'));
 elgg_save_config('pagination_behaviour', get_input('pagination_behaviour', 'ajax-replace'));
 elgg_save_config('mentions_display_format', get_input('mentions_display_format'));
 
+$trash_retention = (int) get_input('trash_retention', 30);
+if ($trash_retention < 0) {
+	$trash_retention = 30;
+}
+
+elgg_save_config('trash_retention', $trash_retention);
+
 elgg_save_config('user_joined_river', get_input('user_joined_river') === 'on');
 elgg_save_config('can_change_username', get_input('can_change_username') === 'on');
 
@@ -131,13 +138,7 @@ if ($friendly_time_number_of_days === '') {
 	$friendly_time_number_of_days = 30;
 }
 
-$bin_cleanup_grace_period = get_input('bin_cleanup_grace_period', 30);
-if ($bin_cleanup_grace_period === '') {
-	$bin_cleanup_grace_period = 30;
-}
-
 elgg_save_config('friendly_time_number_of_days', (int) $friendly_time_number_of_days);
-elgg_save_config('bin_cleanup_grace_period', (int) $bin_cleanup_grace_period);
 elgg_save_config('message_delay', (int) get_input('message_delay', 6));
 
 elgg_invalidate_caches();

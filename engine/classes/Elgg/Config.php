@@ -10,7 +10,6 @@ use Elgg\Traits\Loggable;
  * Access to configuration values
  *
  * @since 1.10.0
- *
  * @property int           $action_time_limit						Maximum php execution time for actions (in seconds)
  * @property int           $action_token_timeout
  * @property bool          $allow_phpinfo							Allow access tot PHPInfo
@@ -22,7 +21,6 @@ use Elgg\Traits\Loggable;
  * @property int           $authentication_failures_limit           Number of allowed authentication failures
  * @property bool          $auto_disable_plugins					Are unbootable plugins automatically disabled
  * @property int           $batch_run_time_in_secs					Max time for a single upgrade loop
- * @property int           $bin_cleanup_grace_period				Number of days before content is removed from the database
  * @property int           $boot_cache_ttl                          Time to live for boot cache in seconds
  * @property string        $cacheroot            					Path of cache storage with trailing "/"
  * @property bool          $can_change_username						Is user allowed to change the username
@@ -124,6 +122,7 @@ use Elgg\Traits\Loggable;
  * @property bool          $system_cache_enabled					Is the system cache enabled?
  * @property bool          $testing_mode  							Is the current application running (PHPUnit) tests
  * @property string        $time_format  							Preferred PHP time format
+ * @property int           $trash_retention							Number of days before trashed content is removed from the database
  * @property bool          $user_joined_river						Do we need to create a river event when a user joins the site
  * @property string        $view         							Default viewtype (usually not set)
  * @property bool          $walled_garden							Is current site in walled garden mode?
@@ -192,7 +191,7 @@ class Config {
 		'authentication_failures_limit' => 5,
 		'auto_disable_plugins' => true,
 		'batch_run_time_in_secs' => 4,
-		'bin_cleanup_grace_period' => 30,
+		'trash_retention' => 30,
 		'boot_cache_ttl' => 3600,
 		'can_change_username' => false,
 		'class_loader_verify_file_existence' => true,

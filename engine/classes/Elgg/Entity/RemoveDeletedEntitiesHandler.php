@@ -17,7 +17,12 @@ class RemoveDeletedEntitiesHandler {
 	 * @return void
 	 */
 	public function __invoke(\Elgg\Event $event): void {
-		elgg_call(ELGG_SHOW_DELETED_ENTITIES | ELGG_IGNORE_ACCESS, function() {
+		$retention = (int) elgg_get_config('trash_retention');
+		if ($retention < 1) {
+			return;
+		}
+		
+		elgg_call(ELGG_SHOW_DELETED_ENTITIES | ELGG_IGNORE_ACCESS, function() use ($retention) {
 			/* @var $entities \ElggBatch */
 			$entities = elgg_get_entities([
 				'type_subtype_pairs' => elgg_entity_types_with_capability('restorable'),
@@ -28,9 +33,8 @@ class RemoveDeletedEntitiesHandler {
 					function(QueryBuilder $qb, $main_alias) {
 						return $qb->compare("{$main_alias}.deleted", '=', 'yes', ELGG_VALUE_STRING);
 					},
-					function(QueryBuilder $qb, $main_alias) {
-						$grace_period = (int) elgg_get_config('bin_cleanup_grace_period');
-						return $qb->compare("{$main_alias}.time_deleted", '<', \Elgg\Values::normalizeTimestamp("-{$grace_period} days"), ELGG_VALUE_TIMESTAMP);
+					function(QueryBuilder $qb, $main_alias) use ($retention) {
+						return $qb->compare("{$main_alias}.time_deleted", '<', \Elgg\Values::normalizeTimestamp("-{$retention} days"), ELGG_VALUE_TIMESTAMP);
 					},
 				],
 			]);
@@ -40,7 +44,7 @@ class RemoveDeletedEntitiesHandler {
 			
 			/* @var $entity \ElggEntity */
 			foreach ($entities as $entity) {
-				if (!$entity->delete()) {
+				if (!$entity->delete(true, true)) {
 					$entities->reportFailure();
 				}
 			}
