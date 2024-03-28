@@ -1486,7 +1486,7 @@ abstract class ElggEntity extends \ElggData {
 		$guid = (int) $this->guid;
 
 		if ($recursive) {
-			elgg_call(ELGG_IGNORE_ACCESS | ELGG_HIDE_DISABLED_ENTITIES, function () use ($guid, $reason) {
+			elgg_call(ELGG_IGNORE_ACCESS | ELGG_HIDE_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function () use ($guid, $reason) {
 				$base_options = [
 					'wheres' => [
 						function(QueryBuilder $qb, $main_alias) use ($guid) {
@@ -1552,7 +1552,7 @@ abstract class ElggEntity extends \ElggData {
 			return false;
 		}
 
-		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($recursive) {
+		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($recursive) {
 			$result = _elgg_services()->entityTable->enable($this);
 			
 			$this->deleteMetadata('disable_reason');

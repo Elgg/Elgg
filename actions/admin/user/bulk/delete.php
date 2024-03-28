@@ -8,7 +8,7 @@ if (empty($user_guids)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
-elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($user_guids) {
+elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($user_guids) {
 	foreach ($user_guids as $user_guid) {
 		$user = get_user($user_guid);
 		if (empty($user)) {

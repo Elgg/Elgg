@@ -274,7 +274,7 @@ class EntityTable {
 	 * @return void
 	 */
 	public function invalidateCache(int $guid): void {
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($guid) {
 			$entity = $this->get($guid);
 			if ($entity instanceof \ElggEntity) {
 				$entity->invalidateCache();
@@ -342,7 +342,7 @@ class EntityTable {
 	 * @return bool
 	 */
 	public function exists(int $guid): bool {
-		return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
+		return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($guid) {
 			// need to ignore access and show hidden entities to check existence
 			return !empty($this->getRow($guid));
 		});
@@ -450,7 +450,7 @@ class EntityTable {
 			return $this->session_manager->getLoggedInUser();
 		}
 
-		$user = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
+		$user = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($guid) {
 			// need to ignore access and show hidden entities for potential hidden/disabled users
 			return $this->get($guid, 'user');
 		});
@@ -709,7 +709,7 @@ class EntityTable {
 	 */
 	protected function deleteEntityProperties(\ElggEntity $entity): void {
 		// Temporarily overriding access controls and disable system_log to save performance
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($entity) {
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($entity) {
 			$entity->removeAllRelatedRiverItems();
 			$entity->deleteOwnedAccessCollections();
 			$entity->deleteAccessCollectionMemberships();

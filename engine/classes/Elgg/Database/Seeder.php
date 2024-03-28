@@ -60,7 +60,7 @@ class Seeder {
 	 * @return void
 	 */
 	public function seed(array $options = []): void {
-		$this->invoker->call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($options) {
+		$this->invoker->call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($options) {
 			$defaults = [
 				'limit' => null,
 				'image_folder' => elgg_get_config('seeder_local_image_folder'),
@@ -131,7 +131,7 @@ class Seeder {
 	 * @return void
 	 */
 	public function unseed(array $options = []): void {
-		$this->invoker->call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($options) {
+		$this->invoker->call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($options) {
 			$defaults = [
 				'type' => '',
 			];

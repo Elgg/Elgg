@@ -24,14 +24,14 @@ class ElggComment extends \ElggObject {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
-	public function delete(bool $recursive = true, bool $persistent = null): bool {
-		$result = parent::delete($recursive, $persistent);
+	public function persistentDelete(bool $recursive = true): bool {
+		$result = parent::persistentDelete($recursive);
 		
 		if ($result) {
 			// remove the threaded comments directly below this comment
-			elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($recursive, $persistent) {
+			elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($recursive) {
 				$children = elgg_get_entities([
 					'type' => 'object',
 					'subtype' => 'comment',
@@ -46,7 +46,7 @@ class ElggComment extends \ElggObject {
 				
 				/* @var $child \ElggComment */
 				foreach ($children as $child) {
-					$child->delete($recursive, $persistent);
+					$child->delete($recursive, true);
 				}
 			});
 		}

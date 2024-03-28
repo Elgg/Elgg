@@ -43,7 +43,7 @@ class Cron {
 		/* @var $cron_logger \Elgg\Logger\Cron */
 		$cron_logger = $event->getParam('logger');
 		
-		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() {
+		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() {
 			$count = 0;
 			$max_runtime = 120; // 2 minutes
 			$start_time = microtime(true);
@@ -73,7 +73,7 @@ class Cron {
 			
 			/* @var $entity \ElggEntity */
 			foreach ($batch as $entity) {
-				if (!$entity->delete()) {
+				if (!$entity->delete(true, true)) {
 					$batch->reportFailure();
 					continue;
 				}
@@ -113,7 +113,7 @@ class Cron {
 		
 		$max_runtime = static::CLEANUP_MAX_DURATION[$event->getType()];
 		
-		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($days, $max_runtime) {
+		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($days, $max_runtime) {
 			$count = 0;
 			$start_time = microtime(true);
 			
@@ -182,7 +182,7 @@ class Cron {
 		
 		$max_runtime = static::CLEANUP_MAX_DURATION[$event->getType()];
 		
-		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($days, $max_runtime) {
+		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() use ($days, $max_runtime) {
 			$count = 0;
 			$start_time = microtime(true);
 			

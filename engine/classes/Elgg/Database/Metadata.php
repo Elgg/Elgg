@@ -66,9 +66,6 @@ class Metadata extends Repository {
 					throw new DomainException("'{$property}' is not a valid attribute");
 				}
 
-				/**
-				 * @todo When no entity constraints are present, do we need to ensure that entity access clause is added?
-				 */
 				$alias = $qb->joinEntitiesTable($qb->getTableAlias(), 'entity_guid', 'inner', 'e');
 				$qb->addSelect("{$function}({$alias}.{$property}) AS calculation");
 				break;

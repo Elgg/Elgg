@@ -165,9 +165,9 @@ class Entity {
 		$return = $event->getValue();
 		
 		$container = elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($entity) {
-			return get_entity($entity->container_guid);
+			return $entity->getContainerEntity();
 		});
-		if ($container instanceof \ElggGroup && $container->deleted === 'yes') {
+		if (!$container instanceof \ElggEntity || ($container instanceof \ElggGroup && $container->deleted === 'yes')) {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'restore_and_move',
 				'icon' => 'trash-restore-alt',

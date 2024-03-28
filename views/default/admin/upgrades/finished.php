@@ -17,7 +17,7 @@ $count = count($upgrades);
 $items = array_slice($upgrades, $offset, $limit);
 
 // make sure to use the same options as in \Elgg\UpgradeService::executeUpgrade()
-echo elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($items, $offset, $limit, $count) {
+echo elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($items, $offset, $limit, $count) {
 	return elgg_view_entity_list($items, [
 		'offset' => $offset,
 		'limit' => $limit,
