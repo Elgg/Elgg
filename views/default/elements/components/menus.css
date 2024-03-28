@@ -189,7 +189,6 @@
 .elgg-menu-owner-block {
 	background: #ffffff;
 	border: 1px solid $(border-color-soft);
-	margin-bottom: 2rem;
 
 	li:not(:last-child) {
 		border-bottom: 1px solid #f7f7f8;

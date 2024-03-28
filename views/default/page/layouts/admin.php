@@ -15,16 +15,9 @@ unset($vars['class']);
 
 $vars['sidebar'] = elgg_view('admin/sidebar', $vars);
 
-$header = elgg_view('page/layouts/elements/header', $vars);
 $sidebar = elgg_view('page/layouts/elements/sidebar', $vars);
 $body = elgg_view('page/layouts/elements/body', $vars);
 
-if ($sidebar) {
-	$class[] = 'elgg-layout-one-sidebar';
-} else {
-	$class[] = 'elgg-layout-one-column';
-}
+$class[] = $sidebar ? 'elgg-layout-one-sidebar' : 'elgg-layout-one-column';
 
-$layout = elgg_format_element('div', ['class' => 'elgg-layout-columns'], $sidebar . $body);
-
-echo elgg_format_element('div', ['class' => $class], $header . $layout);
+echo elgg_format_element('div', ['class' => $class], $sidebar . $body);

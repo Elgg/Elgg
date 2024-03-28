@@ -41,12 +41,9 @@ if (!isset($all_link) && $can_default) {
 }
 
 if (!empty($all_link)) {
-	$menu = elgg_format_element('span', [
-		'class' => 'groups-widget-viewall',
-	], $all_link);
+	$menu = elgg_format_element('span', ['class' => 'elgg-quiet'], $all_link);
 }
 
-// content
 $content = elgg_extract('content', $vars);
 if (!isset($content) && $can_default) {
 	elgg_push_context('widgets');

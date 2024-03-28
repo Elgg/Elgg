@@ -68,6 +68,8 @@ foreach ($js_head as $resource) {
 	echo elgg_format_element('script', $options);
 }
 
+// See https://github.com/Elgg/Elgg/issues/8328
+echo elgg_format_element('script', [], '// A non-empty script otherwise Firefox will exhibit FOUC');
 
 $imports = _elgg_services()->esm->getImports();
 if (empty($imports)) {

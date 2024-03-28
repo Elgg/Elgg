@@ -6,7 +6,8 @@
 
 return [
 	// layout and shell
-	'body-background-color' => '#FFFFFF',
+	'body-background-color' => '#f3f3f3',
+	'page-section-max-width' => '90rem',
 	'walled-garden-background-image' => 'graphics/walled_garden.jpg',
 	
 	// Typography
@@ -32,7 +33,7 @@ return [
 	'text-color-highlight' => '#0078ac',
 
 	'background-color-soft' => '#fafafa',
-	'background-color-mild' => '#e6e6ea',
+	'background-color-mild' => '#f3f3f3',
 	'background-color-strong' => '#cfcfd2',
 	'background-color-highlight' => '#0078ac',
 
@@ -84,8 +85,6 @@ return [
 	'topbar-indicator' => '#faa51a',
 
 	// breakpoints
-	'tablet' => '50rem',
-	'desktop' => '80rem',
 	'media-phone-up' => 'screen and (min-width: 30rem)',
 	'media-tablet-up' => 'screen and (min-width: 50rem)',
 	'media-desktop-up' => 'screen and (min-width: 80rem)',

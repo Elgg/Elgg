@@ -18,7 +18,6 @@ echo elgg_view('core.css');
 		margin: 0 auto;
 	}
 
-
 	.elgg-admin-notices-dismiss-all {
 		font-weight: 600;
 		margin: 1rem;
@@ -27,31 +26,33 @@ echo elgg_view('core.css');
 
 	.elgg-module-admin-notices {
 		margin-top: 2rem;
-	}
-	
-	.elgg-admin-notices > li {
-		padding: 0;
-		border: none;
+		
+		> li {
+			padding: 0;
+			border: none;
+		}
 	}
 
 	.elgg-page-topbar {
 		background: #2d3047;
+		padding: 0 1rem;
 		
-		 .elgg-menu li .elgg-child-menu {
-			background: #2d3047;
+		.elgg-menu-container {
+			justify-content: space-between;
+			width: 100%;
+			
+			.elgg-menu li .elgg-child-menu {
+				background: #2d3047;
+			}
 		}
 	}
-
-	.elgg-main {
-		padding: 2rem;
-		background: #ffffff;
-		border: 1px solid #e6e6ea;
-		margin: 1rem 0.5rem;
+	
+	.elgg-page-body {
+		padding: 2rem 1rem;
 	}
-
-	.elgg-page-topbar .elgg-menu-container {
-		justify-content: space-between;
-		width: 100%;
+	
+	.elgg-page-footer {
+		padding: 1rem;
 	}
 }
 

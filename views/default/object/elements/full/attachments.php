@@ -11,6 +11,4 @@ if (!$attachments) {
 	return;
 }
 
-echo elgg_format_element('div', [
-	'class' => 'elgg-listing-full-attachments',
-], $attachments);
+echo elgg_format_element('div', ['class' => 'elgg-listing-full-attachments'], $attachments);

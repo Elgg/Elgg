@@ -1314,10 +1314,10 @@ function elgg_views_boot(): void {
 	
 	elgg_require_css('elgg');
 	
-	elgg_register_esm('cropperjs', elgg_get_simplecache_url('cropperjs/cropper.min.js'));
-	elgg_register_esm('jquery', elgg_get_simplecache_url('jquery.js'));
+	elgg_register_esm('cropperjs', elgg_get_simplecache_url('cropperjs/cropper.esm.js'));
+	elgg_register_esm('jquery', elgg_get_simplecache_url('elgg/jquery.mjs'));
 	elgg_register_esm('jquery-ui', elgg_get_simplecache_url('jquery-ui.js'));
-	elgg_register_esm('jquery-cropper/jquery-cropper', elgg_get_simplecache_url('jquery-cropper/jquery-cropper.min.js'));
+	elgg_register_esm('jquery-cropper/jquery-cropper', elgg_get_simplecache_url('jquery-cropper/jquery-cropper.esm.js'));
 	
 	elgg_import_esm('elgg');
 	elgg_import_esm('elgg/lightbox');

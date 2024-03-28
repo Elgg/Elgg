@@ -15,6 +15,10 @@
 			height: auto;
 		}
 	}
+	
+	> img {
+		display: block;
+	}
 }
 
 .elgg-avatar-tiny,

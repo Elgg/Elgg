@@ -2,6 +2,7 @@
 	HEADER
 *************************************** */
 .elgg-layout-header {
+	padding: 0 1rem 1rem;
 	margin-bottom: 1rem;
 	border-bottom: 1px solid $(border-color-soft);
 	width: 100%;
@@ -9,41 +10,30 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	gap: 1rem;
 	
-	> h1,
-	> h2,
-	> h3 {
+	> h1 {
 		order: 1;
 		flex-basis: 30%;
 		flex-grow: 1;
 		
-		padding: 1rem;
-		text-align: center;
 		font-size: 2rem;
 	}
 	
 	> .elgg-menu-container {
 		order: 2;
-		padding: 1rem;
+		align-items: center;
 	}
 }
 
 @media $(media-desktop-up) {
 	.elgg-layout-header {
-		padding: 1rem;
 		flex-direction: row;
 		align-items: flex-start;
 		justify-content: space-between;
-		
-		> h1,
-		> h2,
-		> h3 {
-			padding: 0;
-			text-align: left;
-		}
+		gap: 0;
 		
 		> .elgg-menu-container {
-			padding: 0;
 			margin-left: auto;
 		}
 	}

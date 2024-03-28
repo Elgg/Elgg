@@ -1,23 +1,31 @@
 .elgg-profile-fields {
-	padding: 1rem;
-}
-
-.elgg-profile-field {
+	padding: 1.5rem;
 	display: flex;
 	flex-direction: column;
-	padding: 1rem 0.5rem;
+	row-gap: 0.5rem;
+	
+	.elgg-profile-field {
+		display: flex;
+		flex-direction: column;
+		
+		> .elgg-profile-field-label {
+			width: 12rem;
+			
+			font-weight: $(font-bold-weight);
+			font-size: 0.85rem;
+			color: $(text-color-mild);
+		}
+	}
 }
 
-.elgg-profile-field.elgg-profile-field-horizontal {
-	flex-direction: row;
-}
-
-.elgg-profile-field > * {
-	padding: 0 0.5rem;
-}
-
-.elgg-profile-field-label {
-	font-weight: $(font-bold-weight);
-	font-size: 0.85rem;
-	color: $(text-color-mild);
+@media $(media-tablet-up) {
+	.elgg-profile-fields {
+		.elgg-profile-field {
+			flex-direction: row;
+			
+			> .elgg-profile-field-label {
+				max-width: 12rem;
+			}
+		}
+	}
 }
