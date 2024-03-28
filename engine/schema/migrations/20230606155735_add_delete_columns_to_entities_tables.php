@@ -4,7 +4,7 @@ declare(strict_types=1);
 use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
-final class AddColumnsToEntitiesTables extends AbstractMigration {
+final class AddDeleteColumnsToEntitiesTables extends AbstractMigration {
 	/**
 	 * Add the deleted and time_deleted columns to the entities table
 	 */
@@ -34,6 +34,11 @@ final class AddColumnsToEntitiesTables extends AbstractMigration {
 			'default' => '0',
 			'limit' => MysqlAdapter::INT_REGULAR,
 			'precision' => 11,
+		]);
+		
+		$table->addIndex(['time_deleted'], [
+			'name' => 'time_deleted',
+			'unique' => false,
 		]);
 		
 		$table->update();
