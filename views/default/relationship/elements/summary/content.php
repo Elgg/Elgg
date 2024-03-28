@@ -10,9 +10,4 @@ if (elgg_is_empty($content)) {
 	return;
 }
 
-echo elgg_format_element('div', [
-	'class' => [
-		'elgg-listing-summary-content',
-		'elgg-content',
-	]
-], $content);
+echo elgg_format_element('div', ['class' => 'elgg-listing-summary-content'], $content);

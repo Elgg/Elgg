@@ -74,7 +74,7 @@ if (elgg_extract('use_link', $vars, true)) {
 		'class' => elgg_extract_class($vars, [], 'link_class'),
 	]);
 } else {
-	$content .= elgg_format_element('a', [], $icon);
+	$content .= $icon;
 }
 
 echo elgg_format_element('div', ['class' => $wrapper_class], $content);

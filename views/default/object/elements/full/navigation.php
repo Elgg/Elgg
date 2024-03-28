@@ -10,15 +10,15 @@ if (!$entity instanceof \ElggEntity) {
 	return;
 }
 
-$params = $vars;
-$params['sort_by'] = 'priority';
+if (!elgg_extract('show_navigation', $vars, false)) {
+	return;
+}
 
-$menu = elgg_view_menu('entity_navigation', $params);
+$vars['sort_by'] = 'priority';
 
+$menu = elgg_view_menu('entity_navigation', $vars);
 if (!$menu) {
 	return;
 }
 
-echo elgg_format_element('div', [
-	'class' => 'elgg-listing-full-navigation',
-], $menu);
+echo elgg_format_element('div', ['class' => 'elgg-listing-full-navigation'], $menu);

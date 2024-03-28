@@ -6,17 +6,13 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!($entity instanceof \ElggGroup)) {
+if (!$entity instanceof \ElggGroup) {
 	return;
 }
 
 $owner = $entity->getOwnerEntity();
-if (!($owner instanceof \ElggUser)) {
+if (!$owner instanceof \ElggUser) {
 	return;
 }
 
-$body = elgg_view_entity($owner, [
-	'full_view' => false,
-]);
-
-echo elgg_view_module('aside', elgg_echo('groups:owner'), $body);
+echo elgg_view_module('aside', elgg_echo('groups:owner'), elgg_view_entity_list([$owner], ['full_view' => false]));

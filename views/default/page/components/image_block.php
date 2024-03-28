@@ -15,8 +15,9 @@
  * @uses $vars['body']        HTML content of the body block
  * @uses $vars['image']       HTML content of the image block
  * @uses $vars['image_alt']   HTML content of the alternate image block
- * @uses $vars['class']       Optional additional class (or an array of classes) for media element
- * @uses $vars['id']          Optional id for the media element
+ * @uses $vars['class']       Optional additional class (or an array of classes) for the element
+ * @uses $vars['id']          Optional id for the element
+ * @uses $vars['tag_name']    Optional tag name for the element (default 'div')
  */
 
 $body = elgg_extract('body', $vars, '');
@@ -28,26 +29,20 @@ unset($vars['image']);
 $alt_image = elgg_extract('image_alt', $vars, '');
 unset($vars['image_alt']);
 
-$class = elgg_extract_class($vars, ['elgg-image-block']);
-unset($vars['class']);
+$vars['class'] = elgg_extract_class($vars, ['elgg-image-block']);
 
-$body = elgg_format_element('div', [
-	'class' => 'elgg-body',
-], $body);
-
+$content = '';
 if ($image) {
-	$image = elgg_format_element('div', [
-		'class' => 'elgg-image',
-	], $image);
+	$content .= elgg_format_element('div', ['class' => 'elgg-image'], $image);
 }
+
+$content .= elgg_format_element('div', ['class' => 'elgg-body'], $body);
 
 if ($alt_image) {
-	$alt_image = elgg_format_element('div', [
-		'class' => 'elgg-image-alt',
-	], $alt_image);
+	$content .= elgg_format_element('div', ['class' => 'elgg-image-alt'], $alt_image);
 }
 
-$params = $vars;
-$params['class'] = $class;
+$tag_name = elgg_extract('tag_name', $vars, 'div');
+unset($vars['tag_name']);
 
-echo elgg_format_element('div', $params, $image . $alt_image . $body);
+echo elgg_format_element($tag_name, $vars, $content);

@@ -22,4 +22,9 @@ return [
 		'module_groups_enabled' => 1,
 		'module_users_enabled' => 1,
 	],
+	'view_extensions' => [
+		'elgg.css' => [
+			'custom_index/content.css' => [],
+		],
+	],
 ];

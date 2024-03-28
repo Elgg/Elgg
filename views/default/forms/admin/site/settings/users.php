@@ -11,18 +11,18 @@ $result = elgg_view_field([
 
 $result .= elgg_view_field([
 	'#type' => 'checkbox',
-	'#label' => elgg_echo('installation:adminvalidation:label'),
-	'#help' => elgg_echo('installation:adminvalidation:description'),
-	'name' => 'require_admin_validation',
-	'checked' => (bool) elgg_get_config('require_admin_validation'),
+	'#label' => elgg_echo('config:users:user_joined_river'),
+	'name' => 'user_joined_river',
+	'checked' => (bool) elgg_get_config('user_joined_river'),
 	'switch' => true,
 ]);
 
 $result .= elgg_view_field([
 	'#type' => 'checkbox',
-	'#label' => elgg_echo('config:users:user_joined_river'),
-	'name' => 'user_joined_river',
-	'checked' => (bool) elgg_get_config('user_joined_river'),
+	'#label' => elgg_echo('installation:adminvalidation:label'),
+	'#help' => elgg_echo('installation:adminvalidation:description'),
+	'name' => 'require_admin_validation',
+	'checked' => (bool) elgg_get_config('require_admin_validation'),
 	'switch' => true,
 ]);
 

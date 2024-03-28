@@ -60,7 +60,6 @@ echo elgg_view('core.css');
 			font-weight: $(font-bold-weight);
 		}
 	}
-
 }
 
 .elgg-page-walled-garden .elgg-main {
