@@ -5,90 +5,45 @@
  */
 
 $guid = (int) get_input('entity_guid');
-$deleter_guid = (int) get_input('deleter_guid');
-$destination_container_guid = (int) get_input('destination_container_guid');
+$destination_container_guid = (array) get_input('destination_container_guid');
+$destination_container_guid = array_filter($destination_container_guid, function($value) {
+	return is_numeric($value);
+});
+$destination_container_guid = array_map(function($value) {
+	return (int) $value;
+}, $destination_container_guid);
+
+if (empty($guid) || empty($destination_container_guid)) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
+}
 
 $entity = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function () use ($guid) {
 	return get_entity($guid);
 });
-if (!$entity instanceof \ElggEntity) {
+if (!$entity instanceof \ElggEntity || $entity->deleted !== 'yes') {
 	return elgg_error_response(elgg_echo('entity:restore:item_not_found'));
 }
 
-set_time_limit(0);
+$new_container = get_entity($destination_container_guid[0]);
+if (!$new_container instanceof \ElggEntity || !$new_container->canWriteToContainer(0, $entity->type, $entity->subtype)) {
+	return elgg_error_response(elgg_echo('actionunauthorized'));
+}
 
 // determine what name to show on success
 $display_name = $entity->getDisplayName() ?: elgg_echo('entity:restore:item');
 
-if ($entity->deleted === 'yes') {
-	// restore-and-move: move the entity to new container. Currently NOT fail-safe against fail restore.
-	if (!$entity->restore(false)) {
-		return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));
-	}
-
-	if (!$entity->overrideEntityContainerID($destination_container_guid)) {
-		return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));
-	}
+if (!$entity->restore()) {
+	return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));
 }
 
-$type = $entity->getType();
-$subtype = $entity->getSubtype();
-$container = $entity->getContainerEntity();
-
-// determine forward URL
-$forward_url = get_input('forward_url');
-if (!empty($forward_url)) {
-	$forward_url = elgg_normalize_site_url((string) $forward_url);
-}
-
-if (empty($forward_url)) {
-	$forward_url = REFERRER;
-	$referrer_url = elgg_extract('HTTP_REFERER', $_SERVER, '');
-	$site_url = elgg_get_site_url();
-
-	$find_forward_url = function (\ElggEntity $container = null) use ($type, $subtype) {
-		$routes = _elgg_services()->routes;
-
-		// check if there is a collection route (eg. blog/owner/username)
-		$route_name = false;
-		if ($container instanceof \ElggUser) {
-			$route_name = "collection:{$type}:{$subtype}:owner";
-		} elseif ($container instanceof \ElggGroup) {
-			$route_name = "collection:{$type}:{$subtype}:group";
-		}
-
-		if ($route_name && $routes->get($route_name)) {
-			$params = $routes->resolveRouteParameters($route_name, $container);
-
-			return elgg_generate_url($route_name, $params);
-		}
-
-		// no route found, fallback to container url
-		if ($container instanceof \ElggEntity) {
-			return $container->getURL();
-		}
-
-		// no container
-		return '';
-	};
-
-	if (!empty($referrer_url) && elgg_strpos($referrer_url, $site_url) === 0) {
-		// referer is on current site
-		$referrer_path = elgg_substr($referrer_url, elgg_strlen($site_url));
-		$segments = explode('/', $referrer_path);
-
-		if (in_array($guid, $segments)) {
-			// referrer URL contains a reference to the entity that will be deleted
-			$forward_url = $find_forward_url($container);
-		}
-	} elseif ($container instanceof \ElggEntity) {
-		$forward_url = $find_forward_url($container);
-	}
+$entity->container_guid = $new_container->guid;
+if (!$entity->save()) {
+	return elgg_error_response(elgg_echo('entity:restore:fail', [$display_name]));
 }
 
 $success_keys = [
-	"entity:restore:{$type}:{$subtype}:success",
-	"entity:restore:{$type}:success",
+	"entity:restore:{$entity->type}:{$entity->subtype}:success",
+	"entity:restore:{$entity->type}:success",
 	'entity:restore:success',
 ];
 
@@ -102,4 +57,4 @@ if (get_input('show_success', true)) {
 	}
 }
 
-return elgg_ok_response('', $message, $forward_url);
+return elgg_ok_response('', $message);

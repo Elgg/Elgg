@@ -216,7 +216,9 @@ class EventsService {
 			$result = call_user_func($callable, $object);
 		}
 
-		$this->triggerAfter($name, $type, $object, $options);
+		if ($result) {
+			$this->triggerAfter($name, $type, $object, $options);
+		}
 
 		return $result;
 	}

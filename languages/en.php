@@ -1822,6 +1822,13 @@ Global variables:
 	'trash:no_results' => "No items found in the trash",
 	
 	'trash:notice:retention' => "Trashed items will automatically be removed after %s days.",
+	
+	'trash:restore:container:owner' => "You can restore this trashed item to your personal section since the original group has also been removed.",
+	'trash:restore:container:choose' => "Since the original group for this item has been removed, you can choose where to restore the item.",
+	'trash:restore:container:group' => "Restore in a different group",
+	'trash:restore:group' => "Search for a group",
+	'trash:restore:group:help' => "Make sure the selected group has the feature active for the item or an error may occure.",
+	'trash:restore:owner' => "Restore to the owner (%s)",
 
 /**
  * Miscellaneous

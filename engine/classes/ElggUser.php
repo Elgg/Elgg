@@ -448,7 +448,7 @@ class ElggUser extends \ElggEntity {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function persistentDelete(bool $recursive = true): bool {
 		$result = parent::persistentDelete($recursive);

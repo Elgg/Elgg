@@ -80,6 +80,7 @@ $body .= elgg_view_field([
 	'#type' => 'number',
 	'#label' => elgg_echo('config:content:trash_retention:label'),
 	'#help' => elgg_echo('config:content:trash_retention:help'),
+	'#class' => ['elgg-divide-left', 'plm'],
 	'name' => 'trash_retention',
 	'value' => (int) elgg_get_config('trash_retention'),
 	'min' => 0,

@@ -167,7 +167,7 @@ class Entity {
 		$container = elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($entity) {
 			return get_entity($entity->container_guid);
 		});
-		if (!$container instanceof \ElggUser) {
+		if ($container instanceof \ElggGroup && $container->deleted === 'yes') {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'restore_and_move',
 				'icon' => 'trash-restore-alt',
@@ -175,24 +175,8 @@ class Entity {
 				'title' => elgg_echo('restore:this'),
 				'href' => elgg_http_add_url_query_elements('ajax/form/entity/chooserestoredestination', [
 					'entity_guid' => $entity->guid,
-					'entity_owner_guid' => $entity->owner_guid,
 				]),
 				'link_class' => 'elgg-lightbox',
-				'priority' => 800,
-			]);
-		}
-		
-		if ($entity instanceof \ElggGroup) {
-			$return[] = \ElggMenuItem::factory([
-				'name' => 'restore_non_recursive',
-				'icon' => 'trash-restore-alt',
-				'text' => elgg_echo('entity:restore:non_recursive'),
-				'title' => elgg_echo('restore:this'),
-				'href' => elgg_generate_action_url('entity/restore', [
-					'guid' => $entity->guid,
-					'recursive' => false
-				]),
-				'confirm' => elgg_echo('restoreconfirm'),
 				'priority' => 800,
 			]);
 		}

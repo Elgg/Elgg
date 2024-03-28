@@ -1405,6 +1405,8 @@ abstract class ElggEntity extends \ElggData {
 				$result = _elgg_services()->entityTable->restore($this);
 				
 				if ($recursive) {
+					set_time_limit(0);
+					
 					/* @var $deleted_with_it \ElggBatch */
 					$deleted_with_it = elgg_get_entities([
 						'relationship' => 'deleted_with',
@@ -1423,7 +1425,6 @@ abstract class ElggEntity extends \ElggData {
 						}
 						
 						$e->removeRelationship($this->guid, 'deleted_with');
-						$e->removeAllRelationships('deleted_by', true);
 					}
 				}
 				
@@ -1622,7 +1623,7 @@ abstract class ElggEntity extends \ElggData {
 		}
 		
 		try {
-			if ($persistent) {
+			if (empty($this->guid) || $persistent) {
 				return $this->persistentDelete($recursive);
 			} else {
 				return $this->trash($recursive);
@@ -1655,30 +1656,6 @@ abstract class ElggEntity extends \ElggData {
 	 */
 	protected function trash(bool $recursive = true): bool {
 		return _elgg_services()->entityTable->trash($this, $recursive);
-	}
-
-	/**
-	 * This method overrides an entity id with id of the group/user.
-	 *
-	 * @param int $container_guid the GUID of the new container
-	 *
-	 * @return bool
-	 * @since 6.0
-	 */
-	public function overrideEntityContainerID(int $container_guid): bool {
-		$container = get_entity($container_guid);
-		if (!$container instanceof \ElggEntity) {
-			return false;
-		}
-
-		if (!$container->canWriteToContainer(0, $this->type, $this->subtype)) {
-			return false;
-		}
-
-		// @todo check if $container allows $entity->type. If not return false.
-		$this->container_guid = $container->guid;
-
-		return $this->save();
 	}
 
 	/**

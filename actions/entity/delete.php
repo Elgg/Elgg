@@ -15,8 +15,6 @@ if (!$entity->canDelete() || $entity instanceof \ElggPlugin || $entity instanceo
 	return elgg_error_response(elgg_echo('entity:delete:permission_denied'));
 }
 
-set_time_limit(0);
-
 // determine what name to show on success
 $display_name = $entity->getDisplayName() ?: elgg_echo('entity:delete:item');
 

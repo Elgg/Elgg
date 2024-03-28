@@ -521,39 +521,32 @@ class EntityTable {
 	 * @return bool
 	 */
 	public function delete(\ElggEntity $entity, bool $recursive = true): bool {
-		$guid = $entity->guid;
-		if (!$guid) {
-			return false;
-		}
-
-		if (!$this->events->triggerBefore('delete', $entity->type, $entity)) {
+		if (!$entity->guid) {
 			return false;
 		}
 		
-		$this->events->trigger('delete', $entity->type, $entity);
-
-		if ($entity instanceof \ElggUser) {
-			// ban to prevent using the site during delete
-			$entity->ban();
-		}
-
-		// we're going to delete this entity, log the guid to prevent deadloops
-		$this->deleted_guids[] = $entity->guid;
+		set_time_limit(0);
 		
-		if ($recursive) {
-			$this->deleteRelatedEntities($entity);
-		}
-
-		$this->deleteEntityProperties($entity);
-
-		$qb = Delete::fromTable(self::TABLE_NAME);
-		$qb->where($qb->compare('guid', '=', $guid, ELGG_VALUE_GUID));
-
-		$this->db->deleteData($qb);
-
-		$this->events->triggerAfter('delete', $entity->type, $entity);
-
-		return true;
+		return $this->events->triggerSequence('delete', $entity->type, $entity, function(\ElggEntity $entity) use ($recursive) {
+			if ($entity instanceof \ElggUser) {
+				// ban to prevent using the site during delete
+				$entity->ban();
+			}
+			
+			// we're going to delete this entity, log the guid to prevent deadloops
+			$this->deleted_guids[] = $entity->guid;
+			
+			if ($recursive) {
+				$this->deleteRelatedEntities($entity);
+			}
+			
+			$this->deleteEntityProperties($entity);
+			
+			$qb = Delete::fromTable(self::TABLE_NAME);
+			$qb->where($qb->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
+			
+			return (bool) $this->db->deleteData($qb);
+		});
 	}
 	
 	/**
@@ -565,8 +558,7 @@ class EntityTable {
 	 * @return bool
 	 */
 	public function trash(\ElggEntity $entity, bool $recursive = true): bool {
-		$guid = $entity->guid;
-		if (!$guid) {
+		if (!$entity->guid) {
 			return false;
 		}
 		
@@ -590,6 +582,8 @@ class EntityTable {
 			$this->trashed_guids[] = $entity->guid;
 			
 			if ($recursive) {
+				set_time_limit(0);
+				
 				$this->trashRelatedEntities($entity);
 			}
 			
