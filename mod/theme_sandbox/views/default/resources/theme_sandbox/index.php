@@ -12,7 +12,6 @@ $pages = [
 	'components',
 	'email',
 	'forms',
-	'grid',
 	'icons',
 	'javascript',
 	'layouts',

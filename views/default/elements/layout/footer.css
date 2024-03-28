@@ -24,7 +24,6 @@
 .elgg-page-footer .elgg-menu-container {
 	flex-direction: column;
 	justify-content: flex-start;
-	padding: 0.5rem 1rem;
 }
 
 .elgg-menu-footer {

@@ -10,4 +10,4 @@ if (empty($sidebar_alt)) {
 	return;
 }
 
-echo elgg_format_element('div', ['class' => ['elgg-sidebar-alt', 'elgg-layout-sidebar-alt']], $sidebar_alt);
+echo elgg_format_element('aside', ['class' => 'elgg-layout-sidebar-alt'], $sidebar_alt);

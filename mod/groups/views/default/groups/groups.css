@@ -17,16 +17,6 @@
 	}
 }
 
-.elgg-sidebar .elgg-listing-summary-subtitle {
-	.groups-membership, .groups-members {
-		display: block;
-	}
-}
-
-.groups-widget-viewall {
-	font-size: 85%;
-}
-
 #groups-tools {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));

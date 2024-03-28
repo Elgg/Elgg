@@ -5,7 +5,7 @@
 *************************************** */
 .elgg-module {
 	display: block;
-	margin-bottom: 1rem;
+	margin-bottom: 2rem;
 	
 	> .elgg-head {
 		display: flex;
@@ -25,12 +25,12 @@
 *************************************** */
 .elgg-module-aside {
 	> .elgg-head {
-		padding: 0.5rem 1rem;
-		border-bottom: 1px solid $(border-color-soft);
+		padding: 0 0.5rem 1rem;
 	}
 	
-	> .elgg-body {
-		padding: 0.5rem;
+	.elgg-gallery,
+	.elgg-list {
+		background: white;
 	}
 }
 
@@ -109,25 +109,4 @@
 	> .elgg-body {
 		padding: 1rem;
 	}
-}
-
-/* ***************************************
-	SIDEBAR OWNER BLOCK AND PAGE MENU
-*************************************** */
-.elgg-owner-block,
-.elgg-page-menu {
-	border: none;
-	margin: 0;
-	
-	> .elgg-head {
-		padding: 1.5rem;
-	}
-	
-	> .elgg-body {
-		padding: 0;
-	}
-}
-
-.elgg-owner-block-empty {
-	margin-bottom: 2rem;
 }

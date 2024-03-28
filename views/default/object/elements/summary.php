@@ -16,21 +16,15 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggEntity) {
+if (!$entity instanceof \ElggEntity) {
 	return;
 }
 
 // build image block content
-$summary = '';
-$summary .= elgg_view('object/elements/summary/metadata', $vars);
+$summary = elgg_view('object/elements/summary/metadata', $vars);
 $summary .= elgg_view('object/elements/summary/title', $vars);
 $summary .= elgg_view('object/elements/summary/subtitle', $vars);
 $summary .= elgg_view('object/elements/summary/tags', $vars);
-
-if (elgg_view_exists('object/summary/extend')) {
-	$summary .= elgg_view('object/summary/extend', $vars);
-}
-
 $summary .= elgg_view('object/elements/summary/content', $vars);
 
 // image block image
@@ -42,5 +36,6 @@ $class = elgg_extract_class($params);
 $class = elgg_extract_class($vars, $class);
 $params['class'] = $class;
 $params['data-guid'] = $entity->guid;
+$params['tag_name'] = elgg_extract('tag_name', $params, 'article');
 
 echo elgg_view_image_block($icon, $summary, $params);

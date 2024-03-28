@@ -9,11 +9,28 @@ use Elgg\Database\Clauses\OrderByClause;
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!($entity instanceof \ElggGroup)) {
+if (!$entity instanceof \ElggGroup) {
 	return;
 }
 
-$limit = elgg_extract('limit', $vars, 14);
+$count = $entity->getMembers(['count' => true]);
+if (empty($count)) {
+	return;
+}
+
+$body = elgg_list_entities([
+	'relationship' => 'member',
+	'relationship_guid' => $entity->guid,
+	'inverse_relationship' => true,
+	'type' => 'user',
+	'limit' => elgg_extract('limit', $vars, 14),
+	'order_by' => [
+		new OrderByClause('r.time_created', 'DESC'),
+	],
+	'pagination' => false,
+	'list_type' => 'gallery',
+	'gallery_class' => 'elgg-gallery-users',
+]);
 
 $all_link = elgg_view('output/url', [
 	'href' => elgg_generate_url('collection:user:user:group_members', [
@@ -23,22 +40,6 @@ $all_link = elgg_view('output/url', [
 	'is_trusted' => true,
 ]);
 
-$body = elgg_list_entities([
-	'relationship' => 'member',
-	'relationship_guid' => $entity->guid,
-	'inverse_relationship' => true,
-	'type' => 'user',
-	'limit' => $limit,
-	'order_by' => [
-		new OrderByClause('r.time_created', 'DESC'),
-	],
-	'pagination' => false,
-	'list_type' => 'gallery',
-	'gallery_class' => 'elgg-gallery-users',
-]);
-
-$body .= "<div class='center mts'>$all_link</div>";
-
-$count = $entity->getMembers(['count' => true]);
+$body .= elgg_format_element('div', ['class' => ['center', 'mts']], $all_link);
 
 echo elgg_view_module('aside', elgg_echo('groups:members') . " ({$count})", $body);

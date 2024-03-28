@@ -34,7 +34,7 @@ $label = elgg_format_element('span', [
 $class = ['elgg-profile-field'];
 
 $align = elgg_extract('align', $vars, 'vertical');
-$class[] = "elgg-profile-field-$align";
+$class[] = "elgg-profile-field-{$align}";
 
 $class = elgg_extract_class($vars, $class);
 

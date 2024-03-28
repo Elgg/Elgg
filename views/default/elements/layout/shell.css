@@ -1,8 +1,7 @@
 .elgg-page-default {
 	.elgg-page-section > .elgg-inner {
-		max-width: $(desktop);
+		max-width: $(page-section-max-width);
 		margin: 0 auto;
-		padding: 0 0.5rem;
 	}
 	
 	.elgg-page-header > .elgg-inner {
@@ -13,22 +12,21 @@
 		.elgg-header-image {
 			background-size: cover;
 			background-position: center;
+			background-attachment: fixed;
 			width: 100%;
 			height: 40vh;
 		}
 	}
-
-	.elgg-page-body > .elgg-inner {
-		padding-top: 1rem;
-		padding-bottom: 1rem;
+	
+	.elgg-page-topbar {
+		padding: 0 1rem;
 	}
-}
-
-@media $(media-desktop-up) {
-	.elgg-page-default {
-		.elgg-page-section:not(.elgg-page-header) > .elgg-inner {
-			padding-left: 1rem;
-			padding-right: 1rem;
-		}
+	
+	.elgg-page-body {
+		padding: 2rem 1rem;
+	}
+	
+	.elgg-page-footer {
+		padding: 1rem;
 	}
 }

@@ -1,0 +1,7 @@
+@media $(media-tablet-up) {
+	.custom-index {
+		display: grid;
+		column-gap: 2rem;
+		grid-template-columns: 1fr 1fr;
+	}
+}

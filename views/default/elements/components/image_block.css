@@ -4,6 +4,7 @@
 .elgg-image-block {
 	display: flex;
 	align-items: flex-start;
+	column-gap: 1rem;
 	
 	&:after {
 		display: none;
@@ -11,15 +12,6 @@
 	
 	&.elgg-chip {
 		align-items: center;
-	}
-	
-	.elgg-image {
-		margin-right: 1rem;
-	}
-	
-	.elgg-image-alt {
-		margin-left: 1rem;
-		order: 1;
 	}
 	
 	> .elgg-body {

@@ -12,6 +12,7 @@ $show_summary = (bool) elgg_extract('show_summary', $vars, false);
 if ($show_summary) {
 	$image_block_vars = (array) elgg_extract('image_block_vars', $vars, []);
 	$image_block_vars['class'] = elgg_extract_class($image_block_vars, ['elgg-listing-full-header']);
+	$image_block_vars['tag_name'] = elgg_extract('tag_name', $vars, 'div');
 	
 	$vars['image_block_vars'] = $image_block_vars;
 	$vars['title'] = elgg_extract('title', $vars, false);

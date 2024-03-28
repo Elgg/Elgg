@@ -12,7 +12,9 @@ if (elgg_is_logged_in()) {
 	$title = elgg_echo('welcome');
 }
 
+$content = elgg_format_element('div', ['class' => ['custom-index']], elgg_view('custom_index/content', $vars));
+
 echo elgg_view_page($title, [
-	'content' => elgg_view('custom_index/content', $vars),
+	'content' => $content,
 	'sidebar' => false,
 ]);
