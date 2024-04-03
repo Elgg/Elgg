@@ -93,7 +93,19 @@ Most notable changes are the following:
 
 * H1 is always the page title (and no longer the logo / site name)
 * Modules (info, sidebar, widgets) use the H2 heading
-* H3 headings on entity / relationship / annotation summary titles have been replaced by a regular text element 
+* H3 headings on entity / relationship / annotation summary titles have been replaced by a regular text element
+
+CSS and HTML structure changes
+------------------------------
+
+The HTML structure of pages have been changed. Entity summaries and full view entity pages have been wrapped in an ``article`` element.
+Sidebar elements now use the ``aside`` html element. Modules (like widgets of info-modules) now use a ``section`` element instead of a ``div``.
+Duplicate css classes on the same element like ``elgg-body`` and ``elgg-layout-body`` have been removed.
+
+Elgg provided some helper classes for creating a grid layout (like ``elgg-grid``, ``elgg-col``, ``elgg-row``).
+These helper classes have been removed. You can do all those things with regular css like ``display: grid``.
+
+Some other styling changes include a new background color for the body, improved styling of breadcrumbs and a more basic owner block chip.
 
 Changes in functions
 --------------------

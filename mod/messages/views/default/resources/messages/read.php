@@ -38,6 +38,7 @@ if ($inbox) {
 	if ((elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) && $from_user) {
 		elgg_register_menu_item('title', [
 			'name' => 'reply',
+			'icon' => 'reply',
 			'href' => '#messages-reply-form',
 			'text' => elgg_echo('reply'),
 			'link_class' => ['elgg-button', 'elgg-button-action', 'elgg-toggle'],

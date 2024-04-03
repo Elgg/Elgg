@@ -22,6 +22,4 @@ if (empty($responses)) {
 	return;
 }
 
-echo elgg_format_element('div', [
-	'class' => 'elgg-listing-full-responses',
-], $responses);
+echo elgg_format_element('div', ['class' => 'elgg-listing-full-responses'], $responses);

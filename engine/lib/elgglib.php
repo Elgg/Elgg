@@ -269,18 +269,19 @@ function elgg_extract($key, $array, $default = null, bool $strict = true) {
  * @param array           $array       Source array
  * @param string|string[] $existing    Existing name(s)
  * @param string          $extract_key Key to extract new classes from
+ *
  * @return string[]
  *
  * @since 2.3.0
  */
-function elgg_extract_class(array $array, $existing = [], $extract_key = 'class'): array {
+function elgg_extract_class(array $array, array|string $existing = [], string $extract_key = 'class'): array {
 	$existing = empty($existing) ? [] : (array) $existing;
 
 	$merge = (array) elgg_extract($extract_key, $array, []);
 
 	array_splice($existing, count($existing), 0, $merge);
 
-	return array_values(array_unique($existing));
+	return array_values(array_filter(array_unique($existing)));
 }
 
 /**

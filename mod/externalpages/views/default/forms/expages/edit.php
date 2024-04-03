@@ -56,7 +56,7 @@ $footer = elgg_view_field([
 	'fields' => [
 		[
 			'#type' => 'submit',
-			'value' => elgg_echo('save'),
+			'text' => elgg_echo('save'),
 		],
 		[
 			'#html' => elgg_view('output/url', [

@@ -28,7 +28,6 @@ echo elgg_view_page($user->getDisplayName(), [
 	'sidebar_alt' => elgg_view('profile/owner_block', [
 		'entity' => $user,
 	]),
-	'class' => 'profile',
 	'sidebar' => false,
 	'filter' => false,
 ]);

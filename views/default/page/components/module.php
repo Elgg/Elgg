@@ -55,4 +55,4 @@ if ($show_inner) {
 	$contents = elgg_format_element('div', ['class' => 'elgg-inner'], $contents);
 }
 
-echo elgg_format_element('div', $attrs, $contents);
+echo elgg_format_element('section', $attrs, $contents);

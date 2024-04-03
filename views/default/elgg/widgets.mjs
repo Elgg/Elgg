@@ -79,7 +79,7 @@ function saveWidgetSettings(event) {
 };
 
 $('.elgg-widgets').sortable({
-	items: 'div.elgg-module-widget.elgg-state-draggable',
+	items: '.elgg-module-widget.elgg-state-draggable',
 	connectWith: '.elgg-widgets',
 	handle: '.elgg-widget-handle',
 	forcePlaceholderSize: true,

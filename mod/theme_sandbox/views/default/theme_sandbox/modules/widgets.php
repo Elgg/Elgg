@@ -25,10 +25,6 @@ function css_permissions_override() {
 	return true;
 }
 
-?>
-<div class="elgg-body mal">
-	<?php echo elgg_view('theme_sandbox/header', $vars); ?>
-<?php
 $w = [];
 for ($i = 1; $i <= 6; $i++) {
 	$obj = new ElggWidget();
@@ -45,11 +41,10 @@ $num_columns = 3;
 
 echo '<div class="elgg-layout-widgets">';
 echo '<div class="elgg-widgets-grid">';
-$widget_class = "elgg-col-1of{$num_columns}";
 for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	$column_widgets = $widgets[$column_index];
 
-	echo "<div class='{$widget_class} elgg-widgets elgg-widget-col-{$column_index}' data-widget-column='{$column_index}'>";
+	echo "<div class='elgg-widgets elgg-widget-col-{$column_index}' data-widget-column='{$column_index}'>";
 	if (is_array($column_widgets) && count($column_widgets) > 0) {
 		foreach ($column_widgets as $widget) {
 			echo elgg_view_entity($widget);
@@ -63,7 +58,6 @@ echo '</div>';
 echo '</div>';
 
 ?>
-</div>
 <script type='module'>
 import 'jquery';
 import elgg from 'elgg';

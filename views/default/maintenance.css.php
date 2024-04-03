@@ -6,6 +6,7 @@
 echo elgg_view('elements/reset.css', $vars);
 echo elgg_view('elements/helpers.css', $vars);
 echo elgg_view('elements/z-index.css', $vars);
+echo elgg_view('elements/components/messages.css', $vars);
 
 ?>
 /* <style> /**/
@@ -36,33 +37,25 @@ a {
 	LAYOUT
 *************************************** */
 
-.elgg-body-maintenance {
-	margin: 100px auto 0 auto;
+.elgg-page-maintenance {
+	margin: 0;
 	position: relative;
-	width: 530px;
-}
-.elgg-module-maintenance {
-	position: absolute;
-	top: 0;
-	left: 0;
-
-	background-color: #FFF;
-	border: 1px solid #DEDEDE;
-	padding: 30px 10px;
-
-	border-radius: 3px;
-	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
 	
-	> .elgg-head {
-		padding: 20px 20px 0 20px;
-	}
-	
-	> .elgg-body {
-		padding: 0 20px;
-	}
-	
-	> .elgg-foot {
-		padding: 0 20px 20px 20px;
+	.elgg-body-maintenance {
+		min-width: 30rem;
+		max-width: 50%;
+		min-height: 100%;
+		
+		background: #fff;
+		border: 1px solid #DEDEDE;
+		padding: 2rem;
+		
+		border-radius: 4px;
+		box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
 	}
 }
 
@@ -71,6 +64,12 @@ a {
 	top: 32px;
 	right: 20px;
 	max-width: 500px;
+}
+
+.elgg-module {
+	> .elgg-head {
+		padding: 1rem 0;
+	}
 }
 
 .elgg-output {
@@ -135,7 +134,8 @@ a {
 	Form Elements
 *************************************** */
 
-fieldset > div {
+.elgg-form-body,
+.elgg-field {
 	margin-bottom: 15px;
 	
 	&:last-child {
@@ -146,7 +146,7 @@ fieldset > div {
 label {
 	font-weight: bold;
 	color: #333;
-	font-size: 110%;
+	font-size: 90%;
 }
 input, textarea {
 	border: 1px solid #DCDCDC;
@@ -209,20 +209,4 @@ input[type="number"] {
 .elgg-button-submit:hover {
 	background-color: #333;
 	border-color: #222;
-}
-
-<?= elgg_view('elements/components/messages.css') ?>
-
-/* ***************************************
-	RESPONSIVE
-*************************************** */
-
-@media (max-width: 600px) {
-	.elgg-page-maintenance {
-		padding: 20px;
-	}
-	.elgg-body-maintenance {
-		margin: 40px auto 0;
-		width: auto;
-	}
 }

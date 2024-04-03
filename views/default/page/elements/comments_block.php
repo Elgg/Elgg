@@ -51,17 +51,15 @@ if ($subtypes) {
 	};
 }
 
-$title = elgg_echo('generic_comments:latest');
 $comments = elgg_get_entities($options);
-if ($comments) {
-	$body = elgg_view('page/components/list', [
-		'items' => $comments,
-		'pagination' => false,
-		'list_class' => 'elgg-latest-comments',
-		'full_view' => false,
-	]);
-} else {
-	$body = '<p>' . elgg_echo('generic_comment:none') . '</p>';
+if (empty($comments)) {
+	return;
 }
 
-echo elgg_view_module('aside', $title, $body);
+$body = elgg_view_entity_list($comments, [
+	'pagination' => false,
+	'full_view' => false,
+	'list_class' => 'elgg-latest-comments',
+]);
+
+echo elgg_view_module('aside', elgg_echo('generic_comments:latest'), $body);

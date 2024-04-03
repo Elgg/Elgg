@@ -14,16 +14,6 @@
 	padding-top: 1rem;
 }
 
-.elgg-item {
-	.elgg-content {
-		margin: 0.5rem 0;
-	}
-}
-
-.elgg-content {
-	clear: both;
-}
-
 .elgg-no-results {
 	padding: 0.5rem 1rem;
 }
@@ -36,6 +26,10 @@
 	margin-bottom: 0.25rem;
 	font-weight: 500;
 	font-size: 1.2rem;
+}
+
+.elgg-listing-summary-content {
+	margin-top: 0.5rem;
 }
 
 .elgg-listing-full-header {

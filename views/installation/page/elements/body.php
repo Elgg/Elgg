@@ -33,29 +33,27 @@ $footer_menu = elgg_format_element('ul', ['class' => 'elgg-menu elgg-menu-footer
 <div class="elgg-page">
 	<div class="elgg-page-body">
 		<div class="elgg-layout">
-			<div class="elgg-layout-columns">
-				<aside class="elgg-sidebar-alt" role="complementary">
-					<header class="elgg-page-header" role="banner">
-						<?php
-						echo elgg_format_element('img', [
-							'src' => elgg_get_site_url() . $elggSubdir . 'views/default/graphics/elgg_logo.png',
-							'alt' => 'Elgg',
-						]);
-						?>
-					</header>
-					<?php echo elgg_view('page/elements/sidebar', $vars); ?>
-				</aside>
-				<main class="elgg-body" role="main">
+			<aside class="elgg-sidebar-alt">
+				<header class="elgg-page-header">
 					<?php
-						echo elgg_format_element('h1', [], (string) elgg_extract('title', $vars));
-						echo elgg_view('page/elements/messages', ['object' => elgg_extract('sysmessages', $vars)]);
-						echo elgg_extract('body', $vars);
+					echo elgg_format_element('img', [
+						'src' => elgg_get_site_url() . $elggSubdir . 'views/default/graphics/elgg_logo.png',
+						'alt' => 'Elgg',
+					]);
 					?>
-				</main>
-			</div>
+				</header>
+				<?php echo elgg_view('page/elements/sidebar', $vars); ?>
+			</aside>
+			<main class="elgg-body">
+				<?php
+					echo elgg_format_element('h1', [], (string) elgg_extract('title', $vars));
+					echo elgg_view('page/elements/messages', ['object' => elgg_extract('sysmessages', $vars)]);
+					echo elgg_extract('body', $vars);
+				?>
+			</main>
 		</div>
 	</div>
-	<footer class="elgg-page-footer" role="contentinfo">
+	<footer class="elgg-page-footer">
 		<?php echo $footer_menu; ?>
 	</footer>
 </div>

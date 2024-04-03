@@ -32,12 +32,12 @@ body {
 	max-width: 100%;
 }
 
-.elgg-layout-columns > .elgg-sidebar-alt {
+.elgg-layout > .elgg-sidebar-alt {
 	padding: 2rem;
 	max-width: 20rem;
 }
 
-.elgg-layout-columns > .elgg-body {
+.elgg-layout > .elgg-body {
 	padding: 4rem;
 }
 

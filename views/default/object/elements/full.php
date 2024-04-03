@@ -15,20 +15,17 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggEntity) {
+if (!$entity instanceof \ElggEntity) {
 	return;
 }
 
-$class = elgg_extract_class($vars, ['elgg-listing-full', 'elgg-content']);
+$class = elgg_extract_class($vars, 'elgg-listing-full');
 unset($vars['class']);
 
 $content = elgg_view('object/elements/full/header', $vars);
 $content .= elgg_view('object/elements/full/body', $vars);
 $content .= elgg_view('object/elements/full/attachments', $vars);
-if (elgg_extract('show_navigation', $vars, false)) {
-	$content .= elgg_view('object/elements/full/navigation', $vars);
-}
-
+$content .= elgg_view('object/elements/full/navigation', $vars);
 $content .= elgg_view('object/elements/full/responses', $vars);
 
 echo elgg_format_element('div', [
