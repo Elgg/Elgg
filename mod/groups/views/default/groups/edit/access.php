@@ -62,8 +62,8 @@ $access_mode_params = [
 	'id' => 'groups-content-access-mode',
 	'value' => $content_access_mode,
 	'options_values' => [
-		ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED => elgg_echo('groups:content_access_mode:unrestricted'),
-		ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY => elgg_echo('groups:content_access_mode:membersonly'),
+		\ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED => elgg_echo('groups:content_access_mode:unrestricted'),
+		\ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY => elgg_echo('groups:content_access_mode:membersonly'),
 	],
 ];
 
@@ -71,7 +71,7 @@ if ($entity instanceof \ElggGroup) {
 	// Disable content_access_mode field for hidden groups because the setting
 	// will be forced to members_only regardless of the entered value
 	$acl = $entity->getOwnedAccessCollection('group_acl');
-	if ($acl instanceof ElggAccessCollection && ($entity->access_id === $acl->id)) {
+	if ($acl instanceof \ElggAccessCollection && ($entity->access_id === $acl->id)) {
 		$access_mode_params['disabled'] = 'disabled';
 	}
 	
@@ -106,12 +106,13 @@ if ($show_content_default_access) {
 }
 
 // group owner transfer
-if ($show_group_owner_transfer && $entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
+if ($show_group_owner_transfer && $entity instanceof \ElggGroup && ($entity->getMembers(['count' => true]) > 1) && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
 	$owner_guid_options = [
 		'#type' => 'userpicker',
 		'#label' => elgg_echo('groups:owner'),
 		'name' => 'owner_guid',
 		'value' => $owner_guid,
+		'placeholder' => elgg_echo('groups:owner:placeholder'),
 		'limit' => 1,
 		'match_on' => 'group_members',
 		'show_friends' => false,
