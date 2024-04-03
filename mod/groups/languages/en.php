@@ -51,6 +51,7 @@ return array(
 	'groups:content_access_mode:unrestricted' => "Unrestricted - Access depends on content-level settings",
 	'groups:content_access_mode:membersonly' => "Members Only - Non-members can never access group content",
 	'groups:owner' => "Owner",
+	'groups:owner:placeholder' => "Search for a group member",
 	'groups:owner:warning' => "Warning: if you change this value, you will no longer be the owner of this group.",
 	'groups:widget:num_display' => 'Number of groups to display',
 	'widgets:a_users_groups:name' => 'Group membership',
