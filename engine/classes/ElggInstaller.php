@@ -139,7 +139,7 @@ class ElggInstaller {
 			$this->app = $app;
 
 			$app->internal_services->boot->getCache()->disable();
-			$app->internal_services->plugins->getCache()->disable();
+			$app->internal_services->pluginsCache->disable();
 			$app->internal_services->sessionCache->disable();
 			$app->internal_services->dataCache->disable();
 			$app->internal_services->autoloadManager->getCache()->disable();
@@ -1452,7 +1452,7 @@ class ElggInstaller {
 			$app->internal_services->reset('plugins');
 			
 			if (elgg_extract('activate_plugins', $submissionVars, true)) {
-				$plugins = $app->internal_services->plugins->find('any');
+				$plugins = $app->internal_services->plugins->find('all');
 	
 				foreach ($plugins as $plugin) {
 					$plugin_config = $plugin->getStaticConfig('plugin', []);

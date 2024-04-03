@@ -25,6 +25,7 @@ class PluginsCommandIntegrationTest extends IntegrationTestCase {
 
 		foreach ($ids as $id) {
 			$plugin = \ElggPlugin::fromId($id, $this->normalizeTestFilePath('mod/'));
+			$plugin->save();
 			$plugin->deactivate();
 		}
 	}

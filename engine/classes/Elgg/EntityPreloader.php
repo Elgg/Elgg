@@ -2,9 +2,8 @@
 
 namespace Elgg;
 
-use Elgg\Database\EntityTable;
-use Elgg\Database\Entities;
 use Elgg\Cache\EntityCache;
+use Elgg\Database\Entities;
 
 /**
  * Preload entities based on properties of fetched objects
@@ -12,7 +11,9 @@ use Elgg\Cache\EntityCache;
  * @internal
  */
 class EntityPreloader {
-
+	
+	const MAX_PRELOAD = 256;
+	
 	/**
 	 * @var callable
 	 * @internal DO NOT USE. For unit test mocking
@@ -28,11 +29,11 @@ class EntityPreloader {
 	/**
 	 * Constructor
 	 *
-	 * @param EntityTable $entity_table Entity service
+	 * @param EntityCache $entity_cache Entity cache
 	 */
-	public function __construct(EntityTable $entity_table) {
-		$this->_callable_cache_checker = function ($guid) use ($entity_table) {
-			return $entity_table->getFromCache($guid);
+	public function __construct(EntityCache $entity_cache) {
+		$this->_callable_cache_checker = function ($guid) use ($entity_cache) {
+			return $entity_cache->load($guid);
 		};
 		$this->_callable_entity_loader = function ($options) {
 			return Entities::find($options);
@@ -56,7 +57,7 @@ class EntityPreloader {
 		if (count($guids) > 1) {
 			call_user_func($this->_callable_entity_loader, [
 				'guids' => $guids,
-				'limit' => EntityCache::MAX_SIZE,
+				'limit' => self::MAX_PRELOAD,
 				'order_by' => false,
 			]);
 		}

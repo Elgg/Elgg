@@ -217,7 +217,7 @@ class MetadataCache {
 	/**
 	 * Populate the cache from a set of entities
 	 *
-	 * @param int[] ...$guids Array of or single GUIDs
+	 * @param mixed ...$guids Array of entities or GUIDs
 	 * @return array|null [guid => [metadata]]
 	 */
 	public function populateFromEntities(...$guids) {

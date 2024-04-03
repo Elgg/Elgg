@@ -27,7 +27,7 @@ class ElggEntityPreloaderIntegrationTest extends \Elgg\IntegrationTestCase {
 		elgg()->session_manager->setLoggedInUser($this->user);
 		
 		$this->realPreloader = _elgg_services()->entityPreloader;
-		$this->mockPreloader = new MockEntityPreloader20140623(_elgg_services()->entityTable);
+		$this->mockPreloader = new MockEntityPreloader20140623(_elgg_services()->entityCache);
 		
 		_elgg_services()->set('entityPreloader', $this->mockPreloader);
 	}

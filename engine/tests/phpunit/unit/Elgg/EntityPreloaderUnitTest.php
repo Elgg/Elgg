@@ -19,7 +19,7 @@ class EntityPreloaderUnitTest extends \Elgg\UnitTestCase {
 	public $obj;
 
 	public function up() {
-		$this->obj = new EntityPreloader(_elgg_services()->entityTable);
+		$this->obj = new EntityPreloader(_elgg_services()->entityCache);
 		$dependency = new PreloaderMock20140623();
 		$this->obj->_callable_cache_checker = [$dependency, 'isCached'];
 		$this->obj->_callable_entity_loader = [$dependency, 'load'];
@@ -47,7 +47,7 @@ class EntityPreloaderUnitTest extends \Elgg\UnitTestCase {
 		$this->obj->_callable_entity_loader = [$this->mock, 'load'];
 		$this->mock->expects($this->once())->method('load')->with([
 			'guids' => [234, 345],
-			'limit' => EntityCache::MAX_SIZE,
+			'limit' => EntityPreloader::MAX_PRELOAD,
 			'order_by' => false,
 		]);
 		$this->obj->preload([
@@ -70,7 +70,7 @@ class EntityPreloaderUnitTest extends \Elgg\UnitTestCase {
 		$this->obj->_callable_entity_loader = [$this->mock, 'load'];
 		$this->mock->expects($this->once())->method('load')->with([
 			'guids' => [234, 345],
-			'limit' => EntityCache::MAX_SIZE,
+			'limit' => EntityPreloader::MAX_PRELOAD,
 			'order_by' => false,
 		]);
 		$this->obj->preload([

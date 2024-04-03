@@ -7,14 +7,13 @@ use Elgg\Config;
 use Elgg\Context;
 use Elgg\Database;
 use Elgg\EventsService;
-use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\PluginException;
 use Elgg\Http\Request;
 use Elgg\I18n\Translator;
+use Elgg\Invoker;
 use Elgg\Project\Paths;
 use Elgg\SessionManagerService;
 use Elgg\SystemMessagesService;
-use Elgg\Traits\Cacheable;
 use Elgg\Traits\Debug\Profilable;
 use Elgg\Traits\Loggable;
 use Elgg\ViewsService;
@@ -29,7 +28,6 @@ use Psr\Log\LogLevel;
 class Plugins {
 
 	use Profilable;
-	use Cacheable;
 	use Loggable;
 	
 	const BUNDLED_PLUGINS = [
@@ -70,27 +68,13 @@ class Plugins {
 	 * @var \ElggPlugin[]
 	 */
 	protected ?array $boot_plugins;
-
-	protected Database $db;
-
-	protected SessionManagerService $session_manager;
-
-	protected EventsService $events;
-
-	protected Translator $translator;
-
-	protected ViewsService $views;
-
-	protected Config $config;
-
-	protected SystemMessagesService $system_messages;
-
+	
 	protected Context $context;
 
 	/**
 	 * Constructor
 	 *
-	 * @param BaseCache             $cache           Cache for referencing plugins by ID
+	 * @param BaseCache             $cache           Plugins cache
 	 * @param Database              $db              Database
 	 * @param SessionManagerService $session_manager Session
 	 * @param EventsService         $events          Events
@@ -98,28 +82,21 @@ class Plugins {
 	 * @param ViewsService          $views           Views service
 	 * @param Config                $config          Config
 	 * @param SystemMessagesService $system_messages System messages
+	 * @param Invoker               $invoker         Invoker
 	 * @param Request               $request         Context
 	 */
 	public function __construct(
-		BaseCache $cache,
-		Database $db,
-		SessionManagerService $session_manager,
-		EventsService $events,
-		Translator $translator,
-		ViewsService $views,
-		Config $config,
-		SystemMessagesService $system_messages,
+		protected BaseCache $cache,
+		protected Database $db,
+		protected SessionManagerService $session_manager,
+		protected EventsService $events,
+		protected Translator $translator,
+		protected ViewsService $views,
+		protected Config $config,
+		protected SystemMessagesService $system_messages,
+		protected Invoker $invoker,
 		Request $request
 	) {
-		$this->cache = $cache;
-		$this->db = $db;
-		$this->session_manager = $session_manager;
-		$this->events = $events;
-		$this->translator = $translator;
-		$this->views = $views;
-		$this->config = $config;
-		$this->system_messages = $system_messages;
-		
 		$this->context = $request->getContextStack();
 	}
 
@@ -129,12 +106,7 @@ class Plugins {
 	 * @return string
 	 */
 	public function getPath(): string {
-		$path = $this->config->plugins_path;
-		if (!$path) {
-			$path = Paths::project() . 'mod/';
-		}
-		
-		return $path;
+		return $this->config->plugins_path ?: Paths::project() . 'mod/';
 	}
 
 	/**
@@ -146,6 +118,7 @@ class Plugins {
 	 * @return void
 	 */
 	public function setBootPlugins(array $plugins = null, bool $order_plugins = true): void {
+		$this->cache->clear();
 		if (!is_array($plugins)) {
 			unset($this->boot_plugins);
 			return;
@@ -171,26 +144,13 @@ class Plugins {
 			$plugin->registerLanguages();
 			
 			$this->boot_plugins[$plugin_id] = $plugin;
+			
+			// make sure the plugin is in the entity and plugin cache
+			$plugin->cache();
+			
+			// can't use ElggEntity::cache() as it conflict with metadata preloading
 			$this->cache->save($plugin_id, $plugin);
 		}
-	}
-
-	/**
-	 * Clear plugin caches
-	 *
-	 * @return void
-	 */
-	public function clear(): void {
-		$this->cache->clear();
-	}
-	
-	/**
-	 * Invalidate plugin cache
-	 *
-	 * @return void
-	 */
-	public function invalidate(): void {
-		$this->cache->invalidate();
 	}
 	
 	/**
@@ -237,150 +197,105 @@ class Plugins {
 	 * @return bool
 	 */
 	public function generateEntities(): bool {
-		$mod_dir = $this->getPath();
-
 		// ignore access in case this is called with no admin logged in - needed for creating plugins perhaps?
-		$old_ia = $this->session_manager->setIgnoreAccess(true);
-
 		// show hidden entities so that we can enable them if appropriate
-		$old_access = $this->session_manager->setDisabledEntityVisibility(true);
-
-		$known_plugins = $this->find('all');
-		if (empty($known_plugins)) {
-			$known_plugins = [];
-		}
-
-		// keeps track if reindexing is needed
-		$reindex = false;
-		
-		// map paths to indexes
-		$id_map = [];
-		$latest_priority = -1;
-		foreach ($known_plugins as $i => $plugin) {
-			// if the ID is wrong, delete the plugin because we can never load it.
-			$id = $plugin->getID();
-			if (!$id) {
-				$plugin->delete();
-				unset($known_plugins[$i]);
-				continue;
-			}
+		return $this->invoker->call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() {
+			$mod_dir = $this->getPath();
 			
-			$id_map[$plugin->getID()] = $i;
-			$plugin->cache();
+			$known_plugins = $this->find('all');
 			
-			// disabled plugins should have no priority, so no need to check if the priority is incorrect
-			if (!$plugin->isEnabled()) {
-				continue;
-			}
+			// keeps track if reindexing is needed
+			$reindex = false;
 			
-			$current_priority = $plugin->getPriority();
-			if (($current_priority - $latest_priority) > 1) {
-				$reindex = true;
-			}
-			
-			$latest_priority = $current_priority;
-		}
-
-		$physical_plugins = $this->getDirsInDir($mod_dir);
-		if (empty($physical_plugins)) {
-			$this->session_manager->setIgnoreAccess($old_ia);
-			$this->session_manager->setDisabledEntityVisibility($old_access);
-
-			return false;
-		}
-
-		// check real plugins against known ones
-		foreach ($physical_plugins as $plugin_id) {
-			// is this already in the db?
-			if (array_key_exists($plugin_id, $id_map)) {
-				$index = $id_map[$plugin_id];
-				$plugin = $known_plugins[$index];
-				// was this plugin deleted and its entity disabled?
+			// map paths to indexes
+			$id_map = [];
+			$latest_priority = 0;
+			foreach ($known_plugins as $i => $plugin) {
+				// if the ID is wrong, delete the plugin because we can never load it.
+				$id = $plugin->getID() . $plugin->guid;
+				if (!$id) {
+					$plugin->delete();
+					unset($known_plugins[$i]);
+					continue;
+				}
+				
+				$id_map[$plugin->getID()] = $i;
+				
+				// disabled plugins should have no priority, so no need to check if the priority is incorrect
 				if (!$plugin->isEnabled()) {
-					$plugin->enable();
+					continue;
+				}
+				
+				$current_priority = $plugin->getPriority();
+				if (($current_priority - $latest_priority) > 1) {
+					$reindex = true;
+				}
+				
+				$latest_priority = $current_priority;
+			}
+			
+			$physical_plugins = $this->getDirsInDir($mod_dir);
+			if (empty($physical_plugins)) {
+				return false;
+			}
+			
+			// check real plugins against known ones
+			foreach ($physical_plugins as $plugin_id) {
+				// is this already in the db?
+				if (array_key_exists($plugin_id, $id_map)) {
+					$index = $id_map[$plugin_id];
+					$plugin = $known_plugins[$index];
+					// was this plugin deleted and its entity disabled?
+					if (!$plugin->isEnabled()) {
+						$plugin->enable();
+						try {
+							$plugin->deactivate();
+						} catch (PluginException $e) {
+							// do nothing
+						}
+						
+						$plugin->setPriority('new');
+					}
+					
+					// remove from the list of plugins to disable
+					unset($known_plugins[$index]);
+				} else {
+					// create new plugin
+					// priority is forced to last in save() if not set.
+					$plugin = \ElggPlugin::fromId($plugin_id);
+				}
+			}
+			
+			// everything remaining in $known_plugins needs to be disabled
+			// because they are entities, but their dirs were removed.
+			// don't delete the entities because they hold settings.
+			foreach ($known_plugins as $plugin) {
+				if (!$plugin->isEnabled()) {
+					continue;
+				}
+				
+				$reindex = true;
+				
+				if ($plugin->isActive()) {
 					try {
 						$plugin->deactivate();
 					} catch (PluginException $e) {
 						// do nothing
 					}
-					
-					$plugin->setPriority('new');
 				}
-
-				// remove from the list of plugins to disable
-				unset($known_plugins[$index]);
-			} else {
-				// create new plugin
-				// priority is forced to last in save() if not set.
-				$plugin = \ElggPlugin::fromId($plugin_id);
-				$plugin->cache();
-			}
-		}
-
-		// everything remaining in $known_plugins needs to be disabled
-		// because they are entities, but their dirs were removed.
-		// don't delete the entities because they hold settings.
-		foreach ($known_plugins as $plugin) {
-			if (!$plugin->isEnabled()) {
-				continue;
+				
+				// remove the priority.
+				$plugin->deleteMetadata(\ElggPlugin::PRIORITY_SETTING_NAME);
+				
+				$plugin->disable();
 			}
 			
-			$reindex = true;
-			
-			if ($plugin->isActive()) {
-				try {
-					$plugin->deactivate();
-				} catch (PluginException $e) {
-					// do nothing
-				}
+			if ($reindex) {
+				$this->reindexPriorities();
 			}
 			
-			// remove the priority.
-			$plugin->deleteMetadata(\ElggPlugin::PRIORITY_SETTING_NAME);
-			
-			$plugin->disable();
-		}
-		
-		if ($reindex) {
-			$this->reindexPriorities();
-		}
-
-		$this->session_manager->setIgnoreAccess($old_ia);
-		$this->session_manager->setDisabledEntityVisibility($old_access);
-
-		return true;
-	}
-
-	/**
-	 * Cache a reference to this plugin by its ID
-	 *
-	 * @param \ElggPlugin $plugin the plugin to cache
-	 *
-	 * @return void
-	 */
-	public function cache(\ElggPlugin $plugin): void {
-		if (!$plugin->getID()) {
-			return;
-		}
-		
-		$this->cache->save($plugin->getID(), $plugin);
-	}
-
-	/**
-	 * Remove plugin from cache
-	 *
-	 * @param string $plugin_id Plugin ID
-	 *
-	 * @return void
-	 */
-	public function invalidateCache($plugin_id): void {
-		try {
-			$this->cache->delete($plugin_id);
-		} catch (InvalidArgumentException $ex) {
-			// A plugin must have been deactivated due to missing folder
-			// without proper cleanup
-			elgg_invalidate_caches();
-		}
+			return true;
+		});
 	}
 
 	/**
@@ -394,12 +309,12 @@ class Plugins {
 		if (empty($plugin_id)) {
 			return null;
 		}
-
+		
 		$plugin = $this->cache->load($plugin_id);
 		if ($plugin instanceof \ElggPlugin) {
 			return $plugin;
 		}
-
+		
 		$plugins = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'plugin',
@@ -410,14 +325,16 @@ class Plugins {
 			'limit' => 1,
 			'distinct' => false,
 		]);
-
+		
 		if (empty($plugins)) {
 			return null;
 		}
-
-		$plugins[0]->cache();
-
-		return $plugins[0];
+		
+		$plugin = $plugins[0];
+		
+		$this->cache->save($plugin_id, $plugin);
+		
+		return $plugin;
 	}
 
 	/**
@@ -748,15 +665,20 @@ class Plugins {
 				break;
 		}
 
-		$old_ia = $this->session_manager->setIgnoreAccess(true);
-		$plugins = elgg_get_entities($options) ?: [];
-		$this->session_manager->setIgnoreAccess($old_ia);
-
+		$plugins = $this->invoker->call(ELGG_IGNORE_ACCESS, function () use ($options) {
+			return elgg_get_entities($options) ?: [];
+		});
+		
 		$result = $this->orderPluginsByPriority($plugins, $volatile_data_name);
 		
 		if ($status === 'active' && !isset($this->boot_plugins)) {
 			// populate local cache if for some reason this is not set yet
 			$this->setBootPlugins($result, false);
+		}
+		
+		foreach ($plugins as $plugin) {
+			// can't use ElggEntity::cache() as it conflict with metadata preloading
+			$this->cache->save($plugin->getID(), $plugin);
 		}
 		
 		return $result;
@@ -808,7 +730,7 @@ class Plugins {
 	public function setPriorities(array $order): bool {
 		$name = \ElggPlugin::PRIORITY_SETTING_NAME;
 
-		$plugins = $this->find('any');
+		$plugins = $this->find('all');
 		if (empty($plugins)) {
 			return false;
 		}

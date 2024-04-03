@@ -15,7 +15,7 @@ $active_filter = elgg_strtolower(get_input('filter', 'all'));
 // @todo this should occur in the controller code
 _elgg_services()->plugins->generateEntities();
 
-$installed_plugins = elgg_get_plugins('any');
+$installed_plugins = elgg_get_plugins('all');
 
 // needed for expected plugin view rendering, there are usecases where this is not set so forcing it here
 elgg_push_context('admin');
@@ -28,7 +28,7 @@ $plugins_list = elgg_view_entity_list($installed_plugins, [
 	'active_filter' => $active_filter,
 ]);
 
-$plugins_list .= "<div id='elgg-plugin-list-cover'></div>";
+$plugins_list .= elgg_format_element('div', ['id' => 'elgg-plugin-list-cover']);
 
 elgg_pop_context();
 
