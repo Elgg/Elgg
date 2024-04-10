@@ -292,6 +292,10 @@ function elgg_extract_class(array $array, $existing = [], $extract_key = 'class'
  *                         ELGG_ENFORCE_ACCESS
  *                         ELGG_SHOW_DISABLED_ENTITIES
  *                         ELGG_HIDE_DISABLED_ENTITIES
+ *                         ELGG_DISABLE_SYSTEM_LOG
+ *                         ELGG_ENABLE_SYSTEM_LOG
+ *                         ELGG_SHOW_DELETED_ENTITIES
+ *                         ELGG_HIDE_DELETED_ENTITIES
  * @param Closure $closure Callable to call
  *
  * @return mixed

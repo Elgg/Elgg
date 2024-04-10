@@ -12,7 +12,7 @@ if ($guid === elgg_get_logged_in_user_guid()) {
 	return elgg_error_response(elgg_echo('admin:user:self:delete:no'));
 }
 
-$user = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
+$user = elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($guid) {
 	return get_user($guid);
 });
 if (!$user || !$user->canDelete()) {
@@ -22,7 +22,7 @@ if (!$user || !$user->canDelete()) {
 $name = $user->getDisplayName();
 $username = $user->username;
 
-$deleted = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($user) {
+$deleted = elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($user) {
 	return $user->delete();
 });
 if (!$deleted) {

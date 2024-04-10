@@ -284,32 +284,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($symlink->exists());
 	}
 
-	public function testCanDeleteSymlinkAndKeepTarget() {
-		if (stripos(PHP_OS, 'WIN') !== false) {
-			$this->markTestSkipped('Unable to test symlinks on Windows');
-		}
-
-		$to = new \ElggFile();
-		$to->owner_guid = 2;
-		$to->setFilename('symlink-target.txt');
-		$to->open('write');
-		$to->close();
-
-		$from = new \ElggFile();
-		$from->owner_guid = 2;
-		$from->setFilename('symlink.txt');
-
-		$to_filename = $to->getFilenameOnFilestore();
-		$from_filename = $from->getFilenameOnFilestore();
-
-		// Delete the symlink but keep the target
-		$this->assertTrue(symlink($to_filename, $from_filename));
-		$this->assertTrue($from->delete(false));
-		$this->assertFalse($from->exists());
-		$this->assertFalse(is_link($from_filename));
-		$this->assertTrue($to->exists());
-	}
-
 	public function testCanDeleteSymlinkAndTarget() {
 		if (stripos(PHP_OS, 'WIN') !== false) {
 			$this->markTestSkipped('Unable to test symlinks on Windows');

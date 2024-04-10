@@ -38,6 +38,8 @@ use Elgg\Traits\Entity\Subscriptions;
  * @property       int    $time_created   A UNIX timestamp of when the entity was created
  * @property-read  int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
  * @property-read  int    $last_action    A UNIX timestamp of when the entity was last acted upon
+ * @property-read  int    $time_deleted   A UNIX timestamp of when the entity was deleted
+ * @property-read  string $deleted        Is this entity deleted ('yes' or 'no')
  * @property-read  string $enabled        Is this entity enabled ('yes' or 'no')
  *
  * Metadata (the above are attributes)
@@ -59,6 +61,8 @@ abstract class ElggEntity extends \ElggData {
 		'time_updated',
 		'last_action',
 		'enabled',
+		'deleted',
+		'time_deleted',
 	];
 
 	/**
@@ -72,6 +76,7 @@ abstract class ElggEntity extends \ElggData {
 		'time_created',
 		'time_updated',
 		'last_action',
+		'time_deleted',
 	];
 
 	/**
@@ -161,6 +166,8 @@ abstract class ElggEntity extends \ElggData {
 		$this->attributes['time_updated'] = null;
 		$this->attributes['last_action'] = null;
 		$this->attributes['enabled'] = 'yes';
+		$this->attributes['deleted'] = 'no';
+		$this->attributes['time_deleted'] = null;
 	}
 
 	/**
@@ -201,7 +208,7 @@ abstract class ElggEntity extends \ElggData {
 				$metadata_names[] = $metadata->name;
 			}
 			
-			// arrays are stored with multiple enties per name
+			// arrays are stored with multiple entries per name
 			$metadata_names = array_unique($metadata_names);
 
 			// move the metadata over
@@ -249,6 +256,7 @@ abstract class ElggEntity extends \ElggData {
 			switch ($name) {
 				case 'guid':
 				case 'last_action':
+				case 'time_deleted':
 				case 'time_updated':
 				case 'type':
 					return;
@@ -256,6 +264,8 @@ abstract class ElggEntity extends \ElggData {
 					throw new ElggInvalidArgumentException(elgg_echo('ElggEntity:Error:SetSubtype', ['setSubtype()']));
 				case 'enabled':
 					throw new ElggInvalidArgumentException(elgg_echo('ElggEntity:Error:SetEnabled', ['enable() / disable()']));
+				case 'deleted':
+					throw new ElggInvalidArgumentException(elgg_echo('ElggEntity:Error:SetDeleted', ['delete() / restore()']));
 				case 'access_id':
 				case 'owner_guid':
 				case 'container_guid':
@@ -1153,6 +1163,8 @@ abstract class ElggEntity extends \ElggData {
 		$access_id = (int) $this->attributes['access_id'];
 		$now = $this->getCurrentTime()->getTimestamp();
 		$time_created = isset($this->attributes['time_created']) ? (int) $this->attributes['time_created'] : $now;
+		$deleted = $this->attributes['deleted'];
+		$time_deleted = (int) $this->attributes['time_deleted'];
 
 		$container_guid = $this->attributes['container_guid'];
 		if ($container_guid == 0) {
@@ -1219,6 +1231,8 @@ abstract class ElggEntity extends \ElggData {
 			'time_created' => $time_created,
 			'time_updated' => $now,
 			'last_action' => $now,
+			'deleted' => $deleted,
+			'time_deleted' => $time_deleted
 		], $this->attributes);
 
 		if (!$guid) {
@@ -1231,6 +1245,8 @@ abstract class ElggEntity extends \ElggData {
 		$this->attributes['time_updated'] = (int) $now;
 		$this->attributes['last_action'] = (int) $now;
 		$this->attributes['container_guid'] = (int) $container_guid;
+		$this->attributes['deleted'] = $deleted;
+		$this->attributes['time_deleted'] = (int) $time_deleted;
 
 		// We are writing this new entity to cache to make sure subsequent calls
 		// to get_entity() load the entity from cache and not from the DB. This
@@ -1296,11 +1312,13 @@ abstract class ElggEntity extends \ElggData {
 		$container_guid = (int) $this->container_guid;
 		$time_created = (int) $this->time_created;
 		$time = $this->getCurrentTime()->getTimestamp();
+		$deleted = $this->deleted;
+		$time_deleted = (int) $this->time_deleted;
 
 		if ($access_id == ACCESS_DEFAULT) {
 			throw new ElggInvalidArgumentException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
 		}
-	
+		
 		if ($access_id == ACCESS_FRIENDS) {
 			throw new ElggInvalidArgumentException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
 		}
@@ -1313,6 +1331,8 @@ abstract class ElggEntity extends \ElggData {
 			'time_created' => $time_created,
 			'time_updated' => $time,
 			'guid' => $guid,
+			'deleted' => $deleted,
+			'time_deleted' => $time_deleted
 		]);
 		if ($ret === false) {
 			return false;
@@ -1410,7 +1430,7 @@ abstract class ElggEntity extends \ElggData {
 		$guid = (int) $this->guid;
 
 		if ($recursive) {
-			elgg_call(ELGG_IGNORE_ACCESS | ELGG_HIDE_DISABLED_ENTITIES, function () use ($guid, $reason) {
+			elgg_call(ELGG_IGNORE_ACCESS | ELGG_HIDE_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function () use ($guid, $reason) {
 				$base_options = [
 					'wheres' => [
 						function(QueryBuilder $qb, $main_alias) use ($guid) {
@@ -1476,9 +1496,9 @@ abstract class ElggEntity extends \ElggData {
 			return false;
 		}
 
-		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($recursive) {
+		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($recursive) {
 			$result = _elgg_services()->entityTable->enable($this);
-				
+			
 			$this->deleteMetadata('disable_reason');
 
 			if ($recursive) {
@@ -1529,27 +1549,131 @@ abstract class ElggEntity extends \ElggData {
 	 * the entity.  That means that if the container_guid = $this->guid, the item will
 	 * be deleted regardless of who owns it.
 	 *
-	 * @param bool $recursive If true (default) then all entities which are
-	 *                        owned or contained by $this will also be deleted.
+	 * @param bool      $recursive  If true (default) then all entities which are owned or contained by $this will also be deleted.
+	 * @param bool|null $persistent persistently delete the entity (default: check the 'restorable' capability)
 	 *
 	 * @return bool
 	 */
-	public function delete(bool $recursive = true): bool {
-		// first check if we can delete this entity
-		// NOTE: in Elgg <= 1.10.3 this was after the delete event,
-		// which could potentially remove some content if the user didn't have access
+	public function delete(bool $recursive = true, bool $persistent = null): bool {
 		if (!$this->canDelete()) {
 			return false;
 		}
 
+		if (!elgg_get_config('trash_enabled')) {
+			$persistent = true;
+		}
+		
+		if (!isset($persistent)) {
+			$persistent = !$this->hasCapability('restorable');
+		}
+		
 		try {
-			return _elgg_services()->entityTable->delete($this, $recursive);
+			if (empty($this->guid) || $persistent) {
+				return $this->persistentDelete($recursive);
+			} else {
+				return $this->trash($recursive);
+			}
 		} catch (DatabaseException $ex) {
 			elgg_log($ex, 'ERROR');
 			return false;
 		}
 	}
-
+	
+	/**
+	 * Permanently delete the entity from the database
+	 *
+	 * @param bool $recursive If true (default) then all entities which are owned or contained by $this will also be deleted.
+	 *
+	 * @return bool
+	 * @since 6.0
+	 */
+	protected function persistentDelete(bool $recursive = true): bool {
+		return _elgg_services()->entityTable->delete($this, $recursive);
+	}
+	
+	/**
+	 * Move the entity to the trash
+	 *
+	 * @param bool $recursive If true (default) then all entities which are owned or contained by $this will also be trashed.
+	 *
+	 * @return bool
+	 * @since 6.0
+	 */
+	protected function trash(bool $recursive = true): bool {
+		$result = _elgg_services()->entityTable->trash($this, $recursive);
+		if ($result) {
+			$this->attributes['deleted'] = 'yes';
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * Restore the entity
+	 *
+	 * @param bool $recursive Recursively restores all entities trashed with the entity?
+	 *
+	 * @return bool
+	 * @since 6.0
+	 */
+	public function restore(bool $recursive = true): bool {
+		if (!$this->isDeleted()) {
+			return true;
+		}
+		
+		if (empty($this->guid) || !$this->canEdit()) {
+			return false;
+		}
+		
+		return _elgg_services()->events->triggerSequence('restore', $this->type, $this, function () use ($recursive) {
+			return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($recursive) {
+				$result = _elgg_services()->entityTable->restore($this);
+				
+				if ($recursive) {
+					set_time_limit(0);
+					
+					/* @var $deleted_with_it \ElggBatch */
+					$deleted_with_it = elgg_get_entities([
+						'relationship' => 'deleted_with',
+						'relationship_guid' => $this->guid,
+						'inverse_relationship' => true,
+						'limit' => false,
+						'batch' => true,
+						'batch_inc_offset' => false,
+					]);
+					
+					/* @var $e \ElggEntity */
+					foreach ($deleted_with_it as $e) {
+						if (!$e->restore($recursive)) {
+							$deleted_with_it->reportFailure();
+							continue;
+						}
+						
+						$e->removeRelationship($this->guid, 'deleted_with');
+					}
+				}
+				
+				$this->removeAllRelationships('deleted_by', true);
+				
+				if ($result) {
+					$this->attributes['deleted'] = 'no';
+					$this->attributes['time_deleted'] = 0;
+				}
+				
+				return $result;
+			});
+		});
+	}
+	
+	/**
+	 * Is the entity marked as deleted
+	 *
+	 * @return bool
+	 */
+	public function isDeleted(): bool {
+		return $this->deleted === 'yes';
+	}
+	
 	/**
 	 * Export an entity
 	 *
@@ -1711,8 +1835,25 @@ abstract class ElggEntity extends \ElggData {
 		
 		$this->attributes['last_action'] = $posted;
 		$this->cache();
-	
+		
 		return $posted;
+	}
+
+	/**
+	 * Update the time_deleted column in the entities table.
+	 *
+	 * @param int $deleted Timestamp of deletion
+	 *
+	 * @return int
+	 * @internal
+	 */
+	public function updateTimeDeleted(int $deleted = null): int {
+		$deleted = _elgg_services()->entityTable->updateTimeDeleted($this, $deleted);
+		
+		$this->attributes['time_deleted'] = $deleted;
+		$this->cache();
+		
+		return $deleted;
 	}
 
 	/**

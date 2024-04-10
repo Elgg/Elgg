@@ -28,6 +28,10 @@ class Social {
 		if (!$entity->hasCapability('commentable')) {
 			return;
 		}
+
+		if ($entity->isDeleted()) {
+			return;
+		}
 		
 		/* @var $return MenuItems */
 		$return = $event->getValue();

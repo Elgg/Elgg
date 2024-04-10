@@ -190,6 +190,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->use_deleted_clause = false;
 		$access->use_enabled_clause = false;
 		$parts[] = $access->prepare($this->qb, 'alias');
 
@@ -218,6 +219,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->use_deleted_clause = false;
 		$access->use_enabled_clause = false;
 		
 		$parts[] = $access->prepare($this->qb, 'alias');
@@ -259,6 +261,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->use_deleted_clause = false;
 		$access->use_enabled_clause = false;
 		
 		$parts[] = $access->prepare($this->qb, 'alias');
@@ -286,6 +289,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
+		$access->use_deleted_clause = false;
 		$access->use_enabled_clause = false;
 		
 		$parts[] = $access->prepare($this->qb, $this->qb->getTableAlias());

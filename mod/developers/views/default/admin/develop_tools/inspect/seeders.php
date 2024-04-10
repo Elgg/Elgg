@@ -23,7 +23,7 @@ $header = elgg_format_element('thead', [], $header);
 
 $rows = [];
 
-elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($seeders, &$rows) {
+elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($seeders, &$rows) {
 	foreach ($seeders as $seeder) {
 		$row = [];
 		/* @var $seed Seed */

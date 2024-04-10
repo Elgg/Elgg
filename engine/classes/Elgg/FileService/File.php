@@ -3,6 +3,7 @@
 namespace Elgg\FileService;
 
 use Elgg\Exceptions\DomainException;
+use Elgg\Project\Paths;
 use Elgg\Security\Base64Url;
 
 /**
@@ -105,8 +106,8 @@ class File {
 		}
 
 		$relative_path = '';
-		$root_prefix = _elgg_services()->config->dataroot;
-		$path = $this->file->getFilenameOnFilestore();
+		$root_prefix = Paths::sanitize(_elgg_services()->config->dataroot);
+		$path = Paths::sanitize($this->file->getFilenameOnFilestore(), false);
 		if (str_starts_with($path, $root_prefix)) {
 			$relative_path = substr($path, strlen($root_prefix));
 		}

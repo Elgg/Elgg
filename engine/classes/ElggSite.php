@@ -45,6 +45,8 @@ class ElggSite extends \ElggEntity {
 		$this->attributes['time_updated'] = null;
 		$this->attributes['last_action'] = null;
 		$this->attributes['enabled'] = 'yes';
+		$this->attributes['deleted'] = 'no';
+		$this->attributes['time_deleted'] = null;
 	}
 
 	/**
@@ -77,23 +79,16 @@ class ElggSite extends \ElggEntity {
 	}
 
 	/**
-	 * Delete the site.
-	 *
-	 * @note You cannot delete the current site.
-	 *
-	 * @param bool $recursive If true (default) then all entities which are owned or contained by $this will also be deleted.
-	 *
-	 * @return bool
-	 * @throws SecurityException
+	 * {@inheritdoc}
 	 */
-	public function delete(bool $recursive = true): bool {
-		if ($this->guid == 1) {
+	public function delete(bool $recursive = true, bool $persistent = null): bool {
+		if ($this->guid === 1) {
 			throw new SecurityException('You cannot delete the current site');
 		}
-
-		return parent::delete($recursive);
+		
+		return parent::delete($recursive, $persistent);
 	}
-
+	
 	/**
 	 * Disable the site
 	 *

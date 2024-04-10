@@ -27,7 +27,6 @@ return [
 	],
 	'actions' => [
 		'thewire/add' => [],
-		'thewire/delete' => [],
 	],
 	'routes' => [
 		'default:object:thewire' => [
@@ -58,9 +57,6 @@ return [
 		'collection:object:thewire:thread' => [
 			'path' => '/thewire/thread/{guid}',
 			'resource' => 'thewire/thread',
-			'middleware' => [
-				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
-			],
 		],
 		'collection:object:thewire:tag' => [
 			'path' => '/thewire/tag/{tag}',

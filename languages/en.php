@@ -54,6 +54,7 @@ return array(
 
 	'ElggEntity:Error:SetSubtype' => 'Use %s instead of the magic setter for "subtype"',
 	'ElggEntity:Error:SetEnabled' => 'Use %s instead of the magic setter for "enabled"',
+	'ElggEntity:Error:SetDeleted' => 'Use %s instead of the magic setter for "deleted"',
 	'ElggUser:Error:SetAdmin' => 'Use %s instead of the magic setter for "admin"',
 	'ElggUser:Error:SetBanned' => 'Use %s instead of the magic setter for "banned"',
 
@@ -1129,6 +1130,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'preview' => "Preview",
 	'edit' => "Edit",
 	'delete' => "Delete",
+	'trash' => "Trash",
 	'accept' => "Accept",
 	'reject' => "Reject",
 	'decline' => "Decline",
@@ -1256,6 +1258,8 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'status:unavailable' => 'Unavailable',
 	'status:active' => 'Active',
 	'status:inactive' => 'Inactive',
+	'status:deleted' => 'Deleted',
+	'status:trashed' => 'Trashed',
 
 /**
  * Generic sorts
@@ -1304,6 +1308,9 @@ For improved performance, it is recommended that you enable and configure OPcach
 
 	'edit:this' => 'Edit this',
 	'delete:this' => 'Delete this',
+	'trash:this' => 'Trash this',
+	'restore:this' => 'Restore this',
+	'restore:this:move' => 'Restore and move this',
 	'comment:this' => 'Comment on this',
 
 /**
@@ -1311,6 +1318,9 @@ For improved performance, it is recommended that you enable and configure OPcach
  */
 
 	'deleteconfirm' => "Are you sure you want to delete this item?",
+	'trashconfirm' => "Are you sure you want to trash this item?",
+	'restoreconfirm' => "Are you sure you want to restore this item?",
+	'restoreandmoveconfirm'=> "Are you sure you want to restore and move this item?",
 	'deleteconfirm:plural' => "Are you sure you want to delete these items?",
 	'fileexists' => "A file has already been uploaded. To replace it, select a new one below",
 	'input:file:upload_limit' => 'Maximum allowed file size is %s',
@@ -1480,6 +1490,7 @@ Once you have logged in, we highly recommend that you change your password.',
 	'admin:legend:system' => 'System',
 	'admin:legend:caching' => 'Caching',
 	'admin:legend:content' => 'Content',
+	'admin:legend:comments' => 'Comments',
 	'admin:legend:content_access' => 'Content Access',
 	'admin:legend:site_access' => 'Site Access',
 	'admin:legend:debug' => 'Debugging and Logging',
@@ -1521,6 +1532,10 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:content:mentions_display_format:help' => "This decides how a mentioned user will be visible in your content",
 	'config:content:mentions_display_format:username' => "Username",
 	'config:content:mentions_display_format:display_name' => "Display name",
+	'config:content:trash_enabled:label' => "Enable trash",
+	'config:content:trash_enabled:help' => "When deleting an item it can be moved to the trash before it's permanently deleted. Trashed items can be restored by a user.",
+	'config:content:trash_retention:label' => "Number of days content will remain in the trash once deleted",
+	'config:content:trash_retention:help' => "You can configure how many days deleted entities are stored in the trash. After the retention period the item in the trash will be permanently deleted. Use 0 to keep trashed items indefinitely.",
 	'config:email' => "Email",
 	'config:email_html_part:label' => "Enable HTML mail",
 	'config:email_html_part:help' => "Outgoing mail will be wrapped in a HTML template",
@@ -1714,6 +1729,13 @@ To see the full comment, click on the link below:
 	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
 	'entity:delete:success' => '%s has been deleted.',
 	'entity:delete:fail' => '%s could not be deleted.',
+
+	'entity:restore:item' => 'Item',
+	'entity:restore:item_not_found' => 'Item not found',
+	'entity:restore:container_permission' => 'You do not have permissions to restore this item to %s',
+	'entity:restore:permission_denied' => 'You do not have permissions to restore this item',
+	'entity:restore:success' => '%s has been restored',
+	'entity:restore:fail' => '%s could not be restored',
 	
 	'entity:subscribe' => "Subscribe",
 	'entity:subscribe:disabled' => "Your default notification settings prevent you from subscribing to this content",
@@ -1786,6 +1808,29 @@ Global variables:
 %s
 ------------------------------------------------------------------------',
 	
+/**
+ * Trash
+ */
+	'trash:menu:page' => "Trash",
+	
+	'trash:imprint:actor' => "Deleted by: %s",
+	'trash:imprint:type' => "Type: %s",
+	
+	'trash:owner:title' => "Trash",
+	'trash:owner:title_owner' => "%s's trash",
+	'trash:group:title' => "%s's trash",
+	
+	'trash:no_results' => "No items found in the trash",
+	
+	'trash:notice:retention' => "Trashed items will automatically be removed after %s days.",
+	
+	'trash:restore:container:owner' => "You can restore this trashed item to your personal section since the original group has also been removed.",
+	'trash:restore:container:choose' => "Since the original group for this item has been removed, you can choose where to restore the item.",
+	'trash:restore:container:group' => "Restore in a different group",
+	'trash:restore:group' => "Search for a group",
+	'trash:restore:group:help' => "Make sure the selected group has the feature active for the item or an error may occure.",
+	'trash:restore:owner' => "Restore to the owner (%s)",
+
 /**
  * Miscellaneous
  */

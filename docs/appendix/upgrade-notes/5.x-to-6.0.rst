@@ -14,6 +14,23 @@ DB Requirements
  - The minimal MySQL version is now 8.0
  - The minimal MariaDB version is now 10.6
 
+Deleted state
+~~~~~~~~~~~~~
+
+Entities can now be marked as deleted in the database. This allows entities to be restored from the database when deletion
+was done too soon.
+
+.. note::
+
+	Because of changes to ``ElggEntity::delete()`` the working of ``ElggFile::delete()`` was changed. It was possible to
+	symlink a file to a different location (through other ways then Elgg) and when deleting the ``ElggFile`` is was possible
+	to only delete the symlink and not the target file. This was changed and ``ElggFile::delete()`` will now always delete
+	both the symlink and the target file.
+
+.. seealso::
+
+	Check the :ref:`database <database-deleted>` documentation or the :doc:`/guides/restore` documentation for more information.
+
 ES Modules
 ----------
 
@@ -120,6 +137,7 @@ Removed class functions
 Lib functions function parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* ``elgg_get_entity_statistics()`` now requires an ``array`` of ``$options`` to be used by ``elgg_get_entities()``.
 * ``elgg_get_simplecache_url()`` has the second argument (``$subview``) removed. The full ``$view`` name needs to be provided as the first argument.
 
 Miscellaneous API changes

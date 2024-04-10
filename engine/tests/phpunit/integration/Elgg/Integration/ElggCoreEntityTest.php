@@ -17,8 +17,14 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	 * @var \ElggUser
 	 */
 	protected $owner;
+	
+	/**
+	 * @var bool
+	 */
+	protected $trash_enabled;
 
 	public function up() {
+		$this->trash_enabled = _elgg_services()->config->trash_enabled;
 		$this->owner = $this->createUser();
 		elgg()->session_manager->setLoggedInUser($this->owner);
 		
@@ -30,6 +36,14 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->entity->annotate('test_annotation', 'baz');
 
 		$this->entity->save();
+	}
+	
+	public function down() {
+		_elgg_services()->config->trash_enabled = $this->trash_enabled;
+		
+		if (isset($this->entity)) {
+			elgg_entity_disable_capability($this->entity->type, $this->entity->subtype, 'restorable');
+		}
 	}
 
 	public function testSubtypePropertyReads() {
@@ -693,5 +707,274 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		
 		$testing_event->assertNumberOfCalls(3);
 		$testing_event->unregister();
+	}
+	
+	public function testDeleteWithoutRestorableCapability() {
+		_elgg_services()->config->trash_enabled = true;
+		$entity = $this->entity;
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertFalse($entity->hasCapability('restorable'));
+		
+		$this->assertTrue($entity->delete());
+		$this->assertFalse(elgg_entity_exists($entity->guid));
+	}
+	
+	public function testDeleteWithRestorableCapability() {
+		_elgg_services()->config->trash_enabled = true;
+		$entity = $this->entity;
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		
+		elgg_entity_enable_capability($entity->type, $entity->subtype, 'restorable');
+		$this->assertTrue($entity->hasCapability('restorable'));
+		
+		$this->assertTrue($entity->delete());
+		$this->assertTrue($entity->isDeleted());
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertNull(get_entity($entity->guid));
+	}
+	
+	public function testDeleteWithRestorableCapabilityTrashDisabled() {
+		_elgg_services()->config->trash_enabled = false;
+		$entity = $this->entity;
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		
+		elgg_entity_enable_capability($entity->type, $entity->subtype, 'restorable');
+		$this->assertTrue($entity->hasCapability('restorable'));
+		
+		$this->assertTrue($entity->delete());
+		$this->assertFalse($entity->isDeleted());
+		$this->assertFalse(elgg_entity_exists($entity->guid));
+	}
+	
+	public function testNonPersistentDeleteTrashDisabled() {
+		_elgg_services()->config->trash_enabled = false;
+		$entity = $this->entity;
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		
+		$this->assertTrue($entity->delete(true, false));
+		$this->assertFalse($entity->isDeleted());
+		$this->assertFalse(elgg_entity_exists($entity->guid));
+	}
+	
+	public function testNonPersistentDeleteWithoutRestorableCapability() {
+		_elgg_services()->config->trash_enabled = true;
+		$entity = $this->entity;
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertFalse($entity->hasCapability('restorable'));
+		
+		$this->assertTrue($entity->delete(true, false));
+		$this->assertTrue($entity->isDeleted());
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertNull(get_entity($entity->guid));
+	}
+	
+	public function testPersistentDeleteWithRestorableCapability() {
+		_elgg_services()->config->trash_enabled = true;
+		$entity = $this->entity;
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		
+		elgg_entity_enable_capability($entity->type, $entity->subtype, 'restorable');
+		$this->assertTrue($entity->hasCapability('restorable'));
+		
+		$this->assertTrue($entity->delete(true, true));
+		$this->assertFalse(elgg_entity_exists($entity->guid));
+	}
+	
+	public function testRestoreWithRestorableCapability() {
+		_elgg_services()->config->trash_enabled = true;
+		$entity = $this->entity;
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		
+		elgg_entity_enable_capability($entity->type, $entity->subtype, 'restorable');
+		$this->assertTrue($entity->hasCapability('restorable'));
+		
+		$this->assertTrue($entity->delete());
+		$this->assertTrue($entity->isDeleted());
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertNull(get_entity($entity->guid));
+		
+		$this->assertTrue($entity->restore());
+		$this->assertFalse($entity->isDeleted());
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertInstanceOf(\ElggEntity::class, get_entity($entity->guid));
+	}
+	
+	public function testRestoreWithoutRestorableCapability() {
+		_elgg_services()->config->trash_enabled = true;
+		$entity = $this->entity;
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertFalse($entity->hasCapability('restorable'));
+		
+		$this->assertTrue($entity->delete(true, false));
+		$this->assertTrue($entity->isDeleted());
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertNull(get_entity($entity->guid));
+		
+		$this->assertTrue($entity->restore());
+		$this->assertFalse($entity->isDeleted());
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertInstanceOf(\ElggEntity::class, get_entity($entity->guid));
+	}
+	
+	public function testRecursivePersistentDelete() {
+		_elgg_services()->config->trash_enabled = true;
+		$entity = $this->entity;
+		$sub_entity = $this->createObject([
+			'container_guid' => $entity->guid,
+		]);
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
+		
+		$this->assertTrue($entity->delete(true, true));
+		$this->assertFalse(elgg_entity_exists($entity->guid));
+		$this->assertNull(get_entity($entity->guid));
+		$this->assertFalse(elgg_entity_exists($sub_entity->guid));
+		$this->assertNull(get_entity($sub_entity->guid));
+	}
+	
+	public function testNonRecursivePersistentDelete() {
+		_elgg_services()->config->trash_enabled = true;
+		$entity = $this->entity;
+		$sub_entity = $this->createObject([
+			'container_guid' => $entity->guid,
+		]);
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
+		
+		$this->assertTrue($entity->delete(false, true));
+		$this->assertFalse(elgg_entity_exists($entity->guid));
+		$this->assertNull(get_entity($entity->guid));
+		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
+		$this->assertInstanceOf(\ElggEntity::class, get_entity($sub_entity->guid));
+	}
+	
+	public function testRecursiveNonPersistentDelete() {
+		_elgg_services()->config->trash_enabled = true;
+		$entity = $this->entity;
+		$sub_entity = $this->createObject([
+			'container_guid' => $entity->guid,
+		]);
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
+		
+		$this->assertTrue($entity->delete(true, false));
+		$this->assertTrue($entity->isDeleted());
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertNull(get_entity($entity->guid));
+		
+		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
+		$this->assertNull(get_entity($sub_entity->guid));
+		
+		$sub_entity_reloaded = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($sub_entity) {
+			return get_entity($sub_entity->guid);
+		});
+		$this->assertInstanceOf(\ElggEntity::class, $sub_entity_reloaded);
+		$this->assertEquals($sub_entity->guid, $sub_entity_reloaded->guid);
+		$this->assertTrue($sub_entity_reloaded->isDeleted());
+	}
+	
+	public function testNonRecursiveNonPersistentDelete() {
+		_elgg_services()->config->trash_enabled = true;
+		$entity = $this->entity;
+		$sub_entity = $this->createObject([
+			'container_guid' => $entity->guid,
+		]);
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
+		
+		$this->assertTrue($entity->delete(false, false));
+		$this->assertTrue($entity->isDeleted());
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertNull(get_entity($entity->guid));
+		
+		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
+		
+		$sub_entity = get_entity($sub_entity->guid);
+		$this->assertInstanceOf(\ElggEntity::class, $sub_entity);
+		$this->assertFalse($sub_entity->isDeleted());
+	}
+	
+	public function testRecursiveRestore() {
+		_elgg_services()->config->trash_enabled = true;
+		$entity = $this->entity;
+		$sub_entity = $this->createObject([
+			'container_guid' => $entity->guid,
+		]);
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
+		
+		$this->assertTrue($entity->delete(true, false));
+		$this->assertTrue($entity->isDeleted());
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertNull(get_entity($entity->guid));
+		
+		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
+		$this->assertNull(get_entity($sub_entity->guid));
+		
+		$sub_entity_reloaded = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($sub_entity) {
+			return get_entity($sub_entity->guid);
+		});
+		$this->assertInstanceOf(\ElggEntity::class, $sub_entity_reloaded);
+		$this->assertEquals($sub_entity->guid, $sub_entity_reloaded->guid);
+		$this->assertTrue($sub_entity_reloaded->isDeleted());
+		
+		$this->assertTrue($entity->restore(true));
+		$this->assertFalse($entity->isDeleted());
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertInstanceOf(\ElggEntity::class, get_entity($entity->guid));
+		
+		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
+		$this->assertInstanceOf(\ElggEntity::class, get_entity($sub_entity->guid));
+	}
+	
+	public function testNonRecursiveRestore() {
+		_elgg_services()->config->trash_enabled = true;
+		$entity = $this->entity;
+		$sub_entity = $this->createObject([
+			'container_guid' => $entity->guid,
+		]);
+		
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
+		
+		$this->assertTrue($entity->delete(true, false));
+		$this->assertTrue($entity->isDeleted());
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertNull(get_entity($entity->guid));
+		
+		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
+		$this->assertNull(get_entity($sub_entity->guid));
+		
+		$sub_entity_reloaded = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($sub_entity) {
+			return get_entity($sub_entity->guid);
+		});
+		$this->assertInstanceOf(\ElggEntity::class, $sub_entity_reloaded);
+		$this->assertEquals($sub_entity->guid, $sub_entity_reloaded->guid);
+		$this->assertTrue($sub_entity_reloaded->isDeleted());
+		
+		$this->assertTrue($entity->restore(false));
+		$this->assertFalse($entity->isDeleted());
+		$this->assertTrue(elgg_entity_exists($entity->guid));
+		$this->assertInstanceOf(\ElggEntity::class, get_entity($entity->guid));
+		
+		$sub_entity_reloaded = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($sub_entity) {
+			return get_entity($sub_entity->guid);
+		});
+		$this->assertInstanceOf(\ElggEntity::class, $sub_entity_reloaded);
+		$this->assertEquals($sub_entity->guid, $sub_entity_reloaded->guid);
+		$this->assertTrue($sub_entity_reloaded->isDeleted());
 	}
 }

@@ -3,7 +3,9 @@
  * Procedural code for creating, loading, and modifying \ElggEntity objects.
  */
 
+use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\EntityTable;
+use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 
 /**
@@ -650,28 +652,45 @@ function elgg_search(array $options = []) {
 /**
  * Return an array reporting the number of various entities in the system.
  *
- * @param int $owner_guid Optional owner of the statistics
+ * @param array $options additional options
  *
  * @return array
  * @since 4.3
+ * @see elgg_get_entities()
  */
-function elgg_get_entity_statistics(int $owner_guid = 0): array {
-	$select = Select::fromTable(EntityTable::TABLE_NAME);
-	$select->select('type')
-		->addSelect('subtype')
-		->addSelect('count(*) AS total')
-		->where($select->compare('enabled', '=', 'yes', ELGG_VALUE_STRING))
-		->groupBy('type')
-		->addGroupBy('subtype')
-		->orderBy('total', 'desc');
+function elgg_get_entity_statistics(array $options = []): array {
+	$required = [
+		'selects' => [
+			'count(*) AS total',
+		],
+		'group_by' => [
+			function(QueryBuilder $qb, $main_alias) {
+				return "{$main_alias}.type";
+			},
+			function(QueryBuilder $qb, $main_alias) {
+				return "{$main_alias}.subtype";
+			},
+		],
+		'order_by' => [
+			new OrderByClause('total', 'desc'),
+		],
+		'callback' => function($row) {
+			return (object) [
+				'type' => $row->type,
+				'subtype' => $row->subtype,
+				'total' => $row->total,
+			];
+		},
+		'limit' => false,
+	];
 	
-	if (!empty($owner_guid)) {
-		$select->andWhere($select->compare('owner_guid', '=', $owner_guid, ELGG_VALUE_GUID));
-	}
+	$options = array_merge($options, $required);
+	
+	$rows = elgg_call(ELGG_IGNORE_ACCESS, function() use ($options) {
+		return elgg_get_entities($options);
+	});
 	
 	$entity_stats = [];
-	
-	$rows = _elgg_services()->db->getData($select);
 	foreach ($rows as $row) {
 		$type = $row->type;
 		if (!isset($entity_stats[$type]) || !is_array($entity_stats[$type])) {

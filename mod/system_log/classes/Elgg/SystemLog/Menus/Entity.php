@@ -12,7 +12,7 @@ class Entity {
 	/**
 	 * Add to the entity menu
 	 *
-	 * @param \Elgg\Event $event 'register', 'menu:entity'
+	 * @param \Elgg\Event $event 'register', 'menu:entity|menu:entity:trash'
 	 *
 	 * @return void|\Elgg\Menu\MenuItems
 	 */

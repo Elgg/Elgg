@@ -29,6 +29,14 @@ class SessionManagerServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($this->service->setDisabledEntityVisibility(false)); // returns old state
 		$this->assertFalse($this->service->getDisabledEntityVisibility());
 	}
+	
+	function testDeletedEntityVisibility() {
+		$this->assertFalse($this->service->getDeletedEntityVisibility()); // service inits false
+		$this->assertFalse($this->service->setDeletedEntityVisibility(true)); // returns old state
+		$this->assertTrue($this->service->getDeletedEntityVisibility());
+		$this->assertTrue($this->service->setDeletedEntityVisibility(false)); // returns old state
+		$this->assertFalse($this->service->getDeletedEntityVisibility());
+	}
 
 	function testSettingLoggedInUser() {
 		$this->assertNull($this->service->getLoggedInUser()); // service inits null

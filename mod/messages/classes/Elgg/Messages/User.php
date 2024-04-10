@@ -24,18 +24,21 @@ class User {
 		}
 	
 		// make sure we delete them all
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user) {
-			$batch = new \ElggBatch('elgg_get_entities', [
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($user) {
+			/* @var $batch \ElggBatch */
+			$batch = elgg_get_entities([
 				'type' => 'object',
 				'subtype' => 'messages',
 				'metadata_name_value_pairs' => [
 					'fromId' => $user->guid,
 				],
+				'batch' => true,
+				'batch_inc_offset' => false,
 				'limit' => false,
 			]);
-			$batch->setIncrementOffset(false);
+			/* @var $e \ElggMessage */
 			foreach ($batch as $e) {
-				$e->delete();
+				$e->delete(true, true);
 			}
 		});
 	}

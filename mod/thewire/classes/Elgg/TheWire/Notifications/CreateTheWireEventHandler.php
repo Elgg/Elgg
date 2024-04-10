@@ -95,7 +95,9 @@ class CreateTheWireEventHandler extends NotificationEventHandler {
 				$parent_owner = $parent->getOwnerEntity();
 				$body = elgg_echo('thewire:notify:reply', [$owner->getDisplayName(), $parent_owner->getDisplayName()], $language);
 			}
-		} else {
+		}
+		
+		if (empty($body)) {
 			$body = elgg_echo('thewire:notify:post', [$owner->getDisplayName()], $language);
 		}
 		

@@ -361,6 +361,7 @@
 .elgg-menu-river,
 .elgg-menu-relationship,
 .elgg-menu-entity,
+.elgg-menu-entity-trash,
 .elgg-menu-social,
 .elgg-menu-annotation,
 .elgg-menu-widget {
@@ -381,7 +382,7 @@
 			}
 			
 			&:hover {
-				color: #0078ac;
+				color: $(text-color-highlight);
 				text-decoration: none;
 			}
 		}
@@ -389,6 +390,7 @@
 }
 
 .elgg-menu-entity-default,
+.elgg-menu-entity-trash-default,
 .elgg-menu-relationship-default,
 .elgg-menu-river-default {
 	.elgg-menu-item-has-dropdown {

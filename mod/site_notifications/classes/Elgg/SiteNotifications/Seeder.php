@@ -70,7 +70,7 @@ class Seeder extends Seed {
 		
 		/* @var $notification \SiteNotification */
 		foreach ($notifications as $notification) {
-			if ($notification->delete()) {
+			if ($notification->delete(true, true)) {
 				$this->log("Deleted site notification {$notification->guid}");
 			} else {
 				$this->log("Failed to delete site notification {$notification->guid}");

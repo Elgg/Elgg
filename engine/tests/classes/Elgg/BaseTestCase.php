@@ -181,7 +181,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 		$admin = $this->_testing_admin;
 		unset($this->_testing_admin);
 		if ($admin instanceof \ElggUser) {
-			$admin->delete();
+			$admin->delete(true, true);
 		}
 		
 		// clear all message registers

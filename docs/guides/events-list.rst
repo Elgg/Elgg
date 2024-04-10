@@ -10,7 +10,7 @@ For more information on how events work visit :doc:`/design/events`.
 .. note::
 
 	Some events are marked with |sequence| this means those events also have a ``:before`` and ``:after`` event
-	Also see :ref:`Event sequence <design/events#event-sequence>`
+	Also see :ref:`Event sequence <event-sequence>`
 
 	Some events are marked with |results| this means those events allow altering the output of an event
 
@@ -236,7 +236,7 @@ System events
 	Triggered after a system upgrade has finished. All upgrade scripts have run, but the caches 
 	are not cleared.
 
-**upgrade:execute, system** |sequence|
+**upgrade:execute, system** |sequence| |results|
 	Triggered when executing an ``ElggUpgrade``. The ``$object`` of the event is the ``ElggUpgrade``.
 
 User events
@@ -371,14 +371,8 @@ Entity events
 **create:before, <entity type>**
     Triggered for user, group, object, and site entities before creation. Return false to prevent creating the entity.
 
-**delete, <entity type>**
-    Triggered before entity deletion.
-
-**delete:after, <entity type>**
-    Triggered after entity deletion.
-
-**delete:before, <entity type>**
-    Triggered before entity deletion. Return false to prevent deletion.
+**delete, <entity type>** |sequence|
+    Triggered when an entity is permanently removed from the database. Also see :doc:`/guides/restore`
 
 **disable, <entity type>**
     Triggered before the entity is disabled. Return false to prevent disabling.
@@ -394,7 +388,10 @@ Entity events
 
 **likes:count, <entity_type>** |results|
 	Return the number of likes for ``$params['entity']``.
-	
+
+**trash, <entity type>** |sequence|
+    Triggered when an entity is marked as deleted in the database. Also see :doc:`/guides/restore`
+
 **update, <entity type>**
     Triggered before an update for the user, group, object, and site entities. Return false to prevent update.
     The entity method ``getOriginalAttributes()`` can be used to identify which attributes have changed since
