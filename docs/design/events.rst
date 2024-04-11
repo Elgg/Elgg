@@ -48,7 +48,7 @@ something happens. Handlers can cancel the event by returning ``false``.
 When ``false`` is returned by a handler, following handlers will not be called.
 
 After Events, with names ending in ":after", are triggered after
-something happened. Handlers *cannot* cancel these events; all handlers will always be called.
+something happened. Handlers **cannot** cancel these events; all handlers will always be called.
 
 Where before and after events are available, developers are encouraged
 to transition to them, though older events will be supported for
@@ -201,6 +201,8 @@ Parameters:
 -  **$params** Arbitrary data passed from the trigger to the handlers.
 -  **$value** The initial value of the event.
 
+.. _event-sequence:
+
 Trigger an Elgg Event sequence
 ------------------------------
 
@@ -210,6 +212,9 @@ the ``:before`` event, then the actual event and finally the ``:after`` event.
 .. code-block:: php
 
 	elgg()->events->triggerSequence($event, $type, $object, $callable);
+
+	// or if you wish to have a result sequence
+	$result = elgg->events->triggerResultsSequence($name, $type, $params, $value, $callable);
 
 When called with for example ``'cache:clear', 'system'`` the following three events are triggered
 
@@ -223,6 +228,14 @@ Parameters:
 - **$object_type** The object type (e.g. "user" or "object").
 - **$object** The object (e.g. an instance of ``ElggUser`` or ``ElggGroup``)
 - **$callable** Callable to run on successful event, before event:after
+
+.. note::
+
+	As of Elgg 6.0 the ``:after`` event will no longer be triggered if the result of the callable is ``false``. This was
+	done in order to prevent the system from thinking something was done which wasn't successful. For example the
+	``'delete', 'user'`` event sequence. If the callback (which handles the actual removal from the database) wasn't
+	successful the ``:after`` event implied that the user was deleted. Now this is only triggered when the user is actually
+	removed from the database.
 
 Unregister Event Handlers
 -------------------------

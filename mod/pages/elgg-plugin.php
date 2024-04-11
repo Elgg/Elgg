@@ -20,6 +20,7 @@ return [
 				'commentable' => true,
 				'searchable' => true,
 				'likable' => true,
+				'restorable' => true,
 			],
 		],
 	],

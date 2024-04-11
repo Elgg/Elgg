@@ -120,6 +120,17 @@ class Page {
 			'section' => 'configure',
 		]);
 		
+		if (elgg_get_config('trash_enabled')) {
+			$return[] = \ElggMenuItem::factory([
+				'name' => '1_trash',
+				'text' => elgg_echo('trash:menu:page'),
+				'href' => elgg_generate_url('trash:owner', [
+					'username' => $user->username,
+				]),
+				'section' => 'configure',
+			]);
+		}
+		
 		return $return;
 	}
 	

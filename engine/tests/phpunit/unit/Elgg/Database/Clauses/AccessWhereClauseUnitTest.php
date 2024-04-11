@@ -39,6 +39,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
+		$query->use_deleted_clause = false;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
@@ -53,6 +54,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
+		$query->use_deleted_clause = false;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
@@ -77,6 +79,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$expected = $this->qb->merge($parts);
 
 		$query = new AccessWhereClause();
+		$query->use_deleted_clause = false;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
@@ -99,6 +102,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$expected = $this->qb->merge($parts);
 
 		$query = new AccessWhereClause();
+		$query->use_deleted_clause = false;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, '');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
@@ -122,6 +126,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AccessWhereClause();
 		$query->owner_guid_column = 'unit_test';
+		$query->use_deleted_clause = false;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
@@ -146,6 +151,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 		$expected = $this->qb->merge($parts);
 
 		$query = new AccessWhereClause();
+		$query->use_deleted_clause = false;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
@@ -172,6 +178,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
+		$query->use_deleted_clause = false;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
@@ -198,6 +205,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
+		$query->use_deleted_clause = false;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
@@ -233,6 +241,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
+		$query->use_deleted_clause = false;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());
@@ -266,6 +275,7 @@ class AccessWhereClauseUnitTest extends UnitTestCase {
 
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
+		$query->use_deleted_clause = false;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());

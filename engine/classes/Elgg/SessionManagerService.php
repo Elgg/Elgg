@@ -20,6 +20,8 @@ class SessionManagerService {
 	protected ?\ElggUser $logged_in_user = null;
 	
 	protected bool $show_disabled_entities = false;
+
+	protected bool $show_deleted_entities = false;
 	
 	/**
 	 * Constructor
@@ -84,6 +86,31 @@ class SessionManagerService {
 		$prev = $this->show_disabled_entities;
 		$this->show_disabled_entities = $show;
 		
+		return $prev;
+	}
+
+	/**
+	 * Are deleted entities shown?
+	 *
+	 * @return bool
+	 * @since 6.0
+	 */
+	public function getDeletedEntityVisibility(): bool {
+		return $this->show_deleted_entities;
+	}
+	
+	/**
+	 * Include deleted entities in queries
+	 *
+	 * @param bool $show Visibility status
+	 *
+	 * @return bool Previous setting
+	 * @since 6.0
+	 */
+	public function setDeletedEntityVisibility(bool $show = true): bool {
+		$prev = $this->show_deleted_entities;
+		$this->show_deleted_entities = $show;
+
 		return $prev;
 	}
 	

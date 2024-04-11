@@ -16,16 +16,18 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testDefaultAttributes() {
-		$this->assertEquals(null, $this->obj->guid);
+		$this->assertNull($this->obj->guid);
 		$this->assertEquals('object', $this->obj->type);
-		$this->assertEquals(null, $this->obj->subtype);
+		$this->assertNull($this->obj->subtype);
 		$this->assertEquals(elgg_get_logged_in_user_guid(), $this->obj->owner_guid);
 		$this->assertEquals(elgg_get_logged_in_user_guid(), $this->obj->container_guid);
 		$this->assertEquals(ACCESS_PRIVATE, $this->obj->access_id);
-		$this->assertEquals(null, $this->obj->time_created);
-		$this->assertEquals(null, $this->obj->time_updated);
-		$this->assertEquals(null, $this->obj->last_action);
+		$this->assertNull($this->obj->time_created);
+		$this->assertNull($this->obj->time_updated);
+		$this->assertNull($this->obj->last_action);
+		$this->assertNull($this->obj->time_deleted);
 		$this->assertEquals('yes', $this->obj->enabled);
+		$this->assertEquals('no', $this->obj->deleted);
 	}
 
 	/**
@@ -53,6 +55,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		return [
 			['subtype'],
 			['enabled'],
+			['deleted'],
 		];
 	}
 	

@@ -25,7 +25,7 @@ trait TestSeeding {
 					continue;
 				}
 				
-				$seed->delete();
+				$seed->delete(true, true);
 			}
 		});
 	}

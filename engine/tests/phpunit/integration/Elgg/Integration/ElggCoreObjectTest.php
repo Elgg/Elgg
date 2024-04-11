@@ -51,6 +51,8 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		$attributes['time_updated'] = null;
 		$attributes['last_action'] = null;
 		$attributes['enabled'] = 'yes';
+		$attributes['deleted'] = 'no';
+		$attributes['time_deleted'] = 0;
 		ksort($attributes);
 
 		$entity_attributes = $this->entity->expose_attributes();

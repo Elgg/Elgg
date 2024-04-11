@@ -26,16 +26,18 @@ class EntityExplorer {
 		$result = $event->getValue();
 		
 		// link to entity
-		$url = $entity->getURL();
-		if (!empty($url) && $url !== elgg_get_site_url()) {
-			$result[] = \ElggMenuItem::factory([
-				'name' => 'view',
-				'icon' => 'eye',
-				'text' => elgg_echo('developers:entity_explorer:view_entity'),
-				'href' => $url,
-				'link_class' => ['elgg-button', 'elgg-button-action'],
-				'priority' => 50,
-			]);
+		if (!$entity->isDeleted()) {
+			$url = $entity->getURL();
+			if (!empty($url) && $url !== elgg_get_site_url()) {
+				$result[] = \ElggMenuItem::factory([
+					'name' => 'view',
+					'icon' => 'eye',
+					'text' => elgg_echo('developers:entity_explorer:view_entity'),
+					'href' => $url,
+					'link_class' => ['elgg-button', 'elgg-button-action'],
+					'priority' => 50,
+				]);
+			}
 		}
 		
 		// delete entity

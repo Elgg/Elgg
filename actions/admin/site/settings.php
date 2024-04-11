@@ -76,6 +76,14 @@ elgg_save_config('comments_per_page', (int) get_input('comments_per_page'));
 elgg_save_config('pagination_behaviour', get_input('pagination_behaviour', 'ajax-replace'));
 elgg_save_config('mentions_display_format', get_input('mentions_display_format'));
 
+$trash_retention = (int) get_input('trash_retention', 30);
+if ($trash_retention < 0) {
+	$trash_retention = 30;
+}
+
+elgg_save_config('trash_retention', $trash_retention);
+elgg_save_config('trash_enabled', (bool) get_input('trash_enabled'));
+
 elgg_save_config('user_joined_river', get_input('user_joined_river') === 'on');
 elgg_save_config('can_change_username', get_input('can_change_username') === 'on');
 

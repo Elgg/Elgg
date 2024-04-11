@@ -40,10 +40,10 @@ class ElggApiKey extends ElggObject {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function delete(bool $recursive = true): bool {
+	protected function persistentDelete(bool $recursive = true): bool {
 		$public_key = $this->public_key;
 		
-		if (!parent::delete($recursive)) {
+		if (!parent::persistentDelete($recursive)) {
 			return false;
 		}
 		

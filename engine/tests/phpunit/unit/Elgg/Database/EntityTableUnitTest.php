@@ -63,6 +63,53 @@ class EntityTableUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($last_action, $new_last_action);
 		$this->assertEquals($last_action, $object->last_action);
 	}
+
+	public function testCanUpdateTimeDeleted() {
+		// Set up the current time
+		_elgg_services()->entityTable->setCurrentTime();
+		$currentTime = _elgg_services()->entityTable->getCurrentTime()->getTimestamp();
+		
+		// Create an object
+		$object = $this->createObject();
+		
+		// Create the update query for empty params
+		$update = Update::table(EntityTable::TABLE_NAME);
+		$update->set('time_deleted', $update->param($currentTime, ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('guid', '=', $object->guid, ELGG_VALUE_GUID));
+		
+		// Add the testing query specification
+		$updateQuerySpec = [
+			'sql' => $update->getSQL(),
+			'params' => $update->getParameters(),
+			'row_count' => 1,
+		];
+		_elgg_services()->db->addQuerySpec($updateQuerySpec);
+		
+		// Call the updateTimeDeleted function without passing a timestamp
+		$time_deleted = $object->updateTimeDeleted();
+		$this->assertEquals($currentTime, $time_deleted);
+		$this->assertEquals($currentTime, $object->time_deleted);
+		
+		// Call the updateTimeDeleted function with a new timestamp
+		$new_time_deleted = $currentTime + 3600; // Add 1 hour
+		
+		// Create the update query
+		$update = Update::table(EntityTable::TABLE_NAME);
+		$update->set('time_deleted', $update->param($new_time_deleted, ELGG_VALUE_TIMESTAMP))
+			->where($update->compare('guid', '=', $object->guid, ELGG_VALUE_GUID));
+		
+		// Add the testing query specification
+		$updateQuerySpec = [
+			'sql' => $update->getSQL(),
+			'params' => $update->getParameters(),
+			'row_count' => 1,
+		];
+		_elgg_services()->db->addQuerySpec($updateQuerySpec);
+		
+		$time_deleted = $object->updateTimeDeleted($new_time_deleted);
+		$this->assertEquals($new_time_deleted, $time_deleted);
+		$this->assertEquals($new_time_deleted, $object->time_deleted);
+	}
 	
 	public function testGetRowWithNonExistingGUID() {
 		$this->assertNull(_elgg_services()->entityTable->getRow(-1));

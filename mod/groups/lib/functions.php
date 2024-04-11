@@ -21,7 +21,7 @@ function groups_get_group_leave_menu_item(\ElggGroup $group, \ElggUser $user = n
 		return false;
 	}
 	
-	if (!$group->isMember($user) || ($group->owner_guid === $user->guid)) {
+	if (!$group->isMember($user) || ($group->owner_guid === $user->guid) || $group->isDeleted()) {
 		// a member can leave a group if he/she doesn't own it
 		return false;
 	}
@@ -55,7 +55,7 @@ function groups_get_group_join_menu_item(\ElggGroup $group, \ElggUser $user = nu
 		return false;
 	}
 	
-	if ($group->isMember($user)) {
+	if ($group->isMember($user) || $group->isDeleted()) {
 		return false;
 	}
 	

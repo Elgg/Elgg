@@ -44,7 +44,7 @@ The main differences between metadata and annotations:
 These differences might have implications for performance and your business logic, so consider carefully,
 how you would like to attach data to your entities.
 
-In certain cases, it may be benefitial to avoid using metadata and annotations and create new
+In certain cases, it may be beneficial to avoid using metadata and annotations and create new
 entities instead and attaching them via ``container_guid`` or a relationship.
 
 Datamodel
@@ -63,18 +63,24 @@ Entities
 ``ElggEntity`` is the base class for the Elgg data model and supports a common set of properties
 and methods.
 
--  A numeric Globally Unique IDentifier (See `GUIDs`_).
--  Access permissions. (When a plugin requests data, it never gets to
-   touch data that the current user doesn't have permission to see.)
--  An arbitrary subtype (more below).
--  An owner.
--  The site that the entity belongs to.
--  A container, used to associate content with a group or a user.
+- A numeric Globally Unique IDentifier (See `GUIDs`_)
+- Access permissions. (When a plugin requests data, it never gets to
+  touch data that the current user doesn't have permission to see)
+- An arbitrary subtype (more below)
+- An owner
+- A container, used to associate content with a group or a user
+- UNIX timestamps for certain actions:
+	- When was the entity created
+	- When was the entity last updated
+	- When did the the entity perform it's last action, or was acted upon
+	- When was the entity deleted
+- A deleted state (deleted entities aren't shown in normal circumstances)
+- A disabled state (disabled entities aren't shown in normal circumstances)
 
 Types
 -----
 
-*Actual* entities will be instances of four different subclasses, each having a distinct **type**
+**Actual** entities will be instances of four different subclasses, each having a distinct **type**
 property and their own additional properties and methods.
 
 =======  ==============  ===================================================================
@@ -101,7 +107,7 @@ E.g. the blog plugin creates objects with subtype ``"blog"``.
 By default, users, groups and sites have the subtypes of ``user``, ``group`` and ``site`` respectively.
 
 Plugins can use custom entity classes that extend the base type class. To do so, they need to register their class at
-runtime (e.g. in the ``'init','system'`` handler), using ``elgg_set_entity_class()``.
+runtime (e.g. in the ``'init', 'system'`` handler), using ``elgg_set_entity_class()``.
 For example, the blog plugin could use ``elgg_set_entity_class('object', 'blog', \ElggBlog::class)``.
 
 Plugins can use ``elgg-plugin.php`` to define entity class via shortcut ``entities`` parameter.
@@ -109,8 +115,11 @@ Plugins can use ``elgg-plugin.php`` to define entity class via shortcut ``entiti
 Subtype Gotchas
 ---------------
 
-- Before an entity's ``save()`` method is called, the subtype must be set by writing a string to the ``subtype`` property.
-- *Subtype cannot be changed after saving.*
+Before an entity's ``save()`` method is called, the subtype must be set by writing a string to the ``subtype`` property.
+
+.. warning::
+
+	Subtype cannot be changed after saving.
 
 GUIDs
 -----
@@ -121,13 +130,41 @@ when the entity is first saved and can never be changed.
 
 Some Elgg API functions work with GUIDs instead of ``ElggEntity`` objects.
 
+.. _database-deleted:
+
+Deleted state
+-------------
+
+As of Elgg 6.0 entities also have a deleted state. When a given entity type/subtype supports it before it's removed from
+the database it can get the deleted state. This way a user can restore the entity if the delete action was done too hastily.
+For example the user removes a blog post, but this shouldn't have been done. Now the user has the option to restore the
+blog in it's original state without having to rewrite it.
+
+In the database this is managed by the ``deleted`` column in the ``entities`` table which can have a value of ``yes`` or
+``no`` (default) and by the ``time_deleted`` column which holds a UNIX timestamp when the entity was deleted.
+
+A site administrator can set a retention period for deleted items. Once the retention period is passed the entity will be
+permanently removed from the database.
+
+Deleted items will not show in normal use cases. In the example of the blog post, the blog will not show up in the blog
+listing and if anyone has saved a link to the blog post the page will return a ``404 - Not Found`` error.
+
+There is a special page in the user settings section where all the deleted entities of the user can be viewed. Here the
+user has the option to restore the entity or permanently delete it before the retention period has passed.
+
+This special page is also available to group owners for deleted entities in their group.
+
+.. seealso::
+
+	For more information check out the :doc:`/guides/restore` documentation
+
 ElggObject
 ==========
 
 The ``ElggObject`` entity type represents arbitrary content within an
-Elgg install; things like blog posts, uploaded files, etc.
+Elgg installation things like blog posts, uploaded files, etc.
 
-Beyond the standard ElggEntity properties, ElggObjects also support:
+Beyond the standard ``ElggEntity`` properties, ``ElggObject`` also supports:
 
 -  ``title`` The title of the object (HTML escaped text)
 -  ``description`` A description of the object (HTML)
@@ -137,19 +174,17 @@ Most other data about the object is generally stored via metadata.
 ElggUser
 ========
 
-The ``ElggUser`` entity type represents users within an Elgg install.
+The ``ElggUser`` entity type represents users within an Elgg installation.
 These will be set to disabled until their accounts have been activated
 (unless they were created from within the admin panel).
 
-Beyond the standard ElggEntity properties, ElggUsers also support:
+Beyond the standard ``ElggEntity`` properties, ``ElggUser`` also supports:
 
 -  ``name`` The user's plain text name. e.g. "Hugh Jackman"
 -  ``username`` Their login name. E.g. "hjackman"
 -  ``password`` A hashed version of their password
 -  ``email`` Their email address
 -  ``language`` Their default language code.
--  ``code`` Their session code (moved to a separate table in 1.9).
--  ``last_action`` The UNIX timestamp of the last time they loaded a page
 -  ``prev_last_action`` The previous value of ``last_action``
 -  ``last_login`` The UNIX timestamp of their last log in
 -  ``prev_last_login`` the previous value of ``last_login``
@@ -159,7 +194,7 @@ ElggSite
 
 The ``ElggSite`` entity type represents your Elgg installation (via your site URL).
 
-Beyond the standard ElggEntity properties, ElggSites also support:
+Beyond the standard ``ElggEntity`` properties, ``ElggSite`` also supports:
 
 -  ``name`` The site name
 -  ``description`` A description of the site
@@ -171,7 +206,7 @@ ElggGroup
 The ``ElggGroup`` entity type represents an association of Elgg users.
 Users can join, leave, and post content to groups.
 
-Beyond the standard ElggEntity properties, ElggGroups also support:
+Beyond the standard ``ElggEntity`` properties, ``ElggGroup`` also supports:
 
 -  ``name`` The group's name (HTML escaped text)
 -  ``description`` A description of the group (HTML)
@@ -183,11 +218,13 @@ The Groups plugin
 
 Not to be confused with the entity type ``ElggGroup``, Elgg comes with
 a plugin called "Groups" that provides a default UI/UX for site users
-to interact with groups. Each group is given a discussion forum and a
-profile page linking users to content within the group.
+to interact with groups. Each group is given a profile page linking
+users to content within the group.
 
 You can alter the user experience via the traditional means of extending
 plugins or completely replace the Groups plugin with your own.
+
+Several of the Elgg core plugins offer support for group content like blogs, bookmarks, discussions, files and pages.
 
 Writing a group-aware plugin
 ----------------------------
@@ -250,15 +287,17 @@ Containers
 In order to easily search content by group or by user, content is generally
 set to be "contained" by either the user who posted it, or the group to which
 the user posted. This means the new object's ``container_guid`` property
-will be set to the GUID of the current ElggUser or the target ElggGroup.
+will be set to the GUID of the current ``ElggUser`` or the target ``ElggGroup``.
 
 E.g., three blog posts may be owned by different authors, but all be
 contained by the group they were posted to.
 
-Note: This is not always true. Comment entities are contained by the object
-commented upon, and in some 3rd party plugins the container may be used
-to model a parent-child relationship between entities (e.g. a "folder"
-object containing a file object).
+.. note::
+
+	This is not always true. Comment entities are contained by the object
+	commented upon, and in some 3rd party plugins the container may be used
+	to model a parent-child relationship between entities (e.g. a "folder"
+	object containing a file object).
 
 Annotations
 ===========
@@ -339,7 +378,7 @@ following function will provide the full listing, form and actions:
 Metadata
 ========
 
-Metadata in Elgg allows you to store extra data on an ``entity`` beyond
+Metadata in Elgg allows you to store extra data on an ``ElggEntity`` beyond
 the built-in fields that entity supports. For example, ``ElggObjects``
 only support the basic entity fields plus title and description, but you
 might want to include tags or an ISBN number. Similarly, you might want
@@ -387,8 +426,8 @@ This is suitable for most purposes. Be careful to note which attributes
 are metadata and which are built in to the entity type that you are
 working with. You do not need to save an entity after adding or updating
 metadata. You do need to save an entity if you have changed one of its
-built in attributes. As an example, if you changed the access id of an
-ElggObject, you need to save it or the change isn't pushed to the
+built in attributes. As an example, if you changed the ``access_id`` of an
+``ElggObject``, you need to save it or the change isn't pushed to the
 database.
 
 Reading metadata
@@ -401,7 +440,7 @@ To retrieve metadata, treat it as a property of the entity:
     $tags_value = $object->tags;
 
 Note that this will return the absolute value of the metadata. To get
-metadata as an ElggMetadata object, you will need to use the methods
+metadata as an ``ElggMetadata`` object, you will need to use the methods
 described in the *finer control* section below.
 
 If you stored multiple values in this piece of metadata (as in the
@@ -425,8 +464,7 @@ To always get an array back, simply cast to an array;
 Reading metadata as objects
 ---------------------------
 
-``elgg_get_metadata`` is the best function for retrieving metadata as ElggMetadata
-objects:
+``elgg_get_metadata`` is the best function for retrieving metadata as ``ElggMetadata`` objects:
 
 E.g., to retrieve a user's DOB
 
@@ -524,7 +562,7 @@ the subject (the archer) to the target.
 **A relationship does not imply reciprocity**. **A** follows **B** does
 not imply that **B** follows **A**.
 
-**Relationships_ do not have access control.** They're never
+**Relationships do not have access control.** They're never
 hidden from view and can be edited with code at any privilege
 level, with the caveat that *the entities* in a relationship
 may be invisible due to access control!
@@ -666,8 +704,8 @@ The character set of the database should be ``utf8mb4``, this will provide full 
 InnoDB
 ------
 
-As of Elgg 3.0 the database uses the InnoDB engine. In order for a correct installation or migration some settings may need to be adjusted
-in the database settings.
+As of Elgg 3.0 the database uses the InnoDB engine. In order for a correct installation or migration some settings may
+need to be adjusted in the database settings.
 
 - ``innodb_large_prefix`` should be ``on``
 - ``innodb_file_format`` should be ``Barracuda``
@@ -684,7 +722,7 @@ Table: entities
 
 This is the main `Entities`_ table containing Elgg users, sites,
 objects and groups. When you first install Elgg this is automatically
-populated with your first site.
+populated with your first site, your first user and a set of bundled plugins.
 
 It contains the following fields:
 
@@ -700,6 +738,10 @@ It contains the following fields:
 -  **enabled** If this is 'yes' an entity is accessible, if 'no' the entity
    has been disabled (Elgg treats it as if it were deleted without actually
    removing it from the database)
+-  **deleted** If this is 'yes' an entity is marked as deleted,
+   if 'no' (default) the entity is visible within the regular site.
+   Deleted entities can be viewed in the trash
+-  **time\_deleted** Unix timestamp of when the entity was deleted
 
 Table: metadata
 ~~~~~~~~~~~~~~~
@@ -726,7 +768,6 @@ This table contains `Annotations`_, this is distinct from `Metadata`_.
 -  **owner\_guid** The owner GUID of the owner who set this annotation
 -  **access\_id** An Access controls on this annotation
 -  **time\_created** Unix timestamp of when the annotation is created.
--  **enabled** If this is 'yes' an item is accessible, if 'no' the item has been disabled
 
 Table: relationships
 ~~~~~~~~~~~~~~~~~~~~

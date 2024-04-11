@@ -222,7 +222,7 @@ class UpgradeService {
 	public function getCompletedUpgrades(bool $async = true): array {
 		// make sure always to return all upgrade entities
 		return elgg_call(
-			ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES,
+			ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES,
 			function () use ($async) {
 				$completed = [];
 				
@@ -276,7 +276,7 @@ class UpgradeService {
 		// Upgrade also disabled data, so the compatibility is
 		// preserved in case the data ever gets enabled again
 		return elgg_call(
-			ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES,
+			ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES,
 			function () use ($upgrade, $max_duration) {
 				return $this->events->triggerResultsSequence('upgrade:execute', 'system', ['object' => $upgrade], null, function() use ($upgrade, $max_duration) {
 					$result = new Result();

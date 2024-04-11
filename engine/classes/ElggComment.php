@@ -24,20 +24,46 @@ class ElggComment extends \ElggObject {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
-	public function delete(bool $recursive = true): bool {
-		$result = parent::delete($recursive);
+	protected function persistentDelete(bool $recursive = true): bool {
+		$result = parent::persistentDelete($recursive);
 		
 		if ($result) {
-			// remove the threaded comments directly below this comment
-			elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($recursive) {
+			$this->deleteThreadedComments($recursive, true);
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function trash(bool $recursive = true): bool {
+		$result = parent::trash($recursive);
+		
+		if ($result) {
+			$this->deleteThreadedComments($recursive, false);
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function restore(bool $recursive = true): bool {
+		$result = parent::restore($recursive);
+		
+		if ($result) {
+			// restore threaded comments
+			elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($recursive) {
+				/* @var $children \ElggBatch */
 				$children = elgg_get_entities([
 					'type' => 'object',
 					'subtype' => 'comment',
 					'limit' => false,
 					'batch' => true,
-					'batch_inc_offset' => false,
 					'metadata_name_value_pairs' => [
 						'name' => 'parent_guid',
 						'value' => $this->guid,
@@ -46,12 +72,45 @@ class ElggComment extends \ElggObject {
 				
 				/* @var $child \ElggComment */
 				foreach ($children as $child) {
-					$child->delete($recursive);
+					$child->restore($recursive);
 				}
 			});
 		}
 		
 		return $result;
+	}
+	
+	/**
+	 * Delete threaded child comments on this comment
+	 *
+	 * @param bool $recursive  recursive delete contained entities
+	 * @param bool $persistent persistently remove the threaded comments
+	 *
+	 * @return void
+	 * @since 6.0
+	 */
+	protected function deleteThreadedComments(bool $recursive, bool $persistent): void {
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($recursive, $persistent) {
+			/* @var $children \ElggBatch */
+			$children = elgg_get_entities([
+				'type' => 'object',
+				'subtype' => 'comment',
+				'limit' => false,
+				'batch' => true,
+				'batch_inc_offset' => !$persistent,
+				'metadata_name_value_pairs' => [
+					'name' => 'parent_guid',
+					'value' => $this->guid,
+				],
+			]);
+			
+			/* @var $child \ElggComment */
+			foreach ($children as $child) {
+				if (!$child->delete($recursive, $persistent) && $persistent) {
+					$children->reportFailure();
+				}
+			}
+		});
 	}
 	
 	/**

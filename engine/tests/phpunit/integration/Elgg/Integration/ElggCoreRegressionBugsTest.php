@@ -280,7 +280,9 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 			'owner_guid' => $user->guid,
 		]);
 
-		$stats = elgg_get_entity_statistics($user->guid);
+		$stats = elgg_get_entity_statistics([
+			'owner_guid' => $user->guid,
+		]);
 
 		$this->assertEquals(1, $stats['object'][$subtype]);
 	}

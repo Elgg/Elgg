@@ -31,7 +31,7 @@ class Entity {
 		$return = $event->getValue();
 		
 		if ($return->get('edit')) {
-			// a menu item for editting already exists
+			// a menu item for editing already exists
 			return;
 		}
 		
@@ -60,7 +60,7 @@ class Entity {
 	/**
 	 * Register the delete menu item
 	 *
-	 * @param \Elgg\Event $event 'register', 'menu:entity'
+	 * @param \Elgg\Event $event 'register', 'menu:entity|menu:entity:trash'
 	 *
 	 * @return void|MenuItems
 	 */
@@ -73,11 +73,7 @@ class Entity {
 			return;
 		}
 		
-		$delete_url = elgg_generate_action_url('entity/delete', [
-			'guid' => $entity->guid,
-		]);
-		
-		if (empty($delete_url) || !$entity->canDelete()) {
+		if (!$entity->canDelete()) {
 			return;
 		}
 		
@@ -89,8 +85,55 @@ class Entity {
 			'icon' => 'delete',
 			'text' => elgg_echo('delete'),
 			'title' => elgg_echo('delete:this'),
-			'href' => $delete_url,
+			'href' => elgg_generate_action_url('entity/delete', [
+				'guid' => $entity->guid,
+			]),
 			'confirm' => elgg_echo('deleteconfirm'),
+			'priority' => 950,
+		]);
+		
+		return $return;
+	}
+	
+	/**
+	 * Register the trash menu item
+	 *
+	 * @param \Elgg\Event $event 'register', 'menu:entity'
+	 *
+	 * @return null|MenuItems
+	 */
+	public static function registerTrash(\Elgg\Event $event): ?MenuItems {
+		if (!elgg_get_config('trash_enabled')) {
+			return null;
+		}
+		
+		$entity = $event->getEntityParam();
+		if (!$entity instanceof \ElggEntity || $entity instanceof \ElggUser || $entity instanceof \ElggPlugin || $entity instanceof \ElggUpgrade) {
+			// users mostly use the hover menu for their actions
+			// plugins can't be removed
+			// upgrades deleting has no point, they'll be rediscovered again
+			return null;
+		}
+		
+		if ($entity->isDeleted() || !$entity->canDelete() || !$entity->hasCapability('restorable')) {
+			return null;
+		}
+		
+		/* @var $return MenuItems */
+		$return = $event->getValue();
+
+		// replace the delete menu item with the trash action
+		$return->remove('delete');
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'trash',
+			'icon' => 'trash-alt',
+			'text' => elgg_echo('trash'),
+			'title' => elgg_echo('trash:this'),
+			'href' => elgg_generate_action_url('entity/trash', [
+				'guid' => $entity->guid,
+			]),
+			'confirm' => elgg_echo('trashconfirm'),
 			'priority' => 950,
 		]);
 		

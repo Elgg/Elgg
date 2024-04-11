@@ -40,6 +40,9 @@ return [
 			'menu:entity' => [
 				'Elgg\SystemLog\Menus\Entity::register' => [],
 			],
+			'menu:entity:trash' => [
+				'Elgg\SystemLog\Menus\Entity::register' => [],
+			],
 		],
 		'upgrade:before' => [
 			'system' => [

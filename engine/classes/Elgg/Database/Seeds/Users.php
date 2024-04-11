@@ -123,7 +123,7 @@ class Users extends Seed {
 
 		/* @var $user \ElggUser */
 		foreach ($users as $user) {
-			if ($user->delete()) {
+			if ($user->delete(true, true)) {
 				$this->log("Deleted user {$user->guid}");
 			} else {
 				$this->log("Failed to delete user {$user->guid}");
