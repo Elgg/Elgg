@@ -47,23 +47,15 @@ class BootData {
 			throw new InstallationException('Unable to handle this request. This site is not configured or the database is down.');
 		}
 
-		// get plugins
 		$this->active_plugins = $plugins->find('active');
-
-		// get plugin settings
 		if (empty($this->active_plugins)) {
 			return;
 		}
+		
+		_elgg_services()->metadataCache->populateFromEntities($this->active_plugins);
 
-		// find GUIDs with not too many settings
-		$guids = array_map(function (\ElggPlugin $plugin) {
-			return $plugin->guid;
-		}, $this->active_plugins);
-
-		_elgg_services()->metadataCache->populateFromEntities($guids);
-
-		foreach ($guids as $guid) {
-			$this->plugin_metadata[$guid] = _elgg_services()->metadataCache->getEntityMetadata($guid);
+		foreach ($this->active_plugins as $plugin) {
+			$this->plugin_metadata[$plugin->guid] = _elgg_services()->metadataCache->getEntityMetadata($plugin->guid);
 		}
 	}
 

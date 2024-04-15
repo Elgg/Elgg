@@ -1898,32 +1898,17 @@ abstract class ElggEntity extends \ElggData {
 	}
 
 	/**
-	 * Cache the entity in a session and persisted caches
-	 *
-	 * @param bool $persist Store in persistent cache
+	 * Cache the entity in a session cache
 	 *
 	 * @return void
 	 * @internal
 	 */
-	public function cache(bool $persist = true): void {
+	public function cache(): void {
 		if (!$this->isCacheable()) {
 			return;
 		}
 
 		_elgg_services()->entityCache->save($this);
-
-		if (!$persist) {
-			return;
-		}
-		
-		$tmp = $this->volatile;
-
-		// don't store volatile data
-		$this->volatile = [];
-
-		_elgg_services()->sessionCache->entities->save($this->guid, $this);
-
-		$this->volatile = $tmp;
 	}
 
 	/**

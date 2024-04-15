@@ -179,7 +179,7 @@ class Preloader {
 		$fetch_guids = [];
 
 		foreach ($guids as $guid) {
-			$entity = _elgg_services()->entityTable->getFromCache($guid);
+			$entity = _elgg_services()->entityCache->load($guid);
 			if ($entity) {
 				$entities[] = $entity;
 			} else {

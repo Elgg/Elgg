@@ -7,7 +7,6 @@ use Elgg\Cache\MetadataCache;
 use Elgg\Config;
 use Elgg\Database;
 use Elgg\Database\Clauses\EntityWhereClause;
-use Elgg\EntityPreloader;
 use Elgg\EventsService;
 use Elgg\Exceptions\ClassException;
 use Elgg\Exceptions\Database\UserFetchFailureException;
@@ -40,8 +39,6 @@ class EntityTable {
 	protected Database $db;
 
 	protected EntityCache $entity_cache;
-
-	protected EntityPreloader $entity_preloader;
 
 	protected MetadataCache $metadata_cache;
 
@@ -239,34 +236,6 @@ class EntityTable {
 	}
 
 	/**
-	 * Get an entity from the in-memory or memcache caches
-	 *
-	 * @param int $guid GUID
-	 *
-	 * @return \ElggEntity|null
-	 */
-	public function getFromCache(int $guid): ?\ElggEntity {
-		$entity = $this->entity_cache->load($guid);
-		if ($entity) {
-			return $entity;
-		}
-
-		$entity = _elgg_services()->sessionCache->entities->load($guid);
-		if (!$entity instanceof \ElggEntity) {
-			return null;
-		}
-
-		// Validate accessibility if from cache
-		if (!elgg_get_ignore_access() && !$entity->hasAccess()) {
-			return null;
-		}
-
-		$entity->cache(false);
-
-		return $entity;
-	}
-
-	/**
 	 * Invalidate cache for entity
 	 *
 	 * @param int $guid GUID
@@ -296,7 +265,7 @@ class EntityTable {
 	 * @return \ElggEntity|null The correct Elgg or custom object based upon entity type and subtype
 	 */
 	public function get(int $guid, string $type = null, string $subtype = null): ?\ElggEntity {
-		$entity = $this->getFromCache($guid);
+		$entity = $this->entity_cache->load($guid);
 		if ($entity instanceof \ElggEntity &&
 			(!isset($type) || $entity->type === $type) &&
 			(!isset($subtype) || $entity->subtype === $subtype)

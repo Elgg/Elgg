@@ -1302,23 +1302,13 @@ class ElggPlugin extends ElggObject {
 	public function isCacheable(): bool {
 		return true;
 	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function cache(bool $persist = true): void {
-		_elgg_services()->plugins->cache($this);
-
-		parent::cache($persist);
-	}
-
+	
 	/**
 	 * {@inheritdoc}
 	 */
 	public function invalidateCache(): void {
-		
 		_elgg_services()->boot->clearCache();
-		_elgg_services()->plugins->invalidateCache($this->getID());
+		_elgg_services()->pluginsCache->delete($this->getID());
 
 		parent::invalidateCache();
 	}

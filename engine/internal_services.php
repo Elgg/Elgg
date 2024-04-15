@@ -113,7 +113,7 @@ return [
 	'plugins' => DI\autowire(\Elgg\Database\Plugins::class)->constructorParameter('cache', DI\get('pluginsCache')),
 	'pluginsCache' => DI\factory(function (ContainerInterface $c) {
 		return new \Elgg\Cache\CompositeCache('plugins', $c->config, ELGG_CACHE_RUNTIME);
-    }),
+	}),
 	'publicDb' => DI\autowire(\Elgg\Application\Database::class),
 	'queryCache' => DI\factory(function (ContainerInterface $c) {
 		$config_disabled = $c->config->db_disable_query_cache === true;
