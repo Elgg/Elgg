@@ -4,6 +4,7 @@ namespace Elgg\Cli;
 
 use Elgg\Logger\ElggLogFormatter;
 use Monolog\Logger;
+use Monolog\LogRecord;
 use Symfony\Component\Console\Helper\FormatterHelper;
 
 /**
@@ -16,12 +17,12 @@ class ErrorFormatter extends ElggLogFormatter {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function format(array $record): string {
+	public function format(LogRecord $record): string {
 		$message = parent::format($record);
 
 		$formatter = new FormatterHelper();
 
-		switch ($record['level']) {
+		switch ($record->level->value) {
 			case Logger::EMERGENCY:
 			case Logger::CRITICAL:
 			case Logger::ALERT:

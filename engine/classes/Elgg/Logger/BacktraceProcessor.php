@@ -3,6 +3,7 @@
 namespace Elgg\Logger;
 
 use Elgg\Logger;
+use Monolog\LogRecord;
 
 /**
  * Inject backtrace stack into the record
@@ -25,15 +26,15 @@ class BacktraceProcessor {
 	}
 
 	/**
-	 * Process recrod
+	 * Process record
 	 *
-	 * @param array $record Record
+	 * @param LogRecord $record Record
 	 *
-	 * @return array
+	 * @return LogRecord
 	 */
-	public function __invoke(array $record) {
+	public function __invoke(LogRecord $record): LogRecord {
 		// return if the level is not high enough
-		if ($record['level'] < $this->level) {
+		if ($record->level->isLowerThan($this->level)) {
 			return $record;
 		}
 
