@@ -33,10 +33,7 @@ return array(
 	'site_notifications:success:delete' => 'Notifications deleted',
 	'site_notifications:success:mark_read' => 'Notifications marked as read',
 	
-	'site_notifications:cron:linked_cleanup:start' => 'Site notifications cleaning up notifications without linked entities',
 	'site_notifications:cron:linked_cleanup:end' => 'Site notifications cleaned up %s notifications without linked entities',
-	'site_notifications:cron:unread_cleanup:start' => 'Site notifications cleaning up unread notifications older than %s days',
 	'site_notifications:cron:unread_cleanup:end' => 'Site notifications cleaned up %s unread notifications',
-	'site_notifications:cron:read_cleanup:start' => 'Site notifications cleaning up read notifications older than %s days',
 	'site_notifications:cron:read_cleanup:end' => 'Site notifications cleaned up %s read notifications',
 );

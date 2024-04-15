@@ -2,241 +2,241 @@
 host     = https://www.transifex.com
 lang_map = pt_BR: pt_br, ro_RO: ro_ro, zh-Hans: zh_hans
 
-[o:elgg:p:elgg-core-5:r:engine]
+[o:elgg:p:elgg-core-6:r:engine]
 file_filter = languages/<lang>.php
 source_file = languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:install]
+[o:elgg:p:elgg-core-6:r:install]
 file_filter = install/languages/<lang>.php
 source_file = install/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:activity]
+[o:elgg:p:elgg-core-6:r:activity]
 file_filter = mod/activity/languages/<lang>.php
 source_file = mod/activity/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:blog]
+[o:elgg:p:elgg-core-6:r:blog]
 file_filter = mod/blog/languages/<lang>.php
 source_file = mod/blog/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:bookmarks]
+[o:elgg:p:elgg-core-6:r:bookmarks]
 file_filter = mod/bookmarks/languages/<lang>.php
 source_file = mod/bookmarks/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:ckeditor]
+[o:elgg:p:elgg-core-6:r:ckeditor]
 file_filter = mod/ckeditor/languages/<lang>.php
 source_file = mod/ckeditor/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:custom_index]
+[o:elgg:p:elgg-core-6:r:custom_index]
 file_filter = mod/custom_index/languages/<lang>.php
 source_file = mod/custom_index/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:developers]
+[o:elgg:p:elgg-core-6:r:developers]
 file_filter = mod/developers/languages/<lang>.php
 source_file = mod/developers/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:discussions]
+[o:elgg:p:elgg-core-6:r:discussions]
 file_filter = mod/discussions/languages/<lang>.php
 source_file = mod/discussions/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:externalpages]
+[o:elgg:p:elgg-core-6:r:externalpages]
 file_filter = mod/externalpages/languages/<lang>.php
 source_file = mod/externalpages/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:file]
+[o:elgg:p:elgg-core-6:r:file]
 file_filter = mod/file/languages/<lang>.php
 source_file = mod/file/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:friends]
+[o:elgg:p:elgg-core-6:r:friends]
 file_filter = mod/friends/languages/<lang>.php
 source_file = mod/friends/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:friends_collections]
+[o:elgg:p:elgg-core-6:r:friends_collections]
 file_filter = mod/friends_collections/languages/<lang>.php
 source_file = mod/friends_collections/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:garbagecollector]
+[o:elgg:p:elgg-core-6:r:garbagecollector]
 file_filter = mod/garbagecollector/languages/<lang>.php
 source_file = mod/garbagecollector/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:groups]
+[o:elgg:p:elgg-core-6:r:groups]
 file_filter = mod/groups/languages/<lang>.php
 source_file = mod/groups/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:invitefriends]
+[o:elgg:p:elgg-core-6:r:invitefriends]
 file_filter = mod/invitefriends/languages/<lang>.php
 source_file = mod/invitefriends/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:likes]
+[o:elgg:p:elgg-core-6:r:likes]
 file_filter = mod/likes/languages/<lang>.php
 source_file = mod/likes/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:members]
+[o:elgg:p:elgg-core-6:r:members]
 file_filter = mod/members/languages/<lang>.php
 source_file = mod/members/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:messageboard]
+[o:elgg:p:elgg-core-6:r:messageboard]
 file_filter = mod/messageboard/languages/<lang>.php
 source_file = mod/messageboard/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:messages]
+[o:elgg:p:elgg-core-6:r:messages]
 file_filter = mod/messages/languages/<lang>.php
 source_file = mod/messages/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:pages]
+[o:elgg:p:elgg-core-6:r:pages]
 file_filter = mod/pages/languages/<lang>.php
 source_file = mod/pages/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:profile]
+[o:elgg:p:elgg-core-6:r:profile]
 file_filter = mod/profile/languages/<lang>.php
 source_file = mod/profile/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:reportedcontent]
+[o:elgg:p:elgg-core-6:r:reportedcontent]
 file_filter = mod/reportedcontent/languages/<lang>.php
 source_file = mod/reportedcontent/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:search]
+[o:elgg:p:elgg-core-6:r:search]
 file_filter = mod/search/languages/<lang>.php
 source_file = mod/search/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:site_notifications]
+[o:elgg:p:elgg-core-6:r:site_notifications]
 file_filter = mod/site_notifications/languages/<lang>.php
 source_file = mod/site_notifications/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:system_log]
+[o:elgg:p:elgg-core-6:r:system_log]
 file_filter = mod/system_log/languages/<lang>.php
 source_file = mod/system_log/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:tagcloud]
+[o:elgg:p:elgg-core-6:r:tagcloud]
 file_filter = mod/tagcloud/languages/<lang>.php
 source_file = mod/tagcloud/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:theme_sandbox]
+[o:elgg:p:elgg-core-6:r:theme_sandbox]
 file_filter = mod/theme_sandbox/languages/<lang>.php
 source_file = mod/theme_sandbox/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:thewire]
+[o:elgg:p:elgg-core-6:r:thewire]
 file_filter = mod/thewire/languages/<lang>.php
 source_file = mod/thewire/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:uservalidationbyemail]
+[o:elgg:p:elgg-core-6:r:uservalidationbyemail]
 file_filter = mod/uservalidationbyemail/languages/<lang>.php
 source_file = mod/uservalidationbyemail/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:web_services]
+[o:elgg:p:elgg-core-6:r:web_services]
 file_filter = mod/web_services/languages/<lang>.php
 source_file = mod/web_services/languages/en.php
 source_lang = en
 type        = PHP_ARRAY
 
-[o:elgg:p:elgg-core-5:r:docs-index]
+[o:elgg:p:elgg-core-6:r:docs-index]
 file_filter = docs/locale/<lang>/LC_MESSAGES/index.po
 source_file = docs/locale/pot/index.pot
 source_lang = en
 type        = PO
 
-[o:elgg:p:elgg-core-5:r:docs-admin]
+[o:elgg:p:elgg-core-6:r:docs-admin]
 file_filter = docs/locale/<lang>/LC_MESSAGES/admin.po
 source_file = docs/locale/pot/admin.pot
 source_lang = en
 type        = PO
 
-[o:elgg:p:elgg-core-5:r:docs-appendix]
+[o:elgg:p:elgg-core-6:r:docs-appendix]
 file_filter = docs/locale/<lang>/LC_MESSAGES/appendix.po
 source_file = docs/locale/pot/appendix.pot
 source_lang = en
 type        = PO
 
-[o:elgg:p:elgg-core-5:r:docs-contribute]
+[o:elgg:p:elgg-core-6:r:docs-contribute]
 file_filter = docs/locale/<lang>/LC_MESSAGES/contribute.po
 source_file = docs/locale/pot/contribute.pot
 source_lang = en
 type        = PO
 
-[o:elgg:p:elgg-core-5:r:docs-design]
+[o:elgg:p:elgg-core-6:r:docs-design]
 file_filter = docs/locale/<lang>/LC_MESSAGES/design.po
 source_file = docs/locale/pot/design.pot
 source_lang = en
 type        = PO
 
-[o:elgg:p:elgg-core-5:r:docs-guides]
+[o:elgg:p:elgg-core-6:r:docs-guides]
 file_filter = docs/locale/<lang>/LC_MESSAGES/guides.po
 source_file = docs/locale/pot/guides.pot
 source_lang = en
 type        = PO
 
-[o:elgg:p:elgg-core-5:r:docs-intro]
+[o:elgg:p:elgg-core-6:r:docs-intro]
 file_filter = docs/locale/<lang>/LC_MESSAGES/intro.po
 source_file = docs/locale/pot/intro.pot
 source_lang = en
 type        = PO
 
-[o:elgg:p:elgg-core-5:r:docs-plugins]
+[o:elgg:p:elgg-core-6:r:docs-plugins]
 file_filter = docs/locale/<lang>/LC_MESSAGES/plugins.po
 source_file = docs/locale/pot/plugins.pot
 source_lang = en
 type        = PO
 
-[o:elgg:p:elgg-core-5:r:docs-tutorials]
+[o:elgg:p:elgg-core-6:r:docs-tutorials]
 file_filter = docs/locale/<lang>/LC_MESSAGES/tutorials.po
 source_file = docs/locale/pot/tutorials.pot
 source_lang = en

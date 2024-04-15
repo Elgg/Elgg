@@ -180,7 +180,14 @@ class ReleaseCleaner {
 			// something was changed
 			file_put_contents($translation_file, $contents);
 			
-			$this->log[] = "Cleaned empty translations from {$translation_file}";
+			$translations = Includer::includeFile($translation_file);
+			if (!empty($translations)) {
+				$this->log[] = "Cleaned empty translations from {$translation_file}";
+			} else {
+				unlink($translation_file);
+				
+				$this->log[] = "Removed empty translation file {$translation_file}";
+			}
 		}
 	}
 	
