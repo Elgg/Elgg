@@ -60,7 +60,6 @@ return array(
 	// entity explorer
 	'developers:entity_explorer:help' => 'View information about entities and perform some basic actions on them.',
 	'developers:entity_explorer:guid:label' => 'Enter the guid of the entity to inspect',
-	'developers:entity_explorer:info' => 'Entity Information',
 	'developers:entity_explorer:info:attributes' => 'Attributes',
 	'developers:entity_explorer:info:metadata' => 'Metadata',
 	'developers:entity_explorer:info:relationships' => 'Relationships',
@@ -71,7 +70,6 @@ return array(
 	'developers:entity_explorer:view_entity' => 'View this entity on the site',
 	
 	// inspection
-	'developers:inspect:help' => 'Inspect configuration of the Elgg framework.',
 	'developers:inspect:actions' => 'Actions',
 	'developers:inspect:events' => 'Events',
 	'developers:inspect:menus' => 'Menus',

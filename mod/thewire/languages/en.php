@@ -51,10 +51,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Your message was successfully posted to the wire.",
-	'thewire:deleted' => "The wire post was successfully deleted.",
 	'thewire:blank' => "Sorry, you need to enter some text before we can post this.",
 	'thewire:notsaved' => "Sorry. We could not save this wire post.",
-	'thewire:notdeleted' => "Sorry. We could not delete this wire post.",
 
 	/**
 	 * Notifications
