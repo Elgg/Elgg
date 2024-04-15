@@ -618,7 +618,7 @@ class Application {
 			],
 			'environments' => [
 				'default_migration_table' => "{$conn['prefix']}migrations",
-				'default_database' => 'prod',
+				'default_environment' => 'prod',
 				'prod' => [
 					'adapter' => 'mysql',
 					'host' => $conn['host'],
