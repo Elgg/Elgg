@@ -32,7 +32,7 @@
         "michelf/php-markdown": "~2.0.0",
         "misd/linkify": "~1.1.2",
         "monolog/monolog": "~2.9.1",
-        "npm-asset/cropperjs": "~1.5.9",
+        "npm-asset/cropperjs": "~1.6.1",
         "npm-asset/jquery": "~3.7.1",
         "npm-asset/jquery-cropper": "~1.0.0",
         "npm-asset/jquery-colorbox": "^1.6.4",
