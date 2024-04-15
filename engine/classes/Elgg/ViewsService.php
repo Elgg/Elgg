@@ -3,7 +3,6 @@
 namespace Elgg;
 
 use Elgg\Cache\SystemCache;
-use Elgg\Filesystem\Directory;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\Project\Paths;
 use Elgg\Traits\Loggable;
@@ -582,7 +581,7 @@ class ViewsService {
 				foreach ($paths as $path) {
 					if (!preg_match('~^([/\\\\]|[a-zA-Z]\:)~', $path)) {
 						// relative path
-						$path = Directory\Local::projectRoot()->getPath($path);
+						$path = Paths::project() . $path;
 					}
 
 					if (str_ends_with($view, '/')) {

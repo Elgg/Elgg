@@ -6,9 +6,9 @@
  * @uses $vars['sysmessages'] Array of system status messages
  */
 
-use Elgg\Filesystem\Directory as ElggDirectory;
+use Elgg\Project\Paths;
 
-$isElggAtRoot = Elgg\Application::elggDir()->getPath() === ElggDirectory\Local::projectRoot()->getPath();
+$isElggAtRoot = Paths::elgg() === Paths::project();
 $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';
 
 $footer_menu_items = elgg_format_element('li', [], elgg_view('output/url', [

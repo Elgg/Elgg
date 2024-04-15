@@ -15,8 +15,6 @@ use Elgg\Exceptions\HttpException;
 use Elgg\Exceptions\Http\GatekeeperException;
 use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\Filesystem\Directory;
-use Elgg\Filesystem\Directory\Local;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Http\RedirectResponse;
@@ -43,6 +41,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * The full path is necessary to work around this: https://bugs.php.net/bug.php?id=55726
  *
+ * @internal
  * @since 2.0.0
  */
 class Application {
@@ -479,25 +478,6 @@ class Application {
 	}
 
 	/**
-	 * Returns a directory that points to the root of Elgg, but not necessarily
-	 * the install root. See `self::root()` for that.
-	 *
-	 * @return Directory
-	 */
-	public static function elggDir() {
-		return Local::elggRoot();
-	}
-
-	/**
-	 * Returns a directory that points to the project root, where composer is installed.
-	 *
-	 * @return Directory
-	 */
-	public static function projectDir() {
-		return Local::projectRoot();
-	}
-
-	/**
 	 * Renders a web UI for installing Elgg.
 	 *
 	 * @return Response|false
@@ -572,10 +552,10 @@ class Application {
 	 */
 	public static function migrate() {
 		
-		$constants = self::elggDir()->getPath('engine/lib/constants.php');
+		$constants = Paths::elgg() . 'engine/lib/constants.php';
 		Includer::requireFileOnce($constants);
 		
-		$conf = self::elggDir()->getPath('engine/schema/migrations.php');
+		$conf = Paths::elgg() . 'engine/schema/migrations.php';
 		if (!$conf) {
 			throw new InstallationException('Settings file is required to run database migrations.');
 		}

@@ -85,7 +85,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function createSettingsFile() {
-		$template = Application::elggDir()->getContents("elgg-config/settings.example.php");
+		$template = file_get_contents(Paths::elgg() . "elgg-config/settings.example.php");
 
 		$params = [
 			'dbprefix' => getenv('ELGG_DB_PREFIX') !== false ? getenv('ELGG_DB_PREFIX') : 'c_i_elgg_',

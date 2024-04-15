@@ -71,7 +71,7 @@ class InstallCommand extends BaseCommand {
 		
 		try {
 			$installer = new \ElggInstaller();
-			$htaccess = !is_file(\Elgg\Application::projectDir()->getPath('.htaccess'));
+			$htaccess = !is_file(\Elgg\Project\Paths::project() . '.htaccess');
 			$installer->batchInstall($params, $htaccess);
 		} catch (InstallationException $ex) {
 			$this->dumpRegisters();
