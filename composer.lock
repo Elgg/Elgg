@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "836daf447895d2174c3b043ca71fa05e",
+    "content-hash": "2d280bbecd39ee38820d0a391b087cdd",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -2941,10 +2941,10 @@
         },
         {
             "name": "npm-asset/yaireo--tagify",
-            "version": "4.17.9",
+            "version": "4.22.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@yaireo/tagify/-/tagify-4.17.9.tgz"
+                "url": "https://registry.npmjs.org/@yaireo/tagify/-/tagify-4.22.2.tgz"
             },
             "type": "npm-asset",
             "license": [
