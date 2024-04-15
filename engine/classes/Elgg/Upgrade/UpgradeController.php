@@ -32,7 +32,7 @@ class UpgradeController {
 
 		$upgrade = _elgg_services()->upgrades->run();
 
-		$upgrade->done(
+		$upgrade->then(
 			function () use (&$response, $forward_url) {
 				$response = elgg_ok_response('', elgg_echo('upgrade:core'), $forward_url);
 			},

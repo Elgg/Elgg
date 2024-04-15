@@ -67,7 +67,7 @@ class UpgradeService {
 			\Elgg\Cache\EventHandlers::disable();
 			elgg_clear_caches();
 
-			return $resolve();
+			return $resolve($resolve);
 		});
 	}
 
@@ -88,7 +88,7 @@ class UpgradeService {
 
 			$this->events->triggerAfter('upgrade', 'system', null);
 
-			return $resolve();
+			return $resolve($resolve);
 		});
 	}
 
@@ -156,13 +156,13 @@ class UpgradeService {
 			$upgrades = $this->getPendingUpgrades(false);
 		}
 
-		$this->up()->done(
+		$this->up()->then(
 			function () use ($resolve, $reject, $upgrades) {
 				all([
 					$this->runUpgrades($upgrades),
-				])->done(
+				])->then(
 					function () use ($resolve, $reject) {
-						$this->down()->done(
+						$this->down()->then(
 							function ($result) use ($resolve) {
 								return $resolve($result);
 							},
