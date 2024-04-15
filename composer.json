@@ -44,7 +44,7 @@
         "pelago/emogrifier": "~7.2.0",
         "peppeocchi/php-cron-scheduler": "~4.0",
         "php-di/php-di": "~6.4.0",
-        "phpfastcache/phpfastcache": "~9.1.3",
+        "phpfastcache/phpfastcache": "~9.2.3",
         "react/promise": "^2.5",
         "roave/security-advisories": "dev-master",
         "robmorgan/phinx": "~0.16.0",

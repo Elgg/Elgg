@@ -43,7 +43,6 @@ class Memcached extends Config {
 		
 		return new self([
 			'servers' => $servers,
-			'preventCacheSlams' => true,
 			'useStaticItemCaching' => true,
 			'itemDetailedDate' => true,
 			'optPrefix' => $opt_prefix,

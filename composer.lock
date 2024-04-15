@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d280bbecd39ee38820d0a391b087cdd",
+    "content-hash": "3cd85bf71af376f6ad7ccd72bd2983b6",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -3263,16 +3263,16 @@
         },
         {
             "name": "phpfastcache/phpfastcache",
-            "version": "9.1.3",
+            "version": "9.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPSocialNetwork/phpfastcache.git",
-                "reference": "8614c5624e56b6f41fa666fdec3dc746b52df6b4"
+                "reference": "372d62e0bbab5bcfac6404dc912040b038a3afb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/8614c5624e56b6f41fa666fdec3dc746b52df6b4",
-                "reference": "8614c5624e56b6f41fa666fdec3dc746b52df6b4",
+                "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/372d62e0bbab5bcfac6404dc912040b038a3afb7",
+                "reference": "372d62e0bbab5bcfac6404dc912040b038a3afb7",
                 "shasum": ""
             },
             "require": {
@@ -3282,46 +3282,46 @@
                 "psr/cache": "^2.0||^3.0",
                 "psr/simple-cache": "^2.0||^3.0"
             },
-            "conflict": {
-                "doctrine/couchdb": "<dev-master#9eeb9e5",
-                "solarium/solarium": "<6.1"
+            "provide": {
+                "psr/cache-implementation": "2.0|3.0",
+                "psr/simple-cache-implementation": "2.0|3.0"
             },
             "require-dev": {
                 "ext-gettext": "*",
                 "jetbrains/phpstorm-stubs": "dev-master",
                 "league/climate": "^3.8",
+                "phpfastcache/phpfastcache-devtools": "dev-master",
                 "phpmd/phpmd": "@stable",
-                "phpstan/phpstan": "^1.5",
+                "phpstan/phpstan": "@stable",
                 "squizlabs/php_codesniffer": "@stable"
             },
             "suggest": {
-                "aws/aws-sdk-php": "~3.0",
-                "doctrine/couchdb": "^dev-master#9eeb9e5",
                 "ext-apcu": "*",
                 "ext-cassandra": "*",
-                "ext-couchbase": "*",
-                "ext-couchbase_v3": "*",
+                "ext-couchbase": "^3.0",
+                "ext-curl": "*",
                 "ext-intl": "*",
                 "ext-leveldb": "*",
                 "ext-memcache": "*",
                 "ext-memcached": "*",
-                "ext-mongodb": "*",
                 "ext-redis": "*",
                 "ext-sqlite": "*",
                 "ext-wincache": "*",
-                "ext-xcache": "*",
-                "google/cloud-firestore": "^1.20",
-                "mongodb/mongodb": "^1.9",
+                "phpfastcache/arangodb-extension": "^9.2",
+                "phpfastcache/couchbasev4-extension": "^9.2",
+                "phpfastcache/couchdb-extension": "^9.2",
+                "phpfastcache/dynamodb-extension": "^9.2",
+                "phpfastcache/firestore-extension": "^9.2",
+                "phpfastcache/mongodb-extension": "^9.2",
                 "phpfastcache/phpssdb": "~1.1.0",
-                "predis/predis": "^1.1",
-                "solarium/solarium": "~6.1",
-                "triagens/arangodb": "^3.8"
+                "phpfastcache/ravendb-extension": "^9.2",
+                "phpfastcache/solr-extension": "^9.2",
+                "predis/predis": "^2.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Phpfastcache\\": "lib/Phpfastcache/",
-                    "Phpfastcache\\Tests\\": "tests/lib/"
+                    "Phpfastcache\\": "lib/Phpfastcache/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3340,7 +3340,7 @@
                     "homepage": "https://github.com/PHPSocialNetwork/phpfastcache/graphs/contributors"
                 }
             ],
-            "description": "PHP Abstract Cache Class - Reduce your database call using cache system. Phpfastcache handles a lot of drivers such as Apc(u), Cassandra, CouchBase, Couchdb, Mongodb, Files, (P)redis, Leveldb, Memcache(d), Ssdb, Sqlite, Wincache, Xcache, Zend Data Cache.",
+            "description": "PHP Abstract Cache Class - Reduce your database call using cache system. Phpfastcache handles a lot of drivers such as Apc(u), Cassandra, CouchBase, Couchdb, Dynamodb, Firestore, Mongodb, Files, (P)redis, Leveldb, Memcache(d), Ravendb, Ssdb, Sqlite, Wincache, Xcache, Zend Data Cache.",
             "homepage": "https://www.phpfastcache.com",
             "keywords": [
                 "ArangoDb",
@@ -3357,6 +3357,7 @@
                 "couchdb",
                 "dynamodb",
                 "files cache",
+                "firestore",
                 "memcache",
                 "memcached",
                 "mongodb",
@@ -3364,7 +3365,9 @@
                 "pdo cache",
                 "php cache",
                 "predis",
+                "ravendb",
                 "redis",
+                "redis cluster",
                 "solr",
                 "ssdb",
                 "wincache",
@@ -3376,7 +3379,9 @@
                 "zend server"
             ],
             "support": {
+                "docs": "https://github.com/PHPSocialNetwork/phpfastcache/wiki",
                 "issues": "https://github.com/PHPSocialNetwork/phpfastcache/issues",
+                "security": "https://github.com/PHPSocialNetwork/phpfastcache/blob/master/SECURITY.md",
                 "source": "https://github.com/PHPSocialNetwork/phpfastcache",
                 "wiki": "https://github.com/PHPSocialNetwork/phpfastcache/wiki"
             },
@@ -3386,7 +3391,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-02-18T15:52:06+00:00"
+            "time": "2024-01-13T06:26:00+00:00"
         },
         {
             "name": "psr/cache",

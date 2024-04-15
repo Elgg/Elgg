@@ -252,7 +252,6 @@ class CompositeCache extends BaseCache {
 		
 		$cluster_driver = $cluster->getCluster();
 		$cluster_driver->setConfig(new ConfigurationOption([
-			'preventCacheSlams' => true,
 			'useStaticItemCaching' => true,
 			'itemDetailedDate' => true,
 		]));
@@ -361,12 +360,12 @@ class CompositeCache extends BaseCache {
 			return null;
 		}
 		
-		$config = new \Phpfastcache\Drivers\Memstatic\Config();
+		$config = new \Phpfastcache\Drivers\Memory\Config();
 		
 		$config->setUseStaticItemCaching(true);
 		$config->setItemDetailedDate(true);
 		
-		return CacheManager::getInstance('Memstatic', $config, $this->prefixInstanceId('memstatic'));
+		return CacheManager::getInstance('Memory', $config, $this->prefixInstanceId('memory'));
 	}
 
 	/**

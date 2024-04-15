@@ -189,23 +189,32 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			_elgg_services()->system_messages->dumpRegister();
 		}
 		
+		// close the database connections to prevent 'too many connections'
+		_elgg_services()->db->closeConnections();
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function tearDownAfterClass(): void {
 		// performing some additional cleanup as we can't rely on php garbage collection
 		foreach (CacheManager::getInstances() as $instance) {
 			if ($instance instanceof \Phpfastcache\Drivers\Memcached\Driver) {
 				$memcached_software = $this->getInaccessableProperty($instance, 'instance');
+				$memcached_software->flush();
 				$memcached_software->quit();
 			} elseif ($instance instanceof \Phpfastcache\Drivers\Redis\Driver) {
 				$redis_software = $this->getInaccessableProperty($instance, 'instance');
+				$redis_software->flushAll();
 				$redis_software->close();
 			}
 		}
-
+		
 		CacheManager::clearInstances();
 		
-		// close the database connections to prevent 'too many connections'
-		_elgg_services()->db->closeConnections();
+		parent::tearDownAfterClass();
 	}
-
+	
 	/**
 	 * Called after setUp() method and can be used by test cases to setup their test logic
 	 * @return mixed
