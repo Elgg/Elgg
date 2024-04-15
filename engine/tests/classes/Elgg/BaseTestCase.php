@@ -236,14 +236,9 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	public function getDatabasePlatformMock() {
 		$mock = $this->getMockBuilder('Doctrine\DBAL\Platforms\MySQLPlatform')
 			->onlyMethods([
-				'getName',
 				'getTruncateTableSQL',
 			])
 			->getMock();
-
-		$mock->expects($this->any())
-			->method('getName')
-			->willReturn('mysql');
 
 		$mock->expects($this->any())
 			->method('getTruncateTableSQL')
@@ -266,13 +261,10 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 					'commit',
 					'rollback',
 					'prepare',
-					'query',
 					'executeQuery',
 					'executeStatement',
-					'executeUpdate',
 					'getDatabasePlatform',
 					'lastInsertId',
-					'getExpressionBuilder',
 					'quote',
 				]
 			)

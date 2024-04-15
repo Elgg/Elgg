@@ -108,6 +108,7 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 	public function testCanGetData() {
 
 		$select = Select::fromTable('A');
+		$select->select('*');
 		$select->where($select->compare('foo', '=', 'bar1'));
 		
 		$data = [

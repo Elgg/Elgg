@@ -16,7 +16,7 @@
         "composer/installers": ">=1.0.8",
         "composer/semver": "~3.4.0",
         "css-crush/css-crush": "~4.1.0",
-        "doctrine/dbal": "~3.7.1",
+        "doctrine/dbal": "~4.0.1",
         "eloquent/composer-config-reader": "~3.0.0",
         "fakerphp/faker": "~1.23.0",
         "fortawesome/font-awesome": "~5.14",

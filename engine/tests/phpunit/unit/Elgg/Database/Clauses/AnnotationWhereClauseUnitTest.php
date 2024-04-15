@@ -17,6 +17,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 
 	public function up() {
 		$this->qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$this->qb->select('*');
 	}
 
 	public function testBuildEmptyQuery() {
@@ -211,7 +212,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 	}
 
 	public function testBuildSortByCalculationQuery() {
-		$this->qb->addSelect("avg(CAST({$this->qb->getTableAlias()}.value AS DECIMAL(10, 2))) AS annotation_calculation");
+		$this->qb->select("avg(CAST({$this->qb->getTableAlias()}.value AS DECIMAL(10, 2))) AS annotation_calculation");
 		$this->qb->addGroupBy("{$this->qb->getTableAlias()}.entity_guid");
 		$this->qb->addOrderBy('annotation_calculation', 'desc');
 
@@ -276,6 +277,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 		$query->sort_by_direction = 'desc';
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -305,6 +307,7 @@ class AnnotationWhereClauseUnitTest extends UnitTestCase {
 		$query->value_type = ELGG_VALUE_INTEGER;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());

@@ -61,14 +61,14 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
 		_elgg_services()->db->addQuerySpec([
 			'sql' => $qb->getSQL(),
-			'results' => [1],
+			'results' => [[1]],
 		]);
 
 		$result = elgg()->call(function (Database $db) use ($qb) {
 			return $db->getDataRow($qb);
 		});
 
-		$this->assertEquals((object) 1, $result);
+		$this->assertEquals((object) [1], $result);
 	}
 
 	function testStartsTimer() {

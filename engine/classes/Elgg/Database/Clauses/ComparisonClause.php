@@ -12,31 +12,6 @@ use Elgg\Values;
 class ComparisonClause extends Clause {
 
 	/**
-	 * @var string
-	 */
-	public $x;
-
-	/**
-	 * @var string
-	 */
-	public $comparison;
-
-	/**
-	 * @var mixed|null
-	 */
-	public $y;
-
-	/**
-	 * @var null|string
-	 */
-	public $type;
-
-	/**
-	 * @var bool|null
-	 */
-	public $case_sensitive;
-
-	/**
 	 * Constructor
 	 *
 	 * @param string $x              Comparison value (e.g. prefixed column name)
@@ -45,12 +20,13 @@ class ComparisonClause extends Clause {
 	 * @param string $type           Value type for sanitization/casting
 	 * @param bool   $case_sensitive Use case sensitive comparison for strings
 	 */
-	public function __construct($x, $comparison, $y = null, $type = null, $case_sensitive = null) {
-		$this->x = $x;
-		$this->comparison = $comparison;
-		$this->y = $y;
-		$this->type = $type;
-		$this->case_sensitive = $case_sensitive;
+	public function __construct(
+		public string $x,
+		public string $comparison,
+		public mixed $y = null,
+		public ?string $type = null,
+		public ?bool $case_sensitive = null
+	) {
 	}
 
 	/**
@@ -66,13 +42,13 @@ class ComparisonClause extends Clause {
 
 		$compare_with = function ($func, $boolean = 'OR') use ($x, $y, $type, $case_sensitive, $qb) {
 			if (!isset($y)) {
-				return;
+				return null;
 			}
 
 			$y = is_array($y) ? $y : [$y];
 			$parts = [];
 			foreach ($y as $val) {
-				$val = $qb->param($val, $type);
+				$val = isset($type) ? $qb->param($val, $type) : $val;
 				if ($case_sensitive && $type === ELGG_VALUE_STRING) {
 					$val = "BINARY {$val}";
 				}
@@ -113,7 +89,7 @@ class ComparisonClause extends Clause {
 				}
 				
 				if (is_array($y) || $comparison === 'not in') {
-					if (!empty($y)) {
+					if (!Values::isEmpty($y)) {
 						$param = isset($type) ? $qb->param($y, $type) : $y;
 						$match_expr = $qb->expr()->notIn($x, $param);
 					}

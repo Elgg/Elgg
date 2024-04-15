@@ -403,12 +403,17 @@ class MetadataUnitTest extends UnitTestCase {
 		$alias = $select->joinAnnotationTable($select->getTableAlias(), 'entity_guid', $annotation_names, 'inner', AnnotationsTable::DEFAULT_JOIN_ALIAS);
 		$select->select("avg({$alias}.value) AS calculation");
 
+		$wheres = [];
+		
 		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
-		$select->addClause(new EntityWhereClause(), 'e');
+		$wheres[] = (new EntityWhereClause())->prepare($select, 'e');
 
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = $annotation_names;
-		$select->addClause($annotation, $alias);
+		
+		$wheres[] = $annotation->prepare($select, $alias);
+		
+		$select->andWhere($select->merge($wheres));
 
 		$spec = _elgg_services()->db->addQuerySpec([
 			'sql' => $select->getSQL(),
@@ -509,28 +514,33 @@ class MetadataUnitTest extends UnitTestCase {
 
 		$wheres = [];
 		
+		$md_wheres = [];
+		
 		$metadata = new MetadataWhereClause();
 		$metadata->names = ['foo1'];
 		$metadata->values = ['bar1'];
 		$metadata->ids = [1, 2];
 		$metadata->entity_guids = [1, 2];
-		$wheres[] = $metadata->prepare($select, $select->getTableAlias());
+		$md_wheres[] = $metadata->prepare($select, $select->getTableAlias());
 
 		$metadata = new MetadataWhereClause();
 		$metadata->names = ['foo2'];
 		$metadata->values = ['bar2'];
 		$metadata->ids = [1, 2];
 		$metadata->entity_guids = [1, 2];
-		$wheres[] = $metadata->prepare($select, $select->getTableAlias());
+		$md_wheres[] = $metadata->prepare($select, $select->getTableAlias());
 
-		$select->andWhere($select->merge($wheres));
+		$wheres[] = $select->merge($md_wheres);
 
 		$select->join($select->getTableAlias(), EntityTable::TABLE_NAME, 'e', "e.guid = {$select->getTableAlias()}.entity_guid");
 		$where = new EntityWhereClause();
 		$where->guids = [1, 2];
 		$where->owner_guids = [3, 4];
 		$where->container_guids = [5, 6];
-		$select->addClause($where, 'e');
+		
+		$wheres[] = $where->prepare($select, 'e');
+		
+		$select->andWhere($select->merge($wheres));
 
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
@@ -625,20 +635,23 @@ class MetadataUnitTest extends UnitTestCase {
 		$wheres = [];
 		
 		$alias = $select->joinEntitiesTable($select->getTableAlias(), 'entity_guid', 'inner', EntityTable::DEFAULT_JOIN_ALIAS);
-		$select->addClause(new EntityWhereClause(), $alias);
+		$wheres[] = (new EntityWhereClause())->prepare($select, $alias);
 
+		$an_wheres = [];
 		$alias1 = $select->joinAnnotationTable($select->getTableAlias(), 'entity_guid', ['foo1']);
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo1'];
 		$annotation->values = ['bar1'];
-		$wheres[] = $annotation->prepare($select, $alias1);
+		$an_wheres[] = $annotation->prepare($select, $alias1);
 
 		$alias2 = $select->joinAnnotationTable($select->getTableAlias(), 'entity_guid', ['foo2']);
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo2'];
 		$annotation->values = ['bar2'];
-		$wheres[] = $annotation->prepare($select, $alias2);
+		$an_wheres[] = $annotation->prepare($select, $alias2);
 
+		$wheres[] = $select->merge($an_wheres);
+		
 		$select->andWhere($select->merge($wheres));
 
 		$select->setMaxResults(10);
@@ -678,21 +691,24 @@ class MetadataUnitTest extends UnitTestCase {
 		$wheres = [];
 		
 		$select->joinEntitiesTable($select->getTableAlias(), 'entity_guid', 'inner', 'e');
-		$select->addClause(new EntityWhereClause(), 'e');
+		$wheres[] = (new EntityWhereClause())->prepare($select, 'e');
 
+		$an_wheres = [];
 		$alias = $select->joinAnnotationTable($select->getTableAlias(), 'entity_guid', null, 'inner', AnnotationsTable::DEFAULT_JOIN_ALIAS);
 
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo1'];
 		$annotation->values = ['bar1'];
-		$wheres[] = $annotation->prepare($select, $alias);
+		$an_wheres[] = $annotation->prepare($select, $alias);
 
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo2'];
 		$annotation->values = ['bar2'];
-		$wheres[] = $annotation->prepare($select, $alias);
+		$an_wheres[] = $annotation->prepare($select, $alias);
 
-		$select->andWhere($select->merge($wheres, 'OR'));
+		$wheres[] = $select->merge($an_wheres, 'OR');
+		
+		$select->andWhere($select->merge($wheres));
 
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
@@ -732,21 +748,25 @@ class MetadataUnitTest extends UnitTestCase {
 		$wheres = [];
 		
 		$select->joinEntitiesTable($select->getTableAlias(), 'entity_guid', 'inner', 'e');
-		$select->addClause(new EntityWhereClause(), 'e');
+		$wheres[] = (new EntityWhereClause())->prepare($select, 'e');
 
+		$r_wheres = [];
+		
 		$alias1 = $select->joinRelationshipTable($select->getTableAlias(), 'entity_guid', ['foo1']);
 		$rel1 = new RelationshipWhereClause();
 		$rel1->names = ['foo1'];
 		$rel1->subject_guids = [1, 2, 3];
-		$wheres[] = $rel1->prepare($select, $alias1);
+		$r_wheres[] = $rel1->prepare($select, $alias1);
 
 		$alias2 = $select->joinRelationshipTable($select->getTableAlias(), 'entity_guid', ['foo2'], true);
 		$rel2 = new RelationshipWhereClause();
 		$rel2->names = ['foo2'];
 		$rel2->object_guids = [4, 5, 6];
-		$wheres[] = $rel2->prepare($select, $alias2);
+		$r_wheres[] = $rel2->prepare($select, $alias2);
 
-		$select->andWhere($select->expr()->andX()->addMultiple($wheres));
+		$wheres[] = $select->merge($r_wheres);
+		
+		$select->andWhere($select->merge($wheres));
 
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
@@ -792,7 +812,7 @@ class MetadataUnitTest extends UnitTestCase {
 		$wheres = [];
 		
 		$select->joinEntitiesTable($select->getTableAlias(), 'entity_guid', 'inner', 'e');
-		$select->addClause(new EntityWhereClause(), 'e');
+		$wheres[] = (new EntityWhereClause())->prepare($select, 'e');
 
 		$alias = $select->joinRelationshipTable($select->getTableAlias(), 'entity_guid', null, false, 'inner', RelationshipsTable::DEFAULT_JOIN_ALIAS);
 
@@ -801,7 +821,7 @@ class MetadataUnitTest extends UnitTestCase {
 		$rel->subject_guids = [1, 2, 3];
 		$wheres[] = $rel->prepare($select, $alias);
 
-		$select->andWhere($select->merge($wheres, 'OR'));
+		$select->andWhere($select->merge($wheres));
 
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);

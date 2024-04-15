@@ -17,6 +17,7 @@ class EntitySortByClauseUnitTest extends UnitTestCase {
 
 	public function up() {
 		$this->qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$this->qb->select('*');
 	}
 
 	public function testBuildAttributeSortByClause() {
@@ -28,6 +29,7 @@ class EntitySortByClauseUnitTest extends UnitTestCase {
 		$query->direction = 'asc';
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -44,6 +46,7 @@ class EntitySortByClauseUnitTest extends UnitTestCase {
 		$query->signed = true;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -60,6 +63,7 @@ class EntitySortByClauseUnitTest extends UnitTestCase {
 		$query->direction = 'asc';
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -77,6 +81,7 @@ class EntitySortByClauseUnitTest extends UnitTestCase {
 		$query->signed = true;
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -94,6 +99,7 @@ class EntitySortByClauseUnitTest extends UnitTestCase {
 		$query->property_type = 'annotation';
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -112,6 +118,7 @@ class EntitySortByClauseUnitTest extends UnitTestCase {
 		$query->property_type = 'annotation';
 		
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -126,6 +133,7 @@ class EntitySortByClauseUnitTest extends UnitTestCase {
 		$query->property_type = 'attribute';
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		
 		$this->expectException(DomainException::class);
 		$qb->addClause($query);
@@ -139,6 +147,7 @@ class EntitySortByClauseUnitTest extends UnitTestCase {
 		$query->property_type = 'invalid';
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		
 		_elgg_services()->logger->disable();
 		$this->assertNull($query->prepare($qb, $qb->getTableAlias()));

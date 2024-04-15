@@ -3,12 +3,13 @@
 namespace Elgg;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\Exception\NoIdentityValue;
 use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
+use Doctrine\DBAL\Exception\DriverException;
 use Doctrine\DBAL\Result;
-use Doctrine\DBAL\Query\QueryBuilder;
 use Elgg\Cache\QueryCache;
 use Elgg\Database\DbConfig;
+use Elgg\Database\QueryBuilder;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\RuntimeException;
 use Elgg\Traits\Debug\Profilable;
@@ -235,7 +236,16 @@ class Database {
 		$this->query_cache->clear();
 
 		$this->executeQuery($query);
-		return (int) $query->getConnection()->lastInsertId();
+		
+		try {
+			return (int) $query->getConnection()->lastInsertId();
+		} catch (DriverException $e) {
+			if ($e->getPrevious() instanceof NoIdentityValue) {
+				return 0;
+			}
+			
+			throw $e;
+		}
 	}
 
 	/**
@@ -548,20 +558,7 @@ class Database {
 	 * @return string Empty if version cannot be determined
 	 */
 	public function getServerVersion(string $type = DbConfig::READ_WRITE): string {
-		$driver = $this->getConnection($type)->getWrappedConnection();
-		if ($driver instanceof ServerInfoAwareConnection) {
-			$version = $driver->getServerVersion();
-			
-			if ($this->isMariaDB($type)) {
-				if (str_starts_with($version, '5.5.5-')) {
-					$version = substr($version, 6);
-				}
-			}
-			
-			return $version;
-		}
-
-		return '';
+		return $this->getConnection($type)->getServerVersion();
 	}
 
 	/**
@@ -572,14 +569,20 @@ class Database {
 	 * @return bool if MariaDB is detected
 	 */
 	public function isMariaDB(string $type = DbConfig::READ_WRITE): bool {
-		$driver = $this->getConnection($type)->getWrappedConnection();
-		if ($driver instanceof ServerInfoAwareConnection) {
-			$version = $driver->getServerVersion();
-			
-			return stristr($version, 'mariadb') !== false;
-		}
-
-		return false;
+		return $this->getConnection($type)->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MariaDBPlatform;
+	}
+	
+	/**
+	 * Is the database MySQL
+	 *
+	 * @param string $type Connection type (Config constants, e.g. Config::READ_WRITE)
+	 *
+	 * @return bool if MySQL is detected
+	 *
+	 * @since 6.0
+	 */
+	public function isMySQL(string $type = DbConfig::READ_WRITE): bool {
+		return $this->getConnection($type)->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MySQLPlatform;
 	}
 	
 	/**
