@@ -3,7 +3,6 @@
 namespace Elgg\Menu;
 
 use Elgg\Exceptions\InvalidArgumentException;
-use ElggMenuItem;
 
 /**
  * Linear set of menu items collected from configuration and the "register" event.
@@ -25,9 +24,9 @@ class UnpreparedMenu {
 	/**
 	 * Constructor
 	 *
-	 * @param array                    $params Parameters to be passed to the "prepare" event and views.
-	 *                                         Must include value for "name".
-	 * @param ElggMenuItem[]|MenuItems $items  Menu items
+	 * @param array                     $params Parameters to be passed to the "prepare" event and views.
+	 *                                          Must include value for "name".
+	 * @param \ElggMenuItem[]|MenuItems $items  Menu items
 	 */
 	public function __construct(array $params, $items) {
 		$this->params = $params;

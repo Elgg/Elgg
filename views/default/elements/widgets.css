@@ -35,6 +35,8 @@
 		margin-top: 0.5rem;
 		
 		> li {
+			display: flex;
+			justify-content: space-between;
 			padding: 0.5rem;
 			transition: background 0.2s linear;
 			border-bottom: 1px solid $(border-color-soft);
@@ -47,8 +49,9 @@
 }
 
 .elgg-widgets-add-actions {
-	max-width: 8rem;
+	max-width: 10rem;
 	text-align: right;
+	padding-left: 0.25rem;
 }
 
 .elgg-widget-single.elgg-state-available .elgg-widgets-add-actions > span,

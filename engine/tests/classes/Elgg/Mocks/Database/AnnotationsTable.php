@@ -8,7 +8,6 @@ use Elgg\Database\Delete;
 use Elgg\Database\Insert;
 use Elgg\Database\Select;
 use Elgg\Database\Update;
-use ElggAnnotation;
 
 class AnnotationsTable extends DbAnnotations {
 
@@ -33,10 +32,10 @@ class AnnotationsTable extends DbAnnotations {
 	 */
 	public function get(int $id): ?\ElggAnnotation {
 		if (empty($this->rows[$id])) {
-			return false;
+			return null;
 		}
 
-		$annotation = new ElggAnnotation($this->rows[$id]);
+		$annotation = new \ElggAnnotation($this->rows[$id]);
 
 		if ($annotation->access_id == ACCESS_PUBLIC) {
 			// Public entities are always accessible
@@ -65,7 +64,7 @@ class AnnotationsTable extends DbAnnotations {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function create(ElggAnnotation $annotation, \ElggEntity $entity): int|bool {
+	public function create(\ElggAnnotation $annotation, \ElggEntity $entity): int|bool {
 		self::$iterator++;
 		$id = self::$iterator;
 
@@ -99,7 +98,7 @@ class AnnotationsTable extends DbAnnotations {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function update(ElggAnnotation $annotation): bool {
+	public function update(\ElggAnnotation $annotation): bool {
 		$id = $annotation->id;
 		if (!isset($this->rows[$id])) {
 			return false;
@@ -126,7 +125,7 @@ class AnnotationsTable extends DbAnnotations {
 		$rows = [];
 		foreach ($this->rows as $row) {
 			if (empty($guids) || in_array($row->entity_guid, $guids)) {
-				$rows[] = new ElggAnnotation($row);
+				$rows[] = new \ElggAnnotation($row);
 			}
 		}
 
@@ -136,7 +135,7 @@ class AnnotationsTable extends DbAnnotations {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function delete(ElggAnnotation $annotation): bool {
+	public function delete(\ElggAnnotation $annotation): bool {
 		parent::delete($annotation);
 
 		if (!isset($this->rows[$annotation->id])) {
@@ -154,6 +153,7 @@ class AnnotationsTable extends DbAnnotations {
 	 * Clear query specs
 	 *
 	 * @param \stdClass $row Data row
+	 *
 	 * @return void
 	 */
 	protected function clearQuerySpecs(\stdClass $row) {

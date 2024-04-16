@@ -4,6 +4,14 @@ import elgg from 'elgg';
 var topbar_height = $('.elgg-page-topbar').height();
 
 export default {
+	htmlSupport: {
+		allow: [{
+			name: /.*/,
+			attributes: true,
+			classes: true,
+			styles: true
+		}]
+	},
 	language: elgg.config.current_language,
 	ui: {
 		viewportOffset: {

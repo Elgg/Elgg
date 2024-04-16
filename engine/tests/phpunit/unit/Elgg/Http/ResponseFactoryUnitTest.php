@@ -3,13 +3,10 @@
 namespace Elgg\Http;
 
 use Elgg\Ajax\Service;
-use Elgg\Amd\Config;
-use Elgg\Config as Config2;
+use Elgg\Config;
 use Elgg\EventsService;
-use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\HandlersService;
 use Elgg\SystemMessagesService;
-use ElggSession;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,13 +15,12 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 
 	/**
-	 *
-	 * @var ElggSession
+	 * @var \ElggSession
 	 */
 	private $session;
 
 	/**
-	 * @var Config2
+	 * @var Config
 	 */
 	private $config;
 
@@ -32,11 +28,6 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 	 * @var Request
 	 */
 	private $request;
-
-	/**
-	 * @var Input
-	 */
-	private $input;
 
 	/**
 	 * @var SystemMessagesService
@@ -121,7 +112,6 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanPrepareResponse() {
-
 		$service = $this->createService();
 
 		elgg_set_http_header('X-Elgg-Testing: 1');
@@ -184,7 +174,6 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanSendReponse() {
-
 		$service = $this->createService();
 
 		ob_start();
@@ -198,7 +187,6 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testSendsReponseOnlyOnce() {
-
 		$service = $this->createService();
 
 		ob_start();
@@ -213,7 +201,6 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanNotSendModifiedResponse() {
-
 		$service = $this->createService();
 
 		$response = $service->prepareResponse('foo');
@@ -325,7 +312,6 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanDetectXhrRequest() {
-
 		$service = $this->createService();
 		$this->assertFalse($service->isXhr());
 

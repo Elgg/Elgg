@@ -189,6 +189,7 @@ class MetadataTable extends DbMetadataTabe {
 	 * Clear query specs
 	 *
 	 * @param \stdClass $row Data row
+	 *
 	 * @return void
 	 */
 	protected function clearQuerySpecs(\stdClass $row) {
@@ -208,7 +209,6 @@ class MetadataTable extends DbMetadataTabe {
 	 * @return void
 	 */
 	protected function addQuerySpecs(\stdClass $row) {
-
 		$this->clearQuerySpecs($row);
 
 		$qb = Select::fromTable(self::TABLE_NAME);

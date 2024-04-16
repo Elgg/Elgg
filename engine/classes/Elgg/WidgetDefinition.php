@@ -8,8 +8,8 @@ use Elgg\Exceptions\InvalidArgumentException;
  * WidgetDefinition
  *
  * Helper class for defining a widget
- *
  */
+#[\AllowDynamicProperties]
 class WidgetDefinition {
 
 	/**

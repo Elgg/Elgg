@@ -2,12 +2,12 @@
 
 namespace Elgg\Integration;
 
-use ElggGroup;
 use Elgg\IntegrationTestCase;
 
 class ElggCoreGroupToolTest extends IntegrationTestCase {
+
 	/**
-	 * @var ElggGroup
+	 * @var \ElggGroup
 	 */
 	protected $group;
 

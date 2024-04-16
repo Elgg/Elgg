@@ -4,7 +4,6 @@ namespace Elgg\Integration;
 
 use Elgg\Database\Select;
 use Elgg\IntegrationTestCase;
-use ElggAnnotation;
 
 class ElggCoreMetastringsTest extends IntegrationTestCase {
 
@@ -212,7 +211,6 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 	public function testDeleteAllMetadataWithInvalidGUID() {
 		$options = [
 			'limit' => 10,
-			'guid' => ELGG_ENTITIES_ANY_VALUE,
 			'guids' => false,
 			'metadata_name' => ELGG_ENTITIES_ANY_VALUE,
 			'metadata_names' => false,

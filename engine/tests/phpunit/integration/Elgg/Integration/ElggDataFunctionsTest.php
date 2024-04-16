@@ -8,12 +8,11 @@ use Elgg\Database\Insert;
 use Elgg\Database\RelationshipsTable;
 use Elgg\Database\Select;
 use Elgg\Database\Update;
-use ElggUser;
 
 class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 
 	/**
-	 * @var ElggUser
+	 * @var \ElggUser
 	 */
 	protected $user;
 

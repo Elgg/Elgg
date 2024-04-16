@@ -54,8 +54,7 @@ class ComposerUnitTest extends UnitTestCase {
 	
 	public function testAssertPluginID() {
 		$composer = $this->getComposer();
-		
-		$this->assertEmpty($composer->assertPluginId());
+		$composer->assertPluginId();
 		
 		$plugin = $this->plugin;
 		$plugin->title = 'invalid_plugin_id';
@@ -94,6 +93,45 @@ class ComposerUnitTest extends UnitTestCase {
 		$this->assertEquals([
 			'elgg' => '<1.9',
 		], $composer->getConflicts());
+	}
+	
+	/**
+	 * @dataProvider validVersionProvider
+	 */
+	public function testCheckConstraintsValid($version_input, $version_constraint) {
+		$composer = $this->getComposer();
+		
+		$this->assertTrue($composer->checkConstraints($version_input, $version_constraint));
+	}
+	
+	public function validVersionProvider(): array {
+		return [
+			['1.0.0', '*'],
+			['1.2.0', '^1.0'],
+			['2.0.0', '>1.0'],
+		];
+	}
+	
+	/**
+	 * @dataProvider invalidVersionProvider
+	 */
+	public function testCheckConstraintsInvalid($version_input, $version_constraint) {
+		$composer = $this->getComposer();
+		
+		$this->assertFalse($composer->checkConstraints($version_input, $version_constraint));
+	}
+	
+	public function invalidVersionProvider(): array {
+		return [
+			['1.2.0', '1.0'],
+			['2.0.0', '<2.0'],
+			['2.0.0', '<2.0'],
+			// next is an invalid version string which should throw an exception which is caught
+			['1.2.3!invalid', '*'],
+			// next is a bug in Composer\Semver https://github.com/composer/semver/issues/157
+			// once fixed this test should be moved to the valid tests to prevent regression
+			['8.3.3-1+0~20240216.17+debian11~1.gbp87e37b', '*'],
+		];
 	}
 	
 	/**

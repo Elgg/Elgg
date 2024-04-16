@@ -2,7 +2,6 @@
 
 namespace Elgg\Database\Clauses;
 
-use Closure;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Elgg\Database\QueryBuilder;
 
@@ -12,14 +11,14 @@ use Elgg\Database\QueryBuilder;
 class WhereClause extends Clause {
 
 	/**
-	 * @var Closure|CompositeExpression|null|string
+	 * @var \Closure|CompositeExpression|null|string
 	 */
 	public $expr;
 
 	/**
 	 * Constructor
 	 *
-	 * @param CompositeExpression|Closure|string $expr Expression
+	 * @param CompositeExpression|\Closure|string $expr Expression
 	 */
 	public function __construct($expr = null) {
 		$this->expr = $expr;

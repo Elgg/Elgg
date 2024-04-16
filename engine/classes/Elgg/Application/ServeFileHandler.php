@@ -2,10 +2,10 @@
 
 namespace Elgg\Application;
 
-use DateTime;
 use Elgg\Config;
 use Elgg\Filesystem\MimeTypeService;
 use Elgg\Http\Request;
+use Elgg\Values;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Elgg\Security\Base64Url;
@@ -130,7 +130,7 @@ class ServeFileHandler {
 			$expires = strtotime('+1 year');
 		}
 		
-		$expires_dt = (new DateTime())->setTimestamp($expires);
+		$expires_dt = Values::normalizeTime($expires);
 		$response->setExpires($expires_dt);
 
 		$response->setEtag($etag);

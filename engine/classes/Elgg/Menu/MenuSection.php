@@ -3,14 +3,11 @@
 namespace Elgg\Menu;
 
 use Elgg\Collections\CollectionItemInterface;
-use ElggMenuItem;
 
 /**
  * Menu section
  */
-class MenuSection
-	extends MenuItems
-	implements CollectionItemInterface {
+class MenuSection extends MenuItems implements CollectionItemInterface {
 
 	/**
 	 * @var string
@@ -35,6 +32,7 @@ class MenuSection
 
 	/**
 	 * Get unique item identifier within a collection
+	 *
 	 * @return string|int
 	 */
 	public function getID() {
@@ -54,6 +52,7 @@ class MenuSection
 
 	/**
 	 * Get priority (weight) of the item within a collection
+	 *
 	 * @return int
 	 */
 	public function getPriority() {
@@ -65,7 +64,7 @@ class MenuSection
 	 *
 	 * @param string $item_name Menu item name
 	 *
-	 * @return ElggMenuItem|null
+	 * @return \ElggMenuItem|null
 	 */
 	public function getItem($item_name) {
 		return $this->get($item_name);
@@ -73,7 +72,8 @@ class MenuSection
 
 	/**
 	 * Get menu items
-	 * @return ElggMenuItem[]
+	 *
+	 * @return \ElggMenuItem[]
 	 */
 	public function getItems() {
 		return $this->all();

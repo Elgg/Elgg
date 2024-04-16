@@ -1,5 +1,6 @@
 import 'jquery';
 import elgg from 'elgg';
+import 'elgg/toggle';
 
 /* Autofocuses first text input in a comment form when toggled */
 $(document).on('elgg_ui_toggle', function (e, data) {
@@ -13,6 +14,29 @@ $(document).on('elgg_ui_toggle', function (e, data) {
 			$toggle.blur();
 		}
 	}
+});
+
+$(document).on('click', '.elgg-toggle-comment', function () {
+	var $anchor = $(this);
+	var comment_guid = $anchor.data().loadComment;
+	
+	import('elgg/Ajax').then((Ajax) => {
+		var ajax = new Ajax.default();
+		
+		ajax.form('comment/save', {
+			data: {
+				guid: comment_guid
+			},
+			success: function(result) {
+				$('div[data-comments-placeholder=' + comment_guid + ']')
+					.html(result)
+					.slideToggle('medium')
+					.find('textarea, [contenteditable]').filter(':visible').first().focus();
+				
+				$anchor.toggleClass('elgg-toggle elgg-toggle-comment');
+			}
+		});
+	});
 });
 
 $(document).on('submit', '.elgg-form-comment-save', function (event) {

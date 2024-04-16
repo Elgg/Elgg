@@ -273,7 +273,7 @@ $CONFIG->dbencoding = 'utf8mb4';
 //$CONFIG->cookies['session']['domain'] = "";
 //$CONFIG->cookies['session']['secure'] = false;
 //$CONFIG->cookies['session']['httponly'] = false;
-//$CONFIG->cookies['session']['samesite'] = '';
+//$CONFIG->cookies['session']['samesite'] = ''; // 'Strict' or 'Lax'
 
 // extended session cookie
 //$CONFIG->cookies['remember_me'] = session_get_cookie_params();
@@ -284,7 +284,7 @@ $CONFIG->dbencoding = 'utf8mb4';
 //$CONFIG->cookies['remember_me']['domain'] = "";
 //$CONFIG->cookies['remember_me']['secure'] = false;
 //$CONFIG->cookies['remember_me']['httponly'] = false;
-//$CONFIG->cookies['remember_me']['samesite'] = '';
+//$CONFIG->cookies['remember_me']['samesite'] = ''; // 'Strict' or 'Lax'
 
 /**
  * Disable the database query cache
