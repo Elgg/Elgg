@@ -109,7 +109,7 @@ class UpgradeService {
 			
 			$promises[] = new Promise(function ($resolve, $reject) use ($upgrade) {
 				try {
-					$result = $this->executeUpgrade($upgrade, false);
+					$result = $this->executeUpgrade($upgrade, 0);
 				} catch (\Throwable $ex) {
 					return $reject($ex);
 				}
@@ -267,8 +267,8 @@ class UpgradeService {
 	 * Call the upgrade's run() for a specified period of time, or until it completes
 	 *
 	 * @param \ElggUpgrade $upgrade      Upgrade to run
-	 * @param int          $max_duration Maximum duration in seconds
-	 *                                   Set to false to execute an entire upgrade
+	 * @param int|null     $max_duration Maximum duration in seconds
+	 *                                   Set to 0 to execute an entire upgrade
 	 *
 	 * @return Result
 	 */

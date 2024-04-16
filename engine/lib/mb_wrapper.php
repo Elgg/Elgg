@@ -153,6 +153,7 @@ function elgg_strtoupper() {
  * Wrapper for mb_convert_case($str, MB_CASE_TITLE)
  *
  * @param string $str String
+ *
  * @return string
  * @since 2.3
  */
@@ -188,7 +189,7 @@ function elgg_substr_count() {
  * wrapped function in the same order they are passed to this
  * function.
  *
- * @return false|string
+ * @return string
  * @since 1.7.0
  */
 function elgg_substr() {

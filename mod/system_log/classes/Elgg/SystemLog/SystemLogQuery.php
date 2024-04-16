@@ -222,7 +222,7 @@ class SystemLogQuery extends Repository {
 	 *
 	 * @param QueryBuilder $qb Query builder
 	 *
-	 * @return CompositeExpression|string
+	 * @return CompositeExpression|null|string
 	 */
 	protected function buildQuery(QueryBuilder $qb) {
 		$wheres = [];
