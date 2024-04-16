@@ -2,13 +2,6 @@
 
 namespace Elgg;
 
-use Elgg\Database\DbConfig;
-use ElggSession;
-use Psr\Log\LogLevel;
-use Symfony\Component\Console\Output\NullOutput;
-use Symfony\Component\Console\Output\OutputInterface;
-use Laminas\Mail\Transport\InMemory;
-
 /**
  * Integration test abstraction
  *

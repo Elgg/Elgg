@@ -3,11 +3,11 @@
 namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
-use ElggGroup;
 
 class ElggCoreGroupTest extends IntegrationTestCase {
+
 	/**
-	 * @var ElggGroup
+	 * @var \ElggGroup
 	 */
 	protected $group;
 
@@ -22,13 +22,13 @@ class ElggCoreGroupTest extends IntegrationTestCase {
 	}
 
 	public function testContentAccessMode() {
-		$unrestricted = ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
-		$membersonly = ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY;
+		$unrestricted = \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
+		$membersonly = \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY;
 
 		// if mode not set, open groups are unrestricted
 		$this->assertEquals($unrestricted, $this->group->getContentAccessMode());
 
-		// if mode not set, closed groups are membersonly
+		// if mode not set, closed groups are members only
 		unset($this->group->content_access_mode);
 		$this->group->membership = ACCESS_PRIVATE;
 		$this->assertEquals($membersonly, $this->group->getContentAccessMode());

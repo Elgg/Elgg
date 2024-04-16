@@ -28,6 +28,16 @@ class CreateContentEventHandler {
 			return;
 		}
 		
+		if ($entity instanceof \ElggObject) {
+			$notification_events = _elgg_services()->notifications->getEvents();
+			if (!isset($notification_events[$entity->getType()]) || !isset($notification_events[$entity->getType()][$entity->getSubtype()])) {
+				// no notification events registered for this entity type/subtype
+				// so there is no need to subscribe
+				// this also prevents the database from flooding with relationships that are never used (e.g. subscriptions to site notifications)
+				return;
+			}
+		}
+		
 		$content_preferences = $owner->getNotificationSettings('content_create');
 		$enabled_methods = array_keys(array_filter($content_preferences));
 		

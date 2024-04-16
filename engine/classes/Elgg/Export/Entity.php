@@ -2,6 +2,9 @@
 
 namespace Elgg\Export;
 
+use Elgg\I18n\DateTime;
+use Elgg\Values;
+
 /**
  * Entity export representation
  *
@@ -19,13 +22,13 @@ class Entity extends Data {
 	/**
 	 * Get updated time
 	 *
-	 * @return \DateTime|null
+	 * @return DateTime|null
 	 */
 	public function getTimeUpdated() {
 		if (!$this->time_updated) {
 			return null;
 		}
 
-		return new \DateTime($this->time_created);
+		return Values::normalizeTime($this->time_created);
 	}
 }

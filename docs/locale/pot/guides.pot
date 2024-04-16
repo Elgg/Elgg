@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-15 13:56+0100\n"
+"POT-Creation-Date: 2024-03-21 10:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -725,7 +725,7 @@ msgid "``sticky_form_name``: an optional ``string`` to set where the sticky form
 msgstr ""
 
 #: ../../guides/actions.rst:476
-msgid "``sticky_ignored_fields: an ``array`` with the names fo the form fields that should be saved. For example password fields"
+msgid "``sticky_ignored_fields``: an ``array`` with the names fo the form fields that should be saved. For example password fields"
 msgstr ""
 
 #: ../../guides/actions.rst:479

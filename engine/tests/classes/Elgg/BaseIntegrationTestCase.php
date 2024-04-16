@@ -3,7 +3,6 @@
 namespace Elgg;
 
 use Elgg\Database\DbConfig;
-use ElggSession;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,7 +23,6 @@ abstract class BaseIntegrationTestCase extends BaseTestCase {
 	 * {@inheritdoc}
 	 */
 	public static function createApplication(array $params = []) {
-
 		$isolate = elgg_extract('isolate', $params, false);
 		unset($params['isolate']);
 
@@ -65,7 +63,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase {
 		$app->setGlobalConfig($app);
 		
 		$app->internal_services->set('session', function () {
-			return ElggSession::getMock();
+			return \ElggSession::getMock();
 		});
 
 		$app->internal_services->set('mailer', function () {

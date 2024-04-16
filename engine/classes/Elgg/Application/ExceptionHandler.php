@@ -32,14 +32,11 @@ class ExceptionHandler {
 	 *
 	 * @see     http://www.php.net/set-exception-handler
 	 *
-	 * @param \Exception|\Error $exception The exception/error being handled
+	 * @param \Throwable $exception The exception/error being handled
 	 *
 	 * @return void
 	 */
-	public function __invoke($exception) {
-		$exception->timestamp = time();
-		$exception->uncaught = true;
-
+	public function __invoke(\Throwable $exception): void {
 		$this->log(LogLevel::CRITICAL, $exception);
 
 		// Wipe any existing output buffer
@@ -61,9 +58,10 @@ class ExceptionHandler {
 		}
 
 		$app = Application::$_instance;
+		$now = time();
 
 		if (!$app || !$app->internal_services) {
-			$msg = "Exception loading Elgg core. Check log at time {$exception->timestamp}";
+			$msg = "Exception loading Elgg core. Check log at time {$now}";
 			$response = new Response($msg, ELGG_HTTP_INTERNAL_SERVER_ERROR, $headers);
 			$response->prepare($request);
 
@@ -117,20 +115,18 @@ class ExceptionHandler {
 
 			$body = elgg_view('messages/exceptions/exception', [
 				'object' => $exception,
-				'ts' => $exception->timestamp,
+				'ts' => $now,
 			]);
 
 			$response->prepare($services->request);
 			$response->setContent(elgg_view_page(elgg_echo('exception:title'), $body));
 			$response->send();
-		} catch (\Exception $e) {
-			$timestamp = time();
-
-			$e->timestamp = $timestamp;
+		} catch (\Throwable $e) {
+			$now = time();
 
 			$this->log(LogLevel::CRITICAL, $e);
 
-			$msg = "Fatal error in exception handler. Check log for Exception at time $timestamp";
+			$msg = "Fatal error in exception handler. Check log for Exception at time {$now}";
 
 			$response = new Response($msg, ELGG_HTTP_INTERNAL_SERVER_ERROR, $headers);
 			$response->prepare($request);

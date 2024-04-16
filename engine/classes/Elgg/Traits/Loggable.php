@@ -57,10 +57,6 @@ trait Loggable {
 	 */
 	public function log($level, $message, array $context = []) {
 		if ($message instanceof \Throwable) {
-			if (!isset($message->timestamp)) {
-				$message->timestamp = time();
-			}
-
 			$context['exception'] = $message;
 		}
 
