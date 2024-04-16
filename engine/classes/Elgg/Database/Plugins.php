@@ -262,7 +262,7 @@ class Plugins {
 				} else {
 					// create new plugin
 					// priority is forced to last in save() if not set.
-					$plugin = \ElggPlugin::fromId($plugin_id);
+					\ElggPlugin::fromId($plugin_id);
 				}
 			}
 			
