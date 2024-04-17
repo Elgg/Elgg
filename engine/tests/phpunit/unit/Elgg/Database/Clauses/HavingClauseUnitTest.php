@@ -17,12 +17,14 @@ class HavingClauseUnitTest extends UnitTestCase {
 
 	public function up() {
 		$this->qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$this->qb->select('*');
 	}
 
 	public function testBuildHavingClauseFromString() {
 		$this->qb->having("{$this->qb->getTableAlias()}.guid = 25");
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$query = new HavingClause("{$qb->getTableAlias()}.guid = 25");
 		$qb->addClause($query);
 
@@ -39,6 +41,7 @@ class HavingClauseUnitTest extends UnitTestCase {
 		});
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -50,6 +53,7 @@ class HavingClauseUnitTest extends UnitTestCase {
 		$this->qb->having($expr);
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$query = new HavingClause($qb->compare("{$qb->getTableAlias()}.guid", '=', 25, ELGG_VALUE_INTEGER));
 		$qb->addClause($query);
 
@@ -62,6 +66,7 @@ class HavingClauseUnitTest extends UnitTestCase {
 		$this->qb->having($expr);
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$query = new HavingClause(CallableHaving::class);
 		$qb->addClause($query);
 
@@ -74,6 +79,7 @@ class HavingClauseUnitTest extends UnitTestCase {
 		$this->qb->having($expr);
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$query = new HavingClause('\Elgg\Helpers\Database\Clauses\CallableHaving::callable');
 		$qb->addClause($query);
 

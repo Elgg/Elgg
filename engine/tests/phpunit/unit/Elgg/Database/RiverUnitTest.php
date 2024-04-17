@@ -14,6 +14,14 @@ use Elgg\UnitTestCase;
 class RiverUnitTest extends UnitTestCase {
 
 	public function buildQuery(QueryBuilder $qb, array $options = []) {
+		$qb->andWhere($qb->merge($this->getBaseWheres($qb, $options)));
+		
+		return $qb;
+	}
+	
+	public function getBaseWheres(QueryBuilder $qb, array $options = []) {
+		$wheres = [];
+		
 		$where = new RiverWhereClause();
 		$where->ids = elgg_extract('ids', $options);
 		$where->views = elgg_extract('views', $options);
@@ -23,8 +31,8 @@ class RiverUnitTest extends UnitTestCase {
 		$where->target_guids = elgg_extract('target_guids', $options);
 		$where->created_after = elgg_extract('created_after', $options);
 		$where->created_before = elgg_extract('created_before', $options);
-
-		$qb->addClause($where);
+		
+		$wheres[] = $where->prepare($qb, 'rv');
 
 		$ands = [];
 		
@@ -47,10 +55,10 @@ class RiverUnitTest extends UnitTestCase {
 		// Note the LEFT JOIN
 		$target_ors[] = $qb->compare('te.guid', 'IS NULL');
 		$ands[] = $qb->merge($target_ors, 'OR');
-
-		$qb->andWhere($qb->merge($ands));
 		
-		return $qb;
+		$wheres[] = $qb->merge($ands);
+		
+		return $wheres;
 	}
 
 	public function testCanExecuteCount() {
@@ -65,7 +73,7 @@ class RiverUnitTest extends UnitTestCase {
 		$select->select("COUNT(DISTINCT {$select->getTableAlias()}.id) AS total");
 
 		$select = $this->buildQuery($select, $options);
-
+		
 		$spec = _elgg_services()->db->addQuerySpec([
 			'sql' => $select->getSQL(),
 			'params' => $select->getParameters(),
@@ -379,17 +387,19 @@ class RiverUnitTest extends UnitTestCase {
 
 		$alias = $select->joinAnnotationTable($select->getTableAlias(), 'annotation_id', null, 'inner', AnnotationsTable::DEFAULT_JOIN_ALIAS);
 		$select->select("avg({$alias}.value) AS calculation");
-
-		$select = $this->buildQuery($select, $options);
-
+		
+		$wheres = $this->getBaseWheres($select, $options);
+		
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = $annotation_names;
 		$annotation->values = 10;
 		$annotation->comparison = '>';
 		$annotation->value_type = ELGG_VALUE_INTEGER;
 
-		$select->addClause($annotation, $alias);
-
+		$wheres[] = $annotation->prepare($select, $alias);
+		
+		$select->andWhere($select->merge($wheres));
+		
 		$spec = _elgg_services()->db->addQuerySpec([
 			'sql' => $select->getSQL(),
 			'params' => $select->getParameters(),
@@ -444,22 +454,24 @@ class RiverUnitTest extends UnitTestCase {
 		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
 		$select->select("DISTINCT {$select->getTableAlias()}.*");
 
-		$wheres = [];
+		$wheres = $this->getBaseWheres($select, $options);
 		
-		$select = $this->buildQuery($select, $options);
-
+		$an_wheres = [];
+		
 		$alias1 = $select->joinAnnotationTable($select->getTableAlias(), 'annotation_id', ['foo1']);
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo1'];
 		$annotation->values = ['bar1'];
-		$wheres[] = $annotation->prepare($select, $alias1);
+		$an_wheres[] = $annotation->prepare($select, $alias1);
 
 		$alias2 = $select->joinAnnotationTable($select->getTableAlias(), 'annotation_id', ['foo2']);
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo2'];
 		$annotation->values = ['bar2'];
-		$wheres[] = $annotation->prepare($select, $alias2);
+		$an_wheres[] = $annotation->prepare($select, $alias2);
 
+		$wheres[] = $select->merge($an_wheres);
+		
 		$select->andWhere($select->merge($wheres));
 
 		$select->setMaxResults(10);
@@ -498,23 +510,25 @@ class RiverUnitTest extends UnitTestCase {
 		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
 		$select->select("DISTINCT {$select->getTableAlias()}.*");
 		
-		$wheres = [];
+		$wheres = $this->getBaseWheres($select, $options);
 		
-		$select = $this->buildQuery($select, $options);
+		$an_wheres = [];
 
 		$alias = $select->joinAnnotationTable($select->getTableAlias(), 'annotation_id');
 
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo1'];
 		$annotation->values = ['bar1'];
-		$wheres[] = $annotation->prepare($select, $alias);
+		$an_wheres[] = $annotation->prepare($select, $alias);
 
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo2'];
 		$annotation->values = ['bar2'];
-		$wheres[] = $annotation->prepare($select, $alias);
-
-		$select->andWhere($select->merge($wheres, 'OR'));
+		$an_wheres[] = $annotation->prepare($select, $alias);
+		
+		$wheres[] = $select->merge($an_wheres, 'OR');
+		
+		$select->andWhere($select->merge($wheres));
 
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
@@ -558,23 +572,25 @@ class RiverUnitTest extends UnitTestCase {
 		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
 		$select->select("DISTINCT {$select->getTableAlias()}.*");
 		
-		$wheres = [];
+		$wheres = $this->getBaseWheres($select, $options);
 		
-		$select = $this->buildQuery($select, $options);
-
+		$r_wheres = [];
+		
 		$alias1 = $select->joinRelationshipTable($select->getTableAlias(), 'subject_guid', ['foo1']);
 		$rel1 = new RelationshipWhereClause();
 		$rel1->names = ['foo1'];
 		$rel1->subject_guids = [1, 2, 3];
-		$wheres[] = $rel1->prepare($select, $alias1);
+		$r_wheres[] = $rel1->prepare($select, $alias1);
 
 		$alias2 = $select->joinRelationshipTable($select->getTableAlias(), 'subject_guid', ['foo2'], true);
 		$rel2 = new RelationshipWhereClause();
 		$rel2->names = ['foo2'];
 		$rel2->object_guids = [4, 5, 6];
-		$wheres[] = $rel2->prepare($select, $alias2);
+		$r_wheres[] = $rel2->prepare($select, $alias2);
 
-		$select->andWhere($select->expr()->andX()->addMultiple($wheres));
+		$wheres[] = $select->merge($r_wheres);
+		
+		$select->andWhere($select->merge($wheres));
 
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
@@ -610,10 +626,8 @@ class RiverUnitTest extends UnitTestCase {
 		$select = Select::fromTable(RiverTable::TABLE_NAME, RiverTable::DEFAULT_JOIN_ALIAS);
 		$select->select("DISTINCT {$select->getTableAlias()}.*");
 		
-		$wheres = [];
+		$wheres = $this->getBaseWheres($select, $options);
 		
-		$select = $this->buildQuery($select, $options);
-
 		$select->joinRelationshipTable($select->getTableAlias(), 'subject_guid', null, false, 'inner', 'r');
 
 		$relationship = new RelationshipWhereClause();
@@ -621,7 +635,7 @@ class RiverUnitTest extends UnitTestCase {
 		$relationship->subject_guids = [1, 2, 3];
 		$wheres[] = $relationship->prepare($select, 'r');
 
-		$select->andWhere($select->merge($wheres, 'OR'));
+		$select->andWhere($select->merge($wheres));
 
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);

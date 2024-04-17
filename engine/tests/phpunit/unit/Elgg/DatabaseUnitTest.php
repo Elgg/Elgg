@@ -48,7 +48,7 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->expectException(\RuntimeException::class);
 		$this->expectExceptionMessage('$callback must be a callable function. Given blorg!');
-		$db->getData(\Elgg\Database\Select::fromTable('foo'), 'blorg!');
+		$db->getData(\Elgg\Database\Select::fromTable('foo')->select('*'), 'blorg!');
 	}
 	
 	/**

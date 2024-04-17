@@ -45,7 +45,7 @@ class CreateEntitiesTable extends AbstractMigration {
 			'limit' => MysqlAdapter::INT_BIG,
 			'precision' => 20,
 			'signed' => false,
-			'identity' => 'enable',
+			'identity' => true,
 		]);
 
 		$table->addColumn('type', 'enum', [

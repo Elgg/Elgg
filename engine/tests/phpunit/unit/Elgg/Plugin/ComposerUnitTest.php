@@ -104,7 +104,7 @@ class ComposerUnitTest extends UnitTestCase {
 		$this->assertTrue($composer->checkConstraints($version_input, $version_constraint));
 	}
 	
-	public function validVersionProvider(): array {
+	public static function validVersionProvider(): array {
 		return [
 			['1.0.0', '*'],
 			['1.2.0', '^1.0'],
@@ -121,7 +121,7 @@ class ComposerUnitTest extends UnitTestCase {
 		$this->assertFalse($composer->checkConstraints($version_input, $version_constraint));
 	}
 	
-	public function invalidVersionProvider(): array {
+	public static function invalidVersionProvider(): array {
 		return [
 			['1.2.0', '1.0'],
 			['2.0.0', '<2.0'],

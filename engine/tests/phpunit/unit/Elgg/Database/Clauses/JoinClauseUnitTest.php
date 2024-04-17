@@ -17,6 +17,7 @@ class JoinClauseUnitTest extends UnitTestCase {
 
 	public function up() {
 		$this->qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$this->qb->select('*');
 	}
 
 	public function testBuildJoinClauseWithoutCondition() {
@@ -24,6 +25,7 @@ class JoinClauseUnitTest extends UnitTestCase {
 
 		$join = new JoinClause('joined_table', 'joined_alias');
 		$expected = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$expected->select('*');
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());
@@ -34,6 +36,7 @@ class JoinClauseUnitTest extends UnitTestCase {
 		$this->qb->join($this->qb->getTableAlias(), 'joined_table', 'joined_alias', "joined_alias.x = {$this->qb->getTableAlias()}.x");
 
 		$expected = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$expected->select('*');
 		$join = new JoinClause('joined_table', 'joined_alias', "joined_alias.x = {$expected->getTableAlias()}.x");
 		$expected->addClause($join);
 
@@ -50,6 +53,7 @@ class JoinClauseUnitTest extends UnitTestCase {
 		};
 		$join = new JoinClause('joined_table', 'joined_alias', $condition);
 		$expected = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$expected->select('*');
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());
@@ -60,6 +64,7 @@ class JoinClauseUnitTest extends UnitTestCase {
 		$this->qb->join($this->qb->getTableAlias(), 'joined_table', 'joined_alias', "joined_alias.x = {$this->qb->getTableAlias()}.x");
 
 		$expected = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$expected->select('*');
 		$condition = $expected->compare('joined_alias.x', '=', "{$expected->getTableAlias()}.x");
 		$join = new JoinClause('joined_table', 'joined_alias', $condition);
 		$expected->addClause($join);
@@ -72,6 +77,7 @@ class JoinClauseUnitTest extends UnitTestCase {
 		$this->qb->join($this->qb->getTableAlias(), 'joined_table', 'joined_alias', "joined_alias.x = {$this->qb->getTableAlias()}.x");
 
 		$expected = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$expected->select('*');
 		$join = new JoinClause('joined_table', 'joined_alias', CallableJoin::class);
 		$expected->addClause($join);
 
@@ -83,6 +89,7 @@ class JoinClauseUnitTest extends UnitTestCase {
 		$this->qb->join($this->qb->getTableAlias(), 'joined_table', 'joined_alias', "joined_alias.x = {$this->qb->getTableAlias()}.x");
 
 		$expected = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$expected->select('*');
 		$join = new JoinClause('joined_table', 'joined_alias', '\Elgg\Helpers\Database\Clauses\CallableJoin::callable');
 		$expected->addClause($join);
 
@@ -95,6 +102,7 @@ class JoinClauseUnitTest extends UnitTestCase {
 
 		$join = new JoinClause('joined_table', 'joined_alias', null, 'INNER');
 		$expected = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$expected->select('*');
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());
@@ -106,6 +114,7 @@ class JoinClauseUnitTest extends UnitTestCase {
 
 		$join = new JoinClause('joined_table', 'joined_alias', null, 'left');
 		$expected = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$expected->select('*');
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());
@@ -117,6 +126,7 @@ class JoinClauseUnitTest extends UnitTestCase {
 
 		$join = new JoinClause('joined_table', 'joined_alias', null, 'right');
 		$expected = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$expected->select('*');
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());

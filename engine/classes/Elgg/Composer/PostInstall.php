@@ -3,7 +3,7 @@
 namespace Elgg\Composer;
 
 use Composer\Script\Event;
-use Elgg\Filesystem\Directory\Local;
+use Elgg\Project\Paths;
 
 /**
  * A composer command handler to run after composer install
@@ -17,7 +17,7 @@ class PostInstall {
 	 *
 	 * @return void
 	 */
-	public static function execute(Event $event) {
+	public static function execute(Event $event): void {
 		self::copyFromElggToRoot('install/config/htaccess.dist', '.htaccess');
 		self::copyFromElggToRoot('index.php', 'index.php');
 		self::copyFromElggToRoot('install.php', 'install.php');
@@ -43,9 +43,9 @@ class PostInstall {
 	 *
 	 * @return boolean Whether the copy succeeded.
 	 */
-	protected static function copyFromElggToRoot($elggPath, $rootPath, $overwrite = false) {
-		$from = Local::elggRoot()->getPath($elggPath);
-		$to = Local::projectRoot()->getPath($rootPath);
+	protected static function copyFromElggToRoot(string $elggPath, string $rootPath, bool $overwrite = false): bool {
+		$from = Paths::elgg() . $elggPath;
+		$to = Paths::project() . $rootPath;
 
 		if (!$overwrite && file_exists($to)) {
 			return false;
@@ -62,8 +62,8 @@ class PostInstall {
 	 * @since 4.2
 	 */
 	protected static function createProjectModFolder(): bool {
-		$project_mod = Local::projectRoot()->getPath('mod');
-		$elgg_mod = Local::elggRoot()->getPath('mod');
+		$project_mod = Paths::project() . 'mod';
+		$elgg_mod = Paths::elgg() . 'mod';
 		
 		if ($project_mod === $elgg_mod) {
 			// Elgg is the main project, no need to create the /mod folder
@@ -86,9 +86,9 @@ class PostInstall {
 	 *
 	 * @return bool Whether the symlink succeeded.
 	 */
-	protected static function symlinkPluginFromRootToElgg($plugin) {
-		$link = Local::projectRoot()->getPath("mod/{$plugin}");
-		$target = Local::elggRoot()->getPath("mod/{$plugin}");
+	protected static function symlinkPluginFromRootToElgg(string $plugin): bool {
+		$link = Paths::project() . "mod/{$plugin}";
+		$target = Paths::elgg() . "mod/{$plugin}";
 
 		return is_dir($target) && !file_exists($link) && symlink($target, $link);
 	}

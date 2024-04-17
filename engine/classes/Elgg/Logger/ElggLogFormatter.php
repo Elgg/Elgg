@@ -4,6 +4,7 @@ namespace Elgg\Logger;
 
 use Elgg\Exceptions\DatabaseException;
 use Monolog\Formatter\LineFormatter;
+use Monolog\LogRecord;
 
 /**
  * Custom log formatter
@@ -13,25 +14,27 @@ class ElggLogFormatter extends LineFormatter {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function format(array $record): string {
-		$context = elgg_extract('context', $record, []);
+	public function format(LogRecord $record): string {
+		$context = $record->context;
 		$exception = elgg_extract('exception', $context);
-		if ($exception instanceof \Throwable) {
-			$dt = new \DateTime();
-			$record['datetime'] = $dt;
 
-			$eol = PHP_EOL;
-			$message = "Exception at time {$dt->getTimestamp()}:{$eol}{$exception->getMessage()}{$eol}";
-			$record['message'] = preg_replace('~\R~u', $eol, $message);
-
-			if ($exception instanceof DatabaseException) {
-				$record['context']['sql'] = $exception->getQuery();
-				$record['context']['params'] = $exception->getParameters();
-			}
-			
-			unset($record['context']['exception']);
+		if (!$exception instanceof \Throwable) {
+			return parent::format($record);
 		}
+		
+		$dt = new \DateTimeImmutable();
+		
+		$eol = PHP_EOL;
+		$message = "Exception at time {$dt->getTimestamp()}:{$eol}{$exception->getMessage()}{$eol}";
+		$record_message = preg_replace('~\R~u', $eol, $message);
 
-		return parent::format($record);
+		if ($exception instanceof DatabaseException) {
+			$context['sql'] = $exception->getQuery();
+			$context['params'] = $exception->getParameters();
+		}
+		
+		unset($context['exception']);
+
+		return parent::format(new LogRecord($dt, $record->channel, $record->level, $record_message, $context, $record->extra, $record->formatted));
 	}
 }

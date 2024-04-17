@@ -27,7 +27,6 @@ class Redis extends Config {
 		}
 		
 		$options = [
-			'preventCacheSlams' => true,
 			'useStaticItemCaching' => true,
 			'itemDetailedDate' => true,
 			'optPrefix' => $namespace,

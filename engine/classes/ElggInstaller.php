@@ -1251,7 +1251,7 @@ class ElggInstaller {
 	protected function createSettingsFile(array $params): bool {
 		$app = $this->getApp();
 
-		$template = Application::elggDir()->getContents('elgg-config/settings.example.php');
+		$template = file_get_contents(Paths::elgg() . 'elgg-config/settings.example.php');
 		if (!$template) {
 			$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:readsettingsphp'));
 

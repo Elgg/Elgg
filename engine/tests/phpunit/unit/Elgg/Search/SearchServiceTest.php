@@ -244,18 +244,23 @@ class SearchServiceTest extends UnitTestCase {
 
 		$alias = $select->joinAnnotationTable($select->getTableAlias(), 'guid', ['foo1', 'foo2', 'foo3'], 'left');
 
+		$wheres = [];
+		
 		$property = new AnnotationWhereClause();
 		$property->values = 'query1 query2 query3';
 		$property->comparison = 'LIKE';
 		$property->case_sensitive = false;
 
-		$select->andWhere($property->prepare($select, $alias));
+		$wheres[] = $property->prepare($select, $alias);
 
 		$where = new EntityWhereClause();
 		$where->type_subtype_pairs = [
 			'object' => ['blog'],
 		];
-		$select->addClause($where);
+		
+		$wheres[] = $where->prepare($select, EntityTable::DEFAULT_JOIN_ALIAS);
+		
+		$select->andWhere($select->merge($wheres));
 
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
@@ -320,23 +325,27 @@ class SearchServiceTest extends UnitTestCase {
 		$query_parts = ['query1', 'query2', 'query3'];
 
 		$wheres = [];
+		$q_wheres = [];
 
 		foreach ($query_parts as $part) {
 			$property = new AnnotationWhereClause();
 			$property->values = $part;
 			$property->comparison = 'LIKE';
 			$property->case_sensitive = false;
-			$wheres[] = $property->prepare($select, $alias);
+			$q_wheres[] = $property->prepare($select, $alias);
 		}
 
-		$select->andWhere($select->merge($wheres, 'AND'));
-
+		$wheres[] = $select->merge($q_wheres);
+		
 		$where = new EntityWhereClause();
 		$where->type_subtype_pairs = [
 			'object' => ['blog'],
 		];
-		$select->addClause($where);
-
+		
+		$wheres[] = $where->prepare($select, EntityTable::DEFAULT_JOIN_ALIAS);
+		
+		$select->andWhere($select->merge($wheres));
+		
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
 
@@ -400,22 +409,25 @@ class SearchServiceTest extends UnitTestCase {
 		$query_parts = ['query1', 'query2', 'query3'];
 
 		$wheres = [];
+		$q_wheres = [];
 
 		foreach ($query_parts as $part) {
 			$property = new AnnotationWhereClause();
 			$property->values = "%{$part}%";
 			$property->comparison = 'LIKE';
 			$property->case_sensitive = false;
-			$wheres[] = $property->prepare($select, $alias);
+			$q_wheres[] = $property->prepare($select, $alias);
 		}
 
-		$select->andWhere($select->merge($wheres, 'AND'));
+		$wheres[] = $select->merge($q_wheres);
 
 		$where = new EntityWhereClause();
 		$where->type_subtype_pairs = [
 			'object' => ['blog'],
 		];
-		$select->addClause($where);
+		$wheres[] = $where->prepare($select, EntityTable::DEFAULT_JOIN_ALIAS);
+		
+		$select->andWhere($select->merge($wheres));
 
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
@@ -553,22 +565,26 @@ class SearchServiceTest extends UnitTestCase {
 		$query_parts = ['query1', 'query2', 'query3'];
 
 		$wheres = [];
+		$q_wheres = [];
 
 		foreach ($query_parts as $part) {
 			$property = new MetadataWhereClause();
 			$property->values = $part;
 			$property->comparison = 'LIKE';
 			$property->case_sensitive = false;
-			$wheres[] = $property->prepare($select, $alias);
+			$q_wheres[] = $property->prepare($select, $alias);
 		}
 
-		$select->andWhere($select->merge($wheres, 'AND'));
+		$wheres[] = $select->merge($q_wheres);
 
 		$where = new EntityWhereClause();
 		$where->type_subtype_pairs = [
 			'object' => ['blog'],
 		];
-		$select->addClause($where);
+		
+		$wheres[] = $where->prepare($select, EntityTable::DEFAULT_JOIN_ALIAS);
+		
+		$select->andWhere($select->merge($wheres));
 
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);
@@ -633,22 +649,26 @@ class SearchServiceTest extends UnitTestCase {
 		$query_parts = ['query1', 'query2', 'query3'];
 
 		$wheres = [];
+		$q_wheres = [];
 
 		foreach ($query_parts as $part) {
 			$property = new MetadataWhereClause();
 			$property->values = "%{$part}%";
 			$property->comparison = 'LIKE';
 			$property->case_sensitive = false;
-			$wheres[] = $property->prepare($select, $alias);
+			$q_wheres[] = $property->prepare($select, $alias);
 		}
 
-		$select->andWhere($select->merge($wheres, 'AND'));
+		$wheres[] = $select->merge($q_wheres);
 
 		$where = new EntityWhereClause();
 		$where->type_subtype_pairs = [
 			'object' => ['blog'],
 		];
-		$select->addClause($where);
+		
+		$wheres[] = $where->prepare($select, EntityTable::DEFAULT_JOIN_ALIAS);
+		
+		$select->andWhere($select->merge($wheres));
 
 		$select->setMaxResults(10);
 		$select->setFirstResult(0);

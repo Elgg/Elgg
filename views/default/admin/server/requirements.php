@@ -94,7 +94,15 @@ if (empty(ini_get('session.gc_probability')) || empty(ini_get('session.gc_diviso
 $db = _elgg_services()->db;
 $version = $db->getServerVersion();
 $min_version = $db->isMariaDB() ? \ElggInstaller::MARIADB_MINIMAL_VERSION : \ElggInstaller::MYSQL_MINIMAL_VERSION;
-$server = $db->isMariaDB() ? 'mariadb' : $db->getConnection(DbConfig::READ_WRITE)->getDatabasePlatform()->getName();
+
+if ($db->isMariaDB()) {
+	$server = 'mariadb';
+} elseif ($db->isMySQL()) {
+	$server = 'mysql';
+} else {
+	$server = substr(strrchr($db->getConnection(DbConfig::READ_WRITE)->getDatabasePlatform()::class, '\\'), 1);
+}
+
 $subtext = '';
 $icon = $icon_ok;
 

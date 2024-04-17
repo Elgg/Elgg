@@ -4,6 +4,7 @@ namespace Elgg\Cli;
 
 use Elgg\Logger;
 use Monolog\Handler\AbstractProcessingHandler;
+use Monolog\LogRecord;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
@@ -59,21 +60,21 @@ class ErrorHandler extends AbstractProcessingHandler {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function write(array $record): void {
-		$stream = $record['level'] >= Logger::ERROR ? $this->stderr : $this->stdout;
+	public function write(LogRecord $record): void {
+		$stream = $record->level->value >= Logger::ERROR ? $this->stderr : $this->stdout;
 
-		$stream->write($record['formatted'], true);
+		$stream->write($record->formatted, true);
 
 		if ($stream instanceof StreamOutput) {
 			$dumper = new CliDumper($stream->getStream());
 			$cloner = new VarCloner();
 
-			if (!empty($record['context'])) {
-				$dumper->dump($cloner->cloneVar($record['context']));
+			if (!empty($record->context)) {
+				$dumper->dump($cloner->cloneVar($record->context));
 			}
 
-			if (!empty($record['extra'])) {
-				$dumper->dump($cloner->cloneVar($record['extra']));
+			if (!empty($record->extra)) {
+				$dumper->dump($cloner->cloneVar($record->extra));
 			}
 		}
 	}

@@ -82,6 +82,7 @@ abstract class BaseCacheUnitTestCase extends UnitTestCase {
 		
 		$this->assertNull($this->cache->load($key));
 
+		$this->assertTrue($this->cache->save($key, $value)); // need to do double save for Redis
 		$this->assertTrue($this->cache->save($key, $value, \Elgg\Values::normalizeTime('-1 second')));
 		
 		// need to detach to make sure the item is loaded from the backend and does not use static cache

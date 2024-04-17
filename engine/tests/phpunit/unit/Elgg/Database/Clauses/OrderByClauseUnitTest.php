@@ -17,12 +17,14 @@ class OrderByClauseUnitTest extends UnitTestCase {
 
 	public function up() {
 		$this->qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$this->qb->select('*');
 	}
 
 	public function testBuildOrderByClauseFromString() {
 		$this->qb->orderBy("{$this->qb->getTableAlias()}.guid", 'desc');
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$query = new OrderByClause("{$qb->getTableAlias()}.guid", 'desc');
 		$qb->addClause($query);
 
@@ -38,6 +40,7 @@ class OrderByClauseUnitTest extends UnitTestCase {
 		}, 'asc');
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -50,6 +53,7 @@ class OrderByClauseUnitTest extends UnitTestCase {
 		$query = new OrderByClause(CallableOrderBy::class, 'asc');
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -62,6 +66,7 @@ class OrderByClauseUnitTest extends UnitTestCase {
 		$query = new OrderByClause('\Elgg\Helpers\Database\Clauses\CallableOrderBy::callable', 'asc');
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());

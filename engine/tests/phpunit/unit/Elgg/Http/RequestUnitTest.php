@@ -84,7 +84,6 @@ class RequestUnitTest extends \Elgg\UnitTestCase {
 	
 	public static function trustedProxySettingsProvider() {
 		return [
-			[['192.168.0.1'], Request::HEADER_X_FORWARDED_ALL],
 			[['192.168.0.1', '192.168.0.2'], Request::HEADER_X_FORWARDED_AWS_ELB],
 			[['192.168.0.1'], Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST],
 		];

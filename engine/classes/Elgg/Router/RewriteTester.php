@@ -2,7 +2,6 @@
 
 namespace Elgg\Router;
 
-use Elgg\Filesystem\Directory\Local;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
 
@@ -31,12 +30,11 @@ class RewriteTester {
 	/**
 	 * Run the rewrite test and return a status array
 	 *
-	 * @param string $url  URL of rewrite test
-	 * @param string $path Obsolete, don't use
+	 * @param string $url URL of rewrite test
 	 *
 	 * @return array
 	 */
-	public function run($url, $path = null) {
+	public function run(string $url): array {
 
 		$this->webserver = $this->guessWebServer();
 
@@ -58,7 +56,7 @@ class RewriteTester {
 	 *
 	 * @return string
 	 */
-	protected function guessWebServer() {
+	protected function guessWebServer(): string {
 		if (empty($_SERVER['SERVER_SOFTWARE'])) {
 			return 'unknown';
 		}
@@ -82,7 +80,7 @@ class RewriteTester {
 	 * @return string|bool Subdirectory string with beginning and trailing slash or false if were unable to determine subdirectory
 	 * or pointing at root of domain already
 	 */
-	protected function guessSubdirectory($url) {
+	protected function guessSubdirectory(string $url): string|false {
 		$elements = parse_url($url);
 		if (!is_array($elements) || !isset($elements['path'])) {
 			return false;
@@ -93,7 +91,7 @@ class RewriteTester {
 			return false;
 		}
 		
-		return "/$subdir/";
+		return "/{$subdir}/";
 	}
 
 	/**
@@ -103,7 +101,7 @@ class RewriteTester {
 	 *
 	 * @return bool
 	 */
-	public function runRewriteTest($url) {
+	public function runRewriteTest(string $url): bool {
 		$this->serverSupportsRemoteRead = ($this->fetchUrl($url) === Request::REWRITE_TEST_OUTPUT);
 		return $this->serverSupportsRemoteRead;
 	}
@@ -113,7 +111,7 @@ class RewriteTester {
 	 *
 	 * @return boolean
 	 */
-	public function runLocalhostAccessTest() {
+	public function runLocalhostAccessTest(): bool {
 		return (bool) $this->fetchUrl(_elgg_services()->config->wwwroot);
 	}
 
@@ -124,7 +122,7 @@ class RewriteTester {
 	 *
 	 * @return string Note that empty string may imply failure in fetching or empty response
 	 */
-	private function fetchUrl($url) {
+	private function fetchUrl(string $url): string {
 		$response = '';
 
 		if (ini_get('allow_url_fopen')) {
@@ -157,13 +155,12 @@ class RewriteTester {
 	 *
 	 * @return bool
 	 */
-	public function createHtaccess($url) {
-		$root = Local::projectRoot();
-		$file = $root->getFile('.htaccess');
+	public function createHtaccess(string $url): bool {
+		$htaccess = Paths::project() . '.htaccess';
 
-		if ($file->exists()) {
+		if (file_exists($htaccess)) {
 			// check that this is the Elgg .htaccess
-			$data = $file->getContents();
+			$data = file_get_contents($htaccess);
 			if (empty($data)) {
 				// don't have permission to read the file
 				$this->htaccessIssue = 'read_permission';
@@ -184,13 +181,13 @@ class RewriteTester {
 			return true;
 		}
 
-		if (!is_writable($root->getPath())) {
+		if (!is_writable(Paths::project())) {
 			$this->htaccessIssue = 'write_permission';
 			return false;
 		}
 
 		// create the .htaccess file
-		$result = copy(Paths::elgg() . 'install/config/htaccess.dist', $file->getPath());
+		$result = copy(Paths::elgg() . 'install/config/htaccess.dist', $htaccess);
 		if (!$result) {
 			$this->htaccessIssue = 'cannot_copy';
 			return false;
@@ -201,10 +198,10 @@ class RewriteTester {
 			//try to rewrite to guessed subdirectory
 			$subdir = $this->guessSubdirectory($url);
 			if (!empty($subdir)) {
-				$contents = $file->getContents();
+				$contents = file_get_contents($htaccess);
 				$contents = preg_replace("/#RewriteBase \/(\r?\n)/", "RewriteBase $subdir\$1", $contents);
 				if ($contents) {
-					$file->putContents($contents);
+					file_put_contents($htaccess, $contents);
 				}
 			}
 		}
@@ -219,7 +216,7 @@ class RewriteTester {
 	 *
 	 * @return array
 	 */
-	protected function returnStatus($url) {
+	protected function returnStatus(string $url): array {
 		if ($this->rewriteTestPassed) {
 			return [
 				'severity' => 'success',

@@ -391,7 +391,7 @@ class Config {
 			$settings_path = Paths::settingsFile(Paths::SETTINGS_PHP);
 		}
 
-		return \Elgg\Project\Paths::sanitize($settings_path, false);
+		return Paths::sanitize($settings_path, false);
 	}
 
 	/**

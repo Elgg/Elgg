@@ -3,7 +3,6 @@
 namespace Elgg\Mocks;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Query\Expression\ExpressionBuilder;
 use Elgg\BaseTestCase;
 use Elgg\Database as DbDatabase;
 use Elgg\Exceptions\DatabaseException;
@@ -19,7 +18,7 @@ class Database extends DbDatabase {
 	/**
 	 * @var int
 	 */
-	protected $last_insert_id = null;
+	protected $last_insert_id = 0;
 
 	/**
 	 * {@inheritdoc}
@@ -42,10 +41,6 @@ class Database extends DbDatabase {
 		$connection = BaseTestCase::$_instance->getConnectionMock();
 
 		$connection->expects(BaseTestCase::$_instance->any())
-			->method('query')
-			->willReturnCallback([$this, 'executeDatabaseQuery']);
-
-		$connection->expects(BaseTestCase::$_instance->any())
 			->method('executeQuery')
 			->willReturnCallback([$this, 'executeDatabaseQuery']);
 		
@@ -58,12 +53,6 @@ class Database extends DbDatabase {
 			->willReturnCallback(function () {
 				return $this->last_insert_id;
 			});
-
-		$expression_builder = new ExpressionBuilder($connection);
-
-		$connection->expects(BaseTestCase::$_instance->any())
-			->method('getExpressionBuilder')
-			->willReturn($expression_builder);
 
 		$connection->expects(BaseTestCase::$_instance->any())
 			->method('quote')
@@ -147,7 +136,7 @@ class Database extends DbDatabase {
 		$sql = $this->normalizeSql($sql);
 		$results = [];
 		$row_count = 0;
-		$this->last_insert_id = null;
+		$this->last_insert_id = 0;
 
 		$hash = sha1(serialize([$sql, $params]));
 		$match = elgg_extract($hash, $this->query_specs);
@@ -196,7 +185,8 @@ class Database extends DbDatabase {
 		$result->expects(BaseTestCase::$_instance->any())
 			->method('fetchAssociative')
 			->willReturnCallback(function () use (&$results) {
-				return array_shift($results);
+				$result = array_shift($results);
+				return isset($result) ? (array) $result : false;
 			});
 		
 		$result->expects(BaseTestCase::$_instance->any())

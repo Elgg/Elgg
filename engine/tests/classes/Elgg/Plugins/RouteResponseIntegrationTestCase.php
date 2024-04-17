@@ -342,19 +342,19 @@ abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 	/**
 	 * @dataProvider groupRoutesProtectedByToolOption
 	 */
-	public function testProtectedGroupRoutesThrowException($route_name, $tool_option) {
+	public function testProtectedGroupRoutesThrowException($route, $tool) {
 		$group = $this->createGroup([
 			'access_id' => ACCESS_PUBLIC,
 			'membership' => ACCESS_PUBLIC,
 			'content_access_mode'=> \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
 		]);
 		
-		// make sure tool option is registerd
-		elgg()->group_tools->register($tool_option);
+		// make sure tool option is registered
+		elgg()->group_tools->register($tool);
 		
-		$this->assertTrue($group->disableTool($tool_option));
+		$this->assertTrue($group->disableTool($tool));
 		
-		$request = $this->prepareHttpRequest(elgg_generate_url($route_name, [
+		$request = $this->prepareHttpRequest(elgg_generate_url($route, [
 			'guid' => $group->guid,
 		]));
 
@@ -365,19 +365,19 @@ abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 	/**
 	 * @dataProvider groupRoutesProtectedByToolOption
 	 */
-	public function testProtectedGroupRoutesRespondOk($route_name, $tool_option) {
+	public function testProtectedGroupRoutesRespondOk($route, $tool) {
 		$group = $this->createGroup([
 			'access_id' => ACCESS_PUBLIC,
 			'membership' => ACCESS_PUBLIC,
 			'content_access_mode'=> \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
 		]);
 		
-		// make sure tool option is registerd
-		elgg()->group_tools->register($tool_option);
+		// make sure tool option is registered
+		elgg()->group_tools->register($tool);
 		
-		$this->assertTrue($group->enableTool($tool_option));
+		$this->assertTrue($group->enableTool($tool));
 		
-		$request = $this->prepareHttpRequest(elgg_generate_url($route_name, [
+		$request = $this->prepareHttpRequest(elgg_generate_url($route, [
 			'guid' => $group->guid,
 		]));
 

@@ -5,9 +5,9 @@
  * @uses $vars['title'] The page title
  */
 
-use Elgg\Filesystem\Directory as ElggDirectory;
+use Elgg\Project\Paths;
 
-$isElggAtRoot = Elgg\Application::elggDir()->getPath() === ElggDirectory\Local::projectRoot()->getPath();
+$isElggAtRoot = Paths::elgg() === Paths::project();
 $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';
 
 echo elgg_format_element('title', [], elgg_echo('install:title') . ' : ' . elgg_extract('title', $vars));
