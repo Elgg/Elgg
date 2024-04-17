@@ -52,7 +52,7 @@ abstract class DiContainer extends Container {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function set(string $name, $value) {
+	public function set(string $name, mixed $value): void {
 		parent::set($name, $value);
 		
 		if (is_object($value)) {
@@ -86,13 +86,11 @@ abstract class DiContainer extends Container {
 	/**
 	 * Create a DI Container
 	 *
-	 * @param array $options additional options
-	 *
 	 * @return self
 	 */
-	public static function factory(array $options = []) {
+	public static function factory() {
 		$dic_builder = new ContainerBuilder(static::class);
-		$dic_builder->useAnnotations(false);
+		$dic_builder->useAttributes(false);
 		
 		foreach (static::getDefinitionSources() as $location) {
 			$dic_builder->addDefinitions($location);

@@ -41,7 +41,7 @@
         "npm-asset/yaireo--tagify": "~4.22.0",
         "pelago/emogrifier": "~7.2.0",
         "peppeocchi/php-cron-scheduler": "~4.0",
-        "php-di/php-di": "~6.4.0",
+        "php-di/php-di": "~7.0.6",
         "phpfastcache/phpfastcache": "~9.2.3",
         "react/promise": "~3.1.0",
         "roave/security-advisories": "dev-master",
