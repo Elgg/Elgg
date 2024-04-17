@@ -498,10 +498,10 @@ class Mime
      * Mail headers depend on an extended quoted printable algorithm otherwise
      * a range of bugs can occur.
      *
-     * @param string $str
-     * @param string $charset
-     * @param int $lineLength Defaults to {@link LINELENGTH}
-     * @param string $lineEnd Defaults to {@link LINEEND}
+     * @param string            $str
+     * @param string            $charset
+     * @param int               $lineLength       Defaults to {@link LINELENGTH}
+     * @param string            $lineEnd          Defaults to {@link LINEEND}
      * @param positive-int|0    $headerNameSize   When folding a line, it is necessary to calculate
      *                                            the length of the entire line (together with the header name).
      *                                            Therefore, you can specify the header name and colon length
