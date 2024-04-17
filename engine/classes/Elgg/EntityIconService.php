@@ -233,7 +233,7 @@ class EntityIconService {
 		$entity->invalidateCache();
 		
 		if ($x1 || $y1 || $x2 || $y2) {
-			$entity->saveIconCoordinates($coords);
+			$entity->saveIconCoordinates($coords, $type);
 		}
 		
 		$this->events->triggerResults("entity:{$type}:saved", $entity->getType(), [
