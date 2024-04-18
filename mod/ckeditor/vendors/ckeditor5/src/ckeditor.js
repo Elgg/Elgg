@@ -11,13 +11,12 @@ import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js';
 import Code from '@ckeditor/ckeditor5-basic-styles/src/code.js';
 import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock.js';
-import DataFilter from '@ckeditor/ckeditor5-html-support/src/datafilter.js';
-import DataSchema from '@ckeditor/ckeditor5-html-support/src/dataschema.js';
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js';
 import FindAndReplace from '@ckeditor/ckeditor5-find-and-replace/src/findandreplace.js';
-import FontSize from '@ckeditor/ckeditor5-font/src/fontsize.js';
+import Font from '@ckeditor/ckeditor5-font/src/font.js';
 import GeneralHtmlSupport from '@ckeditor/ckeditor5-html-support/src/generalhtmlsupport.js';
 import Heading from '@ckeditor/ckeditor5-heading/src/heading.js';
+import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight.js';
 import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline.js';
 import HtmlEmbed from '@ckeditor/ckeditor5-html-embed/src/htmlembed.js';
 import Image from '@ckeditor/ckeditor5-image/src/image.js';
@@ -40,6 +39,7 @@ import Mention from '@ckeditor/ckeditor5-mention/src/mention.js';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice.js';
 import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat.js';
+import ShowBlocks from '@ckeditor/ckeditor5-show-blocks/src/showblocks.js';
 import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter.js';
 import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting.js';
 import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters.js';
@@ -60,6 +60,7 @@ import TableColumnResize from '@ckeditor/ckeditor5-table/src/tablecolumnresize.j
 import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
+import TextPartLanguage from '@ckeditor/ckeditor5-language/src/textpartlanguage.js';
 import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
 import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount.js';
@@ -78,13 +79,12 @@ Editor.builtinPlugins = [
 	Bold,
 	Code,
 	CodeBlock,
-	DataFilter,
-	DataSchema,
 	Essentials,
 	FindAndReplace,
-	FontSize,
+	Font,
 	GeneralHtmlSupport,
 	Heading,
+	Highlight,
 	HorizontalLine,
 	HtmlEmbed,
 	Image,
@@ -107,6 +107,7 @@ Editor.builtinPlugins = [
 	Paragraph,
 	PasteFromOffice,
 	RemoveFormat,
+	ShowBlocks,
 	SimpleButton,
 	SimpleUploadAdapter,
 	SourceEditing,
@@ -127,6 +128,7 @@ Editor.builtinPlugins = [
 	TableColumnResize,
 	TableProperties,
 	TableToolbar,
+	TextPartLanguage,
 	TextTransformation,
 	TodoList,
 	Underline,
