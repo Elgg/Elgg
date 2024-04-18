@@ -178,7 +178,7 @@ class GarbageCollector {
 	 */
 	protected function optimizeTable(string $table): int {
 		$result = $this->db->getConnection('write')->executeQuery("OPTIMIZE TABLE {$table}");
-		return $result->rowCount();
+		return (int) $result->rowCount();
 	}
 	
 	/**

@@ -258,7 +258,7 @@ class Database {
 	 *
 	 * @return bool|int
 	 */
-	public function updateData(QueryBuilder $query, bool $get_num_rows = false) {
+	public function updateData(QueryBuilder $query, bool $get_num_rows = false): bool|int {
 		$params = $query->getParameters();
 		$sql = $query->getSQL();
 	
@@ -271,7 +271,7 @@ class Database {
 			return true;
 		}
 
-		return ($result instanceof Result) ? $result->rowCount() : $result;
+		return ($result instanceof Result) ? (int) $result->rowCount() : $result;
 	}
 
 	/**
@@ -292,7 +292,7 @@ class Database {
 		$this->query_cache->clear();
 
 		$result = $this->executeQuery($query);
-		return ($result instanceof Result) ? $result->rowCount() : $result;
+		return ($result instanceof Result) ? (int) $result->rowCount() : $result;
 	}
 
 	/**
