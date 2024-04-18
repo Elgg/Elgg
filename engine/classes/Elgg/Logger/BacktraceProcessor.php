@@ -3,6 +3,7 @@
 namespace Elgg\Logger;
 
 use Elgg\Logger;
+use Monolog\Level;
 use Monolog\LogRecord;
 
 /**
@@ -20,7 +21,7 @@ class BacktraceProcessor {
 	 * @param int $level           Logging level
 	 * @param int $backtrace_level Backtrance level (-1 for all)
 	 */
-	public function __construct($level = Logger::WARNING, $backtrace_level = -1) {
+	public function __construct($level = Level::Warning, $backtrace_level = -1) {
 		$this->level = Logger::toMonologLevel($level);
 		$this->backtrace_level = $backtrace_level;
 	}

@@ -4,6 +4,7 @@ namespace Elgg\Cli;
 
 use Elgg\Logger;
 use Monolog\Handler\AbstractProcessingHandler;
+use Monolog\Level;
 use Monolog\LogRecord;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,10 +20,10 @@ class ErrorHandler extends AbstractProcessingHandler {
 	
 	const VERBOSITY_LEVEL_MAP = [
 		OutputInterface::VERBOSITY_QUIET => Logger::OFF,
-		OutputInterface::VERBOSITY_NORMAL => Logger::WARNING,
-		OutputInterface::VERBOSITY_VERBOSE => Logger::NOTICE,
-		OutputInterface::VERBOSITY_VERY_VERBOSE => Logger::INFO,
-		OutputInterface::VERBOSITY_DEBUG => Logger::DEBUG,
+		OutputInterface::VERBOSITY_NORMAL => Level::Warning,
+		OutputInterface::VERBOSITY_VERBOSE => Level::Notice,
+		OutputInterface::VERBOSITY_VERY_VERBOSE => Level::Info,
+		OutputInterface::VERBOSITY_DEBUG => Level::Debug,
 	];
 	
 	/**
@@ -61,7 +62,7 @@ class ErrorHandler extends AbstractProcessingHandler {
 	 * {@inheritdoc}
 	 */
 	public function write(LogRecord $record): void {
-		$stream = $record->level->value >= Logger::ERROR ? $this->stderr : $this->stdout;
+		$stream = $record->level->value >= Level::Error ? $this->stderr : $this->stdout;
 
 		$stream->write($record->formatted, true);
 

@@ -118,7 +118,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 * @return string
 	 */
 	public function getTableName(): string {
-		return $this->table_name;
+		return (string) $this->table_name;
 	}
 
 	/**

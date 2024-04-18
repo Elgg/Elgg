@@ -128,7 +128,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 			$handler = new \Monolog\Handler\RotatingFileHandler(
 				elgg_sanitize_path(elgg_get_data_path() . 'logs/html/errors.html', false),
 				elgg_extract('error_log_max_files', $settings, 60),
-				\Monolog\Logger::ERROR
+				\Monolog\Level::Error
 			);
 	
 			$formatter = new \Elgg\Developers\ErrorLogHtmlFormatter();
