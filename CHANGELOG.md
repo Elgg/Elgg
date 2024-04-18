@@ -1,3 +1,51 @@
+<a name="6.0.0-beta.1"></a>
+### 6.0.0-beta.1 (2024-04-18)
+
+#### Contributors
+
+* Jeroen Dalsem (63)
+* Jerôme Bakker (28)
+
+#### Features
+
+* **ckeditor:** updated to ckeditor v41.3 [c30beef28](https://github.com/Elgg/Elgg//commit/c30beef28eeaa745bd3369653ad1dc661e93e45a)
+* **db:** updated to doctrine/dbal v4 [c3776a7a7](https://github.com/Elgg/Elgg//commit/c3776a7a73c6e01ce48949ff3e6a988ee53cbd57)
+* **core:** added temporary bin [ea8939719](https://github.com/Elgg/Elgg//commit/ea893971959e370c11a63f2ac3bd418db4eea2df) closes [#5172](https://github.com/Elgg/Elgg//commit/5172)
+* **views:**
+  * restructured various page elements and improved css [c5c46637a](https://github.com/Elgg/Elgg//commit/c5c46637ad6137509a70422198e36808d127239e)
+  * improve various sidebar search forms [172ada402](https://github.com/Elgg/Elgg//commit/172ada402d6dd5a97a1a59f2ceb5299cdb2a1b40)
+  * improved usage of headings in various parts of a page [df7e1eaac](https://github.com/Elgg/Elgg//commit/df7e1eaac91d664125e6fc173e8945e3f768fd07) closes [#14435](https://github.com/Elgg/Elgg//commit/14435)
+* **session:** login event has been reintroduced for logging purposes [34819950d](https://github.com/Elgg/Elgg//commit/34819950d0a8f1c783c15d9da5db2ef767fb23d4)
+* **js:** dropped RequireJS in favor of ECMAScript modules [e2e998c2c](https://github.com/Elgg/Elgg//commit/e2e998c2c6c42759518829be0ba0182aee9a411b)
+* **icons:** uniform storage of entity icon cropping coordinates [cee682c2f](https://github.com/Elgg/Elgg//commit/cee682c2f0cd0e4bb1c05393ca47dfb01e398d04)
+* **php:** require php intl module [5b5ddccb6](https://github.com/Elgg/Elgg//commit/5b5ddccb6e53cc369430a32beb2b6bcb2293fda9) closes [#13901](https://github.com/Elgg/Elgg//commit/13901)
+* **tests:** updated to PHPUnit 10.5 [b01996b60](https://github.com/Elgg/Elgg//commit/b01996b6036c626f4ad131777a9020af987dc832)
+* **responses:** response forward urls are now secure by default [afe18fb3b](https://github.com/Elgg/Elgg//commit/afe18fb3b32b3c852dfdbf70bf6bb637d3c33edf)
+
+
+#### Bug fixes
+
+* **core:**
+  * correctly determine if plugins need reindexing [84e72f296](https://github.com/Elgg/Elgg//commit/84e72f2964e5deb8c8cbd9eb66ad3940da79c829)
+  * correctly check for the need for a default order by [72d015033](https://github.com/Elgg/Elgg//commit/72d0150334302143458f137b75c1c972e3ad00a7)
+* **groups:**
+  * only show group owner transfer if there are other members [3f8a4f1bf](https://github.com/Elgg/Elgg//commit/3f8a4f1bf4f0a4ed57a7a1e108fa7084c3d6ff22)
+  * only show edit form sections if there is content [28673a1f7](https://github.com/Elgg/Elgg//commit/28673a1f7bbbb615662a37ff0ac82266bedaa3d7)
+* **webservices:**
+  * set correct response header during exception [7a1322631](https://github.com/Elgg/Elgg//commit/7a132263188f9570cdc7e25ece1cda593be53e86) closes [#14506](https://github.com/Elgg/Elgg//commit/14506)
+  * improved calculation of POST hash [64522a17f](https://github.com/Elgg/Elgg//commit/64522a17fce912311aa615757dbc6723251b73f7) closes [#14233](https://github.com/Elgg/Elgg//commit/14233)
+* **upgrades:** show correct count in the admin upgrade listing [adc8b9028](https://github.com/Elgg/Elgg//commit/adc8b9028049996e2b0a5b243a2402dbe3eb009b) closes [#14520](https://github.com/Elgg/Elgg//commit/14520)
+* **database:** allow both metadata and annotations [67962755c](https://github.com/Elgg/Elgg//commit/67962755ceae392c21a2396552db8f563d984cad) closes [#14405](https://github.com/Elgg/Elgg//commit/14405)
+
+
+#### Removed
+
+* **filesystem:** removed flysystem wrapper [537b90a1d](https://github.com/Elgg/Elgg//commit/537b90a1d24c9a9182dbf34e0a9e4e71b3d9035d)
+* **db:** the enabled column for annotations has been removed [bdd17b413](https://github.com/Elgg/Elgg//commit/bdd17b413b6f925d24e60a21c3289bf92817f3bc)
+* **core:** the \ElggEntity->getTags() function has been removed [d3bbe25d0](https://github.com/Elgg/Elgg//commit/d3bbe25d0ff29a94cf920b67a8a804359124317b)
+* **icons:** icontime metadata is no longer available [7e139b935](https://github.com/Elgg/Elgg//commit/7e139b9352908407bf48edec343c96fbf317df35)
+
+
 <a name="5.1.5"></a>
 ### 5.1.5 (2024-03-22)
 
