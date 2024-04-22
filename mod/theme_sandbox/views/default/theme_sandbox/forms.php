@@ -563,15 +563,6 @@ $ipsum = elgg_view('theme_sandbox/demo/ipsum');
 
 		echo elgg_view_field([
 			'#type' => 'longtext',
-			'name' => 'f14b',
-			'id' => 'f14b',
-			'value' => $ipsum,
-			'visual' => false,
-			'#label' => 'Long textarea input (.elgg-input-longtext) without a visual editor activated by default:',
-		]);
-
-		echo elgg_view_field([
-			'#type' => 'longtext',
 			'name' => 'f14c',
 			'id' => 'f14c',
 			'value' => $ipsum,
