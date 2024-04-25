@@ -155,7 +155,7 @@ return [
 		],
 	],
 	'entity:url' => [
-		'object' => [
+		'object:widget' => [
 			\Elgg\Widgets\EntityUrlHandler::class => [],
 		],
 	],

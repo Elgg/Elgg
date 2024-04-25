@@ -12,14 +12,27 @@ if (!$owner instanceof \ElggUser) {
 	$owner = elgg_get_logged_in_user_entity();
 }
 
-$groups = $owner->getGroups(['limit' => false]);
+/* @var $groups \ElggBatch */
+$groups = $owner->getGroups([
+	'limit' => false,
+	'batch' => true,
+	'sort_by' => [
+		'property' => 'name',
+		'direction' => 'ASC',
+	],
+]);
 
 $mygroups = [];
 if (!$widget->group_guid) {
 	$mygroups[0] = '';
 }
 
+/* @var $group \ElggGroup */
 foreach ($groups as $group) {
+	if (!$group->isToolEnabled('activity')) {
+		continue;
+	}
+	
 	$mygroups[$group->guid] = $group->getDisplayName();
 }
 
@@ -29,6 +42,7 @@ echo elgg_view_field([
 	'name' => 'params[group_guid]',
 	'value' => $widget->group_guid,
 	'options_values' => $mygroups,
+	'required' => true,
 ]);
 
 echo elgg_view('object/widget/edit/num_display', [

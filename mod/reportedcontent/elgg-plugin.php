@@ -45,6 +45,11 @@ return [
 				'Elgg\ReportedContent\Notifications\PreventCommentNotification' => [],
 			],
 		],
+		'entity:url' => [
+			'object:widget' => [
+				'Elgg\ReportedContent\Widgets::reportedcontentWidgetURL' => [],
+			],
+		],
 		'register' => [
 			'menu:admin_header' => [
 				'Elgg\ReportedContent\Menus\AdminHeader::register' => [],

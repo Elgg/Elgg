@@ -1109,8 +1109,8 @@ abstract class ElggEntity extends \ElggData {
 	public function getURL(): string {
 		$url = elgg_generate_entity_url($this, 'view');
 
+		$url = _elgg_services()->events->triggerResults('entity:url', "{$this->getType()}:{$this->getSubtype()}", ['entity' => $this], $url);
 		$url = _elgg_services()->events->triggerResults('entity:url', $this->getType(), ['entity' => $this], $url);
-
 		if (empty($url)) {
 			return '';
 		}

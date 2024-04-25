@@ -1,27 +1,27 @@
 <?php
 
-namespace Elgg\MessageBoard;
+namespace Elgg\Groups;
 
 /**
  * Widget related functions
  */
 class Widgets {
-
+	
 	/**
-	 * Set the title URL for the messageboard widgets
+	 * Get the widget URL for the a_users_groups widget
 	 *
 	 * @param \Elgg\Event $event 'entity:url', 'object:widget'
 	 *
 	 * @return null|string
 	 */
-	public static function widgetURL(\Elgg\Event $event): ?string {
+	public static function usersGroupsWidgetURL(\Elgg\Event $event): ?string {
 		if (!empty($event->getValue())) {
 			// someone already set an url
 			return null;
 		}
 		
 		$widget = $event->getEntityParam();
-		if (!$widget instanceof \ElggWidget || $widget->handler !== 'messageboard') {
+		if (!$widget instanceof \ElggWidget || $widget->handler !== 'a_users_groups') {
 			return null;
 		}
 		
@@ -30,7 +30,7 @@ class Widgets {
 			return null;
 		}
 		
-		return elgg_generate_url('collection:annotation:messageboard:owner', [
+		return elgg_generate_url('collection:group:group:member', [
 			'username' => $owner->username,
 		]);
 	}

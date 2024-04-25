@@ -6,7 +6,9 @@
 use Elgg\Database\Clauses\OrderByClause;
 
 $widget = elgg_extract('entity', $vars);
-$owner = $widget->getOwnerEntity();
+if (!$widget instanceof \ElggWidget) {
+	return;
+}
 
 if (elgg_is_logged_in()) {
 	echo elgg_view_form('messageboard/add', [
@@ -16,18 +18,16 @@ if (elgg_is_logged_in()) {
 
 $num_display = (int) $widget->num_display ?: 4;
 
-$more_link = elgg_view_url(elgg_generate_url('collection:annotation:messageboard:owner', ['username' => $owner->username]), elgg_echo('link:view:all'));
-
 echo elgg_list_annotations([
 	'annotation_name' => 'messageboard',
-	'guid' => $owner->guid,
+	'guid' => $widget->owner_guid,
 	'limit' => $num_display,
 	'pagination' => false,
 	'order_by' => [
 		new OrderByClause('a_table.time_created', 'DESC'),
 		new OrderByClause('a_table.id', 'DESC'),
 	],
-	'widget_more' => $more_link,
+	'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('link:view:all')),
 ]);
 
 elgg_import_esm('elgg/messageboard');

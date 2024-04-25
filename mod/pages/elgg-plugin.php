@@ -118,6 +118,11 @@ return [
 				'Elgg\Pages\Icons::getIconUrl' => [],
 			],
 		],
+		'entity:url' => [
+			'object:widget' => [
+				'Elgg\Pages\Widgets::pagesWidgetURL' => [],
+			],
+		],
 		'extender:url' => [
 			'annotation' => [
 				'Elgg\Pages\Extender::setRevisionUrl' => [],
