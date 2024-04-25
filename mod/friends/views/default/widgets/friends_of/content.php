@@ -3,8 +3,10 @@
  * Friends of widget display view
  */
 
-/* @var $widget ElggWidget */
 $widget = elgg_extract('entity', $vars);
+if (!$widget instanceof \ElggWidget) {
+	return;
+}
 
 $owner = $widget->getOwnerEntity();
 if (!$owner instanceof \ElggUser) {
@@ -23,7 +25,5 @@ echo elgg_list_entities([
 	'list_type' => 'gallery',
 	'pagination' => false,
 	'no_results' => elgg_echo('friends:none'),
-	'widget_more' => elgg_view_url(elgg_generate_url('collection:friends:owner', [
-		'username' => $owner->username,
-	]), elgg_echo('more')),
+	'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('more')),
 ]);

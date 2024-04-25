@@ -1,42 +1,41 @@
 <?php
 
-namespace Elgg\Bookmarks;
+namespace Elgg\Pages;
 
 /**
  * Widget related functions
  */
 class Widgets {
-
+	
 	/**
-	 * Set the title URL for the bookmarks widgets
+	 * Get the widget URL for the pages widget
 	 *
 	 * @param \Elgg\Event $event 'entity:url', 'object:widget'
 	 *
 	 * @return null|string
 	 */
-	public static function widgetURL(\Elgg\Event $event): ?string {
-		$return_value = $event->getValue();
-		if (!empty($return_value)) {
+	public static function pagesWidgetURL(\Elgg\Event $event): ?string {
+		if (!empty($event->getValue())) {
 			// someone already set an url
 			return null;
 		}
 		
 		$widget = $event->getEntityParam();
-		if (!$widget instanceof \ElggWidget || $widget->handler !== 'bookmarks') {
+		if (!$widget instanceof \ElggWidget || $widget->handler !== 'pages') {
 			return null;
 		}
 		
 		$owner = $widget->getOwnerEntity();
 		if ($owner instanceof \ElggGroup) {
-			return elgg_generate_url('collection:object:bookmarks:group', [
+			return elgg_generate_url('collection:object:page:group', [
 				'guid' => $owner->guid,
 			]);
 		} elseif ($owner instanceof \ElggUser) {
-			return elgg_generate_url('collection:object:bookmarks:owner', [
+			return elgg_generate_url('collection:object:page:owner', [
 				'username' => $owner->username,
 			]);
 		}
 		
-		return elgg_generate_url('collection:object:bookmarks:all');
+		return elgg_generate_url('collection:object:page:all');
 	}
 }

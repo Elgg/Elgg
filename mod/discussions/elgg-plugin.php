@@ -90,7 +90,7 @@ return [
 			],
 		],
 		'entity:url' => [
-			'object' => [
+			'object:widget' => [
 				'Elgg\Discussions\Widgets::widgetURL' => [],
 			],
 		],

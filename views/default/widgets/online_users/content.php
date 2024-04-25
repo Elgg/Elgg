@@ -7,7 +7,7 @@ use Elgg\Database\QueryBuilder;
 use Elgg\Values;
 
 $widget = elgg_extract('entity', $vars);
-if (!$widget instanceof ElggWidget) {
+if (!$widget instanceof \ElggWidget) {
 	return;
 }
 
@@ -18,7 +18,7 @@ echo elgg_list_entities([
 	'pagination' => false,
 	'limit' => $num_display,
 	'no_results' => true,
-	'widget_more' => elgg_view_url('admin/users/online', elgg_echo('more')),
+	'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('more')),
 	'wheres' => [
 		function(QueryBuilder $qb, $main_alias) {
 			return $qb->compare("{$main_alias}.last_action", '>=', Values::normalizeTimestamp('-10 minutes'), ELGG_VALUE_TIMESTAMP);

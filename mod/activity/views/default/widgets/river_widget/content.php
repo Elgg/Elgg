@@ -3,14 +3,17 @@
  * Activity widget content view
  */
 
-/* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
+if (!$widget instanceof \ElggWidget) {
+	return;
+}
 
 $num_display = (int) $widget->num_display ?: 8;
 
 $options = [
 	'limit' => $num_display,
 	'pagination' => false,
+	'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('activity:more')),
 ];
 
 if ($widget->context === 'dashboard') {

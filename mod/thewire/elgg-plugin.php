@@ -88,6 +88,11 @@ return [
 		],
 	],
 	'events' => [
+		'entity:url' => [
+			'object:widget' => [
+				'Elgg\TheWire\Widgets::thewireWidgetURL' => [],
+			],
+		],
 		'register' => [
 			'menu:entity' => [
 				'Elgg\TheWire\Menus\Entity::register' => [],

@@ -13,20 +13,24 @@ class Widgets {
 	/**
 	 * Returns widget URLS used in widget titles
 	 *
-	 * @param \Elgg\Event $event 'entity:url', 'object'
+	 * @param \Elgg\Event $event 'entity:url', 'object:widget'
 	 *
-	 * @return void|string
-	 * @internal
+	 * @return null|string
 	 */
-	public static function setWidgetUrl(\Elgg\Event $event) {
+	public static function setWidgetUrl(\Elgg\Event $event): ?string {
+		if (!empty($event->getValue())) {
+			// // someone already set an url
+			return null;
+		}
+		
 		$widget = $event->getEntityParam();
 		if (!$widget instanceof \ElggWidget) {
-			return;
+			return null;
 		}
 		
 		$owner = $widget->getOwnerEntity();
 		if (!$owner instanceof \ElggUser) {
-			return;
+			return null;
 		}
 		
 		switch ($widget->handler) {
@@ -35,5 +39,7 @@ class Widgets {
 			case 'friends_of':
 				return elgg_generate_url('collection:friends_of:owner', ['username' => $owner->username]);
 		}
+		
+		return null;
 	}
 }

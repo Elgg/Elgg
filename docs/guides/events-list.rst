@@ -1209,6 +1209,11 @@ Other
 
 	 * ``entity`` - entity that owns the icons
 
+**entity:url, <entity_type>:<entity_subtype>** |results|
+	Return the URL for the entity ``$params['entity']``. Note: Generally it is better to override the
+	``getUrl()`` method of ElggEntity. This event should be used when it's not possible to subclass
+	(like if you want to extend a bundled plugin without overriding many views).
+
 **entity:url, <entity_type>** |results|
 	Return the URL for the entity ``$params['entity']``. Note: Generally it is better to override the
 	``getUrl()`` method of ElggEntity. This event should be used when it's not possible to subclass

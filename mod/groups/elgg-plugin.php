@@ -196,6 +196,11 @@ return [
 				'Elgg\Groups\Relationships::removeGroupNotificationSubscriptions' => [],
 			],
 		],
+		'entity:url' => [
+			'object:widget' => [
+				'Elgg\Groups\Widgets::usersGroupsWidgetURL' => [],
+			],
+		],
 		'fields' => [
 			'group:group' => [
 				\Elgg\Groups\FieldsHandler::class => [],

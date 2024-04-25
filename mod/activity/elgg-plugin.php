@@ -62,8 +62,9 @@ return [
 	],
 	'events' => [
 		'entity:url' => [
-			'object' => [
-				'Elgg\Activity\Widgets::widgetURL' => [],
+			'object:widget' => [
+				'Elgg\Activity\Widgets::groupWidgetURL' => [],
+				'Elgg\Activity\Widgets::riverWidgetURL' => [],
 			],
 		],
 		'register' => [
