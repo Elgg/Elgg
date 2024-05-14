@@ -81,7 +81,7 @@ jobs:
         with:
           php-version: '8.1'
           coverage: none
-          extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
+          extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring,intl
           ini-values: zend.enable_gc=0
         
       - name: Code checkout PR
@@ -97,7 +97,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       
       - name: Composer update
-        # using composer update to make sure we have latest dependencies like in the starter project (zip)
+        # using composer update to make sure we have the latest dependencies like in the starter project (zip)
         run: composer update --prefer-dist
       
       - name: Elgg CLI upgrade
