@@ -59,13 +59,22 @@ class ViewStackIntegrationTest extends PluginsIntegrationTestCase {
 			}
 		}
 		
+		if (empty($result)) {
+			// hack so test can check if there are no views provided
+			$result[] = [null, null, null, null, null];
+		}
+		
 		return $result;
 	}
 	
 	/**
 	 * @dataProvider viewsProvider
 	 */
-	public function testViewStackRegistrations(\ElggPlugin $plugin, $view, $viewtype, $path, $is_simplecache_view) {
+	public function testViewStackRegistrations(?\ElggPlugin $plugin, $view, $viewtype, $path, $is_simplecache_view) {
+		if (!isset($plugin)) {
+			$this->markTestSkipped('no plugin views to test');
+		}
+		
 		$this->startPlugin($plugin->getID(), false);
 		
 		$this->assertFileExists($path);
