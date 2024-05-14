@@ -5,6 +5,7 @@ namespace Elgg\GarbageCollector;
 use Elgg\Application\Database;
 use Elgg\Database\AccessCollections;
 use Elgg\Database\AnnotationsTable;
+use Elgg\Database\DelayedEmailQueueTable;
 use Elgg\Database\Delete;
 use Elgg\Database\EntityTable;
 use Elgg\Database\MetadataTable;
@@ -258,7 +259,7 @@ class GarbageCollector {
 	 * @return void
 	 */
 	protected function cleanupDelayedEmailQueue(): void {
-		$delete = Delete::fromTable(DatabaseQueue::TABLE_NAME);
+		$delete = Delete::fromTable(DelayedEmailQueueTable::TABLE_NAME);
 		
 		$entity_sub = $delete->subquery(EntityTable::TABLE_NAME);
 		$entity_sub->select('guid');
