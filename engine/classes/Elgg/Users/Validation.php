@@ -13,41 +13,6 @@ use Elgg\Http\ResponseBuilder;
 class Validation {
 
 	/**
-	 * Notify the user that their account is approved
-	 *
-	 * @param \Elgg\Event $event 'validate:after', 'user'
-	 *
-	 * @return void
-	 */
-	public static function notifyUserAfterValidation(\Elgg\Event $event) {
-		
-		if (!(bool) elgg_get_config('require_admin_validation')) {
-			return;
-		}
-		
-		$user = $event->getObject();
-		if (!$user instanceof \ElggUser) {
-			return;
-		}
-		
-		$site = elgg_get_site_entity();
-		
-		$subject = elgg_echo('account:notification:validation:subject', [$site->getDisplayName()], $user->getLanguage());
-		$body = elgg_echo('account:notification:validation:body', [
-			$site->getDisplayName(),
-			$site->getURL(),
-		], $user->getLanguage());
-		
-		$params = [
-			'action' => 'account:validated',
-			'object' => $user,
-			'apply_muting' => false,
-		];
-		
-		notify_user($user->guid, $site->guid, $subject, $body, $params, ['email']);
-	}
-
-	/**
 	 * Adds river activity that a new user joined the site
 	 *
 	 * @param \Elgg\Event $event 'validate:after', 'user'
