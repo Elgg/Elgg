@@ -153,7 +153,7 @@ class Cron {
 				'time' => $time->getTimestamp(),
 				'dt' => $time,
 				'logger' => $cron_logger,
-			], [
+			], null, [
 				EventsService::OPTION_BEGIN_CALLBACK => $begin_callback,
 				EventsService::OPTION_END_CALLBACK => $end_callback,
 			]);
