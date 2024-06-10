@@ -10,8 +10,10 @@
 $options = (array) elgg_extract('options', $vars);
 
 $featured_options = [
-	'metadata_name' => 'featured_group',
-	'metadata_value' => 'yes',
+	'metadata_name_value_pairs' => [
+		'name' => 'featured_group',
+		'value' => 'yes',
+	],
 	'no_results' => elgg_echo('groups:nofeatured'),
 ];
 
