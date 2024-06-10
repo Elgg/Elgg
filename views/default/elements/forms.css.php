@@ -9,7 +9,7 @@
 *************************************** */
 .elgg-form-body,
 .elgg-form-body > div,
-.elgg-form-body fieldset > div,
+.elgg-form-body fieldset:not(.elgg-fieldset) > div,
 .elgg-field {
 	&:not(:last-child) {
 		margin-bottom: 1rem;
@@ -182,18 +182,27 @@ select:not([multiple]) {
 	margin: 0 auto;
 }
 
-.elgg-fieldset-has-legend {
-	border: 1px solid $(border-color-soft);
-	padding: 1rem;
-	margin-bottom: 1rem;
+.elgg-fieldset {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	
+	&.elgg-fieldset-has-legend {
+		border: 1px solid $(border-color-soft);
+		padding: 1rem;
+		margin-bottom: 1rem;
+	}
+	
+	> .elgg-field {
+		margin: 0;
+	}
 }
 
 @media $(media-phone-up) {
 	.elgg-fieldset-horizontal {
-		display: flex;
+		flex-direction: row;
 		
 		> .elgg-field {
-			margin: 0 1rem 0 0;
 			vertical-align: top;
 			
 			display: flex;
@@ -222,34 +231,18 @@ select:not([multiple]) {
 				display: flex;
 				flex-shrink: 0;
 			}
-			
-			&:last-child {
-				margin-right: 0;
-			}
 		}
 		
 		&.elgg-fieldset-wrap {
 			flex-wrap: wrap;
-			
-			> .elgg-field {
-				margin-bottom: 0.5rem;
-			}
 		}
 		
 		&.elgg-justify-right {
 			justify-content: flex-end;
-			
-			> .elgg-field {
-				margin: 0 0 0 1rem;
-			}
 		}
 		
 		&.elgg-justify-center {
 			justify-content: center;
-		
-			> .elgg-field {
-				margin: 0 5px;
-			}
 		}
 	}
 }
