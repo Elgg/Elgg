@@ -10,11 +10,16 @@
 		max-width: unset;
 		
 		.elgg-header-image {
-			background-size: cover;
-			background-position: center;
-			background-attachment: fixed;
 			width: 100%;
 			height: 40vh;
+			
+			> div {
+				background-size: cover;
+				background-position: center;
+				position: fixed;
+				width: 100%;
+				height: 40vh;
+			}
 		}
 	}
 	
@@ -23,7 +28,9 @@
 	}
 	
 	.elgg-page-body {
+		position: relative;
 		padding: 2rem 1rem;
+		background: $(body-background-color);
 	}
 	
 	.elgg-page-footer {

@@ -2,8 +2,10 @@
 
 namespace Elgg\Menus;
 
+use Elgg\Database\QueryBuilder;
 use Elgg\Menu\MenuItems;
 use Elgg\Menu\PreparedMenu;
+use Elgg\Values;
 
 /**
  * Register menu items for the admin_header menu
@@ -29,6 +31,27 @@ class AdminHeader {
 		$return = $event->getValue();
 		
 		$admin = elgg_get_logged_in_user_entity();
+		
+		$online_users_count = elgg_count_entities([
+			'type' => 'user',
+			'wheres' => [
+				function(QueryBuilder $qb, $main_alias) {
+					return $qb->compare("{$main_alias}.last_action", '>=', Values::normalizeTimestamp('-10 minutes'), ELGG_VALUE_TIMESTAMP);
+				}
+			],
+		]);
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'online_users_count',
+			'icon' => 'user',
+			'text' => false,
+			'title' => elgg_echo('admin:statistics:label:numonline'),
+			'badge' => Values::shortFormatOutput(max(1, $online_users_count)),
+			'deps' => ['admin/users/online'],
+			'href' => 'admin/users/online',
+			'priority' => 10,
+			'section' => 'alt',
+		]);
 		
 		// link back to the site
 		$return[] = \ElggMenuItem::factory([
