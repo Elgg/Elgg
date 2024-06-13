@@ -13,9 +13,15 @@ return array(
 	'thewire' => "The Wire",
 
 	'item:object:thewire' => "Posts",
+	'collection:object:thewire' => 'Mensajes',
 	'collection:object:thewire:all' => "Todos los post",
 	'collection:object:thewire:owner' => "los posts de %s",
 	'collection:object:thewire:friends' => "Los post de tus amigos",
+	'collection:object:thewire:mentions' => "Mensajes mencionando a @%s",
+	'notification:object:thewire:create' => "Enviar una notificación cuando se cree un nuevo mensaje",
+	'notifications:mute:object:thewire' => "Acerca del mensaje '%s'",
+
+	'thewire:menu:filter:mentions' => "Menciones",
 	
 	'thewire:replying' => "Responder a %s (@%s) quien escribi&oacute;",
 	'thewire:thread' => "Hilo",
@@ -24,10 +30,13 @@ return array(
 	'thewire:noposts' => "No hay posts",
 
 	'thewire:by' => 'Post publicado por %s',
+
+	'thewire:form:body:placeholder' => "¿Novedades?",
 	
 	/**
 	 * The wire river
 	 */
+	'river:object:thewire:create' => "%s escribió a %s",
 	'thewire:wire' => 'wire',
 
 	/**
@@ -55,8 +64,12 @@ return array(
 	'thewire:notify:reply' => '%s ha respondido a %s en the wire:',
 	'thewire:notify:post' => '%s ha posteado en the wire:',
 	'thewire:notify:footer' => "Ver y responder:\n%s",
+	
+	'notification:mentions:object:thewire:subject' => '%s mencionado en un post',
 
 	/**
 	 * Settings
 	 */
+	'thewire:settings:limit' => "Máximo número de caracteres por mensaje:",
+	'thewire:settings:limit:none' => "Ilimitado",
 );
