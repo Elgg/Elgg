@@ -106,6 +106,14 @@ return [
 			\Elgg\Router\Middleware\AdminGatekeeper::class,
 		],
 	],
+	'admin:online_users_count' => [
+		// needs to be registered before global admin route
+		'path' => '/admin/online_users_count',
+		'controller' => \Elgg\Controllers\OnlineUsersCount::class,
+		'middleware' => [
+			\Elgg\Router\Middleware\AdminGatekeeper::class,
+		],
+	],
 	'admin' => [
 		'path' => '/admin/{segments?}',
 		'resource' => 'admin',
