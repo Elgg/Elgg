@@ -1,15 +1,15 @@
 .elgg-profile-fields {
 	padding: 1.5rem;
-	display: flex;
-	flex-direction: column;
-	row-gap: 0.5rem;
+	display: grid;
+	row-gap: 1rem;
 	
 	.elgg-profile-field {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		column-gap: 1rem;
 		
 		> .elgg-profile-field-label {
-			width: 12rem;
+			display: flex;
+			gap: .5rem;
 			
 			font-weight: $(font-bold-weight);
 			font-size: 0.85rem;
@@ -21,11 +21,7 @@
 @media $(media-tablet-up) {
 	.elgg-profile-fields {
 		.elgg-profile-field {
-			flex-direction: row;
-			
-			> .elgg-profile-field-label {
-				max-width: 12rem;
-			}
+			grid-template-columns: 12rem 1fr;
 		}
 	}
 }
