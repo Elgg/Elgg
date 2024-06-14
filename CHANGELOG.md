@@ -1,3 +1,15 @@
+<a name="5.1.6"></a>
+### 5.1.6 (2024-06-14)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug fixes
+
+* **thewire:** correctly call thewire_filter() [622cfb65f](https://github.com/Elgg/Elgg//commit/622cfb65fd361476f0a69bb6d8500881b918b794) closes [#14611](https://github.com/Elgg/Elgg//commit/14611)
+
+
 <a name="5.1.5"></a>
 ### 5.1.5 (2024-03-22)
 
