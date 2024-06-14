@@ -17,7 +17,7 @@ echo elgg_view_form('admin/users/bulk_actions', [
 		'columns' => [
 			elgg()->table_columns->checkbox(elgg_view('input/checkbox', [
 				'name' => 'user_guids',
-				'title' => elgg_echo('table_columns:fromView:select'),
+				'title' => elgg_echo('table_columns:fromView:checkbox'),
 			]), [
 				'name' => 'user_guids[]',
 			]),
