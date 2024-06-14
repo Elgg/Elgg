@@ -44,21 +44,9 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'Deasbad ùr air a bheil "%s"',
 	'discussion:topic:notify:subject' => 'Deasbad ùr: "%s"',
-	'discussion:topic:notify:body' => 'Tha %s air deasbad ùr, "%s", a thòiseachadh:
-
-%s
-
-Seall agus cuir freagairt ris:
-%s',
 
 	'discussion:comment:notify:summary' => 'Beachd ùr air an deasbad: "%s"',
 	'discussion:comment:notify:subject' => 'Beachd ùr air an deasbad: "%s"',
-	'discussion:comment:notify:body' => 'Tha %s air beachd fhàgail air an deasbad "%s":
-
-%s
-
-Seall agus fàg beachd air
-%s',
 
 	'groups:tool:forum' => 'Cuir an comas deasbadan ann am buidhnean',
 	

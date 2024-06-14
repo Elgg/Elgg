@@ -33,10 +33,7 @@ return array(
 	'site_notifications:success:delete' => 'Notificaties verwijderd',
 	'site_notifications:success:mark_read' => 'Notificaties gemarkeerd als gelezen',
 	
-	'site_notifications:cron:linked_cleanup:start' => 'Site notificaties opruimen zonder gekoppelde entiteiten',
 	'site_notifications:cron:linked_cleanup:end' => 'Site notificaties heeft %s notificaties opgeruimd zonder gekoppelde entiteiten',
-	'site_notifications:cron:unread_cleanup:start' => 'Site notificaties ongelezen notificaties opruimen ouder dan %s dagen',
 	'site_notifications:cron:unread_cleanup:end' => 'Site notificaties heeft %s ongelezen notificaties opgeruimd',
-	'site_notifications:cron:read_cleanup:start' => 'Site notificaties gelezen notificaties opruimen ouder dan %s dagen',
 	'site_notifications:cron:read_cleanup:end' => 'Site notificaties heeft %s gelezen notificaties opgeruimd',
 );

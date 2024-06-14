@@ -43,17 +43,6 @@ return array(
 	*/
 
 	'messages:email:subject' => 'Je hebt een nieuw bericht!',
-	'messages:email:body' => "Je hebt een nieuw bericht ontvangen van %s.
-
-Het bericht is:
-
-%s
-
-Om naar jou berichten te gaan, klik hier:
-%s
-
-Om %s een bericht te sturen, klik hier:
-%s",
 
 	/**
 	* Error messages

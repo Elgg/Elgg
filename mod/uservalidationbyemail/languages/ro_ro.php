@@ -7,13 +7,6 @@
 
 return array(
 	'email:validate:subject' => "%s te rugăm să-ți confirmi adresa de email pentru %s!",
-	'email:validate:body' => "Înainte să poți folosi %s, trebuie să-ți confirmi adresa de email.
-
-Te rugăm să-ți confirmi adresa de email apăsând link-ul de mai jos:
-
-%s
-
-Dacă nu poți apăsa pe link, copiază-l și adaugă-l manual în navigatorul tău.",
 	'email:confirm:success' => "Ți-ai confirmat adresa de email!",
 	'email:confirm:fail' => "Adresa ta de email nu a putu fi verificată...",
 

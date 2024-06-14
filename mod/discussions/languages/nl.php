@@ -44,21 +44,9 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'Nieuwe discussie met de titel \'%s\'',
 	'discussion:topic:notify:subject' => 'Nieuwe discussie: %s',
-	'discussion:topic:notify:body' => '%s heeft een nieuwe discussie toegevoegd "%s":
-
-%s
-
-Bekijk en reageer hier op de discussie:
-%s',
 
 	'discussion:comment:notify:summary' => 'Nieuwe reactie in discussie \'%s\'',
 	'discussion:comment:notify:subject' => 'Nieuwe reactie in discussie \'%s\'',
-	'discussion:comment:notify:body' => '%s reageerde op de discussie "%s":
-
-%s
-
-Bekijk en reageer hier op de discussie:
-%s',
 	
 	'notification:mentions:object:discussion:subject' => '%s heeft je vermeld in een discussie',
 

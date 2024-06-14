@@ -34,12 +34,6 @@ return array(
 
 	'pages:notify:summary' => '新規ページ「%s」が追加されました',
 	'pages:notify:subject' => "新規ページ: %s",
-	'pages:notify:body' => '%s さんが新しいページを追加しました: %s
-
-%s
-
-このページの表示とコメントは:
-%s',
 
 	/**
 	* River

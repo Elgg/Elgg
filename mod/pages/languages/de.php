@@ -34,12 +34,6 @@ return array(
 
 	'pages:notify:summary' => 'Eine neue Coop-Seite namens %s wurde erstellt.',
 	'pages:notify:subject' => "Neue Coop-Seite: %s",
-	'pages:notify:body' => '%s hat eine neue Coop-Seite erstellt: %s
-
-%s
-
-Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
-%s',
 
 	'pages:more' => 'Weitere Coop-Seiten',
 	'pages:none' => 'Es wurden noch keine Coop-Seiten erstellt.',

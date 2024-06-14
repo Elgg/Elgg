@@ -23,13 +23,4 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s gefällt Dein Beitrag "%s"',
-	'likes:notifications:body' => '%1$s gefällt Dein Beitrag "%2$s" auf %3$s.
-
-Um Deinen ursprünglichen Beitrag aufzurufen, folge diesem Link:
-
-%4$s
-
-oder um das Profil von %1$s aufzurufen, folge diesem Link:
-
-%5$s',
 );

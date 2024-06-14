@@ -12,8 +12,6 @@ return array(
 	'relationship:friendrequest:sent' => "Je hebt een vriendschapsverzoek verstuurd naar %s",
 	
 	// plugin settings
-	'friends:settings:request:description' => "Standaard kan iedere gebruiker een vriendschap aangeven met iedere andere gebruiker, dit is eigenlijk het volgen van de activiteit van de andere gebruiker.
-Na het inschakelen van de vriendschapsverzoeken moet indien gebruiker A vriend wil worden met gebruiker B, gebruiker B dit goedkeuren. Na goedkeuring is gebruiker A een vriend van gebruiker B en gebruiker B een vriend van gebruiker A,",
 	'friends:settings:request:label' => "Schakel vriendschapsverzoeken in",
 	'friends:settings:request:help' => "Gebruikers moeten vriendschapsverzoeken goedkeuren en de vriendschap wordt bi-directioneel",
 	
@@ -51,10 +49,6 @@ Na het inschakelen van de vriendschapsverzoeken moet indien gebruiker A vriend w
 	'widgets:friends_of:description' => "Toon wie jou volgen",
 	
 	'friends:notification:request:subject' => "%s wil je vriend worden!",
-	'friends:notification:request:message' => "%s heeft een vriendschapsverzoek ingediend op %s.
-
-Om het vriendschapsverzoek te bekijken, klik hier:
-%s",
 	
 	'friends:notification:request:decline:subject' => "%s heeft je vriendschapsverzoek afgewezen",
 	'friends:notification:request:decline:message' => "%s heeft je vriendschapsverzoek afgewezen.",

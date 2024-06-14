@@ -48,10 +48,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Mesajul tău a fost postat cu succes pe fir.",
-	'thewire:deleted' => "Postarea de fir a fost ștearsă cu succes.",
 	'thewire:blank' => "Scuze, trebuie să introduci ceva text pentru a posta asta.",
 	'thewire:notsaved' => "Scuze. Nu am putut salva această postare de fir.",
-	'thewire:notdeleted' => "Scuze. Nu am putut șterge această postare de fir.",
 
 	/**
 	 * Notifications

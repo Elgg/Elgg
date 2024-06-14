@@ -47,12 +47,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Postare de blog nouă numită %s',
 	'blog:notify:subject' => 'Postare de blog nouă: %s',
-	'blog:notify:body' => '%s a publicat o nouă postare de blog: %s
-
-%s
-
-Vezi și comentează la postarea de blog:
-%s',
 
 	// widget
 	'widgets:blog:name' => 'Postări de blog',

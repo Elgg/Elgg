@@ -77,12 +77,6 @@ return array(
 
 	'file:notify:summary' => 'Nieuw bestand met de titel %s',
 	'file:notify:subject' => 'Nieuw bestand: %s',
-	'file:notify:body' => '%s heeft een nieuw bestand geüpload: %s
-
-%s
-
-Om het bestand te bekijken en te reageren, klik hier:
-%s',
 	
 	'notification:mentions:object:file:subject' => '%s heeft je vermeld bij een bestand',
 

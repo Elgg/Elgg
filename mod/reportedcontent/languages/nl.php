@@ -38,13 +38,4 @@ return array(
 	
 	'reportedcontent:notifications:create:admin:subject' => 'Nieuwe content gemeld: %s',
 	'reportedcontent:notifications:create:admin:summary' => 'Nieuwe content gemeld: %s',
-	'reportedcontent:notifications:create:admin:body' => '%s heeft het volgende gemeld:
-
-%s
-
-Bekijk de gemelde pagina:
-%s
-
-Om alle meldingen te bekijken:
-%s',
 );

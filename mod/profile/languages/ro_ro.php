@@ -44,12 +44,6 @@ return array(
 	'profile:defaultprofile:reset' => 'Câmpurile de profil au fost resetate la starea inițială de sistem',
 	'profile:resetdefault' => 'Resetează câmpurile de profil la starea inițială de sistem',
 	'profile:resetdefault:confirm' => 'Sigur dorești să ștergi câmpurile tale personalizate de profil?',
-	'profile:explainchangefields' => "Puteți înlocui câmpurile de profil existente cu ale dvs.
-Faceți clic pe butonul „Adăugați” și dați noului câmp de profil o etichetă, de exemplu, „Echipa preferată”, apoi selectați tipul câmpului (de exemplu, text, adresă URL, etichete).
-Pentru a reordona câmpurile glisați pe mânerul de lângă eticheta câmpului.
-Pentru a edita o etichetă de câmp - faceți clic pe pictograma de editare.
-
-În orice moment puteți reveni la configurarea profilului implicit, dar veți pierde orice informație deja introdusă în câmpurile personalizate de pe paginile de profil.",
 	'profile:editdefault:success' => 'Câmp nou de profil adăugat',
 	'profile:editdefault:fail' => 'Profilul inițial nu a putut fi salvat',
 	'profile:noaccess' => "Nu ai permisiunea de a edita acest profil.",

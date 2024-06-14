@@ -46,12 +46,6 @@ return array(
 	'profile:defaultprofile:reset' => 'Profielvelden zijn hersteld naar de systeem standaardinstellingen',
 	'profile:resetdefault' => 'Profielvelden herstellen naar de systeem standaardinstellingen',
 	'profile:resetdefault:confirm' => 'Weet je zeker dat je de aangepaste profielvelden wilt verwijderen?',
-	'profile:explainchangefields' => "Je kunt de bestaande profielvelden vervangen met aangepaste profielvelden.
-Klik op de 'Toevoegen' knop en geef het nieuwe profielveld een label, bijvoorbeeld: 'Favoriete team'. Selecteer vervolgens het veldtype, bijvoorbeeld: tekst, url, tags.
-Om de velden te sorteren sleep je ze met het handvat naast het label. 
-Voor het bewerken van het label klik je op het bewerk icoon.
-
-Je kunt op elk moment terugkeren naar het standaardprofiel, maar dan gaat alle informatie die al ingevoerd was in aangepaste velden op de profielpagina's verloren.",
 	'profile:editdefault:success' => 'Nieuw profielveld toegevoegd',
 	'profile:editdefault:fail' => 'Het bewerken van het profielveld is mislukt',
 	'profile:noaccess' => "Je hebt geen rechten om dit profiel te bewerken",

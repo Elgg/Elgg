@@ -20,20 +20,4 @@ return array(
 	'invitefriends:already_members' => 'Die folgenden Leute sind bereits Mitglied der Community: %s',
 	'invitefriends:noemails' => 'Es wurden keine Email-Adressen eingegeben.',
 	
-	'invitefriends:message:default' => 'Hallo,
-
-Ich möchte Dich einladen, der Community-Seite %s beizutreten.',
-
-	'invitefriends:email' => 'Du bist eingeladen, der Community-Seite %s beizutreten.
-
-Die Einladung wurde von %s versendet. Folgende Nachricht wurde der Einladung beigefügt:
-
-%s
-
-Um der Community-Seite beizutreten, folge dem Link:
-
-%s
-
-Nachdem Du einen Account auf der Community-Seite erstellt hast, wird das Mitglied, das Dich eingeladen hat, automatisch in Deine Freundesliste aufgenommen.',
-	
 );

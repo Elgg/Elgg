@@ -33,10 +33,7 @@ return array(
 	'site_notifications:success:delete' => 'Notificări șterse',
 	'site_notifications:success:mark_read' => 'Notificările au fost marcate ca și citite',
 	
-	'site_notifications:cron:linked_cleanup:start' => 'Notificările siteului, curățirea notificărilor care nu au entități corelate',
 	'site_notifications:cron:linked_cleanup:end' => 'Notificările de site au curățat %s notificări fără entități legate',
-	'site_notifications:cron:unread_cleanup:start' => 'Notificările de site au curățat notificări necitite mai vechi de %s zile',
 	'site_notifications:cron:unread_cleanup:end' => 'Notificările de site au curățat %s notificări necitite',
-	'site_notifications:cron:read_cleanup:start' => 'Notificările de site au curățat notificări citite mai vechi de %s zile',
 	'site_notifications:cron:read_cleanup:end' => 'Notificările de site au curățat %s notificări citite',
 );

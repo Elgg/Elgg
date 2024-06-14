@@ -39,10 +39,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Zpráva byla úspěšně přidána do telegrafu.",
-	'thewire:deleted' => "Telegrafní zpráva byla úspěšně smazána.",
 	'thewire:blank' => "Omlouváme se, ale před odesláním musíte zadat nějaký text.",
 	'thewire:notsaved' => "Bohužel nemůžeme uložit vaši telegrafní zprávu.",
-	'thewire:notdeleted' => "Bohužel nemůžeme smazat tuto telegrafní zprávu.",
 
 	/**
 	 * Notifications

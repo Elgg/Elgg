@@ -36,17 +36,6 @@ return array(
 	 */
 
 	'messageboard:email:subject' => 'Er is een nieuwe reactie op een bericht!',
-	'messageboard:email:body' => "Er is een nieuw bericht achtergelaten door %s.
-
-Het bericht is:
-
-%s
-
-Om je berichtenbox te bekijken, klik hier:
-%s
-
-Om naar het profiel van %s te gaan, klik hier:
-%s",
 
 	/**
 	 * Error messages

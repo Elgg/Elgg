@@ -344,17 +344,10 @@ return array(
 	'usersettings:notifications:subscriptions:save:fail' => "Er was een probleem tijdens het opslaan van de notificatie abonnementen.",
 
 	'notification:default:salutation' => 'Beste %s,',
-	'notification:default:sign-off' => 'Met vriendelijke groet,
-
-%s',
 	'notification:subject' => 'Notificatie over \'%s\'',
 	'notification:body' => 'Bekijk de nieuwe activiteit op %s',
 	
 	'notification:mentions:subject' => '%s heeft je vermeld',
-	'notification:mentions:body' => "%sheeft je vermeld in '%s'.
-
-Bekijk het volledige bericht hier:
-%s",
 	
 	'notifications:delayed_email:subject:daily' => "Dagelijkse notificaties",
 	'notifications:delayed_email:subject:weekly' => "Wekelijkse notificaties",
@@ -501,9 +494,6 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:performance:label:generic' => 'Algemeen',
 	'admin:performance:generic:description' => 'Hieronder staat een lijst met performance suggesties en waardes welke je kunnen helpen bij het tunen van de site',
 	'admin:performance:simplecache' => 'Simplecache',
-	'admin:performance:simplecache:settings:warning' => "Het is aangeraden om de simplecache instelling op te nemen in de settings.php.
-Het configureren in de settings.php file bevorderd caching performance.
-Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het moment dat er JavaScript en CSS files uit de cache geserveerd kunnen worden.",
 	'admin:performance:systemcache' => 'Systemcache',
 	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
 	'admin:performance:apache:mod_cache:warning' => 'De mod_cache-module biedt HTTP-bewuste cacheschema\'s. Dit betekent dat de bestanden in de cache worden opgeslagen op basis van een instructie die aangeeft hoe lang een pagina als "vers" kan worden beschouwd.',
@@ -511,7 +501,6 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:performance:php:open_basedir:not_configured' => 'Er zijn geen limitaties ingesteld',
 	'admin:performance:php:open_basedir:warning' => 'Een klein aantal open_basedir limitaties zijn in effect. Dit zou mogelijk impact kunnen hebben op de performance.',
 	'admin:performance:php:open_basedir:error' => 'Een groot aantal open_basedir limitaties zijn in effect. Dit heeft zeer waarschijnlijk impact op de performance.',
-	'admin:performance:php:open_basedir:generic' => 'Met open_basedir limitaties zal er, elke keer als er een bestand benaderd wordt, moeten worden gecontroleerd tegen de lijst van limitaties. Aangezien Elgg een grote hoeveelheid files benaderd zal dit dus een negatieve impact hebben. Ook de opcache van PHP kan door deze limitaties geen gebruik maken van al zijn caching mogelijkheden.',
 	
 	'admin:statistics' => 'Statistieken',
 	'admin:server' => 'Server',
@@ -644,13 +633,6 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:widget:admin_welcome:intro' => 'Welkom in Elgg! Op dit moment kijk je naar het beheerdersdashboard. Dit is makkelijk om te zien wat er op je site gebeurt.',
 
 	'admin:widget:admin_welcome:registration' => "Registratie voor nieuwe gebruikers is op dit moment uitgeschakeld. Je kunt dit activeren op de %s pagina.",
-	'admin:widget:admin_welcome:admin_overview' => "Navigatie door het beheer gedeelte is mogelijk door het menu aan de rechterkant. Dit is georganiseerd in drie secties:
-	<dl>
-		<dt>Beheer</dt><dd>Basis taken zoals het beheren van gebruikers, bekijken van gerapporteerde content en het activeren van plugins</dd>
-		<dt>Configureer</dt><dd>Incidentele taken zoals het wijzigen van de site naam, of het configureren van plugin instellingen</dd>
-		<dt>Informatie</dt><dd>Informatie over je website zoals content statistieken</dd>
-		<dt>Ontwikkel</dt><dd>Voor ontwikkelaars welke bezig zijn met het ontwikkelen van een plugin of een theme. (Vereist de developer plugin)</dd>
-</dl>",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br>Controleer de links onderaan de pagina voor meer informatie en bedankt voor het gebruik van Elgg!',
@@ -716,7 +698,6 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:security:information:php:session_gc' => "PHP sessie opschoning",
 	'admin:security:information:php:session_gc:chance' => "Opschoningskans: %s%%",
 	'admin:security:information:php:session_gc:lifetime' => "Sessie levensduur %s seconden",
-	'admin:security:information:php:session_gc:error' => "Het is aanbevolen om de PHP instellingen  'session.gc_probability' en 'session.gc_divisor' in te stellen. Dit schoont verlopen sessies op in de database en zorgt er voor dat oude sessies niet opnieuw gebruikt kunnen worden.",
 	'admin:security:information:htaccess:hardening' => ".htaccess file access hardening",
 	'admin:security:information:htaccess:hardening:help' => "In het .htaccess bestand kan toegang to bepaalde bestanden worden geblokkeerd om de veiligheid van je site te verhogen. Voor meer informatie kijk in het .htaccess bestand.",
 	
@@ -758,7 +739,6 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:security:settings:email_require_confirmation:help' => 'Het nieuwe e-mailadres moet worden bevestigd voordat de wijziging wordt doorgevoerd. Na een succesvolle wijziging zal er een mededeling verstuurd worden naar het oude e-mailadres.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Sessie gebonden entity iconen',
-	'admin:security:settings:session_bound_entity_icons:help' => 'Entity iconen zijn standaard sessie gebonden. Dit houdt in dat de URLs naar de iconen informatie bevatten over de huidige sessie. Indien iconen sessiegebonden zijn, zijn ze niet deelbaar tussen sessies en dus meer afgeschermd. Het bijeffect is dat de iconen alleen voor de huidige sessie cachebaar zijn.',
 
 	'admin:security:settings:subresource_integrity_enabled' => 'Subresource integrity',
 	'admin:security:settings:subresource_integrity_enabled:help' => 'Voegt een integriteitscontrole toe aan subresources zoals js en css bestanden. Dit geeft browsers de mogelijkheid om de inhoud van deze bestanden te valideren.',
@@ -811,58 +791,19 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:site:secret:prevented' => "Het genereren van een nieuw sitegeheim code werd geblokeerd",
 	
 	'admin:notification:make_admin:admin:subject' => 'Er is een nieuwe site beheerder toegevoegd aan %s',
-	'admin:notification:make_admin:admin:body' => '%s heeft %s toegevoegd als een site beheerder van %s.
-
-Om het profiel van de nieuwe site beheerder te bekijken, klik hier:
-%s',
 	
 	'admin:notification:make_admin:user:subject' => 'Je bent toegevoegd als site beheerder van %s',
-	'admin:notification:make_admin:user:body' => '%s heeft je een site beheerder gemaakt van %s.
-
-Om naar de website te gaan, klik hier:
-%s',
 	'admin:notification:remove_admin:admin:subject' => 'Een site beheerder is verwijderd van %s',
-	'admin:notification:remove_admin:admin:body' => '%s heeft %s verwijderd als site beheerder van %s.
-
-Om het profiel van de oud beheerder te bekijken, klik hier:
-%s',
 	
 	'admin:notification:remove_admin:user:subject' => 'Je bent verwijderd als site beheerder van %s',
-	'admin:notification:remove_admin:user:body' => '%s heeft je verwijderd als site beheerder van %s.
-
-Om naar de website te gaan, klik hier:
-%s',
 	'user:notification:validate:subject' => 'Je account op %s is klaar voor gebruik',
-	'user:notification:validate:body' => 'Je account op %s is gevalideerd. Je kunt er vanaf nu gebruik van maken.
-
-Om naar de website te gaan, klik hier:
-%s',
 	'user:notification:ban:subject' => 'Je account op %s is geblokkeerd',
-	'user:notification:ban:body' => 'Je account op %s is geblokkeerd.
-
-Om naar de website te gaan, klik hier:
-%s',
 	
 	'user:notification:unban:subject' => 'Je account op %s is niet meer geblokkeerd',
-	'user:notification:unban:body' => 'Je account op %s is niet meer geblokkeerd. Je kunt weer gebruik maken van de website.
-
-Om naar de website te gaan, klik hier:
-%s',
 	
 	'user:notification:password_change:subject' => 'Je wachtwoord is gewijzigd!',
-	'user:notification:password_change:body' => "Je wachtwoord op '%s' is gewijzigd! Indien je dit zelf hebt aangevraagd ben je klaar.
-
-Heb je deze wijziging niet zelf aangevraagd, dan kun je je wachtwoord hier wijzigen:
-%s
-
-Of neem contact op met de beheerder van de site:
-%s",
 	
 	'admin:notification:unvalidated_users:subject' => "Gebruikers in afwachting van goedkeuring op %s",
-	'admin:notification:unvalidated_users:body' => "%d gebruikers van '%s' wachten op goedkeuring van een beheerder van de site.
-
-Bekijk hier de volledige lijst van gebruikers:
-%s",
 
 /**
  * Plugins
@@ -967,16 +908,10 @@ Bekijk hier de volledige lijst van gebruikers:
 	'admin:server:label:upload_max_filesize' => 'Maximale grootte van uploadbestanden',
 	'admin:server:warning:post_max_too_small' => '(PS: post_max_size moet groter zijn dan deze waarde om uploads van deze grootte te ondersteunen)',
 	'admin:server:label:memcache' => 'Memcache',
-	'admin:server:memcache:inactive' => 'Memcache is niet beschikbaar op deze server, of is nog niet geconfigureerd in de Elgg configuratie.
-Voor verbeterde performance wordt het aangeraden om Memcache (of Redis) in te schakelen en te configureren.',
 
 	'admin:server:label:redis' => 'Redis',
-	'admin:server:redis:inactive' => 'Redis is niet beschikbaar op deze server, of is nog niet geconfigureerd in de Elgg configuratie.
-Voor verbeterde performance wordt het aangeraden om Redis (of Memcache) in te schakelen en te configureren.',
 
 	'admin:server:label:opcache' => 'OPcache',
-	'admin:server:opcache:inactive' => 'OPcache is niet beschikbaar op deze server, of is nog niet geactiveerd.
-Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en te configureren.',
 	
 	'admin:server:requirements:php_extension' => "PHP extensie: %s",
 	'admin:server:requirements:php_extension:required' => "Deze PHP extensie is vereist voor een correcte werking van Elgg",
@@ -985,7 +920,6 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'admin:server:requirements:rewrite:fail' => "Controleer je .htaccess voor de correcte rewrite rules",
 	
 	'admin:server:requirements:database:server' => "Database server",
-	'admin:server:requirements:database:server:required' => "Elgg vereist MySQL v5.5.3 of hoger voor de database",
 	'admin:server:requirements:database:server:required_version' => "Elgg vereist MySQL versie %s of hoger voor zijn database",
 	'admin:server:requirements:database:client' => "Database client",
 	'admin:server:requirements:database:client:required' => "Elgg vereist pdo_mysql om verbinding met de database server te maken",
@@ -1304,6 +1238,7 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
  */
 
 	'deleteconfirm' => "Weet je zeker dat je dit item wilt verwijderen?",
+	'restoreandmoveconfirm'=> "",
 	'deleteconfirm:plural' => "Weet je zeker dat je deze items wilt verwijderen?",
 	'fileexists' => "Er is reeds een bestand geüpload. Om het te vervangen selecteer hieronder een nieuw bestand",
 	'input:file:upload_limit' => 'De maximale bestandsgrootte is %s',
@@ -1314,16 +1249,6 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
  */
 
 	'useradd:subject' => 'Gebruikersaccount aangemaakt',
-	'useradd:body' => 'Er is een gebruikersaccount voor je aangemaakt op %s. Om je aan te melden bezoek:
-
-%s
-
-Om je aan te kunnen melden moet je gebruik maken van de volgende gegevens:
-
-Gebruikersnaam: %s
-Wachtwoord: %s
-
-Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 
 /**
  * Messages
@@ -1473,6 +1398,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'admin:legend:system' => 'Systeem',
 	'admin:legend:caching' => 'Caching',
 	'admin:legend:content' => 'Inhoud',
+	'admin:legend:comments' => 'Reacties',
 	'admin:legend:content_access' => 'Toegang tot content',
 	'admin:legend:site_access' => 'Toegang tot de site',
 	'admin:legend:debug' => 'Debugging en loggen',
@@ -1577,11 +1503,6 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'email:save:fail:password' => "Het opgegeven wachtwoord komt niet overeen met je huidige wachtwoord, je e-mail adres kon niet worden aangepast.",
 
 	'friend:newfriend:subject' => "%s heeft jou toegevoegd als vriend!",
-	'friend:newfriend:body' => "%s heeft je toegevoegd als vriend!
-
-Klik hier om naar het profile te gaan:
-
-%s",
 
 	'email:changepassword:subject' => "Wachtwoord gewijzigd!",
 	'email:changepassword:body' => "Je wachtwoord is gewijzigd.",
@@ -1590,49 +1511,21 @@ Klik hier om naar het profile te gaan:
 	'email:resetpassword:body' => "Je wachtwoord is gereset naar: %s",
 
 	'email:changereq:subject' => "Aanvraag om het wachtwoord te wijzigen.",
-	'email:changereq:body' => "Iemand (vanaf het IP adres %s) heeft een nieuw wachtwoord aangevraagd voor dit account.
-
-Indien je dit zelf hebt aangevraagd, klik op onderstaande link. Anders negeer deze e-mail.
-
-%s",
 	
 	'account:email:request:success' => "Het nieuwe e-mailadres zal worden opgeslagen nadat deze is gevalideerd. Controleer de e-mail inbox van '%s' voor validatie instructies.",
 	'email:request:email:subject' => "Bevestig je e-mailadres",
-	'email:request:email:body' => "Je hebt een verzoek ingediend om je e-mailadres te wijziging op '%s'.
-Indien je deze wijziging niet hebt aangevraagd kun je deze mail als niet verzonden beschouwen.
-
-Gebruik de volgende link om de wijziging te bevestigen:
-%s
-
-Deze link is slechts 1 uur geldig.",
 	
 	'account:email:request:error:no_new_email' => "Er is geen e-mailadres wijziging die nog moet worden goedgekeurd.",
 	
 	'email:confirm:email:old:subject' => "Het e-mailadres is gewijzigd",
-	'email:confirm:email:old:body' => "Je e-mailadres op '%s' is gewijzigd.
-Vanaf nu ontvang je de e-mail notificaties op '%s'.
-
-Indien je deze wijziging niet hebt aangevraagd, neem dan contact op met een beheerder van de site.
-%s",
 	
 	'email:confirm:email:new:subject' => "Het e-mailadres is gewijzigd",
-	'email:confirm:email:new:body' => "Je e-mailadres op '%s' is gewijzigd.
-Vanaf nu ontvang je de e-mail notificaties op dit e-mailadres.
-
-Indien je deze wijziging niet hebt aangevraagd, neem dan contact op met een beheerder van de site.
-%s",
 
 	'account:email:admin:validation_notification' => "Stuur mij een notificatie indien gebruikers zich aanmelden en handmatig gevalideerd moeten worden",
 	'account:email:admin:validation_notification:help' => "Vanwege de instellingen op de site moeten nieuwe gebruikers handmatig gevalideerd worden. Middels deze instelling kun je de notificaties uitschakelen.",
 	
-	'account:validation:pending:title' => "Accounts wachtend op validatie",
+	'account:validation:pending:title' => "Account wacht op validatie",
 	'account:validation:pending:content' => "Je account is succesvol geregistreerd! Voordat je je account kunt gebruiken moet deze echter eerst nog worden gevalideerd door een beheerder van de site. Zodra dit gedaan is ontvang je daarvan een e-mail.",
-	
-	'account:notification:validation:subject' => "Je account op %s is gevalideerd!",
-	'account:notification:validation:body' => "Je account op '%s' is gevalideerd. Je kunt nu je account gebruiken.
-
-Klik hier om naar de website te gaan:
-%s",
 
 /**
  * user default access
@@ -1674,26 +1567,10 @@ Klik hier om naar de website te gaan:
 
 	'generic_comment:notification:subject' => 'Re: %s',
 	'generic_comment:notification:owner:summary' => 'Je hebt een nieuwe reactie op: %s',
-	'generic_comment:notification:owner:body' => "Je hebt een nieuwe reactie gekregen op je content.
-
-%s
-
-Om te reageren of het originele item te bekijken, klik hier:
-%s",
 	
 	'generic_comment:notification:user:summary' => 'Een nieuwe reactie op: %s',
-	'generic_comment:notification:user:body' => "Er is een nieuwe reactie:
-
-%s
-
-Om te reageren of het originele item te bekijken, klik hier:
-%s",
 
 	'notification:mentions:object:comment:subject' => '%s heeft je vermeld in een reactie',
-	'notification:mentions:object:comment:body' => '%1$sheeft je vermeld in een reactie.
-
-Bekijk de volledige reactie hier:
-%3$s',
 
 /**
  * Entities
@@ -1707,6 +1584,8 @@ Bekijk de volledige reactie hier:
 	'entity:delete:permission_denied' => 'U beschikt niet over de juiste rechten om dit item te verwijderen.',
 	'entity:delete:success' => '%s is verwijderd.',
 	'entity:delete:fail' => '%s kon niet worden verwijderd.',
+
+	'entity:restore:item' => 'Item',
 	
 	'entity:subscribe' => "Volgen",
 	'entity:subscribe:disabled' => "Je standaard notificatie instellingen voorkomen dat je je kunt abonneren op deze content",
@@ -1754,31 +1633,11 @@ Bekijk de volledige reactie hier:
  */
 	'diagnostics:report' => 'Diagnostics Report',
 	'diagnostics:description' => 'Het Diagnostic Report kan gebruikt worden om problemen met de installatie van Elgg te analyseren. Elgg ontwikkelaars kunnen verzoeken om dit rapport.',
-	'diagnostics:header' => '========================================================================
-Elgg Diagnostic Report
-Generated %s by %s
-========================================================================
-
-',
-	'diagnostics:report:basic' => '
-Elgg Release %s
-
-------------------------------------------------------------------------',
-	'diagnostics:report:php' => '
-PHP info:
-%s
-------------------------------------------------------------------------',
-	'diagnostics:report:md5' => '
-Installed files and checksums:
-
-%s
-------------------------------------------------------------------------',
-	'diagnostics:report:globals' => '
-Global variables:
-
-%s
-------------------------------------------------------------------------',
 	
+/**
+ * Trash
+ */
+
 /**
  * Miscellaneous
  */

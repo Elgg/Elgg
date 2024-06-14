@@ -35,8 +35,6 @@ return array(
 	'developers:show_strings:key_only' => "Toon alleen de vertaalsleutel",
 	'developers:label:show_strings' => "Toon vertaalsleutels",
 	'developers:help:show_strings' => "Dit toont de vertaalsleutels die gebruikt worden door elgg_echo().",
-	'developers:label:show_modules' => "Toon de geladen AMD modules in de console",
-	'developers:help:show_modules' => "Streamt geladen modules en waarden naar jouw JavaScript console.",
 	'developers:label:wrap_views' => "Omcirkel views",
 	'developers:help:wrap_views' => "Dit omwikkeld alle views met een HTML comment block. Dit kan je helpen indien je wilt weten welke view de HTML heeft gegenereerd.
 
@@ -63,7 +61,6 @@ Dit kan potentieel non-HTML views niet laten functioneren.",
 	// entity explorer
 	'developers:entity_explorer:help' => 'Bekijk informatie van entiteiten en voor enkele simpele acties uit',
 	'developers:entity_explorer:guid:label' => 'Voer de GUID in van de entiteit die je wilt inspecteren',
-	'developers:entity_explorer:info' => 'Entiteit Informatie',
 	'developers:entity_explorer:info:attributes' => 'Attributen',
 	'developers:entity_explorer:info:metadata' => 'Metadata',
 	'developers:entity_explorer:info:relationships' => 'Relationships',
@@ -74,7 +71,6 @@ Dit kan potentieel non-HTML views niet laten functioneren.",
 	'developers:entity_explorer:view_entity' => 'Bekijk deze entiteit op de site',
 	
 	// inspection
-	'developers:inspect:help' => 'Inspecteer de configuratie van het Elgg framework.',
 	'developers:inspect:actions' => 'Acties',
 	'developers:inspect:events' => 'Events',
 	'developers:inspect:menus' => 'Menu\'s',
@@ -109,8 +105,6 @@ Dit kan potentieel non-HTML views niet laten functioneren.",
 	'developers:log_queries' => "DB queries: %s",
 	'developers:boot_cache_rebuilt' => "De boot cache is herbouwd voor deze pagina",
 	'developers:elapsed_time' => "Tijd verstreken (s)",
-
-	'developers:amd' => 'AMD',
 
 	'admin:develop_tools:error_log' => 'Fouten logboek',
 	'developers:logs:empty' => 'Foutenlogboek is leeg',

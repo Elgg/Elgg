@@ -31,6 +31,5 @@ Pour afficher votre publication :
 %4$s
 
 Pour voir le profil de %1$s :
-
 %5$s',
 );

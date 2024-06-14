@@ -12,8 +12,6 @@ return array(
 	'relationship:friendrequest:sent' => "Tha thu air cuireadh-càirdeis a chur gu %s",
 	
 	// plugin settings
-	'friends:settings:request:description' => "Ma cuirear an roghainn seo à comas, bidh cleachdaichean comasach air cleachdaiche sam bith eile a leantainn.
-Ma cuirear an roghainn seo an comas, feumaidh cleachdaiche A cuireadh-càirdeis a chur do chleachdaiche B agus feumaidh cleachdaiche B gabhail ris mus bi iad nan càirdean a chèile.",
 	'friends:settings:request:label' => "Cuir an comas cuiridhean-càirdeis",
 	'friends:settings:request:help' => "Feumaidh cleachdaichean gabhail ri cuiridhean-càirdeis agus thèid an cur ri liosta-charaid a chèile.",
 	
@@ -51,10 +49,6 @@ Ma cuirear an roghainn seo an comas, feumaidh cleachdaiche A cuireadh-càirdeis 
 	'widgets:friends_of:description' => "Seall do charaidean",
 	
 	'friends:notification:request:subject' => "Tha %s air cuireadh-càirdeis a chur thugad!",
-	'friends:notification:request:message' => "Tha %s air cuireadh-càirdeis a chur thugad air %s.
-
-Briog an-seo airson a' chuireadh fhaicinn:
-%s",
 	
 	'friends:notification:request:decline:subject' => "Dhiùlt %s an cuireadh-càirdeis a chur thu thuca",
 	'friends:notification:request:decline:message' => "Dhiùlt %s an cuireadh-càirdeis a chur thu thuca.",

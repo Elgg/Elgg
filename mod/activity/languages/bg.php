@@ -21,5 +21,4 @@ return array(
 	'collection:river' => "Активност",
 	'collection:river:group' => "Активност в група",
 	'groups:tool:activity' => 'Разреши активността в група',
-	
 );

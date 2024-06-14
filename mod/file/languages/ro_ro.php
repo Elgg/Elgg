@@ -61,12 +61,6 @@ return array(
 
 	'file:notify:summary' => 'Fișier nou numit %s',
 	'file:notify:subject' => 'Fișier nou: %s',
-	'file:notify:body' => '%s a încărcat un fișier nou: %s
-
-%s
-
-Vezi și comentează fișierul:
-%s',
 
 	/**
 	 * Status messages

@@ -36,17 +36,6 @@ return array(
 	 */
 
 	'messageboard:email:subject' => 'Ai un nou comentariu pe tabla de mesaje!',
-	'messageboard:email:body' => "Ai un nou comentariu pe tabla de mesaje de la %s.
-
-Scrie:
-
-%s
-
-Pentru a-ți vedea comentariile de pe tabla de mesaje, apasă aici:
-%s
-
-Pentru a-i vedea profilul utilizatorului %s, apasă aici:
-%s",
 
 	/**
 	 * Error messages

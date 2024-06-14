@@ -7,13 +7,6 @@
 
 return array(
 	'email:validate:subject' => "%s, bevestig alsjeblieft je e-mailadres voor %s!",
-	'email:validate:body' => "Voordat je gebruik kunt maken van %s, moet je je e-mail adres bevestigen.
-
-Om je e-mail adres te bevestigen klik op onderstaande link:
-
-%s
-
-Indien je niet op de link kunt klikken, kopieer en plak deze handmatig in je browser.",
 	'email:confirm:success' => "Je hebt je e-mailadres bevestigd!",
 	'email:confirm:fail' => "Je e-mailadres kon niet worden geverifieerd...",
 

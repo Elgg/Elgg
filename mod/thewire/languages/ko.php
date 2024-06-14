@@ -46,10 +46,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "성공적으로 쪽글을 썼습니다",
-	'thewire:deleted' => "성공적으로 쪽글을 지웠습니다.",
 	'thewire:blank' => "죄송합니다. 이글을 등록하기 전에 글자를 더 입력해야합니다.",
 	'thewire:notsaved' => "죄송합니다. 쪽글을 저장할 수 없었습니다.",
-	'thewire:notdeleted' => "죄송합니다. 이 쪽글을 지울 수 없었습니다.",
 
 	/**
 	 * Notifications

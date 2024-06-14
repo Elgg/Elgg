@@ -30,14 +30,6 @@ return array(
 
 	'bookmarks:notify:summary' => 'Marcaj nou numit %s',
 	'bookmarks:notify:subject' => 'Marcaj nou: %s',
-	'bookmarks:notify:body' => '%s a adăugat un marcaj nou: %s
-
-Adresă: %s
-
-%s
-
-Vezi și comentează la acest marcaj:
-%s',
 	
 	'bookmarks:numbertodisplay' => 'Numărul de marcaje pentru afișare',
 

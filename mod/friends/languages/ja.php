@@ -12,8 +12,6 @@ return array(
 	'relationship:friendrequest:sent' => "あなたは %s に友達申請しました。",
 	
 	// plugin settings
-	'friends:settings:request:description' => "既定では任意のユーザー同士友達になることができ、お互いのアクティビティをフォローすることができます。
-ユーザAがユーザーBと友達になりたいときには友達申請機能を有効にしたあと、ユーザBは友達申請を承認をしなければいけません。承認後ユーザAはユーザBと友達関係になり、同時にユーザBはユーザAと友達関係になります。",
 	'friends:settings:request:label' => "友達申請を有効にする",
 	'friends:settings:request:help' => "ユーザは友達申請を承認する必要があります。その結果、友達関係は双方向のものとなります。",
 	
@@ -46,10 +44,6 @@ return array(
 	'widgets:friends:description' => "友達を何人か表示する",
 	
 	'friends:notification:request:subject' => "%s さんが友達になりたいと言っています！",
-	'friends:notification:request:message' => "%s さんが %s で友達申請をしました。
-
-友達申請を表示するには、ここをクリックしてください:
-%s",
 	
 	'friends:notification:request:decline:subject' => "%s さんがあなたの友達申請を断りました",
 	'friends:notification:request:decline:message' => "%s さんがあなたの友達申請を断りました。",

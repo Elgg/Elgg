@@ -74,9 +74,6 @@ return array(
 	
 	// plugin settings
 	'web_services:settings:authentication' => "Web API authenticatie instellingen",
-	'web_services:settings:authentication:description' => "Sommige API methodes vereisen dat verzoeken zichzelf authenticeren. Er moet dan een API key pair (public en secrect key) worden aangeleverd.
-
-Let er op dat er minstens één API authenticatie methode actief moet zijn om de API verzoeken te autoriseren.",
 	'web_services:settings:authentication:allow_key' => "Sta basic API public key authenticatie toe",
 	'web_services:settings:authentication:allow_key:help' => "De API public key wordt aangeleverd als een parameter in het verzoek",
 	'web_services:settings:authentication:allow_hmac' => "Sta HMAC header API authenticatie toe",

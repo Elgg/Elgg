@@ -21,5 +21,4 @@ return array(
 	'collection:river' => "动态",
 	'collection:river:group' => "圈子动态",
 	'groups:tool:activity' => '开启圈子动态',
-	
 );

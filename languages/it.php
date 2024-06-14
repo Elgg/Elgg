@@ -104,6 +104,20 @@ return array(
 /**
  * Table columns
  */
+	'table_columns:fromView:admin' => 'Amministrazione',
+	'table_columns:fromView:banned' => 'Banned',
+	'table_columns:fromView:entity_menu' => 'Menu',
+	'table_columns:fromView:excerpt' => 'Descrizione',
+	'table_columns:fromView:item' => 'Elemento',
+	'table_columns:fromView:language' => 'Lingua',
+	'table_columns:fromView:owner' => 'Responsabile',
+	'table_columns:fromView:unvalidated_menu' => 'Menu',
+	'table_columns:fromView:user' => 'Utente',
+
+	'table_columns:fromProperty:description' => 'Descrizione',
+	'table_columns:fromProperty:email' => 'Email',
+	'table_columns:fromProperty:name' => 'Nome',
+	'table_columns:fromProperty:username' => 'Nome utente',
 
 /**
  * User details
@@ -311,8 +325,10 @@ return array(
  */
 	'menu:page:header:administer' => 'Amministrazione',
 	'menu:page:header:configure' => 'Configurazione',
+	'menu:page:header:utilities' => 'Utilità',
 	'menu:page:header:develop' => 'Sviluppo',
 	'menu:page:header:default' => 'Altro',
+	'menu:page:header:plugin_settings' => 'Impostazioni plugin',
 
 	'admin:view_site' => 'Visualizza il sito',
 	'admin:loggedin' => 'Sei l\'utente %s',
@@ -327,14 +343,12 @@ return array(
 
 	'admin' => "Amministrazione",
 	'admin:description' => "Il pannello di amministrazione permette di controllare ogni aspetto del sistema, dalla gestione degli utenti al comportamento dei plugin. Selezionare un'opzione qui sotto per cominciare.",
-	'admin:performance:simplecache:settings:warning' => "Si consiglia di configurare l'impostazione simplecache in settings.php.
-L'impostazione di simplecache, nel file settings.php, migliora le prestazioni di memorizzazione nella cache.
-Consente a Elgg di saltare la connessione al database quando servono file JavaScript e CSS memorizzati nella cache",
 	'admin:performance:systemcache' => 'Cache di sistema',
 	'admin:performance:php:open_basedir:warning' => 'Sono in atto alcune limitazioni di open_basedir, che potrebbero influire sulle prestazioni.',
 	
 	'admin:statistics' => 'Statistiche',
 	'admin:server' => 'Server',
+	'admin:cron:date' => 'Date and time',
 	'admin:cron:msg' => 'Messaggio',
 	'admin:cron:started' => 'Cron job per "%s" avviati alle %s',
 	'admin:cron:started:actual' => 'Intervallo cron "%s" ha iniziato l\'elaborazione alle %s',
@@ -474,16 +488,14 @@ Consente a Elgg di saltare la connessione al database quando servono file JavaSc
 	
 	'admin:security:settings:min_password_length' => "Lunghezza minima della password",
 	'admin:security:settings:min_password_special:help' => "Configura il numero minimo di caratteri speciali (!@$%^&*()<>,.?/[]{}-=_+) che devono essere inclusi in una password. Usa 0 per non includere, vuoto per nessun requisito.",
+	'admin:security:security_txt:contact' => "Contatti",
+	'admin:security:security_txt:language' => "Lingua",
 	
 	'admin:site:secret:regenerated' => "La chiave del tuo sito è stato rigenerata",
 	
 	'admin:notification:make_admin:admin:subject' => 'Un nuovo amministratore del sito è stato aggiunto a %s',
 	'admin:notification:remove_admin:admin:subject' => 'Un amministratore del sito è stato rimosso da %s',
 	'user:notification:ban:subject' => 'Il tuo account su %s è stato bannato',
-	'user:notification:unban:body' => 'Il tuo account su %s non è più bannato. Puoi accedere nuovamente al sito.
-
-Per andare sul sito, clicca qui:
-%s',
 	
 	'admin:notification:unvalidated_users:subject' => "Utenti in attesa di approvazione su %s",
 
@@ -492,6 +504,8 @@ Per andare sul sito, clicca qui:
  */
 	'plugins:settings:save:ok' => "Impostazioni per il plugin %s salvate con successo.",
 	'plugins:settings:remove:fail' => "Si è verificato un errore durante la rimozione di tutte le impostazioni per il plug-in %s",
+	'admin:plugins:activate' => 'Attiva',
+	'admin:plugins:deactivate' => 'Disattiva',
 	'admin:plugins:label:id' => "ID",
 	'admin:plugins:label:name' => "Nome",
 	'admin:plugins:label:authors' => "Autori",
@@ -544,14 +558,11 @@ Per andare sul sito, clicca qui:
 	'admin:server:label:post_max_size' => 'Dimensione massima del POST',
 	'admin:server:label:upload_max_filesize' => 'Dimensione massima di upload',
 	'admin:server:warning:post_max_too_small' => '(Nota: post_max_size deve essere maggiore di questo valore per permettere degli upload di questa dimensione)',
-	'admin:server:redis:inactive' => 'Redis non è configurato su questo server o non è stato ancora configurato nella configurazione di Elgg.
-Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o memcache).',
 
 	'admin:server:label:opcache' => 'cache OP',
 	
 	'admin:server:requirements:php_extension' => "Estensione PHP: %s",
 	'admin:server:requirements:php_extension:required' => "Questa estensione PHP è necessaria per il corretto funzionamento di Elgg",
-	'admin:server:requirements:database:server:required' => "Elgg richiede MySQL v5.5.3, o superiore, per il suo database",
 	'admin:server:requirements:database:client:required' => "Elgg richiede pdo_mysql per connettersi al server del database",
 	
 	'admin:user:label:search' => "Trova utenti:",
@@ -602,6 +613,7 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 
 	'usersettings:statistics' => "Statistiche",
 	'usersettings:statistics:opt:linktext' => "Statistiche del profilo utente",
+	'usersettings:statistics:login_history:date' => "Data",
 
 	'usersettings:user' => "Impostazioni di %s",
 	'usersettings:user:opt:linktext' => "Cambia le tue impostazioni",
@@ -811,6 +823,7 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
  */
 
 	'deleteconfirm' => "Si è sicuri di voler eliminare questo elemento?",
+	'restoreandmoveconfirm'=> "",
 	'deleteconfirm:plural' => "Si è sicuri di voler eliminare questi elementi?",
 
 /**
@@ -957,6 +970,7 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 	'admin:legend:system' => 'Sistema',
 	'admin:legend:caching' => 'Caching',
 	'admin:legend:content' => 'Contenuti',
+	'admin:legend:comments' => 'Commenti',
 	'admin:legend:content_access' => 'Accesso ai contenuti',
 	'admin:legend:site_access' => 'Accesso al sito',
 	'admin:legend:debug' => 'Debug e Log',
@@ -964,6 +978,8 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 	'config:remove_branding:label' => "Rimuovi il marchio Elgg",
 	'config:content:pagination_behaviour:ajax-append' => "Aggiungi i nuovi dati dell'elenco prima, o dopo, l'elenco",
 	'config:content:pagination_behaviour:ajax-append-auto' => "Aggiungi i nuovi dati dell'elenco prima o dopo l'elenco (automaticamente se scorri nella vista)",
+	'config:content:mentions_display_format:username' => "Nome utente",
+	'config:content:mentions_display_format:display_name' => "Nome visualizzato",
 	'config:email' => "Email",
 	'config:email_html_part:help' => "La posta in uscita verrà racchiusa in un modello HTML",
 	'config:email_html_part_images:base64' => "Codifica Base64",
@@ -1018,11 +1034,6 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 	'email:resetpassword:subject' => "Password azzerata!",
 
 	'email:changereq:subject' => "Richiesta di cambio password.",
-	'email:confirm:email:old:body' => "Il tuo indirizzo email su '%s' è stato cambiato-
-Da adesso in avanti riceverai le notifiche su '%s'
-
-Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
-%s",
 
 /**
  * user default access
@@ -1069,6 +1080,8 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
 	'entity:delete:permission_denied' => 'Permessi insufficienti per visualizzare questo elemento.',
 	'entity:delete:success' => 'L\'elemento %s è stato eliminato',
 	'entity:delete:fail' => 'L\'elemento %s non può essere eliminato',
+
+	'entity:restore:item' => 'Elemento',
 	
 	'entity:subscribe' => "Sottoscrivi",
 	'entity:subscribe:fail' => "Si è verificato un errore durante l'iscrizione a %s",
@@ -1102,6 +1115,10 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
  */
 	
 /**
+ * Trash
+ */
+
+/**
  * Miscellaneous
  */
 	'elgg:powered' => "Generato da Elgg",
@@ -1110,6 +1127,14 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
 /**
  * Accessibility
  */
+	'menu:comments:header' => "Commenti",
+	'menu:filter:header' => "Filtra",
+	'menu:page:header' => "Pagine",
+	'menu:river:header' => "Attività",
+	'menu:site:header' => "Sito",
+	'menu:social:header' => "Social",
+	'menu:title:header' => "Titolo",
+	'menu:topbar:header' => "Barra superiore",
 
 /**
  * Cli commands

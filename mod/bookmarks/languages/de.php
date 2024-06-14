@@ -30,14 +30,6 @@ return array(
 
 	'bookmarks:notify:summary' => 'Ein neues Lesezeichen %s wurde erstellt',
 	'bookmarks:notify:subject' => 'Neues Lesezeichen: %s',
-	'bookmarks:notify:body' => '%s hat ein neues Lesezeichen erstellt: %s
-
-Adresse: %s
-
-%s
-
-Schau Dir das neue Lesezeichen an und schreibe einen Kommentar:
-%s',
 	
 	'bookmarks:numbertodisplay' => 'Anzahl der anzuzeigenden Lesezeichen-Einträge.',
 

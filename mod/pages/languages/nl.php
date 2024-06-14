@@ -36,12 +36,6 @@ return array(
 
 	'pages:notify:summary' => 'Nieuwe pagina met de titel %s',
 	'pages:notify:subject' => "Een nieuwe pagina: %s",
-	'pages:notify:body' => '%s schreef een nieuwe pagina: %s
-
-%s
-
-Om de pagina te bekijken en te reageren, klik hier:
-%s',
 	
 	'notification:mentions:object:page:subject' => '%s heeft je vermeld in een pagina',
 

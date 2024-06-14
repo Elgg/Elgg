@@ -33,10 +33,7 @@ return array(
 	'site_notifications:success:delete' => 'Уведомления удалены',
 	'site_notifications:success:mark_read' => 'Уведомления отмечены прочитанными',
 	
-	'site_notifications:cron:linked_cleanup:start' => 'Очистка уведомлений без связанных сущностей',
 	'site_notifications:cron:linked_cleanup:end' => 'Очищено %s уведомлений без связанных сущностей',
-	'site_notifications:cron:unread_cleanup:start' => 'Очистка непрочитанных уведомлений старше %s дней',
 	'site_notifications:cron:unread_cleanup:end' => 'Очищено %s непрочитанных уведомлений',
-	'site_notifications:cron:read_cleanup:start' => 'Очистка прочитанных уведомлений старше %s дней',
 	'site_notifications:cron:read_cleanup:end' => 'Очищено %s прочитанных уведомлений',
 );

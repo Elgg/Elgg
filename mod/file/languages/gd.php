@@ -61,12 +61,6 @@ return array(
 
 	'file:notify:summary' => 'Faidhle ùr air a bheil an t-ainm \'%s\'',
 	'file:notify:subject' => 'Faidhle ùr: %s',
-	'file:notify:body' => 'Luchdaich suas %s faidhle ùr: %s
-
-%s
-
-Seall agus fàg beachd ùr air an fhaidhle:
-%s',
 
 	/**
 	 * Status messages

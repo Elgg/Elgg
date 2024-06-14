@@ -136,25 +136,10 @@ return array(
 	'groups:invite:subject' => "%s ai fost invitat/ă să te alături pe %s!",
 	'groups:joinrequest:remove:check' => 'Sigur dorești să îndepărtezi această cerere de alăturare?',
 	'groups:invite:remove:check' => 'Sigur dorești să îndepărtezi această invitație?',
-	'groups:invite:body' => "%s te-a invitat să te alături grupului '%s'.
-
-Apasă mai jos pentru a-ți vedea invitațiile:
-%s",
 
 	'groups:welcome:subject' => "Bine ai venit pe grupul %s!",
-	'groups:welcome:body' => "De acum ești membru al grupului '%s'.
-
-Apasă mai jos pentru a începe să postezi!
-%s",
 
 	'groups:request:subject' => "%s a cerut să se alăture pe %s",
-	'groups:request:body' => "%s a cerut să se alăture grupului '%s'.
-
-Apasă mai jos pentru a-i vedea profilul:
-%s
-
-sau apasă mai jos pentru a vedea cererile de alăturare ale grupului:
-%s",
 
 	'river:group:create' => '%s a creat grupul %s',
 	'river:group:join' => '%s s-a alăturat grupului %s',
@@ -178,4 +163,6 @@ sau apasă mai jos pentru a vedea cererile de alăturare ale grupului:
 	'groups:usersettings:notifications:description' => 'Pentru a primii notificări atunci când se adaugă conținut nou pe un grup al cărui membru ești, găsește-l mai jos și selectează metoda(ele) de notificare pe care dorești să o(le) folosești.',
 	
 	// accessibility
+	'groups:aria:label:group_search' => "Caută grupuri",
+	'groups:aria:label:search_in_group' => "Caută în acest grup",
 );

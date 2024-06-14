@@ -51,6 +51,7 @@ return array(
 	'groups:content_access_mode:unrestricted' => "Geen beperkingen. Toegang hangt af van de instelling van de content.",
 	'groups:content_access_mode:membersonly' => "Alleen voor leden - Niet-leden kunnen nooit de inhoud van de groep zien.",
 	'groups:owner' => "Eigenaar",
+	'groups:owner:placeholder' => "Zoek een groepslid",
 	'groups:owner:warning' => "Opgelet: als je deze waarde aanpast ben je niet meer de eigenaar van deze groep",
 	'groups:widget:num_display' => 'Aantal groepen om weer te geven',
 	'widgets:a_users_groups:name' => 'Groepslidmaatschap',

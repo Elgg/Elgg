@@ -20,19 +20,4 @@ return array(
 	'invitefriends:already_members' => 'Deze gebruikers zijn al lid: %s',
 	'invitefriends:noemails' => 'Je hebt geen e-mailadressen opgegeven.',
 	
-	'invitefriends:message:default' => 'Hoi,
-
-Ik wil je uitnodigen om lid te worden van mijn netwerk op %s.',
-
-	'invitefriends:email' => 'Je bent uitgenodigd om lid te worden van %s door %s.
-
-Er is de volgende tekst toegevoegd aan de uitnodiging:
-
-%s
-
-Om lid te worden, klik op de volgende link:
-%s
-
-Je zult automatisch vrienden worden als je een account aanmaakt.',
-	
 );

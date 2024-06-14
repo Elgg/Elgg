@@ -12,8 +12,6 @@ return array(
 	'relationship:friendrequest:sent' => "Ai cerut prietenia cu %s",
 	
 	// plugin settings
-	'friends:settings:request:description' => "Implicit orice utilizator poate fi prieten/ă cu orice alt utilizator, e ca și urmărirea activității altor utilizatori.
-După activarea cererilor de prietenie, atunci când utilizatorul A dorește să fie prieten/ă cu utilizatorul B, utilizatorul B trebuie să aprobe cererea. După aprobare, utilizatorul A va fi prieten/ă cu utilizatorul B și utilizatorul B va fi prieten/ă cu utilizatorul A.",
 	'friends:settings:request:label' => "Activează cererile de prietenie",
 	'friends:settings:request:help' => "Utilizatorii trebuie să aprobe cererea de prietenie iar prieteniile vor deveni bidirecționale",
 	
@@ -51,10 +49,6 @@ După activarea cererilor de prietenie, atunci când utilizatorul A dorește să
 	'widgets:friends_of:description' => "Arată cine te-a făcut prieten/ă",
 	
 	'friends:notification:request:subject' => "%s dorește să-ți fie prieten/ă!",
-	'friends:notification:request:message' => "%s a cerut să-ți fie prieten/ă pe %s.
-
-Pentru a vedea cererea de prietenie, apasă aici:
-%s",
 	
 	'friends:notification:request:decline:subject' => "%s a respins cererea ta de prietenie",
 	'friends:notification:request:decline:message' => "%s a respins cererea ta de prietenie.",

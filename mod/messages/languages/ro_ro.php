@@ -43,17 +43,6 @@ return array(
 	*/
 
 	'messages:email:subject' => 'Ai un mesaj nou!',
-	'messages:email:body' => "Ai un mesaj nou de la %s.
-
-Scrie:
-
-%s
-
-Pentru a vedea mesajul, apasă aici:
-%s
-
-Pentru a-i trimite un mesaj utilizatorului %s, apasă aici:
-%s",
 
 	/**
 	* Error messages

@@ -44,12 +44,6 @@ return array(
 	'profile:defaultprofile:reset' => 'Chaidh na raointean pròifile ath-shuidheachadh dha na bun-roghainnean',
 	'profile:resetdefault' => 'Ath-shuidhich na raointean pròifile dha na bun-roghainnean',
 	'profile:resetdefault:confirm' => 'A bheil thu cinnteach gu bheil thu airson na raointean pròifile gnàthaichte agad a sguabadh às?',
-	'profile:explainchangefields' => "Faodaidh tu raointean pròifile gnàthaichte a chur an àite na bun-roghainnean.
-Briog air a' phùtan 'Cuir ann', cuir ainm air agus tagh an seòrsa (me. teacsa, url, taga).
-Faodaidh tu na raointean a slaodadh gus an òrdugh atharrachadh.
-Briog air an ìomhaigh dheasachaidh gus an leubail a dheasachadh.
-
-Faodaidh tu na raointean ath-shuidheachadh dha na bun-roghainnean ach thèid fiosrachadh sam bith a tha cleachdaichean air cur annta a chall.",
 	'profile:editdefault:success' => 'Chaidh raon pròifile ùr a chur ann',
 	'profile:editdefault:fail' => 'Cha do ghabh a\' phròifil bhunaiteach a shàbhaladh',
 	'profile:noaccess' => "Chan eil cead agad a' phròifil seo a dheasachadh.",

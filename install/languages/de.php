@@ -17,12 +17,6 @@ return array(
 	'install:next' => 'Weiter',
 	'install:refresh' => 'Neu laden',
 	'install:change_language' => 'Sprache auswählen',
-
-	'install:welcome:instructions' => "Die Installation von Elgg besteht aus 6 einfachen Schritten und der erste Schritt davon ist das Lesen dieser Begrüßung!
-
-Wenn Du es nicht bereits getan hast, lies bitte die mitgelieferten Installations-Hinweise (oder rufe die Hinweise auf indem Du dem Link am Ende dieser Seite folgst).
-
-Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	
 	'install:footer:instructions' => "Installationsanweisungen",
 	'install:footer:troubleshooting' => "Hilfe bei Installationsproblemen",
@@ -37,12 +31,6 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:require:settings' => 'Konfigurationsdatei',
 	'install:require:database' => 'Datenbank',
 
-	'install:check:root' => 'Aufgrund fehlender Schreibberechtigung ist es leider nicht möglich, auf Deinem Server im Hauptverzeichnis der Elgg-Installation die Datei .htaccess automatisch zu erzeugen. Du hast zwei Möglichkeiten:
-
-1. Ändere (nur während der Installation!) die Schreibberechtigung für das Elgg-Hauptverzeichnis,
-
-2. Lege die Datei .htaccess im Elgg-Hauptverzeichnis selbst an, indem Du sie aus der Datei vendor/elgg/elgg/install/config/htaccess.dist durch Kopieren und Umbenennen erzeugst.',
-
 	'install:check:php:version' => 'Elgg benötigt PHP in Version %s oder neuer. Dieser Server verwendet Version %s.',
 	'install:check:php:extension' => 'Elgg benötigt die PHP-Erweiterung %s.',
 	'install:check:php:extension:recommend' => 'Es wird empfohlen, dass die PHP-Erweiterung %s auf dem Server installiert ist.',
@@ -51,12 +39,6 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:check:php:arg_separator' => 'Das von PHP verwendete Trennzeichen arg_separator.output muss \'&\' sein, damit Elgg einwandfrei funktioniert. Das eingestellte Trennzeichen auf Deinem Server ist aber \'%s\'',
 	'install:check:php:register_globals' => 'Register globals muss auf dem Server ausgeschaltet sein, d.h. der Wert der PHP-Variable register_globals muss \'0\' sein.',
 	'install:check:php:session.auto_start' => "Auf dem Server muss session.auto_start ausgeschaltet sein, damit Elgg einwandfrei funktioniert. Ändere diese Einstellung entweder in der PHP-Konfiguration php.ini oder setze den Wert dieser PHP-Variable in der .htaccess-Datei von Elgg.",
-
-	'install:check:installdir' => 'Aufgrund fehlender Schreibberechtigung ist es leider nicht möglich, auf Deinem Server im Installationsverzeichnis von Elgg die Datei settings.php zu erzeugen. Du hast zwei Möglichkeiten:
-
-1. Ändere (nur während der Installation!) die Schreibberechtigung für das Verzeichnis elgg-config Deiner Elgg-Installation,
-
-2. Lege die Datei settings.php selbst an, indem Du die Datei %s/settings.example.php in das Verzeichnis elgg-config kopierst und zu settings.php umbenennst. Folge dann den Anweisungen in dieser Datei, um die Verbindungsparameter für Deine Datenbank einzutragen.',
 	'install:check:readsettings' => 'Im Installationsverzeichnis von Elgg ist eine Konfigurationsdatei namens settings.php vorhanden, aber es fehlt die notwendige Leseberechtigung. Du kannst entweder die Datei löschen, damit sie neu angelegt werden kann oder Du kannst die Leseberechtigungen der Datei anpassen.',
 
 	'install:check:php:success' => "Die PHP-Konfiguration auf Deinem Server erfüllt alle notwendigen Voraussetzungen für Elgg.",
@@ -135,7 +117,6 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:error:settings' => 'Die settings-Datei konnte nicht erzeugt werden.',
 	'install:error:databasesettings' => 'Elgg konnte mit den eingegebenen Verbindungsparametern keine Verbindung mit der Datenbank herstellen.',
 	'install:error:database_prefix' => 'Das eingegebene Tabellen-Prefix enthält unzulässige Zeichen.',
-	'install:error:oldmysql2' => 'Voraussetzung für Elgg ist MySQL in Version 5.5.3 oder neuer. Dein Server verwendet Version %s.',
 	'install:error:nodatabase' => 'Der Zugriff auf die Datenbank %s ist nicht möglich. Möglicherweise ist die Datenbank nicht vorhanden.',
 	'install:error:cannotloadtables' => 'Der Zugriff auf die Tabellen der Datenbank ist nicht möglich.',
 	'install:error:tables_exist' => 'In der Datenbank ist bereits eine Elgg-Tabellenstruktur vorhanden. Du mußt entweder diese Tabellen aus der Datenbank löschen oder die Installation neu starten. Bei einem Neustart kann versucht werden, die bestehende Tabellenstruktur zu verwenden. Um die Installation neu zu starten, entferne \'?step=database\' aus der URL in der Adressleiste Deines Browsers und drücke \'Enter\'.',
@@ -156,8 +137,6 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:error:rewrite:nginx' => 'Die Überprüfung Deines Servers hat ergeben, dass der Nginx-Webserver verwendet wird.',
 	'install:error:rewrite:lighttpd' => 'Die Überprüfung Deines Servers hat ergeben, dass der Lighttpd-Webserver verwendet wird.',
 	'install:error:rewrite:iis' => 'Die Überprüfung Deines Servers hat ergeben, dass der IIS-Webserver verwendet wird.',
-	'install:error:rewrite:allowoverride' => "Der Rewrite-Test ist fehlgeschlagen. Die wahrscheinlichste Ursache ist, dass für das Elgg-Installationsverzeichnis 'AllowOverride All' nicht gesetzt ist. Dies verhindert, dass der Apache-Webserver die Einstellungen in der Datei .htaccess verarbeiten kann, in welcher die Rewrite-Regeln gesetzt werden.
-\n\nEine andere mögliche Ursache ist, dass in der Konfiguration des Apache-Webservers ein Alias für Dein Elgg-Installationsverzeichnis definiert ist. Dann mußt Du in der Datei .htaccess die richtige Einstellung für RewriteBase setzen. In der Datei .htaccess in Deinem Elgg-Installationsverzeichnis gibt es weitere Informationen darüber, was zu tun ist.",
 	'install:error:rewrite:htaccess:write_permission' => 'Dein Webserver hat nicht die notwendige Schreibberechtigung, um im Elgg-Installationsverzeichnis die Datei .htaccess automatisch zu erzeugen. Du mußt entweder (nur während der Installation!) die Zugriffsberechtigungen für das Elgg-Installationsverzeichnis ändern oder selbst die Datei .htaccess im Elgg-Installationsverzeichnis anlegen, indem Du sie aus der Datei install/config/htaccess.dist durch Kopieren und Umbenennen erzeugst.',
 	'install:error:rewrite:htaccess:read_permission' => 'Im Elgg-Installationsverzeichnis ist die Datei .htaccess vorhanden, aber Dein Webserver hat keine Leseberechtigung für diese Datei.',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'Im Elgg-Installationsverzeichnis ist eine Datei namens .htaccess, die nicht von Elgg angelegt wurde. Bitte entferne diese Datei.',

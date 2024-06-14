@@ -47,12 +47,6 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Brath-bloga ùr air a bheil an t-ainm \'%s\'',
 	'blog:notify:subject' => 'Brath-bloga ùr: %s',
-	'blog:notify:body' => 'Dh’fhoillsich %sbrath-bloga ùr: %s
-
-%s
-
-Seall agus fàg beachd air a\' bhrath-bhloga:
-%s',
 
 	// widget
 	'widgets:blog:name' => 'Brathan-bloga',

@@ -44,21 +44,9 @@ return array(
 	 */
 	'discussion:topic:notify:summary' => 'Neue Diskussion namens %s',
 	'discussion:topic:notify:subject' => 'Neue Diskussion: %s',
-	'discussion:topic:notify:body' => '%s hat die neue Diskussion "%s" gestartet:
-
-%s
-
-Schau Dir die neue Diskussion an und antworte darauf:
-%s',
 
 	'discussion:comment:notify:summary' => 'Neue Antwort in Diskussion %s',
 	'discussion:comment:notify:subject' => 'Neue Antwort in Diskussion: %s',
-	'discussion:comment:notify:body' => '%s hat in der Diskussion "%s" geantwortet:
-
-%s
-
-Schau Dir die Diskussion an und antworte selbst darauf:
-%s',
 
 	'groups:tool:forum' => 'Gruppen-Diskussionen aktivieren',
 	

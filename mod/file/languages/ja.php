@@ -61,12 +61,6 @@ return array(
 
 	'file:notify:summary' => '新着ファイル「%s」がアップロードされました。',
 	'file:notify:subject' => '新着ファイル: %s',
-	'file:notify:body' => '%s さんが新しいファイルをアップロードしました: %s
-
-%s
-
-表示とコメントは:
-%s',
 
 	/**
 	 * Status messages

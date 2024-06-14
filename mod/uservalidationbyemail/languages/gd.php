@@ -8,13 +8,6 @@
 return array(
 	'email:validate:subject' => "%s,
 Dearbhaich an seòladh puist-d agad air %s!",
-	'email:validate:body' => "Feumaidh tu an seòladh puist-d agad a dhearbhadh mus bi thu comasach air %s a chleachdadh.
-
-Briog air a' cheagal na leanas gus an seòladh puist-d agad a dhearbhadh:
-
-%s
-
-Mura h-eil thu comasach air a' cheangal a bhriogadh, dèan leth-bhreac dheth is cuir ann dhan bhrabhsair agad e.",
 	'email:confirm:success' => "Chaidh an seòladh puist-d agad a dhearbadh!",
 	'email:confirm:fail' => "Cha do ghabh an seòladh puist-d agad a dhearbhadh...",
 

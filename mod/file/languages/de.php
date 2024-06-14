@@ -61,12 +61,6 @@ return array(
 
 	'file:notify:summary' => 'Eine neue Datei namens %s wurde hochgeladen',
 	'file:notify:subject' => 'Neue Datei: %s',
-	'file:notify:body' => '%s hat eine neue Datei hochgeladen: %s
-
-%s
-
-Schau Dir die Datei an und schreibe einen Kommentar:
-%s',
 
 	/**
 	 * Status messages

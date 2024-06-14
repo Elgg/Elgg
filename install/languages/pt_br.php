@@ -17,10 +17,6 @@ return array(
 	'install:next' => 'Proximo',
 	'install:refresh' => 'Atualiza',
 	'install:change_language' => 'Mudar idioma',
-
-	'install:welcome:instructions' => "A Instalação do Elgg tem 6 etapas simples. Esta é a primeira delas!
-Se você ainda não fez, leia as instruções de instalação inclusas no Elgg (ou clique no botão de link para instruções na parte inferior da página)
-Se você já está pronto para iniciar, clique no botão Próximo.",
 	
 	'install:footer:instructions' => "Instruções de instalação",
 	'install:footer:troubleshooting' => "Solução de problemas de instalação",
@@ -122,7 +118,6 @@ Se você já está pronto para iniciar, clique no botão Próximo.",
 	'install:error:settings' => 'Não foi possivel criar o arquivo de configurações <i>(settings file)</i>',
 	'install:error:databasesettings' => 'Não foi possivel conectar ao banco de dados com estas configurações.',
 	'install:error:database_prefix' => 'Caracteres invalidos no prefixo da base de dados (database prefix)',
-	'install:error:oldmysql2' => 'MySQL deve ser da versao 5.5.3 ou superior. Seu servidor está usando %s.',
 	'install:error:mysql_version' => 'A versão do MySQL deve ser %s ou superior. Seu servidor usa a versão %s.',
 	'install:error:database_version' => 'A versão do do banco de dados deve ser a %s ou superior. Seu servidor está usando a versão %s.',
 	'install:error:nodatabase' => 'Não foi possivel usar o banco de dados %s. Ele pode não existir.',
@@ -145,8 +140,6 @@ Se você já está pronto para iniciar, clique no botão Próximo.",
 	'install:error:rewrite:nginx' => 'Nos achamos que seu servidor está funcionando em um servidor Nginx <i>(Nginx web server)</i>.',
 	'install:error:rewrite:lighttpd' => 'Nos achamos que seu servidor está funcionando em um servidor Lighttpd <i>(Lighttpd web server)</i>.',
 	'install:error:rewrite:iis' => 'Nos achamos que seu servidor está funcionando em um servidor IIS <i>(IIS web server)</i>.',
-	'install:error:rewrite:allowoverride' => "O teste de reescrita falhou. Esta falha pode ter ocorrido porque o AllowOverride não está configurado para todos os diretórios do Elgg. Isto previne o servidor Apache de processar o arquivo .htaccess que contem as regras de reescrita.
-\n\nOutro motivo menos comum está relacionado à configuração do Apache com um alias para o seu diretório Elgg e você precisa configurar uma regra Rewrite Base no arquivo .htaccess. Há mais instruções em seu arquivo .htaccess no diretório Elgg.",
 	'install:error:rewrite:htaccess:write_permission' => 'Seu servidor web nao possui permissao para criar o arquivo <b>.htaccess</b> no diretorio do Elgg. Voce precisa copiar manualmente o arquivo <b>htaccess_dist</b> para <b>.htaccess</b> ou alterar as permissoes no diretorio.',
 	'install:error:rewrite:htaccess:read_permission' => 'Existe um arquivo <b>.htaccess</b> no diretorio do Elgg, mas seu servidor web nao possui permissao para ler este arquivo.',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'Existe um arquivo <b>.htaccess</b> no diretorio do Elgg que nao foi criado pelo Elgg.  Por favor, remova o arquivo.',

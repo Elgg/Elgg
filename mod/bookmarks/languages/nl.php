@@ -30,14 +30,6 @@ return array(
 
 	'bookmarks:notify:summary' => 'Nieuwe favoriet genaamd \'%s\'',
 	'bookmarks:notify:subject' => 'Nieuwe favoriet: %s',
-	'bookmarks:notify:body' => '%s heeft een nieuwe favoriet toegevoegd: %s
-
-Adres: %s
-
-%s
-
-Bekijk en reageer op de favoriet:
-%s',
 	
 	'notification:mentions:object:bookmarks:subject' => '%s heeft je vermeld in een favoriet',
 	

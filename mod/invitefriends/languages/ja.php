@@ -20,19 +20,4 @@ return array(
 	'invitefriends:already_members' => '以下の方は、すでにメンバです。: %s',
 	'invitefriends:noemails' => '電子メールアドレスが入力されていません。',
 	
-	'invitefriends:message:default' => 'こんにちは。
-
- %s への参加をご招待いたします。',
-
-	'invitefriends:email' => '%s への参加のご招待を %s より案内いたします。
-
-内容:
-
-%s
-
-ご参加いただけるのであれば、下のリンクをクリックしてください:
-%s
-
-あなたがアカウントを作成すると自動的に友達登録されます。',
-	
 );

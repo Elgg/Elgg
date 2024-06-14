@@ -49,11 +49,11 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'Новая запись блога %s',
 	'blog:notify:subject' => 'Новая запись блога: %s',
-	'blog:notify:body' => '%s опубликовал в блоге: %s
+	'blog:notify:body' => '%s опубликовал новый пост: %s
 
 %s
 
-Просмотреть и прокомментировать запись в блоге:
+Просмотр и комментирование  поста:
 %s',
 	
 	'notification:mentions:object:blog:subject' => '%s упомянул вас в записи блога',

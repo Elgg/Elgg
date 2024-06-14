@@ -106,7 +106,6 @@ return array(
 	'install:error:settings' => 'Ei voida luoda asetustiedostoa',
 	'install:error:databasesettings' => 'Tietokantaan yhdistäminen ei onnistunut annetuilla tiedoilla.',
 	'install:error:database_prefix' => 'Tietokantataulujen etuliite sisältää virheellisiä merkkejä',
-	'install:error:oldmysql2' => 'MySQL-versio pitää olla vähintään 5.5.3. Palvelimesi käyttää versiota %s.',
 	'install:error:nodatabase' => 'Tietokantaan %s ei saada yhteyttä.',
 	'install:error:cannotloadtables' => 'Tietokantataulujen lataaminen ei onnistu',
 	'install:error:tables_exist' => 'Tietokannassa on jo olemassa Elggin tauluja. Sinun pitää joko poistaa taulut tai aloittaa asennus uudelleen, jolloin Elgg voi yrittää ottaa taulut käyttöön. Aloittaaksesi asennuksen uudelleen, poista \'?step=database\' selaimesi osoiteriviltä ja siirry kyseiseen osoitteeseen.',

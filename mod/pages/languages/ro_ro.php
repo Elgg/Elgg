@@ -34,12 +34,6 @@ return array(
 
 	'pages:notify:summary' => 'Pagină nouă numită %s',
 	'pages:notify:subject' => "O pagină nouă: %s",
-	'pages:notify:body' => '%s a adăugat o pagină nouă: %s
-
-%s
-
-Vezi și comentează pe pagină:
-%s',
 
 	'pages:more' => 'Mai multe pagini',
 	'pages:none' => 'Încă nu s-au creat pagini',

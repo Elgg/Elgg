@@ -34,12 +34,6 @@ return array(
 
 	'pages:notify:summary' => 'Duilleag ùr air a bheil an t-ainm \'%s\'',
 	'pages:notify:subject' => "Duilleag ùr: %s",
-	'pages:notify:body' => 'Chruthaich %s duilleag ùr: %s
-
-%s
-
-Faodaidh tu fhaicinn is beachd fhàgail air aig:
-%s',
 
 	'pages:more' => 'Barrachd duilleagan',
 	'pages:none' => 'Cha deach duilleag a chruthachadh fhathast',

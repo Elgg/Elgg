@@ -105,7 +105,6 @@ return array(
 	'install:error:settings' => 'Non foi posíbel crear o ficheiro de configuración.',
 	'install:error:databasesettings' => 'Non foi posíbel conectarse á base de datos coa información de conexión indicada.',
 	'install:error:database_prefix' => 'O prefixo da base de datos contén caracteres que non son válidos.',
-	'install:error:oldmysql2' => 'O servidor de bases de datos debe ser un MySQL 5.5.3 ou unha versión superior. O servidor actual usa MySQL %s.',
 	'install:error:nodatabase' => 'Non foi posíbel usar a base de datos «%s». Pode que non exista.',
 	'install:error:cannotloadtables' => 'Non foi posíbel cargar as táboas da base de datos.',
 	'install:error:tables_exist' => 'A base de datos xa contén táboas de Elgg. Ten que eliminar esas táboas ou reiniciar o instalador e intentar facer uso delas. Para reiniciar o instalador, elimine a parte de «?step=database» do URL na barra do URL do navegador, e prema Intro.',

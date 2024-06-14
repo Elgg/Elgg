@@ -23,13 +23,4 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s ți-a apreciat postarea "%s"',
-	'likes:notifications:body' => '%1$s ți-a apreciat postarea "%2$s" de pe %3$s
-
-Vezi postarea ta originală de aici:
-
-%4$s
-
-sau vezi profilul utilizatorului %1$s de aici:
-
-%5$s',
 );

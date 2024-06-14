@@ -25,13 +25,4 @@ return array(
 
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s vindt je item "%s" leuk',
-	'likes:notifications:body' => '%1$s vond je item "%2$s" op %3$s leuk.
-
-Om naar je item te gaan, klik hier:
-
-%4$s
-
-of bekijk %1$s\'s profiel hier:
-
-%5$s',
 );
