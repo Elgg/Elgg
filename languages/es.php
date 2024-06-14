@@ -20,6 +20,7 @@ return array(
 
 	'login' => "Iniciar sesi&oacute;n",
 	'loginok' => "Ha iniciado sesi&oacute;n",
+	'login:continue' => "Inicie sesi&oacute;n para continuar",
 	'login:empty' => "El nombre de usuario y contrase&ntilde;a son requeridos",
 	'login:baduser' => "No se pudo cargar su cuenta de usuario",
 
@@ -51,7 +52,13 @@ return array(
 
 	'PluginException:CannotStart' => '%s (guid: %s) no puede iniciarse. Motivo: %s',
 	'PluginException:InvalidID' => "%s no es un ID de plugin v&aacute;lido",
+	'PluginException:PluginMustBeActive' => "El plugin '%s' debe estar activado",
+	'PluginException:PluginMustBeAfter' => "Debe estar después del plugin '%s'.",
+	'PluginException:PluginMustBeBefore' => "Debe estar antes del plugin '%s'.",
 	'ElggPlugin:MissingID' => 'No se encuentra el ID del plugin (guid %s)',
+	'ElggPlugin:NoPluginComposer' => 'Falta el archivo composer.json para el plugin ID %s (guid %s)',
+	'ElggPlugin:StartFound' => 'El plugin ID %s incluye un archivo start.php. Esto puede indicar un plugin obsoleto.',
+	'ElggPlugin:IdMismatch' => 'Debe cambiarse el nombre de la carpeta del plugin a "%s" para que coincida con el nombre del proyecto definido en el archivo composer.json del plugin.',
 	'ElggPlugin:Error' => 'Error del plugin',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'No puede incluirse %s para el plugin %s (guid: %s) en %s. Verifique los permisos!',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Se lanzó la excepción incluyendo %s para el complemento %s (guid: %s) en %s. ',
