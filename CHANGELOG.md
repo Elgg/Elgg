@@ -1,3 +1,25 @@
+<a name="6.0.0-rc.1"></a>
+### 6.0.0-rc.1 (2024-06-14)
+
+#### Contributors
+
+* Jerôme Bakker (8)
+* Jeroen Dalsem (7)
+
+#### Features
+
+* **admin:** total amount of online users added to the admin header menu [0b8f970b2](https://github.com/Elgg/Elgg//commit/0b8f970b22fea733eb73a1d19ddf56cb179b898f)
+
+
+#### Bug fixes
+
+* **css:** correctly align user and group profile fields and labels [4595b6e04](https://github.com/Elgg/Elgg//commit/4595b6e04ea0f829022c8ba8254a9d3eae2b0a41) closes [#14608](https://github.com/Elgg/Elgg//commit/14608)
+* **users:** prevent double notification on admin user validation [0ff70c0ea](https://github.com/Elgg/Elgg//commit/0ff70c0ea626b0a2d2c6c7323f30886c901954e6)
+* **garbagecollector:** use correct table to clean delayed email queue [01615ca51](https://github.com/Elgg/Elgg//commit/01615ca511d82ab4361f6644dec659f8124b7a6f)
+* **cron:** use correct event trigger [921eedc09](https://github.com/Elgg/Elgg//commit/921eedc0984854530cd5ea5f24ee5f919322033e)
+* **widgets:** set correct widget URLs [e5ceaf6f0](https://github.com/Elgg/Elgg//commit/e5ceaf6f0abf12ff0f4f32d6f4ab980eff6f0539) closes [#14609](https://github.com/Elgg/Elgg//commit/14609)
+
+
 <a name="6.0.0-beta.1"></a>
 ### 6.0.0-beta.1 (2024-04-18)
 
