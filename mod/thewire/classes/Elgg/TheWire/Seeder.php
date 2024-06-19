@@ -108,7 +108,7 @@ class Seeder extends Seed {
 
 		/* @var $entity \ElggWire */
 		foreach ($entities as $entity) {
-			if ($entity->delete(true, true)) {
+			if ($entity->delete()) {
 				$this->log("Deleted wire post {$entity->guid}");
 			} else {
 				$this->log("Failed to delete wire post {$entity->guid}");

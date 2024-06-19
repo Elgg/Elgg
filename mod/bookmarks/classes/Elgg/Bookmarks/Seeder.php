@@ -62,7 +62,7 @@ class Seeder extends Seed {
 
 		/* @var $boolmark \ElggBookmark */
 		foreach ($bookmarks as $bookmark) {
-			if ($bookmark->delete(true, true)) {
+			if ($bookmark->delete()) {
 				$this->log("Deleted bookmark {$bookmark->guid}");
 			} else {
 				$this->log("Failed to delete bookmark {$bookmark->guid}");
