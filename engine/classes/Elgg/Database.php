@@ -34,17 +34,17 @@ class Database {
 	/**
 	 * @var string $table_prefix Prefix for database tables
 	 */
-	private $table_prefix;
+	protected $table_prefix;
 
 	/**
 	 * @var Connection[]
 	 */
-	private array $connections = [];
+	protected array $connections = [];
 
 	/**
 	 * @var int $query_count The number of queries made
 	 */
-	private int $query_count = 0;
+	protected int $query_count = 0;
 
 	/**
 	 * Queries are saved as an array with the DELAYED_* constants as keys.
@@ -58,7 +58,7 @@ class Database {
 	/**
 	 * @var \Elgg\Database\DbConfig $config Database configuration
 	 */
-	private $db_config;
+	protected $db_config;
 
 	/**
 	 * Constructor

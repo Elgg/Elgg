@@ -57,14 +57,11 @@ class Plugins extends DbPlugins {
 			return $plugin;
 		}
 
-		$plugin = BaseTestCase::$_instance->createObject([
+		return _elgg_services()->entityTable->setup(null, 'object', 'plugin', [
 			'owner_guid' => 1,
 			'container_guid' => 1,
-			'subtype' => 'plugin',
 			'title' => $plugin_id,
 		]);
-
-		return $plugin;
 	}
 
 	public function find(string $status = 'active'): array {

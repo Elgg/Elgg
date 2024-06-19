@@ -4,6 +4,7 @@ namespace Elgg\Database;
 
 use Elgg\Cli\Command;
 use Elgg\Cli\Progress;
+use Elgg\Config;
 use Elgg\Database\Seeds\Seed;
 use Elgg\EventsService;
 use Elgg\I18n\Translator;
@@ -18,14 +19,6 @@ use Elgg\Invoker;
  */
 class Seeder {
 
-	protected EventsService $events;
-
-	protected Progress $progress;
-	
-	protected Invoker $invoker;
-	
-	protected Translator $translator;
-
 	/**
 	 * Seeder constructor.
 	 *
@@ -33,17 +26,15 @@ class Seeder {
 	 * @param Progress      $progress   Progress helper
 	 * @param Invoker       $invoker    Invoker service
 	 * @param Translator    $translator Translator
+	 * @param Config        $config     Elgg config
 	 */
 	public function __construct(
-		EventsService $events,
-		Progress $progress,
-		Invoker $invoker,
-		Translator $translator
+		protected EventsService $events,
+		protected Progress $progress,
+		protected Invoker $invoker,
+		protected Translator $translator,
+		protected Config $config
 	) {
-		$this->events = $events;
-		$this->progress = $progress;
-		$this->invoker = $invoker;
-		$this->translator = $translator;
 	}
 
 	/**
@@ -139,6 +130,9 @@ class Seeder {
 
 			$seeds = $this->getSeederClasses();
 
+			// disable trash during unseed, everything needs te be permanently removed
+			$trash_enabled = $this->config->trash_enabled;
+			$this->config->trash_enabled = false;
 			foreach ($seeds as $seed) {
 				// check for type limitation
 				if (!empty($options['type']) && $options['type'] !== $seed::getType()) {
@@ -156,6 +150,9 @@ class Seeder {
 
 				$this->progress->finish($progress_bar);
 			}
+			
+			// restore trash config setting
+			$this->config->trash_enabled = $trash_enabled;
 		});
 	}
 	

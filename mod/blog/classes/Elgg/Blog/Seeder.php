@@ -85,7 +85,7 @@ class Seeder extends Seed {
 
 		/* @var $blog \ElggBlog */
 		foreach ($blogs as $blog) {
-			if ($blog->delete(true, true)) {
+			if ($blog->delete()) {
 				$this->log("Deleted blog {$blog->guid}");
 			} else {
 				$this->log("Failed to delete blog {$blog->guid}");

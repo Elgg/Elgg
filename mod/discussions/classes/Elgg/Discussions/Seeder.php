@@ -68,7 +68,7 @@ class Seeder extends Seed {
 
 		/* @var $discussion \ElggDiscussion */
 		foreach ($discussions as $discussion) {
-			if ($discussion->delete(true, true)) {
+			if ($discussion->delete()) {
 				$this->log("Deleted discussion {$discussion->guid}");
 			} else {
 				$this->log("Failed to delete discussion {$discussion->guid}");
