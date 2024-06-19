@@ -125,4 +125,4 @@ jobs:
 
       - name: Unseed Elgg database
         if: ${{ always() }}
-        run: php ./elgg-cli database:unseed -vv
+        run: php ./elgg-cli database:unseed -vv --no-ansi
