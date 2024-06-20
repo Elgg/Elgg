@@ -19,6 +19,7 @@ $summary = '';
 $summary .= elgg_view('trash/elements/metadata', $vars);
 $summary .= elgg_view('trash/elements/title', $vars);
 $summary .= elgg_view('trash/elements/subtitle', $vars);
+$summary .= elgg_view('trash/elements/content', $vars);
 
 // image block params
 $params = (array) elgg_extract('image_block_vars', $vars, []);
