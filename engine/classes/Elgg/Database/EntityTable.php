@@ -558,7 +558,7 @@ class EntityTable {
 			
 			$deleter_guid = elgg_get_logged_in_user_guid();
 			if (!empty($deleter_guid)) {
-				$entity->addRelationship($deleter_guid, 'delete_by');
+				$entity->addRelationship($deleter_guid, 'deleted_by');
 			}
 			
 			$qb = Update::table(self::TABLE_NAME);
