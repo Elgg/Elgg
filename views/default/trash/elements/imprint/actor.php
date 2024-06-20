@@ -14,7 +14,6 @@ if (!isset($actor_text)) {
 		$actors = $entity->getEntitiesFromRelationship([
 			'type' => 'user',
 			'relationship' => 'deleted_by',
-			'inverse_relationship' => true,
 			'limit' => 1,
 		]);
 		if (!empty($actors)) {

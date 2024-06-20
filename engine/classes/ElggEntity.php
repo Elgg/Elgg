@@ -539,7 +539,7 @@ abstract class ElggEntity extends \ElggData {
 	}
 
 	/**
-	 * Add a relationship between this an another entity.
+	 * Add a relationship between this and another entity.
 	 *
 	 * @tip Read the relationship like "This entity is a $relationship of $guid_two."
 	 *
@@ -550,7 +550,7 @@ abstract class ElggEntity extends \ElggData {
 	 * @throws \Elgg\Exceptions\LengthException
 	 */
 	public function addRelationship(int $guid_two, string $relationship): bool {
-		return _elgg_services()->relationshipsTable->add($this->guid, (string) $relationship, (int) $guid_two);
+		return _elgg_services()->relationshipsTable->add($this->guid, $relationship, $guid_two);
 	}
 	
 	/**
@@ -1627,40 +1627,41 @@ abstract class ElggEntity extends \ElggData {
 		
 		return _elgg_services()->events->triggerSequence('restore', $this->type, $this, function () use ($recursive) {
 			return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($recursive) {
-				$result = _elgg_services()->entityTable->restore($this);
+				if (!_elgg_services()->entityTable->restore($this)) {
+					return false;
+				}
 				
-				if ($recursive) {
-					set_time_limit(0);
-					
-					/* @var $deleted_with_it \ElggBatch */
-					$deleted_with_it = elgg_get_entities([
-						'relationship' => 'deleted_with',
-						'relationship_guid' => $this->guid,
-						'inverse_relationship' => true,
-						'limit' => false,
-						'batch' => true,
-						'batch_inc_offset' => false,
-					]);
-					
-					/* @var $e \ElggEntity */
-					foreach ($deleted_with_it as $e) {
-						if (!$e->restore($recursive)) {
-							$deleted_with_it->reportFailure();
-							continue;
-						}
-						
-						$e->removeRelationship($this->guid, 'deleted_with');
+				$this->attributes['deleted'] = 'no';
+				$this->attributes['time_deleted'] = 0;
+				
+				$this->removeAllRelationships('deleted_by');
+				$this->removeAllRelationships('deleted_with');
+				
+				if (!$recursive) {
+					return true;
+				}
+				
+				set_time_limit(0);
+				
+				/* @var $deleted_with_it \ElggBatch */
+				$deleted_with_it = elgg_get_entities([
+					'relationship' => 'deleted_with',
+					'relationship_guid' => $this->guid,
+					'inverse_relationship' => true,
+					'limit' => false,
+					'batch' => true,
+					'batch_inc_offset' => false,
+				]);
+				
+				/* @var $e \ElggEntity */
+				foreach ($deleted_with_it as $e) {
+					if (!$e->restore($recursive)) {
+						$deleted_with_it->reportFailure();
+						continue;
 					}
 				}
 				
-				$this->removeAllRelationships('deleted_by', true);
-				
-				if ($result) {
-					$this->attributes['deleted'] = 'no';
-					$this->attributes['time_deleted'] = 0;
-				}
-				
-				return $result;
+				return true;
 			});
 		});
 	}

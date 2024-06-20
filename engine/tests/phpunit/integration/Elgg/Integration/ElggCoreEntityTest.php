@@ -733,6 +733,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($entity->isDeleted());
 		$this->assertTrue(elgg_entity_exists($entity->guid));
 		$this->assertNull(get_entity($entity->guid));
+		$this->assertEquals(1, $entity->countEntitiesFromRelationship('deleted_by'));
 	}
 	
 	public function testDeleteWithRestorableCapabilityTrashDisabled() {
@@ -771,6 +772,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($entity->isDeleted());
 		$this->assertTrue(elgg_entity_exists($entity->guid));
 		$this->assertNull(get_entity($entity->guid));
+		$this->assertEquals(1, $entity->countEntitiesFromRelationship('deleted_by'));
 	}
 	
 	public function testPersistentDeleteWithRestorableCapability() {
@@ -799,11 +801,13 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($entity->isDeleted());
 		$this->assertTrue(elgg_entity_exists($entity->guid));
 		$this->assertNull(get_entity($entity->guid));
+		$this->assertEquals(1, $entity->countEntitiesFromRelationship('deleted_by'));
 		
 		$this->assertTrue($entity->restore());
 		$this->assertFalse($entity->isDeleted());
 		$this->assertTrue(elgg_entity_exists($entity->guid));
 		$this->assertInstanceOf(\ElggEntity::class, get_entity($entity->guid));
+		$this->assertEmpty($entity->countEntitiesFromRelationship('deleted_by'));
 	}
 	
 	public function testRestoreWithoutRestorableCapability() {
@@ -817,11 +821,13 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($entity->isDeleted());
 		$this->assertTrue(elgg_entity_exists($entity->guid));
 		$this->assertNull(get_entity($entity->guid));
+		$this->assertEquals(1, $entity->countEntitiesFromRelationship('deleted_by'));
 		
 		$this->assertTrue($entity->restore());
 		$this->assertFalse($entity->isDeleted());
 		$this->assertTrue(elgg_entity_exists($entity->guid));
 		$this->assertInstanceOf(\ElggEntity::class, get_entity($entity->guid));
+		$this->assertEmpty($entity->countEntitiesFromRelationship('deleted_by'));
 	}
 	
 	public function testRecursivePersistentDelete() {
@@ -872,6 +878,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($entity->isDeleted());
 		$this->assertTrue(elgg_entity_exists($entity->guid));
 		$this->assertNull(get_entity($entity->guid));
+		$this->assertEquals(1, $entity->countEntitiesFromRelationship('deleted_by'));
 		
 		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
 		$this->assertNull(get_entity($sub_entity->guid));
@@ -882,6 +889,10 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertInstanceOf(\ElggEntity::class, $sub_entity_reloaded);
 		$this->assertEquals($sub_entity->guid, $sub_entity_reloaded->guid);
 		$this->assertTrue($sub_entity_reloaded->isDeleted());
+		$this->assertEquals(1, $sub_entity_reloaded->countEntitiesFromRelationship('deleted_by'));
+		elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($sub_entity_reloaded){
+			$this->assertEquals(1, $sub_entity_reloaded->countEntitiesFromRelationship('deleted_with'));
+		});
 	}
 	
 	public function testNonRecursiveNonPersistentDelete() {
@@ -920,6 +931,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($entity->isDeleted());
 		$this->assertTrue(elgg_entity_exists($entity->guid));
 		$this->assertNull(get_entity($entity->guid));
+		$this->assertEquals(1, $entity->countEntitiesFromRelationship('deleted_by'));
 		
 		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
 		$this->assertNull(get_entity($sub_entity->guid));
@@ -930,14 +942,23 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertInstanceOf(\ElggEntity::class, $sub_entity_reloaded);
 		$this->assertEquals($sub_entity->guid, $sub_entity_reloaded->guid);
 		$this->assertTrue($sub_entity_reloaded->isDeleted());
+		$this->assertEquals(1, $sub_entity_reloaded->countEntitiesFromRelationship('deleted_by'));
+		elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($sub_entity_reloaded){
+			$this->assertEquals(1, $sub_entity_reloaded->countEntitiesFromRelationship('deleted_with'));
+		});
 		
 		$this->assertTrue($entity->restore(true));
 		$this->assertFalse($entity->isDeleted());
 		$this->assertTrue(elgg_entity_exists($entity->guid));
 		$this->assertInstanceOf(\ElggEntity::class, get_entity($entity->guid));
+		$this->assertEmpty($entity->countEntitiesFromRelationship('deleted_by'));
 		
 		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
 		$this->assertInstanceOf(\ElggEntity::class, get_entity($sub_entity->guid));
+		$this->assertEmpty($sub_entity->countEntitiesFromRelationship('deleted_by'));
+		elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($sub_entity_reloaded){
+			$this->assertEmpty($sub_entity_reloaded->countEntitiesFromRelationship('deleted_with'));
+		});
 	}
 	
 	public function testNonRecursiveRestore() {
@@ -954,6 +975,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($entity->isDeleted());
 		$this->assertTrue(elgg_entity_exists($entity->guid));
 		$this->assertNull(get_entity($entity->guid));
+		$this->assertEquals(1, $entity->countEntitiesFromRelationship('deleted_by'));
 		
 		$this->assertTrue(elgg_entity_exists($sub_entity->guid));
 		$this->assertNull(get_entity($sub_entity->guid));
@@ -964,11 +986,16 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertInstanceOf(\ElggEntity::class, $sub_entity_reloaded);
 		$this->assertEquals($sub_entity->guid, $sub_entity_reloaded->guid);
 		$this->assertTrue($sub_entity_reloaded->isDeleted());
+		$this->assertEquals(1, $sub_entity_reloaded->countEntitiesFromRelationship('deleted_by'));
+		elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($sub_entity_reloaded){
+			$this->assertEquals(1, $sub_entity_reloaded->countEntitiesFromRelationship('deleted_with'));
+		});
 		
 		$this->assertTrue($entity->restore(false));
 		$this->assertFalse($entity->isDeleted());
 		$this->assertTrue(elgg_entity_exists($entity->guid));
 		$this->assertInstanceOf(\ElggEntity::class, get_entity($entity->guid));
+		$this->assertEmpty($entity->countEntitiesFromRelationship('deleted_by'));
 		
 		$sub_entity_reloaded = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($sub_entity) {
 			return get_entity($sub_entity->guid);
@@ -976,5 +1003,9 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$this->assertInstanceOf(\ElggEntity::class, $sub_entity_reloaded);
 		$this->assertEquals($sub_entity->guid, $sub_entity_reloaded->guid);
 		$this->assertTrue($sub_entity_reloaded->isDeleted());
+		$this->assertEquals(1, $sub_entity_reloaded->countEntitiesFromRelationship('deleted_by'));
+		elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() use ($sub_entity_reloaded){
+			$this->assertEquals(1, $sub_entity_reloaded->countEntitiesFromRelationship('deleted_with'));
+		});
 	}
 }
