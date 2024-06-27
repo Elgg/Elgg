@@ -1,3 +1,15 @@
+<a name="5.1.7"></a>
+### 5.1.7 (2024-06-27)
+
+#### Contributors
+
+* Jerôme Bakker (1)
+
+#### Bug fixes
+
+* **email:** use recipient language for email footer link [b5add14a0](https://github.com/Elgg/Elgg//commit/b5add14a02c6b362f8efcd7db8d8faf097c4e2eb)
+
+
 <a name="5.1.6"></a>
 ### 5.1.6 (2024-06-14)
 
