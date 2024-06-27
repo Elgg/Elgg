@@ -1,3 +1,15 @@
+<a name="6.0.0"></a>
+## 6.0.0 (2024-06-27)
+
+#### Contributors
+
+* Jerôme Bakker (9)
+
+#### Bug fixes
+
+* **core:** use correct relationship to mark recursive trashed entities [b8887bbd5](https://github.com/Elgg/Elgg//commit/b8887bbd58be7cd092141f232ed508225fca48ff)
+
+
 <a name="6.0.0-rc.1"></a>
 ### 6.0.0-rc.1 (2024-06-14)
 
