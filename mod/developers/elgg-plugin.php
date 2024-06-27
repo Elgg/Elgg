@@ -2,7 +2,7 @@
 
 return [
 	'plugin' => [
-		'name' => 'Elgg Developer Tools',
+		'name' => 'Developer Tools',
 	],
 	'settings' => [
 		'screen_log' => 0,
