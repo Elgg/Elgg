@@ -178,4 +178,6 @@ sau apasă mai jos pentru a vedea cererile de alăturare ale grupului:
 	'groups:usersettings:notifications:description' => 'Pentru a primii notificări atunci când se adaugă conținut nou pe un grup al cărui membru ești, găsește-l mai jos și selectează metoda(ele) de notificare pe care dorești să o(le) folosești.',
 	
 	// accessibility
+	'groups:aria:label:group_search' => "Caută grupuri",
+	'groups:aria:label:search_in_group' => "Caută în acest grup",
 );

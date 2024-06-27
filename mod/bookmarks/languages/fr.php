@@ -10,7 +10,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'item:object:bookmarks' => 'Signets',
+	'item:object:bookmarks' => 'Signet',
 	'collection:object:bookmarks' => 'Signets',
 	'collection:object:bookmarks:group' => 'Signets du groupe',
 	'collection:object:bookmarks:all' => "Tous les signets du site",

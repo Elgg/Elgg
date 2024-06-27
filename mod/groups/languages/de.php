@@ -182,4 +182,6 @@ oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt 
 	'groups:usersettings:notifications:description' => 'Um Benachrichtigungen zu erhalten, wenn zu einer Gruppe, in der Du Mitglied bist, neue Inhalte hinzugefügt werden, kannst Du individuell für jede Gruppe im Folgenden die Methode(n) festlegen, die verwendet werden soll(en).',
 	
 	// accessibility
+	'groups:aria:label:group_search' => "Suche nach Gruppen",
+	'groups:aria:label:search_in_group' => "In dieser Gruppe suchen",
 );

@@ -23,4 +23,5 @@ return array(
 	'groups:tool:activity' => 'Activer l\'activité du groupe',
 	'groups:tool:activity:description' => 'Affiche le flux d\'activité relatif au contenu du groupe.',
 	
+	'activity:more' => "Plus d'activités",
 );

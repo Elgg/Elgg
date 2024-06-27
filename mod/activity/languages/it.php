@@ -22,5 +22,4 @@ return array(
 	'collection:river:group' => "Attività del gruppo",
 	'groups:tool:activity' => 'Abilita attività del gruppo',
 	'groups:tool:activity:description' => 'Mostra un feed di attività sui contenuti relativi al gruppo.',
-	
 );

@@ -48,10 +48,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "あなたのつぶやきを投稿しました。",
-	'thewire:deleted' => "つぶやきを削除しまいした。",
 	'thewire:blank' => "申し訳ありません、入力欄が空欄なので投稿できません。",
 	'thewire:notsaved' => "申し訳ありません。このつぶやきを保存できませんでした",
-	'thewire:notdeleted' => "申し訳ありません、この投稿を削除できませんでした。",
 
 	/**
 	 * Notifications

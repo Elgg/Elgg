@@ -43,10 +43,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Il tuo messaggio è stato inviato.",
-	'thewire:deleted' => "Il tuo messaggio è stato eliminato.",
 	'thewire:blank' => "Devi scrivere qualcosa prima di poterlo inviare.",
 	'thewire:notsaved' => "Impossibile salvare questo messaggio.",
-	'thewire:notdeleted' => "Impossibile eliminare questo messaggio.",
 
 	/**
 	 * Notifications

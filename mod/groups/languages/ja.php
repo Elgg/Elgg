@@ -177,4 +177,6 @@ return array(
 	'groups:usersettings:notifications:description' => 'あなたの参加しているグループに新しいコンテンツが追加されたときの通知の受け取り方を、下から選択してください。（複数可）',
 	
 	// accessibility
+	'groups:aria:label:group_search' => "グループを検索",
+	'groups:aria:label:search_in_group' => "このグループ内を検索",
 );

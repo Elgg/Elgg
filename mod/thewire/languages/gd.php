@@ -48,10 +48,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Chaidh am brath agad a phostadh ris an uèir gu soirbheachail.",
-	'thewire:deleted' => "Chaidh am brath-uèir a sguabadh às gu soirbheachail.",
 	'thewire:blank' => "Tha sinn duilich ach feumaidh tu teacsa a chur a-steach mus urrainn dhuinn seo a phostadh.",
 	'thewire:notsaved' => "Tha sinn duilich. Cha b' urrainn dhuinn am brath-uèir seo a shàbhaladh.",
-	'thewire:notdeleted' => "Tha sinn duilich. Cha b' urrainn dhuinn am brath-uèir seo a sguabadh às.",
 
 	/**
 	 * Notifications

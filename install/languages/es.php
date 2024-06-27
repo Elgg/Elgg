@@ -103,7 +103,6 @@ return array(
 	'install:error:htaccess' => 'No se pudo crear el archivo .htaccess',
 	'install:error:settings' => 'No se pudo crear el archivo de configuración',
 	'install:error:databasesettings' => 'No se pudo conectar a la base de datos con la información provista',
-	'install:error:oldmysql2' => 'MySQL debe ser una versión 5.5.3 o superior. Su servidor se encuentra utilizando la versión %s.',
 	'install:error:nodatabase' => 'No se pudo acceder a la base de datos %s. Puede que no exista.',
 	'install:error:cannotloadtables' => 'No se pueden cargar las tablas de la base de datos',
 	'install:error:tables_exist' => 'Se encontraron tablas de Elgg preexistentes en la base de datos. Debe eliminarlas o reiniciar el instalador para intentar utilizarlas. Para reiniciar el instalador, quite \'?step=database\' de la URL en la barra de direcciones de su explorador y presione ENTER.',

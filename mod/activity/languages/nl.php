@@ -23,4 +23,5 @@ return array(
 	'groups:tool:activity' => 'Schakel groepsactiviteit in',
 	'groups:tool:activity:description' => 'Toon activiteiten gerelateerd aan content in deze groep.',
 	
+	'activity:more' => "Meer activiteiten",
 );

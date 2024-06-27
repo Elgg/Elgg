@@ -33,10 +33,7 @@ return array(
 	'site_notifications:success:delete' => 'Die Seiten-Benachrichtigungen wurden gelöscht.',
 	'site_notifications:success:mark_read' => 'Die Seiten-Benachrichtigungen wurden als gelesen markiert.',
 	
-	'site_notifications:cron:linked_cleanup:start' => 'Automatisches Löschen der Seiten-Benachrichtigungen ohne Verknüpfung mit einer Entität gestartet.',
 	'site_notifications:cron:linked_cleanup:end' => 'Automatisches Löschen von %s Seiten-Benachrichtigungen ohne Verknüpfung mit einer Entität abgeschlossen.',
-	'site_notifications:cron:unread_cleanup:start' => 'Automatisches Löschen der ungelesenen Seiten-Benachrichtigungen, die älter als %s Tage sind, gestartet.',
 	'site_notifications:cron:unread_cleanup:end' => 'Automatisches Löschen von ungelesenen Seiten-Benachrichtigungen, die älter als %s Tage waren, abgeschlossen.',
-	'site_notifications:cron:read_cleanup:start' => 'Automatisches Löschen der gelesenen Seiten-Benachrichtigungen, die älter als %s Tage sind, gestartet.',
 	'site_notifications:cron:read_cleanup:end' => 'Automatisches Löschen von gelesenen Seiten-Benachrichtigungen, die älter als %s Tage waren, abgeschlossen.',
 );

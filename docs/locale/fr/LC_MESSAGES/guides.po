@@ -4,7 +4,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Jerôme Bakker, 2023
+# Jerôme Bakker, 2024
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024
 # 
 #, fuzzy
@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-21 10:41+0100\n"
-"PO-Revision-Date: 2023-04-05 07:42+0000\n"
+"PO-Revision-Date: 2024-04-15 12:07+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -2130,7 +2130,7 @@ msgstr ""
 "Le format des informations d’identification transmises au gestionnaire peut "
 "varier en fonction de la demande d’origine. Par exemple, une connexion "
 "classique via le formulaire de connexion créera un tableau indexé, avec les "
-"clefs ``username`` et ``password``. Si une demande a été faite par exemple "
+"clefs ``username`` et ``password``. Si une requête a été faite par exemple "
 "via XML-RPC, les informations d’identification seront définies dans l’entête"
 " HTTP, de sorte que dans ce cas rien ne sera transmis au gestionnaire "
 "d’authentification, et que le gestionnaire devra effectuer ses propres "
@@ -10268,7 +10268,7 @@ msgstr ""
 "Créez maintenant la fonction qui sera appelée par l'événement de "
 "vérification des autorisations. Dans cette fonction, nous déterminons si "
 "l'entité (dans les paramètres) a un accès en écriture. Puisqu'il est "
-"important de garantir la sécurité d'Elgg, l'accès en écriture ne doit être "
+"important de garantir la sécurité de Elgg, l'accès en écriture ne doit être "
 "accordé qu'après avoir vérifié diverses situations, notamment le contexte de"
 " la page, l'utilisateur connecté, etc. Notez que cette fonction peut "
 "renvoyer 3 valeurs : true si l'entité a un accès en écriture, false si "
@@ -14953,7 +14953,7 @@ msgid ""
 msgstr ""
 "Vous pouvez souhaiter contrôler l’accès à certaines des fonctions que vous "
 "exposez. Peut-être que vous exposez des fonctions afin d’intégrer Elgg avec "
-"une autre plate-forme opensource sur le même serveur. Dans ce cas, vous "
+"une autre plateforme open source sur le même serveur. Dans ce cas, vous "
 "souhaitez seulement permettre à cette autre application d’accéder à ces "
 "méthodes. Une autre possibilité est que vous souhaitez limiter ce à quoi des"
 " développeurs externes ont accès via votre API. Ou peut-être voulez-vous "

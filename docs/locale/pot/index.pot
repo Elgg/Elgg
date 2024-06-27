@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-13 14:04+0200\n"
+"POT-Creation-Date: 2024-06-27 10:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,7 +57,7 @@ msgid "**Security** is ensured by built-in anti CSRF validation, strict XSS filt
 msgstr ""
 
 #: ../../index.rst:17
-msgid "**Client-side API** powered by asynchronous JavaScript modules via RequireJS and a build-in Ajax service for easy communication with the server"
+msgid "**Client-side API** powered by asynchronous ES modules and a built-in Ajax service for easy communication with the server"
 msgstr ""
 
 #: ../../index.rst:18
@@ -113,7 +113,7 @@ msgid "Symfony2 HTTP Foundation handles requests and responses"
 msgstr ""
 
 #: ../../index.rst:33
-msgid "RequireJS handles AMD"
+msgid "modular javascript with ECMAScript modules"
 msgstr ""
 
 #: ../../index.rst:34

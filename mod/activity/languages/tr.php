@@ -21,5 +21,4 @@ Arkadaşlar aktivitesi',
 	
 	'collection:river' => "Aktivite",
 	'collection:river:group' => "Grup ativitesi",
-	
 );
