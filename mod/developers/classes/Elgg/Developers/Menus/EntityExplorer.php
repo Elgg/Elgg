@@ -55,6 +55,10 @@ class EntityExplorer {
 			'priority' => 9999,
 		]);
 		
+		// fix restore action classes
+		$result->get('restore')?->setLinkClass(['elgg-button', 'elgg-button-cancel']);
+		$result->get('restore_and_move')?->setLinkClass(['elgg-button', 'elgg-button-cancel']);
+		
 		return $result;
 	}
 }

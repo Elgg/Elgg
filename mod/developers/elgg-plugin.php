@@ -35,6 +35,7 @@ return [
 			],
 			'menu:entity_explorer' => [
 				'Elgg\Developers\Menus\EntityExplorer::register' => [],
+				'Elgg\Menus\EntityTrash::registerRestore' => ['priority' => 400],
 			],
 		],
 	],
