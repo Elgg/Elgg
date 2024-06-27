@@ -35,19 +35,17 @@ return array(
 	'developers:show_strings:key_only' => "Afficher uniquement la clef de traduction",
 	'developers:label:show_strings' => "Afficher les chaînes de traduction brutes",
 	'developers:help:show_strings' => "Affiche les chaînes de traduction utilisées par elgg_echo().",
-	'developers:label:show_modules' => "Montrer les modules AMD chargés dans la console",
-	'developers:help:show_modules' => "Envoie les modules chargés et les valeurs dans votre console JavaScript.",
 	'developers:label:wrap_views' => "Envelopper les Vues",
 	'developers:help:wrap_views' => "Ceci enveloppe presque toutes les vues avec des commentaires HTML. Pratique pour identifier la vue responsable d'un bloc HTML particulier.
 									Ceci peut casser les vues non HTML dans le type de vue par défaut.",
 	'developers:label:log_events' => "Journaliser les événements",
 	'developers:help:log_events' => "Écrit les événements dans le journal. Attention : il y en a beaucoup pour chaque page.",
 	'developers:label:block_email' => "Bloquer tous les e-mails sortants",
-	'developers:help:block_email' => "Vous pouvez bloquer les e-mails sortants vers les simples membres, ou pour tous les utilisateurs",
+	'developers:help:block_email' => "Vous pouvez bloquer les e-mails expédiés aux utilisateurs standards, ou pour tous les utilisateurs",
 	'developers:label:forward_email' => "Faire suivre tous les e-mails sortants vers une seule adresse e-mail",
 	'developers:help:forward_email' => "Tous les e-mails sortants seront envoyés sur l'adresse e-mail configurée",
 	'developers:label:enable_error_log' => "Activer le journal des erreurs",
-	'developers:help:enable_error_log' => "Maintenir un journal séparé des erreurs et des messages enregistrés via error_log() sur la base de votre configuration de niveau de journalisation. Le journal peut être affiché via l'interface admin.",
+	'developers:help:enable_error_log' => "Maintient un journal séparé des erreurs et des messages enregistrés via error_log() sur la base de votre configuration du niveau de journalisation. Le journal peut être affiché via l'interface admin.",
 
 	'developers:block_email:forward' => 'Faire suivre tous les e-mails',
 	'developers:block_email:users' => 'Seulement les membres',
@@ -62,7 +60,6 @@ return array(
 	// entity explorer
 	'developers:entity_explorer:help' => 'Affiche des informations sur les entités et effectue des actions basiques dessus.',
 	'developers:entity_explorer:guid:label' => 'Saisissez le GUID de l\'entité à inspecter',
-	'developers:entity_explorer:info' => 'Informations sur l\'entité',
 	'developers:entity_explorer:info:attributes' => 'Attributs',
 	'developers:entity_explorer:info:metadata' => 'Métadonnées',
 	'developers:entity_explorer:info:relationships' => 'Relations',
@@ -73,7 +70,6 @@ return array(
 	'developers:entity_explorer:view_entity' => 'Voir cette entité sur le site',
 	
 	// inspection
-	'developers:inspect:help' => 'Inspecter la configuration système du framework Elgg',
 	'developers:inspect:actions' => 'Actions',
 	'developers:inspect:events' => 'Événements',
 	'developers:inspect:menus' => 'Menus',
@@ -82,7 +78,7 @@ return array(
 	'developers:inspect:simplecache' => 'Cache simple',
 	'developers:inspect:routes' => 'Routes',
 	'developers:inspect:views' => 'Vues',
-	'developers:inspect:views:all_filtered' => "<b>Note !</b> Toutes les entrées/sorties des vues sont filtrées par ces hooks de plugin :",
+	'developers:inspect:views:all_filtered' => "<b>Note !</b> Toutes les entrées/sorties des vues sont filtrées par ces Événements :",
 	'developers:inspect:views:input_filtered' => "(entrée filtrée par le gestionnaire d'événement : %s)",
 	'developers:inspect:views:filtered' => "(filtré par le gestionnaire d'événement : %s)",
 	'developers:inspect:widgets' => 'Widgets',
@@ -108,8 +104,6 @@ return array(
 	'developers:log_queries' => "Requêtes sur la base de données : %s",
 	'developers:boot_cache_rebuilt' => "Le cache de démarrage a été reconstruit pour cette requête",
 	'developers:elapsed_time' => "Durée écoulée (s)",
-
-	'developers:amd' => 'AMD',
 
 	'admin:develop_tools:error_log' => 'Journal des erreurs',
 	'developers:logs:empty' => 'Le journal des erreurs est vide',

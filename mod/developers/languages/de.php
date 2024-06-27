@@ -33,8 +33,6 @@ return array(
 	'developers:show_strings:key_only' => "Nur native Sprach-Strings anzeigen",
 	'developers:label:show_strings' => "Native Sprach-Strings anzeigen",
 	'developers:help:show_strings' => "Diese Einstellung legt fest, ob die von elgg_echo() verwendeten Sprach-Strings angezeigt werden.",
-	'developers:label:show_modules' => "Geladene AMD-Module in der JavaScript-Konsole anzeigen",
-	'developers:help:show_modules' => "Zeigt Informationen zu den auf der aktuellen Seite geladenen AMD-Modulen in der JavaScript-Konsole des Browsers an.",
 	'developers:label:wrap_views' => "Views einkapseln",
 	'developers:label:log_events' => "Events protokollieren",
 	'developers:help:log_events' => "Einträge für Events ins Log schreiben. Warnung: es gibt sehr viele davon bei jedem Seitenaufruf.",
@@ -58,7 +56,6 @@ return array(
 	// entity explorer
 	'developers:entity_explorer:help' => 'Detailinformationen einer Entität anzeigen und (optional) die Anwendung von Datenbank-Operationen auf den Datenbankeintrag der Entität.',
 	'developers:entity_explorer:guid:label' => 'Gebe die GUID der Entität ein, für die Detailinformationen angezeigt werden sollen:',
-	'developers:entity_explorer:info' => 'Detailinformationen',
 	'developers:entity_explorer:info:attributes' => 'Attribute',
 	'developers:entity_explorer:info:metadata' => 'Metadaten',
 	'developers:entity_explorer:info:relationships' => 'Beziehungen',
@@ -69,7 +66,6 @@ return array(
 	'developers:entity_explorer:view_entity' => 'Diese Entität auf der Seite anzeigen',
 	
 	// inspection
-	'developers:inspect:help' => 'Konfiguration des Elgg-Frameworks prüfen.',
 	'developers:inspect:actions' => 'Actions',
 	'developers:inspect:events' => 'Events',
 	'developers:inspect:menus' => 'Menüs',
@@ -103,8 +99,6 @@ return array(
 	'developers:log_queries' => "Datenbankabfragen: %s",
 	'developers:boot_cache_rebuilt' => "Der Boot-Cache wurde für diese Abfrage neu erzeugt.",
 	'developers:elapsed_time' => "Benötigte Zeit (s)",
-
-	'developers:amd' => 'AMD',
 
 	'admin:develop_tools:error_log' => 'Error-Log',
 	'developers:logs:empty' => 'Das Error-Log hat noch keine Einträge.',

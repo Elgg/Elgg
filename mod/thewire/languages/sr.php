@@ -42,10 +42,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Ваша порука је успешно објављена на жици.",
-	'thewire:deleted' => "Објава је успешно обрисана",
 	'thewire:blank' => "Извините али морате да унесете текст пре него што објавите.",
 	'thewire:notsaved' => "Ивините. Нисмо успли да сачувамо ову објаву.",
-	'thewire:notdeleted' => "Извините. Нисмо успели да обришемо ову објаву.",
 
 	/**
 	 * Notifications

@@ -21,5 +21,4 @@ return array(
 	'collection:river' => "Gnìomhachd",
 	'collection:river:group' => "Gnìomhachd a' bhuidhinn",
 	'groups:tool:activity' => 'Cuir an comas inbhir gnìomhachd a\' bhuidhinn',
-	
 );

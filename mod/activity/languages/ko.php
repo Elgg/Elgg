@@ -21,5 +21,4 @@ return array(
 	'collection:river' => "활동",
 	'collection:river:group' => "모둠 활동",
 	'groups:tool:activity' => '모둠 활동 활성화',
-	
 );

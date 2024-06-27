@@ -51,10 +51,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Опубликовано в ленте.",
-	'thewire:deleted' => "Публикация удалена.",
 	'thewire:blank' => "Введите текст перед публикацией.",
 	'thewire:notsaved' => "Не удается сохранить публикацию в ленте.",
-	'thewire:notdeleted' => "Не удается удалить публикацию.",
 
 	/**
 	 * Notifications

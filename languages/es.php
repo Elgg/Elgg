@@ -20,7 +20,6 @@ return array(
 
 	'login' => "Iniciar sesi&oacute;n",
 	'loginok' => "Ha iniciado sesi&oacute;n",
-	'login:continue' => "Inicie sesi&oacute;n para continuar",
 	'login:empty' => "El nombre de usuario y contrase&ntilde;a son requeridos",
 	'login:baduser' => "No se pudo cargar su cuenta de usuario",
 
@@ -52,13 +51,7 @@ return array(
 
 	'PluginException:CannotStart' => '%s (guid: %s) no puede iniciarse. Motivo: %s',
 	'PluginException:InvalidID' => "%s no es un ID de plugin v&aacute;lido",
-	'PluginException:PluginMustBeActive' => "El plugin '%s' debe estar activado",
-	'PluginException:PluginMustBeAfter' => "Debe estar después del plugin '%s'.",
-	'PluginException:PluginMustBeBefore' => "Debe estar antes del plugin '%s'.",
 	'ElggPlugin:MissingID' => 'No se encuentra el ID del plugin (guid %s)',
-	'ElggPlugin:NoPluginComposer' => 'Falta el archivo composer.json para el plugin ID %s (guid %s)',
-	'ElggPlugin:StartFound' => 'El plugin ID %s incluye un archivo start.php. Esto puede indicar un plugin obsoleto.',
-	'ElggPlugin:IdMismatch' => 'Debe cambiarse el nombre de la carpeta del plugin a "%s" para que coincida con el nombre del proyecto definido en el archivo composer.json del plugin.',
 	'ElggPlugin:Error' => 'Error del plugin',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'No puede incluirse %s para el plugin %s (guid: %s) en %s. Verifique los permisos!',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Se lanzó la excepción incluyendo %s para el complemento %s (guid: %s) en %s. ',
@@ -87,10 +80,10 @@ return array(
 	'EntityNotFoundException' => 'El contenido al que intentas acceder ha sido eliminado o no tienes permiso para verlo.',
 	'EntityPermissionsException' => 'No tienes permisos suficientes para esta acción.',
 	'GatekeeperException' => 'No tienes permisos para ver la pagina a la que intentas acceder',
+	'BadRequestException' => 'Petición incorrecta',
 	'ValidationException' => 'Los datos enviados no cumplen los requerimientos, por favor comprueba los datos.',
 	'LogicException:InterfaceNotImplemented' => '%s debe de ser implementado %s',
 
-	'viewfailure' => 'Ocurri&oacute; un error interno en la vista %s',
 	'changebookmark' => 'Por favor modifique su &iacute;ndice para esta vista',
 	'error:missing_data' => 'Faltan datos en tu solicitud',
 	'save:fail' => 'Hubo un error guardando tus datos',
@@ -354,9 +347,11 @@ return array(
  */
 	'menu:page:header:administer' => 'Administrar',
 	'menu:page:header:configure' => 'Configurar',
+	'menu:page:header:utilities' => 'Utilidades',
 	'menu:page:header:develop' => 'Desarrollar',
 	'menu:page:header:information' => 'Información',
 	'menu:page:header:default' => 'Otro',
+	'menu:page:header:plugin_settings' => 'Configuraci&oacute;n del plugin',
 
 	'admin:view_site' => 'Ver sitio',
 	'admin:loggedin' => 'Sesi&oacute;n iniciada como %s',
@@ -529,6 +524,8 @@ return array(
 	'admin:security:settings:notify_user_ban:help' => 'Esto enviara una notificación al usuario cuya cuenta ha sido suspendida/habilitada',
 	
 	'admin:security:settings:protect_upgrade' => 'Proteger upgrade.php',
+	'admin:security:security_txt:contact' => "Contacto",
+	'admin:security:security_txt:language' => "Su lenguaje",
 	
 	'user:notification:unban:subject' => 'Tu cuenta en %s ya no esta suspendida',
 
@@ -1030,11 +1027,14 @@ return array(
 	'admin:legend:system' => 'Sistema',
 	'admin:legend:caching' => 'Caché',
 	'admin:legend:content' => 'Contenido',
+	'admin:legend:comments' => 'Comentarios',
 	'admin:legend:content_access' => 'Acceso del Contenido',
 	'admin:legend:site_access' => 'Acceso del Sitio',
 	'admin:legend:debug' => 'Depuración y registro',
 	'config:i18n:who_can_change_language:admin_only' => "Solo Administradores",
 	'config:remove_branding:label' => "Eliminar marca de Elgg",
+	'config:content:mentions_display_format:username' => "Nombre de Usuario",
+	'config:content:mentions_display_format:display_name' => "Mi nombre para mostrar",
 	'config:email' => "Correo electr&oacute;nico",
 
 	'upgrading' => 'Actualizando..',
@@ -1102,8 +1102,6 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 
 	'generic_comments:add' => "Comentar",
 	'generic_comments:edit' => "Editar comentario",
-	'generic_comments:post' => "Publicar un comentario",
-	'generic_comments:text' => "Comentar",
 	'generic_comments:latest' => "&uacute;ltimos comentarios",
 	'generic_comment:posted' => "Se ha publicado su comentario",
 	'generic_comment:updated' => "El comentario fué cambiado éxitosamente.",
@@ -1112,9 +1110,7 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	'generic_comment:notfound' => "Lo sentimos. No hemos encontrado el comentario especificado.",
 	'generic_comment:failure' => "Un error no especificado ocurrió al guardar el comentario.",
 	'generic_comment:none' => 'Sin comentarios',
-	'generic_comment:title' => 'Comentario de %s',
 	'generic_comment:on' => '%s on %s',
-	'generic_comments:latest:posted' => 'Publicó un',
 
 /**
  * Entities
@@ -1128,6 +1124,8 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	'entity:delete:permission_denied' => 'No tiene permisos para borrar este elemento',
 	'entity:delete:success' => '%s se ha borrado.',
 	'entity:delete:fail' => '%s no se ha podido borrar.',
+
+	'entity:restore:item' => 'Elemento',
 
 /**
  * Annotations
@@ -1152,6 +1150,10 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
  */
 	
 /**
+ * Trash
+ */
+
+/**
  * Miscellaneous
  */
 	'elgg:powered' => "Creado con Elgg",
@@ -1160,6 +1162,14 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 /**
  * Accessibility
  */
+	'menu:comments:header' => "Comentarios",
+	'menu:filter:header' => "Filtrar",
+	'menu:page:header' => "P&aacute;ginas",
+	'menu:river:header' => "River",
+	'menu:site:header' => "Sitio",
+	'menu:social:header' => "Social",
+	'menu:title:header' => "T&iacute;tulo",
+	'menu:topbar:header' => "Barra principal",
 
 /**
  * Cli commands

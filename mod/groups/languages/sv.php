@@ -158,4 +158,6 @@ return array(
 	// Notification settings
 	
 	// accessibility
+	'groups:aria:label:group_search' => "Sök efter grupper",
+	'groups:aria:label:search_in_group' => "Sök i den här gruppen",
 );

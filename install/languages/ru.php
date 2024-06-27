@@ -137,7 +137,6 @@ return array(
 	'install:error:settings_mismatch' => 'Значение файла настроек для "%s" не соответствует заданному параметру $params. Должно быть: "%s" В действительности: "%s"',
 	'install:error:databasesettings' => 'Невозможно подключиться к базе данных с данными настройками.',
 	'install:error:database_prefix' => 'Недопустимые символы в префиксе базы данных',
-	'install:error:oldmysql2' => 'MySQL должен быть версии 5.5.3 или выше. Ваш сервер использует %s.',
 	'install:error:mysql_version' => 'MySQL должен быть версии %s или выше. Ваш сервер использует %s.',
 	'install:error:database_version' => 'База данных должна быть версии %s или выше. Ваш сервер использует %s.',
 	'install:error:nodatabase' => 'Невозможно использовать базу данных %s. Она может не существовать.',

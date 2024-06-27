@@ -135,4 +135,5 @@ return array(
 	// Notification settings
 	
 	// accessibility
+	'groups:aria:label:search_in_group' => "Αναζήτηση σ' αυτή την ομάδα",
 );

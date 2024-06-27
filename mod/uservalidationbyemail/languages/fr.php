@@ -10,7 +10,6 @@ return array(
 	'email:validate:body' => "Avant de pouvoir commencer à utiliser %s, vous devez confirmer qu'il s'agit bien de votre adresse e-mail.
 
 Veuillez vérifier votre adresse e-mail en cliquant sur ce lien :
-
 %s
 
 Si vous ne pouvez pas cliquer sur le lien, copiez et collez-le manuellement dans votre navigateur.",

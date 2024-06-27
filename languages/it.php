@@ -77,7 +77,6 @@ return array(
 	'GatekeeperException' => 'Non disponi delle autorizzazioni per visualizzare la pagina a cui stai tentando di accedere',
 	'BadRequestException' => 'Richiesta non valida',
 
-	'viewfailure' => 'Si è verificato un errore interno nella vista %s',
 	'changebookmark' => 'Per favore cambia il segnalibro di questa pagina.',
 	'error:missing_data' => 'Ci sono dei dati mancanti nella tua richiesta',
 	'save:fail' => 'Si è verificato un problema durante il salvataggio dei tuoi dati',
@@ -104,6 +103,20 @@ return array(
 /**
  * Table columns
  */
+	'table_columns:fromView:admin' => 'Amministrazione',
+	'table_columns:fromView:banned' => 'Banned',
+	'table_columns:fromView:entity_menu' => 'Menu',
+	'table_columns:fromView:excerpt' => 'Descrizione',
+	'table_columns:fromView:item' => 'Elemento',
+	'table_columns:fromView:language' => 'Lingua',
+	'table_columns:fromView:owner' => 'Responsabile',
+	'table_columns:fromView:unvalidated_menu' => 'Menu',
+	'table_columns:fromView:user' => 'Utente',
+
+	'table_columns:fromProperty:description' => 'Descrizione',
+	'table_columns:fromProperty:email' => 'Email',
+	'table_columns:fromProperty:name' => 'Nome',
+	'table_columns:fromProperty:username' => 'Nome utente',
 
 /**
  * User details
@@ -311,8 +324,10 @@ return array(
  */
 	'menu:page:header:administer' => 'Amministrazione',
 	'menu:page:header:configure' => 'Configurazione',
+	'menu:page:header:utilities' => 'Utilità',
 	'menu:page:header:develop' => 'Sviluppo',
 	'menu:page:header:default' => 'Altro',
+	'menu:page:header:plugin_settings' => 'Impostazioni plugin',
 
 	'admin:view_site' => 'Visualizza il sito',
 	'admin:loggedin' => 'Sei l\'utente %s',
@@ -335,6 +350,7 @@ Consente a Elgg di saltare la connessione al database quando servono file JavaSc
 	
 	'admin:statistics' => 'Statistiche',
 	'admin:server' => 'Server',
+	'admin:cron:date' => 'Date and time',
 	'admin:cron:msg' => 'Messaggio',
 	'admin:cron:started' => 'Cron job per "%s" avviati alle %s',
 	'admin:cron:started:actual' => 'Intervallo cron "%s" ha iniziato l\'elaborazione alle %s',
@@ -474,6 +490,8 @@ Consente a Elgg di saltare la connessione al database quando servono file JavaSc
 	
 	'admin:security:settings:min_password_length' => "Lunghezza minima della password",
 	'admin:security:settings:min_password_special:help' => "Configura il numero minimo di caratteri speciali (!@$%^&*()<>,.?/[]{}-=_+) che devono essere inclusi in una password. Usa 0 per non includere, vuoto per nessun requisito.",
+	'admin:security:security_txt:contact' => "Contatti",
+	'admin:security:security_txt:language' => "Lingua",
 	
 	'admin:site:secret:regenerated' => "La chiave del tuo sito è stato rigenerata",
 	
@@ -492,6 +510,8 @@ Per andare sul sito, clicca qui:
  */
 	'plugins:settings:save:ok' => "Impostazioni per il plugin %s salvate con successo.",
 	'plugins:settings:remove:fail' => "Si è verificato un errore durante la rimozione di tutte le impostazioni per il plug-in %s",
+	'admin:plugins:activate' => 'Attiva',
+	'admin:plugins:deactivate' => 'Disattiva',
 	'admin:plugins:label:id' => "ID",
 	'admin:plugins:label:name' => "Nome",
 	'admin:plugins:label:authors' => "Autori",
@@ -551,7 +571,6 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 	
 	'admin:server:requirements:php_extension' => "Estensione PHP: %s",
 	'admin:server:requirements:php_extension:required' => "Questa estensione PHP è necessaria per il corretto funzionamento di Elgg",
-	'admin:server:requirements:database:server:required' => "Elgg richiede MySQL v5.5.3, o superiore, per il suo database",
 	'admin:server:requirements:database:client:required' => "Elgg richiede pdo_mysql per connettersi al server del database",
 	
 	'admin:user:label:search' => "Trova utenti:",
@@ -602,6 +621,7 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 
 	'usersettings:statistics' => "Statistiche",
 	'usersettings:statistics:opt:linktext' => "Statistiche del profilo utente",
+	'usersettings:statistics:login_history:date' => "Data",
 
 	'usersettings:user' => "Impostazioni di %s",
 	'usersettings:user:opt:linktext' => "Cambia le tue impostazioni",
@@ -957,6 +977,7 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 	'admin:legend:system' => 'Sistema',
 	'admin:legend:caching' => 'Caching',
 	'admin:legend:content' => 'Contenuti',
+	'admin:legend:comments' => 'Commenti',
 	'admin:legend:content_access' => 'Accesso ai contenuti',
 	'admin:legend:site_access' => 'Accesso al sito',
 	'admin:legend:debug' => 'Debug e Log',
@@ -964,6 +985,8 @@ Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o 
 	'config:remove_branding:label' => "Rimuovi il marchio Elgg",
 	'config:content:pagination_behaviour:ajax-append' => "Aggiungi i nuovi dati dell'elenco prima, o dopo, l'elenco",
 	'config:content:pagination_behaviour:ajax-append-auto' => "Aggiungi i nuovi dati dell'elenco prima o dopo l'elenco (automaticamente se scorri nella vista)",
+	'config:content:mentions_display_format:username' => "Nome utente",
+	'config:content:mentions_display_format:display_name' => "Nome visualizzato",
 	'config:email' => "Email",
 	'config:email_html_part:help' => "La posta in uscita verrà racchiusa in un modello HTML",
 	'config:email_html_part_images:base64' => "Codifica Base64",
@@ -1043,8 +1066,6 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
 
 	'generic_comments:add' => "Aggiungi un commento",
 	'generic_comments:edit' => "Modifica commento",
-	'generic_comments:post' => "Invia commento",
-	'generic_comments:text' => "Commento",
 	'generic_comments:latest' => "Ultimi commenti",
 	'generic_comment:posted' => "Il tuo commento è stato inviato.",
 	'generic_comment:updated' => "Il commento è stato aggiornato.",
@@ -1053,9 +1074,7 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
 	'generic_comment:notfound' => "Spiacenti, impossibile trovare il commento specificato.",
 	'generic_comment:failure' => "Errore inatteso durante il salvataggio del commento.",
 	'generic_comment:none' => 'Nessun commento',
-	'generic_comment:title' => 'Commento di %s',
 	'generic_comment:on' => '%s su %s',
-	'generic_comments:latest:posted' => 'ha inviato un',
 
 /**
  * Entities
@@ -1069,6 +1088,8 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
 	'entity:delete:permission_denied' => 'Permessi insufficienti per visualizzare questo elemento.',
 	'entity:delete:success' => 'L\'elemento %s è stato eliminato',
 	'entity:delete:fail' => 'L\'elemento %s non può essere eliminato',
+
+	'entity:restore:item' => 'Elemento',
 	
 	'entity:subscribe' => "Sottoscrivi",
 	'entity:subscribe:fail' => "Si è verificato un errore durante l'iscrizione a %s",
@@ -1102,6 +1123,10 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
  */
 	
 /**
+ * Trash
+ */
+
+/**
  * Miscellaneous
  */
 	'elgg:powered' => "Generato da Elgg",
@@ -1110,6 +1135,14 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
 /**
  * Accessibility
  */
+	'menu:comments:header' => "Commenti",
+	'menu:filter:header' => "Filtra",
+	'menu:page:header' => "Pagine",
+	'menu:river:header' => "Attività",
+	'menu:site:header' => "Sito",
+	'menu:social:header' => "Social",
+	'menu:title:header' => "Titolo",
+	'menu:topbar:header' => "Barra superiore",
 
 /**
  * Cli commands

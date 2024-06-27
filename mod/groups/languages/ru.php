@@ -51,6 +51,7 @@ return array(
 	'groups:content_access_mode:unrestricted' => "Не ограничено - Доступ зависит от настроек доступа контента",
 	'groups:content_access_mode:membersonly' => "Только участникам - Не участники группы не смогут получить доступ к контенту группы",
 	'groups:owner' => "Основатель",
+	'groups:owner:placeholder' => "Поиск участника группы",
 	'groups:owner:warning' => "Внимание: если вы измените это значение, вы больше не будете основателем группы.",
 	'groups:widget:num_display' => 'Число отображаемых групп',
 	'widgets:a_users_groups:name' => 'Членство',

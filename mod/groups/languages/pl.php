@@ -138,4 +138,5 @@ return array(
 	// Notification settings
 	
 	// accessibility
+	'groups:aria:label:search_in_group' => "Szukaj w tej grupie",
 );

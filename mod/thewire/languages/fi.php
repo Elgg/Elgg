@@ -42,10 +42,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Tila päivitetty.",
-	'thewire:deleted' => "Tilapäivitys poistettu.",
 	'thewire:blank' => "Lisää jotakin sisältöä ennen tallennusta.",
 	'thewire:notsaved' => "Tilan tallentaminen epäonnistui.",
-	'thewire:notdeleted' => "Tilapäivituksen poistaminen epäonnistui.",
 
 	/**
 	 * Notifications

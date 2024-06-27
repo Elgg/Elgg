@@ -51,10 +51,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Votre message a bien été publié sur le Fil.",
-	'thewire:deleted' => "Votre message a bien été supprimé du Fil.",
 	'thewire:blank' => "Désolé, vous devez d'abord écrire un message avant de pouvoir le publier.",
 	'thewire:notsaved' => "Désolé. Impossible d'enregistrer ce message du Fil.",
-	'thewire:notdeleted' => "Désolé, ce message du Fil n'a pas pu être supprimé.",
 
 	/**
 	 * Notifications

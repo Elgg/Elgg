@@ -19,5 +19,4 @@ return array(
 	
 	'collection:river' => "Atividade",
 	'collection:river:group' => "Atividade do grupo",
-	
 );

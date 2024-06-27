@@ -57,7 +57,7 @@ Voir le sujet de discussion et répondre :
 
 %s
 
-Voir la discussion et répondre :
+Voir la discussion et commenter :
 %s',
 	
 	'notification:mentions:object:discussion:subject' => '%s vous a mentionné dans une discussion',

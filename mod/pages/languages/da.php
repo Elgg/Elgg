@@ -23,6 +23,7 @@ return array(
 	'groups:tool:pages' => 'Aktiver gruppe sider',
 
 	'pages:history' => "Sidehistorik",
+	'pages:revision' => "Revision",
 
 	'pages:notify:summary' => 'Ny side kaldt %s',
 	'pages:notify:subject' => "En ny side: %s",
@@ -40,6 +41,7 @@ return array(
 
 	'pages:title' => 'Side titel',
 	'pages:description' => 'Side indhold',
+	'pages:tags' => 'Tags',
 
 	/**
 	 * Status and error messages
