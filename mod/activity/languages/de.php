@@ -21,5 +21,4 @@ return array(
 	'collection:river' => "Aktivitäten",
 	'collection:river:group' => "Gruppen-Aktivitäten",
 	'groups:tool:activity' => 'Anzeige von "Letzte Aktivitäten der Gruppe" aktivieren',
-	
 );

@@ -10,20 +10,20 @@ class Widgets {
 	/**
 	 * Set the title URL for the bookmarks widgets
 	 *
-	 * @param \Elgg\Event $event 'entity:url', 'object'
+	 * @param \Elgg\Event $event 'entity:url', 'object:widget'
 	 *
-	 * @return void|string
+	 * @return null|string
 	 */
-	public static function widgetURL(\Elgg\Event $event) {
+	public static function widgetURL(\Elgg\Event $event): ?string {
 		$return_value = $event->getValue();
 		if (!empty($return_value)) {
 			// someone already set an url
-			return;
+			return null;
 		}
 		
 		$widget = $event->getEntityParam();
 		if (!$widget instanceof \ElggWidget || $widget->handler !== 'bookmarks') {
-			return;
+			return null;
 		}
 		
 		$owner = $widget->getOwnerEntity();
@@ -36,5 +36,7 @@ class Widgets {
 				'username' => $owner->username,
 			]);
 		}
+		
+		return elgg_generate_url('collection:object:bookmarks:all');
 	}
 }

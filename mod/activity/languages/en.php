@@ -23,4 +23,5 @@ return array(
 	'groups:tool:activity' => 'Enable group activity',
 	'groups:tool:activity:description' => 'Show an activity feed about group related content.',
 	
+	'activity:more' => "More activity",
 );

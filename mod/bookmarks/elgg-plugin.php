@@ -98,7 +98,7 @@ return [
 			],
 		],
 		'entity:url' => [
-			'object' => [
+			'object:widget' => [
 				'Elgg\Bookmarks\Widgets::widgetURL' => [],
 			],
 		],

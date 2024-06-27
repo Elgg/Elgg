@@ -21,19 +21,6 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	use EventTesting;
 	use MessageTesting;
 
-	static $_instance;
-	static $_settings;
-
-	public function __construct($name = null, array $data = [], $dataName = '') {
-		parent::__construct($name, $data, $dataName);
-
-		self::$_instance = $this;
-	}
-
-	public function __destruct() {
-		self::$_instance = null;
-	}
-
 	/**
 	 * Build a new testing application
 	 *

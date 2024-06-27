@@ -33,10 +33,7 @@ return array(
 	'site_notifications:success:delete' => 'Notifications supprimées',
 	'site_notifications:success:mark_read' => 'Notifications marquées comme lues',
 	
-	'site_notifications:cron:linked_cleanup:start' => 'Site Notifications est en train de nettoyer les notifications sans entité liée',
 	'site_notifications:cron:linked_cleanup:end' => 'Site Notifications a nettoyé %s notifications sans entité liée',
-	'site_notifications:cron:unread_cleanup:start' => 'Site Notifications est en train de nettoyer les notifications non lues de plus de %s jours',
 	'site_notifications:cron:unread_cleanup:end' => 'Site Notifications a nettoyé %s notifications non lues',
-	'site_notifications:cron:read_cleanup:start' => 'Site Notifications est en train de nettoyer les notifications lues de plus de %s jours',
 	'site_notifications:cron:read_cleanup:end' => 'Site Notifications a nettoyé %s notifications lues',
 );

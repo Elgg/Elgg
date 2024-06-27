@@ -4,7 +4,7 @@
  */
 
 $widget = elgg_extract('entity', $vars);
-if (!$widget instanceof ElggWidget) {
+if (!$widget instanceof \ElggWidget) {
 	return;
 }
 
@@ -16,5 +16,5 @@ echo elgg_list_entities([
 	'full_view' => false,
 	'pagination' => false,
 	'limit' => $num_display,
-	'widget_more' => elgg_view_url('admin/users', elgg_echo('more')),
+	'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('more')),
 ]);

@@ -42,10 +42,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Tu mensaje ha sido publicado exitosamente a The Wire.",
-	'thewire:deleted' => "El post ha sido borrado exitosamente.",
 	'thewire:blank' => "Necesitas ingresar más texto para publicar.",
 	'thewire:notsaved' => "Lo sentimos. No pudimos guardar este post",
-	'thewire:notdeleted' => "No se pudo borrar este post.",
 
 	/**
 	 * Notifications

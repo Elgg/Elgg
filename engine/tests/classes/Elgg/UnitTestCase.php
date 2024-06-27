@@ -83,8 +83,6 @@ abstract class UnitTestCase extends BaseTestCase {
 
 		_elgg_services()->boot->boot(_elgg_services());
 
-		self::$_instance = $this;
-
 		$this->up();
 	}
 

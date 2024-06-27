@@ -82,7 +82,6 @@ return array(
 	'GatekeeperException' => '您没有权限查看要访问的页面。',
 	'BadRequestException' => '错误请求！',
 
-	'viewfailure' => '在视图中存在错误 %s',
 	'changebookmark' => '请更改此页的书签！',
 	'error:missing_data' => '在您的请求中部分数据丢失。',
 	'save:fail' => '数据保存失败！',
@@ -346,9 +345,11 @@ return array(
  */
 	'menu:page:header:administer' => '管理员',
 	'menu:page:header:configure' => '配置',
+	'menu:page:header:utilities' => '站点设置',
 	'menu:page:header:develop' => '开发',
 	'menu:page:header:information' => '信息',
 	'menu:page:header:default' => '其他',
+	'menu:page:header:plugin_settings' => '插件设置',
 
 	'admin:view_site' => '访问网站',
 	'admin:loggedin' => '以%s身份登录',
@@ -486,6 +487,7 @@ return array(
 	'admin:security:settings:description' => '在这个页面上，您可以配置一些安全特性。请仔细阅读设置。',
 	'admin:security:settings:label:hardening' => '强化',
 	'admin:security:settings:label:account' => '账户',
+	'admin:security:settings:label:notifications' => 'Notifications',
 	'admin:security:settings:label:site_secret' => '站点安全',
 	
 	'admin:security:settings:notify_admins' => '当添加或删除管理员时通知所有站点管理员。',
@@ -515,6 +517,8 @@ return array(
 	'admin:security:settings:site_secret:intro' => 'Elgg用来创建各种用途的安全令牌的关键。',
 	'admin:security:settings:site_secret:regenerate' => "更新网站的密钥",
 	'admin:security:settings:site_secret:regenerate:help' => "注：重新生成你的站点的秘密可能会导致一些用户用于“记住我”，电子邮件验证请求，邀请码等的令牌无效。",
+	'admin:security:security_txt:contact' => "聯絡",
+	'admin:security:security_txt:language' => "语言",
 	
 	'admin:site:secret:regenerated' => "您的站点密钥已被重新生成",
 	'admin:site:secret:prevented' => "站点秘密的再生被阻止。",
@@ -1021,6 +1025,7 @@ return array(
 	'admin:legend:system' => '系统',
 	'admin:legend:caching' => '缓存',
 	'admin:legend:content' => '内容',
+	'admin:legend:comments' => '评论',
 	'admin:legend:content_access' => '内容访问',
 	'admin:legend:site_access' => '网站访问',
 	'admin:legend:debug' => '调试和纪录',
@@ -1031,6 +1036,8 @@ return array(
 	'config:disable_rss:help' => "禁用此功能，不再使用RSS提供的可用性。",
 	'config:friendly_time_number_of_days:label' => "呈现人性化天数的时间",
 	'config:friendly_time_number_of_days:help' => "您可以配置使用人性化时间标记的天数。在设定的天数之后，人性化时间将更改为常规日期格式。将此设置为0将禁用人性化的时间格式。",
+	'config:content:mentions_display_format:username' => "使用者名稱",
+	'config:content:mentions_display_format:display_name' => "姓名",
 	'config:email' => "邮箱",
 
 	'upgrading' => '升级',
@@ -1107,8 +1114,6 @@ return array(
 
 	'generic_comments:add' => "留下评论",
 	'generic_comments:edit' => "编辑评论",
-	'generic_comments:post' => "发表评论",
-	'generic_comments:text' => "评论",
 	'generic_comments:latest' => "最新评论",
 	'generic_comment:posted' => "您的评论已发布.",
 	'generic_comment:updated' => "评论已更新！",
@@ -1116,9 +1121,7 @@ return array(
 	'generic_comment:notfound' => "未找到指定内容！",
 	'generic_comment:failure' => "保存评论时产生意外错误！",
 	'generic_comment:none' => '尚无评论',
-	'generic_comment:title' => '%s评论',
 	'generic_comment:on' => '%s 评论 %s',
-	'generic_comments:latest:posted' => '发表了',
 	
 	'generic_comment:notification:user:summary' => '新评论： %s',
 
@@ -1134,6 +1137,8 @@ return array(
 	'entity:delete:permission_denied' => '您还没有权限删除此项目。',
 	'entity:delete:success' => '%s 已删除。',
 	'entity:delete:fail' => '%s 删除失败。',
+
+	'entity:restore:item' => '栏目',
 
 /**
  * Annotations
@@ -1161,6 +1166,10 @@ return array(
  */
 	
 /**
+ * Trash
+ */
+
+/**
  * Miscellaneous
  */
 	'field:required' => "需要的",
@@ -1168,6 +1177,13 @@ return array(
 /**
  * Accessibility
  */
+	'menu:comments:header' => "评论",
+	'menu:filter:header' => "过滤",
+	'menu:river:header' => "动态",
+	'menu:site:header' => "Site",
+	'menu:social:header' => "社交",
+	'menu:title:header' => "标题",
+	'menu:topbar:header' => "顶部栏",
 
 /**
  * Cli commands

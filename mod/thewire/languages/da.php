@@ -40,10 +40,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Dit indlæg blev postet til the wire.",
-	'thewire:deleted' => "Dit wire indlæg er blevet slettet.",
 	'thewire:blank' => "Beklager, du skal skrive noget i tekstboksen, før det kan gemmes.",
 	'thewire:notsaved' => "Beklager. Vi kunne ikke gemme dette wire indlæg.",
-	'thewire:notdeleted' => "Beklager, vi kunne ikke slette dette wire indlæg.",
 
 	/**
 	 * Notifications

@@ -102,7 +102,6 @@ return array(
 	'install:error:settings' => '無法建立設定值檔案',
 	'install:error:databasesettings' => '無法以這些設定值連線到資料庫。',
 	'install:error:database_prefix' => '在資料庫前綴中有無效字元',
-	'install:error:oldmysql2' => 'MySQL 必須是版本 5.5.3 或以上。伺服器正在使用 %s。',
 	'install:error:nodatabase' => '無法使用資料庫 %s。它可能不存在。',
 	'install:error:cannotloadtables' => '無法載入資料表格',
 	'install:error:tables_exist' => '在資料庫中已有 Elgg 表格。您需要選擇丟棄那些表格，或是重新啟動安裝程式而我們將試圖去使用它們。如果要重新啟動安裝程式，請自瀏覽器網址列中移除 \'?step=database\' 並按下輸入鍵。',

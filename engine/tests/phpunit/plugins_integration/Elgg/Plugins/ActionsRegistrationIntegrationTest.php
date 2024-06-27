@@ -34,6 +34,11 @@ class ActionsRegistrationIntegrationTest extends RegistrationIntegrationTestCase
 			}
 		}
 		
+		if (empty($result)) {
+			// hack so test can check if there are no actions provided
+			$result[] = [null, null];
+		}
+		
 		return $result;
 	}
 	
@@ -41,6 +46,10 @@ class ActionsRegistrationIntegrationTest extends RegistrationIntegrationTestCase
 	 * @dataProvider actionsProvider
 	 */
 	public function testCanRequestActionWithoutParameters($name, $access, \ElggPlugin $plugin = null) {
+		if (!isset($name)) {
+			$this->markTestSkipped('no plugin actions to test');
+		}
+		
 		$this->registerPluginActions($plugin);
 		
 		parent::testCanRequestActionWithoutParameters($name, $access);
@@ -50,6 +59,10 @@ class ActionsRegistrationIntegrationTest extends RegistrationIntegrationTestCase
 	 * @dataProvider actionsProvider
 	 */
 	public function testCanRequestActionWithoutParametersViaAjax($name, $access, \ElggPlugin $plugin = null) {
+		if (!isset($name)) {
+			$this->markTestSkipped('no plugin actions to test');
+		}
+		
 		$this->registerPluginActions($plugin);
 		
 		parent::testCanRequestActionWithoutParametersViaAjax($name, $access);

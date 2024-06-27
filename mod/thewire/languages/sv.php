@@ -46,10 +46,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Ditt meddelande skickades till nyhetsflödet.",
-	'thewire:deleted' => "Nyhetsinlägget togs bort.",
 	'thewire:blank' => "Tyvärr, du måste skriva något innan du kan skicka det här.",
 	'thewire:notsaved' => "Tyvärr kunde vi inte spara det här nyhetsinlägget",
-	'thewire:notdeleted' => "Tyvärr kunde vi inte ta bort det här nyhetsinlägget.",
 
 	/**
 	 * Notifications

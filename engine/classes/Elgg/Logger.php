@@ -8,6 +8,7 @@ use Elgg\Cli\ErrorHandler;
 use Elgg\Logger\BacktraceProcessor;
 use Elgg\Logger\ElggLogFormatter;
 use Monolog\Handler\ErrorLogHandler;
+use Monolog\Level;
 use Monolog\Processor\MemoryPeakUsageProcessor;
 use Monolog\Processor\MemoryUsageProcessor;
 use Monolog\Processor\ProcessIdProcessor;
@@ -98,7 +99,7 @@ class Logger extends \Monolog\Logger {
 
 			$handler->setFormatter($formatter);
 
-			$handler->pushProcessor(new BacktraceProcessor(self::ERROR));
+			$handler->pushProcessor(new BacktraceProcessor(Level::Error));
 		} else {
 			$handler = new ErrorLogHandler();
 
@@ -113,7 +114,7 @@ class Logger extends \Monolog\Logger {
 			$handler->pushProcessor(new MemoryUsageProcessor());
 			$handler->pushProcessor(new MemoryPeakUsageProcessor());
 			$handler->pushProcessor(new ProcessIdProcessor());
-			$handler->pushProcessor(new BacktraceProcessor(self::WARNING));
+			$handler->pushProcessor(new BacktraceProcessor(Level::Warning));
 		}
 
 		$handler->pushProcessor(new PsrLogMessageProcessor());

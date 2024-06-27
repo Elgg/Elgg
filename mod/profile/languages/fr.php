@@ -51,7 +51,7 @@ Cliquez sur le bouton \"Ajouter\" et donnez un label au nouveau champ de profil,
 Pour ré-organiser les champs, cliquez au niveau de la poignée située à côté du label du champ.
 Pour modifier le label d'un champ - cliquez sur l'icône d'édition.
 
-A tout moment vous pouvez revenir au profil par défaut, mais vous perdrez les informations déjà saisies dans les champs personnalisés des pages de profil.",
+À tout moment vous pouvez revenir au profil par défaut, mais vous perdrez les informations déjà saisies dans les champs personnalisés des pages de profil.",
 	'profile:editdefault:success' => 'Nouveau champ de profil ajouté',
 	'profile:editdefault:fail' => 'Le profil par défaut n\'a pas pu être chargé',
 	'profile:noaccess' => "Vous n'avez pas la permission de modifier ce profil.",

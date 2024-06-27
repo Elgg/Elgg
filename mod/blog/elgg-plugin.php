@@ -110,6 +110,11 @@ return [
 				GroupToolContainerLogicCheck::class => [],
 			],
 		],
+		'entity:url' => [
+			'object:widget' => [
+				'Elgg\Blog\Widgets::blogWidgetUrl' => [],
+			],
+		],
 		'form:prepare:fields' => [
 			'blog/save' => [
 				PrepareFields::class => [],

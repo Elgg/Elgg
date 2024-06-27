@@ -6,16 +6,15 @@
  * @uses $vars['value'] Value
  * @uses $vars['class'] Additional classes
  * @uses $vars['icon'] Icon
- * @uses $vars['align'] 'horizontal'|'vertical'
  * @uses $vars['name'] Field name
  */
 
 $value = elgg_extract('value', $vars);
-if (!$value) {
+if (elgg_is_empty($value)) {
 	return;
 }
 
-$icon = elgg_extract('icon', $vars, '');
+$icon = (string) elgg_extract('icon', $vars);
 if ($icon && !str_starts_with($icon, '<')) {
 	$icon = elgg_view_icon($icon);
 }
@@ -26,19 +25,12 @@ if ($icon) {
 	], $icon);
 }
 
-$label = elgg_extract('label', $vars, '');
+$label = (string) elgg_extract('label', $vars);
 $label = elgg_format_element('span', [
 	'class' => 'elgg-profile-field-label',
-], $label);
-
-$class = ['elgg-profile-field'];
-
-$align = elgg_extract('align', $vars, 'vertical');
-$class[] = "elgg-profile-field-{$align}";
-
-$class = elgg_extract_class($vars, $class);
+], $icon . $label);
 
 echo elgg_format_element('div', [
-	'class' => $class,
+	'class' => elgg_extract_class($vars, ['elgg-profile-field']),
 	'data-name' => elgg_extract('name', $vars),
-], $icon . $label . $value);
+], $label . $value);

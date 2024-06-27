@@ -51,10 +51,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Je bericht is succesvol geplaatst op The Wire.",
-	'thewire:deleted' => "Je notitie is succesvol verwijderd.",
 	'thewire:blank' => "Sorry, je moet wel iets intypen voordat we je bericht kunnen versturen!",
 	'thewire:notsaved' => "Sorry, we konden je wire bericht niet opslaan.",
-	'thewire:notdeleted' => "Sorry, we konden dit wire bericht niet verwijderen.",
 
 	/**
 	 * Notifications

@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "5.1.5",
+    "version": "6.0.0",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0-only",
     "minimum-stability": "dev",
@@ -43,7 +43,7 @@
         "peppeocchi/php-cron-scheduler": "~4.0",
         "php-di/php-di": "~7.0.6",
         "phpfastcache/phpfastcache": "~9.2.3",
-        "react/promise": "~3.1.0",
+        "react/promise": "^2.5",
         "roave/security-advisories": "dev-master",
         "robmorgan/phinx": "~0.16.0",
         "symfony/console": "~6.4",

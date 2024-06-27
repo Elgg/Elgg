@@ -3,8 +3,10 @@
  * Group activity widget
  */
 
-/* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
+if (!$widget instanceof \ElggWidget) {
+	return;
+}
 
 $num = (int) $widget->num_display ?: 8;
 $guid = (int) $widget->group_guid;
@@ -12,7 +14,9 @@ $guid = (int) $widget->group_guid;
 $group = get_entity($guid);
 if (!$group instanceof ElggGroup) {
 	// no group selected yet
-	echo '<p>' . elgg_echo('widgets:group_activity:content:noselect') . '</p>';
+	echo elgg_view('page/components/no_results', [
+		'no_results' => elgg_echo('widgets:group_activity:content:noselect'),
+	]);
 	return;
 }
 
@@ -22,5 +26,6 @@ echo elgg_view('river/listing/group', [
 		'limit' => $num,
 		'pagination' => false,
 		'no_results' => elgg_echo('widgets:group_activity:content:noactivity'),
+		'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('activity:more')),
 	],
 ]);

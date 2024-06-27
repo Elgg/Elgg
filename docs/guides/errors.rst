@@ -18,6 +18,6 @@ You can add custom handlers (see Monolog_ documentation for a full list of handl
 			'admin@example.com',
 			'Critical error',
 			'no-reply@mysite.com',
-			\Monolog\Logger::CRITICAL
+			\Monolog\Level::Critical
 		)
 	);

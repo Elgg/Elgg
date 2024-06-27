@@ -47,10 +47,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Deine Nachricht wurde dem Heißen Draht hinzugefügt.",
-	'thewire:deleted' => "Die Nachricht wurde aus dem Heißen Draht gelöscht.",
 	'thewire:blank' => "Entschuldigung, Du mußt erst etwas schreiben, bevor es veröffentlicht werden kann.",
 	'thewire:notsaved' => "Entschuldigung, das Speichern der Nachricht ist fehlgeschlagen.",
-	'thewire:notdeleted' => "Entschuldigung, das Löschen der Nachricht aus dem Heißen Draht ist fehlgeschlagen.",
 
 	/**
 	 * Notifications

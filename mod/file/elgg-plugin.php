@@ -96,6 +96,11 @@ return [
 				'Elgg\File\Icons::setIconSizes' => [],
 			],
 		],
+		'entity:url' => [
+			'object:widget' => [
+				'Elgg\File\Widgets::filerepoWidgetURL' => [],
+			],
+		],
 		'form:prepare:fields' => [
 			'file/upload' => [
 				PrepareFields::class => [],

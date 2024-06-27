@@ -139,4 +139,5 @@ return array(
 	// Notification settings
 	
 	// accessibility
+	'groups:aria:label:search_in_group' => "Etsi tästä ryhmästä",
 );

@@ -42,10 +42,8 @@ return array(
 	 * Status messages
 	 */
 	'thewire:posted' => "Publicouse o chío.",
-	'thewire:deleted' => "Eliminouse o chío.",
 	'thewire:blank' => "Non pode publicar chíos baleiros.",
 	'thewire:notsaved' => "Non foi posíbel gardar o chío.",
-	'thewire:notdeleted' => "Non foi posíbel eliminar o chío.",
 
 	/**
 	 * Notifications

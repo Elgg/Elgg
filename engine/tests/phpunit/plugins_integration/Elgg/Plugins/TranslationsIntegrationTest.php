@@ -55,13 +55,22 @@ class TranslationsIntegrationTest extends PluginsIntegrationTestCase {
 			}
 		}
 		
+		if (empty($result)) {
+			// hack so test can check if there are no translations provided
+			$result[] = [null, null];
+		}
+		
 		return $result;
 	}
 	
 	/**
 	 * @dataProvider languageProvider
 	 */
-	public function testCanLoadTranslations(\ElggPlugin $plugin, string $language) {
+	public function testCanLoadTranslations(?\ElggPlugin $plugin, ?string $language) {
+		if (!isset($plugin)) {
+			$this->markTestSkipped('no plugin translations to test');
+		}
+		
 		$this->translator->setCurrentLanguage($language);
 		
 		$this->assertTrue($this->translator->registerTranslations($plugin->getPath() . 'languages/', false, $language));
@@ -85,7 +94,11 @@ class TranslationsIntegrationTest extends PluginsIntegrationTestCase {
 	 *
 	 * @dataProvider languageProvider
 	 */
-	public function testCanCalculateLanguageCompleteness(\ElggPlugin $plugin, string $language) {
+	public function testCanCalculateLanguageCompleteness(?\ElggPlugin $plugin, ?string $language) {
+		if (!isset($plugin)) {
+			$this->markTestSkipped('no plugin translations to test');
+		}
+		
 		$this->translator->setCurrentLanguage($language);
 		
 		$this->translator->registerTranslations($plugin->getPath() . 'languages/', false, $language);
@@ -123,7 +136,11 @@ class TranslationsIntegrationTest extends PluginsIntegrationTestCase {
 	 *
 	 * @dataProvider languageProvider
 	 */
-	public function testCanEncodeTranslations(\ElggPlugin $plugin, string $language) {
+	public function testCanEncodeTranslations(?\ElggPlugin $plugin, ?string $language) {
+		if (!isset($plugin)) {
+			$this->markTestSkipped('no plugin translations to test');
+		}
+		
 		$translations = Includer::includeFile("{$plugin->getPath()}/languages/{$language}.php");
 		
 		$this->assertIsArray($translations);

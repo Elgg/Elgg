@@ -112,7 +112,6 @@ return array(
 	
 	'Entity:Subscriptions:InvalidMethodsException' => '%s requires $methods to be a string or an array of strings',
 
-	'viewfailure' => 'There was an internal failure in the view %s',
 	'changebookmark' => 'Please change your bookmark for this page',
 	'error:missing_data' => 'There was some data missing in your request',
 	'save:fail' => 'There was a failure saving your data',
@@ -951,7 +950,7 @@ See the full list of users here:
 	'admin:statistics:label:numusers' => "Number of users",
 	'admin:statistics:label:numonline' => "Number of users online",
 	'admin:statistics:label:onlineusers' => "Users online now",
-	'admin:statistics:label:admins'=>"Admins",
+	'admin:statistics:label:admins' => "Admins",
 	'admin:statistics:label:version' => "Elgg version",
 	'admin:statistics:label:version:release' => "Release",
 	'admin:statistics:label:version:version' => "Database Version",
@@ -1320,7 +1319,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'deleteconfirm' => "Are you sure you want to delete this item?",
 	'trashconfirm' => "Are you sure you want to trash this item?",
 	'restoreconfirm' => "Are you sure you want to restore this item?",
-	'restoreandmoveconfirm'=> "Are you sure you want to restore and move this item?",
+	'restoreandmoveconfirm' => "Are you sure you want to restore and move this item?",
 	'deleteconfirm:plural' => "Are you sure you want to delete these items?",
 	'fileexists' => "A file has already been uploaded. To replace it, select a new one below",
 	'input:file:upload_limit' => 'Maximum allowed file size is %s',
@@ -1649,12 +1648,6 @@ If you didn't request this change, please contact a site administrator.
 	
 	'account:validation:pending:title' => "Account validation pending",
 	'account:validation:pending:content' => "Your account has been registered successfully! However before you can use you account a site administrator needs to validate you account. You'll receive an e-mail when you account is validated.",
-	
-	'account:notification:validation:subject' => "Your account on %s has been validated!",
-	'account:notification:validation:body' => "Your account on '%s' has been validated. You can now use your account.
-
-To go the the website, click here:
-%s",
 
 /**
  * user default access
@@ -1678,8 +1671,6 @@ To go the the website, click here:
 
 	'generic_comments:add' => "Leave a comment",
 	'generic_comments:edit' => "Edit comment",
-	'generic_comments:post' => "Post comment",
-	'generic_comments:text' => "Comment",
 	'generic_comments:latest' => "Latest comments",
 	'generic_comment:login_required' => "Your need to be logged in to be able to comment.",
 	'generic_comment:posted' => "Your comment was successfully posted.",
@@ -1689,10 +1680,8 @@ To go the the website, click here:
 	'generic_comment:notfound' => "Sorry, we could not find the specified comment.",
 	'generic_comment:failure' => "An unexpected error occurred when saving the comment.",
 	'generic_comment:none' => 'No comments',
-	'generic_comment:title' => 'Comment by %s',
 	'generic_comment:on' => '%s on %s',
 	'generic_comment:by_owner' => 'Comment by owner',
-	'generic_comments:latest:posted' => 'posted a',
 
 	'generic_comment:notification:subject' => 'Re: %s',
 	'generic_comment:notification:owner:summary' => 'You have a new comment on: %s',
@@ -1782,7 +1771,6 @@ To see the full comment, click on the link below:
  * Diagnostics
  */
 	'diagnostics:report' => 'Diagnostics Report',
-	'diagnostics:description' => 'The following diagnostic report can be useful for diagnosing problems with Elgg. The developers of Elgg may request that you attach it to a bug report.',
 	'diagnostics:header' => '========================================================================
 Elgg Diagnostic Report
 Generated %s by %s
@@ -1828,7 +1816,7 @@ Global variables:
 	'trash:restore:container:choose' => "Since the original group for this item has been removed, you can choose where to restore the item.",
 	'trash:restore:container:group' => "Restore in a different group",
 	'trash:restore:group' => "Search for a group",
-	'trash:restore:group:help' => "Make sure the selected group has the feature active for the item or an error may occure.",
+	'trash:restore:group:help' => "Make sure the selected group has the feature active for the item or an error may occur.",
 	'trash:restore:owner' => "Restore to the owner (%s)",
 
 /**
@@ -1870,7 +1858,6 @@ Global variables:
 /**
  * Cli commands
  */
-	'cli:login:error:unknown' => "Unable to login as %s",
 	'cli:login:success:log' => "Logged in as %s [guid: %s]",
 	'cli:response:output' => "Response:",
 	'cli:option:as' => "Execute the command on behalf of a user with the given username",

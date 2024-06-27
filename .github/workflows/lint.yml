@@ -50,7 +50,7 @@ jobs:
         with:
           php-version: '8.1'
           coverage: none
-          extensions: gd,pdo,xml,json,mysqli,pdo_mysql
+          extensions: gd,pdo,xml,json,mysqli,pdo_mysql,intl
       
       - name: Code checkout
         uses: actions/checkout@v4

@@ -26,6 +26,5 @@ if (empty($header_url)) {
 }
 
 echo elgg_format_element('div', [
-	'style' => "background-image: url({$header_url})",
 	'class' => $class,
-]);
+], elgg_format_element('div', ['style' => "background-image: url({$header_url})"]));

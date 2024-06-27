@@ -10,24 +10,26 @@ class Widgets {
 	/**
 	 * Set the title URL for the messageboard widgets
 	 *
-	 * @param \Elgg\Event $event 'entity:url', 'object'
+	 * @param \Elgg\Event $event 'entity:url', 'object:widget'
 	 *
-	 * @return void|string
+	 * @return null|string
 	 */
-	public static function widgetURL(\Elgg\Event $event) {
-		
-		$return_value = $event->getValue();
-		if (!empty($return_value)) {
+	public static function widgetURL(\Elgg\Event $event): ?string {
+		if (!empty($event->getValue())) {
 			// someone already set an url
-			return;
+			return null;
 		}
 		
 		$widget = $event->getEntityParam();
 		if (!$widget instanceof \ElggWidget || $widget->handler !== 'messageboard') {
-			return;
+			return null;
 		}
 		
 		$owner = $widget->getOwnerEntity();
+		if (!$owner instanceof \ElggUser) {
+			return null;
+		}
+		
 		return elgg_generate_url('collection:annotation:messageboard:owner', [
 			'username' => $owner->username,
 		]);

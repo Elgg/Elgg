@@ -82,7 +82,7 @@ class Seeder extends Seed {
 
 		/* @var $page \ElggPage */
 		foreach ($pages as $page) {
-			if ($page->delete(true, true)) {
+			if ($page->delete()) {
 				$this->log("Deleted page {$page->guid}");
 			} else {
 				$this->log("Failed to delete page {$page->guid}");

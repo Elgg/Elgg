@@ -4,11 +4,11 @@
  */
 
 $widget = elgg_extract('entity', $vars);
-$owner = $widget->getOwnerEntity();
+if (!$widget instanceof \ElggWidget) {
+	return;
+}
 
 $num_display = (int) $widget->num_display ?: 4;
-
-$more_link = elgg_view_url(elgg_generate_url('collection:group:group:member', ['username' => $owner->username]), elgg_echo('groups:more'));
 
 echo elgg_list_entities([
 	'type' => 'group',
@@ -17,5 +17,5 @@ echo elgg_list_entities([
 	'limit' => $num_display,
 	'pagination' => false,
 	'no_results' => elgg_echo('groups:none'),
-	'widget_more' => $more_link,
+	'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('groups:more')),
 ]);

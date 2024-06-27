@@ -148,11 +148,12 @@ class Cron {
 				$cron_logger->notice("Finished {$readable_callable}");
 			};
 			
-			$this->events->trigger('cron', $interval, [
+			// for BC this needs to be a triggerResults
+			$this->events->triggerResults('cron', $interval, [
 				'time' => $time->getTimestamp(),
 				'dt' => $time,
 				'logger' => $cron_logger,
-			], [
+			], null, [
 				EventsService::OPTION_BEGIN_CALLBACK => $begin_callback,
 				EventsService::OPTION_END_CALLBACK => $end_callback,
 			]);

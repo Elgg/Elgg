@@ -35,8 +35,6 @@ return array(
 	'developers:show_strings:key_only' => "Показать только ключ перевода",
 	'developers:label:show_strings' => "Показывать ключи перевода",
 	'developers:help:show_strings' => "Вывод ключей для перевода используемых в функции elgg_echo() вместо самого перевода.",
-	'developers:label:show_modules' => "Показать модули AMD, загруженные в консоль",
-	'developers:help:show_modules' => "Передает загруженные модули и значения в вашу консоль JavaScript.",
 	'developers:label:wrap_views' => "Оборачивать views",
 	'developers:help:wrap_views' => "Это оборачивает почти каждое представление комментариями HTML. Полезно для поиска представления, создающего конкретный HTML.
 									Это может привести к поломке представлений, отличных от HTML, в типе представления по умолчанию.",
@@ -62,7 +60,6 @@ return array(
 	// entity explorer
 	'developers:entity_explorer:help' => 'Просмотр информации об объектах и выполнение некоторых основных действий над ними.',
 	'developers:entity_explorer:guid:label' => 'Введите guid объекта для проверки',
-	'developers:entity_explorer:info' => 'Информация об объекте',
 	'developers:entity_explorer:info:attributes' => 'Атрибуты',
 	'developers:entity_explorer:info:metadata' => 'Метаданные',
 	'developers:entity_explorer:info:relationships' => 'Отношения',
@@ -73,7 +70,6 @@ return array(
 	'developers:entity_explorer:view_entity' => 'Посмотреть этот объект на сайте',
 	
 	// inspection
-	'developers:inspect:help' => 'Проверить конфигурацию фреймворка Elgg',
 	'developers:inspect:actions' => 'Действия',
 	'developers:inspect:events' => 'События',
 	'developers:inspect:menus' => 'Меню',
@@ -108,8 +104,6 @@ return array(
 	'developers:log_queries' => "Запросы к БД: %s",
 	'developers:boot_cache_rebuilt' => "Загрузочный кеш был перестроен для этого запроса",
 	'developers:elapsed_time' => "Прошедшее время (сек)",
-
-	'developers:amd' => 'AMD',
 
 	'admin:develop_tools:error_log' => 'Журнал ошибок',
 	'developers:logs:empty' => 'Журнал ошибок пуст',

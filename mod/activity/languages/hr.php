@@ -21,5 +21,4 @@ return array(
 	'collection:river' => "Aktivnost",
 	'collection:river:group' => "Grupna aktivnost",
 	'groups:tool:activity' => 'Omogući grupnu aktivnost',
-	
 );

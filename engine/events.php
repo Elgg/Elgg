@@ -155,7 +155,7 @@ return [
 		],
 	],
 	'entity:url' => [
-		'object' => [
+		'object:widget' => [
 			\Elgg\Widgets\EntityUrlHandler::class => [],
 		],
 	],
@@ -447,7 +447,6 @@ return [
 	],
 	'validate:after' => [
 		'user' => [
-			'Elgg\Users\Validation::notifyUserAfterValidation' => [],
 			'Elgg\Users\Validation::addRiverActivityAfterValidation' => [],
 		],
 	],

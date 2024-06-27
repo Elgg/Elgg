@@ -69,7 +69,7 @@ class Seeder extends Seed {
 
 		/* @var $file \ElggFile */
 		foreach ($files as $file) {
-			if ($file->delete(true, true)) {
+			if ($file->delete()) {
 				$this->log("Deleted file {$file->guid}");
 			} else {
 				$this->log("Failed to delete file {$file->guid}");

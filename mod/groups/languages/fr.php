@@ -51,6 +51,7 @@ return array(
 	'groups:content_access_mode:unrestricted' => "Sans restriction - Les membres peuvent définir les accès au niveau de chaque nouvelle publication",
 	'groups:content_access_mode:membersonly' => "Membres seulement - Seuls les membres du groupe peuvent accéder à son contenu",
 	'groups:owner' => "Propriétaire",
+	'groups:owner:placeholder' => "Rechercher un membre du groupe",
 	'groups:owner:warning' => "Attention : si vous faites cette modification vous ne serez plus le propriétaire du groupe.",
 	'groups:widget:num_display' => 'Nombre de groupes à afficher',
 	'widgets:a_users_groups:name' => 'Adhésion au groupe',
