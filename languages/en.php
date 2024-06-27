@@ -950,7 +950,7 @@ See the full list of users here:
 	'admin:statistics:label:numusers' => "Number of users",
 	'admin:statistics:label:numonline' => "Number of users online",
 	'admin:statistics:label:onlineusers' => "Users online now",
-	'admin:statistics:label:admins'=>"Admins",
+	'admin:statistics:label:admins' => "Admins",
 	'admin:statistics:label:version' => "Elgg version",
 	'admin:statistics:label:version:release' => "Release",
 	'admin:statistics:label:version:version' => "Database Version",
@@ -1319,7 +1319,7 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'deleteconfirm' => "Are you sure you want to delete this item?",
 	'trashconfirm' => "Are you sure you want to trash this item?",
 	'restoreconfirm' => "Are you sure you want to restore this item?",
-	'restoreandmoveconfirm'=> "Are you sure you want to restore and move this item?",
+	'restoreandmoveconfirm' => "Are you sure you want to restore and move this item?",
 	'deleteconfirm:plural' => "Are you sure you want to delete these items?",
 	'fileexists' => "A file has already been uploaded. To replace it, select a new one below",
 	'input:file:upload_limit' => 'Maximum allowed file size is %s',
@@ -1816,7 +1816,7 @@ Global variables:
 	'trash:restore:container:choose' => "Since the original group for this item has been removed, you can choose where to restore the item.",
 	'trash:restore:container:group' => "Restore in a different group",
 	'trash:restore:group' => "Search for a group",
-	'trash:restore:group:help' => "Make sure the selected group has the feature active for the item or an error may occure.",
+	'trash:restore:group:help' => "Make sure the selected group has the feature active for the item or an error may occur.",
 	'trash:restore:owner' => "Restore to the owner (%s)",
 
 /**
