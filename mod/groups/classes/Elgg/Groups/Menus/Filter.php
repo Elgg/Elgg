@@ -29,15 +29,6 @@ class Filter {
 		]);
 	
 		$return[] = \ElggMenuItem::factory([
-			'name' => 'popular',
-			'text' => elgg_echo('sort:popular'),
-			'href' => elgg_generate_url('collection:group:group:all', [
-				'filter' => 'popular',
-			]),
-			'priority' => 300,
-		]);
-	
-		$return[] = \ElggMenuItem::factory([
 			'name' => 'featured',
 			'text' => elgg_echo('groups:featured'),
 			'href' => elgg_generate_url('collection:group:group:all', [
