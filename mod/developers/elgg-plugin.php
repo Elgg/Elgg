@@ -2,7 +2,7 @@
 
 return [
 	'plugin' => [
-		'name' => 'Elgg Developer Tools',
+		'name' => 'Developer Tools',
 	],
 	'settings' => [
 		'screen_log' => 0,
@@ -35,6 +35,7 @@ return [
 			],
 			'menu:entity_explorer' => [
 				'Elgg\Developers\Menus\EntityExplorer::register' => [],
+				'Elgg\Menus\EntityTrash::registerRestore' => ['priority' => 400],
 			],
 		],
 	],

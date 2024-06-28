@@ -18,7 +18,7 @@ class EntityTrash {
 	 */
 	public static function registerRestore(\Elgg\Event $event): ?MenuItems {
 		$entity = $event->getEntityParam();
-		if (!$entity->canEdit() || !$entity->hasCapability('restorable')) {
+		if (!$entity->canEdit() || !$entity->hasCapability('restorable') || !$entity->isDeleted()) {
 			return null;
 		}
 		
