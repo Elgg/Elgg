@@ -60,7 +60,7 @@ function groups_get_group_join_menu_item(\ElggGroup $group, \ElggUser $user = nu
 	}
 	
 	$menu_name = 'groups:joinrequest';
-	if ($group->isPublicMembership() || $group->canEdit()) {
+	if ($group->isPublicMembership() || $group->canEdit() || $group->getRelationship($user->guid, 'invited')) {
 		// admins can always join
 		// non-admins can join if membership is public
 		$menu_name = 'groups:join';
