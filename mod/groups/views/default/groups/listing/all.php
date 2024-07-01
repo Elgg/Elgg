@@ -19,4 +19,11 @@ $options = array_merge($defaults, $options);
 
 $getter = (string) elgg_extract('getter', $vars, 'elgg_get_entities');
 
+if (!isset($options['sort_by']) && get_input('sort_by') === 'popular') {
+	$getter = 'elgg_get_entities_from_relationship_count';
+	
+	$options['relationship'] = 'member';
+	$options['inverse_relationship'] = false;
+}
+
 echo elgg_list_entities($options, $getter);

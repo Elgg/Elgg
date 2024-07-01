@@ -64,6 +64,22 @@ function elgg_get_relationships(array $options = []) {
 }
 
 /**
+ * Returns a count of relationships.
+ *
+ * @param array $options the same options as elgg_get_relationships() but forces 'count' to true
+ *
+ * @return int
+ *
+ * @see   elgg_get_relationships()
+ * @since 6.1
+ */
+function elgg_count_relationships(array $options = []): int {
+	$options['count'] = true;
+	
+	return (int) elgg_get_relationships($options);
+}
+
+/**
  * Returns a rendered list of relationships with pagination.
  *
  * @param array $options Relationship getter and display options.

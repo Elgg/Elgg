@@ -7,6 +7,8 @@
  * @uses $vars['options'] Additional listing options
  */
 
+elgg_deprecated_notice('The "groups/listing/popular" view has been deprecated. Popular sorting is supported in the "groups/listing/all" view.', '6.1');
+
 $options = (array) elgg_extract('options', $vars);
 
 $popular_options = [

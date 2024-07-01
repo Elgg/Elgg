@@ -34,18 +34,21 @@ class Page {
 		$return = $event->getValue();
 		
 		if ($page_owner->isPublicMembership()) {
-			// show lint to invited users
+			// show link to invited users
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'membership_invites',
 				'text' => elgg_echo('groups:invitedmembers'),
 				'href' => elgg_generate_url('collection:user:user:group_invites', [
 					'guid' => $page_owner->guid,
 				]),
+				'badge' => elgg_count_relationships([
+					'relationship' => 'invited',
+					'relationship_guid' => $page_owner->guid,
+				]) ?: null,
 			]);
 		} else {
 			// show link to membership requests
-			$count = elgg_count_entities([
-				'type' => 'user',
+			$count = elgg_count_relationships([
 				'relationship' => 'membership_request',
 				'relationship_guid' => $page_owner->guid,
 				'inverse_relationship' => true,

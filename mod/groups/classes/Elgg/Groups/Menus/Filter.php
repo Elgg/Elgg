@@ -29,15 +29,6 @@ class Filter {
 		]);
 	
 		$return[] = \ElggMenuItem::factory([
-			'name' => 'popular',
-			'text' => elgg_echo('sort:popular'),
-			'href' => elgg_generate_url('collection:group:group:all', [
-				'filter' => 'popular',
-			]),
-			'priority' => 300,
-		]);
-	
-		$return[] = \ElggMenuItem::factory([
 			'name' => 'featured',
 			'text' => elgg_echo('groups:featured'),
 			'href' => elgg_generate_url('collection:group:group:all', [
@@ -108,6 +99,11 @@ class Filter {
 				'text' => elgg_echo('groups:membershiprequests'),
 				'href' => elgg_generate_entity_url($entity, 'requests'),
 				'priority' => 300,
+				'badge' => elgg_count_relationships([
+					'relationship' => 'membership_request',
+					'relationship_guid' => $entity->guid,
+					'inverse_relationship' => true,
+				]) ?: null,
 			]);
 			
 			$menu[] = \ElggMenuItem::factory([
@@ -117,6 +113,10 @@ class Filter {
 					'guid' => $entity->guid,
 				]),
 				'priority' => 400,
+				'badge' => elgg_count_relationships([
+					'relationship' => 'invited',
+					'relationship_guid' => $entity->guid,
+				]) ?: null,
 			]);
 		}
 		
