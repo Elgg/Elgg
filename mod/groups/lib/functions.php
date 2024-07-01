@@ -59,6 +59,19 @@ function groups_get_group_join_menu_item(\ElggGroup $group, \ElggUser $user = nu
 		return false;
 	}
 	
+	if ($user->hasRelationship($group->guid, 'membership_request')) {
+		return \ElggMenuItem::factory([
+			'name' => 'groups:killrequest',
+			'icon' => 'sign-in-alt',
+			'text' => elgg_echo('groups:joinrequest:revoke'),
+			'href' => elgg_generate_action_url('groups/killrequest', [
+				'user_guid' => $user->guid,
+				'group_guid' => $group->guid,
+			]),
+			'confirm' => true,
+		]);
+	}
+	
 	$menu_name = 'groups:joinrequest';
 	if ($group->isPublicMembership() || $group->canEdit() || $group->getRelationship($user->guid, 'invited')) {
 		// admins can always join

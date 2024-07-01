@@ -138,6 +138,7 @@ return array(
 	'groups:useralreadyinvited' => 'User has already been invited',
 	'groups:invite:message' => "You have been invited to this group on %s",
 	'groups:invite:subject' => "%s you have been invited to join %s!",
+	'groups:joinrequest:revoke' => 'Revoke membership request',
 	'groups:joinrequest:remove:check' => 'Are you sure you want to remove this join request?',
 	'groups:invite:remove:check' => 'Are you sure you want to remove this invitation?',
 	'groups:invite:body' => "%s invited you to join the '%s' group.
