@@ -136,6 +136,7 @@ return array(
 	'groups:userinvited' => 'User has been invited.',
 	'groups:usernotinvited' => 'User could not be invited.',
 	'groups:useralreadyinvited' => 'User has already been invited',
+	'groups:invite:message' => "You have been invited to this group on %s",
 	'groups:invite:subject' => "%s you have been invited to join %s!",
 	'groups:joinrequest:remove:check' => 'Are you sure you want to remove this join request?',
 	'groups:invite:remove:check' => 'Are you sure you want to remove this invitation?',
