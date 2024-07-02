@@ -23,9 +23,6 @@ if (!empty($guid)) {
 	$submit_label = elgg_echo('upload');
 }
 
-$categories_field = $vars;
-$categories_field['#type'] = 'categories';
-
 $fields = [
 	[
 		'#type' => 'file',
@@ -53,7 +50,6 @@ $fields = [
 		'name' => 'tags',
 		'value' => $tags,
 	],
-	$categories_field,
 	[
 		'#type' => 'access',
 		'#label' => elgg_echo('access'),
