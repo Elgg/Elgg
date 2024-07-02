@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\Blog\FieldsHandler;
 use Elgg\Blog\Forms\PrepareFields;
 use Elgg\Blog\GroupToolContainerLogicCheck;
 use Elgg\Blog\Notifications\PublishBlogEventHandler;
@@ -113,6 +114,11 @@ return [
 		'entity:url' => [
 			'object:widget' => [
 				'Elgg\Blog\Widgets::blogWidgetUrl' => [],
+			],
+		],
+		'fields' => [
+			'object:blog' => [
+				FieldsHandler::class => [],
 			],
 		],
 		'form:prepare:fields' => [
