@@ -57,11 +57,11 @@ echo elgg_view_field([
 	'value' => $debug_value,
 	'disabled' => $config->hasInitialValue('debug'),
 	'options_values' => [
-		'' => elgg_echo('developers:debug:off'),
-		'ERROR' => elgg_echo('developers:debug:error'),
-		'WARNING' => elgg_echo('developers:debug:warning'),
-		'NOTICE' => elgg_echo('developers:debug:notice'),
-		'INFO' => elgg_echo('developers:debug:info'),
+		'' => elgg_echo('installation:debug:none'),
+		\Psr\Log\LogLevel::ERROR => elgg_echo('installation:debug:error'),
+		\Psr\Log\LogLevel::WARNING => elgg_echo('installation:debug:warning'),
+		\Psr\Log\LogLevel::NOTICE => elgg_echo('installation:debug:notice'),
+		\Psr\Log\LogLevel::INFO => elgg_echo('installation:debug:info'),
 	],
 ]);
 

@@ -469,9 +469,9 @@ $CONFIG->proxy = [
  * will not be logged during the initial boot.
  *
  * However, if the level is set here, it will be used during the entire request. It can be set to one of
- * the string levels in Elgg\Logger or ''. E.g., use 'INFO' to log all DB queries during boot up.
+ * the constants from \Psr\Log\LogLevel. E.g., use 'info' to log all DB queries during boot up.
  */
-//$CONFIG->debug = 'INFO';
+//$CONFIG->debug = 'info';
 
 /**
  * Language to locale mapping
@@ -482,7 +482,7 @@ $CONFIG->proxy = [
  * For example if you wish to present English dates in USA format make the mapping 'en' => ['en_US'], or if you
  * wish to use UK format 'en' => ['en_UK'].
  *
- * It's possible to configure the locale mapping for mulitple languages, for example:
+ * It's possible to configure the locale mapping for multiple languages, for example:
  * [
  * 	'en' => ['en_US', 'en_UK'],
  * 	'nl' => ['nl_NL'],

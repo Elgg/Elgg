@@ -36,10 +36,10 @@ class Breadcrumbs {
 		
 		// remove last crumb if it has no link
 		if (empty($last->getHref())) {
-			elgg_log("Having a breadcrumb at the end of the list without a link makes no sense. Please update your code for the '{$last->getText()}[{$last->getID()}]' breadcrumb.", 'NOTICE');
+			elgg_log("Having a breadcrumb at the end of the list without a link makes no sense. Please update your code for the '{$last->getText()}[{$last->getID()}]' breadcrumb.", \Psr\Log\LogLevel::NOTICE);
 			$breadcrumbs->getSection('default')->remove($last->getID());
 		} elseif (!$last->getChildren() && elgg_http_url_is_identical(elgg_get_current_url(), $last->getHref())) {
-			elgg_log("Having a breadcrumb at the end of the list which links to the current page makes no sense. Please update your code for the '{$last->getText()}[{$last->getID()}]' breadcrumb.", 'NOTICE');
+			elgg_log("Having a breadcrumb at the end of the list which links to the current page makes no sense. Please update your code for the '{$last->getText()}[{$last->getID()}]' breadcrumb.", \Psr\Log\LogLevel::NOTICE);
 			$breadcrumbs->getSection('default')->remove($last->getID());
 		}
 	}

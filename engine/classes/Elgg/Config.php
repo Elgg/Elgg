@@ -45,7 +45,7 @@ use Elgg\Traits\Loggable;
  * @property string        $dbprefix
  * @property bool          $db_disable_query_cache
  * @property int           $db_query_cache_limit                    Limit for the query cache
- * @property string        $debug
+ * @property string        $debug                                   Holds the \Psr\Log\LogLevel
  * @property int           $default_access							Default access
  * @property int           $default_limit							The default "limit" used in listings and queries
  * @property bool          $disable_rss 							Is RSS disabled

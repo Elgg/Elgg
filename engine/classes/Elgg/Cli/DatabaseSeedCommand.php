@@ -47,7 +47,7 @@ class DatabaseSeedCommand extends Command {
 	 */
 	protected function command() {
 		if (!class_exists('\Faker\Generator')) {
-			elgg_log(elgg_echo('cli:database:seed:log:error:faker'), 'ERROR');
+			elgg_log(elgg_echo('cli:database:seed:log:error:faker'), \Psr\Log\LogLevel::ERROR);
 
 			return self::FAILURE;
 		}
@@ -55,7 +55,7 @@ class DatabaseSeedCommand extends Command {
 		set_time_limit(0);
 
 		if (elgg_is_logged_in()) {
-			elgg_log(elgg_echo('cli:database:seed:log:error:logged_in'), 'ERROR');
+			elgg_log(elgg_echo('cli:database:seed:log:error:logged_in'), \Psr\Log\LogLevel::ERROR);
 
 			return self::INVALID;
 		}
@@ -77,7 +77,7 @@ class DatabaseSeedCommand extends Command {
 		try {
 			_elgg_services()->seeder->seed($options);
 		} catch (\Exception $e) {
-			elgg_log($e->getMessage(), 'ERROR');
+			elgg_log($e->getMessage(), \Psr\Log\LogLevel::ERROR);
 
 			return $e->getCode() ?: 3;
 		}

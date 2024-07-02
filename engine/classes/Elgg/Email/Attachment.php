@@ -43,12 +43,12 @@ class Attachment extends Part {
 		}
 		
 		if (!is_array($options)) {
-			elgg_log(__METHOD__ . ': $options needs to be an array', 'ERROR');
+			elgg_log(__METHOD__ . ': $options needs to be an array', \Psr\Log\LogLevel::ERROR);
 			return false;
 		}
 		
 		if (!isset($options['content']) && !isset($options['filepath'])) {
-			elgg_log(__METHOD__ . ': $options "content" or "filepath" is required', 'ERROR');
+			elgg_log(__METHOD__ . ': $options "content" or "filepath" is required', \Psr\Log\LogLevel::ERROR);
 			return false;
 		}
 		
@@ -57,7 +57,7 @@ class Attachment extends Part {
 		if (!isset($content)) {
 			$filepath = elgg_extract('filepath', $options);
 			if (empty($filepath) || !is_file($filepath)) {
-				elgg_log(__METHOD__ . ': $options[filepath] didn\'t result in a valid file', 'ERROR');
+				elgg_log(__METHOD__ . ': $options[filepath] didn\'t result in a valid file', \Psr\Log\LogLevel::ERROR);
 				return false;
 			}
 			

@@ -341,7 +341,7 @@ class ElggPlugin extends ElggObject {
 		], $value);
 
 		if (is_array($value)) {
-			elgg_log('Plugin settings cannot store arrays.', 'ERROR');
+			elgg_log('Plugin settings cannot store arrays.', \Psr\Log\LogLevel::ERROR);
 
 			return false;
 		}
@@ -402,7 +402,7 @@ class ElggPlugin extends ElggObject {
 			
 			$result &= true;
 		} catch (DatabaseException $e) {
-			elgg_log($e, 'ERROR');
+			elgg_log($e, \Psr\Log\LogLevel::ERROR);
 			
 			$result &= false;
 		}

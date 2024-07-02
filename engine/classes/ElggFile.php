@@ -289,7 +289,7 @@ class ElggFile extends ElggObject {
 		if ($modified) {
 			clearstatcache(true, $filestorename);
 		} else {
-			elgg_log("Unable to update modified time for {$filestorename}", 'ERROR');
+			elgg_log("Unable to update modified time for {$filestorename}", \Psr\Log\LogLevel::ERROR);
 		}
 		
 		return $modified;

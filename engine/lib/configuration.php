@@ -141,7 +141,7 @@ function elgg_get_release(): string {
  */
 function elgg_get_config(string $name, $default = null) {
 	if (!_elgg_services()->config->hasValue($name)) {
-		elgg_log("Config value for '$name' is not set'", 'INFO');
+		_elgg_services()->logger->info("Config value for '{$name}' is not set");
 		return $default;
 	}
 

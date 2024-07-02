@@ -1340,7 +1340,7 @@ function elgg_views_boot(): void {
 function _elgg_get_js_page_data(array $params = []): array {
 	$data = elgg_trigger_event_results('elgg.data', 'page', $params, []);
 	if (!is_array($data)) {
-		elgg_log('"elgg.data" Event handlers must return an array. Returned ' . gettype($data) . '.', 'ERROR');
+		_elgg_services()->logger->error('"elgg.data" Event handlers must return an array. Returned ' . gettype($data) . '.');
 		$data = [];
 	}
 	

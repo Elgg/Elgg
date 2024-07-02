@@ -43,6 +43,7 @@
         "peppeocchi/php-cron-scheduler": "~4.0",
         "php-di/php-di": "~7.0.6",
         "phpfastcache/phpfastcache": "~9.2.3",
+        "psr/log": "^2.0 || ^3.0",
         "react/promise": "^2.5",
         "roave/security-advisories": "dev-master",
         "robmorgan/phinx": "~0.16.0",

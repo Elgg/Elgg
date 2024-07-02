@@ -200,17 +200,17 @@ class MetadataTable {
 	 */
 	public function create(\ElggMetadata $metadata, bool $allow_multiple = false): int|false {
 		if (!isset($metadata->value) || !isset($metadata->entity_guid)) {
-			elgg_log('Metadata must have a value and entity guid', 'ERROR');
+			elgg_log('Metadata must have a value and entity guid', \Psr\Log\LogLevel::ERROR);
 			return false;
 		}
 
 		if (!$this->entityTable->exists($metadata->entity_guid)) {
-			elgg_log("Can't create metadata on a non-existing entity_guid", 'ERROR');
+			elgg_log("Can't create metadata on a non-existing entity_guid", \Psr\Log\LogLevel::ERROR);
 			return false;
 		}
 		
 		if (!is_scalar($metadata->value)) {
-			elgg_log('To set multiple metadata values use ElggEntity::setMetadata', 'ERROR');
+			elgg_log('To set multiple metadata values use ElggEntity::setMetadata', \Psr\Log\LogLevel::ERROR);
 			return false;
 		}
 
@@ -221,7 +221,7 @@ class MetadataTable {
 		}
 
 		if (strlen($metadata->value) > self::MYSQL_TEXT_BYTE_LIMIT) {
-			elgg_log("Metadata '{$metadata->name}' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
+			elgg_log("Metadata '{$metadata->name}' is above the MySQL TEXT size limit and may be truncated.", \Psr\Log\LogLevel::WARNING);
 		}
 
 		if (!$allow_multiple) {
@@ -289,7 +289,7 @@ class MetadataTable {
 	 */
 	public function update(\ElggMetadata $metadata): bool {
 		if (!$this->entityTable->exists($metadata->entity_guid)) {
-			elgg_log("Can't update metadata to a non-existing entity_guid", 'ERROR');
+			elgg_log("Can't update metadata to a non-existing entity_guid", \Psr\Log\LogLevel::ERROR);
 			return false;
 		}
 		
@@ -298,7 +298,7 @@ class MetadataTable {
 		}
 
 		if (strlen($metadata->value) > self::MYSQL_TEXT_BYTE_LIMIT) {
-			elgg_log("Metadata '{$metadata->name}' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
+			elgg_log("Metadata '{$metadata->name}' is above the MySQL TEXT size limit and may be truncated.", \Psr\Log\LogLevel::WARNING);
 		}
 
 		$qb = Update::table(self::TABLE_NAME);

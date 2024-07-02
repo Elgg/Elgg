@@ -319,7 +319,7 @@ class CompositeCache extends BaseCache {
 			return CacheManager::getInstance('Files', $config, $this->prefixInstanceId('files'));
 		} catch (\Phpfastcache\Exceptions\PhpfastcacheIOException $e) {
 			if (!$this->config->installer_running) {
-				elgg_log($e, 'ERROR');
+				elgg_log($e, \Psr\Log\LogLevel::ERROR);
 			}
 		}
 		
@@ -344,7 +344,7 @@ class CompositeCache extends BaseCache {
 			return CacheManager::getInstance('Files', $config, $this->prefixInstanceId('local_files'));
 		} catch (\Phpfastcache\Exceptions\PhpfastcacheIOException $e) {
 			if (!$this->config->installer_running) {
-				elgg_log($e, 'ERROR');
+				elgg_log($e, \Psr\Log\LogLevel::ERROR);
 			}
 		}
 		
