@@ -13,9 +13,6 @@ echo elgg_view('entity/edit/header', [
 	'entity_subtype' => 'blog',
 ]);
 
-$categories_vars = $vars;
-$categories_vars['#type'] = 'categories';
-
 $fields = [
 	[
 		'#label' => elgg_echo('title'),
@@ -47,7 +44,6 @@ $fields = [
 		'id' => 'blog_tags',
 		'value' => elgg_extract('tags', $vars),
 	],
-	$categories_vars,
 	[
 		'#label' => elgg_echo('comments'),
 		'#type' => 'checkbox',

@@ -3,9 +3,6 @@
  * Edit / add a bookmark
  */
 
-$categories_vars = $vars;
-$categories_vars['#type'] = 'categories';
-
 $fields = [
 	[
 		'#label' => elgg_echo('title'),
@@ -35,7 +32,6 @@ $fields = [
 		'id' => 'blog_tags',
 		'value' => elgg_extract('tags', $vars),
 	],
-	$categories_vars,
 	[
 		'#label' => elgg_echo('access'),
 		'#type' => 'access',
