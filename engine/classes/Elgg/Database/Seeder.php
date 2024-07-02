@@ -167,12 +167,12 @@ class Seeder {
 		$seeds = $this->events->triggerResults('seeds', 'database', [], []);
 		foreach ($seeds as $seed) {
 			if (!class_exists($seed)) {
-				elgg_log("Seeding class {$seed} not found", 'ERROR');
+				elgg_log("Seeding class {$seed} not found", \Psr\Log\LogLevel::ERROR);
 				continue;
 			}
 			
 			if (!is_subclass_of($seed, Seed::class)) {
-				elgg_log("Seeding class {$seed} does not extend " . Seed::class, 'ERROR');
+				elgg_log("Seeding class {$seed} does not extend " . Seed::class, \Psr\Log\LogLevel::ERROR);
 				continue;
 			}
 			

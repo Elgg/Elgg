@@ -2109,4 +2109,7 @@ Global variables:
 
 	'core:upgrade:2024020901:title' => "Remove icontime metadata",
 	'core:upgrade:2024020901:description' => "Remove the unreliable metadata icontime from the database",
+
+	'core:upgrade:2024070201:title' => "Migrate debug config",
+	'core:upgrade:2024070201:description' => "Changes the database config value for debug logging to a supported value",
 );

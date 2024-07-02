@@ -67,7 +67,7 @@ class MoveIconsOnOwnerChangeHandler {
 				$notice = "Entity {$entity->guid} has been transferred to a new owner but an icon was";
 				$notice .= " left behind under {$old_icon->getFilenameOnFilestore()}.";
 				$notice .= ' Old icon has been deleted';
-				elgg_log($notice, 'NOTICE');
+				elgg_log($notice, \Psr\Log\LogLevel::NOTICE);
 				continue;
 			}
 	
@@ -75,7 +75,7 @@ class MoveIconsOnOwnerChangeHandler {
 			
 			$notice = "Entity {$entity->guid} has been transferred to a new owner.";
 			$notice .= " Icon was moved from {$old_icon->getFilenameOnFilestore()} to {$new_icon->getFilenameOnFilestore()}.";
-			elgg_log($notice, 'NOTICE');
+			elgg_log($notice, \Psr\Log\LogLevel::NOTICE);
 		}
 	}
 }

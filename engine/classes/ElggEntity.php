@@ -1574,7 +1574,7 @@ abstract class ElggEntity extends \ElggData {
 				return $this->trash($recursive);
 			}
 		} catch (DatabaseException $ex) {
-			elgg_log($ex, 'ERROR');
+			elgg_log($ex, \Psr\Log\LogLevel::ERROR);
 			return false;
 		}
 	}

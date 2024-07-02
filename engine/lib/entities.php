@@ -576,7 +576,7 @@ function elgg_list_entities(array $options = [], callable $getter = null, callab
 	$options['count'] = is_array($entities) ? count($entities) : 0;
 	
 	if (!is_array($entities) && $viewer === 'elgg_view_entity_list') {
-		elgg_log(elgg_echo('list:error:getter:admin', [$getter, gettype($entities), $viewer]), 'ERROR');
+		_elgg_services()->logger->error(elgg_echo('list:error:getter:admin', [$getter, gettype($entities), $viewer]));
 		
 		return elgg_echo('list:error:getter:user');
 	}

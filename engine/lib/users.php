@@ -17,11 +17,11 @@ function get_user(int $guid): ?\ElggUser {
 	try {
 		return _elgg_services()->entityTable->get($guid, 'user');
 	} catch (\Elgg\Exceptions\DomainException $ex) {
-		elgg_log($ex, 'ERROR');
+		_elgg_services()->logger->error($ex);
 
 		return null;
 	} catch (\Elgg\Exceptions\ClassException $ex) {
-		elgg_log($ex, 'ERROR');
+		_elgg_services()->logger->error($ex);
 
 		return null;
 	}

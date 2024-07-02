@@ -134,6 +134,10 @@ class Logger extends \Monolog\Logger {
 	 * @return string|false
 	 */
 	protected function normalizeLevel($level = null) {
+		if (!is_string($level) || !in_array($level, self::$elgg_levels)) {
+			$this->warning("Deprecated in 6.1: Using the log level '{$level}' has been deprecated. Use the \Psr\Log\LogLevel constants.");
+		}
+		
 		if (!$level) {
 			return false;
 		}
@@ -166,10 +170,12 @@ class Logger extends \Monolog\Logger {
 	 * @internal
 	 */
 	public function setLevel($level = null) {
+		// TODO: In Elgg 7 we should throw exceptions if level is not a Psr/Log/LogLevel
+		
 		if (!isset($level)) {
 			$php_error_level = error_reporting();
 
-			$level = false;
+			$level = LogLevel::CRITICAL;
 
 			if (($php_error_level & E_NOTICE) == E_NOTICE) {
 				$level = LogLevel::NOTICE;
