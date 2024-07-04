@@ -28,8 +28,8 @@ if (elgg_extract('prevent_double_submit', $vars, true)) {
 	$vars['class'][] = 'elgg-form-prevent-double-submit';
 }
 
-$vars['action'] = elgg_normalize_url($vars['action']);
-$vars['method'] = strtolower($vars['method']);
+$vars['action'] = elgg_normalize_url((string) $vars['action']);
+$vars['method'] = strtolower((string) $vars['method']);
 
 $ignore_empty_body = (bool) elgg_extract('ignore_empty_body', $vars, true);
 unset($vars['ignore_empty_body']);
