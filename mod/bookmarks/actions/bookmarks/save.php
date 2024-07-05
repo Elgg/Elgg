@@ -3,26 +3,47 @@
  * Elgg bookmarks save action
  */
 
-$title = elgg_get_title_input();
-$description = get_input('description');
-$address = get_input('address');
-$access_id = (int) get_input('access_id');
-$tags = (string) get_input('tags');
+
 $guid = (int) get_input('guid');
 $container_guid = (int) get_input('container_guid', elgg_get_logged_in_user_guid());
 
-// don't use elgg_normalize_url() because we don't want
-// relative links resolved to this site.
-if ($address && !preg_match('#^((ht|f)tps?:)?//#i', $address)) {
-	$address = "http://{$address}";
-}
-
-if (empty($title) || empty($address)) {
-	return elgg_error_response(elgg_echo('bookmarks:save:failed'));
-}
-
-if (!filter_var($address, FILTER_VALIDATE_URL)) {
-	return elgg_error_response(elgg_echo('bookmarks:save:failed'));
+$values = [];
+$fields = elgg()->fields->get('object', 'bookmarks');
+foreach ($fields as $field) {
+	$value = null;
+	
+	$name = elgg_extract('name', $field);
+	switch (elgg_extract('#type', $field)) {
+		case 'tags':
+			$value = elgg_string_to_array((string) get_input($name));
+			break;
+		case 'url':
+			$value = get_input($name);
+			
+			// don't use elgg_normalize_url() because we don't want
+			// relative links resolved to this site.
+			if (!empty($value) && !preg_match('#^((ht|f)tps?:)?//#i', $value)) {
+				$value = "http://{$value}";
+			}
+			
+			if (!filter_var($value, FILTER_VALIDATE_URL)) {
+				return elgg_error_response(elgg_echo('bookmarks:save:failed'));
+			}
+			break;
+		default:
+			if ($name === 'title') {
+				$value = elgg_get_title_input($name);
+			} else {
+				$value = get_input($name);
+			}
+			break;
+	}
+	
+	if (elgg_extract('required', $field) && elgg_is_empty($value)) {
+		return elgg_error_response(elgg_echo('bookmarks:save:failed'));
+	}
+	
+	$values[$name] = $value;
 }
 
 $new = true;
@@ -38,11 +59,9 @@ if (empty($guid)) {
 	$new = false;
 }
 
-$bookmark->title = $title;
-$bookmark->address = $address;
-$bookmark->description = $description;
-$bookmark->access_id = $access_id;
-$bookmark->tags = elgg_string_to_array($tags);
+foreach ($values as $name => $value) {
+	$bookmark->{$name} = $value;
+}
 
 if (!$bookmark->save()) {
 	return elgg_error_response(elgg_echo('bookmarks:save:failed'));
@@ -54,6 +73,7 @@ if ($new) {
 		'view' => 'river/object/bookmarks/create',
 		'action_type' => 'create',
 		'object_guid' => $bookmark->guid,
+		'target_guid' => $bookmark->container_guid,
 	]);
 }
 
