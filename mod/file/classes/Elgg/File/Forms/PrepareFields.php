@@ -21,20 +21,28 @@ class PrepareFields {
 		
 		// input names => defaults
 		$values = [
-			'title' => '',
-			'description' => '',
-			'access_id' => ACCESS_DEFAULT,
-			'tags' => '',
 			'container_guid' => elgg_get_page_owner_guid(),
-			'guid' => null,
 		];
+		
+		$fields = elgg()->fields->get('object', 'file');
+		foreach ($fields as $field) {
+			$default_value = null;
+			
+			$name = elgg_extract('name', $field);
+			if (elgg_extract('#type', $field) === 'file') {
+				// don't set file input values
+				continue;
+			}
+			
+			$values[$name] = $default_value;
+		}
 		
 		$file = elgg_extract('entity', $vars);
 		if ($file instanceof \ElggFile) {
 			// load current file values
 			foreach (array_keys($values) as $field) {
-				if (isset($file->$field)) {
-					$values[$field] = $file->$field;
+				if (isset($file->{$field})) {
+					$values[$field] = $file->{$field};
 				}
 			}
 		}

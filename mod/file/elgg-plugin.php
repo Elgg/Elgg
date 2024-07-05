@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\File\FieldsHandler;
 use Elgg\File\Forms\PrepareFields;
 use Elgg\File\GroupToolContainerLogicCheck;
 use Elgg\File\Notifications\CreateFileEventHandler;
@@ -99,6 +100,11 @@ return [
 		'entity:url' => [
 			'object:widget' => [
 				'Elgg\File\Widgets::filerepoWidgetURL' => [],
+			],
+		],
+		'fields' => [
+			'object:file' => [
+				FieldsHandler::class => [],
 			],
 		],
 		'form:prepare:fields' => [
