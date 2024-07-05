@@ -10,7 +10,7 @@ namespace Elgg\Blog;
 class FieldsHandler {
 	
 	/**
-	 * Register the fields fot blogs
+	 * Register the fields for blogs
 	 *
 	 * @param \Elgg\Event $event 'fields', 'object:blog'
 	 *
