@@ -28,6 +28,8 @@ class Views {
 			$vars['id'] = 'elgg-input-' . base_convert(mt_rand(), 10, 36);
 		}
 		
+		$vars['tabindex'] = '-1';
+		
 		return $vars;
 	}
 

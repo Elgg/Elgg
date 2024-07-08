@@ -45,6 +45,26 @@
 	height: .5rem;
 }
 
+.elgg-field-longtext .elgg-field-input {
+	display: flex;
+	flex-direction: column;
+	
+	> textarea {
+		display: block !important;
+		
+		order: 1;
+		resize: none;
+		border: 0 !important;
+		height: 1px !important;
+		padding: 0 !important;
+		margin: -1px 0 0 0 !important;
+		
+		:invalid {
+			box-shadow: none;
+		}
+	}
+}
+
 :root {
 	--ck-image-upload-icon-is-visible: 1px;
 }
