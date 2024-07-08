@@ -921,8 +921,6 @@ trait LegacyQueryOptionsAdapter {
 					$direction = 'ASC';
 				}
 
-				$direction = strtoupper($direction) === 'DESC' ? 'DESC' : 'ASC';
-
 				$options['order_by'][] = new OrderByClause($column, $direction);
 			}
 		}

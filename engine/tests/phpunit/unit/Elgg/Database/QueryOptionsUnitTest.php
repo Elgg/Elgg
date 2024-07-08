@@ -1151,7 +1151,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 
 		$this->assertInstanceOf(OrderByClause::class, $clause);
 		$this->assertEquals('sum(x)', $clause->expr);
-		$this->assertEquals('DESC', $clause->direction);
+		$this->assertEquals('desc', $clause->direction);
 
 	}
 
