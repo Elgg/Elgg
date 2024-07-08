@@ -69,8 +69,9 @@ function thewire_save_post(string $text, int $userid, int $access_id, int $paren
 	elgg_create_river_item([
 		'view' => 'river/object/thewire/create',
 		'action_type' => 'create',
-		'subject_guid' => $post->owner_guid,
 		'object_guid' => $post->guid,
+		'subject_guid' => $post->owner_guid,
+		'target_guid' => $post->container_guid,
 	]);
 
 	return $post->guid;

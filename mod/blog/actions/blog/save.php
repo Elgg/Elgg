@@ -95,8 +95,9 @@ if (($new_post || $old_status === 'draft') && $status === 'published') {
 	elgg_create_river_item([
 		'view' => 'river/object/blog/create',
 		'action_type' => 'create',
-		'subject_guid' => $blog->owner_guid,
 		'object_guid' => $blog->guid,
+		'subject_guid' => $blog->owner_guid,
+		'target_guid' => $blog->container_guid,
 	]);
 
 	elgg_trigger_event('publish', 'object', $blog);
