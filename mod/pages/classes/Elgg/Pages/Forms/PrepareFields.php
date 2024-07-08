@@ -27,15 +27,17 @@ class PrepareFields {
 		// handle customizable fields
 		$fields = elgg()->fields->get('object', 'page');
 		foreach ($fields as $field) {
-			$default_value = $field['#type'] === 'access' ? ACCESS_DEFAULT : elgg_extract($field['name'], $vars, '');
-			$values[$field['name']] = $default_value;
+			$default_value = null;
+			$name = elgg_extract('name', $field);
+			
+			$values[$name] = $default_value;
 		}
 		
 		$page = elgg_extract('entity', $vars);
 		if ($page instanceof \ElggPage) {
 			foreach (array_keys($values) as $field) {
-				if (isset($page->$field)) {
-					$values[$field] = $page->$field;
+				if (isset($page->{$field})) {
+					$values[$field] = $page->{$field};
 				}
 			}
 		}
