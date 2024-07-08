@@ -29,9 +29,7 @@ class PrepareFields {
 			$default_value = null;
 			$name = elgg_extract('name', $field);
 			
-			if (elgg_extract('#type', $field) === 'access') {
-				$default_value = ACCESS_DEFAULT;
-			} elseif ($name === 'status') {
+			if ($name === 'status') {
 				$default_value = 'published';
 			} elseif ($name === 'comments_on') {
 				$default_value = 'On';
