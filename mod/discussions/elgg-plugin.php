@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\Discussions\FieldsHandler;
 use Elgg\Discussions\Forms\PrepareFields;
 use Elgg\Discussions\GroupToolContainerLogicCheck;
 use Elgg\Discussions\Notifications\CreateDiscussionEventHandler;
@@ -92,6 +93,11 @@ return [
 		'entity:url' => [
 			'object:widget' => [
 				'Elgg\Discussions\Widgets::widgetURL' => [],
+			],
+		],
+		'fields' => [
+			'object:discussion' => [
+				FieldsHandler::class => [],
 			],
 		],
 		'form:prepare:fields' => [

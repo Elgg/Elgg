@@ -114,6 +114,7 @@ if ($new_page) {
 	elgg_create_river_item([
 		'action_type' => 'create',
 		'object_guid' => $page->guid,
+		'target_guid' => $page->container_guid,
 	]);
 }
 

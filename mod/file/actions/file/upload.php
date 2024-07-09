@@ -3,36 +3,58 @@
  * Elgg file uploader/edit action
  */
 
-// Get variables
-$title = elgg_get_title_input();
-$desc = get_input('description');
-$access_id = (int) get_input('access_id');
-$container_guid = (int) get_input('container_guid', 0);
 $guid = (int) get_input('file_guid');
-$tags = (string) get_input('tags');
 
-$container_guid = $container_guid ?: elgg_get_logged_in_user_guid();
+$values = [];
+$uploaded_file = null;
 
-// check if upload attempted and failed
-$uploaded_file = elgg_get_uploaded_file('upload', false);
-if ($uploaded_file && !$uploaded_file->isValid()) {
-	$error = elgg_get_friendly_upload_error($uploaded_file->getError());
-	return elgg_error_response($error);
+$fields = elgg()->fields->get('object', 'file');
+foreach ($fields as $field) {
+	$value = null;
+	
+	$name = elgg_extract('name', $field);
+	switch (elgg_extract('#type', $field)) {
+		case 'file':
+			$uploaded_file = elgg_get_uploaded_file('upload', false);
+			if ($uploaded_file && !$uploaded_file->isValid()) {
+				$error = elgg_get_friendly_upload_error($uploaded_file->getError());
+				
+				return elgg_error_response($error);
+			}
+			
+			if (empty($guid) && empty($uploaded_file) && elgg_extract('required', $field)) {
+				return elgg_error_response(elgg_echo('file:uploadfailed'));
+			}
+			continue(2);
+		case 'tags':
+			$value = elgg_string_to_array((string) get_input($name));
+			break;
+		default:
+			if ($name === 'title') {
+				$value = elgg_get_title_input();
+			} else {
+				$value = get_input($name);
+			}
+			break;
+	}
+	
+	if (elgg_extract('required', $field) && elgg_is_empty($value)) {
+		return elgg_error_response(elgg_echo('error:missing_data'));
+	}
+	
+	$values[$name] = $value;
 }
 
 // check whether this is a new file or an edit
 $new_file = empty($guid);
 
 if ($new_file) {
-	if (empty($uploaded_file)) {
-		return elgg_error_response(elgg_echo('file:uploadfailed'));
-	}
-	
-	$file = new ElggFile();
+	$file = new \ElggFile();
+	$file->container_guid = (int) get_input('container_guid');
 } else {
 	// load original file object
 	$file = get_entity($guid);
-	if (!$file instanceof ElggFile) {
+	if (!$file instanceof \ElggFile) {
 		return elgg_error_response(elgg_echo('file:cannotload'));
 	}
 
@@ -42,16 +64,13 @@ if ($new_file) {
 	}
 }
 
-if (!elgg_is_empty($title)) {
-	$file->title = $title;
+foreach ($values as $name => $value) {
+	$file->{$name} = $value;
 }
 
-$file->description = $desc;
-$file->access_id = $access_id;
-$file->container_guid = $container_guid;
-$file->tags = elgg_string_to_array($tags);
-
-$file->save();
+if (!$file->save()) {
+	return elgg_error_response(elgg_echo('file:uploadfailed'));
+}
 
 if ($uploaded_file && $uploaded_file->isValid()) {
 	if (!$file->acceptUploadedFile($uploaded_file)) {
@@ -75,7 +94,7 @@ $forward = $file->getURL();
 
 // handle results differently for new files and file updates
 if ($new_file) {
-	$container = get_entity($container_guid);
+	$container = $file->getContainerEntity();
 	if ($container instanceof \ElggGroup) {
 		$forward = elgg_generate_url('collection:object:file:group', ['guid' => $container->guid]);
 	} else {
@@ -85,6 +104,7 @@ if ($new_file) {
 	elgg_create_river_item([
 		'action_type' => 'create',
 		'object_guid' => $file->guid,
+		'target_guid' => $file->container_guid,
 	]);
 }
 
