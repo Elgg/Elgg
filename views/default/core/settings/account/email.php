@@ -6,43 +6,42 @@
  */
 
 $user = elgg_extract('entity', $vars, elgg_get_page_owner_entity());
-if (!$user instanceof ElggUser) {
+if (!$user instanceof \ElggUser) {
 	return;
 }
 
-$title = elgg_echo('email:settings');
+$fields = [];
 
-$content = '';
-if (elgg_get_config('security_email_require_password') && ($user->getGUID() === elgg_get_logged_in_user_guid())) {
+if (elgg_get_config('security_email_require_password') && ($user->guid === elgg_get_logged_in_user_guid())) {
 	// user needs to provide current password in order to be able to change his/her email address
-	$content .= elgg_view_field([
+	$fields[] = [
 		'#type' => 'password',
 		'#label' => elgg_echo('email:address:password'),
 		'#help' => elgg_echo('email:address:password:help'),
 		'name' => 'email_password',
 		'autocomplete' => 'current-password',
-	]);
+	];
 }
 
-$email_help = '';
+$email_help = null;
 if (elgg_get_config('security_email_require_confirmation') && isset($user->new_email)) {
 	$email_help = elgg_echo('email:address:help:confirm', [$user->new_email]);
 }
 
-$content .= elgg_view_field([
+$fields[] = [
 	'#type' => 'email',
 	'#label' => elgg_echo('email:address:label'),
 	'#help' => $email_help,
 	'name' => 'email',
 	'value' => $user->email,
-]);
+];
 
 if ($user->isAdmin()) {
 	// check is unvalidated e-mail notifications are sent
 	if ((bool) elgg_get_config('require_admin_validation') && !empty(elgg_get_config('admin_validation_notification'))) {
 		$user_setting = $user->admin_validation_notification;
 		
-		$content .= elgg_view_field([
+		$fields[] = [
 			'#type' => 'checkbox',
 			'#label' => elgg_echo('account:email:admin:validation_notification'),
 			'#help' => elgg_echo('account:email:admin:validation_notification:help'),
@@ -50,8 +49,12 @@ if ($user->isAdmin()) {
 			'value' => 1,
 			'checked' => isset($user_setting) ? (bool) $user_setting : true,
 			'switch' => true,
-		]);
+		];
 	}
 }
 
-echo elgg_view_module('info', $title, $content);
+echo elgg_view_field([
+	'#type' => 'fieldset',
+	'legend' => elgg_echo('email:settings'),
+	'fields' => $fields,
+]);
