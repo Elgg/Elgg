@@ -6,7 +6,6 @@ elgg_push_entity_breadcrumbs($group);
 
 $content = elgg_view_form('groups/invite', [
 	'id' => 'invite_to_group',
-	'class' => 'elgg-form-alt mtm',
 ], [
 	'entity' => $group,
 ]);
