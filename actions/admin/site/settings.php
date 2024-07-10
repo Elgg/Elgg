@@ -28,12 +28,7 @@ $require_admin_validation = (get_input('require_admin_validation', false) === 'o
 elgg_save_config('require_admin_validation', $require_admin_validation);
 
 // notify admins about pending validation
-$admin_validation_notification = get_input('admin_validation_notification');
-if (empty($admin_validation_notification)) {
-	elgg_remove_config('admin_validation_notification');
-} else {
-	elgg_save_config('admin_validation_notification', $admin_validation_notification);
-}
+elgg_save_config('admin_validation_notification', (bool) get_input('admin_validation_notification'));
 
 // remove unvalidated users after x days
 $remove_unvalidated_users_days = (int) get_input('remove_unvalidated_users_days');

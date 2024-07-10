@@ -16,7 +16,6 @@ $end = $user->timed_muting_end;
 $fields = [
 	[
 		'#type' => 'fieldset',
-		
 		'#help' => elgg_echo('usersettings:notifications:timed_muting:help'),
 		'align' => 'horizontal',
 		'fields' => [
@@ -46,7 +45,6 @@ if (!empty($start) && !empty($end) && $start < time() && $end > time()) {
 
 echo elgg_view_field([
 	'#type' => 'fieldset',
-	'#label' => elgg_echo('usersettings:notifications:timed_muting'),
-	'#class' => 'ptl',
+	'legend' => elgg_echo('usersettings:notifications:timed_muting'),
 	'fields' => $fields,
 ]);

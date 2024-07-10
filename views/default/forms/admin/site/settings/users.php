@@ -32,18 +32,15 @@ if (!(bool) elgg_get_config('require_admin_validation')) {
 }
 
 $result .= elgg_view_field([
-	'#type' => 'select',
+	'#type' => 'checkbox',
 	'#label' => elgg_echo('installation:adminvalidation:notification:label'),
 	'#help' => elgg_echo('installation:adminvalidation:notification:description'),
 	'#class' => $classes,
 	'name' => 'admin_validation_notification',
-	'value' => elgg_get_config('admin_validation_notification'),
-	'options_values' => [
-		'' => elgg_echo('option:no'),
-		'direct' => elgg_echo('installation:adminvalidation:notification:direct'),
-		'daily' => elgg_echo('interval:daily'),
-		'weekly' => elgg_echo('interval:weekly'),
-	],
+	'checked' => (bool) elgg_get_config('admin_validation_notification'),
+	'switch' => true,
+	'value' => 1,
+	'default' => false,
 ]);
 
 $result .= elgg_view_field([
