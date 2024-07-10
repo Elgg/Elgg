@@ -11,13 +11,10 @@ if ($group instanceof \ElggGroup) {
 }
 
 $content = elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('discussions:groups:edit:add_group_subscribers_to_discussion_comments'),
 	'name' => 'settings[discussions][add_group_subscribers_to_discussion_comments]',
-	'checked' => $checked,
-	'switch' => true,
-	'default' => 0,
-	'value' => 1,
+	'value' => $checked,
 ]);
 
 echo elgg_view_module('info', elgg_echo('collection:object:discussion'), $content);

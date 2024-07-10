@@ -35,23 +35,19 @@ if ($entity instanceof \ElggComment) {
 	$mute_guids[] = $commented_entity->guid;
 	
 	$checkboxes .= elgg_view_field([
-		'#type' => 'checkbox',
+		'#type' => 'switch',
 		'#label' => elgg_echo($get_language_key($commented_entity, 'entity'), [$commented_entity->getDisplayName()]),
 		'name' => "mute[{$commented_entity->guid}]",
-		'value' => 1,
-		'switch' => true,
-		'checked' => $commented_entity->hasMutedNotifications($recipient->guid),
+		'value' => $commented_entity->hasMutedNotifications($recipient->guid),
 	]);
 } elseif (!elgg_is_empty($entity->getDisplayName())) {
 	$mute_guids[] = $entity->guid;
 	
 	$checkboxes .= elgg_view_field([
-		'#type' => 'checkbox',
+		'#type' => 'switch',
 		'#label' => elgg_echo($get_language_key($entity, 'entity'), [$entity->getDisplayName()]),
 		'name' => "mute[{$entity->guid}]",
-		'value' => 1,
-		'switch' => true,
-		'checked' => $entity->hasMutedNotifications($recipient->guid),
+		'value' => $entity->hasMutedNotifications($recipient->guid),
 	]);
 }
 
@@ -60,12 +56,10 @@ if (($container instanceof \ElggGroup || $container instanceof \ElggUser) && !in
 	$mute_guids[] = $container->guid;
 	
 	$checkboxes .= elgg_view_field([
-		'#type' => 'checkbox',
+		'#type' => 'switch',
 		'#label' => elgg_echo($get_language_key($container, 'container'), [$container->getDisplayName()]),
 		'name' => "mute[{$container->guid}]",
-		'value' => 1,
-		'switch' => true,
-		'checked' => $container->hasMutedNotifications($recipient->guid),
+		'value' => $container->hasMutedNotifications($recipient->guid),
 	]);
 }
 
@@ -74,12 +68,10 @@ if (($owner instanceof \ElggGroup || $owner instanceof \ElggUser) && !in_array($
 	$mute_guids[] = $owner->guid;
 	
 	$checkboxes .= elgg_view_field([
-		'#type' => 'checkbox',
+		'#type' => 'switch',
 		'#label' => elgg_echo($get_language_key($owner, 'owner'), [$owner->getDisplayName()]),
 		'name' => "mute[{$owner->guid}]",
-		'value' => 1,
-		'switch' => true,
-		'checked' => $owner->hasMutedNotifications($recipient->guid),
+		'value' => $owner->hasMutedNotifications($recipient->guid),
 	]);
 }
 
@@ -88,12 +80,10 @@ if (($actor instanceof \ElggGroup || $actor instanceof \ElggUser) && !in_array($
 	$mute_guids[] = $actor->guid;
 	
 	$checkboxes .= elgg_view_field([
-		'#type' => 'checkbox',
+		'#type' => 'switch',
 		'#label' => elgg_echo($get_language_key($actor, 'actor'), [$actor->getDisplayName()]),
 		'name' => "mute[{$actor->guid}]",
-		'value' => 1,
-		'switch' => true,
-		'checked' => $actor->hasMutedNotifications($recipient->guid),
+		'value' => $actor->hasMutedNotifications($recipient->guid),
 	]);
 }
 

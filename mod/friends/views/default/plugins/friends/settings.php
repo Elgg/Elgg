@@ -9,11 +9,9 @@ echo elgg_view('output/longtext', [
 ]);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('friends:settings:request:label'),
 	'#help' => elgg_echo('friends:settings:request:help'),
 	'name' => 'params[friend_request]',
-	'value' => 1,
-	'checked' => (bool) $plugin->friend_request,
-	'switch' => true,
+	'value' => $plugin->friend_request,
 ]);

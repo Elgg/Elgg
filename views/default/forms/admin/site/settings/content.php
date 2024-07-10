@@ -67,13 +67,11 @@ $body .= elgg_view_field([
 ]);
 
 $body .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('config:content:trash_enabled:label'),
 	'#help' => elgg_echo('config:content:trash_enabled:help'),
 	'name' => 'trash_enabled',
-	'value' => 1,
-	'checked' => (bool) elgg_get_config('trash_enabled'),
-	'switch' => true,
+	'value' => elgg_get_config('trash_enabled'),
 ]);
 
 $body .= elgg_view_field([

@@ -1136,7 +1136,7 @@ function elgg_view_field(array $params = []): string {
 	}
 
 	$make_special_checkbox_label = false;
-	if ($input_type == 'checkbox' && (isset($params['label']) || isset($params['#label']))) {
+	if (in_array($input_type, ['checkbox', 'switch']) && (isset($params['label']) || isset($params['#label']))) {
 		if (isset($params['#label']) && isset($params['label'])) {
 			$params['label_tag'] = 'div';
 		} else {

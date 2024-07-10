@@ -28,12 +28,9 @@ foreach ($modules as $module => $plugin) {
 	}
 	
 	echo elgg_view_field([
-		'#type' => 'checkbox',
+		'#type' => 'switch',
 		'#label' => elgg_echo('custom_index:settings:enable_module', [$module]),
 		'name' => "params[module_{$module}_enabled]",
-		'checked' => (bool) $custom_index->{"module_{$module}_enabled"},
-		'switch' => true,
-		'default' => 0,
-		'value' => 1,
+		'value' => $custom_index->{"module_{$module}_enabled"},
 	]);
 }

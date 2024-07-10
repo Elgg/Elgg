@@ -4,14 +4,11 @@
  */
 
 $body = elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('config:email_html_part:label'),
 	'#help' => elgg_echo('config:email_html_part:help'),
 	'name' => 'email_html_part',
-	'checked' => (bool) elgg_get_config('email_html_part'),
-	'switch' => true,
-	'value' => 1,
-	'default' => 0,
+	'value' => elgg_get_config('email_html_part'),
 ]);
 
 $body .= elgg_view_field([
@@ -28,14 +25,11 @@ $body .= elgg_view_field([
 ]);
 
 $body .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('config:delayed_email:label'),
 	'#help' => elgg_echo('config:delayed_email:help'),
 	'name' => 'enable_delayed_email',
-	'checked' => (bool) elgg_get_config('enable_delayed_email'),
-	'switch' => true,
-	'value' => 1,
-	'default' => 0,
+	'value' => elgg_get_config('enable_delayed_email'),
 ]);
 
 echo elgg_view_module('info', elgg_echo('config:email'), $body);

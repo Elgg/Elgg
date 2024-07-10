@@ -38,10 +38,8 @@ if (elgg_language_key_exists("entity:edit:{$icon_type}:remove:label")) {
 }
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => $label,
 	'#class' => 'elgg-entity-edit-icon-remove',
 	'name' => $name,
-	'value' => 1,
-	'switch' => true,
 ]);
