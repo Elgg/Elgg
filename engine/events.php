@@ -107,7 +107,6 @@ return [
 		'daily' => [
 			\Elgg\Email\DelayedQueue\CronHandler::class => [],
 			'Elgg\Users\Validation::removeUnvalidatedUsers' => [],
-			'Elgg\Users\Validation::notifyAdminsAboutPendingUsers' => [],
 			\Elgg\Users\CleanupPersistentLoginHandler::class => [],
 		],
 		'hourly' => [
@@ -118,7 +117,6 @@ return [
 		],
 		'weekly' => [
 			\Elgg\Email\DelayedQueue\CronHandler::class => [],
-			'Elgg\Users\Validation::notifyAdminsAboutPendingUsers' => [],
 		],
 	],
 	'delete' => [
@@ -434,7 +432,6 @@ return [
 	],
 	'usersettings:save' => [
 		'user' => [
-			'Elgg\Users\Settings::setAdminValidationNotification' => [],
 			'Elgg\Users\Settings::setDefaultAccess' => [],
 			'Elgg\Users\Settings::setEmail' => [],
 			'Elgg\Users\Settings::setLanguage' => [],

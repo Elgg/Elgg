@@ -44,3 +44,11 @@ $params['description'] = elgg_echo('usersettings:notifications:mentions:descript
 $params['purpose'] = 'mentions';
 
 echo elgg_view('notifications/settings/record', $params);
+
+if ($user->isAdmin() && (bool) elgg_get_config('require_admin_validation') && (bool) elgg_get_config('admin_validation_notification')) {
+	$params = $vars;
+	$params['description'] = elgg_echo('usersettings:notifications:admin_validation_notification:description');
+	$params['purpose'] = 'admin_validation_notification';
+	
+	echo elgg_view('notifications/settings/record', $params);
+}

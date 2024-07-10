@@ -13,6 +13,7 @@ use Elgg\Traits\Loggable;
  *
  * @property int           $action_time_limit						Maximum php execution time for actions (in seconds)
  * @property int           $action_token_timeout
+ * @property bool          $admin_validation_notification		    Should we notify admins when a new user registers and needs validation
  * @property bool          $allow_phpinfo							Allow access tot PHPInfo
  * @property bool          $allow_registration						Is registration enabled
  * @property string        $allow_user_default_access				Are users allowed to set their own default access level
@@ -188,6 +189,7 @@ class Config {
 	 * @var array
 	 */
 	protected $config_defaults = [
+		'admin_validation_notification' => false,
 		'allow_phpinfo' => false,
 		'authentication_failures_lifetime' => 600,
 		'authentication_failures_limit' => 5,
@@ -227,6 +229,7 @@ class Config {
 		'notifications_max_runtime' => 45,
 		'notifications_queue_delay' => 0,
 		'pagination_behaviour' => 'ajax-replace',
+		'require_admin_validation' => false,
 		'security_email_require_confirmation' => true,
 		'security_email_require_password' => true,
 		'security_notify_admins' => true,

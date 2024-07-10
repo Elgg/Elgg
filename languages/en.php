@@ -334,6 +334,7 @@ return array(
 	'usersettings:notifications:content_create:description' => 'Default notification settings for new content you created, this can cause notifications when others take action on you content like leaving a comment',
 	'usersettings:notifications:create_comment:description' => "Default notification setting when you comment on content in order to follow the rest of the conversation",
 	'usersettings:notifications:mentions:description' => "Receive a notification when you get @mentioned",
+	'usersettings:notifications:admin_validation_notification:description' => "Receive a notification when a newly registered user needs to be validated",
 
 	'usersettings:notifications:timed_muting' => "Temporarily disable notifications",
 	'usersettings:notifications:timed_muting:help' => "If you don't wish to receive any notifications during a certain period (for example a holiday) you can set a start and end date to temporarily disable all notifications",
@@ -2112,4 +2113,7 @@ Global variables:
 
 	'core:upgrade:2024070201:title' => "Migrate debug config",
 	'core:upgrade:2024070201:description' => "Changes the database config value for debug logging to a supported value",
+
+	'core:upgrade:2024071001:title' => "Migrate admin validation notification preference",
+	'core:upgrade:2024071001:description' => "Moves the storage of the admin notification preference to notifications settings",
 );

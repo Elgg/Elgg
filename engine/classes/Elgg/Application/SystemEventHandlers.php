@@ -64,8 +64,8 @@ class SystemEventHandlers {
 		elgg_extend_view('core/settings/statistics', 'core/settings/statistics/numentities');
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/username', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/name', 100);
-		elgg_extend_view('forms/usersettings/save', 'core/settings/account/password', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/email', 100);
+		elgg_extend_view('forms/usersettings/save', 'core/settings/account/password', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/language', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/default_access', 100);
 		
