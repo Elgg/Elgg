@@ -2,6 +2,7 @@
 
 namespace Elgg\Database;
 
+use Elgg\Exceptions\DomainException;
 use Elgg\UnitTestCase;
 
 class QueryBuilderUnitTest extends UnitTestCase {
@@ -354,5 +355,15 @@ class QueryBuilderUnitTest extends UnitTestCase {
 
 		$this->assertInstanceOf(QueryBuilder::class, $qb);
 		$this->assertEquals('table', $qb->getTableName());
+	}
+	
+	public function testSetOrderByWithInvalidDirectionThrowsException() {
+		$this->expectException(DomainException::class);
+		$this->qb->orderBy('foo.bar', 'bar');
+	}
+	
+	public function testAddOrderByWithInvalidDirectionThrowsException() {
+		$this->expectException(DomainException::class);
+		$this->qb->addOrderBy('foo.bar', 'bar');
 	}
 }
