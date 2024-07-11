@@ -1,3 +1,16 @@
+<a name="5.1.8"></a>
+### 5.1.8 (2024-07-11)
+
+#### Contributors
+
+* Jeroen Dalsem (1)
+* Jerôme Bakker (1)
+
+#### Bug fixes
+
+* **forms:** prevent type hint crash by casting vars [6286063c8](https://github.com/Elgg/Elgg//commit/6286063c8aadb11941f6eb0dbd2aaf322fd61c14)
+
+
 <a name="5.1.7"></a>
 ### 5.1.7 (2024-06-27)
 
