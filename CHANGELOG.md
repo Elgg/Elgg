@@ -1,3 +1,16 @@
+<a name="6.0.1"></a>
+### 6.0.1 (2024-07-11)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+* Jerôme Bakker (1)
+
+#### Bug fixes
+
+* **ckeditor:** editor field validation errors will show on form submit [ffd55edbc](https://github.com/Elgg/Elgg/commit/ffd55edbc028be1383431ff0c7bab23e2b96cb7c) closes [#14360](https://github.com/Elgg/Elgg/issues/14360)
+
+
 <a name="6.0.0"></a>
 ## 6.0.0 (2024-06-27)
 
