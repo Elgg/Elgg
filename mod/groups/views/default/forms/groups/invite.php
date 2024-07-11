@@ -25,11 +25,9 @@ echo elgg_view_field([
 ]);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('groups:invite:resend'),
 	'name' => 'resend',
-	'value' => 1,
-	'switch' => true,
 ]);
 
 $footer = elgg_view_field([

@@ -10,15 +10,13 @@ $hardening = '';
 // protect upgrade.php
 $protect_upgrade = (bool) elgg_get_config('security_protect_upgrade');
 $hardening .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('admin:security:settings:protect_upgrade'),
 	'#help' => elgg_echo('admin:security:settings:protect_upgrade:help'),
 	'name' => 'security_protect_upgrade',
-	'default' => 0,
-	'value' => 1,
-	'switch' => true,
-	'checked' => $protect_upgrade,
+	'value' => $protect_upgrade,
 ]);
+
 if ($protect_upgrade) {
 	$url = elgg_http_get_signed_url('upgrade.php');
 	$url = elgg_format_element('pre', [], $url);
@@ -31,15 +29,13 @@ if ($protect_upgrade) {
 // protect /cron
 $protect_cron = (bool) elgg_get_config('security_protect_cron');
 $hardening .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('admin:security:settings:protect_cron'),
 	'#help' => elgg_echo('admin:security:settings:protect_cron:help'),
 	'name' => 'security_protect_cron',
-	'default' => 0,
-	'value' => 1,
-	'switch' => true,
-	'checked' => $protect_cron,
+	'value' => $protect_cron,
 ]);
+
 if ($protect_cron) {
 	$periods = _elgg_services()->cron->getConfiguredIntervals(true);
 	$rows = [];
@@ -82,38 +78,29 @@ if ($protect_cron) {
 
 // disable autocomplete on password forms
 $hardening .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('admin:security:settings:disable_password_autocomplete'),
 	'#help' => elgg_echo('admin:security:settings:disable_password_autocomplete:help'),
 	'name' => 'security_disable_password_autocomplete',
-	'default' => 0,
-	'value' => 1,
-	'switch' => true,
-	'checked' => (bool) elgg_get_config('security_disable_password_autocomplete'),
+	'value' => elgg_get_config('security_disable_password_autocomplete'),
 ]);
 
 // session bound entity icons
 $hardening .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('admin:security:settings:session_bound_entity_icons'),
 	'#help' => elgg_echo('admin:security:settings:session_bound_entity_icons:help'),
 	'name' => 'session_bound_entity_icons',
-	'default' => 0,
-	'value' => 1,
-	'switch' => true,
-	'checked' => (bool) elgg_get_config('session_bound_entity_icons'),
+	'value' => elgg_get_config('session_bound_entity_icons'),
 ]);
 
 // subresource integrity
 $hardening .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('admin:security:settings:subresource_integrity_enabled'),
 	'#help' => elgg_echo('admin:security:settings:subresource_integrity_enabled:help'),
 	'name' => 'subresource_integrity_enabled',
-	'default' => 0,
-	'value' => 1,
-	'switch' => true,
-	'checked' => (bool) elgg_get_config('subresource_integrity_enabled'),
+	'value' => elgg_get_config('subresource_integrity_enabled'),
 ]);
 
 // allow others to extend this section

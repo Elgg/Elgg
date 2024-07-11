@@ -21,11 +21,9 @@ if (extension_loaded('zip')) {
 	
 	if ($current_zip) {
 		$fa .= elgg_view_field([
-			'#type' => 'checkbox',
+			'#type' => 'switch',
 			'#label' => elgg_echo('admin:site_icons:font_awesome:remove_zip'),
 			'name' => 'remove_font_awesome_zip',
-			'value' => 1,
-			'switch' => true,
 		]);
 	}
 	
