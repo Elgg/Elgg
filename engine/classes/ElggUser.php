@@ -38,6 +38,8 @@ class ElggUser extends \ElggEntity {
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
+		
+		$this->attributes['type'] = 'user';
 		$this->attributes['subtype'] = 'user';
 		
 		$this->attributes['access_id'] = ACCESS_PUBLIC;
@@ -51,13 +53,6 @@ class ElggUser extends \ElggEntity {
 		$this->prev_last_action = 0;
 		$this->last_login = 0;
 		$this->prev_last_login = 0;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getType(): string {
-		return 'user';
 	}
 	
 	/**

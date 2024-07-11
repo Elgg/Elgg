@@ -135,7 +135,12 @@ class Logger extends \Monolog\Logger {
 	 */
 	protected function normalizeLevel($level = null) {
 		if (!is_string($level) || !in_array($level, self::$elgg_levels)) {
-			$this->warning("Deprecated in 6.1: Using the log level '{$level}' has been deprecated. Use the \Psr\Log\LogLevel constants.");
+			$level_value = $level;
+			if ($level === false) {
+				$level_value = 'false';
+			}
+			
+			$this->warning("Deprecated in 6.1: Using the log level '{$level_value}' has been deprecated. Use the \Psr\Log\LogLevel constants.");
 		}
 		
 		if (!$level) {
@@ -238,14 +243,11 @@ class Logger extends \Monolog\Logger {
 				'message' => $message,
 				'level' => $level,
 			];
-		}
-
-		if (!$this->isLoggable($level)) {
+			
 			return;
 		}
 
-		// when capturing, still use consistent return value
-		if (!empty($this->disabled_stack)) {
+		if (!$this->isLoggable($level)) {
 			return;
 		}
 

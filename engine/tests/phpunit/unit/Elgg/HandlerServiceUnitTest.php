@@ -39,7 +39,9 @@ class HandlerServiceUnitTest extends UnitTestCase {
 	}
 	
 	public function testCallUncallable() {
+		_elgg_services()->logger->disable();
 		$result = $this->service->call([$this, 'uncallable'], 'hook', ['unit', 'test']);
+		_elgg_services()->logger->enable();
 		
 		$this->validateCallResult($result, false, null, 'hook');
 	}
@@ -99,7 +101,7 @@ class HandlerServiceUnitTest extends UnitTestCase {
 		return [
 			['some_function_name', '', 'some_function_name'],
 			[[__CLASS__, 'callableEvent'], '', 'Elgg\HandlerServiceUnitTest::callableEvent'],
-			[function() {}, __DIR__, 'HandlerServiceUnitTest.php:102'], // this is very error prone. Please keep an eye on the line number
+			[function() {}, __DIR__, 'HandlerServiceUnitTest.php:' . __LINE__],
 			[new \Elgg\Helpers\EventsServiceTestInvokable(), __FILE__, '(Elgg\Helpers\EventsServiceTestInvokable)->__invoke()'],
 		];
 	}

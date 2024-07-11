@@ -13,12 +13,15 @@
  * @property array  $tags        Tags that describe the object (metadata)
  */
 class ElggObject extends \ElggEntity {
-
+	
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getType(): string {
-		return 'object';
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
+		
+		$this->attributes['type'] = 'object';
+		$this->attributes['subtype'] = 'object';
 	}
 
 	/**

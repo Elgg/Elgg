@@ -4,8 +4,6 @@ namespace Elgg;
 
 use Elgg\Mocks\Di\InternalContainer;
 use Psr\Log\LogLevel;
-use Symfony\Component\Console\Output\NullOutput;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Unit test abstraction class
@@ -27,10 +25,7 @@ abstract class UnitTestCase extends BaseTestCase {
 		$config->getCookieConfig();
 		$config->system_cache_enabled = elgg_extract('system_cache_enabled', $params, true);
 		$config->plugins_path = elgg_extract('plugins_path', $params);
-		$config->site = new \ElggSite((object) [
-			'guid' => 1,
-		]);
-
+		
 		$sp = InternalContainer::factory(['config' => $config]);
 
 		$app = Application::factory(array_merge([
@@ -43,11 +38,12 @@ abstract class UnitTestCase extends BaseTestCase {
 		$app->setGlobalConfig($app);
 
 		Application::setInstance($app);
-
-		$cli_output = new NullOutput();
-		$cli_output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
-		$app->internal_services->set('cli_output', $cli_output);
-
+		
+		// need to create site entity after services are available
+		$app->internal_services->config->site = new \ElggSite((object) [
+			'guid' => 1,
+		]);
+		
 		if (in_array('--verbose', $_SERVER['argv'])) {
 			$app->internal_services->logger->setLevel(LogLevel::DEBUG);
 		} else {

@@ -16,6 +16,11 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->counter = 0;
 		$this->counter2 = 0;
 		$this->events = new EventsService(new HandlersService());
+		_elgg_services()->logger->disable();
+	}
+	
+	public function down() {
+		_elgg_services()->logger->enable();
 	}
 
 	public function incrementCounter(): bool {

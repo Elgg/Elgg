@@ -17,7 +17,9 @@ class LoggerUnitTest extends \Elgg\UnitTestCase {
 	
 	public function testLoggingOff() {
 		$logger = $this->service;
+		$logger->disable();
 		$logger->setLevel(false);
+		$logger->enable();
 		$logger->log(LogLevel::NOTICE, "hello");
 	}
 
@@ -29,7 +31,9 @@ class LoggerUnitTest extends \Elgg\UnitTestCase {
 
 	public function testLoggingLevelNotExist() {
 		$logger = $this->service;
+		$logger->disable();
 		$logger->log(12, "hello");
+		$logger->enable();
 	}
 
 	public function testDisablePreventsProcessingAndCapturesLogCalls() {

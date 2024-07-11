@@ -5,11 +5,29 @@ namespace Elgg;
 use Elgg\Helpers\Upgrade\TestBatch;
 use Elgg\Helpers\Upgrade\TestNoIncrementBatch;
 use Elgg\Helpers\Upgrade\UnknownSizeTestBatch;
+use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class BatchUpgraderUnitTest extends UnitTestCase {
-
+	
+	/**
+	 * @var OutputInterface
+	 */
+	protected $backup_cli_output;
+	
 	public function up() {
 		_elgg_services()->logger->disable();
+		
+		$this->backup_cli_output = _elgg_services()->get('cli_output');
+		
+		$cli_output = new NullOutput();
+		$cli_output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
+		_elgg_services()->set('cli_output', $cli_output);
+	}
+	
+	public function down() {
+		_elgg_services()->logger->enable();
+		_elgg_services()->set('cli_output', $this->backup_cli_output);
 	}
 
 	public function testCanRunIncrementedUpgrade() {
