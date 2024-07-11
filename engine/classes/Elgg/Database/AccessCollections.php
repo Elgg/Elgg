@@ -34,22 +34,6 @@ class AccessCollections {
 	 */
 	public const MEMBERSHIP_TABLE_NAME = 'access_collection_membership';
 
-	protected Config $config;
-
-	protected Database $db;
-
-	protected BaseCache $access_cache;
-
-	protected EventsService $events;
-
-	protected SessionManagerService $session_manager;
-
-	protected EntityTable $entities;
-
-	protected UserCapabilities $capabilities;
-
-	protected Translator $translator;
-
 	protected bool $init_complete = false;
 
 	/**
@@ -59,28 +43,20 @@ class AccessCollections {
 	 * @param Database              $db              Database
 	 * @param EntityTable           $entities        Entity table
 	 * @param UserCapabilities      $capabilities    User capabilities
-	 * @param BaseCache             $cache           Access cache
+	 * @param BaseCache             $access_cache    Access cache
 	 * @param EventsService         $events          Events
 	 * @param SessionManagerService $session_manager Session
 	 * @param Translator            $translator      Translator
 	 */
 	public function __construct(
-		Config $config,
-		Database $db,
-		EntityTable $entities,
-		UserCapabilities $capabilities,
-		BaseCache $cache,
-		EventsService $events,
-		SessionManagerService $session_manager,
-		Translator $translator) {
-		$this->config = $config;
-		$this->db = $db;
-		$this->entities = $entities;
-		$this->capabilities = $capabilities;
-		$this->access_cache = $cache;
-		$this->events = $events;
-		$this->session_manager = $session_manager;
-		$this->translator = $translator;
+		protected Config $config,
+		protected Database $db,
+		protected EntityTable $entities,
+		protected UserCapabilities $capabilities,
+		protected BaseCache $access_cache,
+		protected EventsService $events,
+		protected SessionManagerService $session_manager,
+		protected Translator $translator) {
 	}
 
 	/**

@@ -38,7 +38,7 @@ class InternalContainer extends \Elgg\Di\InternalContainer{
 		$container->set('metadataTable', \DI\autowire(\Elgg\Mocks\Database\MetadataTable::class));
 		$container->set('annotationsTable', \DI\autowire(\Elgg\Mocks\Database\AnnotationsTable::class));
 		$container->set('relationshipsTable', \DI\autowire(\Elgg\Mocks\Database\RelationshipsTable::class));
-		$container->set('accessCollections', \DI\autowire(\Elgg\Mocks\Database\AccessCollections::class)->constructorParameter('cache', \DI\get('accessCache')));
+		$container->set('accessCollections', \DI\autowire(\Elgg\Mocks\Database\AccessCollections::class)->constructorParameter('access_cache', \DI\get('accessCache')));
 		$container->set('configTable', \DI\autowire(\Elgg\Mocks\Database\ConfigTable::class));
 		$container->set('users_remember_me_cookies_table', \DI\autowire(\Elgg\Mocks\Database\UsersRememberMeCookiesTable::class));
 

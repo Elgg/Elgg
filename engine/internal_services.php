@@ -7,7 +7,7 @@ return [
 	'accessCache' => DI\factory(function (ContainerInterface $c) {
 		return $c->sessionCache->access;
     }),
-	'accessCollections' => DI\autowire(\Elgg\Database\AccessCollections::class)->constructorParameter('cache', DI\get('accessCache')),
+	'accessCollections' => DI\autowire(\Elgg\Database\AccessCollections::class)->constructorParameter('access_cache', DI\get('accessCache')),
 	'actions' => DI\autowire(\Elgg\ActionsService::class),
 	'accounts' => DI\autowire(\Elgg\Users\Accounts::class),
 	'adminNotices' => DI\autowire(\Elgg\Database\AdminNotices::class),
