@@ -11,6 +11,7 @@ use Elgg\Database\Clauses\Clause;
 use Elgg\Database\Clauses\ComparisonClause;
 use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\WhereClause;
+use Elgg\Exceptions\DomainException;
 use Elgg\Values;
 
 /**
@@ -288,7 +289,29 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	public function rightJoin(string $fromAlias, string $join, string $alias, ?string $condition = null): self {
 		return parent::rightJoin($fromAlias, $this->prefix($join), $alias, $condition);
 	}
-
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function orderBy(string $sort, ?string $order = null): self {
+		if (isset($order) && !in_array(strtoupper($order), ['ASC', 'DESC'])) {
+			throw new DomainException("'{$order}' is not a valid order by direction");
+		}
+		
+		return parent::orderBy($sort, $order);
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function addOrderBy(string $sort, ?string $order = null): self {
+		if (isset($order) && !in_array(strtoupper($order), ['ASC', 'DESC'])) {
+			throw new DomainException("'{$order}' is not a valid order by direction");
+		}
+		
+		return parent::addOrderBy($sort, $order);
+	}
+	
 	/**
 	 * Merges multiple composite expressions with a boolean
 	 *

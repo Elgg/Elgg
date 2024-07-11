@@ -37,8 +37,8 @@ if (elgg_extract('prevent_double_submit', $vars, true)) {
 	$vars['class'][] = 'elgg-form-prevent-double-submit';
 }
 
-$vars['action'] = elgg_normalize_url($vars['action']);
-$vars['method'] = strtolower($vars['method']);
+$vars['action'] = elgg_normalize_url((string) $vars['action']);
+$vars['method'] = strtolower((string) $vars['method']);
 
 // Generate a security header
 if (!$vars['disable_security']) {
