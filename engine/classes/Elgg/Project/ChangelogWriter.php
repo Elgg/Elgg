@@ -46,6 +46,8 @@ class ChangelogWriter {
 			throw new InvalidArgumentException("The changelog file doesn't exist or is not writable");
 		}
 		
+		$options['repository'] = rtrim($options['repository'], '/');
+		
 		$this->options = $options;
 	}
 	
@@ -430,7 +432,7 @@ class ChangelogWriter {
 			return '';
 		}
 		
-		return vsprintf('[#%s](%s/commit/%s)', [
+		return vsprintf('[#%s](%s/issues/%s)', [
 			$issue_id,
 			$this->getOption('repository'),
 			$issue_id,
