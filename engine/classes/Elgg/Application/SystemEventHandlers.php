@@ -97,11 +97,6 @@ class SystemEventHandlers {
 	 */
 	public static function initEarly() {
 		elgg_register_pam_handler(\Elgg\PAM\User\Password::class);
-		
-		// @todo registering an alias helps in the transition from Elgg 4 to Elgg 5. This can be removed in Elgg 6
-		if (!class_exists('Elgg\Hook')) {
-			class_alias(\Elgg\Event::class, 'Elgg\Hook');
-		}
 	}
 	
 	/**
