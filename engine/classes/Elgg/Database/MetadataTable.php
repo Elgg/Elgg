@@ -26,14 +26,6 @@ class MetadataTable {
 	
 	public const DEFAULT_JOIN_ALIAS = 'n_table';
 	
-	protected MetadataCache $metadata_cache;
-
-	protected Database $db;
-
-	protected Events $events;
-	
-	protected EntityTable $entityTable;
-
 	/**
 	 * Constructor
 	 *
@@ -43,15 +35,11 @@ class MetadataTable {
 	 * @param EntityTable   $entityTable    The EntityTable database wrapper
 	 */
 	public function __construct(
-		MetadataCache $metadata_cache,
-		Database $db,
-		Events $events,
-		EntityTable $entityTable
+		protected MetadataCache $metadata_cache,
+		protected Database $db,
+		protected Events $events,
+		protected EntityTable $entityTable
 	) {
-		$this->metadata_cache = $metadata_cache;
-		$this->db = $db;
-		$this->events = $events;
-		$this->entityTable = $entityTable;
 	}
 
 	/**

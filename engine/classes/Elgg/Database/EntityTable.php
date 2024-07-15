@@ -34,20 +34,6 @@ class EntityTable {
 	
 	public const DEFAULT_JOIN_ALIAS = 'e';
 
-	protected Config $config;
-
-	protected Database $db;
-
-	protected EntityCache $entity_cache;
-
-	protected MetadataCache $metadata_cache;
-
-	protected EventsService $events;
-
-	protected SessionManagerService $session_manager;
-
-	protected Translator $translator;
-
 	protected array $deleted_guids = [];
 	
 	protected array $trashed_guids = [];
@@ -66,21 +52,14 @@ class EntityTable {
 	 * @param Translator            $translator      Translator
 	 */
 	public function __construct(
-		Config $config,
-		Database $db,
-		EntityCache $entity_cache,
-		MetadataCache $metadata_cache,
-		EventsService $events,
-		SessionManagerService $session_manager,
-		Translator $translator
+		protected Config $config,
+		protected Database $db,
+		protected EntityCache $entity_cache,
+		protected MetadataCache $metadata_cache,
+		protected EventsService $events,
+		protected SessionManagerService $session_manager,
+		protected Translator $translator
 	) {
-		$this->config = $config;
-		$this->db = $db;
-		$this->entity_cache = $entity_cache;
-		$this->metadata_cache = $metadata_cache;
-		$this->events = $events;
-		$this->session_manager = $session_manager;
-		$this->translator = $translator;
 	}
 
 	/**
