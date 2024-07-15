@@ -2,74 +2,81 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Cache\EntityCache;
 use Elgg\EntityPreloader;
-use Elgg\Helpers\MockEntityPreloader20140623;
 
 class ElggEntityPreloaderIntegrationTest extends \Elgg\IntegrationTestCase {
 
 	/**
 	 * @var EntityPreloader
 	 */
-	protected $realPreloader;
-
-	/**
-	 * @var MockEntityPreloader20140623
-	 */
-	protected $mockPreloader;
+	protected $preloader;
 	
 	/**
-	 * @var \ElggUser
+	 * @var EntityCache
 	 */
-	protected $user;
+	protected $entityCache;
 
 	public function up() {
-		$this->user = $this->createUser();
-		elgg()->session_manager->setLoggedInUser($this->user);
+		$this->preloader = _elgg_services()->entityPreloader;
+		$this->entityCache = _elgg_services()->entityCache;
+		$this->entityCache->clear();
+	}
+	
+	public function testPreloadWithUnusableParameters() {
+		$this->preloader->preload([], []); // skipped empty array
+		$this->preloader->preload(['no object 1', 'no_object_2'], []); // skipped no objects
 		
-		$this->realPreloader = _elgg_services()->entityPreloader;
-		$this->mockPreloader = new MockEntityPreloader20140623(_elgg_services()->entityCache);
+		$object1 = $this->createObject();
+		$object2 = $this->createObject();
+		$this->preloader->preload([$object1, $object2], []); // skipped no properties
+		$this->preloader->preload([$object1, $object2], ['foo']); // skipped non existing properties
+	}
+	
+	public function testNotPreloadIfThereIsOnlyOneToLoad() {
+		$owner1 = $this->createUser();
+		$owner2 = $this->createUser();
+		$object1 = $this->createObject(['owner_guid' => $owner1->guid, 'foo' => $owner1->guid]);
+		$object2 = $this->createObject(['owner_guid' => $owner2->guid]);
 		
-		_elgg_services()->set('entityPreloader', $this->mockPreloader);
+		$this->assertNull($this->entityCache->load($owner1->guid));
+		$this->assertNull($this->entityCache->load($owner2->guid));
+		$this->preloader->preload([$object1, $object2], ['foo']);
+		$this->assertNull($this->entityCache->load($owner1->guid));
+		$this->assertNull($this->entityCache->load($owner2->guid));
+		
+		$this->entityCache->save($owner1);
+		$this->assertNotNull($this->entityCache->load($owner1->guid));
+		
+		$this->preloader->preload([$object1, $object2], ['owner_guid']);
+		// should not preload as owner1 is already loaded thus there is just one to preload
+		$this->assertNull($this->entityCache->load($owner2->guid));
 	}
-
-	public function down() {
-		_elgg_services()->set('entityPreloader', $this->realPreloader);
+	
+	public function testPreloadFromSingleProperty() {
+		$owner1 = $this->createUser();
+		$owner2 = $this->createUser();
+		$object1 = $this->createObject(['owner_guid' => $owner1->guid]);
+		$object2 = $this->createObject(['owner_guid' => $owner2->guid]);
+		
+		$this->assertNull($this->entityCache->load($owner1->guid));
+		$this->assertNull($this->entityCache->load($owner2->guid));
+		$this->preloader->preload([$object1, $object2], ['owner_guid']);
+		$this->assertNotNull($this->entityCache->load($owner1->guid));
+		$this->assertNotNull($this->entityCache->load($owner2->guid));
 	}
-
-	public function testCanPreloadEntityOwners() {
-		$seeded = $this->createMany('object', 3);
-		$options = [
-			'types' => 'object',
-			'limit' => 3,
-		];
-
-		$objects = elgg_get_entities($options);
-		$this->assertEquals(3, count($objects));
-		$this->assertNull($this->mockPreloader->preloaded);
-
-		$options['preload_owners'] = true;
-		elgg_get_entities($options);
-		$this->assertCount(3, $this->mockPreloader->preloaded);
-	}
-
-	public function testCanPreloadAnnotationOwners() {
-		$object = $this->createObject();
-		$object->annotate('test', 1);
-		$object->annotate('test', 2);
-		$object->annotate('test', 3);
-
-		$options = [
-			'types' => 'object',
-			'limit' => 3,
-		];
-
-		$annotations = elgg_get_annotations($options);
-		$this->assertCount(3, $annotations);
-
-		$this->assertNull($this->mockPreloader->preloaded);
-
-		$options['preload_owners'] = true;
-		elgg_get_annotations($options);
-		$this->assertCount(3, $this->mockPreloader->preloaded);
+	
+	public function testPreloadFromMultipleProperty() {
+		$owner1 = $this->createUser();
+		$owner2 = $this->createUser();
+		$owner3 = $this->createUser();
+		$object1 = $this->createObject(['owner_guid' => $owner3->guid, 'foo' => $owner1->guid]);
+		$object2 = $this->createObject(['owner_guid' => $owner3->guid, 'bar' => $owner2->guid]);
+		
+		$this->assertNull($this->entityCache->load($owner1->guid));
+		$this->assertNull($this->entityCache->load($owner2->guid));
+		$this->preloader->preload([$object1, $object2], ['foo', 'bar']);
+		$this->assertNotNull($this->entityCache->load($owner1->guid));
+		$this->assertNotNull($this->entityCache->load($owner2->guid));
 	}
 }
