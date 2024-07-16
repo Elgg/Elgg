@@ -156,7 +156,7 @@ abstract class ElggEntity extends \ElggData {
 		parent::initializeAttributes();
 
 		$this->attributes['guid'] = null;
-		$this->attributes['type'] = $this->getType();
+		$this->attributes['type'] = null;
 		$this->attributes['subtype'] = null;
 
 		$this->attributes['owner_guid'] = _elgg_services()->session_manager->getLoggedInUserGuid();
@@ -1011,8 +1011,7 @@ abstract class ElggEntity extends \ElggData {
 	 * @return string The entity type
 	 */
 	public function getType(): string {
-		// this is just for the PHPUnit mocking framework
-		return (string) $this->type;
+		return (string) $this->attributes['type'];
 	}
 
 	/**

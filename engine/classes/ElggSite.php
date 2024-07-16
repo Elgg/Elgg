@@ -31,10 +31,8 @@ class ElggSite extends \ElggEntity {
 	 * {@inheritdoc}
 	 */
 	protected function initializeAttributes() {
-		// Using ElggData for testing purposes
-		ElggData::initializeAttributes();
+		parent::initializeAttributes();
 
-		$this->attributes['guid'] = null;
 		$this->attributes['type'] = 'site';
 		$this->attributes['subtype'] = 'site';
 
@@ -42,18 +40,6 @@ class ElggSite extends \ElggEntity {
 		$this->attributes['container_guid'] = 0;
 
 		$this->attributes['access_id'] = ACCESS_PUBLIC;
-		$this->attributes['time_updated'] = null;
-		$this->attributes['last_action'] = null;
-		$this->attributes['enabled'] = 'yes';
-		$this->attributes['deleted'] = 'no';
-		$this->attributes['time_deleted'] = null;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getType(): string {
-		return 'site';
 	}
 
 	/**

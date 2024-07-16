@@ -23,14 +23,9 @@ class ElggGroup extends \ElggEntity {
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
+		
+		$this->attributes['type'] = 'group';
 		$this->attributes['subtype'] = 'group';
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getType(): string {
-		return 'group';
 	}
 
 	/**

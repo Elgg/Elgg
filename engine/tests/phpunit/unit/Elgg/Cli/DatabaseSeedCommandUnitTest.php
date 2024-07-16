@@ -3,18 +3,25 @@
 namespace Elgg\Cli;
 
 use Elgg\Helpers\Cli\CliSeeder;
-use Elgg\Logger;
 use Elgg\TestableEvent;
 use Elgg\UnitTestCase;
+use Psr\Log\LogLevel;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class DatabaseSeedCommandUnitTest extends UnitTestCase {
 
 	/**
-	 * @var int previous log level
+	 * @var string previous log level
 	 */
 	protected $loglevel;
+	
+	/**
+	 * @var OutputInterface
+	 */
+	protected $backup_cli_output;
 	
 	/**
 	 * @var TestableEvent
@@ -24,14 +31,21 @@ class DatabaseSeedCommandUnitTest extends UnitTestCase {
 	public function up() {
 		// Need to adjust loglevel to make sure system messages go to screen output and not to logger
 		$app = \Elgg\Application::getInstance();
-		$this->loglevel = $app->internal_services->logger->getLevel();
-		$app->internal_services->logger->setLevel(Logger::ERROR);
+		$this->loglevel = $app->internal_services->logger->getLevel(false);
+		$app->internal_services->logger->setLevel(LogLevel::ERROR);
+		
+		$this->backup_cli_output = $app->internal_services->get('cli_output');
+		
+		$cli_output = new NullOutput();
+		$cli_output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
+		$app->internal_services->set('cli_output', $cli_output);
 	}
 
 	public function down() {
 		// restore loglevel
 		$app = \Elgg\Application::getInstance();
 		$app->internal_services->logger->setLevel($this->loglevel);
+		$app->internal_services->set('cli_output', $this->backup_cli_output);
 		
 		if ($this->event instanceof TestableEvent) {
 			$this->event->unregister();

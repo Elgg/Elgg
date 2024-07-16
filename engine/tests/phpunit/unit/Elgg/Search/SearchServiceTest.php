@@ -15,10 +15,12 @@ class SearchServiceTest extends UnitTestCase {
 
 	public function up() {
 		_elgg_services()->events->backup();
+		_elgg_services()->logger->disable();
 	}
 
 	public function down() {
 		_elgg_services()->events->restore();
+		_elgg_services()->logger->enable();
 	}
 
 	public function testEmptyReturnWithMissingQueryParts() {

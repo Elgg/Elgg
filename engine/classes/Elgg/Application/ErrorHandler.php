@@ -41,8 +41,7 @@ class ErrorHandler {
 		$error = date('Y-m-d H:i:s (T)') . ": \"{$errmsg}\" in file {$filename} (line {$linenum})";
 
 		// check if the error wasn't suppressed by the error control operator (@)
-		// error_reporting === 0 for PHP < 8.0
-		$reporting_disabled = (error_reporting() === 0) || !(error_reporting() & $errno);
+		$reporting_disabled = !(error_reporting() & $errno);
 		
 		switch ($errno) {
 			case E_USER_ERROR:
