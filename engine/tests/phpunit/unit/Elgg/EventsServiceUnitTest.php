@@ -141,15 +141,6 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		TestEventHandler::$invocations = [];
 	}
-
-	public function testInvokableFunctionTypeHintHook() {
-		// @todo This tests the \Elgg\Hook alias to help in the transition from Elgg 4 to Elgg 5. This can be removed in Elgg 6
-		$this->events->registerHandler('foo', 'bar', function(\Elgg\Hook $hook) {
-			return $hook->getValue() + 1;
-		});
-		
-		$this->assertEquals(2, $this->events->trigger('foo', 'bar', 1));
-	}
 	
 	public function testTriggerDeprecatedWithoutRegisteredHandlers() {
 		
