@@ -119,8 +119,6 @@ class SimpleCache {
 	 * Returns the cacheable views
 	 *
 	 * @return array
-	 *
-	 * @internal
 	 */
 	public function getCacheableViews(): array {
 		return $this->simplecache_views;
@@ -139,7 +137,6 @@ class SimpleCache {
 	 * Enables the simple cache.
 	 *
 	 * @return void
-	 * @see elgg_register_simplecache_view()
 	 */
 	public function enable(): void {
 		$this->config->save('simplecache_enabled', 1);
@@ -149,7 +146,6 @@ class SimpleCache {
 	 * Disables the simple cache.
 	 *
 	 * @return void
-	 * @see elgg_register_simplecache_view()
 	 */
 	public function disable(): void {
 		if (!$this->isEnabled()) {
@@ -282,5 +278,56 @@ class SimpleCache {
 		
 		$filename = $this->getPath() . "{$cache_time}/{$viewtype}/{$view}";
 		return Paths::sanitize($filename, false);
+	}
+	
+	/**
+	 * Checks if /cache directory has been symlinked to views simplecache directory
+	 *
+	 * @return bool
+	 * @since 6.1
+	 */
+	public function isSymbolicLinked(): bool {
+		$simplecache_path = rtrim($this->getPath(), '/');
+		$symlink_path = elgg_get_root_path() . 'cache';
+		
+		return is_dir($symlink_path) && realpath($simplecache_path) === realpath($symlink_path);
+	}
+	
+	/**
+	 * Symlinks /cache directory to views simplecache directory
+	 *
+	 * @return bool
+	 * @since 6.1
+	 */
+	public function createSymbolicLink(): bool {
+		if ($this->isSymbolicLinked()) {
+			// symlink exists, no need to proceed
+			return true;
+		}
+		
+		$symlink_path = Paths::project() . 'cache';
+		if (is_dir($symlink_path)) {
+			// Cache directory already exists
+			// We can not proceed without overwriting files
+			return false;
+		}
+		
+		$simplecache_path = rtrim($this->getPath(), '/');
+		if (!is_dir($simplecache_path)) {
+			// Views simplecache directory has not yet been created
+			mkdir($simplecache_path, 0755, true);
+		}
+		
+		symlink($simplecache_path, $symlink_path);
+		
+		if ($this->isSymbolicLinked()) {
+			return true;
+		}
+		
+		if (is_dir($symlink_path)) {
+			unlink($symlink_path);
+		}
+		
+		return false;
 	}
 }

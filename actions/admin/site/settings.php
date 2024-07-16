@@ -91,7 +91,7 @@ if (!elgg()->config->hasInitialValue('simplecache_enabled')) {
 }
 
 if (get_input('cache_symlink_enabled') === 'on') {
-	if (!_elgg_symlink_cache()) {
+	if (!_elgg_services()->simpleCache->createSymbolicLink()) {
 		elgg_register_error_message(elgg_echo('installation:cache_symlink:error'));
 	}
 }

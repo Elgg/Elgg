@@ -69,13 +69,13 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($this->service->isEnabled());
 		
 		// create symlink
-		$this->assertTrue(_elgg_symlink_cache());
+		$this->assertTrue($this->service->createSymbolicLink());
 		
 		// clear cache
 		$this->service->clear();
 		
 		// ensure symlink still works
-		$this->assertTrue(_elgg_is_cache_symlinked());
+		$this->assertTrue($this->service->isSymbolicLinked());
 		
 		_elgg_services()->config->save('simplecache_enabled', $is_enabled);
 		
@@ -118,8 +118,8 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 			unlink($symlink_path);
 		}
 		
-		$this->assertTrue(_elgg_symlink_cache());
-		$this->assertTrue(_elgg_is_cache_symlinked());
+		$this->assertTrue($this->service->createSymbolicLink());
+		$this->assertTrue($this->service->isSymbolicLinked());
 		$this->assertTrue(is_dir($simplecache_path));
 		
 		// Test that we can flush caches with symlink
