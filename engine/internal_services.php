@@ -51,7 +51,7 @@ return [
 	'entityTable' => DI\autowire(\Elgg\Database\EntityTable::class),
 	'esm' => DI\autowire(\Elgg\Javascript\ESMService::class),
 	'events' => DI\autowire(\Elgg\EventsService::class),
-	'externalFiles' => DI\autowire(\Elgg\Assets\ExternalFiles::class)->constructorParameter('serverCache', DI\get('serverCache')),
+	'externalFiles' => DI\autowire(\Elgg\Assets\ExternalFiles::class),
 	'fields' => DI\autowire(\Elgg\Forms\FieldsService::class),
 	'forms' => DI\autowire(\Elgg\FormsService::class),
 	'fileCache' => DI\factory(function (ContainerInterface $c) {
@@ -146,6 +146,7 @@ return [
 	'search' => DI\autowire(\Elgg\Search\SearchService::class),
 	'seeder' => DI\autowire(\Elgg\Database\Seeder::class),
 	'serveFileHandler' => DI\autowire(\Elgg\Application\ServeFileHandler::class),
+	'serverCache' => DI\autowire(\Elgg\Cache\ServerCache::class),
 	'session' => DI\factory(function (ContainerInterface $c) {
         return \ElggSession::fromDatabase($c->config, $c->db);
     }),
@@ -155,7 +156,6 @@ return [
 	'siteSecret' => DI\autowire(\Elgg\Security\SiteSecret::class),
 	'stickyForms' => DI\autowire(\Elgg\Forms\StickyForms::class),
 	'systemCache' => DI\autowire(\Elgg\Cache\SystemCache::class)->constructorParameter('cache', DI\get('fileCache')),
-	'serverCache' => DI\autowire(\Elgg\Cache\SystemCache::class)->constructorParameter('cache', DI\get('localFileCache')),
 	'subscriptions' => DI\autowire(\Elgg\Notifications\SubscriptionsService::class),
 	'system_messages' => DI\autowire(\Elgg\SystemMessagesService::class),
 	'table_columns' => DI\autowire(\Elgg\Views\TableColumn\ColumnFactory::class),
@@ -172,7 +172,7 @@ return [
 	'usersApiSessionsTable' => DI\autowire(\Elgg\Database\UsersApiSessionsTable::class),
 	'users_remember_me_cookies_table' => DI\autowire(\Elgg\Database\UsersRememberMeCookiesTable::class),
 	'upgradeLocator' => DI\autowire(\Elgg\Upgrade\Locator::class),
-	'views' => DI\autowire(\Elgg\ViewsService::class)->constructorParameter('server_cache', DI\get('serverCache')),
+	'views' => DI\autowire(\Elgg\ViewsService::class),
 	'viewCacher' => DI\autowire(\Elgg\Cache\ViewCacher::class),
 	'widgets' => DI\autowire(\Elgg\WidgetsService::class),
 	
@@ -193,6 +193,7 @@ return [
 	\Elgg\Cache\EntityCache::class => DI\get('entityCache'),
 	\Elgg\Cache\MetadataCache::class => DI\get('metadataCache'),
 	\Elgg\Cache\QueryCache::class => DI\get('queryCache'),
+	\Elgg\Cache\ServerCache::class => DI\get('serverCache'),
 	\Elgg\Cache\SessionCache::class => DI\get('sessionCache'),
 	\Elgg\Cache\SimpleCache::class => DI\get('simpleCache'),
 	\Elgg\Cache\SystemCache::class => DI\get('systemCache'),

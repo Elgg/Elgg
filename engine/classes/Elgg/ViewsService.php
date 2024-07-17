@@ -2,7 +2,7 @@
 
 namespace Elgg;
 
-use Elgg\Cache\SystemCache;
+use Elgg\Cache\ServerCache;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\Project\Paths;
 use Elgg\Traits\Loggable;
@@ -61,16 +61,16 @@ class ViewsService {
 	/**
 	 * Constructor
 	 *
-	 * @param EventsService           $events       Events service
-	 * @param \Elgg\Http\Request      $request      Http Request
-	 * @param \Elgg\Config            $config       Elgg configuration
-	 * @param \Elgg\Cache\SystemCache $server_cache Server cache
+	 * @param EventsService      $events       Events service
+	 * @param \Elgg\Http\Request $request      Http Request
+	 * @param \Elgg\Config       $config       Elgg configuration
+	 * @param ServerCache        $server_cache Server cache
 	 */
 	public function __construct(
 		protected EventsService $events,
 		protected HttpRequest $request,
 		protected Config $config,
-		protected SystemCache $server_cache
+		protected ServerCache $server_cache
 	) {
 	}
 

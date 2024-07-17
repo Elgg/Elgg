@@ -2,8 +2,6 @@
 
 namespace Elgg;
 
-use Elgg\IntegrationTestCase;
-
 class ViewsServiceIntegrationTest extends IntegrationTestCase {
 	
 	public function up() {
@@ -17,7 +15,7 @@ class ViewsServiceIntegrationTest extends IntegrationTestCase {
 		$this->views = _elgg_services()->views;
 		
 		$this->cache->enable();
-		$this->cache->reset();
+		$this->cache->clear();
 	}
 	
 	public function testConfigureFromCache() {
@@ -41,7 +39,7 @@ class ViewsServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals(array_keys($test_data['locations']['default']), $this->views->listViews());
 		
 		// assert that once loaded we do not load again
-		$this->cache->reset();
+		$this->cache->clear();
 		$this->views->configureFromCache();
 		$this->assertEquals(array_keys($test_data['locations']['default']), $this->views->listViews());
 	}

@@ -97,7 +97,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Router                                      $router
  * @property-read \Elgg\Database\Seeder                             $seeder
  * @property-read \Elgg\Application\ServeFileHandler                $serveFileHandler
- * @property-read \Elgg\Cache\SystemCache                           $serverCache
+ * @property-read \Elgg\Cache\ServerCache                           $serverCache
  * @property-read \ElggSession                                      $session
  * @property-read \Elgg\Cache\SessionCache                          $sessionCache
  * @property-read \Elgg\SessionManagerService                       $session_manager
