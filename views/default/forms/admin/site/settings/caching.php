@@ -79,7 +79,7 @@ $body .= elgg_view_field([
 	'#class' => 'mtm',
 	'name' => 'system_cache_enabled',
 	'switch' => true,
-	'checked' => elgg_is_system_cache_enabled(),
+	'checked' => _elgg_services()->systemCache->isEnabled(),
 ]);
 
 echo elgg_view_module('info', elgg_echo('admin:legend:caching'), $body, ['id' => 'elgg-settings-advanced-caching']);

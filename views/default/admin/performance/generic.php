@@ -148,7 +148,7 @@ $title = elgg_view('output/url', [
 $value = elgg_echo('status:disabled');
 $subtext = elgg_echo('installation:simplecache:description');
 
-if (elgg_is_simplecache_enabled()) {
+if (_elgg_services()->simpleCache->isEnabled()) {
 	$icon = $icon_ok;
 	$value = elgg_echo('status:enabled');
 	
@@ -172,7 +172,7 @@ $title = elgg_view('output/url', [
 $value = elgg_echo('status:disabled');
 $subtext = elgg_echo('installation:systemcache:description');
 
-if (elgg_is_system_cache_enabled()) {
+if (_elgg_services()->systemCache->isEnabled()) {
 	$icon = $icon_ok;
 	$value = elgg_echo('status:enabled');
 	$subtext = '';

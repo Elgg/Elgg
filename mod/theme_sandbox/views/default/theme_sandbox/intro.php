@@ -12,7 +12,7 @@
 </p>
 <?php
 $simple_cache = elgg_get_config('simplecache_enabled');
-$system_cache = elgg_is_system_cache_enabled();
+$system_cache = _elgg_services()->systemCache->isEnabled();
 
 if ($simple_cache || $system_cache) {
 	$advanced = elgg_view_url('admin/site_settings', 'Advanced Settings');

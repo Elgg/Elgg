@@ -16,7 +16,7 @@ class TranslatorIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testTranslationsGetSavedInCache() {
-		$cache = elgg_get_system_cache();
+		$cache = _elgg_services()->fileCache;
 		$cache->delete('en.lang');
 		
 		$this->assertEmpty($cache->load('en.lang'));

@@ -84,9 +84,9 @@ elgg_save_config('can_change_username', get_input('can_change_username') === 'on
 
 if (!elgg()->config->hasInitialValue('simplecache_enabled')) {
 	if (get_input('simplecache_enabled') === 'on') {
-		elgg_enable_simplecache();
+		_elgg_services()->simpleCache->enable();
 	} else {
-		elgg_disable_simplecache();
+		_elgg_services()->simpleCache->disable();
 	}
 }
 
@@ -100,9 +100,9 @@ elgg_save_config('simplecache_minify_js', get_input('simplecache_minify_js') ===
 elgg_save_config('simplecache_minify_css', get_input('simplecache_minify_css') === 'on');
 
 if (get_input('system_cache_enabled') === 'on') {
-	elgg_enable_system_cache();
+	_elgg_services()->systemCache->enable();
 } else {
-	elgg_disable_system_cache();
+	_elgg_services()->systemCache->disable();
 }
 
 elgg_save_config('default_access', (int) get_input('default_access', ACCESS_PRIVATE));

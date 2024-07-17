@@ -18,10 +18,10 @@ class Translator extends ElggTranslator {
 	 */
 	protected function includeLanguageFile($path): bool {
 		$cache_key = 'lang/' . sha1($path);
-		$result = elgg_get_system_cache()->load($cache_key);
+		$result = _elgg_services()->fileCache->load($cache_key);
 		if (!isset($result)) {
 			$result = includer::includeFile($path);
-			elgg_get_system_cache()->save($cache_key, $result);
+			_elgg_services()->fileCache->save($cache_key, $result);
 		}
 		
 		if (is_array($result)) {

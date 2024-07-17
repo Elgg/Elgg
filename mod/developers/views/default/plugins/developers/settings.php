@@ -16,7 +16,7 @@ echo elgg_view_field([
 	'#label' => elgg_echo('developers:label:simple_cache'),
 	'#help' => elgg_echo('developers:help:simple_cache'),
 	'name' => 'simple_cache',
-	'value' => elgg_is_simplecache_enabled(),
+	'value' => _elgg_services()->simpleCache->isEnabled(),
 	'disabled' => $config->hasInitialValue('simplecache_enabled'),
 ]);
 
@@ -25,7 +25,7 @@ echo elgg_view_field([
 	'#label' => elgg_echo('developers:label:system_cache'),
 	'#help' => elgg_echo('developers:help:system_cache'),
 	'name' => 'system_cache',
-	'value' => elgg_is_system_cache_enabled(),
+	'value' => _elgg_services()->systemCache->isEnabled(),
 ]);
 
 echo elgg_view_field([

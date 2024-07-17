@@ -45,14 +45,14 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 		$is_enabled = _elgg_services()->config->simplecache_enabled;
 
 		_elgg_services()->config->save('simplecache_enabled', false);
+		
+		_elgg_services()->simpleCache->disable();
 
-		elgg_disable_simplecache();
+		$this->assertFalse(_elgg_services()->simpleCache->isEnabled());
+		
+		_elgg_services()->simpleCache->enable();
 
-		$this->assertFalse(elgg_is_simplecache_enabled());
-
-		elgg_enable_simplecache();
-
-		$this->assertTrue(elgg_is_simplecache_enabled());
+		$this->assertTrue(_elgg_services()->simpleCache->isEnabled());
 
 		_elgg_services()->config->save('simplecache_enabled', $is_enabled);
 	}
