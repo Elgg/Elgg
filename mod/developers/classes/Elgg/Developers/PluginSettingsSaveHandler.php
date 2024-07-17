@@ -24,16 +24,16 @@ class PluginSettingsSaveHandler {
 		
 		if (!elgg()->config->hasInitialValue('simplecache_enabled')) {
 			if (get_input('simple_cache')) {
-				elgg_enable_simplecache();
+				_elgg_services()->simpleCache->enable();
 			} else {
-				elgg_disable_simplecache();
+				_elgg_services()->simpleCache->disable();
 			}
 		}
 		
 		if (get_input('system_cache')) {
-			elgg_enable_system_cache();
+			_elgg_services()->systemCache->enable();
 		} else {
-			elgg_disable_system_cache();
+			_elgg_services()->systemCache->disable();
 		}
 		
 		if (!elgg()->config->hasInitialValue('debug')) {

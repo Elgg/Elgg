@@ -22,20 +22,20 @@ class SystemCacheUnitTest extends UnitTestCase {
 	}
 
 	public function testCanEnableSystemCache() {
+		
+		_elgg_services()->systemCache->enable();
 
-		elgg_enable_system_cache();
+		$this->assertTrue(_elgg_services()->systemCache->isEnabled());
+		
+		_elgg_services()->systemCache->disable();
 
-		$this->assertTrue(elgg_is_system_cache_enabled());
-
-		elgg_disable_system_cache();
-
-		$this->assertFalse(elgg_is_system_cache_enabled());
+		$this->assertFalse(_elgg_services()->systemCache->isEnabled());
 
 	}
 
 	public function testCanStoreValuesInSystemCache() {
 
-		$cache = elgg_get_system_cache();
+		$cache = _elgg_services()->fileCache;
 
 		$cache->save('foo', 'bar');
 
@@ -47,42 +47,42 @@ class SystemCacheUnitTest extends UnitTestCase {
 	}
 
 	public function testCanStoreValuesInSystemCacheUsingApiMethods() {
-
-		elgg_enable_system_cache();
+		
+		_elgg_services()->systemCache->enable();
 
 		elgg_save_system_cache('foo', 'bar');
 
 		$this->assertEquals('bar', elgg_load_system_cache('foo'));
-
-		elgg_reset_system_cache();
+		
+		_elgg_services()->systemCache->reset();
 
 		$this->assertNull(elgg_load_system_cache('foo'));
 	}
 
 	public function testCanNotStoreValuesInSystemCacheWhenDisabled() {
-
-		elgg_disable_system_cache();
+		
+		_elgg_services()->systemCache->disable();
 
 		$this->assertFalse(elgg_save_system_cache('foo', 'bar'));
 
 		$this->assertNull(elgg_load_system_cache('foo'));
-
-		elgg_enable_system_cache();
+		
+		_elgg_services()->systemCache->enable();
 
 		elgg_save_system_cache('foo', 'bar');
 
 		$this->assertEquals('bar', elgg_load_system_cache('foo'));
-
-		elgg_disable_system_cache();
+		
+		_elgg_services()->systemCache->disable();
 
 		$this->assertNull(elgg_load_system_cache('foo'));
-
-		elgg_reset_system_cache();
+		
+		_elgg_services()->systemCache->reset();
 	}
 	
 	public function testCanDeleteSingleKeyFromCache() {
-		elgg_enable_system_cache();
-		elgg_reset_system_cache();
+		_elgg_services()->systemCache->enable();
+		_elgg_services()->systemCache->reset();
 		
 		elgg_save_system_cache('foo', 'bar');
 		elgg_save_system_cache('foo2', 'bar2');
@@ -92,16 +92,16 @@ class SystemCacheUnitTest extends UnitTestCase {
 		
 		$this->assertEquals('bar2', elgg_load_system_cache('foo2'));
 		
-		elgg_reset_system_cache();
+		_elgg_services()->systemCache->reset();
 	}
 	
 	public function testCanStoreItemWithTTL() {
-		elgg_enable_system_cache();
-		elgg_reset_system_cache();
+		_elgg_services()->systemCache->enable();
+		_elgg_services()->systemCache->reset();
 		
 		elgg_save_system_cache('foo', 'bar', 1);
 		
-		$pool = $this->getInaccessableProperty(elgg_get_system_cache(), 'pool');
+		$pool = $this->getInaccessableProperty(_elgg_services()->fileCache, 'pool');
 		
 		if ($pool instanceof ClusterPoolInterface) {
 			$this->markTestSkipped('Unable to test a cluster as it does not implement detachAllItems for all pool drivers');

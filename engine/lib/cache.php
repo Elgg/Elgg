@@ -5,24 +5,6 @@
  */
 
 /**
- * Returns an \Elgg\Cache\BaseCache object suitable for caching system information
- *
- * @return \Elgg\Cache\BaseCache
- */
-function elgg_get_system_cache(): \Elgg\Cache\BaseCache {
-	return _elgg_services()->fileCache;
-}
-
-/**
- * Reset the system cache by deleting the caches
- *
- * @return void
- */
-function elgg_reset_system_cache(): void {
-	_elgg_services()->systemCache->reset();
-}
-
-/**
  * Saves a system cache.
  *
  * @param string $type         The type or identifier of the cache
@@ -55,40 +37,6 @@ function elgg_load_system_cache(string $type) {
  */
 function elgg_delete_system_cache(string $type): bool {
 	return _elgg_services()->systemCache->delete($type);
-}
-
-/**
- * Is system cache enabled
- *
- * @return bool
- * @since 2.2.0
- */
-function elgg_is_system_cache_enabled(): bool {
-	return _elgg_services()->systemCache->isEnabled();
-}
-
-/**
- * Enables the system disk cache.
- *
- * Uses the 'system_cache_enabled' config with a boolean value.
- * Resets the system cache.
- *
- * @return void
- */
-function elgg_enable_system_cache(): void {
-	_elgg_services()->systemCache->enable();
-}
-
-/**
- * Disables the system disk cache.
- *
- * Uses the 'system_cache_enabled' config with a boolean value.
- * Resets the system cache.
- *
- * @return void
- */
-function elgg_disable_system_cache(): void {
-	_elgg_services()->systemCache->disable();
 }
 
 /* Simplecache */
@@ -129,40 +77,6 @@ function elgg_register_simplecache_view(string $view_name): void {
  */
 function elgg_get_simplecache_url(string $view): string {
 	return _elgg_services()->simpleCache->getUrl($view);
-}
-
-/**
- * Is simple cache enabled
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_is_simplecache_enabled(): bool {
-	return _elgg_services()->simpleCache->isEnabled();
-}
-
-/**
- * Enables the simple cache.
- *
- * @see elgg_register_simplecache_view()
- * @return void
- * @since 1.8.0
- */
-function elgg_enable_simplecache(): void {
-	_elgg_services()->simpleCache->enable();
-}
-
-/**
- * Disables the simple cache.
- *
- * @warning Simplecache is also purged when disabled.
- *
- * @see elgg_register_simplecache_view()
- * @return void
- * @since 1.8.0
- */
-function elgg_disable_simplecache(): void {
-	_elgg_services()->simpleCache->disable();
 }
 
 /**
