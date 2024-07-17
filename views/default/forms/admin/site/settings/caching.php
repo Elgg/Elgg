@@ -28,7 +28,7 @@ $simple_cache_disabled_class = $is_simple_cache_on ? '' : 'elgg-state-disabled';
 
 $body = elgg_view_field($params);
 
-$cache_symlinked = _elgg_is_cache_symlinked();
+$cache_symlinked = _elgg_services()->simpleCache->isSymbolicLinked();
 
 $help = elgg_echo('installation:cache_symlink:description');
 $help .= elgg_echo('installation:cache_symlink:paths', [elgg_get_root_path() . 'cache/', elgg_get_asset_path()]);
