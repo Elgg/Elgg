@@ -25,6 +25,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Database\ApiUsersTable                      $apiUsersTable
  * @property-read \Elgg\AuthenticationService                       $authentication
  * @property-read \Elgg\Views\AutoParagraph                         $autoParagraph
+ * @property-read \Elgg\Cache\AutoloadCache                         $autoloadCache
  * @property-read \Elgg\AutoloadManager                             $autoloadManager
  * @property-read \Elgg\BootService                                 $boot
  * @property-read \Elgg\Cache\BootCache                             $bootCache
@@ -67,7 +68,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\ImageService                                $imageService
  * @property-read \Elgg\Invoker                                     $invoker
  * @property-read \Elgg\I18n\LocaleService                          $locale
- * @property-read \Elgg\Cache\BaseCache                             $localFileCache
  * @property-read \Elgg\Logger                                      $logger
  * @property-read \Laminas\Mail\Transport\TransportInterface        $mailer
  * @property-read \Elgg\Menu\Service                                $menus

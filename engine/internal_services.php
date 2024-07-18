@@ -3,7 +3,8 @@
 use Psr\Container\ContainerInterface;
 
 return [
-	'autoloadManager' => DI\autowire(\Elgg\AutoloadManager::class)->constructorParameter('cache', DI\get('localFileCache')),
+	'autoloadCache' => DI\autowire(\Elgg\Cache\AutoloadCache::class),
+	'autoloadManager' => DI\autowire(\Elgg\AutoloadManager::class),
 	'accessCache' => DI\factory(function (ContainerInterface $c) {
 		return $c->sessionCache->access;
     }),
@@ -65,10 +66,6 @@ return [
 	'imageService' => DI\autowire(\Elgg\ImageService::class),
 	'invoker' => DI\autowire(\Elgg\Invoker::class)->constructorParameter('dic', function() { return elgg(); }),
 	'locale' => DI\autowire(\Elgg\I18n\LocaleService::class),
-	'localFileCache' => DI\factory(function (ContainerInterface $c) {
-		$flags = ELGG_CACHE_LOCALFILESYSTEM | ELGG_CACHE_RUNTIME;
-		return new \Elgg\Cache\CompositeCache('elgg_local_system_cache', $c->config, $flags);
-    }),
 	'logger' => DI\factory(function (ContainerInterface $c) {
 		$logger = \Elgg\Logger::factory($c->cli_input, $c->cli_output);
 
@@ -180,6 +177,7 @@ return [
 	\Elgg\AuthenticationService::class => DI\get('authentication'),
 	\Elgg\AutoloadManager::class => DI\get('autoloadManager'),
 	\Elgg\BootService::class => DI\get('boot'),
+	\Elgg\Cache\AutoloadCache::class => DI\get('autoloadCache'),
 	\Elgg\Cache\BootCache::class => DI\get('bootCache'),
 	\Elgg\Cache\DataCache::class => DI\get('dataCache'),
 	\Elgg\Cache\EntityCache::class => DI\get('entityCache'),

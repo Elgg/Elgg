@@ -142,7 +142,7 @@ class ElggInstaller {
 			$app->internal_services->pluginsCache->disable();
 			$app->internal_services->sessionCache->disable();
 			$app->internal_services->dataCache->disable();
-			$app->internal_services->autoloadManager->getCache()->disable();
+			$app->internal_services->serverCache->disable();
 
 			$current_step = $this->getCurrentStep();
 			$index_admin = array_search('admin', $this->getSteps());
