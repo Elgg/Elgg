@@ -30,11 +30,7 @@ class PluginSettingsSaveHandler {
 			}
 		}
 		
-		if (get_input('system_cache')) {
-			_elgg_services()->systemCache->enable();
-		} else {
-			_elgg_services()->systemCache->disable();
-		}
+		elgg_save_config('system_cache_enabled', get_input('system_cache'));
 		
 		if (!elgg()->config->hasInitialValue('debug')) {
 			$debug = get_input('debug_level');

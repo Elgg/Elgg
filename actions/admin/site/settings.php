@@ -99,11 +99,7 @@ if (get_input('cache_symlink_enabled') === 'on') {
 elgg_save_config('simplecache_minify_js', get_input('simplecache_minify_js') === 'on');
 elgg_save_config('simplecache_minify_css', get_input('simplecache_minify_css') === 'on');
 
-if (get_input('system_cache_enabled') === 'on') {
-	_elgg_services()->systemCache->enable();
-} else {
-	_elgg_services()->systemCache->disable();
-}
+elgg_save_config('system_cache_enabled', get_input('system_cache_enabled') === 'on');
 
 elgg_save_config('default_access', (int) get_input('default_access', ACCESS_PRIVATE));
 
