@@ -12,10 +12,7 @@ use Elgg\Cache\CompositeCache;
  */
 trait Cacheable {
 
-	/**
-	 * @var BaseCache
-	 */
-	protected $cache;
+	protected BaseCache $cache;
 
 	/**
 	 * Set cache

@@ -25,9 +25,10 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Database\ApiUsersTable                      $apiUsersTable
  * @property-read \Elgg\AuthenticationService                       $authentication
  * @property-read \Elgg\Views\AutoParagraph                         $autoParagraph
+ * @property-read \Elgg\Cache\AutoloadCache                         $autoloadCache
  * @property-read \Elgg\AutoloadManager                             $autoloadManager
  * @property-read \Elgg\BootService                                 $boot
- * @property-read \Elgg\Cache\BaseCache                             $bootCache
+ * @property-read \Elgg\Cache\BootCache                             $bootCache
  * @property-read \Elgg\Application\CacheHandler                    $cacheHandler
  * @property-read \Elgg\Assets\CssCompiler                          $cssCompiler
  * @property-read \Elgg\Security\Csrf                               $csrf
@@ -54,7 +55,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\EventsService                               $events
  * @property-read \Elgg\Assets\ExternalFiles                        $externalFiles
  * @property-read \Elgg\Forms\FieldsService                         $fields
- * @property-read \Elgg\Cache\BaseCache                             $fileCache
  * @property-read \Elgg\Filesystem\Filestore\DiskFilestore          $filestore
  * @property-read \Elgg\FormsService                                $forms
  * @property-read \Elgg\Gatekeeper                                  $gatekeeper
@@ -68,7 +68,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\ImageService                                $imageService
  * @property-read \Elgg\Invoker                                     $invoker
  * @property-read \Elgg\I18n\LocaleService                          $locale
- * @property-read \Elgg\Cache\BaseCache                             $localFileCache
  * @property-read \Elgg\Logger                                      $logger
  * @property-read \Laminas\Mail\Transport\TransportInterface        $mailer
  * @property-read \Elgg\Menu\Service                                $menus
@@ -83,7 +82,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Security\PasswordGeneratorService           $passwordGenerator
  * @property-read \Elgg\PersistentLoginService                      $persistentLogin
  * @property-read \Elgg\Database\Plugins                            $plugins
- * @property-read \Elgg\Cache\BaseCache                             $pluginsCache
+ * @property-read \Elgg\Cache\PluginsCache                          $pluginsCache
  * @property-read \Elgg\Application\Database                        $publicDb
  * @property-read \Elgg\Cache\QueryCache                            $queryCache
  * @property-read \Elgg\RedirectService                             $redirects
@@ -97,7 +96,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Router                                      $router
  * @property-read \Elgg\Database\Seeder                             $seeder
  * @property-read \Elgg\Application\ServeFileHandler                $serveFileHandler
- * @property-read \Elgg\Cache\SystemCache                           $serverCache
+ * @property-read \Elgg\Cache\ServerCache                           $serverCache
  * @property-read \ElggSession                                      $session
  * @property-read \Elgg\Cache\SessionCache                          $sessionCache
  * @property-read \Elgg\SessionManagerService                       $session_manager

@@ -2,8 +2,8 @@
 
 namespace Elgg\Assets;
 
+use Elgg\Cache\ServerCache;
 use Elgg\Cache\SimpleCache;
-use Elgg\Cache\SystemCache;
 use Elgg\Config;
 use Elgg\Http\Urls;
 use Elgg\ViewsService;
@@ -32,14 +32,14 @@ class ExternalFiles {
 	 * @param Urls         $urls        urls service
 	 * @param ViewsService $views       views service
 	 * @param SimpleCache  $simpleCache simplecache
-	 * @param SystemCache  $serverCache server cache
+	 * @param ServerCache  $serverCache server cache
 	 */
 	public function __construct(
 		protected Config $config,
 		protected Urls $urls,
 		protected ViewsService $views,
 		protected SimpleCache $simpleCache,
-		protected SystemCache $serverCache
+		protected ServerCache $serverCache
 	) {
 	}
 
