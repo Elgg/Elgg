@@ -27,7 +27,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Views\AutoParagraph                         $autoParagraph
  * @property-read \Elgg\AutoloadManager                             $autoloadManager
  * @property-read \Elgg\BootService                                 $boot
- * @property-read \Elgg\Cache\BaseCache                             $bootCache
+ * @property-read \Elgg\Cache\BootCache                             $bootCache
  * @property-read \Elgg\Application\CacheHandler                    $cacheHandler
  * @property-read \Elgg\Assets\CssCompiler                          $cssCompiler
  * @property-read \Elgg\Security\Csrf                               $csrf

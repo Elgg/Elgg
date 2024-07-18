@@ -16,11 +16,8 @@ return [
 	'apiUsersTable' => DI\autowire(\Elgg\Database\ApiUsersTable::class),
 	'authentication' => DI\autowire(\Elgg\AuthenticationService::class),
 	'autoParagraph' => DI\autowire(\Elgg\Views\AutoParagraph::class),
-	'boot' => DI\autowire(\Elgg\BootService::class)->constructorParameter('cache', DI\get('bootCache')),
-	'bootCache' => DI\factory(function (ContainerInterface $c) {
-		$flags = ELGG_CACHE_PERSISTENT | ELGG_CACHE_FILESYSTEM | ELGG_CACHE_RUNTIME;
-		return new \Elgg\Cache\CompositeCache('elgg_boot', $c->config, $flags);
-    }),
+	'boot' => DI\autowire(\Elgg\BootService::class),
+	'bootCache' => DI\autowire(\Elgg\Cache\BootCache::class),
 	'cacheHandler' => DI\autowire(\Elgg\Application\CacheHandler::class),
 	'cssCompiler' => DI\autowire(\Elgg\Assets\CssCompiler::class),
 	'csrf' => DI\autowire(\Elgg\Security\Csrf::class),
@@ -185,6 +182,7 @@ return [
 	\Elgg\AuthenticationService::class => DI\get('authentication'),
 	\Elgg\AutoloadManager::class => DI\get('autoloadManager'),
 	\Elgg\BootService::class => DI\get('boot'),
+	\Elgg\Cache\BootCache::class => DI\get('bootCache'),
 	\Elgg\Cache\DataCache::class => DI\get('dataCache'),
 	\Elgg\Cache\EntityCache::class => DI\get('entityCache'),
 	\Elgg\Cache\MetadataCache::class => DI\get('metadataCache'),

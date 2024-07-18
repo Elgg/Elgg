@@ -81,6 +81,7 @@ class CacheServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 	
 	public static function cacheServiceProvider(): array {
 		return [
+			['bootCache'],
 			['serverCache'],
 			['systemCache'],
 		];
