@@ -20,7 +20,7 @@ class EventHandlers {
 		_elgg_services()->sessionCache->disable();
 		_elgg_services()->dataCache->disable();
 		_elgg_services()->autoloadManager->getCache()->disable();
-		_elgg_services()->systemCache->getCache()->disable();
+		_elgg_services()->systemCache->disable();
 		_elgg_services()->serverCache->disable();
 	}
 	
@@ -35,7 +35,7 @@ class EventHandlers {
 		_elgg_services()->sessionCache->enable();
 		_elgg_services()->dataCache->enable();
 		_elgg_services()->autoloadManager->getCache()->enable();
-		_elgg_services()->systemCache->getCache()->enable();
+		_elgg_services()->systemCache->enable();
 		_elgg_services()->serverCache->enable();
 	}
 
@@ -50,7 +50,7 @@ class EventHandlers {
 		_elgg_services()->sessionCache->purge();
 		_elgg_services()->dataCache->purge();
 		_elgg_services()->simpleCache->purge();
-		_elgg_services()->fileCache->purge();
+		_elgg_services()->systemCache->purge();
 		_elgg_services()->localFileCache->purge();
 		_elgg_services()->serverCache->purge();
 	}
@@ -65,7 +65,7 @@ class EventHandlers {
 		_elgg_services()->pluginsCache->invalidate();
 		_elgg_services()->sessionCache->invalidate();
 		_elgg_services()->dataCache->invalidate();
-		_elgg_services()->fileCache->invalidate();
+		_elgg_services()->systemCache->invalidate();
 		_elgg_services()->localFileCache->invalidate();
 		_elgg_services()->serverCache->invalidate();
 	}
@@ -82,7 +82,7 @@ class EventHandlers {
 		_elgg_services()->dataCache->clear();
 		_elgg_services()->simpleCache->clear();
 		_elgg_services()->autoloadManager->deleteCache();
-		_elgg_services()->fileCache->clear();
+		_elgg_services()->systemCache->clear();
 		_elgg_services()->localFileCache->clear();
 		_elgg_services()->serverCache->clear();
 		

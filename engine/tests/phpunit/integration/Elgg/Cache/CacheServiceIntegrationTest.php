@@ -38,7 +38,9 @@ class CacheServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 		$service->delete('foo');
 		
 		$this->assertTrue($service->save('foo', 'bar'));
+		$this->assertTrue($service->save('foo2', 'bar2'));
 		$this->assertEquals('bar', $service->load('foo'));
+		$this->assertEquals('bar2', $service->load('foo2'));
 		
 		$service->disable();
 		$this->assertNull($service->load('foo'));
@@ -49,6 +51,7 @@ class CacheServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 		
 		$service->delete('foo');
 		$this->assertNull($service->load('foo'));
+		$this->assertEquals('bar2', $service->load('foo2'));
 	}
 	
 	/**
@@ -79,6 +82,7 @@ class CacheServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 	public static function cacheServiceProvider(): array {
 		return [
 			['serverCache'],
+			['systemCache'],
 		];
 	}
 }

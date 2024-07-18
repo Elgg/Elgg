@@ -54,7 +54,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\EventsService                               $events
  * @property-read \Elgg\Assets\ExternalFiles                        $externalFiles
  * @property-read \Elgg\Forms\FieldsService                         $fields
- * @property-read \Elgg\Cache\BaseCache                             $fileCache
  * @property-read \Elgg\Filesystem\Filestore\DiskFilestore          $filestore
  * @property-read \Elgg\FormsService                                $forms
  * @property-read \Elgg\Gatekeeper                                  $gatekeeper

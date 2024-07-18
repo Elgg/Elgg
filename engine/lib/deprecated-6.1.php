@@ -12,7 +12,7 @@
 function elgg_get_system_cache(): \Elgg\Cache\BaseCache {
 	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '6.1');
 	
-	return _elgg_services()->fileCache;
+	return _elgg_services()->systemCache->getCache();
 }
 
 /**
@@ -24,7 +24,7 @@ function elgg_get_system_cache(): \Elgg\Cache\BaseCache {
 function elgg_reset_system_cache(): void {
 	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '6.1');
 	
-	_elgg_services()->systemCache->reset();
+	_elgg_services()->systemCache->clear();
 }
 
 /**

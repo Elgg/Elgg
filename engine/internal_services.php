@@ -54,10 +54,6 @@ return [
 	'externalFiles' => DI\autowire(\Elgg\Assets\ExternalFiles::class),
 	'fields' => DI\autowire(\Elgg\Forms\FieldsService::class),
 	'forms' => DI\autowire(\Elgg\FormsService::class),
-	'fileCache' => DI\factory(function (ContainerInterface $c) {
-		$flags = ELGG_CACHE_PERSISTENT | ELGG_CACHE_FILESYSTEM | ELGG_CACHE_RUNTIME;
-		return new \Elgg\Cache\CompositeCache('elgg_system_cache', $c->config, $flags);
-    }),
 	'filestore' => DI\factory(function (ContainerInterface $c) {
 		return new \Elgg\Filesystem\Filestore\DiskFilestore($c->config->dataroot);
     }),
@@ -155,7 +151,7 @@ return [
 	'simpleCache' => DI\autowire(\Elgg\Cache\SimpleCache::class),
 	'siteSecret' => DI\autowire(\Elgg\Security\SiteSecret::class),
 	'stickyForms' => DI\autowire(\Elgg\Forms\StickyForms::class),
-	'systemCache' => DI\autowire(\Elgg\Cache\SystemCache::class)->constructorParameter('cache', DI\get('fileCache')),
+	'systemCache' => DI\autowire(\Elgg\Cache\SystemCache::class),
 	'subscriptions' => DI\autowire(\Elgg\Notifications\SubscriptionsService::class),
 	'system_messages' => DI\autowire(\Elgg\SystemMessagesService::class),
 	'table_columns' => DI\autowire(\Elgg\Views\TableColumn\ColumnFactory::class),
