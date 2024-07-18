@@ -31,71 +31,81 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$success = $this->service->add($object1->guid, 'testRelationship', $object2->guid);
-		$this->assertTrue($success);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $object1->guid;
+		$relationship->relationship = 'testRelationship';
+		$relationship->guid_two = $object2->guid;
 		
-		$object1->delete();
-		$object2->delete();
+		$this->assertTrue($this->service->add($relationship));
 	}
 	
 	public function testAddRelationshipWithIdReturn() {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $object1->guid;
+		$relationship->relationship = 'testRelationship';
+		$relationship->guid_two = $object2->guid;
+		
+		$id = $this->service->add($relationship, true);
 		$this->assertIsInt($id);
 		$this->assertGreaterThan(0, $id);
-		
-		$object1->delete();
-		$object2->delete();
 	}
 	
 	public function testAddTooLongRelationshipFailure() {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$str = str_repeat('Foo', RelationshipsTable::RELATIONSHIP_COLUMN_LENGTH);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $object1->guid;
+		$relationship->relationship = str_repeat('Foo', RelationshipsTable::RELATIONSHIP_COLUMN_LENGTH);
+		$relationship->guid_two = $object2->guid;
 		
 		$this->expectException(LengthException::class);
-		$this->service->add($object1->guid, $str, $object2->guid);
-		
-		$object1->delete();
-		$object2->delete();
+		$this->service->add($relationship);
 	}
 	
 	public function testAddDuplicateRelationshipFailure() {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$success = $this->service->add($object1->guid, 'testRelationship', $object2->guid);
-		$this->assertTrue($success);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $object1->guid;
+		$relationship->relationship = 'testRelationship';
+		$relationship->guid_two = $object2->guid;
 		
-		$failure = $this->service->add($object1->guid, 'testRelationship', $object2->guid);
-		$this->assertFalse($failure);
-		
-		$object1->delete();
-		$object2->delete();
+		$this->assertTrue($this->service->add($relationship));
+		$this->assertFalse($this->service->add($relationship));
 	}
 	
 	public function testAddNonExistingEntityRelationshipFailure() {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$failure = $this->service->add($object1->guid, 'testRelationship', 123456789);
-		$this->assertFalse($failure);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $object1->guid;
+		$relationship->relationship = 'testRelationship';
+		$relationship->guid_two = 123456789;
 		
-		$failure = $this->service->add(123456789, 'testRelationship', $object2->guid);
-		$this->assertFalse($failure);
+		$this->assertFalse($this->service->add($relationship));
 		
-		$failure = $this->service->add(123456789, 'testRelationship', 987654321);
-		$this->assertFalse($failure);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = 123456789;
+		$relationship->relationship = 'testRelationship';
+		$relationship->guid_two = $object2->guid;
 		
-		$object1->delete();
-		$object2->delete();
+		$this->assertFalse($this->service->add($relationship));
+		
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = 123456789;
+		$relationship->relationship = 'testRelationship';
+		$relationship->guid_two = 987654321;
+		
+		$this->assertFalse($this->service->add($relationship));
 	}
 	
 	public function testAddRelationshipPreventByEvent() {
-		
 		elgg()->events->backup();
 		
 		$object1 = $this->createObject();
@@ -105,29 +115,30 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 			return false;
 		});
 		
-		$failure = $this->service->add($object1->guid, 'testRelationship', $object2->guid);
-		$this->assertFalse($failure);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $object1->guid;
+		$relationship->relationship = 'testRelationship';
+		$relationship->guid_two = $object2->guid;
+		
+		$this->assertFalse($this->service->add($relationship));
 		
 		elgg()->events->restore();
-		
-		$object1->delete();
-		$object2->delete();
 	}
 	
 	public function testGetRelationshipByID() {
-		
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $object1->guid;
+		$relationship->relationship = 'testRelationship';
+		$relationship->guid_two = $object2->guid;
+		
+		$id = $this->service->add($relationship, true);
 		$this->assertIsInt($id);
 		$this->assertGreaterThan(0, $id);
 		
-		$relationship = $this->service->get($id);
-		$this->assertInstanceOf(\ElggRelationship::class, $relationship);
-		
-		$object1->delete();
-		$object2->delete();
+		$this->assertInstanceOf(\ElggRelationship::class, $this->service->get($id));
 	}
 	
 	public function testGetRelationshipByUnknownID() {
@@ -135,29 +146,33 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 	}
 	
 	public function testDeleteRelationshipByID() {
-		
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $object1->guid;
+		$relationship->relationship = 'testRelationship';
+		$relationship->guid_two = $object2->guid;
+		
+		$id = $this->service->add($relationship, true);
 		$this->assertIsInt($id);
 		$this->assertGreaterThan(0, $id);
 		
-		$success = $this->service->delete($id);
-		$this->assertTrue($success);
-		
-		$object1->delete();
-		$object2->delete();
+		$this->assertTrue($this->service->delete($id));
 	}
 	
 	public function testDeleteRelationshipByIDPreventByEvent() {
-		
 		elgg()->events->backup();
 		
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $object1->guid;
+		$relationship->relationship = 'testRelationship';
+		$relationship->guid_two = $object2->guid;
+		
+		$id = $this->service->add($relationship, true);
 		$this->assertIsInt($id);
 		$this->assertGreaterThan(0, $id);
 		
@@ -165,37 +180,9 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 			return false;
 		});
 		
-		$failure = $this->service->delete($id);
-		$this->assertFalse($failure);
+		$this->assertFalse($this->service->delete($id));
 		
 		elgg()->events->restore();
-		
-		$object1->delete();
-		$object2->delete();
-	}
-	
-	public function testDeleteRelationshipByIDNotPreventedByEvent() {
-		
-		elgg()->events->backup();
-		
-		$object1 = $this->createObject();
-		$object2 = $this->createObject();
-		
-		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
-		$this->assertIsInt($id);
-		$this->assertGreaterThan(0, $id);
-		
-		elgg()->events->registerHandler('delete', 'relationship', function(\Elgg\Event $event) {
-			return false;
-		});
-		
-		$success = $this->service->delete($id, false);
-		$this->assertTrue($success);
-		
-		elgg()->events->restore();
-		
-		$object1->delete();
-		$object2->delete();
 	}
 	
 	public function testDeleteRelationshipByUnknownID() {
@@ -206,7 +193,12 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $object1->guid;
+		$relationship->relationship = 'testRelationship';
+		$relationship->guid_two = $object2->guid;
+		
+		$id = $this->service->add($relationship, true);
 		$this->assertIsInt($id);
 		$this->assertGreaterThan(0, $id);
 		
@@ -215,16 +207,18 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($this->service->check($object1->guid, 'testRelationship', $object1->guid));
 		$this->assertFalse($this->service->check($object2->guid, 'testRelationship', $object2->guid));
 		$this->assertFalse($this->service->check($object1->guid, 'testUnknownRelationship', $object2->guid));
-		
-		$object1->delete();
-		$object2->delete();
 	}
 	
 	public function testRemoveRelationship() {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $object1->guid;
+		$relationship->relationship = 'testRelationship';
+		$relationship->guid_two = $object2->guid;
+		
+		$id = $this->service->add($relationship, true);
 		$this->assertIsInt($id);
 		$this->assertGreaterThan(0, $id);
 		
@@ -233,8 +227,5 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($this->service->remove($object2->guid, 'testRelationship', $object2->guid));
 		$this->assertFalse($this->service->remove($object1->guid, 'testUnknownRelationship', $object2->guid));
 		$this->assertTrue($this->service->remove($object1->guid, 'testRelationship', $object2->guid));
-		
-		$object1->delete();
-		$object2->delete();
 	}
 }

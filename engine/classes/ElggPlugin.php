@@ -1282,9 +1282,9 @@ class ElggPlugin extends ElggObject {
 
 		$site = elgg_get_site_entity();
 		if ($active) {
-			$result = _elgg_services()->relationshipsTable->add($this->guid, 'active_plugin', $site->guid);
+			$result = $this->addRelationship($site->guid, 'active_plugin');
 		} else {
-			$result = _elgg_services()->relationshipsTable->remove($this->guid, 'active_plugin', $site->guid);
+			$result = $this->removeRelationship($site->guid, 'active_plugin');
 		}
 		
 		if ($result) {
