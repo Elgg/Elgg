@@ -82,7 +82,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Security\PasswordGeneratorService           $passwordGenerator
  * @property-read \Elgg\PersistentLoginService                      $persistentLogin
  * @property-read \Elgg\Database\Plugins                            $plugins
- * @property-read \Elgg\Cache\BaseCache                             $pluginsCache
+ * @property-read \Elgg\Cache\PluginsCache                          $pluginsCache
  * @property-read \Elgg\Application\Database                        $publicDb
  * @property-read \Elgg\Cache\QueryCache                            $queryCache
  * @property-read \Elgg\RedirectService                             $redirects

@@ -103,10 +103,8 @@ return [
 	'passwords' => DI\autowire(\Elgg\PasswordService::class),
 	'passwordGenerator' => DI\autowire(\Elgg\Security\PasswordGeneratorService::class),
 	'persistentLogin' => DI\autowire(\Elgg\PersistentLoginService::class),
-	'plugins' => DI\autowire(\Elgg\Database\Plugins::class)->constructorParameter('cache', DI\get('pluginsCache')),
-	'pluginsCache' => DI\factory(function (ContainerInterface $c) {
-		return new \Elgg\Cache\CompositeCache('plugins', $c->config, ELGG_CACHE_RUNTIME);
-	}),
+	'plugins' => DI\autowire(\Elgg\Database\Plugins::class),
+	'pluginsCache' => DI\autowire(\Elgg\Cache\PluginsCache::class),
 	'publicDb' => DI\autowire(\Elgg\Application\Database::class),
 	'queryCache' => DI\factory(function (ContainerInterface $c) {
 		$config_disabled = $c->config->db_disable_query_cache === true;
@@ -186,6 +184,7 @@ return [
 	\Elgg\Cache\DataCache::class => DI\get('dataCache'),
 	\Elgg\Cache\EntityCache::class => DI\get('entityCache'),
 	\Elgg\Cache\MetadataCache::class => DI\get('metadataCache'),
+	\Elgg\Cache\PluginsCache::class => DI\get('pluginsCache'),
 	\Elgg\Cache\QueryCache::class => DI\get('queryCache'),
 	\Elgg\Cache\ServerCache::class => DI\get('serverCache'),
 	\Elgg\Cache\SessionCache::class => DI\get('sessionCache'),
