@@ -36,8 +36,10 @@ $extensions = elgg_view('extensions/channel');
 elgg_set_http_header('Pragma: public');
 elgg_set_http_header('Content-Type: text/xml; charset=utf-8');
 
+// echo is needed because of PHP short tag support
+// https://www.php.net/manual/en/ini.core.php#ini.short-open-tag
+echo "<?xml version='1.0'?>";
 ?>
-<?xml version='1.0'?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom" <?= $namespaces; ?>>
 <channel>
 	<title><![CDATA[<?= $title; ?>}]]></title>
