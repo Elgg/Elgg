@@ -37,15 +37,15 @@ class RelationshipsTable extends DbRelationshipsTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function add(int $guid_one, string $relationship, int $guid_two, bool $return_id = false): bool|int {
+	public function add(\ElggRelationship $relationship, bool $return_id = false): bool|int {
 		// Check for duplicates
 		// note: escape $relationship after this call, we don't want to double-escape
-		if ($this->check($guid_one, $relationship, $guid_two)) {
+		if ($this->check($relationship->guid_one, $relationship->relationship, $relationship->guid_two)) {
 			return false;
 		}
 		
 		// Check if the related entities exist
-		if (!$this->entities->exists($guid_one) || !$this->entities->exists($guid_two)) {
+		if (!$this->entities->exists($relationship->guid_one) || !$this->entities->exists($relationship->guid_two)) {
 			// one or both of the guids doesn't exist
 			return false;
 		}
@@ -58,9 +58,9 @@ class RelationshipsTable extends DbRelationshipsTable {
 		
 		$row = (object) [
 			'id' => $id,
-			'guid_one' => (int) $guid_one,
-			'guid_two' => (int) $guid_two,
-			'relationship' => $relationship,
+			'guid_one' => $relationship->guid_one,
+			'guid_two' => $relationship->guid_two,
+			'relationship' => $relationship->relationship,
 			'time_created' => $this->getCurrentTime()->getTimestamp(),
 		];
 
@@ -68,7 +68,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 
 		$this->addQuerySpecs($row);
 
-		$result = parent::add($row->guid_one, $row->relationship, $row->guid_two, $return_id);
+		$result = parent::add($relationship, $return_id);
 		
 		// reset the time
 		$this->resetCurrentTime();

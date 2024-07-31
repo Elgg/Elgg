@@ -11,7 +11,7 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 	 */
 	private $service;
 	
-	protected $delete_event_counter;
+	protected int $delete_event_counter = 0;
 	
 	public function up() {
 		$this->service = _elgg_services()->relationshipsTable;
@@ -39,16 +39,15 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 	 * @dataProvider removeAllEventToggleProvider
 	 */
 	public function testRemoveAllRelationshipsByGUID(bool $trigger_events) {
-		
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$this->service->add($object1->guid, 'testRelationship', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship2', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship3', $object2->guid);
-		$this->service->add($object2->guid, 'testRelationship', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship2', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship3', $object1->guid);
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship2'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship3'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship2'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship3'));
 		
 		$this->assertTrue($this->service->removeAll($object1->guid, '', false, '', $trigger_events));
 		if ($trigger_events) {
@@ -69,16 +68,15 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 	 * @dataProvider removeAllEventToggleProvider
 	 */
 	public function testRemoveAllRelationshipsByGUIDAndRelationship(bool $trigger_events) {
-		
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$this->service->add($object1->guid, 'testRelationship', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship2', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship3', $object2->guid);
-		$this->service->add($object2->guid, 'testRelationship', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship2', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship3', $object1->guid);
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship2'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship3'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship2'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship3'));
 		
 		$this->assertTrue($this->service->removeAll($object1->guid, 'testRelationship', false, '', $trigger_events));
 		if ($trigger_events) {
@@ -99,16 +97,15 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 	 * @dataProvider removeAllEventToggleProvider
 	 */
 	public function testRemoveAllRelationshipsByGUIDAndInverse(bool $trigger_events) {
-		
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$this->service->add($object1->guid, 'testRelationship', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship2', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship3', $object2->guid);
-		$this->service->add($object2->guid, 'testRelationship', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship2', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship3', $object1->guid);
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship2'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship3'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship2'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship3'));
 		
 		$this->assertTrue($this->service->removeAll($object1->guid, '', true, '', $trigger_events));
 		if ($trigger_events) {
@@ -129,16 +126,15 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 	 * @dataProvider removeAllEventToggleProvider
 	 */
 	public function testRemoveAllRelationshipsByGUIDAndRelationshipAndInverse(bool $trigger_events) {
-		
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
-		$this->service->add($object1->guid, 'testRelationship', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship2', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship3', $object2->guid);
-		$this->service->add($object2->guid, 'testRelationship', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship2', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship3', $object1->guid);
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship2'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship3'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship2'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship3'));
 		
 		$this->assertTrue($this->service->removeAll($object1->guid, 'testRelationship', true, '', $trigger_events));
 		if ($trigger_events) {
@@ -159,23 +155,22 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 	 * @dataProvider removeAllEventToggleProvider
 	 */
 	public function testRemoveAllRelationshipsByGUIDAndType(bool $trigger_events) {
-		
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		$group1 = $this->createGroup();
 		
-		$this->service->add($object1->guid, 'testRelationship', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship2', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship3', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship', $group1->guid);
-		$this->service->add($object1->guid, 'testRelationship2', $group1->guid);
-		$this->service->add($object1->guid, 'testRelationship3', $group1->guid);
-		$this->service->add($group1->guid, 'testRelationship', $object1->guid);
-		$this->service->add($group1->guid, 'testRelationship2', $object1->guid);
-		$this->service->add($group1->guid, 'testRelationship3', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship2', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship3', $object1->guid);
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship2'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship3'));
+		$this->assertTrue($object1->addRelationship($group1->guid, 'testRelationship'));
+		$this->assertTrue($object1->addRelationship($group1->guid, 'testRelationship2'));
+		$this->assertTrue($object1->addRelationship($group1->guid, 'testRelationship3'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship2'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship3'));
+		$this->assertTrue($group1->addRelationship($object1->guid, 'testRelationship'));
+		$this->assertTrue($group1->addRelationship($object1->guid, 'testRelationship2'));
+		$this->assertTrue($group1->addRelationship($object1->guid, 'testRelationship3'));
 		
 		$this->assertTrue($this->service->removeAll($object1->guid, '', false, 'group', $trigger_events));
 		if ($trigger_events) {
@@ -202,23 +197,22 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 	 * @dataProvider removeAllEventToggleProvider
 	 */
 	public function testRemoveAllRelationshipsByGUIDAndRelationshipAndType(bool $trigger_events) {
-		
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		$group1 = $this->createGroup();
 		
-		$this->service->add($object1->guid, 'testRelationship', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship2', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship3', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship', $group1->guid);
-		$this->service->add($object1->guid, 'testRelationship2', $group1->guid);
-		$this->service->add($object1->guid, 'testRelationship3', $group1->guid);
-		$this->service->add($group1->guid, 'testRelationship', $object1->guid);
-		$this->service->add($group1->guid, 'testRelationship2', $object1->guid);
-		$this->service->add($group1->guid, 'testRelationship3', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship2', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship3', $object1->guid);
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship2'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship3'));
+		$this->assertTrue($object1->addRelationship($group1->guid, 'testRelationship'));
+		$this->assertTrue($object1->addRelationship($group1->guid, 'testRelationship2'));
+		$this->assertTrue($object1->addRelationship($group1->guid, 'testRelationship3'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship2'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship3'));
+		$this->assertTrue($group1->addRelationship($object1->guid, 'testRelationship'));
+		$this->assertTrue($group1->addRelationship($object1->guid, 'testRelationship2'));
+		$this->assertTrue($group1->addRelationship($object1->guid, 'testRelationship3'));
 		
 		$this->assertTrue($this->service->removeAll($object1->guid, 'testRelationship', false, 'group', $trigger_events));
 		if ($trigger_events) {
@@ -245,23 +239,22 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 	 * @dataProvider removeAllEventToggleProvider
 	 */
 	public function testRemoveAllRelationshipsByGUIDAndRelationshipAndInverseAndType(bool $trigger_events) {
-		
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		$group1 = $this->createGroup();
 		
-		$this->service->add($object1->guid, 'testRelationship', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship2', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship3', $object2->guid);
-		$this->service->add($object1->guid, 'testRelationship', $group1->guid);
-		$this->service->add($object1->guid, 'testRelationship2', $group1->guid);
-		$this->service->add($object1->guid, 'testRelationship3', $group1->guid);
-		$this->service->add($group1->guid, 'testRelationship', $object1->guid);
-		$this->service->add($group1->guid, 'testRelationship2', $object1->guid);
-		$this->service->add($group1->guid, 'testRelationship3', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship2', $object1->guid);
-		$this->service->add($object2->guid, 'testRelationship3', $object1->guid);
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship2'));
+		$this->assertTrue($object1->addRelationship($object2->guid, 'testRelationship3'));
+		$this->assertTrue($object1->addRelationship($group1->guid, 'testRelationship'));
+		$this->assertTrue($object1->addRelationship($group1->guid, 'testRelationship2'));
+		$this->assertTrue($object1->addRelationship($group1->guid, 'testRelationship3'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship2'));
+		$this->assertTrue($object2->addRelationship($object1->guid, 'testRelationship3'));
+		$this->assertTrue($group1->addRelationship($object1->guid, 'testRelationship'));
+		$this->assertTrue($group1->addRelationship($object1->guid, 'testRelationship2'));
+		$this->assertTrue($group1->addRelationship($object1->guid, 'testRelationship3'));
 		
 		$this->assertTrue($this->service->removeAll($object1->guid, 'testRelationship', true, 'group', $trigger_events));
 		if ($trigger_events) {

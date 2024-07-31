@@ -36,36 +36,34 @@ class ElggRelationship extends \ElggData {
 	 * Holds the original (persisted) attribute values that have been changed but not yet saved.
 	 * @var array
 	 */
-	protected $orig_attributes = [];
+	protected array $orig_attributes = [];
 	
 	/**
 	 * Create a relationship object
 	 *
-	 * @param \stdClass $row Database row
+	 * @param null|\stdClass $row Database row
 	 */
-	public function __construct(\stdClass $row) {
+	public function __construct(\stdClass $row = null) {
 		$this->initializeAttributes();
 
-		foreach ((array) $row as $key => $value) {
-			if (!in_array($key, static::PRIMARY_ATTR_NAMES)) {
-				// don't set arbitrary attributes that aren't supported
-				continue;
+		if (!empty($row)) {
+			foreach ((array) $row as $key => $value) {
+				if (!in_array($key, static::PRIMARY_ATTR_NAMES)) {
+					// don't set arbitrary attributes that aren't supported
+					continue;
+				}
+				
+				if (in_array($key, static::INTEGER_ATTR_NAMES)) {
+					$value = (int) $value;
+				}
+				
+				$this->attributes[$key] = $value;
 			}
-			
-			if (in_array($key, static::INTEGER_ATTR_NAMES)) {
-				$value = (int) $value;
-			}
-			
-			$this->attributes[$key] = $value;
 		}
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 *
-	 * @see \ElggData::initializeAttributes()
-	 *
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
@@ -81,9 +79,10 @@ class ElggRelationship extends \ElggData {
 	 *
 	 * @param string $name  Name
 	 * @param mixed  $value Value
+	 *
 	 * @return void
 	 */
-	public function __set($name, $value) {
+	public function __set(string $name, mixed $value): void {
 		if (in_array($name, static::INTEGER_ATTR_NAMES) && isset($value) && !is_int($value)) {
 			// make sure the new value is an int for the int columns
 			$value = (int) $value;
@@ -116,9 +115,10 @@ class ElggRelationship extends \ElggData {
 	 * Get an attribute of the relationship
 	 *
 	 * @param string $name Name
+	 *
 	 * @return mixed
 	 */
-	public function __get($name) {
+	public function __get(string $name): mixed {
 		if (array_key_exists($name, $this->attributes)) {
 			return $this->attributes[$name];
 		}
@@ -127,10 +127,10 @@ class ElggRelationship extends \ElggData {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function save(): bool {
-		if (empty($this->orig_attributes)) {
+		if ($this->id > 0 && empty($this->orig_attributes)) {
 			// nothing has changed
 			return true;
 		}
@@ -139,18 +139,13 @@ class ElggRelationship extends \ElggData {
 			_elgg_services()->relationshipsTable->delete($this->id);
 		}
 
-		$id = _elgg_services()->relationshipsTable->add(
-			$this->guid_one,
-			$this->relationship,
-			$this->guid_two,
-			true
-		);
-		
+		$id = _elgg_services()->relationshipsTable->add($this, true);
 		if ($id === false) {
 			return false;
 		}
 		
 		$this->attributes['id'] = $id;
+		$this->attributes['time_created'] = _elgg_services()->relationshipsTable->getCurrentTime()->getTimestamp();
 
 		return true;
 	}

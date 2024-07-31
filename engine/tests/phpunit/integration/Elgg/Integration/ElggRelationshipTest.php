@@ -86,11 +86,17 @@ class ElggRelationshipTest extends IntegrationTestCase {
 	}
 
 	public function testRelationshipSave() {
-		$rel_id = _elgg_services()->relationshipsTable->add($this->entity1->guid, 'test_relationship', $this->entity2->guid, true);
-		$this->assertIsInt($rel_id);
-
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $this->entity1->guid;
+		$relationship->relationship = 'test_relationship';
+		$relationship->guid_two = $this->entity2->guid;
+		
+		$this->assertTrue($relationship->save());
+		
+		$rel_id = $relationship->id;
 		$rel = elgg_get_relationship($rel_id);
 		$this->assertInstanceOf(\ElggRelationship::class, $rel);
+		$this->assertEquals($relationship, $rel);
 
 		$rel->guid_two = $this->entity3->guid;
 		$this->assertTrue($rel->save());
@@ -108,11 +114,16 @@ class ElggRelationshipTest extends IntegrationTestCase {
 	}
 
 	public function testRelationshipDelete() {
-		$rel_id = _elgg_services()->relationshipsTable->add($this->entity1->guid, 'test_relationship', $this->entity2->guid, true);
-		$this->assertIsInt($rel_id);
-
-		$rel = elgg_get_relationship($rel_id);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $this->entity1->guid;
+		$relationship->relationship = 'test_relationship';
+		$relationship->guid_two = $this->entity2->guid;
+		
+		$this->assertTrue($relationship->save());
+		
+		$rel = elgg_get_relationship($relationship->id);
 		$this->assertInstanceOf(\ElggRelationship::class, $rel);
+		$this->assertEquals($relationship, $rel);
 
 		$this->assertTrue($rel->delete());
 		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));

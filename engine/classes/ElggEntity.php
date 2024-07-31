@@ -550,7 +550,12 @@ abstract class ElggEntity extends \ElggData {
 	 * @throws \Elgg\Exceptions\LengthException
 	 */
 	public function addRelationship(int $guid_two, string $relationship): bool {
-		return _elgg_services()->relationshipsTable->add($this->guid, $relationship, $guid_two);
+		$rel = new \ElggRelationship();
+		$rel->guid_one = $this->guid;
+		$rel->relationship = $relationship;
+		$rel->guid_two = $guid_two;
+		
+		return $rel->save();
 	}
 	
 	/**

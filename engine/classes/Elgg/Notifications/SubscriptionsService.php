@@ -195,7 +195,12 @@ class SubscriptionsService {
 		
 		$rel[] = $method;
 		
-		return $this->relationshipsTable->add($user_guid, implode(':', $rel), $target_guid);
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $user_guid;
+		$relationship->relationship = implode(':', $rel);
+		$relationship->guid_two = $target_guid;
+		
+		return $relationship->save();
 	}
 	
 	/**
@@ -443,7 +448,7 @@ class SubscriptionsService {
 	/**
 	 * Mute notifications about events affecting the target
 	 *
-	 * @param int $user_guid   The GUID of the user to mute notifcations for
+	 * @param int $user_guid   The GUID of the user to mute notifications for
 	 * @param int $target_guid The GUID of the entity to for which to mute notifications
 	 *
 	 * @return bool
@@ -452,7 +457,12 @@ class SubscriptionsService {
 		// remove all current subscriptions
 		$this->removeSubscriptions($user_guid, $target_guid);
 		
-		return $this->relationshipsTable->add($user_guid, self::MUTE_NOTIFICATIONS_RELATIONSHIP, $target_guid);
+		$rel = new \ElggRelationship();
+		$rel->guid_one = $user_guid;
+		$rel->relationship = self::MUTE_NOTIFICATIONS_RELATIONSHIP;
+		$rel->guid_two = $target_guid;
+		
+		return $rel->save();
 	}
 	
 	/**
