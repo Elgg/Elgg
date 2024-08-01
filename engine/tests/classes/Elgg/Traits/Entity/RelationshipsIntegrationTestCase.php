@@ -1,10 +1,10 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Traits\Entity;
 
 use Elgg\IntegrationTestCase;
 
-class ElggRelationshipTest extends IntegrationTestCase {
+abstract class RelationshipsIntegrationTestCase extends IntegrationTestCase {
 
 	/**
 	 * @var \ElggEntity
@@ -32,7 +32,7 @@ class ElggRelationshipTest extends IntegrationTestCase {
 		$this->user = $this->createUser();
 		elgg()->session_manager->setLoggedInUser($this->user);
 		
-		$this->entity1 = $this->createObject(['subtype' => 'elgg_relationship_test']);
+		$this->entity1 = $this->getEntity();
 		$this->entity2 = $this->createObject(['subtype' => 'elgg_relationship_test']);
 		$this->entity3 = $this->createObject(['subtype' => 'elgg_relationship_test']);
 	}
@@ -40,6 +40,13 @@ class ElggRelationshipTest extends IntegrationTestCase {
 	public function down() {
 		_elgg_services()->events->restore();
 	}
+	
+	/**
+	 * Get the testing entity
+	 *
+	 * @return \ElggEntity
+	 */
+	abstract protected function getEntity(): \ElggEntity;
 
 	public function testAddRelationship() {
 		// test adding a relationship
@@ -133,13 +140,16 @@ class ElggRelationshipTest extends IntegrationTestCase {
 		$this->assertTrue($this->entity1->addRelationship($this->entity2->guid, 'test_relationship'));
 
 		// test deleting entity in guid_one position
-		$this->entity1->delete();
+		$deleted = elgg_call(ELGG_IGNORE_ACCESS, function() {
+			return $this->entity1->delete();
+		});
+		$this->assertTrue($deleted);
 		$this->assertFalse($this->entity1->hasRelationship($this->entity2->guid, 'test_relationship'));
 
 		$this->assertTrue($this->entity2->addRelationship($this->entity3->guid, 'test_relationship'));
 
 		// test deleting entity in guid_two position
-		$this->entity3->delete();
+		$this->assertTrue($this->entity3->delete());
 		$this->assertFalse($this->entity2->hasRelationship($this->entity3->guid, 'test_relationship'));
 	}
 
@@ -149,7 +159,10 @@ class ElggRelationshipTest extends IntegrationTestCase {
 
 		elgg_register_event_handler('delete', 'relationship', 'Elgg\Values::getFalse');
 
-		$this->assertTrue($this->entity1->delete());
+		$deleted = elgg_call(ELGG_IGNORE_ACCESS, function() {
+			return $this->entity1->delete();
+		});
+		$this->assertTrue($deleted);
 
 		elgg_unregister_event_handler('delete', 'relationship', 'Elgg\Values::getFalse');
 
