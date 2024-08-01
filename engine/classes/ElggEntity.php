@@ -5,7 +5,11 @@ use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Filesystem\IOException;
 use Elgg\Exceptions\DomainException as ElggDomainException;
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
+use Elgg\Traits\Entity\AccessCollections;
+use Elgg\Traits\Entity\Annotations;
 use Elgg\Traits\Entity\Icons;
+use Elgg\Traits\Entity\Metadata;
+use Elgg\Traits\Entity\Relationships;
 use Elgg\Traits\Entity\Subscriptions;
 
 /**
@@ -47,7 +51,11 @@ use Elgg\Traits\Entity\Subscriptions;
  */
 abstract class ElggEntity extends \ElggData {
 
+	use AccessCollections;
+	use Annotations;
 	use Icons;
+	use Metadata;
+	use Relationships;
 	use Subscriptions;
 	
 	public const PRIMARY_ATTR_NAMES = [
@@ -80,20 +88,6 @@ abstract class ElggEntity extends \ElggData {
 	];
 
 	/**
-	 * Holds metadata until entity is saved.  Once the entity is saved,
-	 * metadata are written immediately to the database.
-	 * @var array
-	 */
-	protected $temp_metadata = [];
-
-	/**
-	 * Holds annotations until entity is saved.  Once the entity is saved,
-	 * annotations are written immediately to the database.
-	 * @var array
-	 */
-	protected $temp_annotations = [];
-
-	/**
 	 * Volatile data structure for this object, allows for storage of data
 	 * in-memory that isn't synced back to the metadata table.
 	 * @var array
@@ -110,18 +104,6 @@ abstract class ElggEntity extends \ElggData {
 	 * @var bool
 	 */
 	protected $_is_cacheable = true;
-
-	/**
-	 * Holds metadata key/value pairs acquired from the metadata cache
-	 * Entity metadata may have mutated since last call to __get,
-	 * do not rely on this value for any business logic
-	 * This storage is intended to help with debugging objects during dump,
-	 * because otherwise it's hard to tell what the object is from it's attributes
-	 *
-	 * @var array
-	 * @internal
-	 */
-	protected $_cached_metadata;
 
 	/**
 	 * Create a new entity.
@@ -337,185 +319,6 @@ abstract class ElggEntity extends \ElggData {
 	}
 
 	/**
-	 * Return the value of a piece of metadata.
-	 *
-	 * @param string $name Name
-	 *
-	 * @return mixed The value, or null if not found.
-	 */
-	public function getMetadata(string $name) {
-		$metadata = $this->getAllMetadata();
-		return elgg_extract($name, $metadata);
-	}
-
-	/**
-	 * Get all entity metadata
-	 *
-	 * @return array
-	 */
-	public function getAllMetadata(): array {
-		if (!$this->guid) {
-			return array_map(function($values) {
-				return count($values) > 1 ? $values : $values[0];
-			}, $this->temp_metadata);
-		}
-
-		$this->_cached_metadata = _elgg_services()->metadataCache->getAll($this->guid);
-
-		return $this->_cached_metadata;
-	}
-
-	/**
-	 * Set metadata on this entity.
-	 *
-	 * Plugin developers usually want to use the magic set method ($entity->name = 'value').
-	 * Use this method if you want to explicitly set the owner or access of the metadata.
-	 * You cannot set the owner/access before the entity has been saved.
-	 *
-	 * @param string $name       Name of the metadata
-	 * @param mixed  $value      Value of the metadata (doesn't support assoc arrays)
-	 * @param string $value_type 'text', 'integer', or '' for automatic detection
-	 * @param bool   $multiple   Allow multiple values for a single name.
-	 *                           Does not support associative arrays.
-	 *
-	 * @return bool
-	 */
-	public function setMetadata(string $name, $value, string $value_type = '', bool $multiple = false): bool {
-
-		if ($value === null || $value === '') {
-			return $this->deleteMetadata($name);
-		}
-		
-		// normalize value to an array that we will loop over
-		// remove indexes if value already an array.
-		if (is_array($value)) {
-			$value = array_values($value);
-		} else {
-			$value = [$value];
-		}
-
-		// strip null values from array
-		$value = array_filter($value, function($var) {
-			return !is_null($var);
-		});
-
-		if (empty($this->guid)) {
-			// unsaved entity. store in temp array
-			return $this->setTempMetadata($name, $value, $multiple);
-		}
-
-		// saved entity. persist md to db.
-		if (!$multiple) {
-			$current_metadata = $this->getMetadata($name);
-
-			if ((is_array($current_metadata) || count($value) > 1 || $value === []) && isset($current_metadata)) {
-				// remove current metadata if needed
-				// need to remove access restrictions right now to delete
-				// because this is the expected behavior
-				$delete_result = elgg_call(ELGG_IGNORE_ACCESS, function() use ($name) {
-					return elgg_delete_metadata([
-						'guid' => $this->guid,
-						'metadata_name' => $name,
-						'limit' => false,
-					]);
-				});
-
-				if ($delete_result === false) {
-					return false;
-				}
-			}
-
-			if (count($value) > 1) {
-				// new value is a multiple valued metadata
-				$multiple = true;
-			}
-		}
-
-		// create new metadata
-		foreach ($value as $value_tmp) {
-			$metadata = new ElggMetadata();
-			$metadata->entity_guid = $this->guid;
-			$metadata->name = $name;
-			$metadata->value = $value_tmp;
-			
-			if (!empty($value_type)) {
-				$metadata->value_type = $value_type;
-			}
-			
-			$md_id = _elgg_services()->metadataTable->create($metadata, $multiple);
-			if ($md_id === false) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Set temp metadata on this entity.
-	 *
-	 * @param string $name     Name of the metadata
-	 * @param mixed  $value    Value of the metadata (doesn't support assoc arrays)
-	 * @param bool   $multiple Allow multiple values for a single name.
-	 *                         Does not support associative arrays.
-	 *
-	 * @return bool
-	 */
-	protected function setTempMetadata(string $name, $value, bool $multiple = false): bool {
-		// if overwrite, delete first
-		if (!$multiple) {
-			unset($this->temp_metadata[$name]);
-			if (count($value)) {
-				// only save if value array contains data
-				$this->temp_metadata[$name] = $value;
-			}
-			
-			return true;
-		}
-
-		if (!isset($this->temp_metadata[$name])) {
-			$this->temp_metadata[$name] = [];
-		}
-
-		$this->temp_metadata[$name] = array_merge($this->temp_metadata[$name], $value);
-
-		return true;
-	}
-
-	/**
-	 * Deletes all metadata on this object (metadata.entity_guid = $this->guid).
-	 * If you pass a name, only metadata matching that name will be deleted.
-	 *
-	 * @warning Calling this with no $name will clear all metadata on the entity.
-	 *
-	 * @param null|string $name The name of the metadata to remove.
-	 *
-	 * @return bool
-	 * @since 1.8
-	 */
-	public function deleteMetadata(string $name = null): bool {
-
-		if (!$this->guid) {
-			// remove from temp_metadata
-			if (isset($name)) {
-				if (isset($this->temp_metadata[$name])) {
-					unset($this->temp_metadata[$name]);
-				}
-			} else {
-				$this->temp_metadata = [];
-			}
-			
-			return true;
-		}
-
-		return elgg_delete_metadata([
-			'guid' => $this->guid,
-			'limit' => false,
-			'metadata_name' => $name,
-		]);
-	}
-
-	/**
 	 * Get a piece of volatile (non-persisted) data on this entity.
 	 *
 	 * @param string $name The name of the volatile data
@@ -539,114 +342,6 @@ abstract class ElggEntity extends \ElggData {
 	}
 
 	/**
-	 * Add a relationship between this and another entity.
-	 *
-	 * @tip Read the relationship like "This entity is a $relationship of $guid_two."
-	 *
-	 * @param int    $guid_two     GUID of the target entity of the relationship
-	 * @param string $relationship The type of relationship
-	 *
-	 * @return bool
-	 * @throws \Elgg\Exceptions\LengthException
-	 */
-	public function addRelationship(int $guid_two, string $relationship): bool {
-		$rel = new \ElggRelationship();
-		$rel->guid_one = $this->guid;
-		$rel->relationship = $relationship;
-		$rel->guid_two = $guid_two;
-		
-		return $rel->save();
-	}
-	
-	/**
-	 * Check if this entity has a relationship with another entity
-	 *
-	 * @tip Read the relationship like "This entity is a $relationship of $guid_two."
-	 *
-	 * @param int    $guid_two     GUID of the target entity of the relationship
-	 * @param string $relationship The type of relationship
-	 *
-	 * @return bool
-	 * @since 4.3
-	 */
-	public function hasRelationship(int $guid_two, string $relationship): bool {
-		return (bool) _elgg_services()->relationshipsTable->check($this->guid, $relationship, $guid_two);
-	}
-	
-	/**
-	 * Return the relationship if this entity has a relationship with another entity
-	 *
-	 * @param int    $guid_two     GUID of the target entity of the relationship
-	 * @param string $relationship The type of relationship
-	 *
-	 * @return \ElggRelationship|null
-	 * @since 4.3
-	 */
-	public function getRelationship(int $guid_two, string $relationship): ?\ElggRelationship {
-		return _elgg_services()->relationshipsTable->check($this->guid, $relationship, $guid_two) ?: null;
-	}
-	
-	/**
-	 * Gets an array of entities with a relationship to this entity.
-	 *
-	 * @param array $options Options array. See elgg_get_entities()
-	 *                       for a list of options. 'relationship_guid' is set to
-	 *                       this entity
-	 *
-	 * @return \ElggEntity[]|int|mixed
-	 * @see elgg_get_entities()
-	 */
-	public function getEntitiesFromRelationship(array $options = []) {
-		$options['relationship_guid'] = $this->guid;
-		return elgg_get_entities($options);
-	}
-	
-	/**
-	 * Gets the number of entities from a specific relationship type
-	 *
-	 * @param string $relationship         Relationship type (eg "friends")
-	 * @param bool   $inverse_relationship Invert relationship
-	 *
-	 * @return int
-	 */
-	public function countEntitiesFromRelationship(string $relationship, bool $inverse_relationship = false): int {
-		return elgg_count_entities([
-			'relationship' => $relationship,
-			'relationship_guid' => $this->guid,
-			'inverse_relationship' => $inverse_relationship,
-		]);
-	}
-
-	/**
-	 * Remove a relationship
-	 *
-	 * @param int    $guid_two     GUID of the target entity of the relationship
-	 * @param string $relationship The type of relationship
-	 *
-	 * @return bool
-	 */
-	public function removeRelationship(int $guid_two, string $relationship): bool {
-		return _elgg_services()->relationshipsTable->remove($this->guid, (string) $relationship, (int) $guid_two);
-	}
-	
-	/**
-	 * Remove all relationships to or from this entity.
-	 *
-	 * If you pass a relationship name, only relationships matching that name will be deleted.
-	 *
-	 * @warning Calling this with no $relationship will clear all relationships with this entity.
-	 *
-	 * @param string|null $relationship         (optional) The name of the relationship to remove
-	 * @param bool        $inverse_relationship (optional) Inverse the relationship
-	 *
-	 * @return bool
-	 * @since 4.3
-	 */
-	public function removeAllRelationships(string $relationship = '', bool $inverse_relationship = false): bool {
-		return _elgg_services()->relationshipsTable->removeAll($this->guid, $relationship, $inverse_relationship);
-	}
-
-	/**
 	 * Removes all river items related to this entity
 	 *
 	 * @return void
@@ -655,204 +350,6 @@ abstract class ElggEntity extends \ElggData {
 		elgg_delete_river(['subject_guid' => $this->guid, 'limit' => false]);
 		elgg_delete_river(['object_guid' => $this->guid, 'limit' => false]);
 		elgg_delete_river(['target_guid' => $this->guid, 'limit' => false]);
-	}
-
-	/**
-	 * Deletes all annotations on this object (annotations.entity_guid = $this->guid).
-	 * If you pass a name, only annotations matching that name will be deleted.
-	 *
-	 * @warning Calling this with no or empty arguments will clear all annotations on the entity.
-	 *
-	 * @param string $name An optional name of annotations to remove.
-	 *
-	 * @return bool
-	 * @since 1.8
-	 */
-	public function deleteAnnotations(string $name = null): bool {
-		if ($this->guid) {
-			return elgg_delete_annotations([
-				'guid' => $this->guid,
-				'limit' => false,
-				'annotation_name' => $name,
-			]);
-		}
-		
-		if ($name) {
-			unset($this->temp_annotations[$name]);
-		} else {
-			$this->temp_annotations = [];
-		}
-		
-		return true;
-	}
-
-	/**
-	 * Deletes all annotations owned by this object (annotations.owner_guid = $this->guid).
-	 * If you pass a name, only annotations matching that name will be deleted.
-	 *
-	 * @param string $name An optional name of annotations to delete.
-	 *
-	 * @return bool
-	 * @since 1.8
-	 */
-	public function deleteOwnedAnnotations(string $name = null): bool {
-		// access is turned off for this because they might
-		// no longer have access to an entity they created annotations on
-		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($name) {
-			return elgg_delete_annotations([
-				'annotation_owner_guid' => $this->guid,
-				'limit' => false,
-				'annotation_name' => $name,
-			]);
-		});
-	}
-
-	/**
-	 * Helper function to return annotation calculation results
-	 *
-	 * @param string $name        The annotation name.
-	 * @param string $calculation A valid MySQL function to run its values through
-	 *
-	 * @return mixed
-	 */
-	private function getAnnotationCalculation($name, $calculation) {
-		$options = [
-			'guid' => $this->getGUID(),
-			'distinct' => false,
-			'annotation_name' => $name,
-			'annotation_calculation' => $calculation
-		];
-
-		return elgg_get_annotations($options);
-	}
-
-	/**
-	 * Adds an annotation to an entity.
-	 *
-	 * @warning By default, annotations are private.
-	 *
-	 * @warning Annotating an unsaved entity more than once with the same name
-	 *          will only save the last annotation.
-	 *
-	 * @todo Update temp_annotations to store an instance of ElggAnnotation and simply call ElggAnnotation::save(),
-	 *       after entity is saved
-	 *
-	 * @param string $name       Annotation name
-	 * @param mixed  $value      Annotation value
-	 * @param int    $access_id  Access ID
-	 * @param int    $owner_guid GUID of the annotation owner
-	 * @param string $value_type The type of annotation value
-	 *
-	 * @return bool|int Returns int if an annotation is saved
-	 */
-	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_guid = 0, $value_type = '') {
-		if (!$this->guid) {
-			$this->temp_annotations[$name] = $value;
-			return true;
-		}
-		
-		if (!$owner_guid) {
-			$owner_guid = _elgg_services()->session_manager->getLoggedInUserGuid();
-		}
-		
-		$annotation = new ElggAnnotation();
-		$annotation->entity_guid = $this->guid;
-		$annotation->name = $name;
-		$annotation->value = $value;
-		$annotation->owner_guid = $owner_guid;
-		$annotation->access_id = $access_id;
-		
-		if (!empty($value_type)) {
-			$annotation->value_type = $value_type;
-		}
-		
-		if ($annotation->save()) {
-			return $annotation->id;
-		}
-		
-		return false;
-	}
-
-	/**
-	 * Gets an array of annotations.
-	 *
-	 * To retrieve annotations on an unsaved entity, pass array('name' => [annotation name])
-	 * as the options array.
-	 *
-	 * @param array $options Array of options for elgg_get_annotations() except guid.
-	 *
-	 * @return \ElggAnnotation[]|mixed
-	 * @see elgg_get_annotations()
-	 */
-	public function getAnnotations(array $options = []) {
-		if ($this->guid) {
-			$options['guid'] = $this->guid;
-
-			return elgg_get_annotations($options);
-		} else {
-			$name = elgg_extract('annotation_name', $options, '');
-
-			if (isset($this->temp_annotations[$name])) {
-				return [$this->temp_annotations[$name]];
-			}
-		}
-
-		return [];
-	}
-
-	/**
-	 * Count annotations.
-	 *
-	 * @param string $name The type of annotation.
-	 *
-	 * @return int
-	 */
-	public function countAnnotations(string $name = ''): int {
-		return $this->getAnnotationCalculation($name, 'count');
-	}
-
-	/**
-	 * Get the average of an integer type annotation.
-	 *
-	 * @param string $name Annotation name
-	 *
-	 * @return int
-	 */
-	public function getAnnotationsAvg(string $name) {
-		return $this->getAnnotationCalculation($name, 'avg');
-	}
-
-	/**
-	 * Get the sum of integer type annotations of a given name.
-	 *
-	 * @param string $name Annotation name
-	 *
-	 * @return int
-	 */
-	public function getAnnotationsSum(string $name) {
-		return $this->getAnnotationCalculation($name, 'sum');
-	}
-
-	/**
-	 * Get the minimum of integer type annotations of given name.
-	 *
-	 * @param string $name Annotation name
-	 *
-	 * @return int
-	 */
-	public function getAnnotationsMin(string $name) {
-		return $this->getAnnotationCalculation($name, 'min');
-	}
-
-	/**
-	 * Get the maximum of integer type annotations of a given name.
-	 *
-	 * @param string $name Annotation name
-	 *
-	 * @return int
-	 */
-	public function getAnnotationsMax(string $name) {
-		return $this->getAnnotationCalculation($name, 'max');
 	}
 
 	/**
@@ -876,43 +373,6 @@ abstract class ElggEntity extends \ElggData {
 		return \Elgg\Comments\DataService::instance()->getCommentsCount($this);
 	}
 
-	/**
-	 * Returns the ACLs owned by the entity
-	 *
-	 * @param array $options additional options to get the access collections with
-	 *
-	 * @return \ElggAccessCollection[]
-	 *
-	 * @see elgg_get_access_collections()
-	 * @since 3.0
-	 */
-	public function getOwnedAccessCollections(array $options = []): array {
-		$options['owner_guid'] = $this->guid;
-		return _elgg_services()->accessCollections->getEntityCollections($options);
-	}
-	
-	/**
-	 * Returns the first ACL owned by the entity with a given subtype
-	 *
-	 * @param string $subtype subtype of the ACL
-	 *
-	 * @return \ElggAccessCollection|null
-	 * @throws \Elgg\Exceptions\InvalidArgumentException
-	 *
-	 * @since 3.0
-	 */
-	public function getOwnedAccessCollection(string $subtype): ?\ElggAccessCollection {
-		if ($subtype === '') {
-			throw new ElggInvalidArgumentException(__METHOD__ . ' requires $subtype to be non empty');
-		}
-		
-		$acls = $this->getOwnedAccessCollections([
-			'subtype' => $subtype,
-		]);
-		
-		return elgg_extract(0, $acls);
-	}
-	
 	/**
 	 * Check if the given user has access to this entity
 	 *
@@ -1766,62 +1226,6 @@ abstract class ElggEntity extends \ElggData {
 	 */
 	public function getObjectFromID(int $id): ?\ElggEntity {
 		return get_entity($id);
-	}
-
-	/**
-	 * Remove the membership of all access collections for this entity (if the entity is a user)
-	 *
-	 * @return bool
-	 * @since 1.11
-	 */
-	public function deleteAccessCollectionMemberships() {
-
-		if (!$this->guid) {
-			return false;
-		}
-
-		if ($this->type !== 'user') {
-			return true;
-		}
-
-		$ac = _elgg_services()->accessCollections;
-
-		$collections = $ac->getCollectionsByMember($this->guid);
-		if (empty($collections)) {
-			return true;
-		}
-
-		$result = true;
-		foreach ($collections as $collection) {
-			$result &= $ac->removeUser($this->guid, $collection->id);
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Remove all access collections owned by this entity
-	 *
-	 * @return bool
-	 * @since 1.11
-	 */
-	public function deleteOwnedAccessCollections() {
-
-		if (!$this->guid) {
-			return false;
-		}
-
-		$collections = $this->getOwnedAccessCollections();
-		if (empty($collections)) {
-			return true;
-		}
-
-		$result = true;
-		foreach ($collections as $collection) {
-			$result = $result & $collection->delete();
-		}
-
-		return $result;
 	}
 
 	/**

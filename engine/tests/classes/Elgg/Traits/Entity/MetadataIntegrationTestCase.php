@@ -1,28 +1,32 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Traits\Entity;
 
-class ElggEntityMetadataTest extends \Elgg\IntegrationTestCase {
+use Elgg\IntegrationTestCase;
+
+abstract class MetadataIntegrationTestCase extends IntegrationTestCase {
 
 	/**
-	 * @var \ElggObject
+	 * @var \ElggEntity
 	 */
 	protected $entity;
 
 	/**
-	 * @var \ElggObject
+	 * @var \ElggEntity
 	 */
 	protected $unsaved_entity;
 	
 	/**
-	 * @var \ElggObject[]
+	 * @var \ElggEntity[]
 	 */
-	protected $entities;
+	protected array $entities;
 
 	public function up() {
-		$this->entity = $this->createObject();
+		parent::up();
 		
-		$this->unsaved_entity = new \ElggObject();
+		$this->entity = $this->getEntity();
+		
+		$this->unsaved_entity = $this->getUnsavedEntity();
 		
 		$this->entities = [
 			$this->entity,
@@ -34,6 +38,10 @@ class ElggEntityMetadataTest extends \Elgg\IntegrationTestCase {
 		unset($this->unsaved_entity);
 		unset($this->entities);
 	}
+	
+	abstract protected function getEntity(): \ElggEntity;
+	
+	abstract protected function getUnsavedEntity(): \ElggEntity;
 	
 	public function testEntitySetSingleValue() {
 		foreach ($this->entities as $entity) {
@@ -340,6 +348,30 @@ class ElggEntityMetadataTest extends \Elgg\IntegrationTestCase {
 			$this->assertEquals($metadata['foo3'], $entity->foo3);
 		}
 	}
-
-
+	
+	/**
+	 * @dataProvider emptyValues
+	 */
+	public function testSetMetadataEmpty($empty_value) {
+		foreach ($this->entities as $entity) {
+			$entity->setMetadata('foo', 'bar');
+			$this->assertEquals('bar', $entity->getMetadata('foo'));
+			$this->assertEquals('bar', $entity->foo);
+			
+			// remove metadata by setting to empty value
+			$this->assertTrue($entity->setMetadata('foo', $empty_value));
+			$this->assertNull($entity->foo);
+			$this->assertNull($entity->getMetadata('foo'));
+			
+			// removing non-existing data should also return true
+			$this->assertTrue($entity->setMetadata('foo', $empty_value));
+		}
+	}
+	
+	public static function emptyValues() {
+		return [
+			[''],
+			[null],
+		];
+	}
 }
