@@ -253,9 +253,10 @@ class Config {
 	 * @var array
 	 */
 	protected $path_properties = [
-		'dataroot',
-		'cacheroot',
 		'assetroot',
+		'cacheroot',
+		'dataroot',
+		'plugins_path',
 	];
 	
 	/**
@@ -460,11 +461,16 @@ class Config {
 			elgg_deprecated_notice("Using '{$name}' from config has been deprecated", $this->deprecated[$name]);
 		}
 		
-		if (isset($this->values[$name])) {
-			return $this->values[$name];
+		if (!isset($this->values[$name])) {
+			return null;
+		}
+		
+		$value = $this->values[$name];
+		if (in_array($name, $this->path_properties)) {
+			$value = Paths::sanitize($value);
 		}
 
-		return null;
+		return $value;
 	}
 
 	/**
