@@ -18,8 +18,8 @@ class EventHandlers {
 		_elgg_services()->accessCache->disable();
 		_elgg_services()->autoloadCache->disable();
 		_elgg_services()->bootCache->disable();
+		_elgg_services()->metadataCache->disable();
 		_elgg_services()->pluginsCache->disable();
-		_elgg_services()->dataCache->disable();
 		_elgg_services()->systemCache->disable();
 		_elgg_services()->serverCache->disable();
 	}
@@ -33,8 +33,8 @@ class EventHandlers {
 		_elgg_services()->accessCache->enable();
 		_elgg_services()->autoloadCache->enable();
 		_elgg_services()->bootCache->enable();
+		_elgg_services()->metadataCache->enable();
 		_elgg_services()->pluginsCache->enable();
-		_elgg_services()->dataCache->enable();
 		_elgg_services()->systemCache->enable();
 		_elgg_services()->serverCache->enable();
 	}
@@ -48,8 +48,8 @@ class EventHandlers {
 		_elgg_services()->accessCache->purge();
 		_elgg_services()->autoloadCache->purge();
 		_elgg_services()->bootCache->purge();
+		_elgg_services()->metadataCache->purge();
 		_elgg_services()->pluginsCache->purge();
-		_elgg_services()->dataCache->purge();
 		_elgg_services()->simpleCache->purge();
 		_elgg_services()->systemCache->purge();
 		_elgg_services()->serverCache->purge();
@@ -64,8 +64,8 @@ class EventHandlers {
 		_elgg_services()->accessCache->invalidate();
 		_elgg_services()->autoloadCache->invalidate();
 		_elgg_services()->bootCache->invalidate();
+		_elgg_services()->metadataCache->invalidate();
 		_elgg_services()->pluginsCache->invalidate();
-		_elgg_services()->dataCache->invalidate();
 		_elgg_services()->systemCache->invalidate();
 		_elgg_services()->serverCache->invalidate();
 	}
@@ -79,8 +79,8 @@ class EventHandlers {
 		_elgg_services()->accessCache->clear();
 		_elgg_services()->autoloadManager->deleteCache();
 		_elgg_services()->boot->clearCache();
+		_elgg_services()->metadataCache->clear();
 		_elgg_services()->pluginsCache->clear();
-		_elgg_services()->dataCache->clear();
 		_elgg_services()->simpleCache->clear();
 		_elgg_services()->systemCache->clear();
 		_elgg_services()->serverCache->clear();

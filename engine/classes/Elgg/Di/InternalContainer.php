@@ -41,7 +41,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Security\Crypto                             $crypto
  * @property-read \Elgg\Config                                      $config
  * @property-read \Elgg\Database\ConfigTable                        $configTable
- * @property-read \Elgg\Cache\DataCache                             $dataCache
  * @property-read \Elgg\Database                                    $db
  * @property-read \Elgg\Database\DbConfig                           $dbConfig
  * @property-read \Elgg\Database\DelayedEmailQueueTable             $delayedEmailQueueTable

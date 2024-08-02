@@ -33,7 +33,6 @@ return [
 	'configTable' => DI\autowire(\Elgg\Database\ConfigTable::class),
 	'cron' => DI\autowire(\Elgg\Cron::class),
 	'crypto' => DI\autowire(\Elgg\Security\Crypto::class),
-	'dataCache' => DI\autowire(\Elgg\Cache\DataCache::class),
 	'db' => DI\autowire(\Elgg\Database::class),
 	// the 'dbConfig' service is available but is set as part of the construction of the application
 	'delayedEmailQueueTable' => DI\autowire(\Elgg\Database\DelayedEmailQueueTable::class),
@@ -83,10 +82,7 @@ return [
 		}
     }),
 	'menus' => DI\autowire(\Elgg\Menu\Service::class),
-	'metadataCache' => DI\factory(function (ContainerInterface $c) {
-		$cache = $c->dataCache->metadata;
-		return new \Elgg\Cache\MetadataCache($cache);
-    }),
+	'metadataCache' => DI\autowire(\Elgg\Cache\MetadataCache::class),
 	'metadataTable' => DI\autowire(\Elgg\Database\MetadataTable::class),
 	'mimetype' => DI\autowire(\Elgg\Filesystem\MimeTypeService::class),
 	'mutex' => DI\autowire(\Elgg\Database\Mutex::class),
@@ -175,7 +171,6 @@ return [
 	\Elgg\Cache\AccessCache::class => DI\get('accessCache'),
 	\Elgg\Cache\AutoloadCache::class => DI\get('autoloadCache'),
 	\Elgg\Cache\BootCache::class => DI\get('bootCache'),
-	\Elgg\Cache\DataCache::class => DI\get('dataCache'),
 	\Elgg\Cache\EntityCache::class => DI\get('entityCache'),
 	\Elgg\Cache\MetadataCache::class => DI\get('metadataCache'),
 	\Elgg\Cache\PluginsCache::class => DI\get('pluginsCache'),

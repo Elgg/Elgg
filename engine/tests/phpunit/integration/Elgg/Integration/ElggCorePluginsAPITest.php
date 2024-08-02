@@ -26,8 +26,12 @@ class ElggCorePluginsAPITest extends \Elgg\IntegrationTestCase {
 		}
 
 		$cache = _elgg_services()->metadataCache;
-		$cache->inject($plugin->guid, [
-			__METHOD__ => 'foo',
+		$cache->save($plugin->guid, [
+			new \ElggMetadata((object) [
+				'name' => __METHOD__,
+				'value' => 'foo',
+				'entity_guid' => $plugin->guid,
+			]),
 		]);
 
 		$this->assertEquals('foo', $plugin->getSetting(__METHOD__, 'bar'));

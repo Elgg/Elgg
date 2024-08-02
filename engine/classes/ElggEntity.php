@@ -1332,7 +1332,7 @@ abstract class ElggEntity extends \ElggData {
 		}
 
 		_elgg_services()->entityCache->delete($this->guid);
-		_elgg_services()->dataCache->get('metadata')->delete($this->guid);
+		_elgg_services()->metadataCache->delete($this->guid);
 	}
 	
 	/**

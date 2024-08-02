@@ -2,6 +2,7 @@
 
 namespace Elgg\Database;
 
+use Elgg\Cache\AccessCache;
 use Elgg\Cache\MetadataCache;
 use Elgg\Database;
 use Elgg\Database\Clauses\MetadataWhereClause;
@@ -29,12 +30,14 @@ class MetadataTable {
 	/**
 	 * Constructor
 	 *
+	 * @param AccessCache   $access_cache   The access cache
 	 * @param MetadataCache $metadata_cache A cache for this table
 	 * @param Database      $db             The Elgg database
 	 * @param Events        $events         The events registry
 	 * @param EntityTable   $entityTable    The EntityTable database wrapper
 	 */
 	public function __construct(
+		protected AccessCache $access_cache,
 		protected MetadataCache $metadata_cache,
 		protected Database $db,
 		protected Events $events,
@@ -158,7 +161,7 @@ class MetadataTable {
 			return false;
 		}
 
-		if (!_elgg_services()->events->trigger('delete', 'metadata', $metadata)) {
+		if (!$this->events->trigger('delete', 'metadata', $metadata)) {
 			return false;
 		}
 
@@ -168,7 +171,7 @@ class MetadataTable {
 		$deleted = $this->db->deleteData($qb);
 
 		if ($deleted) {
-			$this->metadata_cache->clear($metadata->entity_guid);
+			$this->metadata_cache->delete($metadata->entity_guid);
 		}
 
 		return $deleted !== false;
@@ -248,7 +251,7 @@ class MetadataTable {
 
 		$id = $this->db->insertData($qb);
 
-		if ($id === false) {
+		if ($id === 0) {
 			return false;
 		}
 
@@ -261,7 +264,7 @@ class MetadataTable {
 			return false;
 		}
 		
-		$this->metadata_cache->clear($metadata->entity_guid);
+		$this->metadata_cache->delete($metadata->entity_guid);
 
 		$this->events->triggerAfter('create', 'metadata', $metadata);
 
@@ -301,7 +304,7 @@ class MetadataTable {
 			return false;
 		}
 
-		$this->metadata_cache->clear($metadata->entity_guid);
+		$this->metadata_cache->delete($metadata->entity_guid);
 
 		$this->events->trigger('update', 'metadata', $metadata);
 		$this->events->triggerAfter('update', 'metadata', $metadata);
@@ -389,7 +392,12 @@ class MetadataTable {
 
 		// This moved last in case an object's constructor sets metadata. Currently the batch
 		// delete process has to create the entity to delete its metadata. See #5214
-		$this->metadata_cache->invalidateByOptions($options);
+		if (empty($options['guid'])) {
+			$this->access_cache->clear();
+			$this->metadata_cache->clear();
+		} else {
+			$this->entityTable->invalidateCache($options['guid']);
+		}
 
 		$options['batch'] = true;
 		$options['batch_size'] = 50;
@@ -422,8 +430,16 @@ class MetadataTable {
 	 * @return int[]|int|null
 	 */
 	protected function getIDsByName(int $entity_guid, string $name) {
-		if ($this->metadata_cache->isLoaded($entity_guid)) {
-			$ids = $this->metadata_cache->getSingleId($entity_guid, $name);
+		$cached_metadata = $this->metadata_cache->load($entity_guid);
+		if ($cached_metadata !== null) {
+			$ids = [];
+			foreach ($cached_metadata as $md) {
+				if ($md->name !== $name) {
+					continue;
+				}
+				
+				$ids[] = $md->id;
+			}
 		} else {
 			$qb = Select::fromTable(self::TABLE_NAME);
 			$qb->select('id')

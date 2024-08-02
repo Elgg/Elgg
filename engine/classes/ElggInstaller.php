@@ -141,7 +141,7 @@ class ElggInstaller {
 			$app->internal_services->bootCache->disable();
 			$app->internal_services->pluginsCache->disable();
 			$app->internal_services->accessCache->disable();
-			$app->internal_services->dataCache->disable();
+			$app->internal_services->metadataCache->disable();
 			$app->internal_services->serverCache->disable();
 
 			$current_step = $this->getCurrentStep();

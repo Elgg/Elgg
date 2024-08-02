@@ -52,7 +52,7 @@ abstract class UnitTestCase extends BaseTestCase {
 
 		// Invalidate caches
 		$app->internal_services->serverCache->clear();
-		$app->internal_services->dataCache->clear();
+		$app->internal_services->metadataCache->clear();
 		$app->internal_services->accessCache->clear();
 
 		// turn off system log

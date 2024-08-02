@@ -18,18 +18,6 @@ trait Metadata {
 	protected array $temp_metadata = [];
 	
 	/**
-	 * Holds metadata key/value pairs acquired from the metadata cache
-	 * Entity metadata may have mutated since last call to __get,
-	 * do not rely on this value for any business logic
-	 * This storage is intended to help with debugging objects during dump,
-	 * because otherwise it's hard to tell what the object is from it's attributes
-	 *
-	 * @var array
-	 * @internal
-	 */
-	protected array $_cached_metadata = [];
-	
-	/**
 	 * Return the value of a piece of metadata.
 	 *
 	 * @param string $name Name
@@ -53,9 +41,23 @@ trait Metadata {
 			}, $this->temp_metadata);
 		}
 		
-		$this->_cached_metadata = _elgg_services()->metadataCache->getAll($this->guid);
+		$metadata = _elgg_services()->metadataCache->load($this->guid);
+		if ($metadata === null) {
+			$metadata = elgg_extract($this->guid, _elgg_services()->metadataCache->populateFromEntities($this->guid));
+		}
 		
-		return $this->_cached_metadata;
+		if (empty($metadata)) {
+			return [];
+		}
+
+		$metadata_values = [];
+		foreach ($metadata as $md) {
+			$metadata_values[$md->name][] = $md->value;
+		}
+
+		return array_map(function($values) {
+			return count($values) > 1 ? $values : $values[0];
+		}, $metadata_values);
 	}
 	
 	/**

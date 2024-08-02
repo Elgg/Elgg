@@ -35,7 +35,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase {
 			Application::setInstance($app);
 
 			// Invalidate caches
-			$app->internal_services->dataCache->clear();
+			$app->internal_services->metadataCache->clear();
 			$app->internal_services->accessCache->clear();
 
 			return $app;
@@ -91,7 +91,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase {
 		}
 
 		// Invalidate caches
-		$app->internal_services->dataCache->clear();
+		$app->internal_services->metadataCache->clear();
 		$app->internal_services->accessCache->clear();
 
 		// prevent loading of 'active' plugins from database if loading application with a custom plugins path
@@ -114,6 +114,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase {
 		$app->internal_services->config->allowed_languages = null;
 		
 		// set correct base classes for testing purposes
+		$app->internal_services->boot->clearCache();
 		$app->internal_services->entityTable->setEntityClass('object', 'plugin', \Elgg\Mocks\ElggPlugin::class);
 
 		// register object/commentable as a subtype that is always commentable

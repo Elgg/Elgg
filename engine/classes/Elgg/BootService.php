@@ -67,7 +67,7 @@ class BootService {
 		}
 
 		foreach ($data->getPluginMetadata() as $guid => $metadata) {
-			$services->dataCache->metadata->save($guid, $metadata);
+			$services->metadataCache->save($guid, $metadata);
 		}
 
 		$services->plugins->setBootPlugins($data->getActivePlugins(), false);
