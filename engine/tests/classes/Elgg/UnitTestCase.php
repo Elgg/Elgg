@@ -24,7 +24,7 @@ abstract class UnitTestCase extends BaseTestCase {
 		// persistentLogin service needs this set to instantiate without calling DB
 		$config->getCookieConfig();
 		$config->system_cache_enabled = elgg_extract('system_cache_enabled', $params, true);
-		$config->plugins_path = elgg_extract('plugins_path', $params);
+		$config->plugins_path = elgg_extract('plugins_path', $params, $config->plugins_path);
 		
 		$sp = InternalContainer::factory(['config' => $config]);
 

@@ -50,7 +50,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase {
 
 		$config->system_cache_enabled = true;
 		$config->boot_cache_ttl = 600;
-		$config->plugins_path = elgg_extract('plugins_path', $params);
+		$config->plugins_path = elgg_extract('plugins_path', $params, $config->plugins_path);
 		$config->getCookieConfig();
 
 		$app = Application::factory(array_merge([

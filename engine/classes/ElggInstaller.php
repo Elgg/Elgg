@@ -120,8 +120,8 @@ class ElggInstaller {
 			$config->system_cache_enabled = false;
 			$config->simplecache_enabled = false;
 			$config->debug = \Psr\Log\LogLevel::WARNING;
-			$config->cacheroot = Paths::sanitize(sys_get_temp_dir()) . 'elgginstaller/caches/';
-			$config->assetroot = Paths::sanitize(sys_get_temp_dir()) . 'elgginstaller/assets/';
+			$config->cacheroot = sys_get_temp_dir() . 'elgginstaller/caches';
+			$config->assetroot = sys_get_temp_dir() . 'elgginstaller/assets';
 
 			$app = Application::factory([
 				'config' => $config,
@@ -244,19 +244,23 @@ class ElggInstaller {
 
 		// Make sure settings file matches parameters
 		$config = $app->internal_services->config;
-		$config_keys = [
-			// param key => config key
-			'dbhost' => 'dbhost',
-			'dbport' => 'dbport',
-			'dbuser' => 'dbuser',
-			'dbpassword' => 'dbpass',
-			'dbname' => 'dbname',
-			'dataroot' => 'dataroot',
-			'dbprefix' => 'dbprefix',
+		if ($params['dataroot'] !== $config->dataroot) {
+			throw new InstallationException(elgg_echo('install:error:settings_mismatch', ['dataroot', $params['dataroot'], $config->dataroot]));
+		}
+		
+		$db_config = $app->internal_services->dbConfig->getConnectionConfig();
+		$db_config_keys = [
+			// param key => db config key
+			'dbhost' => 'host',
+			'dbport' => 'port',
+			'dbuser' => 'user',
+			'dbpassword' => 'password',
+			'dbname' => 'database',
+			'dbprefix' => 'prefix',
 		];
-		foreach ($config_keys as $params_key => $config_key) {
-			if ($params[$params_key] !== $config->$config_key) {
-				throw new InstallationException(elgg_echo('install:error:settings_mismatch', [$config_key, $params[$params_key], $config->$config_key]));
+		foreach ($db_config_keys as $params_key => $db_config_key) {
+			if ($params[$params_key] !== (string) $db_config[$db_config_key]) {
+				throw new InstallationException(elgg_echo('install:error:settings_mismatch', [$db_config_key, $params[$params_key], $db_config[$db_config_key]]));
 			}
 		}
 
@@ -721,13 +725,7 @@ class ElggInstaller {
 		$this->has_completed['config'] = true;
 
 		// must be able to connect to database to jump install steps
-		$dbSettingsPass = $this->checkDatabaseSettings(
-			$app->internal_services->config->dbuser,
-			$app->internal_services->config->dbpass,
-			$app->internal_services->config->dbname,
-			$app->internal_services->config->dbhost,
-			$app->internal_services->config->dbport
-		);
+		$dbSettingsPass = $this->checkDatabaseSettings($app->internal_services->dbConfig);
 
 		if (!$dbSettingsPass) {
 			return;
@@ -870,10 +868,10 @@ class ElggInstaller {
 			$app = $this->getApp();
 
 			$config = Config::factory();
-			$app->internal_services->set('config', $config);
+			$app->internal_services->set('config', $app->internal_services->initConfig($config));
 
 			// in case the DB instance is already captured in services, we re-inject its settings.
-			$app->internal_services->db->resetConnections(DbConfig::fromElggConfig($config));
+			$app->internal_services->db->resetConnections($app->internal_services->dbConfig);
 		} catch (\Exception $e) {
 			throw new InstallationException(elgg_echo('InstallationException:CannotLoadSettings'), 0, $e);
 		}
@@ -1181,38 +1179,29 @@ class ElggInstaller {
 
 			return false;
 		}
-
-		return $this->checkDatabaseSettings(
-			$submissionVars['dbuser'],
-			$submissionVars['dbpassword'],
-			$submissionVars['dbname'],
-			$submissionVars['dbhost'],
-			$submissionVars['dbport']
-		);
+		
+		$config = new DbConfig((object) [
+			'dbhost' => $submissionVars['dbhost'],
+			'dbport' => $submissionVars['dbport'],
+			'dbuser' => $submissionVars['dbuser'],
+			'dbpass' => $submissionVars['dbpassword'],
+			'dbname' => $submissionVars['dbname'],
+			'dbencoding' => 'utf8mb4',
+		]);
+		
+		return $this->checkDatabaseSettings($config);
 	}
 
 	/**
 	 * Confirm the settings for the database
 	 *
-	 * @param string $user     Username
-	 * @param string $password Password
-	 * @param string $dbname   Database name
-	 * @param string $host     Host
-	 * @param int    $port     Port
+	 * @param DbConfig $config database configuration
 	 *
 	 * @return bool
 	 */
-	protected function checkDatabaseSettings(string $user, string $password, string $dbname, string $host, int $port = null): bool {
+	protected function checkDatabaseSettings(DbConfig $config): bool {
 		$app = $this->getApp();
-
-		$config = new DbConfig((object) [
-			'dbhost' => $host,
-			'dbport' => $port,
-			'dbuser' => $user,
-			'dbpass' => $password,
-			'dbname' => $dbname,
-			'dbencoding' => 'utf8mb4',
-		]);
+		
 		$db = new Database($config, $app->internal_services->queryCache, $app->internal_services->config);
 
 		try {

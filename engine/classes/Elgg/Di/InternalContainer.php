@@ -158,7 +158,7 @@ class InternalContainer extends DiContainer {
 		}
 
 		if (!$config->plugins_path) {
-			$config->plugins_path = Paths::project() . 'mod/';
+			$config->plugins_path = Paths::project() . 'mod';
 		}
 
 		// move sensitive credentials into isolated services
