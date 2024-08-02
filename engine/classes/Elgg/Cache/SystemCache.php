@@ -3,7 +3,6 @@
 namespace Elgg\Cache;
 
 use Elgg\Config;
-use Elgg\Traits\Cacheable;
 
 /**
  * System Cache
