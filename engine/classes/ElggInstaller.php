@@ -140,7 +140,7 @@ class ElggInstaller {
 
 			$app->internal_services->bootCache->disable();
 			$app->internal_services->pluginsCache->disable();
-			$app->internal_services->sessionCache->disable();
+			$app->internal_services->accessCache->disable();
 			$app->internal_services->dataCache->disable();
 			$app->internal_services->serverCache->disable();
 

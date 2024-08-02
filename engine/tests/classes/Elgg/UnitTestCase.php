@@ -53,7 +53,7 @@ abstract class UnitTestCase extends BaseTestCase {
 		// Invalidate caches
 		$app->internal_services->serverCache->clear();
 		$app->internal_services->dataCache->clear();
-		$app->internal_services->sessionCache->clear();
+		$app->internal_services->accessCache->clear();
 
 		// turn off system log
 		$app->internal_services->events->unregisterHandler('all', 'all', 'Elgg\SystemLog\Logger::listen');

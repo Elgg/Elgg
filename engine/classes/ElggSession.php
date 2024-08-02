@@ -122,7 +122,7 @@ class ElggSession {
 		$this->storage->clear();
 		$result = $this->migrate(true);
 		$this->generateSessionToken();
-		_elgg_services()->sessionCache->clear();
+		_elgg_services()->accessCache->clear();
 		return $result;
 	}
 

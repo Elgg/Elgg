@@ -36,7 +36,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase {
 
 			// Invalidate caches
 			$app->internal_services->dataCache->clear();
-			$app->internal_services->sessionCache->clear();
+			$app->internal_services->accessCache->clear();
 
 			return $app;
 		}
@@ -92,7 +92,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase {
 
 		// Invalidate caches
 		$app->internal_services->dataCache->clear();
-		$app->internal_services->sessionCache->clear();
+		$app->internal_services->accessCache->clear();
 
 		// prevent loading of 'active' plugins from database if loading application with a custom plugins path
 		if (isset($params['plugins_path'])) {

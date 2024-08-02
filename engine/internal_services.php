@@ -5,10 +5,8 @@ use Psr\Container\ContainerInterface;
 return [
 	'autoloadCache' => DI\autowire(\Elgg\Cache\AutoloadCache::class),
 	'autoloadManager' => DI\autowire(\Elgg\AutoloadManager::class),
-	'accessCache' => DI\factory(function (ContainerInterface $c) {
-		return $c->sessionCache->access;
-    }),
-	'accessCollections' => DI\autowire(\Elgg\Database\AccessCollections::class)->constructorParameter('access_cache', DI\get('accessCache')),
+	'accessCache' => DI\autowire(\Elgg\Cache\AccessCache::class),
+	'accessCollections' => DI\autowire(\Elgg\Database\AccessCollections::class),
 	'actions' => DI\autowire(\Elgg\ActionsService::class),
 	'accounts' => DI\autowire(\Elgg\Users\Accounts::class),
 	'adminNotices' => DI\autowire(\Elgg\Database\AdminNotices::class),
@@ -136,7 +134,6 @@ return [
 	'session' => DI\factory(function (ContainerInterface $c) {
         return \ElggSession::fromDatabase($c->config, $c->db);
     }),
-	'sessionCache' => DI\autowire(\Elgg\Cache\SessionCache::class),
 	'session_manager' => DI\autowire(\Elgg\SessionManagerService::class),
 	'simpleCache' => DI\autowire(\Elgg\Cache\SimpleCache::class),
 	'siteSecret' => DI\autowire(\Elgg\Security\SiteSecret::class),
@@ -175,6 +172,7 @@ return [
 	\Elgg\AuthenticationService::class => DI\get('authentication'),
 	\Elgg\AutoloadManager::class => DI\get('autoloadManager'),
 	\Elgg\BootService::class => DI\get('boot'),
+	\Elgg\Cache\AccessCache::class => DI\get('accessCache'),
 	\Elgg\Cache\AutoloadCache::class => DI\get('autoloadCache'),
 	\Elgg\Cache\BootCache::class => DI\get('bootCache'),
 	\Elgg\Cache\DataCache::class => DI\get('dataCache'),
@@ -183,7 +181,6 @@ return [
 	\Elgg\Cache\PluginsCache::class => DI\get('pluginsCache'),
 	\Elgg\Cache\QueryCache::class => DI\get('queryCache'),
 	\Elgg\Cache\ServerCache::class => DI\get('serverCache'),
-	\Elgg\Cache\SessionCache::class => DI\get('sessionCache'),
 	\Elgg\Cache\SimpleCache::class => DI\get('simpleCache'),
 	\Elgg\Cache\SystemCache::class => DI\get('systemCache'),
 	\Elgg\Cache\ViewCacher::class => DI\get('viewCacher'),

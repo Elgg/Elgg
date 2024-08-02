@@ -207,7 +207,7 @@ class MetadataCache {
 	 */
 	public function invalidateByOptions(array $options) {
 		if (empty($options['guid'])) {
-			_elgg_services()->sessionCache->clear();
+			_elgg_services()->accessCache->clear();
 			_elgg_services()->dataCache->clear();
 		} else {
 			_elgg_services()->entityTable->invalidateCache($options['guid']);
