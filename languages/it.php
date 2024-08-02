@@ -546,7 +546,7 @@ Per andare sul sito, clicca qui:
 	'admin:statistics:label:numusers' => "Numero di utenti",
 	'admin:statistics:label:numonline' => "Numero di utenti online",
 	'admin:statistics:label:onlineusers' => "Utenti online in questo momento",
-	'admin:statistics:label:admins'=>"Amministratori",
+	'admin:statistics:label:admins' => "Amministratori",
 	'admin:statistics:label:version' => "Versione di Elgg",
 	'admin:statistics:label:version:release' => "Versione",
 	'admin:statistics:label:version:version' => "Rilascio",
