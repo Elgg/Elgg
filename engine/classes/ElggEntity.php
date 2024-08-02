@@ -1317,7 +1317,7 @@ abstract class ElggEntity extends \ElggData {
 			return;
 		}
 
-		_elgg_services()->entityCache->save($this);
+		_elgg_services()->entityCache->save($this->guid, $this);
 	}
 
 	/**

@@ -41,9 +41,7 @@ return [
 	'delayedEmailQueueTable' => DI\autowire(\Elgg\Database\DelayedEmailQueueTable::class),
 	'delayedEmailService' => DI\autowire(\Elgg\Email\DelayedEmailService::class),
 	'emails' => DI\autowire(\Elgg\EmailService::class)->constructorParameter('mailer', DI\get('mailer')),
-	'entityCache' => DI\factory(function (ContainerInterface $c) {
-		return new \Elgg\Cache\EntityCache($c->sessionCache->entities);
-    }),
+	'entityCache' => DI\autowire(\Elgg\Cache\EntityCache::class),
 	'entity_capabilities' => DI\autowire(\Elgg\EntityCapabilitiesService::class),
 	'entityPreloader' => DI\autowire(\Elgg\EntityPreloader::class),
 	'entityTable' => DI\autowire(\Elgg\Database\EntityTable::class),

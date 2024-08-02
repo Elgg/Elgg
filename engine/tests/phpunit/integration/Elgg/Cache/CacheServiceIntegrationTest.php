@@ -83,6 +83,7 @@ class CacheServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 		return [
 			['autoloadCache'],
 			['bootCache'],
+			['entityCache'],
 			['pluginsCache'],
 			['serverCache'],
 			['systemCache'],

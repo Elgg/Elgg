@@ -286,7 +286,7 @@ class SessionManagerService {
 			$this->session->set('guid', $user->guid);
 			$this->logged_in_user = $user;
 			$this->session_cache->clear();
-			$this->entity_cache->save($user);
+			$this->entity_cache->save($user->guid, $user);
 			$this->translator->setCurrentLanguage($user->language);
 		}
 	}
