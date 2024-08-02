@@ -18,7 +18,7 @@ class AutoloadCache extends CacheService {
 	 * @param Config $config Elgg config
 	 */
 	public function __construct(protected Config $config) {
-		$flags = ELGG_CACHE_LOCALFILESYSTEM | ELGG_CACHE_RUNTIME;
+		$flags = CompositeCache::CACHE_LOCALFILESYSTEM | CompositeCache::CACHE_RUNTIME;
 		
 		$this->cache = new CompositeCache('autoload_cache', $this->config, $flags);
 	}

@@ -19,6 +19,6 @@ class SessionCache extends CacheCollection {
 	 * @return CompositeCache
 	 */
 	protected function create($namespace) {
-		return new CompositeCache($namespace, $this->config, ELGG_CACHE_RUNTIME);
+		return new CompositeCache($namespace, $this->config, CompositeCache::CACHE_RUNTIME);
 	}
 }

@@ -18,7 +18,7 @@ class SystemCache extends CacheService {
 	 * @param Config $config Elgg config
 	 */
 	public function __construct(protected Config $config) {
-		$flags = ELGG_CACHE_PERSISTENT | ELGG_CACHE_FILESYSTEM | ELGG_CACHE_RUNTIME;
+		$flags = CompositeCache::CACHE_PERSISTENT | CompositeCache::CACHE_FILESYSTEM | CompositeCache::CACHE_RUNTIME;
 		
 		$this->cache = new CompositeCache('system_cache', $this->config, $flags);
 		

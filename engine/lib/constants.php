@@ -116,15 +116,6 @@ const ELGG_VALUE_TIMESTAMP = 'timestamp';
 const ELGG_VALUE_BOOL = 'bool';
 
 /**
- * Cache init values
- */
-const ELGG_CACHE_BLACK_HOLE = 1;
-const ELGG_CACHE_RUNTIME = 2;
-const ELGG_CACHE_FILESYSTEM = 4;
-const ELGG_CACHE_PERSISTENT = 8;
-const ELGG_CACHE_LOCALFILESYSTEM = 32;
-
-/**
  * elgg_call() flags
  */
 const ELGG_IGNORE_ACCESS = 1;

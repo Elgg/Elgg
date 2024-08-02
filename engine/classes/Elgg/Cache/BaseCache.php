@@ -13,18 +13,9 @@ abstract class BaseCache implements \ArrayAccess {
 	 *
 	 * @var array
 	 */
-	private $variables = [];
+	private array $variables = [];
 
-	/**
-	 * @var bool
-	 */
-	protected $disabled = false;
-
-	/**
-	 * Set the constructor.
-	 */
-	public function __construct() {
-	}
+	protected bool $disabled = false;
 	
 	/**
 	 * Set a cache variable.

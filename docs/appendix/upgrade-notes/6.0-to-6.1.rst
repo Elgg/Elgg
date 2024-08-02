@@ -5,6 +5,15 @@ From 6.0 to 6.1
    :local:
    :depth: 1
 
+Constants
+~~~~~~~~~
+
+* The constant ``ELGG_CACHE_BLACK_HOLE`` is deprecated. Use ``\Elgg\Cache\CompositeCache::CACHE_BLACK_HOLE``.
+* The constant ``ELGG_CACHE_RUNTIME`` is deprecated. Use ``\Elgg\Cache\CompositeCache::CACHE_RUNTIME``.
+* The constant ``ELGG_CACHE_FILESYSTEM`` is deprecated. Use ``\Elgg\Cache\CompositeCache::CACHE_FILESYSTEM``.
+* The constant ``ELGG_CACHE_PERSISTENT`` is deprecated. Use ``\Elgg\Cache\CompositeCache::CACHE_PERSISTENT``.
+* The constant ``ELGG_CACHE_LOCALFILESYSTEM`` is deprecated. Use ``\Elgg\Cache\CompositeCache::CACHE_LOCALFILESYSTEM``.
+
 Deprecated APIs
 ~~~~~~~~~~~~~~~
 
