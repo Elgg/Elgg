@@ -93,6 +93,19 @@
 * **icons:** icontime metadata is no longer available [7e139b935](https://github.com/Elgg/Elgg/commit/7e139b9352908407bf48edec343c96fbf317df35)
 
 
+<a name="5.1.9"></a>
+### 5.1.9 (2024-08-02)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+
+#### Bug fixes
+
+* **menus:** no longer render empty menu sections [72882fc37](https://github.com/Elgg/Elgg/commit/72882fc37325801d0a95370fe82f92495105a681)
+* **rss:** fatal error that occurred when enabling short_open_tag [d0883e534](https://github.com/Elgg/Elgg/commit/d0883e534f81f50a5837bae03f97386591000aab)
+
+
 <a name="5.1.8"></a>
 ### 5.1.8 (2024-07-11)
 
