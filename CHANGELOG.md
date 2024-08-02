@@ -1,3 +1,17 @@
+<a name="6.0.2"></a>
+### 6.0.2 (2024-08-02)
+
+#### Contributors
+
+* Jeroen Dalsem (1)
+* Jerôme Bakker (1)
+* Nikolai Shcherbin (1)
+
+#### Bug fixes
+
+* **rss:** fatal error that occurred when enabling short_open_tag [5a9d8d43f](https://github.com/Elgg/Elgg/commit/5a9d8d43f2c7f7d0f7723d11078474d26a80fe48)
+
+
 <a name="6.0.1"></a>
 ### 6.0.1 (2024-07-11)
 
