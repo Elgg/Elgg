@@ -1,3 +1,17 @@
+<a name="6.0.2"></a>
+### 6.0.2 (2024-08-02)
+
+#### Contributors
+
+* Jeroen Dalsem (1)
+* Jerôme Bakker (1)
+* Nikolai Shcherbin (1)
+
+#### Bug fixes
+
+* **rss:** fatal error that occurred when enabling short_open_tag [5a9d8d43f](https://github.com/Elgg/Elgg/commit/5a9d8d43f2c7f7d0f7723d11078474d26a80fe48)
+
+
 <a name="6.0.1"></a>
 ### 6.0.1 (2024-07-11)
 
@@ -91,6 +105,19 @@
 * **db:** the enabled column for annotations has been removed [bdd17b413](https://github.com/Elgg/Elgg/commit/bdd17b413b6f925d24e60a21c3289bf92817f3bc)
 * **core:** the \ElggEntity->getTags() function has been removed [d3bbe25d0](https://github.com/Elgg/Elgg/commit/d3bbe25d0ff29a94cf920b67a8a804359124317b)
 * **icons:** icontime metadata is no longer available [7e139b935](https://github.com/Elgg/Elgg/commit/7e139b9352908407bf48edec343c96fbf317df35)
+
+
+<a name="5.1.9"></a>
+### 5.1.9 (2024-08-02)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+
+#### Bug fixes
+
+* **menus:** no longer render empty menu sections [72882fc37](https://github.com/Elgg/Elgg/commit/72882fc37325801d0a95370fe82f92495105a681)
+* **rss:** fatal error that occurred when enabling short_open_tag [d0883e534](https://github.com/Elgg/Elgg/commit/d0883e534f81f50a5837bae03f97386591000aab)
 
 
 <a name="5.1.8"></a>
