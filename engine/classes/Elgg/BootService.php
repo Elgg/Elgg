@@ -5,7 +5,6 @@ namespace Elgg;
 use Elgg\Cache\BootCache;
 use Elgg\Di\InternalContainer;
 use Elgg\Exceptions\RuntimeException;
-use Elgg\Traits\Cacheable;
 use Elgg\Traits\Debug\Profilable;
 use Psr\Log\LogLevel;
 

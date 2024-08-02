@@ -18,7 +18,7 @@ class PluginsCache extends CacheService {
 	 * @param Config $config Elgg config
 	 */
 	public function __construct(protected Config $config) {
-		$flags = ELGG_CACHE_RUNTIME;
+		$flags = CompositeCache::CACHE_RUNTIME;
 		
 		$this->cache = new CompositeCache('plugins_cache', $this->config, $flags);
 	}

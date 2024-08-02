@@ -3,6 +3,17 @@
  * Bundle all functions which have been deprecated in Elgg 6.1
  */
 
+/* @deprecated 6.1 Use \Elgg\Cache\CompositeCache::CACHE_BLACK_HOLE */
+const ELGG_CACHE_BLACK_HOLE = 1;
+/* @deprecated 6.1 Use \Elgg\Cache\CompositeCache::CACHE_RUNTIME */
+const ELGG_CACHE_RUNTIME = 2;
+/* @deprecated 6.1 Use \Elgg\Cache\CompositeCache::CACHE_FILESYSTEM */
+const ELGG_CACHE_FILESYSTEM = 4;
+/* @deprecated 6.1 Use \Elgg\Cache\CompositeCache::CACHE_PERSISTENT */
+const ELGG_CACHE_PERSISTENT = 8;
+/* @deprecated 6.1 Use \Elgg\Cache\CompositeCache::CACHE_LOCALFILESYSTEM */
+const ELGG_CACHE_LOCALFILESYSTEM = 32;
+
 /**
  * Returns an \Elgg\Cache\BaseCache object suitable for caching system information
  *
