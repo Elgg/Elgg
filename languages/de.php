@@ -821,7 +821,7 @@ Siehe die vollständige Liste dieser Benutzer hier:
 	'admin:statistics:label:numusers' => "Anzahl der Mitglieder",
 	'admin:statistics:label:numonline' => "Anzahl der angemeldeten Mitglieder",
 	'admin:statistics:label:onlineusers' => "Momentan angemeldete Mitglieder",
-	'admin:statistics:label:admins'=>"Admins",
+	'admin:statistics:label:admins' => "Admins",
 	'admin:statistics:label:version' => "Elgg-Version",
 	'admin:statistics:label:version:release' => "Release",
 	'admin:statistics:label:version:version' => "Version",
