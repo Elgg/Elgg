@@ -149,7 +149,38 @@ class ViewsService {
 
 		return true;
 	}
-
+	
+	/**
+	 * Discover the core views if the system cache did not load
+	 *
+	 * @return void
+	 * @since 6.1
+	 */
+	public function registerCoreViews(): void {
+		if ($this->isViewLocationsLoadedFromCache()) {
+			return;
+		}
+		
+		// Core view files in /views
+		$this->registerViewsFromPath(Paths::elgg());
+		
+		// Core view definitions in /engine/views.php
+		$file = Paths::elgg() . 'engine/views.php';
+		if (!is_file($file)) {
+			return;
+		}
+		
+		$spec = Includer::includeFile($file);
+		if (is_array($spec)) {
+			// check for uploaded fontawesome font
+			if ($this->config->font_awesome_zip) {
+				$spec['default']['font-awesome/'] = elgg_get_data_path() . 'fontawesome/webfont/';
+			}
+			
+			$this->mergeViewsSpec($spec);
+		}
+	}
+	
 	/**
 	 * Auto-registers views from a location.
 	 *

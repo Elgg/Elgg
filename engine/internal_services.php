@@ -149,7 +149,6 @@ return [
 	'users_remember_me_cookies_table' => DI\autowire(\Elgg\Database\UsersRememberMeCookiesTable::class),
 	'upgradeLocator' => DI\autowire(\Elgg\Upgrade\Locator::class),
 	'views' => DI\autowire(\Elgg\ViewsService::class),
-	'viewCacher' => DI\autowire(\Elgg\Cache\ViewCacher::class),
 	'widgets' => DI\autowire(\Elgg\WidgetsService::class),
 	
 	// map classes to alias to allow autowiring
@@ -175,7 +174,6 @@ return [
 	\Elgg\Cache\ServerCache::class => DI\get('serverCache'),
 	\Elgg\Cache\SimpleCache::class => DI\get('simpleCache'),
 	\Elgg\Cache\SystemCache::class => DI\get('systemCache'),
-	\Elgg\Cache\ViewCacher::class => DI\get('viewCacher'),
 	\Elgg\ClassLoader::class => DI\get('classLoader'),
 	\Elgg\Cli::class => DI\get('cli'),
 	\Elgg\Cli\Progress::class => DI\get('cli_progress'),
