@@ -16,7 +16,7 @@ use Psr\Container\ContainerInterface;
  * the container generic.
  *
  * @property-read \Elgg\Database\AccessCollections                  $accessCollections
- * @property-read \Elgg\Cache\BaseCache                             $accessCache
+ * @property-read \Elgg\Cache\AccessCache                           $accessCache
  * @property-read \Elgg\ActionsService                              $actions
  * @property-read \Elgg\Users\Accounts                              $accounts
  * @property-read \Elgg\Database\AdminNotices                       $adminNotices
@@ -41,7 +41,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Security\Crypto                             $crypto
  * @property-read \Elgg\Config                                      $config
  * @property-read \Elgg\Database\ConfigTable                        $configTable
- * @property-read \Elgg\Cache\DataCache                             $dataCache
  * @property-read \Elgg\Database                                    $db
  * @property-read \Elgg\Database\DbConfig                           $dbConfig
  * @property-read \Elgg\Database\DelayedEmailQueueTable             $delayedEmailQueueTable
@@ -98,7 +97,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Application\ServeFileHandler                $serveFileHandler
  * @property-read \Elgg\Cache\ServerCache                           $serverCache
  * @property-read \ElggSession                                      $session
- * @property-read \Elgg\Cache\SessionCache                          $sessionCache
  * @property-read \Elgg\SessionManagerService                       $session_manager
  * @property-read \Elgg\Search\SearchService                        $search
  * @property-read \Elgg\Cache\SimpleCache                           $simpleCache

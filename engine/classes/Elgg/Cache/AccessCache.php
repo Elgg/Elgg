@@ -5,12 +5,13 @@ namespace Elgg\Cache;
 use Elgg\Config;
 
 /**
- * Volatile cache for entities
+ * Access Cache
  *
  * @internal
+ * @since 6.1
  */
-class EntityCache extends CacheService {
-	
+class AccessCache extends CacheService {
+
 	/**
 	 * Constructor
 	 *
@@ -19,6 +20,6 @@ class EntityCache extends CacheService {
 	public function __construct(protected Config $config) {
 		$flags = CompositeCache::CACHE_RUNTIME;
 		
-		$this->cache = new CompositeCache('entity_cache', $this->config, $flags);
+		$this->cache = new CompositeCache('access_cache', $this->config, $flags);
 	}
 }

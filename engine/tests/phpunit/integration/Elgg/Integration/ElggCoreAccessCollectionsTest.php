@@ -30,7 +30,7 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 
 		$hash = $user->guid . 'get_access_array';
 		
-		$this->assertEmpty($access_cache[$hash]);
+		$this->assertEmpty($access_cache->load($hash));
 		
 		$acl = elgg_create_access_collection('custom', $user->guid);
 		$this->assertInstanceOf(\ElggAccessCollection::class, $acl);
@@ -44,12 +44,12 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 		$this->assertEquals($expected, elgg_get_access_array($user->guid));
 
 		// check if exists in cache
-		$this->assertEquals($expected, $access_cache[$hash]);
+		$this->assertEquals($expected, $access_cache->load($hash));
 		
 		$manipulated_access = $expected;
 		$manipulated_access[] = 'foo';
-		$access_cache[$hash] = $manipulated_access;
-		$this->assertEquals($manipulated_access, $access_cache[$hash]);
+		$access_cache->save($hash, $manipulated_access);
+		$this->assertEquals($manipulated_access, $access_cache->load($hash));
 		
 		$this->assertEquals($manipulated_access, elgg_get_access_array($user->guid));
 		

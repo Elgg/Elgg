@@ -45,7 +45,7 @@ class ElggEntityPreloaderIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->assertNull($this->entityCache->load($owner1->guid));
 		$this->assertNull($this->entityCache->load($owner2->guid));
 		
-		$this->entityCache->save($owner1);
+		$this->entityCache->save($owner1->guid, $owner1);
 		$this->assertNotNull($this->entityCache->load($owner1->guid));
 		
 		$this->preloader->preload([$object1, $object2], ['owner_guid']);

@@ -353,13 +353,13 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		
 		// ignore access bypasses the MD cache, so we try it both ways
 		elgg_call(ELGG_ENFORCE_ACCESS, function() use (&$obj, &$md_values) {
-			_elgg_services()->metadataCache->clear($obj->guid);
+			_elgg_services()->metadataCache->delete($obj->guid);
 			$md_values = $obj->test_md;
 			$this->assertEquals([1, 2, 3], $md_values);
 		});
 		
 		elgg_call(ELGG_IGNORE_ACCESS, function() use (&$obj, &$md_values) {
-			_elgg_services()->metadataCache->clear($obj->guid);
+			_elgg_services()->metadataCache->delete($obj->guid);
 			$md_values = $obj->test_md;
 			$this->assertEquals([1, 2, 3], $md_values);
 	

@@ -398,7 +398,7 @@ class ElggPlugin extends ElggObject {
 		
 		try {
 			_elgg_services()->db->deleteData($delete);
-			_elgg_services()->dataCache->metadata->clear();
+			_elgg_services()->metadataCache->clear();
 			
 			$result &= true;
 		} catch (DatabaseException $e) {
