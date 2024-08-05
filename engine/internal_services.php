@@ -95,10 +95,7 @@ return [
 	'plugins' => DI\autowire(\Elgg\Database\Plugins::class),
 	'pluginsCache' => DI\autowire(\Elgg\Cache\PluginsCache::class),
 	'publicDb' => DI\autowire(\Elgg\Application\Database::class),
-	'queryCache' => DI\factory(function (ContainerInterface $c) {
-		$config_disabled = $c->config->db_disable_query_cache === true;
-		return new \Elgg\Cache\QueryCache($c->config->db_query_cache_limit, $config_disabled);
-    }),
+	'queryCache' => DI\autowire(\Elgg\Cache\QueryCache::class),
 	'redirects' => DI\autowire(\Elgg\RedirectService::class),
 	'relationshipsTable' => DI\autowire(\Elgg\Database\RelationshipsTable::class),
 	'request' => DI\factory(function (ContainerInterface $c) {

@@ -53,7 +53,7 @@ class Database {
 	 *
 	 * @var array $delayed_queries Queries to be run during shutdown
 	 */
-	protected $delayed_queries = [];
+	protected array $delayed_queries = [];
 
 	/**
 	 * @var \Elgg\Database\DbConfig $config Database configuration
@@ -78,7 +78,7 @@ class Database {
 	 *
 	 * @return void
 	 */
-	public function resetConnections(DbConfig $config) {
+	public function resetConnections(DbConfig $config): void {
 		$this->closeConnections();
 		
 		$this->db_config = $config;
@@ -355,9 +355,9 @@ class Database {
 			$extras .= $this->fingerprintCallback($callback);
 		}
 		
-		$hash = $this->query_cache->getHash($sql, $params, $extras);
+		$hash = $this->getCacheHash($sql, $params, $extras);
 
-		$cached_results = $this->query_cache->get($hash);
+		$cached_results = $this->query_cache->load($hash);
 		if (isset($cached_results)) {
 			return $cached_results;
 		}
@@ -381,9 +381,8 @@ class Database {
 				$return[] = $row_obj;
 			}
 		}
-
-		// Cache result
-		$this->query_cache->set($hash, $return);
+		
+		$this->query_cache->save($hash, $return);
 				
 		return $return;
 	}
@@ -418,6 +417,28 @@ class Database {
 		}
 
 		return $result;
+	}
+	
+	/**
+	 * Returns a hashed key for storage in the cache
+	 *
+	 * @param string $sql    query
+	 * @param array  $params optional params
+	 * @param string $extras optional extras
+	 *
+	 * @return string
+	 * @since 6.1
+	 */
+	protected function getCacheHash(string $sql, array $params = [], string $extras = ''): string {
+		$query_id = $sql . '|';
+		if (!empty($params)) {
+			$query_id .= serialize($params) . '|';
+		}
+		
+		$query_id .= $extras;
+		
+		// MD5 yields smaller mem usage for cache
+		return md5($query_id);
 	}
 	
 	/**
@@ -516,29 +537,6 @@ class Database {
 		}
 
 		$this->delayed_queries = [];
-	}
-
-	/**
-	 * Enable the query cache
-	 *
-	 * This does not take precedence over the \Elgg\Database\Config setting.
-	 *
-	 * @return void
-	 */
-	public function enableQueryCache(): void {
-		$this->query_cache->enable();
-	}
-
-	/**
-	 * Disable the query cache
-	 *
-	 * This is useful for special scripts that pull large amounts of data back
-	 * in single queries.
-	 *
-	 * @return void
-	 */
-	public function disableQueryCache(): void {
-		$this->query_cache->disable();
 	}
 
 	/**

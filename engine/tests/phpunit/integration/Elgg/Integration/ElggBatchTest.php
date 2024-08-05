@@ -201,10 +201,10 @@ class ElggBatchTest extends IntegrationTestCase {
 		
 		$queryCache = _elgg_services()->queryCache;
 		$this->assertTrue($queryCache->isEnabled());
-		$queryCache->set('foo', 'bar');
-		$this->assertEquals('bar', $queryCache->get('foo'));
+		$queryCache->save('foo', 'bar');
+		$this->assertEquals('bar', $queryCache->load('foo'));
 		
-		$cache_size = $queryCache->size();
+		$cache_size = count($this->getInaccessableProperty($queryCache, 'keys'));
 		
 		/* @var $batch \ElggBatch */
 		$batch = elgg_get_entities($options);
@@ -217,18 +217,18 @@ class ElggBatchTest extends IntegrationTestCase {
 		}
 		
 		$this->assertTrue($queryCache->isEnabled());
-		$this->assertEquals('bar', $queryCache->get('foo'));
-		$this->assertEquals($cache_size, $queryCache->size());
+		$this->assertEquals('bar', $queryCache->load('foo'));
+		$this->assertEquals($cache_size, count($this->getInaccessableProperty($queryCache, 'keys')));
 		
 		// do a normal elgg_get_entities()
-		// this should increate the cache size
-		$cache_size = $queryCache->size();
+		// this should increase the cache size
+		$cache_size = count($this->getInaccessableProperty($queryCache, 'keys'));
 		$options['batch'] = false;
 		$entities = elgg_get_entities($options);
 		$this->assertIsArray($entities);
 		$this->assertCount(5, $entities);
 		
-		$this->assertGreaterThan($cache_size, $queryCache->size());
+		$this->assertGreaterThan($cache_size, count($this->getInaccessableProperty($queryCache, 'keys')));
 		
 		$queryCache->clear();
 	}
