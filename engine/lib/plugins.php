@@ -75,7 +75,7 @@ function elgg_get_plugin_user_setting(string $name, int $user_guid = 0, string $
 function elgg_get_plugin_setting(string $name, string $plugin_id, $default = null) {
 	$plugin = _elgg_services()->plugins->get($plugin_id);
 	if (!$plugin instanceof \ElggPlugin) {
-		return false;
+		return $default;
 	}
 	
 	return $plugin->getSetting($name, $default);
