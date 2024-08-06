@@ -338,21 +338,6 @@ class Plugins {
 	}
 
 	/**
-	 * Returns if a plugin exists in the system.
-	 *
-	 * @warning This checks only plugins that are registered in the system!
-	 * If the plugin cache is outdated, be sure to regenerate it with
-	 * {@link _elgg_generate_plugin_objects()} first.
-	 *
-	 * @param string $id The plugin ID.
-	 *
-	 * @return bool
-	 */
-	public function exists(string $id): bool {
-		return $this->get($id) instanceof \ElggPlugin;
-	}
-
-	/**
 	 * Returns the highest priority of the plugins
 	 *
 	 * @return int
