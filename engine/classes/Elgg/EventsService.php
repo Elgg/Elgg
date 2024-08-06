@@ -29,6 +29,8 @@ class EventsService {
 
 	protected int $next_index = 0;
 	
+	protected array $ordered_handlers_cache = [];
+	
 	/**
 	 * @var array [name][type][] = registration
 	 */
@@ -330,12 +332,14 @@ class EventsService {
 			}
 		}
 		
-		$this->registrations[$name][$type][] = [
+		$this->registrations[$name][$type]["{$priority}_{$this->next_index}"] = [
 			self::REG_KEY_PRIORITY => $priority,
 			self::REG_KEY_INDEX => $this->next_index,
 			self::REG_KEY_HANDLER => $callback,
 		];
 		$this->next_index++;
+		
+		unset($this->ordered_handlers_cache);
 		
 		return true;
 	}
@@ -367,6 +371,8 @@ class EventsService {
 			}
 			
 			unset($this->registrations[$name][$type][$i]);
+			unset($this->ordered_handlers_cache);
+			
 			return;
 		}
 	}
@@ -381,6 +387,7 @@ class EventsService {
 	 */
 	public function clearHandlers(string $name, string $type): void {
 		unset($this->registrations[$name][$type]);
+		unset($this->ordered_handlers_cache);
 	}
 	
 	/**
@@ -436,46 +443,40 @@ class EventsService {
 	public function getOrderedHandlers(string $name, string $type): array {
 		$registrations = [];
 		
+		if (isset($this->ordered_handlers_cache[$name . $type])) {
+			return $this->ordered_handlers_cache[$name . $type];
+		}
+		
 		if (!empty($this->registrations[$name][$type])) {
 			if ($name !== 'all' && $type !== 'all') {
-				array_splice($registrations, count($registrations), 0, $this->registrations[$name][$type]);
+				$registrations = $this->registrations[$name][$type];
 			}
 		}
 		
 		if (!empty($this->registrations['all'][$type])) {
 			if ($type !== 'all') {
-				array_splice($registrations, count($registrations), 0, $this->registrations['all'][$type]);
+				$registrations += $this->registrations['all'][$type];
 			}
 		}
 		
 		if (!empty($this->registrations[$name]['all'])) {
 			if ($name !== 'all') {
-				array_splice($registrations, count($registrations), 0, $this->registrations[$name]['all']);
+				$registrations += $this->registrations[$name]['all'];
 			}
 		}
 		
 		if (!empty($this->registrations['all']['all'])) {
-			array_splice($registrations, count($registrations), 0, $this->registrations['all']['all']);
+			$registrations += $this->registrations['all']['all'];
 		}
 		
-		usort($registrations, function ($a, $b) {
-			// priority first
-			if ($a[self::REG_KEY_PRIORITY] < $b[self::REG_KEY_PRIORITY]) {
-				return -1;
-			}
-			
-			if ($a[self::REG_KEY_PRIORITY] > $b[self::REG_KEY_PRIORITY]) {
-				return 1;
-			}
-			
-			// then insertion order
-			return ($a[self::REG_KEY_INDEX] < $b[self::REG_KEY_INDEX]) ? -1 : 1;
-		});
+		ksort($registrations, SORT_NATURAL);
 			
 		$handlers = [];
 		foreach ($registrations as $registration) {
 			$handlers[] = $registration[self::REG_KEY_HANDLER];
 		}
+		
+		$this->ordered_handlers_cache[$name . $type] = $handlers;
 		
 		return $handlers;
 	}
@@ -520,6 +521,7 @@ class EventsService {
 	public function backup(): void {
 		$this->backups[] = $this->registrations;
 		$this->registrations = [];
+		unset($this->ordered_handlers_cache);
 	}
 	
 	/**
@@ -532,6 +534,8 @@ class EventsService {
 		if (is_array($backup)) {
 			$this->registrations = $backup;
 		}
+		
+		unset($this->ordered_handlers_cache);
 	}
 	
 	/**
