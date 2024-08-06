@@ -47,10 +47,8 @@ class ViewsServiceIntegrationTest extends IntegrationTestCase {
 	public function testCacheConfiguration() {
 		$this->assertEmpty($this->cache->load('view_locations'));
 		$this->assertEmpty($this->cache->load('view_overrides'));
-		
-		// make sure we register the core views
-		_elgg_services()->reset('viewCacher');
-		_elgg_services()->viewCacher->registerCoreViews();
+	
+		$this->views->registerCoreViews();
 
 		$this->views->cacheConfiguration();
 		

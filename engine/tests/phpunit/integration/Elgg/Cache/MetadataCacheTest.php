@@ -1,10 +1,8 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Cache;
 
-use Elgg\IntegrationTestCase;
-
-class ElggCoreMetadataCacheTest extends IntegrationTestCase {
+class MetadataCacheTest extends \Elgg\IntegrationTestCase {
 
 	public function testPopulateFromEntities() {
 		$cache = _elgg_services()->metadataCache;

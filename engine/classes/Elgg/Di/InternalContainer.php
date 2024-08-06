@@ -120,7 +120,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Database\UsersApiSessionsTable              $usersApiSessionsTable
  * @property-read \Elgg\Database\UsersRememberMeCookiesTable        $users_remember_me_cookies_table
  * @property-read \Elgg\ViewsService                                $views
- * @property-read \Elgg\Cache\ViewCacher                            $viewCacher
  * @property-read \Elgg\WidgetsService                              $widgets
  *
  * @internal

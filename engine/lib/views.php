@@ -1304,7 +1304,7 @@ function _elgg_has_rss_link(): bool {
  * @internal
  */
 function elgg_views_boot(): void {
-	_elgg_services()->viewCacher->registerCoreViews();
+	_elgg_services()->views->registerCoreViews();
 
 	elgg_register_external_file('css', 'font-awesome', elgg_get_simplecache_url('font-awesome/css/all.min.css'));
 	elgg_load_external_file('css', 'font-awesome');

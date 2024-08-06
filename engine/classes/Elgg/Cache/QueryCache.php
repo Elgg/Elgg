@@ -2,142 +2,97 @@
 
 namespace Elgg\Cache;
 
-use Elgg\Traits\Loggable;
+use Elgg\Config;
 
 /**
  * Volatile cache for select queries
  *
- * Queries and their results are stored in this cache as:
- * <code>
- * $DB_QUERY_CACHE[query hash] => array(result1, result2, ... resultN)
- * </code>
- *
  * @internal
  */
-class QueryCache extends LRUCache {
+class QueryCache extends CacheService {
 	
-	use Loggable;
+	protected int $query_cache_limit = 50;
 	
-	/**
-	 * @var bool Is this cache disabled by a config flag
-	 */
-	protected $config_disabled = false;
-
-	/**
-	 * @var bool Is this cache disabled during runtime
-	 */
-	protected $runtime_enabled = false;
+	protected array $keys = [];
 	
 	/**
-	 * @inheritdoc
+	 * Constructor
 	 *
-	 * @param int  $size            max items in LRU cache
-	 * @param bool $config_disabled is this cache allowed to be used
+	 * @param Config $config Elgg config
 	 */
-	public function __construct(int $size = 50, bool $config_disabled = false) {
+	public function __construct(protected Config $config) {
+		$flags = CompositeCache::CACHE_RUNTIME;
 		
-		$this->config_disabled = $config_disabled;
+		$this->cache = new CompositeCache('query_cache', $this->config, $flags);
 		
-		parent::__construct($size);
-	}
-	
-	/**
-	 * Enable the query cache
-	 *
-	 * This does not take precedence over the \Elgg\Database\Config setting.
-	 *
-	 * @return void
-	 */
-	public function enable() {
-		$this->runtime_enabled = true;
-	}
-	
-	/**
-	 * Disable the query cache
-	 *
-	 * This is useful for special scripts that pull large amounts of data back
-	 * in single queries.
-	 *
-	 * @param bool $clear also clear the cache (default: true)
-	 *
-	 * @return void
-	 */
-	public function disable(bool $clear = true) {
-		$this->runtime_enabled = false;
-		
-		if ($clear) {
-			$this->clear();
+		$this->enabled = $this->config->db_disable_query_cache !== true;
+		if (isset($this->config->db_query_cache_limit)) {
+			$this->query_cache_limit = (int) $this->config->db_query_cache_limit;
 		}
 	}
 	
 	/**
-	 * Checks if this cache is enabled
-	 *
-	 * @return boolean
+	 * {@inheritdoc}
 	 */
-	public function isEnabled() {
-		if ($this->config_disabled) {
-			return false;
-		}
+	public function purge(): void {
+		$this->keys = [];
 		
-		return $this->runtime_enabled;
+		parent::purge();
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
-	public function clear() {
+	public function invalidate(): void {
+		$this->keys = [];
+		
+		parent::invalidate();
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function clear(): void {
+		$this->keys = [];
+		
 		parent::clear();
-		
-		$this->getLogger()->info('Query cache invalidated');
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
-	public function get($key, $default = null) {
-		if (!$this->isEnabled()) {
-			return $default;
+	public function save(string $key, mixed $data, int|\DateTime $expire_after = null): bool {
+		$result = parent::save($key, $data, $expire_after);
+		if ($result && !isset($this->keys[$key])) {
+			$this->keys[$key] = true;
+			
+			if (count($this->keys) > $this->query_cache_limit) {
+				$this->delete(array_key_first($this->keys));
+			}
 		}
-		
-		$result = parent::get($key, $default);
-		
-		$this->getLogger()->info("DB query results returned from cache (hash: {$key})");
 		
 		return $result;
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
-	public function set($key, $value) {
-		if (!$this->isEnabled()) {
-			return;
+	public function load(string $key): mixed {
+		if (isset($this->keys[$key])) {
+			// when used move key to bottom
+			unset($this->keys[$key]);
+			$this->keys[$key] = true;
 		}
 		
-		parent::set($key, $value);
-		
-		$this->getLogger()->info("DB query results cached (hash: {$key})");
+		return parent::load($key);
 	}
 	
 	/**
-	 * Returns a hashed key for storage in the cache
-	 *
-	 * @param string $sql    query
-	 * @param array  $params optional params
-	 * @param string $extras optional extras
-	 *
-	 * @return string
+	 * {@inheritdoc}
 	 */
-	public function getHash(string $sql, array $params = [], string $extras = '') {
-		$query_id = $sql . '|';
-		if (!empty($params)) {
-			$query_id .= serialize($params) . '|';
-		}
+	public function delete(string $key): bool {
+		unset($this->keys[$key]);
 		
-		$query_id .= $extras;
-
-		// MD5 yields smaller mem usage for cache and cleaner logs
-		return md5($query_id);
+		return parent::delete($key);
 	}
 }
