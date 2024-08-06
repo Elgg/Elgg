@@ -24,27 +24,22 @@ class ViewsService {
 
 	/**
 	 * @see ViewsService::fileExists()
-	 * @var array
 	 */
 	protected array $file_exists_cache = [];
 
 	/**
-	 * @var array
-	 *
 	 * [viewtype][view] => '/path/to/views/style.css'
 	 */
 	protected array $locations = [];
 
 	/**
-	 * @var array Tracks location changes for views
+	 * Tracks location changes for views
 	 *
 	 * [viewtype][view][] => '/path/to/views/style.css'
 	 */
 	protected array $overrides = [];
 
 	/**
-	 * @var array
-	 *
 	 * [view][priority] = extension_view
 	 */
 	protected array $extensions = [];
@@ -184,50 +179,32 @@ class ViewsService {
 	/**
 	 * Auto-registers views from a location.
 	 *
-	 * @param string $view_base Optional The base of the view name without the view type.
+	 * @param string $view_base The base of the view name without the view type.
 	 * @param string $folder    Required The folder to begin looking in
 	 * @param string $viewtype  The type of view we're looking at (default, rss, etc)
 	 *
 	 * @return bool returns false if folder can't be read
 	 */
 	public function autoregisterViews(string $view_base, string $folder, string $viewtype): bool {
-		$folder = rtrim($folder, '/\\');
-		$view_base = rtrim($view_base, '/\\');
-
-		if (!is_dir($folder) || !is_readable($folder)) {
-			$this->getLogger()->notice("Unable to register views from the directory: {$folder}");
-			return false;
-		}
-
+		$folder = Paths::sanitize($folder);
+		$view_base = Paths::sanitize($view_base, false);
+		$view_base = $view_base ? $view_base . '/' : $view_base;
+		
 		try {
-			$dir = new \DirectoryIterator($folder);
-		} catch (\Exception $e) {
-			$this->getLogger()->error($e->getMessage());
+			$dir = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($folder, \RecursiveDirectoryIterator::SKIP_DOTS));
+		} catch (\Throwable $t) {
+			$this->getLogger()->error($t->getMessage());
 			return false;
 		}
 
-		$view_base_new = '';
-		if (!empty($view_base)) {
-			$view_base_new = $view_base . '/';
-		}
-
-		/* @var $fileinfo \SplFileInfo */
-		foreach ($dir as $fileinfo) {
-			if ($fileinfo->isDot()) {
-				continue;
-			}
-
-			$path = $fileinfo->getPathname();
-
-			if ($fileinfo->isDir()) {
-				// Found a directory so go deeper
-				$this->autoregisterViews($view_base_new . $fileinfo->getFilename(), $path, $viewtype);
-				continue;
-			}
+		/* @var $file \SplFileInfo */
+		foreach ($dir as $file) {
+			$path = $file->getPath() .  '/' . $file->getBasename('.php');
+			$path = Paths::sanitize($path, false);
 
 			// found a file add it to the views
-			$view = $view_base_new . $fileinfo->getBasename('.php');
-			$this->setViewLocation($view, $viewtype, $path);
+			$view = $view_base . substr($path, strlen($folder));
+			$this->setViewLocation($view, $viewtype, $file->getPathname());
 		}
 
 		return true;
@@ -247,11 +224,8 @@ class ViewsService {
 		}
 
 		$path = $this->locations[$viewtype][$view];
-		if ($this->fileExists($path)) {
-			return $path;
-		}
-
-		return '';
+		
+		return $this->fileExists($path) ? $path : '';
 	}
 
 	/**
@@ -334,7 +308,7 @@ class ViewsService {
 
 		// check for extension deadloops
 		if (in_array($view, $extensions_tree)) {
-			$this->getLogger()->error("View $view is detected as an extension of itself. This is not allowed");
+			$this->getLogger()->error("View {$view} is detected as an extension of itself. This is not allowed");
 
 			return '';
 		}
@@ -428,7 +402,7 @@ class ViewsService {
 		$file = $this->findViewFile($view, $viewtype);
 		if (!$file) {
 			if ($issue_missing_notice) {
-				$this->getLogger()->notice("$viewtype/$view view does not exist.");
+				$this->getLogger()->notice("{$viewtype}/{$view} view does not exist.");
 			}
 
 			return false;
@@ -490,7 +464,7 @@ class ViewsService {
 		}
 
 		// Now check if the default view exists if the view is registered as a fallback
-		if ($viewtype != 'default' && $this->doesViewtypeFallback($viewtype)) {
+		if ($viewtype !== 'default' && $this->doesViewtypeFallback($viewtype)) {
 			return $this->viewExists($view, 'default');
 		}
 
@@ -515,7 +489,7 @@ class ViewsService {
 		}
 
 		if (!isset($this->extensions[$view])) {
-			$this->extensions[$view][self::BASE_VIEW_PRIORITY] = (string) $view;
+			$this->extensions[$view][self::BASE_VIEW_PRIORITY] = $view;
 		}
 
 		// raise priority until it doesn't match one already registered
@@ -523,7 +497,7 @@ class ViewsService {
 			$priority++;
 		}
 
-		$this->extensions[$view][$priority] = (string) $view_extension;
+		$this->extensions[$view][$priority] = $view_extension;
 		ksort($this->extensions[$view]);
 	}
 
@@ -563,29 +537,28 @@ class ViewsService {
 	 * @return bool
 	 */
 	public function registerViewsFromPath(string $path): bool {
-		$path = Paths::sanitize($path);
-		$view_dir = "{$path}views/";
+		$path = Paths::sanitize($path) . 'views/';
 
 		// do not fail on non existing views folder
-		if (!is_dir($view_dir)) {
+		if (!is_dir($path)) {
 			return true;
 		}
-
-		// but if folder exists it has to be readable
-		$handle = opendir($view_dir);
-		if ($handle === false) {
-			$this->getLogger()->notice("Unable to register views from the directory: {$view_dir}");
-
+		
+		try {
+			$dir = new \DirectoryIterator($path);
+		} catch (\Throwable $t) {
+			$this->getLogger()->error($t->getMessage());
 			return false;
 		}
-
-		while (($view_type = readdir($handle)) !== false) {
-			$view_type_dir = $view_dir . $view_type;
-
-			if (!str_starts_with($view_type, '.') && is_dir($view_type_dir)) {
-				if (!$this->autoregisterViews('', $view_type_dir, $view_type)) {
-					return false;
-				}
+		
+		foreach ($dir as $folder) {
+			$folder_name = $folder->getBasename();
+			if (!$folder->isDir() || str_starts_with($folder_name, '.')) {
+				continue;
+			}
+			
+			if (!$this->autoregisterViews('', $folder->getPathname(), $folder_name)) {
+				return false;
 			}
 		}
 
@@ -634,11 +607,7 @@ class ViewsService {
 	 * @return string[]
 	 */
 	public function listViews(string $viewtype = 'default'): array {
-		if (empty($this->locations[$viewtype])) {
-			return [];
-		}
-
-		return array_keys($this->locations[$viewtype]);
+		return array_keys($this->locations[$viewtype] ?? []);
 	}
 
 	/**
@@ -647,18 +616,11 @@ class ViewsService {
 	 * @return array
 	 */
 	public function getInspectorData(): array {
-		$overrides = $this->overrides;
-
-		if ($this->server_cache) {
-			$data = $this->server_cache->load('view_overrides');
-			if (is_array($data)) {
-				$overrides = $data;
-			}
-		}
+		$cached_overrides = $this->server_cache->load('view_overrides');
 		
 		return [
 			'locations' => $this->locations,
-			'overrides' => $overrides,
+			'overrides' => is_array($cached_overrides) ? $cached_overrides : $this->overrides,
 			'extensions' => $this->extensions,
 			'simplecache' => _elgg_services()->simpleCache->getCacheableViews(),
 		];
