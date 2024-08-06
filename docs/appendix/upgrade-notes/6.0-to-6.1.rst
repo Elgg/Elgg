@@ -24,4 +24,5 @@ Deprecated APIs
 * ``elgg_get_system_cache``
 * ``elgg_is_simplecache_enabled``
 * ``elgg_is_system_cache_enabled``
+* ``elgg_plugin_exists`` use ``elgg_get_plugin_from_id()``
 * ``elgg_reset_system_cache``

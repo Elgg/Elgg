@@ -121,3 +121,22 @@ function elgg_disable_simplecache(): void {
 	
 	_elgg_services()->simpleCache->disable();
 }
+
+/**
+ * Returns if a plugin exists in the system.
+ *
+ * @warning This checks only plugins that are registered in the system!
+ * If the plugin cache is outdated, be sure to regenerate it with
+ * {@link _elgg_generate_plugin_objects()} first.
+ *
+ * @param string $plugin_id The plugin ID.
+ *
+ * @return bool
+ * @since 1.8.0
+ * @deprecated 6.1 Use elgg_get_plugin_from_id()
+ */
+function elgg_plugin_exists(string $plugin_id): bool {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_get_plugin_from_id().', '6.1');
+	
+	return _elgg_services()->plugins->get($plugin_id) instanceof \ElggPlugin;
+}

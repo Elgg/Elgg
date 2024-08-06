@@ -17,22 +17,6 @@ function elgg_get_plugin_from_id(string $plugin_id): ?\ElggPlugin {
 }
 
 /**
- * Returns if a plugin exists in the system.
- *
- * @warning This checks only plugins that are registered in the system!
- * If the plugin cache is outdated, be sure to regenerate it with
- * {@link _elgg_generate_plugin_objects()} first.
- *
- * @param string $plugin_id The plugin ID.
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_plugin_exists(string $plugin_id): bool {
-	return _elgg_services()->plugins->exists($plugin_id);
-}
-
-/**
  * Returns if a plugin is active for a current site.
  *
  * @param string $plugin_id The plugin ID
@@ -70,7 +54,7 @@ function elgg_get_plugins(string $status = 'active'): array {
  */
 function elgg_get_plugin_user_setting(string $name, int $user_guid = 0, string $plugin_id = '', $default = null) {
 	$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
-	if (!$user instanceof ElggUser) {
+	if (!$user instanceof \ElggUser) {
 		return $default;
 	}
 	
@@ -90,8 +74,8 @@ function elgg_get_plugin_user_setting(string $name, int $user_guid = 0, string $
  */
 function elgg_get_plugin_setting(string $name, string $plugin_id, $default = null) {
 	$plugin = _elgg_services()->plugins->get($plugin_id);
-	if (!$plugin) {
-		return false;
+	if (!$plugin instanceof \ElggPlugin) {
+		return $default;
 	}
 	
 	return $plugin->getSetting($name, $default);
