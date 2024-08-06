@@ -54,29 +54,26 @@
 	}
 }
 
-.elgg-item-object-comment {
-	
-	padding: 0;
-	
-	> .elgg-listing-full {
-		margin: 0;
-	
-		> .elgg-listing-full-header {
-			margin: 0;
-			
+.elgg-river-responses,
+.elgg-comments {
+	.elgg-item-object-comment {
+		article {
 			padding: 1rem;
 			border-style: solid;
 			border-color: $(border-color-soft);
 			border-width: 1px;
-			
-			.elgg-listing-summary-content {
+		}
+		
+		> .elgg-listing-full {
+			.elgg-listing-full-header {
 				margin: 0;
 			}
-		}
-		> .elgg-listing-full-responses {
-			padding: 0 0 0 2rem;
 			
-			border-left: 2px dashed $(border-color-soft);
+			> .elgg-listing-full-responses {
+				padding: 0 0 0 2rem;
+				
+				border-left: 2px dashed $(border-color-soft);
+			}
 		}
 	}
 }
