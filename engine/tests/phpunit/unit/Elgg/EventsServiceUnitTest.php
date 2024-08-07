@@ -374,9 +374,13 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->events->registerHandler('foo', 'bar', 'callback2');
 		$this->events->registerHandler('all', 'all', 'callback4', 100);
 		$this->events->registerHandler('foo', 'baz', 'callback3', 100);
+		$this->events->registerHandler('all', 'bar', 'callback5', 110);
+		$this->events->registerHandler('foo', 'all', 'callback6', 120);
 		
 		$expected_foo_bar = [
 			'callback4', // first even though it's [all, all]
+			'callback5',
+			'callback6',
 			'callback1',
 			'callback2',
 		];
@@ -384,6 +388,7 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		$expected_foo_baz = [
 			'callback4', // first even though it's [all, all]
 			'callback3',
+			'callback6',
 		];
 		
 		$this->assertSame($expected_foo_bar, $this->events->getOrderedHandlers('foo', 'bar'));

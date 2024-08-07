@@ -81,7 +81,7 @@ class RouteRegistrationService {
 		$resource = elgg_extract('resource', $params);
 		$handler = elgg_extract('handler', $params);
 		$middleware = elgg_extract('middleware', $params, []);
-		$protected = elgg_extract('walled', $params, true);
+		$walled = elgg_extract('walled', $params, true);
 		$deprecated = elgg_extract('deprecated', $params, '');
 		$required_plugins = elgg_extract('required_plugins', $params, []);
 		$detect_page_owner = (bool) elgg_extract('detect_page_owner', $params, false);
@@ -134,7 +134,7 @@ class RouteRegistrationService {
 
 		$path = '/' . implode('/', $segments);
 
-		if ($protected !== false) {
+		if ($walled !== false) {
 			$middleware[] = WalledGarden::class;
 		}
 		
