@@ -2,8 +2,6 @@
 
 namespace Elgg\Traits\Entity;
 
-use Elgg\Traits\Entity\MetadataIntegrationTestCase;
-
 class ElggObjectMetadataIntegrationTest extends MetadataIntegrationTestCase {
 	
 	protected function getEntity(): \ElggEntity {

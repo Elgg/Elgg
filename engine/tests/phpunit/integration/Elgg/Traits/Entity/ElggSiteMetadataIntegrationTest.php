@@ -2,8 +2,6 @@
 
 namespace Elgg\Traits\Entity;
 
-use Elgg\Traits\Entity\MetadataIntegrationTestCase;
-
 class ElggSiteMetadataIntegrationTest extends MetadataIntegrationTestCase {
 	
 	protected array $initial_metadata_names = [];

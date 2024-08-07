@@ -2,8 +2,6 @@
 
 namespace Elgg\Traits\Entity;
 
-use Elgg\Traits\Entity\RelationshipsIntegrationTestCase;
-
 class ElggSiteRelationshipsIntegrationTest extends RelationshipsIntegrationTestCase {
 	
 	protected function getEntity(): \ElggEntity {

@@ -39,6 +39,7 @@ abstract class RelationshipsIntegrationTestCase extends IntegrationTestCase {
 
 	public function down() {
 		_elgg_services()->events->restore();
+		_elgg_services()->relationshipsTable->resetCurrentTime();
 	}
 	
 	/**
@@ -93,6 +94,8 @@ abstract class RelationshipsIntegrationTestCase extends IntegrationTestCase {
 	}
 
 	public function testRelationshipSave() {
+		_elgg_services()->relationshipsTable->setCurrentTime();
+		
 		$relationship = new \ElggRelationship();
 		$relationship->guid_one = $this->entity1->guid;
 		$relationship->relationship = 'test_relationship';
@@ -121,6 +124,8 @@ abstract class RelationshipsIntegrationTestCase extends IntegrationTestCase {
 	}
 
 	public function testRelationshipDelete() {
+		_elgg_services()->relationshipsTable->setCurrentTime();
+		
 		$relationship = new \ElggRelationship();
 		$relationship->guid_one = $this->entity1->guid;
 		$relationship->relationship = 'test_relationship';
