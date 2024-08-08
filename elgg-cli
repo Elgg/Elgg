@@ -43,9 +43,8 @@ $services = $app->internal_services;
 $cli = $services->cli;
 $cli->setLogger($services->logger);
 
-$argv = $services->request->server->get('argv');
-
-if (isset($argv[1]) && ($argv[1] === 'upgrade')) {
+$argv = (array) $services->request->server->get('argv');
+if (in_array('upgrade', $argv)) {
 	// To run an upgrade successfully, we must first migrate
 	// the application before booting it
 	$cli->add(\Elgg\Cli\UpgradeCommand::class);
@@ -58,6 +57,6 @@ try {
 	$app->start();
 	$cli->run();
 } catch (\Throwable $throw) {
-	fwrite(STDERR, "An error occured during the execution of the command '{$argv[0]}': {$throw->getMessage()}" . PHP_EOL);
+	fwrite(STDERR, "An error occurred during the execution of the command '" . implode(' ', $argv) . "': {$throw->getMessage()}" . PHP_EOL);
 	die(3);
 }
