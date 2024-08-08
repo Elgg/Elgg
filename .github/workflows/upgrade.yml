@@ -69,7 +69,7 @@ jobs:
         run: composer install --prefer-dist --no-suggest
         
       - name: Elgg CLI upgrade to 5.1
-        run: php ./elgg-cli upgrade async --verbose
+        run: php ./elgg-cli upgrade async --verbose --no-ansi
 
       - name: Enable Elgg 5.1 plugins
         run: |
@@ -101,7 +101,7 @@ jobs:
         run: composer update --prefer-dist
       
       - name: Elgg CLI upgrade
-        run: php ./elgg-cli upgrade async --verbose
+        run: php ./elgg-cli upgrade async --verbose --no-ansi
 
       - name: Activate current plugins
         run: |
