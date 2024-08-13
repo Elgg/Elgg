@@ -43,7 +43,7 @@ class RemoveDeletedEntitiesHandler {
 						// the related items will be deleted with the root item
 						$sub = $qb->subquery(RelationshipsTable::TABLE_NAME);
 						$sub->select('guid_one')
-							->where($qb->compare('relationship', '=', 'deleted_with'));
+							->where($qb->compare('relationship', '=', 'deleted_with', ELGG_VALUE_STRING));
 						
 						return $qb->compare("{$main_alias}.guid", 'not in', $sub->getSQL());
 					}
