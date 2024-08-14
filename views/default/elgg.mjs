@@ -1,5 +1,11 @@
 import 'jquery';
 
+while (globalThis.elgg === undefined) {
+	// need to wait for inline javascript to make elgg page data available
+	// in an edge case the imported js is evaluated before the global Elgg data is available
+	await new Promise(r => setTimeout(r, 10));
+}
+
 /**
  * @namespace Singleton object for holding the Elgg javascript library
  */
