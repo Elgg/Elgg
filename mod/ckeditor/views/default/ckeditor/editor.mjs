@@ -57,6 +57,10 @@ export default {
 							return true;
 						}
 					});
+					
+					if ($input.is(':focus')) {
+						editor.focus();
+					}
 				});
 		});
 	},
