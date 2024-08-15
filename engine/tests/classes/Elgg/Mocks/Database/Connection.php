@@ -14,6 +14,10 @@ class Connection extends \Doctrine\DBAL\Connection {
 		$this->database = $database;
 	}
 	
+	public function getServerVersion(): string {
+		return \ElggInstaller::MYSQL_MINIMAL_VERSION;
+	}
+	
 	public function executeQuery(string $sql, array $params = [], array $types = [], ?QueryCacheProfile $qcp = null,): Result {
 		return $this->database->executeDatabaseQuery($sql, $params, $types, $qcp);
 	}

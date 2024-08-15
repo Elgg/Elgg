@@ -214,12 +214,15 @@ class Preloader {
 		}
 		
 		$preload = elgg_extract('preload_likes', $vars);
-		if (!isset($preload)) {
-			$list_class = elgg_extract('list_class', $vars);
-			$preload = !elgg_in_context('widgets') && in_array($list_class, ['elgg-list-river', 'elgg-list-entity', 'comments-list']);
+		if (!isset($preload) && !elgg_in_context('widgets')) {
+			$list_classes = elgg_extract_class($vars, [], 'list_class');
+			$preload_list_classes = ['comments-list', 'elgg-list-entity', 'elgg-list-river', 'elgg-river-comments'];
+			$intersect = array_intersect($list_classes, $preload_list_classes);
+			
+			$preload = count($intersect) > 0;
 		}
 		
-		if (!$preload) {
+		if (empty($preload)) {
 			return;
 		}
 		
