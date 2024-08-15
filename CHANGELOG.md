@@ -1,3 +1,27 @@
+<a name="6.0.3"></a>
+### 6.0.3 (2024-08-15)
+
+#### Contributors
+
+* Jerôme Bakker (8)
+* Jeroen Dalsem (4)
+
+#### Performance
+
+* **river:** preload response owners [e9a1ee9de](https://github.com/Elgg/Elgg/commit/e9a1ee9de51c78edac949c31c5828a7f2ef2540c)
+* **likes:** preload likes for river responses [cae17e102](https://github.com/Elgg/Elgg/commit/cae17e10204e441f8e512826a7edb89d1c1a64a5)
+
+
+#### Bug fixes
+
+* **ckeditor:**
+  * editor keeps focus if input already has the focus [f2d14eb41](https://github.com/Elgg/Elgg/commit/f2d14eb41c02a4c186e4ea81cf6fdd247b199517) closes [#14533](https://github.com/Elgg/Elgg/issues/14533)
+  * ctrl-enter submitting from editor works again [28db80430](https://github.com/Elgg/Elgg/commit/28db80430d03e4cf0a30deb4d21bbd3033412025)
+* **js:** elgg module should postpone loading if global elgg is missing [34d67caf1](https://github.com/Elgg/Elgg/commit/34d67caf1e0dcc602047e8ca3bdad3d5e311976d)
+* **garbagecollector:** correctly log optimize table results [ff399c2f6](https://github.com/Elgg/Elgg/commit/ff399c2f6be674588a205098ecda093088730178)
+* **cron:** correct database query for removed entity handling [5fc811366](https://github.com/Elgg/Elgg/commit/5fc811366ff1e72fed4dee3e8b660955d7ffa809)
+
+
 <a name="6.0.2"></a>
 ### 6.0.2 (2024-08-02)
 
