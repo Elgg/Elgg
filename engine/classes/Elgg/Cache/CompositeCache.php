@@ -10,6 +10,7 @@ use Phpfastcache\CacheManager;
 use Phpfastcache\Cluster\ClusterAggregator;
 use Phpfastcache\Config\ConfigurationOption;
 use Phpfastcache\Core\Pool\ExtendedCacheItemPoolInterface;
+use Phpfastcache\Exceptions\PhpfastcacheRootException;
 
 /**
  * Composite cache pool
@@ -105,22 +106,28 @@ class CompositeCache extends BaseCache {
 		if ($this->disabled) {
 			return null;
 		}
-
-		$item = $this->pool->getItem($this->sanitizeItemKey($key));
-		if (!$item->isHit()) {
-			return null;
-		}
 		
-		if ($this->validate_lastcache && $this->config->lastcache) {
-			$expiration_date = Values::normalizeTime($this->config->lastcache);
-			
-			if ($item->getCreationDate()->getTimestamp() < $expiration_date->getTimestamp()) {
-				$this->delete($key);
+		try {
+			$item = $this->pool->getItem($this->sanitizeItemKey($key));
+			if (!$item->isHit()) {
 				return null;
 			}
+			
+			if ($this->validate_lastcache && $this->config->lastcache) {
+				$expiration_date = Values::normalizeTime($this->config->lastcache);
+				
+				if ($item->getCreationDate()->getTimestamp() < $expiration_date->getTimestamp()) {
+					$this->delete($key);
+					return null;
+				}
+			}
+			
+			return $item->get();
+		} catch (PhpfastcacheRootException $e) {
+			// something wrong with the cache
+			elgg_log($e->getMessage(), 'ERROR');
+			return null;
 		}
-		
-		return $item->get();
 	}
 
 	/**
