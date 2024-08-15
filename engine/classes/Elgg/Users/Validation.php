@@ -49,7 +49,7 @@ class Validation {
 			return;
 		}
 		
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user, $event) {
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user) {
 			
 			if ($user->isEnabled()) {
 				// disable the user until validation

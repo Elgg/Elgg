@@ -28,7 +28,7 @@ class PrepareFields {
 		foreach ($fields as $field) {
 			$default_value = null;
 			
-			$name = elgg_extract('name', $field);
+			$name = (string) elgg_extract('name', $field);
 			if (in_array($name, ['title', 'address'])) {
 				// bookmarklet support
 				$default_value = get_input($name);

@@ -27,7 +27,7 @@ class PrepareFields {
 		$fields = elgg()->fields->get('object', 'blog');
 		foreach ($fields as $field) {
 			$default_value = null;
-			$name = elgg_extract('name', $field);
+			$name = (string) elgg_extract('name', $field);
 			
 			if ($name === 'status') {
 				$default_value = 'published';
