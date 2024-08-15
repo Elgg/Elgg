@@ -14,7 +14,7 @@ if (!$container || !$container->canWriteToContainer(0, 'object', 'discussion')) 
 $values = [];
 $fields = elgg()->fields->get('object', 'discussion');
 foreach ($fields as $field) {
-	$name = elgg_extract('name', $field);
+	$name = (string) elgg_extract('name', $field);
 	if (elgg_extract('#type', $field) === 'tags') {
 		$value = elgg_string_to_array((string) get_input($name));
 	} elseif ($name === 'title') {

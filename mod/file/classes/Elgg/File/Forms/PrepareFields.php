@@ -28,7 +28,7 @@ class PrepareFields {
 		foreach ($fields as $field) {
 			$default_value = null;
 			
-			$name = elgg_extract('name', $field);
+			$name = (string) elgg_extract('name', $field);
 			if (elgg_extract('#type', $field) === 'file') {
 				// don't set file input values
 				continue;

@@ -12,7 +12,7 @@ $fields = elgg()->fields->get('object', 'bookmarks');
 foreach ($fields as $field) {
 	$value = null;
 	
-	$name = elgg_extract('name', $field);
+	$name = (string) elgg_extract('name', $field);
 	switch (elgg_extract('#type', $field)) {
 		case 'tags':
 			$value = elgg_string_to_array((string) get_input($name));

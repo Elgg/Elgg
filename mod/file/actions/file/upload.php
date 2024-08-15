@@ -12,7 +12,7 @@ $fields = elgg()->fields->get('object', 'file');
 foreach ($fields as $field) {
 	$value = null;
 	
-	$name = elgg_extract('name', $field);
+	$name = (string) elgg_extract('name', $field);
 	switch (elgg_extract('#type', $field)) {
 		case 'file':
 			$uploaded_file = elgg_get_uploaded_file('upload', false);

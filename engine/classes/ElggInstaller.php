@@ -1210,8 +1210,8 @@ class ElggInstaller {
 			if (str_starts_with($e->getMessage(), "Elgg couldn't connect")) {
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:databasesettings'));
 			} else {
-				$save_value = $this->sanitizeInputValue($dbname);
-				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:nodatabase', [$save_value]));
+				$database = (string) elgg_extract('database', $config->getConnectionConfig());
+				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:nodatabase', [$database]));
 			}
 
 			return false;
