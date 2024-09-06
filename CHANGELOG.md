@@ -1,3 +1,16 @@
+<a name="6.0.4"></a>
+### 6.0.4 (2024-09-06)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Jeroen Dalsem (1)
+
+#### Bug fixes
+
+* **cache:** catch exceptions when loading data from cache [f242fce22](https://github.com/Elgg/Elgg/commit/f242fce22730f9fd70bf88dd3348a24edb37389c)
+
+
 <a name="6.0.3"></a>
 ### 6.0.3 (2024-08-15)
 

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-02 08:06+0200\n"
+"POT-Creation-Date: 2024-08-15 09:49+0200\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -2717,7 +2717,7 @@ msgstr "Juillet 2022"
 
 #: ../../appendix/support.rst:77
 msgid "4.3"
-msgstr ""
+msgstr "4.3"
 
 #: ../../appendix/support.rst:77 ../../appendix/support.rst:77
 #: ../../appendix/support.rst:83
@@ -2734,15 +2734,15 @@ msgstr "Octobre 2023"
 
 #: ../../appendix/support.rst:81
 msgid "5.1 LTS"
-msgstr ""
+msgstr "5.1 LTS"
 
 #: ../../appendix/support.rst:81
 msgid "June 2025"
-msgstr ""
+msgstr "Juin 2025"
 
 #: ../../appendix/support.rst:81
 msgid "**Until 7.0**"
-msgstr ""
+msgstr "**Jusqu'à la 7.0**"
 
 #: ../../appendix/support.rst:83
 msgid "6.0"
@@ -2750,7 +2750,7 @@ msgstr "6.0"
 
 #: ../../appendix/support.rst:85
 msgid "7.0"
-msgstr ""
+msgstr "7.0"
 
 #: ../../appendix/support.rst:85
 msgid "TBD"
@@ -18674,6 +18674,8 @@ msgid ""
 "``elgg_unrequire_css()`` has been removed. Use "
 "``elgg_unregister_external_file('css', $view)`` as replacement."
 msgstr ""
+"``elgg_unrequire_css()`` a été retirée. Utilisez "
+"``elgg_unregister_external_file('css', $view)`` en remplacement."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:143
 msgid "``\\ElggAnnotation->enable()``"
@@ -18695,6 +18697,8 @@ msgstr "``\\ElggEntity->enableAnnotations()``"
 msgid ""
 "``\\ElggEntity->getTags()`` use ``elgg_get_metadata()`` as an alternative."
 msgstr ""
+"``\\ElggEntity->getTags()`` utilisez ``elgg_get_metadata()`` comme "
+"alternative."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:152
 msgid ""
