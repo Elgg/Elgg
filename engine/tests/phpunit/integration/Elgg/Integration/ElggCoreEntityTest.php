@@ -649,32 +649,6 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		];
 	}
 	
-	/**
-	 * @dataProvider emptyValues
-	 */
-	public function testSetMetadataEmpty($empty_value) {
-		$object = $this->createObject();
-		
-		$object->setMetadata('foo', 'bar');
-		$this->assertEquals('bar', $object->getMetadata('foo'));
-		$this->assertEquals('bar', $object->foo);
-		
-		// remove metadata by setting to empty value
-		$this->assertTrue($object->setMetadata('foo', $empty_value));
-		$this->assertNull($object->foo);
-		$this->assertNull($object->getMetadata('foo'));
-		
-		// removing unexisting data should also return true
-		$this->assertTrue($object->setMetadata('foo', $empty_value));
-	}
-	
-	public static function emptyValues() {
-		return [
-			[''],
-			[null],
-		];
-	}
-	
 	public function testDeleteDeadloopPrevented() {
 		$user = $this->getAdmin();
 		

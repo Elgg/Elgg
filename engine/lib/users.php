@@ -14,17 +14,9 @@
  * @return \ElggUser|null
  */
 function get_user(int $guid): ?\ElggUser {
-	try {
-		return _elgg_services()->entityTable->get($guid, 'user');
-	} catch (\Elgg\Exceptions\DomainException $ex) {
-		elgg_log($ex, 'ERROR');
-
-		return null;
-	} catch (\Elgg\Exceptions\ClassException $ex) {
-		elgg_log($ex, 'ERROR');
-
-		return null;
-	}
+	$result = _elgg_services()->entityTable->get($guid, 'user');
+	
+	return $result instanceof \ElggUser ? $result : null;
 }
 
 /**

@@ -6,16 +6,13 @@
  */
 
 $user = elgg_extract('entity', $vars, elgg_get_page_owner_entity());
-if (!$user instanceof ElggUser) {
+if (!$user instanceof \ElggUser) {
 	return;
 }
 
-$title = elgg_echo('user:name:label');
-$content = elgg_view_field([
+echo elgg_view_field([
 	'#type' => 'text',
 	'#label' => elgg_echo('name'),
 	'name' => 'name',
 	'value' => $user->name,
 ]);
-
-echo elgg_view_module('info', $title, $content);

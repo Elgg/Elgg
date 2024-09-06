@@ -12,7 +12,7 @@ if (!elgg_get_config('_boot_cache_hit')) {
 	$log .= elgg_format_element('div', [], '<b>(' . elgg_echo('developers:boot_cache_rebuilt') . ')</b>');
 }
 
-$system_log_enabled = elgg_is_system_cache_enabled() ? elgg_echo('option:yes') : elgg_echo('option:no');
+$system_log_enabled = _elgg_services()->systemCache->isEnabled() ? elgg_echo('option:yes') : elgg_echo('option:no');
 $log .= elgg_format_element('div', [], elgg_echo('developers:label:system_cache') . ": <b>{$system_log_enabled}</b>");
 
 $log_file = elgg()->config->log_cache;

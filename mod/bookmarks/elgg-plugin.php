@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\Bookmarks\FieldsHandler;
 use Elgg\Bookmarks\Forms\PrepareFields;
 use Elgg\Bookmarks\GroupToolContainerLogicCheck;
 use Elgg\Bookmarks\Notifications\CreateBookmarksEventHandler;
@@ -100,6 +101,11 @@ return [
 		'entity:url' => [
 			'object:widget' => [
 				'Elgg\Bookmarks\Widgets::widgetURL' => [],
+			],
+		],
+		'fields' => [
+			'object:bookmarks' => [
+				FieldsHandler::class => [],
 			],
 		],
 		'form:prepare:fields' => [

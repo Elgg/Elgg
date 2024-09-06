@@ -91,7 +91,7 @@ class Relationship {
 			
 			$result[] = \ElggMenuItem::factory([
 				'name' => 'reject',
-				'text' => elgg_echo('delete'),
+				'text' => elgg_echo('decline'),
 				'href' => elgg_generate_action_url('groups/killrequest', [
 					'user_guid' => $user->guid,
 					'group_guid' => $group->guid,
@@ -156,7 +156,7 @@ class Relationship {
 			
 			$result[] = \ElggMenuItem::factory([
 				'name' => 'delete',
-				'text' => elgg_echo('delete'),
+				'text' => elgg_echo('decline'),
 				'href' => elgg_generate_action_url('groups/killinvitation', [
 					'user_guid' => $user->guid,
 					'group_guid' => $group->guid,

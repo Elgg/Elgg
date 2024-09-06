@@ -4,7 +4,6 @@ namespace Elgg;
 
 use Elgg\Database\EntityTable;
 use Elgg\Database\Plugins;
-use Elgg\Database\Select;
 use Elgg\Exceptions\Configuration\InstallationException;
 
 /**
@@ -25,10 +24,7 @@ class BootData {
 	 */
 	private $active_plugins;
 
-	/**
-	 * @var array
-	 */
-	private $plugin_metadata = [];
+	private array $plugin_metadata = [];
 
 	/**
 	 * Populate the boot data
@@ -52,11 +48,7 @@ class BootData {
 			return;
 		}
 		
-		_elgg_services()->metadataCache->populateFromEntities($this->active_plugins);
-
-		foreach ($this->active_plugins as $plugin) {
-			$this->plugin_metadata[$plugin->guid] = _elgg_services()->metadataCache->getEntityMetadata($plugin->guid);
-		}
+		$this->plugin_metadata = _elgg_services()->metadataCache->populateFromEntities($this->active_plugins);
 	}
 
 	/**
@@ -82,7 +74,7 @@ class BootData {
 	 *
 	 * @return array
 	 */
-	public function getPluginMetadata() {
+	public function getPluginMetadata(): array {
 		return $this->plugin_metadata;
 	}
 }

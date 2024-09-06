@@ -28,7 +28,7 @@ $simple_cache_disabled_class = $is_simple_cache_on ? '' : 'elgg-state-disabled';
 
 $body = elgg_view_field($params);
 
-$cache_symlinked = _elgg_is_cache_symlinked();
+$cache_symlinked = _elgg_services()->simpleCache->isSymbolicLinked();
 
 $help = elgg_echo('installation:cache_symlink:description');
 $help .= elgg_echo('installation:cache_symlink:paths', [elgg_get_root_path() . 'cache/', elgg_get_asset_path()]);
@@ -79,7 +79,7 @@ $body .= elgg_view_field([
 	'#class' => 'mtm',
 	'name' => 'system_cache_enabled',
 	'switch' => true,
-	'checked' => elgg_is_system_cache_enabled(),
+	'checked' => _elgg_services()->systemCache->isEnabled(),
 ]);
 
 echo elgg_view_module('info', elgg_echo('admin:legend:caching'), $body, ['id' => 'elgg-settings-advanced-caching']);

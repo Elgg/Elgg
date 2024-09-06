@@ -64,8 +64,8 @@ class SystemEventHandlers {
 		elgg_extend_view('core/settings/statistics', 'core/settings/statistics/numentities');
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/username', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/name', 100);
-		elgg_extend_view('forms/usersettings/save', 'core/settings/account/password', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/email', 100);
+		elgg_extend_view('forms/usersettings/save', 'core/settings/account/password', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/language', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/default_access', 100);
 		
@@ -97,11 +97,6 @@ class SystemEventHandlers {
 	 */
 	public static function initEarly() {
 		elgg_register_pam_handler(\Elgg\PAM\User\Password::class);
-		
-		// @todo registering an alias helps in the transition from Elgg 4 to Elgg 5. This can be removed in Elgg 6
-		if (!class_exists('Elgg\Hook')) {
-			class_alias(\Elgg\Event::class, 'Elgg\Hook');
-		}
 	}
 	
 	/**

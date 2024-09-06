@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-13 14:04+0200\n"
+"POT-Creation-Date: 2024-08-15 09:49+0200\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -50,6 +50,7 @@ msgstr "Ci-dessous quelques questions fréquemment posées à propos de Elgg."
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:6
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:6
 #: ../../appendix/upgrade-notes/5.0-to-5.1.rst:6
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:6
 msgid "Contents"
 msgstr "Contenu"
 
@@ -2715,16 +2716,13 @@ msgid "July 2022"
 msgstr "Juillet 2022"
 
 #: ../../appendix/support.rst:77
-msgid "4.3 LTS"
-msgstr "4.3 LTS"
+msgid "4.3"
+msgstr "4.3"
 
-#: ../../appendix/support.rst:77
+#: ../../appendix/support.rst:77 ../../appendix/support.rst:77
+#: ../../appendix/support.rst:83
 msgid "June 2024"
 msgstr "Juin 2024"
-
-#: ../../appendix/support.rst:77
-msgid "**Until 6.0**"
-msgstr "**Jusqu'à la 6.0**"
 
 #: ../../appendix/support.rst:79
 msgid "5.0"
@@ -2735,14 +2733,26 @@ msgid "October 2023"
 msgstr "Octobre 2023"
 
 #: ../../appendix/support.rst:81
-msgid "5.1"
-msgstr "5.1"
+msgid "5.1 LTS"
+msgstr "5.1 LTS"
+
+#: ../../appendix/support.rst:81
+msgid "June 2025"
+msgstr "Juin 2025"
+
+#: ../../appendix/support.rst:81
+msgid "**Until 7.0**"
+msgstr "**Jusqu'à la 7.0**"
 
 #: ../../appendix/support.rst:83
 msgid "6.0"
 msgstr "6.0"
 
-#: ../../appendix/support.rst:83
+#: ../../appendix/support.rst:85
+msgid "7.0"
+msgstr "7.0"
+
+#: ../../appendix/support.rst:85
 msgid "TBD"
 msgstr "A FAIRE"
 
@@ -8691,6 +8701,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:690
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:865
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:156
 msgid "Miscellaneous API changes"
 msgstr "Modifications d’API diverses"
 
@@ -10935,11 +10946,13 @@ msgstr "De 3.x à 4.0"
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:9
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:17
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:59
 msgid "Composer"
 msgstr "Composer"
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:12
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:20
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:62
 msgid "PHP Requirements"
 msgstr "Pré-requis PHP"
 
@@ -16405,6 +16418,7 @@ msgstr ""
 " de métadonnées contenant un ``,``."
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:160
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:128
 msgid "Changes in functions"
 msgstr "Modification dans les fonctions"
 
@@ -16630,6 +16644,7 @@ msgid "``elgg_ws_expose_function()`` no longer returns a ``bool``"
 msgstr "``elgg_ws_expose_function()`` ne renvoie plus un ``bool``"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:207
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:150
 msgid "Lib functions function parameters"
 msgstr "Paramètres de fonction des fonctions des bibliothèques"
 
@@ -18291,6 +18306,7 @@ msgid "``thewire_latest_guid``"
 msgstr "``thewire_latest_guid``"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:474
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:141
 msgid "Removed class functions"
 msgstr "Fonctions de classe supprimées"
 
@@ -18399,3 +18415,320 @@ msgid ""
 msgstr ""
 "``edit:object:comment`` est obsolète : la modification des commentaires "
 "utilise un formulaire en ligne"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:2
+msgid "From 5.x to 6.0"
+msgstr "De 5.x vers 6.0"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:9
+msgid "Databases"
+msgstr "Bases de données"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:12
+msgid "DB Requirements"
+msgstr "Pré-requis de la base de données"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:14
+msgid "The minimal MySQL version is now 8.0"
+msgstr "La version minimale de MySQL est maintenant la 8.0."
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:15
+msgid "The minimal MariaDB version is now 10.6"
+msgstr "La version minimale de MariaDB est maintenant la 10.6."
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:18
+msgid "Deleted state"
+msgstr "État supprimé"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:20
+msgid ""
+"Entities can now be marked as deleted in the database. This allows entities "
+"to be restored from the database when deletion was done too soon."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:25
+msgid ""
+"Because of changes to ``ElggEntity::delete()`` the working of "
+"``ElggFile::delete()`` was changed. It was possible to symlink a file to a "
+"different location (through other ways then Elgg) and when deleting the "
+"``ElggFile`` is was possible to only delete the symlink and not the target "
+"file. This was changed and ``ElggFile::delete()`` will now always delete "
+"both the symlink and the target file."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:32
+msgid ""
+"Check the :ref:`database <database-deleted>` documentation or the "
+":doc:`/guides/restore` documentation for more information."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:35
+msgid "ES Modules"
+msgstr "Modules ES"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:37
+msgid ""
+"We no longer use RequireJS for inclusion of AMD JavaScript modules. Instead "
+"we now rely on the native use of ECMAScript modules. All modules can be "
+"referenced under the same name as an importable module."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:41
+msgid "Related functions changes"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:43
+msgid ""
+"``elgg_define_js()`` this function has been removed. You might need "
+"``elgg_register_esm()`` as a replacement."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:44
+msgid ""
+"``elgg_require_js()`` this function has been removed. You might need "
+"``elgg_import_esm()`` as a replacement."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:45
+msgid "``elgg_unrequire_js()`` this function has been removed"
+msgstr "``elgg_unrequire_js()`` cette fonction a été retirée"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:47
+msgid ""
+"The event 'config', 'amd' has been removed. The event 'elgg.data', 'site' "
+"has been removed. You can switch to the 'elgg.data', 'page' event."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:52
+msgid ""
+"With the switch to ECMAScript modules we can no longer add Sub-Resource "
+"Integrity checks to the imported modules."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:56
+msgid ""
+"With the switch to ECMAScript modules we temporarily dropped Javascript "
+"testing features. This will be added in the future."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:64
+msgid ""
+"The minimal PHP version is now 8.1. Also the ``intl`` module is now required"
+" to be enabled."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:67
+msgid "PHPUnit"
+msgstr "PHPUnit"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:69
+msgid "Elgg now uses PHPUnit 10.5. You might need to update your tests."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:72
+msgid "Annotations"
+msgstr "Annotations"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:74
+msgid ""
+"Due to a naming conflict in the default join alias between the "
+"``annotations`` and ``metadata`` table, the default join alias for the "
+"``annotations`` table has been changed from ``n_table`` to ``a_table``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:77
+msgid ""
+"If your code uses very specific clauses (select, where, order_by, etc.) you "
+"need to update your code. If you use the ``\\Elgg\\Database\\QueryBuilder`` "
+"for your query parts you should be ok."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:81
+msgid "Enabled column"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:83
+msgid ""
+"The ``enabled`` column for annotations has been removed. An annotation is no"
+" longer enabled or disabled. You can no longer perform the ``enable`` and "
+"``disable`` API calls on annotations. Other related API functions have been "
+"removed."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:87
+msgid "Entity Icons"
+msgstr "Icônes des entités"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:90
+msgid "Cropping coordinates"
+msgstr "Coordonnées de découpe"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:92
+msgid ""
+"The cropping coordinates of the default icon (``icon``) are now stored in a "
+"uniform way, same as those of the other icon types. The metadata ``x1``, "
+"``x2``, ``y1`` and ``y2`` no longer exist. Use the new ``\\ElggEntity`` "
+"function ``getIconCoordinates()``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:96
+msgid "Icontime"
+msgstr "Icontime"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:98
+msgid ""
+"The metadata ``icontime`` has been removed from the database. This was an "
+"unreliable way to check if an icon was uploaded. This was only stored for "
+"the icon type ``icon``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:101
+msgid ""
+"A reliable way to check if an icon was uploaded is to use the "
+"``\\ElggEntity::hasIcon()`` function."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:104
+msgid "Headings"
+msgstr "Titres"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:106
+msgid ""
+"The use of headings (h1, h2, h3) have been revisited throughout the entire "
+"codebase to make sure they are used when appropriate and that they also are "
+"used in the correct order. You can read more about the intended usage in "
+":doc:`/design/a11y`."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:109
+msgid "Most notable changes are the following:"
+msgstr "Les changements les plus importants sont les suivants :"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:111
+msgid "H1 is always the page title (and no longer the logo / site name)"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:112
+msgid "Modules (info, sidebar, widgets) use the H2 heading"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:113
+msgid ""
+"H3 headings on entity / relationship / annotation summary titles have been "
+"replaced by a regular text element"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:116
+msgid "CSS and HTML structure changes"
+msgstr "Modifications de structure CSS et HTML"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:118
+msgid ""
+"The HTML structure of pages have been changed. Entity summaries and full "
+"view entity pages have been wrapped in an ``article`` element. Sidebar "
+"elements now use the ``aside`` html element. Modules (like widgets of info-"
+"modules) now use a ``section`` element instead of a ``div``. Duplicate css "
+"classes on the same element like ``elgg-body`` and ``elgg-layout-body`` have"
+" been removed."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:122
+msgid ""
+"Elgg provided some helper classes for creating a grid layout (like ``elgg-"
+"grid``, ``elgg-col``, ``elgg-row``). These helper classes have been removed."
+" You can do all those things with regular css like ``display: grid``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:125
+msgid ""
+"Some other styling changes include a new background color for the body, "
+"improved styling of breadcrumbs and a more basic owner block chip."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:131
+msgid "Removed lib functions"
+msgstr "Fonctions de bibliothèque supprimées"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:133
+msgid "``elgg_disable_annotations()`` has been removed"
+msgstr "``elgg_disable_annotations()`` a été retiré"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:134
+msgid "``elgg_enable_annotations()`` has been removed"
+msgstr "``elgg_enable_annotations()`` a été retiré"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:135
+msgid "``elgg_set_view_location()`` has been removed"
+msgstr "``elgg_set_view_location()`` a été retiré"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:136
+msgid "``elgg_strrchr()`` has been removed"
+msgstr "``elgg_strrchr()`` a été retiré"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:137
+msgid "``elgg_strripos()`` has been removed"
+msgstr "``elgg_strripos()`` a été retiré"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:138
+msgid ""
+"``elgg_unrequire_css()`` has been removed. Use "
+"``elgg_unregister_external_file('css', $view)`` as replacement."
+msgstr ""
+"``elgg_unrequire_css()`` a été retirée. Utilisez "
+"``elgg_unregister_external_file('css', $view)`` en remplacement."
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:143
+msgid "``\\ElggAnnotation->enable()``"
+msgstr "``\\ElggAnnotation->enable()``"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:144
+msgid "``\\ElggAnnotation->disable()``"
+msgstr "``\\ElggAnnotation->disable()``"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:145
+msgid "``\\ElggEntity->disableAnnotations()``"
+msgstr "``\\ElggEntity->disableAnnotations()``"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:146
+msgid "``\\ElggEntity->enableAnnotations()``"
+msgstr "``\\ElggEntity->enableAnnotations()``"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:147
+msgid ""
+"``\\ElggEntity->getTags()`` use ``elgg_get_metadata()`` as an alternative."
+msgstr ""
+"``\\ElggEntity->getTags()`` utilisez ``elgg_get_metadata()`` comme "
+"alternative."
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:152
+msgid ""
+"``elgg_get_entity_statistics()`` now requires an ``array`` of ``$options`` "
+"to be used by ``elgg_get_entities()``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:153
+msgid ""
+"``elgg_get_simplecache_url()`` has the second argument (``$subview``) "
+"removed. The full ``$view`` name needs to be provided as the first argument."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:158
+msgid ""
+"The interface ``\\Elgg\\EntityIcon`` has been removed. Implemented functions"
+" in ``\\ElggEntity`` have been moved to ``\\Elgg\\Traits\\Entity\\Icons``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:159
+msgid ""
+"View names from a 'css' or 'js' view folder now always need to be referenced"
+" by their full view name (previously is was possible to omit the first "
+"folder if it was 'css' or 'js')"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:162
+msgid "Removed Config values"
+msgstr "Valeurs de configuration retirées"
+
+#: ../../appendix/upgrade-notes/5.x-to-6.0.rst:164
+msgid "``system_cache_loaded``"
+msgstr "``system_cache_loaded``"

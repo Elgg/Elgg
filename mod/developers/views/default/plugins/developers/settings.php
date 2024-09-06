@@ -12,34 +12,28 @@ echo elgg_view('output/longtext', [
 ]);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('developers:label:simple_cache'),
 	'#help' => elgg_echo('developers:help:simple_cache'),
 	'name' => 'simple_cache',
-	'value' => 1,
-	'checked' => elgg_is_simplecache_enabled(),
+	'value' => _elgg_services()->simpleCache->isEnabled(),
 	'disabled' => $config->hasInitialValue('simplecache_enabled'),
-	'switch' => true,
 ]);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('developers:label:system_cache'),
 	'#help' => elgg_echo('developers:help:system_cache'),
 	'name' => 'system_cache',
-	'value' => 1,
-	'checked' => elgg_is_system_cache_enabled(),
-	'switch' => true,
+	'value' => _elgg_services()->systemCache->isEnabled(),
 ]);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('developers:label:display_errors'),
 	'#help' => elgg_echo('developers:help:display_errors'),
 	'name' => 'params[display_errors]',
-	'value' => 1,
-	'checked' => $plugin->display_errors === '1',
-	'switch' => true,
+	'value' => $plugin->display_errors,
 ]);
 
 $debug_value = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;
@@ -57,22 +51,20 @@ echo elgg_view_field([
 	'value' => $debug_value,
 	'disabled' => $config->hasInitialValue('debug'),
 	'options_values' => [
-		'' => elgg_echo('developers:debug:off'),
-		'ERROR' => elgg_echo('developers:debug:error'),
-		'WARNING' => elgg_echo('developers:debug:warning'),
-		'NOTICE' => elgg_echo('developers:debug:notice'),
-		'INFO' => elgg_echo('developers:debug:info'),
+		'' => elgg_echo('installation:debug:none'),
+		\Psr\Log\LogLevel::ERROR => elgg_echo('installation:debug:error'),
+		\Psr\Log\LogLevel::WARNING => elgg_echo('installation:debug:warning'),
+		\Psr\Log\LogLevel::NOTICE => elgg_echo('installation:debug:notice'),
+		\Psr\Log\LogLevel::INFO => elgg_echo('installation:debug:info'),
 	],
 ]);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('developers:label:screen_log'),
 	'#help' => elgg_echo('developers:help:screen_log'),
 	'name' => 'params[screen_log]',
-	'value' => 1,
-	'checked' => $plugin->screen_log === '1',
-	'switch' => true,
+	'value' => $plugin->screen_log,
 ]);
 
 echo elgg_view_field([
@@ -89,23 +81,19 @@ echo elgg_view_field([
 ]);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('developers:label:wrap_views'),
 	'#help' => elgg_echo('developers:help:wrap_views'),
 	'name' => 'params[wrap_views]',
-	'value' => 1,
-	'checked' => $plugin->wrap_views === '1',
-	'switch' => true,
+	'value' => $plugin->wrap_views,
 ]);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('developers:label:log_events'),
 	'#help' => elgg_echo('developers:help:log_events'),
 	'name' => 'params[log_events]',
-	'value' => 1,
-	'checked' => $plugin->log_events === '1',
-	'switch' => true,
+	'value' => $plugin->log_events,
 ]);
 
 echo elgg_view_field([

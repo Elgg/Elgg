@@ -233,6 +233,7 @@ return [
 			],
 			'menu:filter:groups/all' => [
 				'Elgg\Groups\Menus\Filter::registerGroupsAll' => [],
+				'Elgg\Groups\Menus\FilterSortItems::registerPopularSorting' => [],
 				'Elgg\Menus\FilterSortItems::registerTimeCreatedSorting' => [],
 				'Elgg\Menus\FilterSortItems::registerNameSorting' => [],
 				'Elgg\Menus\FilterSortItems::registerSortingDropdown' => ['priority' => 9999],

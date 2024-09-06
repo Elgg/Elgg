@@ -69,11 +69,11 @@ class PluginsIntegrationTest extends IntegrationTestCase {
 				}
 				
 				if ($settings['active'] !== $plugin->isActive()) {
-					// using relationship only and not \ElggPlugin::activate() or \ElggPlugin::deactivate() because it does to much
+					// using relationship only and not \ElggPlugin::activate() or \ElggPlugin::deactivate() because it does too much
 					if ($settings['active']) {
-						_elgg_services()->relationshipsTable->add($plugin->guid, 'active_plugin', $site->guid);
+						$plugin->addRelationship($site->guid, 'active_plugin');
 					} else {
-						_elgg_services()->relationshipsTable->remove($plugin->guid, 'active_plugin', $site->guid);
+						$plugin->removeRelationship($site->guid, 'active_plugin');
 					}
 				}
 			}

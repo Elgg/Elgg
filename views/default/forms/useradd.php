@@ -30,12 +30,10 @@ echo elgg_view_field([
 ]);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('autogen_password_option'),
 	'name' => 'autogen_password',
-	'value' => 1,
-	'default' => false,
-	'checked' => (bool) elgg_extract('autogen_password', $vars),
+	'value' => elgg_extract('autogen_password', $vars),
 ]);
 
 echo elgg_view_field([
@@ -57,12 +55,10 @@ echo elgg_view_field([
 ]);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('admin_option'),
 	'name' => 'admin',
-	'value' => 1,
-	'default' => false,
-	'checked' => (bool) elgg_extract('admin', $vars),
+	'value' => elgg_extract('admin', $vars),
 ]);
 
 $footer = elgg_view_field([

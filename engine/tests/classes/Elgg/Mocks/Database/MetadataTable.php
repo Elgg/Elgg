@@ -32,17 +32,17 @@ class MetadataTable extends DbMetadataTabe {
 	 */
 	public function create(\ElggMetadata $metadata, bool $allow_multiple = false): int|false {
 		if (!isset($metadata->value) || !isset($metadata->entity_guid)) {
-			elgg_log("Metadata must have a value and entity guid", 'ERROR');
+			_elgg_services()->logger->error('Metadata must have a value and entity guid');
 			return false;
 		}
 		
 		if (!$this->entityTable->exists($metadata->entity_guid)) {
-			elgg_log("Can't create metadata on a non-existing entity_guid", 'ERROR');
+			_elgg_services()->logger->error("Can't create metadata on a non-existing entity_guid");
 			return false;
 		}
 		
 		if (!is_scalar($metadata->value)) {
-			elgg_log("To set multiple metadata values use ElggEntity::setMetadata", 'ERROR');
+			_elgg_services()->logger->error('To set multiple metadata values use ElggEntity::setMetadata');
 			return false;
 		}
 		
@@ -102,7 +102,7 @@ class MetadataTable extends DbMetadataTabe {
 	 */
 	public function update(\ElggMetadata $metadata): bool {
 		if (!$this->entityTable->exists($metadata->entity_guid)) {
-			elgg_log("Can't updated metadata to a non-existing entity_guid", 'ERROR');
+			_elgg_services()->logger->error("Can't updated metadata to a non-existing entity_guid");
 			return false;
 		}
 		

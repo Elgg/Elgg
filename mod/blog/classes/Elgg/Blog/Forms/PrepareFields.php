@@ -21,23 +21,29 @@ class PrepareFields {
 		
 		// input names => defaults
 		$values = [
-			'title' => null,
-			'description' => null,
-			'status' => 'published',
-			'access_id' => ACCESS_DEFAULT,
-			'comments_on' => 'On',
-			'excerpt' => null,
-			'tags' => null,
-			'container_guid' => null,
-			'guid' => null,
+			'container_guid' => elgg_get_page_owner_guid(),
 		];
+		
+		$fields = elgg()->fields->get('object', 'blog');
+		foreach ($fields as $field) {
+			$default_value = null;
+			$name = (string) elgg_extract('name', $field);
+			
+			if ($name === 'status') {
+				$default_value = 'published';
+			} elseif ($name === 'comments_on') {
+				$default_value = 'On';
+			}
+			
+			$values[$name] = $default_value;
+		}
 		
 		$blog = elgg_extract('entity', $vars);
 		if ($blog instanceof \ElggBlog) {
 			// load current blog values
 			foreach (array_keys($values) as $field) {
-				if (isset($blog->$field)) {
-					$values[$field] = $blog->$field;
+				if (isset($blog->{$field})) {
+					$values[$field] = $blog->{$field};
 				}
 			}
 			

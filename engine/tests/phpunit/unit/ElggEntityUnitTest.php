@@ -18,7 +18,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 	public function testDefaultAttributes() {
 		$this->assertNull($this->obj->guid);
 		$this->assertEquals('object', $this->obj->type);
-		$this->assertNull($this->obj->subtype);
+		$this->assertEquals('object', $this->obj->subtype);
 		$this->assertEquals(elgg_get_logged_in_user_guid(), $this->obj->owner_guid);
 		$this->assertEquals(elgg_get_logged_in_user_guid(), $this->obj->container_guid);
 		$this->assertEquals(ACCESS_PRIVATE, $this->obj->access_id);

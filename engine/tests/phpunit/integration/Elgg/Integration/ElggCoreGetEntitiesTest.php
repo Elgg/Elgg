@@ -649,4 +649,52 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesIntegrationTestCase {
 		$this->assertNotFalse($result);
 		$this->assertNotEmpty($result); // should be a \stdClass with data
 	}
+	
+	public function testCanPreloadEntityOwners() {
+		
+		$owner1 = $this->createUser();
+		$owner2 = $this->createUser();
+		
+		$object1 = $this->createObject(['owner_guid' => $owner1->guid]);
+		$object2 = $this->createObject(['owner_guid' => $owner2->guid]);
+		
+		elgg_get_entities([
+			'guids' => [$object1->guid, $object2->guid],
+		]);
+		
+		$this->assertNull(_elgg_services()->entityCache->load($owner1->guid));
+		$this->assertNull(_elgg_services()->entityCache->load($owner2->guid));
+		
+		elgg_get_entities([
+			'guids' => [$object1->guid, $object2->guid],
+			'preload_owners' => true,
+		]);
+		
+		$this->assertNotNull(_elgg_services()->entityCache->load($owner1->guid));
+		$this->assertNotNull(_elgg_services()->entityCache->load($owner2->guid));
+	}
+	
+	public function testCanPreloadEntityContainers() {
+		
+		$owner1 = $this->createUser();
+		$owner2 = $this->createUser();
+		
+		$object1 = $this->createObject(['container_guid' => $owner1->guid]);
+		$object2 = $this->createObject(['container_guid' => $owner2->guid]);
+		
+		elgg_get_entities([
+			'guids' => [$object1->guid, $object2->guid],
+		]);
+		
+		$this->assertNull(_elgg_services()->entityCache->load($owner1->guid));
+		$this->assertNull(_elgg_services()->entityCache->load($owner2->guid));
+		
+		elgg_get_entities([
+			'guids' => [$object1->guid, $object2->guid],
+			'preload_containers' => true,
+		]);
+		
+		$this->assertNotNull(_elgg_services()->entityCache->load($owner1->guid));
+		$this->assertNotNull(_elgg_services()->entityCache->load($owner2->guid));
+	}
 }

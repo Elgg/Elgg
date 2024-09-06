@@ -8,7 +8,7 @@ class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 	 * @return \ElggRelationship
 	 */
 	protected function getRelationshipMock() {
-		return new \ElggRelationship(new stdClass());
+		return new \ElggRelationship();
 	}
 	
 	/**
@@ -20,12 +20,12 @@ class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 		$subject = $this->createUser();
 		$object = $this->createObject();
 		
-		$rel_id = _elgg_services()->relationshipsTable->add($subject->guid, 'foo', $object->guid, true);
-		if (empty($rel_id)) {
-			return false;
-		}
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $subject->guid;
+		$relationship->relationship = 'foo';
+		$relationship->guid_two  = $object->guid;
 		
-		return elgg_get_relationship($rel_id);
+		return $relationship->save() ? $relationship : false;
 	}
 	
 	/**
@@ -89,7 +89,7 @@ class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testIsLoggable() {
-		$unsaved = new \ElggRelationship(new \stdClass());
+		$unsaved = new \ElggRelationship();
 		$this->assertEmpty($unsaved->getSystemLogID());
 		
 		$relationship = $this->createRelationship();

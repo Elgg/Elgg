@@ -11,15 +11,14 @@ if (!elgg_is_admin_logged_in() && !elgg_get_config('can_change_username')) {
 }
 
 $user = elgg_extract('entity', $vars, elgg_get_page_owner_entity());
-if (!$user instanceof ElggUser) {
+if (!$user instanceof \ElggUser) {
 	return;
 }
 
-$body = elgg_view_field([
+echo elgg_view_field([
 	'#type' => 'text',
+	'#label' => elgg_echo('username'),
 	'#help' => elgg_echo('user:username:help'),
 	'name' => 'username',
 	'value' => $user->username,
 ]);
-
-echo elgg_view_module('info', elgg_echo('username'), $body);

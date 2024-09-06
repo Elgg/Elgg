@@ -951,7 +951,7 @@ Voir la liste complète des utilisateurs :
 	'admin:statistics:label:numusers' => "Nombre de comptes utilisateur",
 	'admin:statistics:label:numonline' => "Nombre de membres en ligne",
 	'admin:statistics:label:onlineusers' => "Utilisateurs en ligne en ce moment",
-	'admin:statistics:label:admins'=>"Administrateurs",
+	'admin:statistics:label:admins' => "Administrateurs",
 	'admin:statistics:label:version' => "Version de Elgg",
 	'admin:statistics:label:version:release' => "Version Majeure",
 	'admin:statistics:label:version:version' => "Version de la base de données",
@@ -1320,7 +1320,7 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'deleteconfirm' => "Confirmez-vous vouloir supprimer cet élément ?",
 	'trashconfirm' => "Confirmez-vous vouloir mettre cet élément dans la corbeille ?",
 	'restoreconfirm' => "Confirmez-vous vouloir restaurer cet élément ?",
-	'restoreandmoveconfirm'=> "Confirmez-vous vouloir restaurer et déplacer cet élément ?",
+	'restoreandmoveconfirm' => "Confirmez-vous vouloir restaurer et déplacer cet élément ?",
 	'deleteconfirm:plural' => "Confirmez-vous vouloir supprimer ces éléments ?",
 	'fileexists' => "Un fichier a déjà été chargé. Pour le remplacer, sélectionnez un nouveau fichier ci-dessous",
 	'input:file:upload_limit' => 'La taille maximale de fichier autorisée est %s',
@@ -2110,4 +2110,6 @@ Variables globales :
 
 	'core:upgrade:2024020901:title' => "Supprimer la métadonnée icontime",
 	'core:upgrade:2024020901:description' => "Supprimez la métadonnée peu fiable icontime de la base de données ",
+
+	'core:upgrade:2024070201:title' => "Migrer la configuration de débogage",
 );

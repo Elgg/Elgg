@@ -41,7 +41,7 @@ if (!is_array($items) || count($items) == 0) {
 $headings = '';
 foreach ($columns as $column) {
 	if (!$column instanceof TableColumn) {
-		elgg_log('$vars["columns"] must be an array of ' . TableColumn::class, 'NOTICE');
+		elgg_log('$vars["columns"] must be an array of ' . TableColumn::class, \Psr\Log\LogLevel::NOTICE);
 		return;
 	}
 

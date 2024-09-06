@@ -118,7 +118,7 @@ unset($vars['is_trusted']);
 $vars['class'] = elgg_extract_class($vars, 'elgg-anchor');
 
 if (!isset($vars['aria-label']) && !isset($vars['aria-labelledby']) && !isset($vars['title']) && empty(elgg_strip_tags((string) $text))) {
-	elgg_log('An output/url should have a discernible text (text, title, aria-label or aria-labelledby)', 'NOTICE');
+	elgg_log('An output/url should have a discernible text (text, title, aria-label or aria-labelledby)', \Psr\Log\LogLevel::NOTICE);
 }
 
 if (!elgg_is_empty($text)) {

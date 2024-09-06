@@ -158,7 +158,7 @@ class ApiRegistrationService {
 				try {
 					$this->collection->add(ApiMethod::factory($options));
 				} catch (ExceptionInterface $e) {
-					elgg_log($e, 'ERROR');
+					elgg_log($e, \Psr\Log\LogLevel::ERROR);
 				}
 			}
 		}

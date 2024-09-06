@@ -341,7 +341,7 @@ class ElggPlugin extends ElggObject {
 		], $value);
 
 		if (is_array($value)) {
-			elgg_log('Plugin settings cannot store arrays.', 'ERROR');
+			elgg_log('Plugin settings cannot store arrays.', \Psr\Log\LogLevel::ERROR);
 
 			return false;
 		}
@@ -398,11 +398,11 @@ class ElggPlugin extends ElggObject {
 		
 		try {
 			_elgg_services()->db->deleteData($delete);
-			_elgg_services()->dataCache->metadata->clear();
+			_elgg_services()->metadataCache->clear();
 			
 			$result &= true;
 		} catch (DatabaseException $e) {
-			elgg_log($e, 'ERROR');
+			elgg_log($e, \Psr\Log\LogLevel::ERROR);
 			
 			$result &= false;
 		}
@@ -1282,9 +1282,9 @@ class ElggPlugin extends ElggObject {
 
 		$site = elgg_get_site_entity();
 		if ($active) {
-			$result = _elgg_services()->relationshipsTable->add($this->guid, 'active_plugin', $site->guid);
+			$result = $this->addRelationship($site->guid, 'active_plugin');
 		} else {
-			$result = _elgg_services()->relationshipsTable->remove($this->guid, 'active_plugin', $site->guid);
+			$result = $this->removeRelationship($site->guid, 'active_plugin');
 		}
 		
 		if ($result) {

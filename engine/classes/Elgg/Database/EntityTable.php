@@ -8,7 +8,6 @@ use Elgg\Config;
 use Elgg\Database;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\EventsService;
-use Elgg\Exceptions\ClassException;
 use Elgg\Exceptions\Database\UserFetchFailureException;
 use Elgg\Exceptions\DomainException;
 use Elgg\I18n\Translator;
@@ -23,7 +22,7 @@ use Elgg\Traits\TimeUsing;
  * @since 1.10.0
  */
 class EntityTable {
-
+	
 	use Loggable;
 	use TimeUsing;
 
@@ -33,20 +32,6 @@ class EntityTable {
 	public const TABLE_NAME = 'entities';
 	
 	public const DEFAULT_JOIN_ALIAS = 'e';
-
-	protected Config $config;
-
-	protected Database $db;
-
-	protected EntityCache $entity_cache;
-
-	protected MetadataCache $metadata_cache;
-
-	protected EventsService $events;
-
-	protected SessionManagerService $session_manager;
-
-	protected Translator $translator;
 
 	protected array $deleted_guids = [];
 	
@@ -66,21 +51,14 @@ class EntityTable {
 	 * @param Translator            $translator      Translator
 	 */
 	public function __construct(
-		Config $config,
-		Database $db,
-		EntityCache $entity_cache,
-		MetadataCache $metadata_cache,
-		EventsService $events,
-		SessionManagerService $session_manager,
-		Translator $translator
+		protected Config $config,
+		protected Database $db,
+		protected EntityCache $entity_cache,
+		protected MetadataCache $metadata_cache,
+		protected EventsService $events,
+		protected SessionManagerService $session_manager,
+		protected Translator $translator
 	) {
-		$this->config = $config;
-		$this->db = $db;
-		$this->entity_cache = $entity_cache;
-		$this->metadata_cache = $metadata_cache;
-		$this->events = $events;
-		$this->session_manager = $session_manager;
-		$this->translator = $translator;
 	}
 
 	/**
@@ -103,6 +81,7 @@ class EntityTable {
 
 	/**
 	 * Returns class name registered as a constructor for a given type and subtype
+	 * The classname is also validated to exist and to be an extension of an \ElggEntity
 	 *
 	 * @param string $type    Entity type
 	 * @param string $subtype Entity subtype
@@ -110,7 +89,32 @@ class EntityTable {
 	 * @return string
 	 */
 	public function getEntityClass(string $type, string $subtype): string {
-		return $this->entity_classes[$type][$subtype] ?? '';
+		
+		$class_name = $this->entity_classes[$type][$subtype] ?? '';
+		if ($class_name && !class_exists($class_name)) {
+			$this->getLogger()->error("Class '{$class_name}' was not found");
+			$class_name = '';
+		}
+		
+		if (empty($class_name)) {
+			$map = [
+				'object' => \ElggObject::class,
+				'user' => \ElggUser::class,
+				'group' => \ElggGroup::class,
+				'site' => \ElggSite::class,
+			];
+			if (isset($map[$type])) {
+				$class_name = $map[$type];
+			}
+		}
+		
+		$parents = class_parents($class_name);
+		if ($parents === false || !isset($parents[\ElggEntity::class])) {
+			$this->getLogger()->error("{$class_name} must extend " . \ElggEntity::class);
+			return '';
+		}
+		
+		return $class_name;
 	}
 
 	/**
@@ -198,41 +202,18 @@ class EntityTable {
 	 * @param \stdClass $row The row of the entry in the entities table.
 	 *
 	 * @return \ElggEntity|null
-	 * @throws ClassException
-	 * @throws DomainException
 	 */
 	public function rowToElggStar(\stdClass $row): ?\ElggEntity {
-		if (!isset($row->guid) || !isset($row->subtype)) {
+		if (!isset($row->type) || !isset($row->subtype)) {
 			return null;
 		}
 
 		$class_name = $this->getEntityClass($row->type, $row->subtype);
-		if ($class_name && !class_exists($class_name)) {
-			$this->getLogger()->error("Class '{$class_name}' was not found, missing plugin?");
-			$class_name = '';
-		}
-
 		if (!$class_name) {
-			$map = [
-				'object' => \ElggObject::class,
-				'user' => \ElggUser::class,
-				'group' => \ElggGroup::class,
-				'site' => \ElggSite::class,
-			];
-
-			if (isset($map[$row->type])) {
-				$class_name = $map[$row->type];
-			} else {
-				throw new DomainException("Entity type {$row->type} is not supported.");
-			}
+			return null;
 		}
 
-		$entity = new $class_name($row);
-		if (!$entity instanceof \ElggEntity) {
-			throw new ClassException("{$class_name} must extend " . \ElggEntity::class);
-		}
-
-		return $entity;
+		return new $class_name($row);
 	}
 
 	/**
@@ -286,15 +267,11 @@ class EntityTable {
 			return null;
 		}
 
-		$entity = $row;
-
-		if ($entity instanceof \stdClass) {
-			// Need to check for \stdClass because the unit test mocker returns \ElggEntity classes
-			$entity = $this->rowToElggStar($entity);
+		$entity = $this->rowToElggStar($row);
+		if ($entity instanceof \ElggEntity) {
+			$entity->cache();
 		}
-
-		$entity->cache();
-
+		
 		return $entity;
 	}
 

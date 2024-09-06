@@ -16,11 +16,6 @@
 	}
 }
 
-.elgg-form-alt > .elgg-form-footer {
-	border-top: 1px solid $(border-color-soft);
-	padding: 10px 0;
-}
-
 label, .elgg-field-label {
 	font-weight: 600;
 	font-size: 0.9rem;

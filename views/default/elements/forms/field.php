@@ -27,6 +27,10 @@ $label = elgg_extract('label', $vars, '');
 $help = elgg_extract('help', $vars, '');
 
 $class = elgg_extract_class($vars, 'elgg-field');
+if (elgg_extract('input_type', $vars)) {
+	$class[] = 'elgg-field-' . elgg_extract('input_type', $vars);
+}
+
 if (elgg_extract('required', $vars)) {
 	$class[] = 'elgg-field-required';
 }
@@ -37,6 +41,4 @@ if (elgg_extract('disabled', $vars)) {
 
 $field = $label . $input . $help;
 
-echo elgg_format_element('div', [
-	'class' => $class,
-], $field);
+echo elgg_format_element('div', ['class' => $class], $field);

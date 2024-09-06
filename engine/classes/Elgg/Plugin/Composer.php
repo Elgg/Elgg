@@ -190,7 +190,7 @@ class Composer {
 			return Semver::satisfies($version, $constraints);
 		} catch (\UnexpectedValueException $e) {
 			// something is wrong with the version number
-			elgg_log($e, 'ERROR');
+			elgg_log($e, \Psr\Log\LogLevel::ERROR);
 		}
 		
 		return false;

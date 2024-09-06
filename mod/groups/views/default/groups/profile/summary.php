@@ -20,9 +20,21 @@ $icon = elgg_format_element('div', [
 
 $body = '';
 
+if ($group->canAccessContent()) {
+	if (!$group->isPublicMembership() && !$group->isMember()) {
+		$body .= elgg_view_message('notice', elgg_echo('groups:closedgroup'), ['title' => false]);
+	}
+} else {
+	if ($group->isPublicMembership()) {
+		$body .= elgg_view_message('notice', elgg_echo('groups:opengroup:membersonly'), ['title' => false]);
+	} else {
+		$body .= elgg_view_message('notice', elgg_echo('groups:closedgroup:membersonly'), ['title' => false]);
+	}
+}
+
 $fields = elgg_view('groups/profile/fields', $vars);
 if (!empty($fields)) {
-	$body = elgg_format_element('div', ['class' => 'groups-profile-fields'], $fields);
+	$body .= elgg_format_element('div', ['class' => 'groups-profile-fields'], $fields);
 }
 
 echo elgg_view_image_block($icon, $body, ['class' => 'groups-profile']);

@@ -27,7 +27,7 @@ class DateTime extends PHPDateTime {
 		$result = $this->formatIntl($format, $language);
 		
 		if ($result === false) {
-			elgg_log("Unable to generate locale representation for format: '{$format}', using non-locale version", 'INFO');
+			_elgg_services()->logger->info("Unable to generate locale representation for format: '{$format}', using non-locale version");
 			return $this->format($format);
 		}
 		

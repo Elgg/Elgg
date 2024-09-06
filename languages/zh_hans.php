@@ -593,7 +593,7 @@ return array(
 	'admin:statistics:label:numusers' => "用户数量",
 	'admin:statistics:label:numonline' => "在线用户数量",
 	'admin:statistics:label:onlineusers' => "当前在线用户",
-	'admin:statistics:label:admins'=>"管理",
+	'admin:statistics:label:admins' => "管理",
 	'admin:statistics:label:version' => "Elgg版本",
 	'admin:statistics:label:version:release' => "发布",
 	'admin:statistics:label:version:version' => "数据库版本",

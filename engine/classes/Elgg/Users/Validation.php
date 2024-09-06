@@ -49,7 +49,7 @@ class Validation {
 			return;
 		}
 		
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user, $event) {
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user) {
 			
 			if ($user->isEnabled()) {
 				// disable the user until validation
@@ -63,22 +63,17 @@ class Validation {
 			$session = elgg_get_session();
 			$session->set('admin_validation', true);
 			
-			if (elgg_get_config('admin_validation_notification') === 'direct') {
-				self::notifyAdminsAboutPendingUsers($event);
-			}
+			self::notifyAdminsAboutPendingUsers();
 		});
 	}
 	
 	/**
 	 * Send a notification to all admins that there are pending user validations
 	 *
-	 * @param \Elgg\Event $event various events
-	 *
 	 * @return void
 	 */
-	public static function notifyAdminsAboutPendingUsers(\Elgg\Event $event) {
-		
-		if (empty(elgg_get_config('admin_validation_notification'))) {
+	protected static function notifyAdminsAboutPendingUsers(): void {
+		if (!(bool) elgg_get_config('admin_validation_notification')) {
 			return;
 		}
 		
@@ -90,6 +85,7 @@ class Validation {
 				],
 			]);
 		});
+		
 		if (empty($unvalidated_count)) {
 			// shouldn't be able to get here because this function is triggered when a user is marked as unvalidated
 			return;
@@ -105,8 +101,9 @@ class Validation {
 		
 		/* @var $admin \ElggUser */
 		foreach ($admins as $admin) {
-			$user_setting = $admin->admin_validation_notification;
-			if (isset($user_setting) && !(bool) $user_setting) {
+			$notification_preferences = $admin->getNotificationSettings('admin_validation_notification');
+			$notification_preferences = array_keys(array_filter($notification_preferences));
+			if (empty($notification_preferences)) {
 				continue;
 			}
 			
@@ -121,7 +118,8 @@ class Validation {
 				'action' => 'admin:unvalidated',
 				'object' => $admin,
 			];
-			notify_user($admin->guid, $site->guid, $subject, $body, $params, ['email']);
+			
+			notify_user($admin->guid, $site->guid, $subject, $body, $params, $notification_preferences);
 		}
 	}
 	

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-21 10:41+0100\n"
+"POT-Creation-Date: 2024-08-15 09:49+0200\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -50,18 +50,18 @@ msgstr "Base de données et Persistance"
 
 #: ../../intro/development.rst:12
 msgid ""
-"Elgg uses MySQL 5.7 or higher for data persistence, and maps database values"
-" into Entities (a representation of an atomic unit of information) and "
-"Extenders (additional information and descriptions about Entities). Elgg "
-"supports additional information such as relationships between Entities, "
-"activity streams, and various types of settings."
+"Elgg uses MySQL for data persistence, and maps database values into Entities"
+" (a representation of an atomic unit of information) and Extenders "
+"(additional information and descriptions about Entities). Elgg supports "
+"additional information such as relationships between Entities, activity "
+"streams, and various types of settings."
 msgstr ""
-"Elgg utilise MySQL 5.7 ou supérieur pour la persistance des données et mappe"
-" les valeurs de la base de données en entités (une représentation d'une "
-"unité atomique d'informations) et en extensions (informations et "
-"descriptions supplémentaires sur les entités). Elgg prend en charge des "
-"informations supplémentaires telles que les relations entre les entités, les"
-" flux d'activité et divers types de paramètres."
+"Elgg utilise MySQL pour la persistance des données et mappe les valeurs de "
+"la base de données dans des Entities (une représentation d'une unité "
+"atomique d'informations) et des Extenders (informations et descriptions "
+"supplémentaires sur les entités). Elgg prend en charge des informations "
+"supplémentaires telles que les relations entre les Entities, les flux "
+"d'activité et divers types de paramètres."
 
 #: ../../intro/development.rst:18
 msgid "Plugins"
@@ -129,22 +129,15 @@ msgstr "JavaScript"
 
 #: ../../intro/development.rst:45
 msgid ""
-"Elgg uses an AMD-compatible JavaScript system provided by RequireJs. Bundled"
-" with Elgg are jQuery, jQuery UI, jQuery Form, and jQuery UI Autocomplete."
+"Elgg uses native ES modules. Plugins can register their own modules or load "
+"their own JS libs."
 msgstr ""
-"Elgg utilise un système JavaScript compatible AMD fourni par RequireJs. Les "
-"bibliothèques jQuery, jQuery UI, jQuery Form, et jQuery UI Autocomplete sont"
-" distribuées avec Elgg."
 
 #: ../../intro/development.rst:48
-msgid "Plugins can load their own JS libs."
-msgstr "Les plugins peuvent charger leurs propres bibliothèques JS."
-
-#: ../../intro/development.rst:51
 msgid "Internationalization"
 msgstr "Internationalisation"
 
-#: ../../intro/development.rst:53
+#: ../../intro/development.rst:50
 msgid ""
 "Elgg's interface supports multiple languages, and uses `Transifex`_ for "
 "translation."
@@ -152,32 +145,29 @@ msgstr ""
 "L'interface de Elgg supporte de multiples langues, et utilise `Transifex`_ "
 "pour la traduction."
 
-#: ../../intro/development.rst:56
+#: ../../intro/development.rst:53
 msgid "Caching"
 msgstr "Mise en cache"
 
-#: ../../intro/development.rst:58
+#: ../../intro/development.rst:55
 msgid ""
 "Elgg uses two caches to improve performance: a system cache and SimpleCache."
 msgstr ""
 "Elgg utilise deux caches pour améliorer les performances : un cache système "
 "et SimpleCache."
 
-#: ../../intro/development.rst:61
+#: ../../intro/development.rst:58
 msgid "3rd party libraries"
 msgstr "Bibliothèques tierce-partie"
 
-#: ../../intro/development.rst:63
+#: ../../intro/development.rst:60
 msgid ""
 "The use of 3rd party libraries in Elgg is managed by using `Composer`_ "
-"dependencies. Examples of 3rd party libraries are jQuery, RequireJs or "
+"dependencies. Examples of 3rd party libraries are jQuery, CSS Crush or "
 "Laminas mail."
 msgstr ""
-"L'utilisation de bibliothèques tierce-partie dans Elgg est gérée par le "
-"gestionnaire de dépendances `Composer`_. jQuery, RequireJs ou Zend mail sont"
-" des exemples de bibliothèques tierce-partie."
 
-#: ../../intro/development.rst:66
+#: ../../intro/development.rst:63
 msgid ""
 "To get a list of all the Elgg dependencies check out the `Packagist`_ page "
 "for Elgg."
@@ -185,11 +175,11 @@ msgstr ""
 "Pour une liste complète des dépendances de Elgg, consultez la page "
 "`Packagist`_ pour Elgg."
 
-#: ../../intro/development.rst:73
+#: ../../intro/development.rst:70
 msgid "Database Seeding"
 msgstr "Génération de données de test ou Ensemencement"
 
-#: ../../intro/development.rst:75
+#: ../../intro/development.rst:72
 msgid ""
 "Elgg provides some base database seeds to populate the database with "
 "entities for testing purposes."
@@ -198,13 +188,13 @@ msgstr ""
 "de données, ou database seeding - pour remplir la base de données avec des "
 "entités à des fins de test."
 
-#: ../../intro/development.rst:77
+#: ../../intro/development.rst:74
 msgid "You can run the following commands to seed and unseed the database."
 msgstr ""
 "Vous pouvez exécuter les commandes suivantes pour générer des données de "
 "test et les supprimer de la base de données. "
 
-#: ../../intro/development.rst:88
+#: ../../intro/development.rst:85
 msgid ""
 "Plugins can register their own seeds via ``'seeds', 'database'`` event. The "
 "handler must return the class name of the seed, which must extend "
@@ -297,36 +287,36 @@ msgid "Requirements"
 msgstr "Pré-requis"
 
 #: ../../intro/install.rst:13
-msgid "MySQL 5.7+ or MariaDB 10.3+"
-msgstr "MySQL 5.7+ ou MariaDB 10.3+"
+msgid "MySQL 8.0+ or MariaDB 10.6+"
+msgstr "MySQL 8.0+ ou MariaDB 10.6+"
 
 #: ../../intro/install.rst:14
-msgid "PHP 8.0+ with the following extensions:"
-msgstr "PHP 8.0+ avec les extensions suivantes :"
+msgid "PHP 8.1+ with the following extensions:"
+msgstr "PHP 8.1+ avec les extensions suivantes :"
 
 #: ../../intro/install.rst:16
 msgid "GD (for graphics processing)"
 msgstr "GD (pour les opérations graphiques)"
 
 #: ../../intro/install.rst:17
-msgid "PDO (for database connection)"
-msgstr "PDO (pour la connexion à la base de données)"
+msgid "INTL (for internationalization)"
+msgstr "INTL (pour internationalisation)"
 
 #: ../../intro/install.rst:18
 msgid "JSON (for AJAX responses, etc.)"
 msgstr "JSON (pour les réponses AJAX, etc.)"
 
 #: ../../intro/install.rst:19
+msgid "PDO (for database connection)"
+msgstr "PDO (pour la connexion à la base de données)"
+
+#: ../../intro/install.rst:20
 msgid "XML (for xml resource and web services, etc.)"
 msgstr "XML (pour les ressources xml et les web services, etc.)"
 
-#: ../../intro/install.rst:20
+#: ../../intro/install.rst:21
 msgid "`Multibyte String support`_ (for i18n)"
 msgstr "`Multibyte String support`_ (pour l’internationalisation i18n)"
-
-#: ../../intro/install.rst:21
-msgid "(optional) intl (for i18n)"
-msgstr "(optionnel) intl (pour i18n)"
 
 #: ../../intro/install.rst:22
 msgid "Proper configuration and ability to send email through an MTA"

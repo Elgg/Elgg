@@ -337,13 +337,11 @@ User events
 Relationship events
 ===================
 
-**create, relationship**
-    Triggered after a relationship has been created. Returning false deletes
-    the relationship that was just created.
+**create, relationship** |sequence|
+    Triggered during the creation of a relationship.
 
-**delete, relationship**
-    Triggered before a relationship is deleted. Return false to prevent it
-    from being deleted.
+**delete, relationship** |sequence|
+    Triggered during the deletion of a relationship.
 
 **join, group**
     Triggered after the user ``$params['user']`` has joined the group ``$params['group']``.

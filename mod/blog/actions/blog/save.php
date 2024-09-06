@@ -13,14 +13,13 @@
 $preview = (bool) get_input('preview');
 
 // edit or create a new entity
-$guid = (int) get_input('guid');
 $new_post = true;
+$revision_text = null;
 
-if ($guid) {
-	$entity = get_entity($guid);
-	if ($entity instanceof ElggBlog && $entity->canEdit()) {
-		$blog = $entity;
-	} else {
+$guid = (int) get_input('guid');
+if (!empty($guid)) {
+	$blog = get_entity($guid);
+	if (!$blog instanceof \ElggBlog || !$blog->canEdit()) {
 		return elgg_error_response(elgg_echo('blog:error:post_not_found'));
 	}
 
@@ -29,61 +28,38 @@ if ($guid) {
 	$new_post = false;
 } else {
 	$blog = new \ElggBlog();
+	
+	$container_guid = (int) get_input('container_guid');
+	$container = get_entity($container_guid);
+	if (!$container || !$container->canWriteToContainer(0, 'object', 'blog')) {
+		return elgg_error_response(elgg_echo('blog:error:cannot_write_to_container'));
+	}
+	
+	$blog->container_guid = $container->guid;
 }
 
 // set the previous status for the events to update the time_created and river entries
 $old_status = $blog->status;
 
-// set defaults and required values.
-$values = [
-	'title' => '',
-	'description' => '',
-	'status' => 'draft',
-	'access_id' => ACCESS_DEFAULT,
-	'comments_on' => 'On',
-	'excerpt' => '',
-	'tags' => '',
-	'container_guid' => (int) get_input('container_guid'),
-];
-
-// fail if a required entity isn't set
-$required = ['title', 'description'];
-
-// load from POST and do sanity and access checking
-foreach ($values as $name => $default) {
-	if ($name === 'title') {
+$values = [];
+$fields = elgg()->fields->get('object', 'blog');
+foreach ($fields as $field) {
+	$value = null;
+	
+	$name = (string) elgg_extract('name', $field);
+	if (elgg_extract('#type', $field) === 'tags') {
+		$value = elgg_string_to_array((string) get_input($name));
+	} elseif ($name === 'title') {
 		$value = elgg_get_title_input();
 	} else {
-		$value = get_input($name, $default);
+		$value = get_input($name);
 	}
-
-	if (in_array($name, $required) && empty($value)) {
+	
+	if (elgg_is_empty($value) && elgg_extract('required', $field)) {
 		return elgg_error_response(elgg_echo("blog:error:missing:{$name}"));
 	}
-
-	switch ($name) {
-		case 'tags':
-			$values[$name] = elgg_string_to_array((string) $value);
-			break;
-
-		case 'container_guid':
-			// this can't be empty or saving the base entity fails
-			if (!empty($value)) {
-				$container = get_entity($value);
-				if ($container && (!$new_post || $container->canWriteToContainer(0, 'object', 'blog'))) {
-					$values[$name] = $value;
-				} else {
-					return elgg_error_response(elgg_echo('blog:error:cannot_write_to_container'));
-				}
-			} else {
-				unset($values[$name]);
-			}
-			break;
-
-		default:
-			$values[$name] = $value;
-			break;
-	}
+	
+	$values[$name] = $value;
 }
 
 // if this is a preview, force status to be draft
@@ -99,7 +75,7 @@ if ($values['status'] == 'draft') {
 
 // assign values to the entity
 foreach ($values as $name => $value) {
-	$blog->$name = $value;
+	$blog->{$name} = $value;
 }
 
 if (!$blog->save()) {
@@ -119,14 +95,15 @@ if (($new_post || $old_status === 'draft') && $status === 'published') {
 	elgg_create_river_item([
 		'view' => 'river/object/blog/create',
 		'action_type' => 'create',
+		'object_guid' => $blog->guid,
 		'subject_guid' => $blog->owner_guid,
-		'object_guid' => $blog->getGUID(),
+		'target_guid' => $blog->container_guid,
 	]);
 
 	elgg_trigger_event('publish', 'object', $blog);
 
 	// reset the creation time for posts that move from draft to published
-	if ($guid) {
+	if (!$new_post) {
 		$blog->time_created = time();
 		$blog->save();
 	}

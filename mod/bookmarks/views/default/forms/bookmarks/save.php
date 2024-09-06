@@ -3,64 +3,34 @@
  * Edit / add a bookmark
  */
 
-$categories_vars = $vars;
-$categories_vars['#type'] = 'categories';
+$entity = elgg_extract('entity', $vars);
 
-$fields = [
-	[
-		'#label' => elgg_echo('title'),
-		'#type' => 'text',
-		'required' => true,
-		'name' => 'title',
-		'value' => elgg_extract('title', $vars),
-	],
-	[
-		'#label' => elgg_echo('bookmarks:address'),
-		'#type' => 'url',
-		'required' => true,
-		'name' => 'address',
-		'value' => elgg_extract('address', $vars),
-	],
-	[
-		'#label' => elgg_echo('description'),
-		'#type' => 'longtext',
-		'name' => 'description',
-		'value' => elgg_extract('description', $vars),
-		'editor_type' => 'simple',
-	],
-	[
-		'#label' => elgg_echo('tags'),
-		'#type' => 'tags',
-		'name' => 'tags',
-		'id' => 'blog_tags',
-		'value' => elgg_extract('tags', $vars),
-	],
-	$categories_vars,
-	[
-		'#label' => elgg_echo('access'),
-		'#type' => 'access',
-		'name' => 'access_id',
-		'value' => elgg_extract('access_id', $vars, ACCESS_DEFAULT),
-		'entity' => elgg_extract('entity', $vars),
-		'entity_type' => 'object',
-		'entity_subtype' => 'bookmarks',
-	],
-	[
-		'#type' => 'container_guid',
-		'value' => elgg_extract('container_guid', $vars),
-		'entity_type' => 'object',
-		'entity_subtype' => 'bookmarks',
-	],
-	[
-		'#type' => 'hidden',
-		'name' => 'guid',
-		'value' => elgg_extract('guid', $vars),
-	],
-];
-
+$fields = elgg()->fields->get('object', 'bookmarks');
 foreach ($fields as $field) {
+	$name = elgg_extract('name', $field);
+	
+	if (elgg_extract('#type', $field) === 'access' && $entity instanceof \ElggBookmark) {
+		$field['entity'] = $entity;
+	}
+	
+	$field['value'] = elgg_extract($name, $vars);
 	echo elgg_view_field($field);
 }
+
+if ($entity instanceof \ElggBookmark) {
+	echo elgg_view_field([
+		'#type' => 'hidden',
+		'name' => 'guid',
+		'value' => $entity->guid,
+	]);
+}
+
+echo elgg_view_field([
+	'#type' => 'container_guid',
+	'value' => elgg_extract('container_guid', $vars),
+	'entity_type' => 'object',
+	'entity_subtype' => 'bookmarks',
+]);
 
 $footer = elgg_view_field([
 	'#type' => 'submit',

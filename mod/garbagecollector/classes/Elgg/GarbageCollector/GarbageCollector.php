@@ -93,7 +93,7 @@ class GarbageCollector {
 			];
 			
 			if ($use_logger) {
-				$this->getLogger()->notice($this->translator->translate('garbagecollector:optimize', [$table]) . ' ' . $result ? 'OK' : 'FAILED');
+				$this->getLogger()->notice($this->translator->translate('garbagecollector:optimize', [$table]) . ': ' . ($result ? 'OK' : 'FAILED'));
 			}
 		}
 		

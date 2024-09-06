@@ -134,4 +134,30 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 			'annotation_names' => ['foo', 'bar'],
 		]));
 	}
+	
+	public function testCanPreloadAnnotationOwners() {
+		$entity = $this->createObject();
+		$owner1 = $this->createUser();
+		$owner2 = $this->createUser();
+		
+		$entity->annotate('foo', 'bar', ACCESS_PUBLIC, $owner1->guid);
+		$entity->annotate('foo', 'baz', ACCESS_PUBLIC, $owner2->guid);
+		
+		elgg_get_annotations([
+			'guid' => $entity->guid,
+			'annotation_name' => 'foo',
+		]);
+		
+		$this->assertNull(_elgg_services()->entityCache->load($owner1->guid));
+		$this->assertNull(_elgg_services()->entityCache->load($owner2->guid));
+		
+		elgg_get_annotations([
+			'guid' => $entity->guid,
+			'annotation_name' => 'foo',
+			'preload_owners' => true,
+		]);
+		
+		$this->assertNotNull(_elgg_services()->entityCache->load($owner1->guid));
+		$this->assertNotNull(_elgg_services()->entityCache->load($owner2->guid));
+	}
 }

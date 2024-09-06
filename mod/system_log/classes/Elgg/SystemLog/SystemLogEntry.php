@@ -148,7 +148,7 @@ class SystemLogEntry {
 			} catch (\Exception $e) {
 				return false;
 			} catch (\Error $e) {
-				elgg_log("SystemLogEntry is unable to construct '{$class}' with ID: '{$this->object_id}': {$e->getMessage()}", 'ERROR');
+				elgg_log("SystemLogEntry is unable to construct '{$class}' with ID: '{$this->object_id}': {$e->getMessage()}", \Psr\Log\LogLevel::ERROR);
 				return false;
 			}
 		}

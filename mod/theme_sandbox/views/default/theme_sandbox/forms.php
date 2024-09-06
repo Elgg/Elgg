@@ -77,55 +77,43 @@ $ipsum = elgg_view('theme_sandbox/demo/ipsum');
 		]);
 
 		echo elgg_view_field([
-			'#type' => 'checkbox',
+			'#type' => 'switch',
 			'name' => 'f4s',
 			'id' => 'f4s',
-			'value' => 1,
-			'default' => false,
 			'required' => true,
-			'label' => 'a (.elgg-input-checkbox)',
-			'#help' => 'Single checkbox .elgg-input-checkbox wrapped in .elgg-input-single-checkbox (only label)',
+			'label' => 'a (.elgg-input-switch)',
+			'#help' => 'Single checkbox .elgg-input-switch wrapped in .elgg-input-single-checkbox (only label)',
 		]);
 
 		echo elgg_view_field([
-			'#type' => 'checkbox',
+			'#type' => 'switch',
 			'name' => 'f4sa',
 			'id' => 'f4sa',
-			'value' => 1,
-			'default' => false,
 			'required' => true,
-			'#label' => 'a (.elgg-input-checkbox)',
-			'#help' => 'Single checkbox .elgg-input-checkbox wrapped in .elgg-input-single-checkbox (only #label)',
+			'#label' => 'a (.elgg-input-switch)',
+			'#help' => 'Single checkbox .elgg-input-switch wrapped in .elgg-input-single-checkbox (only #label)',
 		]);
 
 		echo elgg_view_field([
-			'#type' => 'checkbox',
+			'#type' => 'switch',
 			'name' => 'f4sb',
 			'id' => 'f4sb',
-			'value' => 1,
-			'default' => false,
 			'required' => true,
-			'#help' => 'Single checkbox .elgg-input-checkbox wrapped in .elgg-input-single-checkbox (no label)',
+			'#help' => 'Single checkbox .elgg-input-switch wrapped in .elgg-input-single-checkbox (no label)',
 		]);
 
 		echo elgg_view_field([
-			'#type' => 'checkbox',
+			'#type' => 'switch',
 			'name' => 'f4s1',
 			'id' => 'f4s1',
-			'value' => 1,
-			'switch' => true,
-			'default' => false,
 			'required' => true,
-			'#label' => 'a (.elgg-input-checkbox) with switch style',
-			'#help' => 'Single checkbox .elgg-input-checkbox ',
+			'#label' => 'a (.elgg-input-switch) with switch style',
+			'#help' => 'Single checkbox .elgg-input-switch',
 		]);
 		echo elgg_view_field([
-			'#type' => 'checkbox',
+			'#type' => 'switch',
 			'name' => 'f4s1a',
 			'id' => 'f4s1a',
-			'value' => 1,
-			'switch' => true,
-			'default' => false,
 			'required' => true,
 			'#help' => 'Switch styled checkbox without a label',
 		]);
@@ -133,25 +121,20 @@ $ipsum = elgg_view('theme_sandbox/demo/ipsum');
 			'#type' => 'checkbox',
 			'name' => 'f4s1b',
 			'id' => 'f4s1b',
-			'value' => 1,
-			'switch' => true,
 			'disabled' => true,
-			'default' => false,
 			'required' => true,
 			'#label' => 'a (.elgg-input-checkbox) with disabled switch style',
 			'#help' => 'Single checkbox .elgg-input-checkbox ',
 		]);
 
 		echo elgg_view_field([
-			'#type' => 'checkbox',
+			'#type' => 'switch',
 			'name' => 'f4s2',
 			'id' => 'f4s2',
-			'value' => 1,
-			'default' => false,
 			'required' => true,
-			'#label' => 'a (.elgg-input-checkbox) - Field label',
-			'label' => 'a (.elgg-input-checkbox) - Input label',
-			'#help' => 'Single checkbox .elgg-input-checkbox wrapped in .elgg-input-single-checkbox (label and #label)',
+			'#label' => 'a (.elgg-input-switch) - Field label',
+			'label' => 'a (.elgg-input-switch) - Input label',
+			'#help' => 'Single checkbox .elgg-input-switch wrapped in .elgg-input-single-checkbox (label and #label)',
 		]);
 
 		echo elgg_view_field([

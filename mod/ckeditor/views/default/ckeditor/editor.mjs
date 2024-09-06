@@ -44,7 +44,7 @@ export default {
 					});
 					
 					editor.keystrokes.set('Ctrl+Enter', (event, cancel ) => {
-						$submit_button = $(editor.sourceElement).closest('form').find('button[type="submit"]').eq(0);
+						var $submit_button = $(editor.sourceElement).closest('form').find('button[type="submit"]').eq(0);
 						if ($submit_button.length) {
 							$submit_button.trigger('click');
 						}
@@ -57,6 +57,10 @@ export default {
 							return true;
 						}
 					});
+					
+					if ($input.is(':focus')) {
+						editor.focus();
+					}
 				});
 		});
 	},

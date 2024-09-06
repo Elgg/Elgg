@@ -15,29 +15,11 @@ class EntityPreloader {
 	const MAX_PRELOAD = 256;
 	
 	/**
-	 * @var callable
-	 * @internal DO NOT USE. For unit test mocking
-	 */
-	public $_callable_cache_checker;
-
-	/**
-	 * @var callable
-	 * @internal DO NOT USE. For unit test mocking
-	 */
-	public $_callable_entity_loader;
-
-	/**
 	 * Constructor
 	 *
 	 * @param EntityCache $entity_cache Entity cache
 	 */
-	public function __construct(EntityCache $entity_cache) {
-		$this->_callable_cache_checker = function ($guid) use ($entity_cache) {
-			return $entity_cache->load($guid);
-		};
-		$this->_callable_entity_loader = function ($options) {
-			return Entities::find($options);
-		};
+	public function __construct(protected EntityCache $entity_cache) {
 	}
 
 	/**
@@ -49,13 +31,13 @@ class EntityPreloader {
 	 *
 	 * @return void
 	 */
-	public function preload($objects, array $guid_properties) {
+	public function preload(array $objects, array $guid_properties): void {
 		$guids = $this->getGuidsToLoad($objects, $guid_properties);
 		
 		// If only 1 to load, not worth the overhead of elgg_get_entities(),
 		// get_entity() will handle it later.
 		if (count($guids) > 1) {
-			call_user_func($this->_callable_entity_loader, [
+			Entities::find([
 				'guids' => $guids,
 				'limit' => self::MAX_PRELOAD,
 				'order_by' => false,
@@ -73,23 +55,25 @@ class EntityPreloader {
 	 *
 	 * @return int[]
 	 */
-	protected function getGuidsToLoad($objects, array $guid_properties) {
-		if (!is_array($objects) || count($objects) < 2) {
+	protected function getGuidsToLoad(array $objects, array $guid_properties): array {
+		if (count($objects) < 2) {
 			return [];
 		}
 		
 		$preload_guids = [];
 		foreach ($objects as $object) {
-			if (is_object($object)) {
-				foreach ($guid_properties as $property) {
-					if (empty($object->{$property})) {
-						continue;
-					}
-					
-					$guid = $object->{$property};
-					if ($guid && !call_user_func($this->_callable_cache_checker, $guid)) {
-						$preload_guids[] = $guid;
-					}
+			if (!is_object($object)) {
+				continue;
+			}
+			
+			foreach ($guid_properties as $property) {
+				if (empty($object->{$property})) {
+					continue;
+				}
+				
+				$guid = (int) $object->{$property};
+				if ($guid && is_null($this->entity_cache->load($guid))) {
+					$preload_guids[] = $guid;
 				}
 			}
 		}

@@ -17,15 +17,13 @@ class ConfigUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanReadValuesFromConfig() {
-
 		$config = self::getTestingConfig();
 
-		$this->assertEquals(elgg_get_site_url(), $config->wwwroot);
-		$this->assertEquals(realpath(elgg_get_data_path()), realpath($config->dataroot));
-		$this->assertEquals(realpath(elgg_get_cache_path()), realpath($config->cacheroot));
-		$this->assertEquals(realpath(elgg_get_asset_path()), realpath($config->assetroot));
-		$this->assertEquals(realpath(elgg_get_site_url()), realpath($config->wwwroot));
-		$this->assertEquals(realpath(elgg_get_plugins_path()), realpath(Paths::project() . 'mod/'));
+		$this->assertEquals($config->wwwroot, elgg_get_site_url());
+		$this->assertEquals(realpath($config->dataroot), realpath(elgg_get_data_path()));
+		$this->assertEquals(realpath($config->cacheroot), realpath(elgg_get_cache_path()));
+		$this->assertEquals(realpath($config->assetroot), realpath(elgg_get_asset_path()));
+		$this->assertEquals(realpath(Paths::project() . 'mod'), realpath(elgg_get_plugins_path()));
 
 		$engine_path = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 

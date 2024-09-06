@@ -1,17 +1,11 @@
 <?php
 /**
  * Discussion topic add/edit form body
- *
  */
 
-$title = elgg_extract('title', $vars, '');
-$desc = elgg_extract('description', $vars, '');
-$status = elgg_extract('status', $vars, '');
-$tags = elgg_extract('tags', $vars, '');
-$access_id = elgg_extract('access_id', $vars, ACCESS_DEFAULT);
-$container_guid = (int) elgg_extract('container_guid', $vars);
-$guid = (int) elgg_extract('guid', $vars);
+$entity = elgg_extract('entity', $vars);
 
+$container_guid = (int) elgg_extract('container_guid', $vars);
 $container_entity = get_entity($container_guid);
 $show_container_input = true;
 if (!$container_entity instanceof \ElggGroup) {
@@ -39,60 +33,39 @@ if (!$container_entity instanceof \ElggGroup) {
 			'#label' => elgg_echo('discussion:topic:container'),
 			'#help' => elgg_echo('discussion:topic:container:help'),
 			'name' => 'container_guid',
-			'options_values' => $options_values
+			'options_values' => $options_values,
 		]);
 		
 		$show_container_input = false;
 	}
 }
 
-echo elgg_view_field([
-	'#type' => 'text',
-	'#label' => elgg_echo('title'),
-	'name' => 'title',
-	'value' => $title,
-	'required' => true,
-]);
-
-echo elgg_view_field([
-	'#type' => 'longtext',
-	'#label' => elgg_echo('discussion:topic:description'),
-	'name' => 'description',
-	'value' => $desc,
-	'required' => true,
-	'editor_type' => 'simple',
-]);
-
-echo elgg_view_field([
-	'#type' => 'tags',
-	'#label' => elgg_echo('tags'),
-	'name' => 'tags',
-	'value' => $tags,
-]);
-
-if (!empty($guid)) {
-	echo elgg_view_field([
-		'#type' => 'select',
-		'#label' => elgg_echo('discussion:topic:status'),
-		'name' => 'status',
-		'value' => $status,
-		'options_values' => [
-			'open' => elgg_echo('status:open'),
-			'closed' => elgg_echo('status:closed'),
-		],
-	]);
+$fields = elgg()->fields->get('object', 'discussion');
+foreach ($fields as $field) {
+	$name = elgg_extract('name', $field);
+	if (elgg_extract('#type', $field) === 'access' && $entity instanceof \ElggDiscussion) {
+		$field['entity'] = $entity;
+	}
+	
+	if ($name === 'status' && !$entity instanceof \ElggDiscussion) {
+		// don't show status dropdown for new discussions
+		$field = [
+			'#type' => 'hidden',
+			'name' => $name,
+		];
+	}
+	
+	$field['value'] = elgg_extract($name, $vars);
+	echo elgg_view_field($field);
 }
 
-echo elgg_view_field([
-	'#type' => 'access',
-	'#label' => elgg_echo('access'),
-	'#class' => 'discussion-access',
-	'name' => 'access_id',
-	'value' => $access_id,
-	'entity' => elgg_extract('entity', $vars),
-	'entity_type' => 'object',
-	'entity_subtype' => 'discussion',
-]);
+if ($entity instanceof \ElggDiscussion) {
+	echo elgg_view_field([
+		'#type' => 'hidden',
+		'name' => 'topic_guid',
+		'value' => $entity->guid,
+	]);
+}
 
 if ($show_container_input) {
 	echo elgg_view_field([
@@ -102,12 +75,6 @@ if ($show_container_input) {
 		'entity_subtype' => 'discussion',
 	]);
 }
-
-echo elgg_view_field([
-	'#type' => 'hidden',
-	'name' => 'topic_guid',
-	'value' => $guid,
-]);
 
 $footer = elgg_view_field([
 	'#type' => 'submit',

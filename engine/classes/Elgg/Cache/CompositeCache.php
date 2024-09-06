@@ -10,6 +10,7 @@ use Phpfastcache\CacheManager;
 use Phpfastcache\Cluster\ClusterAggregator;
 use Phpfastcache\Config\ConfigurationOption;
 use Phpfastcache\Core\Pool\ExtendedCacheItemPoolInterface;
+use Phpfastcache\Exceptions\PhpfastcacheRootException;
 
 /**
  * Composite cache pool
@@ -17,36 +18,22 @@ use Phpfastcache\Core\Pool\ExtendedCacheItemPoolInterface;
  * @internal
  */
 class CompositeCache extends BaseCache {
-
+	
+	public const CACHE_BLACK_HOLE = 1;
+	public const CACHE_RUNTIME = 2;
+	public const CACHE_FILESYSTEM = 4;
+	public const CACHE_PERSISTENT = 8;
+	public const CACHE_LOCALFILESYSTEM = 32;
+	
 	/**
 	 * TTL of saved items (default timeout after a day to prevent anything getting too stale)
 	 */
-	protected $ttl = 86400;
-
-	/**
-	 * @var Config
-	 */
-	protected $config;
-
-	/**
-	 * @var int
-	 */
-	protected $flags;
+	protected int $ttl = 86400;
 
 	/**
 	 * @var ExtendedCacheItemPoolInterface
 	 */
 	protected $pool;
-
-	/**
-	 * @var string
-	 */
-	protected $namespace;
-	
-	/**
-	 * @var bool
-	 */
-	protected $validate_lastcache;
 
 	/**
 	 * Constructor
@@ -56,14 +43,8 @@ class CompositeCache extends BaseCache {
 	 * @param int    $flags              Start flags
 	 * @param bool   $validate_lastcache During load validate ElggConfig::lastcache
 	 */
-	public function __construct($namespace, Config $config, $flags, bool $validate_lastcache = true) {
-		parent::__construct();
-
-		$this->namespace = $namespace;
-		$this->config = $config;
-		$this->flags = $flags;
+	public function __construct(protected string $namespace, protected Config $config, protected int $flags, protected bool $validate_lastcache = true) {
 		$this->pool = $this->createPool();
-		$this->validate_lastcache = $validate_lastcache;
 	}
 
 	/**
@@ -105,26 +86,32 @@ class CompositeCache extends BaseCache {
 		if ($this->disabled) {
 			return null;
 		}
-
-		$item = $this->pool->getItem($this->sanitizeItemKey($key));
-		if (!$item->isHit()) {
-			return null;
-		}
 		
-		if ($this->validate_lastcache && $this->config->lastcache) {
-			$expiration_date = Values::normalizeTime($this->config->lastcache);
-			
-			if ($item->getCreationDate()->getTimestamp() < $expiration_date->getTimestamp()) {
-				$this->delete($key);
+		try {
+			$item = $this->pool->getItem($this->sanitizeItemKey($key));
+			if (!$item->isHit()) {
 				return null;
 			}
+			
+			if ($this->validate_lastcache && $this->config->lastcache) {
+				$expiration_date = Values::normalizeTime($this->config->lastcache);
+				
+				if ($item->getCreationDate()->getTimestamp() < $expiration_date->getTimestamp()) {
+					$this->delete($key);
+					return null;
+				}
+			}
+			
+			return $item->get();
+		} catch (PhpfastcacheRootException $e) {
+			// something wrong with the cache
+			elgg_log($e->getMessage(), 'ERROR');
+			return null;
 		}
-		
-		return $item->get();
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function delete($key) {
 		if ($this->disabled) {
@@ -135,14 +122,14 @@ class CompositeCache extends BaseCache {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function clear() {
 		return $this->pool->clear();
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function invalidate() {
 		// Phpfastcache doesn't have invalidation as an action.
@@ -151,7 +138,7 @@ class CompositeCache extends BaseCache {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function purge() {
 		// Phpfastcache doesn't have purge as an action
@@ -167,7 +154,7 @@ class CompositeCache extends BaseCache {
 	 *
 	 * @return void
 	 */
-	public function setNamespace($namespace = 'default') {
+	public function setNamespace($namespace = 'default'): void {
 		$this->namespace = $namespace;
 	}
 
@@ -176,7 +163,7 @@ class CompositeCache extends BaseCache {
 	 *
 	 * @return string
 	 */
-	public function getNamespace() {
+	public function getNamespace(): string {
 		return $this->namespace;
 	}
 	
@@ -218,7 +205,7 @@ class CompositeCache extends BaseCache {
 	 * @return ExtendedCacheItemPoolInterface
 	 * @throws ConfigurationException
 	 */
-	protected function createPool() {
+	protected function createPool(): ExtendedCacheItemPoolInterface {
 		
 		$drivers = [];
 		$drivers[] = $this->buildRedisDriver();
@@ -263,8 +250,8 @@ class CompositeCache extends BaseCache {
 	 * Builds Redis driver
 	 * @return null|ExtendedCacheItemPoolInterface
 	 */
-	protected function buildRedisDriver() {
-		if (!($this->flags & ELGG_CACHE_PERSISTENT)) {
+	protected function buildRedisDriver(): ?ExtendedCacheItemPoolInterface {
+		if (!($this->flags & self::CACHE_PERSISTENT)) {
 			return null;
 		}
 
@@ -284,8 +271,8 @@ class CompositeCache extends BaseCache {
 	 * Builds Memcached driver
 	 * @return null|ExtendedCacheItemPoolInterface
 	 */
-	protected function buildMemcachedDriver() {
-		if (!($this->flags & ELGG_CACHE_PERSISTENT)) {
+	protected function buildMemcachedDriver(): ?ExtendedCacheItemPoolInterface {
+		if (!($this->flags & self::CACHE_PERSISTENT)) {
 			return null;
 		}
 			
@@ -305,8 +292,8 @@ class CompositeCache extends BaseCache {
 	 * Builds file system driver
 	 * @return null|ExtendedCacheItemPoolInterface
 	 */
-	protected function buildFileSystemDriver() {
-		if (!($this->flags & ELGG_CACHE_FILESYSTEM)) {
+	protected function buildFileSystemDriver(): ?ExtendedCacheItemPoolInterface {
+		if (!($this->flags & self::CACHE_FILESYSTEM)) {
 			return null;
 		}
 		
@@ -319,7 +306,7 @@ class CompositeCache extends BaseCache {
 			return CacheManager::getInstance('Files', $config, $this->prefixInstanceId('files'));
 		} catch (\Phpfastcache\Exceptions\PhpfastcacheIOException $e) {
 			if (!$this->config->installer_running) {
-				elgg_log($e, 'ERROR');
+				elgg_log($e, \Psr\Log\LogLevel::ERROR);
 			}
 		}
 		
@@ -330,8 +317,8 @@ class CompositeCache extends BaseCache {
 	 * Builds local file system driver
 	 * @return null|ExtendedCacheItemPoolInterface
 	 */
-	protected function buildLocalFileSystemDriver() {
-		if (!($this->flags & ELGG_CACHE_LOCALFILESYSTEM)) {
+	protected function buildLocalFileSystemDriver(): ?ExtendedCacheItemPoolInterface {
+		if (!($this->flags & self::CACHE_LOCALFILESYSTEM)) {
 			return null;
 		}
 
@@ -344,7 +331,7 @@ class CompositeCache extends BaseCache {
 			return CacheManager::getInstance('Files', $config, $this->prefixInstanceId('local_files'));
 		} catch (\Phpfastcache\Exceptions\PhpfastcacheIOException $e) {
 			if (!$this->config->installer_running) {
-				elgg_log($e, 'ERROR');
+				elgg_log($e, \Psr\Log\LogLevel::ERROR);
 			}
 		}
 		
@@ -355,8 +342,8 @@ class CompositeCache extends BaseCache {
 	 * Builds in-memory driver
 	 * @return null|ExtendedCacheItemPoolInterface
 	 */
-	protected function buildEphemeralDriver() {
-		if (!($this->flags & ELGG_CACHE_RUNTIME)) {
+	protected function buildEphemeralDriver(): ?ExtendedCacheItemPoolInterface {
+		if (!($this->flags & self::CACHE_RUNTIME)) {
 			return null;
 		}
 		
@@ -372,8 +359,8 @@ class CompositeCache extends BaseCache {
 	 * Builds null cache driver
 	 * @return null|ExtendedCacheItemPoolInterface
 	 */
-	protected function buildBlackHoleDriver() {
-		if (!($this->flags & ELGG_CACHE_BLACK_HOLE)) {
+	protected function buildBlackHoleDriver(): ?ExtendedCacheItemPoolInterface {
+		if (!($this->flags & self::CACHE_BLACK_HOLE)) {
 			return null;
 		}
 		

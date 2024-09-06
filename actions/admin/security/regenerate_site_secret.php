@@ -6,7 +6,7 @@ if (!elgg_trigger_before_event('regenerate_site_secret', 'system')) {
 }
 
 _elgg_services()->siteSecret->regenerate();
-elgg_reset_system_cache();
+_elgg_services()->systemCache->clear();
 
 elgg_trigger_after_event('regenerate_site_secret', 'system');
 elgg_delete_admin_notice('weak_site_key');

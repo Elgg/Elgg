@@ -97,7 +97,7 @@ $render_option = function($option) use ($value) {
 	unset($option['text']);
 
 	if (!is_string($text) && !is_numeric($text)) {
-		elgg_log('No text defined for input/select option with value "' . $opt_value . '"', 'NOTICE');
+		elgg_log('No text defined for input/select option with value "' . $opt_value . '"', \Psr\Log\LogLevel::NOTICE);
 	}
 
 	if (!isset($option['selected'])) {

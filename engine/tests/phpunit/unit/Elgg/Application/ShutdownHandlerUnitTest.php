@@ -95,7 +95,7 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 		$app->internal_services->autoloadManager->deleteCache();
 		$app->internal_services->autoloadManager->loadCache();
 
-		$cache = $app->internal_services->autoloadManager->getCache()->load(AutoloadManager::FILENAME);
+		$cache = $app->internal_services->autoloadCache->load(AutoloadManager::FILENAME);
 		$this->assertNull($cache);
 
 		$app->bootCore();
@@ -106,8 +106,10 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 		$shutdown = new ShutdownHandler($app);
 		$shutdown->persistCaches();
 
-		$cache = $app->internal_services->autoloadManager->getCache()->load(AutoloadManager::FILENAME);
+		$cache = $app->internal_services->autoloadCache->load(AutoloadManager::FILENAME);
 		
+		$this->assertIsArray($cache);
+		$this->assertArrayHasKey('scannedDirs', $cache);
 		$this->assertContains($dir, $cache['scannedDirs']);
 	}
 }

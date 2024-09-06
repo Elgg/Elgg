@@ -113,12 +113,17 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 			case \ElggRelationship::class :
 				$object = $this->createObject();
 				$user = $this->actor;
-				$rel_id = _elgg_services()->relationshipsTable->add($object->guid, 'test_relationship', $user->guid, true);
-				if (empty($rel_id)) {
+				
+				$rel = new \ElggRelationship();
+				$rel->guid_one = $object->guid;
+				$rel->relationship = 'test_relationship';
+				$rel->guid_two = $user->guid;
+				
+				if (!$rel->save()) {
 					break;
 				}
 
-				return elgg_get_relationship($rel_id);
+				return $rel;
 		}
 
 		throw new Exception("Test object not found for {$this->test_object_class} class");

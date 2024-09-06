@@ -20,6 +20,7 @@ return array(
 
 	'login' => "Iniciar sesi&oacute;n",
 	'loginok' => "Ha iniciado sesi&oacute;n",
+	'login:continue' => "Iniciar sesión para continuar",
 	'login:empty' => "El nombre de usuario y contrase&ntilde;a son requeridos",
 	'login:baduser' => "No se pudo cargar su cuenta de usuario",
 
@@ -48,6 +49,14 @@ return array(
 
 	'ajax:error' => 'Ha habido un error inesperado en la llamada AJAX. Puede que la conexión con el servidor se haya perdido.',
 	'ajax:not_is_xhr' => 'No puedes acceder a las vista AJAX directamente',
+	'ajax:pagination:no_data' => 'No se han encontrado nuevos datos de página',
+	'ajax:pagination:load_more' => 'Más información',
+
+	'ElggEntity:Error:SetSubtype' => 'Utilizar %s en lugar del colocador mágico para "subtipo"',
+	'ElggEntity:Error:SetEnabled' => 'Utilizar %s en lugar del colocador mágico para "habilitado"',
+	'ElggEntity:Error:SetDeleted' => 'Utilizar %s en lugar del colocador mágico para "borrado"',
+	'ElggUser:Error:SetAdmin' => 'Utilizar %s en lugar del colocador mágico para "admin"',
+	'ElggUser:Error:SetBanned' => 'Utilizar %s en lugar del setter mágico para "prohibido"',
 
 	'PluginException:CannotStart' => '%s (guid: %s) no puede iniciarse. Motivo: %s',
 	'PluginException:InvalidID' => "%s no es un ID de plugin v&aacute;lido",
@@ -61,6 +70,8 @@ return array(
 	'ElggPlugin:activate:ConfigSentOutput' => 'El archivo "elgg-plugin.php" del complemento envió una salida.',
 
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Hay otros complementos que tienen a «%s» como dependencia. Debes desactivar los siguientes complementos primero para poder desactivar este: %s',
+	'ElggPlugin:Dependencies:MustBeActive' => 'Debe estar activo',
+	'ElggPlugin:Dependencies:Position' => 'Posición',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Hay elementos de menú que no están enlazados a ningún elemento padre',
 	'ElggMenuBuilder:Trees:OrphanedChild' => 'El elemento de menú [%s] no tiene elemento padre[%s]',
@@ -80,9 +91,12 @@ return array(
 	'EntityNotFoundException' => 'El contenido al que intentas acceder ha sido eliminado o no tienes permiso para verlo.',
 	'EntityPermissionsException' => 'No tienes permisos suficientes para esta acción.',
 	'GatekeeperException' => 'No tienes permisos para ver la pagina a la que intentas acceder',
+	'RegistrationAllowedGatekeeperException:invalid_invitecode' => "El código de invitación proporcionado no es válido",
 	'BadRequestException' => 'Petición incorrecta',
 	'ValidationException' => 'Los datos enviados no cumplen los requerimientos, por favor comprueba los datos.',
 	'LogicException:InterfaceNotImplemented' => '%s debe de ser implementado %s',
+	
+	'Security:InvalidPasswordCharacterRequirementsException' => "La contraseña proporcionada no cumple los requisitos de caracteres.",
 
 	'changebookmark' => 'Por favor modifique su &iacute;ndice para esta vista',
 	'error:missing_data' => 'Faltan datos en tu solicitud',
@@ -93,10 +107,13 @@ return array(
 	'error:default:content' => 'Oops... Algo salió mal',
 	'error:400:title' => 'Petición incorrecta',
 	'error:400:content' => 'Lo sentimos. La petición no es válida o está incompleta.',
+	'error:401:title' => 'Sin autorización',
 	'error:403:title' => 'Prohibido',
 	'error:403:content' => 'Lo sentimos. No tienes permiso para acceder a la página solicitada.',
 	'error:404:title' => 'Página no encontrada',
 	'error:404:content' => 'Lo sentimos. No pudimos encontrar la página solicitada',
+	'error:500:title' => 'Error interno del servidor',
+	'error:503:title' => 'Servicio no disponible',
 
 	'upload:error:ini_size' => 'El archivo que intentó subir es muy grande.',
 	'upload:error:form_size' => 'El archivo que intentó subir es muy grande.',
@@ -112,6 +129,7 @@ return array(
  */
 	'table_columns:fromView:admin' => 'Administrador',
 	'table_columns:fromView:banned' => 'Bloqueado',
+	'table_columns:fromView:checkbox' => 'Seleccione',
 	'table_columns:fromView:container' => 'Contenedor',
 	'table_columns:fromView:entity_menu' => 'Men&uacute;',
 	'table_columns:fromView:excerpt' => 'Descripción',
@@ -119,7 +137,10 @@ return array(
 	'table_columns:fromView:icon' => 'Icono',
 	'table_columns:fromView:item' => 'Elemento',
 	'table_columns:fromView:language' => 'Idioma',
+	'table_columns:fromView:last_action' => 'Última acción',
+	'table_columns:fromView:last_login' => 'Último acceso',
 	'table_columns:fromView:owner' => 'Propietario',
+	'table_columns:fromView:prev_last_login' => 'Último acceso anterior',
 	'table_columns:fromView:time_created' => 'Tiempo de creación',
 	'table_columns:fromView:time_updated' => 'Tiempo de actualización',
 	'table_columns:fromView:unvalidated_menu' => 'Men&uacute;',
@@ -130,6 +151,7 @@ return array(
 	'table_columns:fromProperty:name' => 'Nombre',
 	'table_columns:fromProperty:type' => 'Tipo',
 	'table_columns:fromProperty:username' => 'Nombre de usuario',
+	'table_columns:fromProperty:validated' => 'Validado',
 
 	'table_columns:fromMethod:getSubtype' => 'Subtipo',
 	'table_columns:fromMethod:getDisplayName' => 'Nombre/Título',
@@ -208,6 +230,9 @@ return array(
 	'collection:user' => 'Usuarios',
 	'item:user:user' => 'Usuario',
 	'collection:user:user' => 'Usuarios',
+	'notification:user:user:make_admin' => "Enviar una notificación cuando un usuario recibe derechos de administrador",
+	'notification:user:user:remove_admin' => "Enviar una notificación cuando se revocan los derechos de administrador de un usuario",
+	'notification:user:user:unban' => "Enviar una notificación cuando un usuario es desbloqueado",
 
 	'friends' => "Amigos",
 
@@ -220,9 +245,24 @@ return array(
 	'avatar:remove:success' => 'Se ha eliminado el avatar',
 	'avatar:remove:fail' => 'fall&oacute; al remover el avatar',
 	
+	'header:remove:success' => 'La eliminación de la cabecera ha tenido éxito',
+	'header:remove:fail' => 'Error en la eliminación del encabezado',
+	'header:upload:success' => 'La carga de la cabecera se ha realizado correctamente',
+	'header:upload:fail' => 'Error en la carga del encabezado',
+	
 	'action:user:validate:already' => "%s ya ha sido validado",
 	'action:user:validate:success' => "%s ha sido validado",
 	'action:user:validate:error' => "Ocurrió un error validando %s",
+	
+	'action:user:login_as' => "Iniciar sesión como",
+	'action:user:logout_as' => "Volver a la página %s",
+	
+	'action:user:login_as:success' => "Ha iniciado sesión como%s",
+	'action:user:login_as:unknown' => "Usuario desconocido. No se ha podido iniciar sesión.",
+	'action:user:login_as:error' => "No se ha podido iniciar sesión como %s",
+	
+	'action:admin:user:bulk:ban' => "Usuarios %s baneados con éxito",
+	'action:admin:user:bulk:unban' => "Usuarios %s desbaneados con éxito",
 
 /**
  * Feeds
@@ -241,6 +281,7 @@ return array(
  */
 	'river' => "River",
 	'river:user:friend' => "%s ahora es amigo con %s",
+	'river:site:site:join' => "%s  se unió al sitio",
 	'river:update:user:avatar' => '%s tiene una nueva imagen de perfil',
 	'river:posted:generic' => '%s publicado',
 	'river:ingroup' => 'en el grupo %s',
@@ -256,14 +297,74 @@ return array(
 /**
  * Relationships
  */
+	
+	'relationship:default' => "%s  se refiere a %s",
 
 /**
  * Notifications
  */
 	'notification:method:email' => 'Correo electr&oacute;nico',
+	'notification:method:email:from' => '%s  (vía %s)',
+	'notification:method:delayed_email' => 'Correo electrónico retrasado',
+	
+	'usersettings:notifications:title' => "Ajustes de notificación",
+	'usersettings:notifications:users:title' => 'Notificaciones por usuario',
+	'usersettings:notifications:users:description' => 'Para recibir notificaciones de tus amigos (de forma individual) cuando creen nuevos contenidos, búscalos a continuación y selecciona el método de notificación que deseas utilizar.',
+	
+	'usersettings:notifications:menu:page' => "Ajustes de notificación",
 	'usersettings:notifications:menu:filter:settings' => "Configuraci&oacute;n",
+	
+	'usersettings:notifications:default:description' => 'Ajustes de notificación por defecto para eventos del sistema',
+	'usersettings:notifications:content_create:description' => 'Configuración de notificaciones por defecto para nuevos contenidos creados por ti, esto puede causar notificaciones cuando otros realicen acciones en tu contenido como dejar un comentario.',
+	'usersettings:notifications:create_comment:description' => "Configuración de notificaciones por defecto al comentar un contenido para seguir el resto de la conversación.",
+	'usersettings:notifications:mentions:description' => "Recibe una notificación cuando te @mencionen",
+	'usersettings:notifications:admin_validation_notification:description' => "Recibir una notificación cuando haya que validar a un usuario recién registrado.",
+
+	'usersettings:notifications:timed_muting' => "Desactivar temporalmente las notificaciones",
+	'usersettings:notifications:timed_muting:help' => "Si no desea recibir ninguna notificación durante un periodo determinado (por ejemplo, unas vacaciones), puede fijar una fecha de inicio y de fin para desactivar temporalmente todas las notificaciones.",
+	'usersettings:notifications:timed_muting:start' => "Primer día",
+	'usersettings:notifications:timed_muting:end' => "Último día",
+	'usersettings:notifications:timed_muting:warning' => "Actualmente sus notificaciones están temporalmente desactivadas",
+	'usersettings:notifications:save:fail' => "Se ha producido un problema al guardar la configuración de las notificaciones.",
+	
+	'usersettings:notifications:subscriptions:save:ok' => "Las suscripciones a notificaciones se han guardado correctamente.",
+	'usersettings:notifications:subscriptions:save:fail' => "Hubo un problema al guardar las suscripciones de notificaciones.",
+
+	'notification:default:salutation' => 'Estimado %s',
+	'notification:default:sign-off' => 'Saludos,
+
+%s',
 	'notification:subject' => 'Notificaciones de %s',
 	'notification:body' => 'Ver la nueva actividad en %s',
+	
+	'notification:mentions:subject' => '%s te mencionó',
+	'notification:mentions:body' => "%s  te menciona en '%s'.
+
+Para ver el post completo, haz clic en el siguiente enlace:
+%s",
+	
+	'notifications:delayed_email:subject:daily' => "Notificaciones diarias",
+	'notifications:delayed_email:subject:weekly' => "Notificaciones semanales",
+	'notifications:delayed_email:body:intro' => "A continuación encontrará una lista de sus notificaciones retrasadas.",
+	
+	'notifications:subscriptions:record:settings' => 'Mostrar selección detallada',
+	'notifications:subscriptions:no_results' => 'Aún no hay registros de suscripción',
+	'notifications:subscriptions:details:no_results' => 'No hay suscripciones detalladas que configurar.',
+	'notifications:subscriptions:details:reset' => 'Deshacer selección',
+
+	'notifications:mute:title' => "Silenciar notificaciones",
+	'notifications:mute:description' => "Si ya no desea recibir notificaciones como la que ha recibido configure una o varias de las siguientes razones para bloquear todas las notificaciones:",
+	'notifications:mute:error:content' => "No se ha podido determinar ninguna configuración de notificación",
+	'notifications:mute:entity' => "sobre '%s'",
+	'notifications:mute:container' => "de '%s'",
+	'notifications:mute:owner' => "por '%s'",
+	'notifications:mute:actor' => "iniciado por '%s'",
+	'notifications:mute:group' => "escrito en el grupo '%s'",
+	'notifications:mute:user' => "escrito por el usuario '%s'",
+	
+	'notifications:mute:save:success' => "Tus ajustes de notificación se han guardado",
+	
+	'notifications:mute:email:footer' => "Silenciar estos correos",
 
 /**
  * Search
@@ -300,6 +401,7 @@ return array(
 	'registration:usernametoolong' => 'Tu nombre de usuario es demasiado largo. El m&aacute;ximo permitido es of %u caracteres.',
 	'registration:dupeemail' => 'Ya se encuentra registrada la direcci&oacute;n de Email',
 	'registration:invalidchars' => 'Lo sentimos, su nombre de usuario posee los caracteres inv&aacute;lidos: %s. Estos son todos los caracteres que se encuentran invalidados: %s',
+	'registration:invalidchars:route' => 'Lo sentimos, su nombre de usuario contiene un carácter %s que no es válido.',
 	'registration:emailnotvalid' => 'Lo sentimos, la direcci&oacute;n de email que ha ingresado es inv&aacute;lida en el sistema',
 	'registration:passwordnotvalid' => 'Lo sentimos, la contrase&ntilde;a que ha ingresado es inv&aacute;lida en el sistema',
 	'registration:usernamenotvalid' => 'Lo sentimos, el nombre de usuario que ha ingresado es inv&aacute;lida en el sistema',
@@ -321,6 +423,10 @@ return array(
 	'user:changepassword:unknown_user' => 'Usuario inv&aacute;lido',
 	'user:changepassword:change_password_confirm' => 'Esto cambiará su contraseña.',
 
+	'user:delete:title' => 'Confirmar la eliminación de la cuenta',
+	'user:delete:description' => 'Confirma que deseas eliminar la cuenta de %s. Al eliminar la cuenta también se eliminará todo el contenido (incluidos los grupos) que pertenezca a este usuario. Esto también podría incluir contenido relacionado, como contenido de grupo, subpáginas o comentarios sobre el contenido. A continuación puedes ver una lista de los contenidos que pertenecen al usuario.',
+	'user:delete:confirm' => "Confirmo que deseo eliminar este usuario",
+
 	'user:set:language' => "Configuraci&oacute;n de lenguaje",
 	'user:language:label' => "Su lenguaje",
 	'user:language:success' => "Se actualiz&oacute; su configuraci&oacute;n de lenguaje",
@@ -341,6 +447,15 @@ return array(
 /**
  * Password requirements
  */
+	'password:requirements:min_length' => "La contraseña debe tener al menos %s caracteres.",
+	'password:requirements:lower' => "La contraseña debe tener al menos %s caracteres en minúsculas.",
+	'password:requirements:no_lower' => "La contraseña no debe contener ningún carácter en minúsculas.",
+	'password:requirements:upper' => "La contraseña debe tener al menos %s caracteres en mayúsculas.",
+	'password:requirements:no_upper' => "La contraseña no debe contener ningún carácter en mayúsculas.",
+	'password:requirements:number' => "La contraseña debe tener al menos %s caracteres numéricos.",
+	'password:requirements:no_number' => "La contraseña no debe contener caracteres numéricos.",
+	'password:requirements:special' => "La contraseña debe tener al menos %s caracteres especiales.",
+	'password:requirements:no_special' => "La contraseña no debe contener caracteres especiales.",
 	
 /**
  * Administration
@@ -365,10 +480,25 @@ return array(
 	'admin:unknown_section' => 'Secci&oacute;n de administraci&oacute;n inv&aacute;lida',
 
 	'admin' => "Administraci&oacute;n",
+	'admin:header:release' => "Liberación de Elgg: %s",
 	'admin:description' => "El panel de administraci&oacute;n le permite organizar todos los aspectos del sistema, desde la gesti&oacute;n de usuarios hasta el comportamiento de los plugins. Seleccione una opci&oacute;n debajo para comenzar",
 
 	'admin:performance' => 'Rendimiento',
+	'admin:performance:label:generic' => 'Genérico',
+	'admin:performance:generic:description' => 'A continuación encontrará una lista de sugerencias / valores de rendimiento que podrían ayudarle a afinar su sitio web',
 	'admin:performance:simplecache' => 'Caché simple',
+	'admin:performance:simplecache:settings:warning' => "Se recomienda configurar simplecache en el archivo settings.php.
+Configurar simplecache en el archivo settings.php mejora el rendimiento del caché.
+Permite a Elgg omitir la conexión a la base de datos cuando sirve archivos JavaScript y CSS en caché.",
+	'admin:performance:systemcache' => 'Caché del sistema',
+	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
+	'admin:performance:apache:mod_cache:warning' => 'El módulo mod_cache proporciona esquemas de caché HTTP-aware. Esto significa que los archivos se almacenarán en caché de acuerdo con una instrucción que especifica cuánto tiempo una página puede considerarse "fresca".',
+	'admin:performance:php:open_basedir' => 'PHP open_basedir',
+	'admin:performance:php:open_basedir:not_configured' => 'No se han establecido limitaciones',
+	'admin:performance:php:open_basedir:warning' => 'Una pequeña cantidad de limitaciones open_basedir están vigentes, esto podría afectar el rendimiento.',
+	'admin:performance:php:open_basedir:error' => 'Una gran cantidad de limitaciones de open_basedir están vigentes, esto probablemente impactará en el rendimiento.',
+	'admin:performance:php:open_basedir:generic' => 'Con open_basedir cada acceso a archivo será chequeado contra la lista de limitaciones.
+Dado que Elgg tiene muchos accesos a archivos, esto impactará negativamente en el rendimiento. Además PHPs opcache ya no puede cachear rutas de archivos en memoria y tiene que resolver esto en cada acceso.',
 	
 	'admin:statistics' => 'Estad&iacute;sticas',
 	'admin:server' => 'Servidor',
@@ -393,6 +523,7 @@ return array(
 	'admin:users:newest' => 'Los mas nuevos',
 	'admin:users:admins' => 'Administrators',
 	'admin:users:banned' => 'Bloqueado',
+	'admin:users:existingadmins' => 'Lista de administradores existentes',
 	'admin:users:add' => 'Agregar Nuevo Usuario',
 	'admin:users:description' => "Este panel de administraci&oacute;n le permite gestionar la configuraci&oacute;n de usuarios de la red. Seleccione una opci&oacute;n debajo para comenzar",
 	'admin:users:adduser:label' => "Click aqu&iacute; para agregar un nuevo usuario..",
@@ -402,6 +533,15 @@ return array(
 	'admin:users:unvalidated' => 'No validado',
 	'admin:users:unvalidated:no_results' => 'No hay usuarios sin validar.',
 	'admin:users:unvalidated:registered' => 'Registrado: %s',
+	'admin:users:unvalidated:change_email' => 'Cambiar la dirección de correo electrónico',
+	'admin:users:unvalidated:change_email:user' => 'Cambiar la dirección de correo electrónico de:  %s',
+	'admin:users:inactive' => 'Inactivo',
+	'admin:users:inactive:last_login_before' => "Mostrar usuarios no conectados después de",
+	'admin:users:inactive:last_login_before:help' => "Esto también mostrará los usuarios que nunca han iniciado sesión.",
+	'admin:users:details:attributes' => 'Atributos del usuario',
+	'admin:users:details:profile' => 'Información sobre el perfil',
+	'admin:users:details:profile:no_fields' => 'No hay campos de perfil configurados',
+	'admin:users:details:profile:no_information' => 'No se dispone de información sobre el perfil',
 	'admin:users:details:statistics' => 'Estad&iacute;sticas de contenido',
 	
 	'admin:configure_utilities:maintenance' => 'Modo mantenimiento',
@@ -429,6 +569,20 @@ return array(
 	'admin:settings:i18n' => 'Internacionalización',
 	'admin:settings:advanced' => 'Configuraci&oacute;n Avanzada',
 	'admin:settings:users' => 'Usuarios',
+	'admin:site_icons' => "Iconos del sitio",
+	'admin:site_icons:site_icon' => "Icono del sitio",
+	'admin:site_icons:info' => "Sube un icono relacionado con tu sitio. Este icono se utilizará como favicon y al mostrar el sitio por ejemplo como remitente en las notificaciones del sitio.",
+	'admin:site_icons:font_awesome' => "Fuente impresionante",
+	'admin:site_icons:font_awesome:zip' => "Cargar archivo ZIP",
+	'admin:site_icons:font_awesome:zip:help' => "Aquí puedes subir una descarga de Font Awesome desde https://fontawesome.com/download. Este webfont se servirá localmente.",
+	'admin:site_icons:font_awesome:zip:error' => "No se puede extraer el archivo ZIP cargado",
+	'admin:site_icons:font_awesome:remove_zip' => "Eliminar fuente cargada",
+	'admin:theme' => "Theme",
+	'admin:theme:info' => "En este formulario se pueden configurar diversas variables temáticas. Esta configuración anulará la configuración existente.",
+	'admin:theme:warning' => "Tenga en cuenta que estos cambios podrían romper su estilo.",
+	'admin:theme:css_variable:name' => "Variable CSS",
+	'admin:theme:css_variable:value' => "Valor",
+	'admin:site_settings' => "Configuración del sitio",
 	'admin:site:description' => "Este panel de administraci&oacute;n le permite gestionar la configuraci&oacute;n global de la red. Selecciona una opci&oacute;n debajo para comenzar",
 	'admin:site:opt:linktext' => "Configurar sitio..",
 	'admin:settings:in_settings_file' => 'Esta opción se configura en settings.php',
@@ -452,16 +606,39 @@ return array(
 	'admin:widget:content_stats:help' => 'Seguimiento del contenido creado por los usuarios de la red',
 	'admin:widget:cron_status' => 'Estado de Cron',
 	'admin:widget:cron_status:help' => 'Muestra el estado de la última ejecución de los trabajos de Cron',
+	'admin:widget:elgg_blog' => 'Blog de Elgg',
+	'admin:widget:elgg_blog:help' => 'Muestra las últimas entradas del blog de Elgg',
+	'admin:widget:elgg_blog:no_results' => 'No se pueden buscar las últimas noticias de Elgg',
 	'admin:statistics:numentities' => 'Estadísticas del contenido',
 	'admin:statistics:numentities:type' => 'Tipo de contenido',
 	'admin:statistics:numentities:number' => 'Numero',
 	'admin:statistics:numentities:searchable' => 'Entidades de búsqueda',
 	'admin:statistics:numentities:other' => 'Otras entidades',
+
+	'admin:statistics:database' => 'Información de la base de datos',
+	'admin:statistics:database:table' => 'Tabla',
+	'admin:statistics:database:row_count' => 'Recuento de filas',
+
+	'admin:statistics:queue' => 'Información de cola',
 	'admin:statistics:queue:name' => 'Nombre',
+	'admin:statistics:queue:row_count' => 'Recuento de filas',
+	'admin:statistics:queue:oldest' => 'Récord más antiguo',
+	'admin:statistics:queue:newest' => 'Registro más reciente',
 
 	'admin:widget:admin_welcome' => 'Bienvenido',
 	'admin:widget:admin_welcome:help' => "Esta es el &aacute;rea de administraci&oacute;n",
 	'admin:widget:admin_welcome:intro' => 'Bienvenido! Se encuentra viendo el panel de control de la administraci&oacute;n. Es &uacute;til para visualizar las novedades en la red',
+
+	'admin:widget:admin_welcome:registration' => "El registro de nuevos usuarios está deshabilitado. Puede activarlo en la página %s.",
+	'admin:widget:admin_welcome:admin_overview' => "El menú de la derecha permite navegar por el área de administración. Está organizada en
+tres secciones:
+	<dl>
+		<dt>Administrar</dt> <dd>Tareas básicas como la gestión de usuarios, la monitorización de contenidos y la activación de plugins.</dd>
+		<dt>Configurar</dt> <dd>Tareas ocasionales como establecer el nombre del sitio o configurar las preferencias de seguridad.</dd>
+		<dt>Utilidades</dt> <dd>Varias herramientas para apoyar el mantenimiento del sitio.</dd>
+		<dt>Información</dt> <dd>Información sobre su sitio, como estadísticas.</dd>
+		<dt>Desarrollar</dt> <dd>Para desarrolladores que están creando plugins o depurando el sitio. (Requiere un plugin de desarrollador).</dd>
+	</dl>",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Aseg&uacute;rese de verificar los recursos disponibles en los enlaces del pi&eacute; de p&aacute;gina y gracias por utilizar Elgg!',
@@ -471,6 +648,12 @@ return array(
 
 	'admin:cache:flush' => 'Limpiar la cache',
 	'admin:cache:flushed' => "La cache del sitio ha sido limpiada",
+	'admin:cache:invalidate' => 'Invalidar las cachés',
+	'admin:cache:invalidated' => "Las cachés del sitio han sido invalidadas",
+	'admin:cache:clear' => 'Borrar las cachés',
+	'admin:cache:cleared' => "Los cachés del sitio han sido borrados",
+	'admin:cache:purge' => 'Purgar las cachés',
+	'admin:cache:purged' => "Las cachés del sitio han sido purgadas",
 
 	'admin:footer:faq' => 'FAQs de Administraci&oacute;n',
 	'admin:footer:manual' => 'Manual de Administraci&oacute;n',
@@ -507,6 +690,13 @@ return array(
 
 	'admin:security' => 'Seguridad',
 	'admin:security:information' => 'Información',
+	'admin:security:information:description' => 'En esta página encontrará una lista de recomendaciones de seguridad.',
+	'admin:security:information:https' => '¿Está el sitio web protegido por HTTPS?',
+	'admin:security:information:https:warning' => "Se recomienda proteger su sitio web utilizando HTTPS, esto ayuda a proteger los datos (por ejemplo, contraseñas) de ser husmeados a través de la conexión a Internet.",
+	'admin:security:information:wwwroot' => 'Se puede escribir en la carpeta principal del sitio web',
+	'admin:security:information:wwwroot:error' => "Es recomendable que instales Elgg en una carpeta en la que no pueda escribir tu servidor web. Visitantes malintencionados podrían colocar código no deseado en tu sitio web.",
+	'admin:security:information:validate_input' => 'Validación de entrada',
+	'admin:security:information:validate_input:error' => "Algún plugin ha desactivado la validación de entrada en su sitio web, lo que permitirá a los usuarios enviar contenido potencialmente dañino (por ejemplo, cross-site-scripting, etc.)",
 	
 	'admin:security:settings' => 'Ajustes',
 	'admin:security:settings:description' => 'En esta página puede configurar algunas características de seguridad. Por favor, lea la configuración cuidadosamente.',
@@ -600,7 +790,7 @@ return array(
 	'admin:statistics:label:numusers' => "Cantidad de usuarios",
 	'admin:statistics:label:numonline' => "Cantidad de usuarios conectados",
 	'admin:statistics:label:onlineusers' => "Usuarios conectados en este momento",
-	'admin:statistics:label:admins'=>"Admins",
+	'admin:statistics:label:admins' => "Admins",
 	'admin:statistics:label:version' => "Versi&oacute;n de Elgg",
 	'admin:statistics:label:version:release' => "Release",
 	'admin:statistics:label:version:version' => "Versi&oacute;n",
@@ -840,6 +1030,7 @@ return array(
 	'status:open' => 'Abierto',
 	'status:closed' => 'Cerrado',
 	'status:active' => 'Activo',
+	'status:inactive' => 'Inactivo',
 
 /**
  * Generic sorts
@@ -1126,6 +1317,8 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	'entity:delete:fail' => '%s no se ha podido borrar.',
 
 	'entity:restore:item' => 'Elemento',
+	
+	'entity:mute' => "Silenciar notificaciones",
 
 /**
  * Annotations

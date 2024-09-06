@@ -181,7 +181,7 @@ trait LegacyQueryOptionsAdapter {
 		if (isset($options['type_subtype_pairs']) && is_array($options['type_subtype_pairs'])) {
 			foreach ($options['type_subtype_pairs'] as $type => $subtypes) {
 				if (!in_array($type, Config::ENTITY_TYPES)) {
-					elgg_log("'$type' is not a valid entity type", 'WARNING');
+					elgg_log("'$type' is not a valid entity type", \Psr\Log\LogLevel::WARNING);
 				}
 				
 				if (!empty($subtypes) && !is_array($subtypes)) {
@@ -917,13 +917,15 @@ trait LegacyQueryOptionsAdapter {
 					$direction = 'ASC';
 				}
 
-				$direction = strtoupper($direction) === 'DESC' ? 'DESC' : 'ASC';
-
 				$options['order_by'][] = new OrderByClause($column, $direction);
 			}
 		}
 		
 		$sort_by = $options['sort_by'];
+		if (!is_array($sort_by)) {
+			return $options;
+		}
+		
 		if (isset($sort_by['property'])) {
 			// single array variant, convert to an array of sort_by specs
 			$options['sort_by'] = [$sort_by];

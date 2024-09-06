@@ -17,4 +17,6 @@ return [
 	\Elgg\Upgrades\NotificationsPrefix::class,
 	\Elgg\Upgrades\RemoveIcontime::class,
 	\Elgg\Upgrades\RemoveOrphanedThreadedComments::class,
+	\Elgg\Upgrades\MigrateDebugConfig::class,
+	\Elgg\Upgrades\MigrateAdminValidationNotificationPreference::class,
 ];

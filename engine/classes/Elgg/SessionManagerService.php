@@ -2,8 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Cache\AccessCache;
 use Elgg\Cache\EntityCache;
-use Elgg\Cache\SessionCache;
 use Elgg\Exceptions\LoginException;
 use Elgg\Exceptions\SecurityException;
 use Elgg\I18n\Translator;
@@ -30,7 +30,7 @@ class SessionManagerService {
 	 * @param EventsService          $events           the events service
 	 * @param Translator             $translator       the translator service
 	 * @param PersistentLoginService $persistent_login the persistent login service
-	 * @param SessionCache           $session_cache    the session cache
+	 * @param AccessCache            $access_cache     the access cache
 	 * @param EntityCache            $entity_cache     the entity cache
 	 */
 	public function __construct(
@@ -38,7 +38,7 @@ class SessionManagerService {
 		protected EventsService $events,
 		protected Translator $translator,
 		protected PersistentLoginService $persistent_login,
-		protected SessionCache $session_cache,
+		protected AccessCache $access_cache,
 		protected EntityCache $entity_cache
 	) {
 	}
@@ -285,8 +285,8 @@ class SessionManagerService {
 			
 			$this->session->set('guid', $user->guid);
 			$this->logged_in_user = $user;
-			$this->session_cache->clear();
-			$this->entity_cache->save($user);
+			$this->access_cache->clear();
+			$this->entity_cache->save($user->guid, $user);
 			$this->translator->setCurrentLanguage($user->language);
 		}
 	}
@@ -341,6 +341,6 @@ class SessionManagerService {
 	public function removeLoggedInUser(): void {
 		$this->logged_in_user = null;
 		$this->session->remove('guid');
-		$this->session_cache->clear();
+		$this->access_cache->clear();
 	}
 }

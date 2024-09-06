@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-27 10:46+0200\n"
+"POT-Creation-Date: 2024-09-06 08:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1703,15 +1703,13 @@ msgid "July 2022"
 msgstr ""
 
 #: ../../appendix/support.rst:77
-msgid "4.3 LTS"
+msgid "4.3"
 msgstr ""
 
 #: ../../appendix/support.rst:77
+#: ../../appendix/support.rst:77
+#: ../../appendix/support.rst:83
 msgid "June 2024"
-msgstr ""
-
-#: ../../appendix/support.rst:77
-msgid "**Until 6.0**"
 msgstr ""
 
 #: ../../appendix/support.rst:79
@@ -1724,14 +1722,26 @@ msgid "October 2023"
 msgstr ""
 
 #: ../../appendix/support.rst:81
-msgid "5.1"
+msgid "5.1 LTS"
+msgstr ""
+
+#: ../../appendix/support.rst:81
+msgid "June 2025"
+msgstr ""
+
+#: ../../appendix/support.rst:81
+msgid "**Until 7.0**"
 msgstr ""
 
 #: ../../appendix/support.rst:83
 msgid "6.0"
 msgstr ""
 
-#: ../../appendix/support.rst:83
+#: ../../appendix/support.rst:85
+msgid "7.0"
+msgstr ""
+
+#: ../../appendix/support.rst:85
 msgid "TBD"
 msgstr ""
 

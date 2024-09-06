@@ -26,4 +26,4 @@ foreach ($views as $view) {
 	}
 }
 
-elgg_log("No autocomplete item view could be found for {$entity->guid}", 'WARNING');
+elgg_log("No autocomplete item view could be found for {$entity->guid}", \Psr\Log\LogLevel::WARNING);

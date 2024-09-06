@@ -63,10 +63,10 @@ if (!$entity instanceof \ElggComment) {
 			'container_guid' => $entity->guid,
 			'metadata_name_value_pairs' => ['level' => 1],
 			'wheres' => [
-				function(QueryBuilder $qb) use ($show_guid, $latest_first) {
+				function(QueryBuilder $qb, $main_alias) use ($show_guid, $latest_first) {
 					$operator = $latest_first ? '>' : '<';
 					
-					return $qb->compare('e.guid', $operator, $show_guid, ELGG_VALUE_INTEGER);
+					return $qb->compare("{$main_alias}.guid", $operator, $show_guid, ELGG_VALUE_INTEGER);
 				},
 			],
 		]);

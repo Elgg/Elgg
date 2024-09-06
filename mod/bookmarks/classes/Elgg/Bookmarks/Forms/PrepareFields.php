@@ -21,21 +21,28 @@ class PrepareFields {
 		
 		// input names => defaults
 		$values = [
-			'title' => (string) get_input('title'), // bookmarklet support
-			'address' => (string) get_input('address'),
-			'description' => '',
-			'access_id' => ACCESS_DEFAULT,
-			'tags' => '',
 			'container_guid' => elgg_get_page_owner_guid(),
-			'guid' => null,
 		];
+		
+		$fields = elgg()->fields->get('object', 'bookmarks');
+		foreach ($fields as $field) {
+			$default_value = null;
+			
+			$name = (string) elgg_extract('name', $field);
+			if (in_array($name, ['title', 'address'])) {
+				// bookmarklet support
+				$default_value = get_input($name);
+			}
+			
+			$values[$name] = $default_value;
+		}
 		
 		$bookmark = elgg_extract('entity', $vars);
 		if ($bookmark instanceof \ElggBookmark) {
 			// load current bookmark values
 			foreach (array_keys($values) as $field) {
-				if (isset($bookmark->$field)) {
-					$values[$field] = $bookmark->$field;
+				if (isset($bookmark->{$field})) {
+					$values[$field] = $bookmark->{$field};
 				}
 			}
 		}

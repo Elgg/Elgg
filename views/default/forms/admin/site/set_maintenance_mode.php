@@ -10,13 +10,10 @@ echo elgg_view('output/longtext', [
 ]);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('admin:maintenance_mode:mode_label'),
 	'name' => 'mode',
-	'checked' => (bool) elgg_get_config('elgg_maintenance_mode'),
-	'switch' => true,
-	'value' => 1,
-	'default' => 0,
+	'value' => elgg_get_config('elgg_maintenance_mode'),
 ]);
 
 echo elgg_view_field([

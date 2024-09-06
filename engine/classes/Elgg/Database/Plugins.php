@@ -2,7 +2,7 @@
 
 namespace Elgg\Database;
 
-use Elgg\Cache\BaseCache;
+use Elgg\Cache\PluginsCache;
 use Elgg\Config;
 use Elgg\Context;
 use Elgg\Database;
@@ -74,7 +74,7 @@ class Plugins {
 	/**
 	 * Constructor
 	 *
-	 * @param BaseCache             $cache           Plugins cache
+	 * @param PluginsCache          $cache           Plugins cache
 	 * @param Database              $db              Database
 	 * @param SessionManagerService $session_manager Session
 	 * @param EventsService         $events          Events
@@ -86,7 +86,7 @@ class Plugins {
 	 * @param Request               $request         Context
 	 */
 	public function __construct(
-		protected BaseCache $cache,
+		protected PluginsCache $cache,
 		protected Database $db,
 		protected SessionManagerService $session_manager,
 		protected EventsService $events,
@@ -106,7 +106,7 @@ class Plugins {
 	 * @return string
 	 */
 	public function getPath(): string {
-		return $this->config->plugins_path ?: Paths::project() . 'mod/';
+		return $this->config->plugins_path;
 	}
 
 	/**
@@ -335,21 +335,6 @@ class Plugins {
 		$this->cache->save($plugin_id, $plugin);
 		
 		return $plugin;
-	}
-
-	/**
-	 * Returns if a plugin exists in the system.
-	 *
-	 * @warning This checks only plugins that are registered in the system!
-	 * If the plugin cache is outdated, be sure to regenerate it with
-	 * {@link _elgg_generate_plugin_objects()} first.
-	 *
-	 * @param string $id The plugin ID.
-	 *
-	 * @return bool
-	 */
-	public function exists(string $id): bool {
-		return $this->get($id) instanceof \ElggPlugin;
 	}
 
 	/**

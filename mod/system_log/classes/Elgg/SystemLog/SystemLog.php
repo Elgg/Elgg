@@ -255,7 +255,7 @@ class SystemLog {
 					$this->db->getConnection('write')->executeStatement("DROP TABLE {$table_name}");
 					$deleted_tables = true;
 				} catch (\Exception $e) {
-					elgg_log("Failed to delete the log table {$table_name}", 'ERROR');
+					elgg_log("Failed to delete the log table {$table_name}", \Psr\Log\LogLevel::ERROR);
 				}
 			}
 		}

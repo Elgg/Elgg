@@ -9,26 +9,20 @@ $account = '';
 
 // require password the changing email address
 $account .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('admin:security:settings:email_require_password'),
 	'#help' => elgg_echo('admin:security:settings:email_require_password:help'),
 	'name' => 'security_email_require_password',
-	'default' => 0,
-	'value' => 1,
-	'switch' => true,
-	'checked' => (bool) elgg_get_config('security_email_require_password'),
+	'value' => elgg_get_config('security_email_require_password'),
 ]);
 
 // require confirmation on e-mail change
 $account .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('admin:security:settings:email_require_confirmation'),
 	'#help' => elgg_echo('admin:security:settings:email_require_confirmation:help'),
 	'name' => 'security_email_require_confirmation',
-	'default' => 0,
-	'value' => 1,
-	'switch' => true,
-	'checked' => (bool) elgg_get_config('security_email_require_confirmation'),
+	'value' => elgg_get_config('security_email_require_confirmation'),
 ]);
 
 // minimal username length

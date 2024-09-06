@@ -118,7 +118,9 @@ class ComposerUnitTest extends UnitTestCase {
 	public function testCheckConstraintsInvalid($version_input, $version_constraint) {
 		$composer = $this->getComposer();
 		
+		_elgg_services()->logger->disable();
 		$this->assertFalse($composer->checkConstraints($version_input, $version_constraint));
+		_elgg_services()->logger->enable();
 	}
 	
 	public static function invalidVersionProvider(): array {

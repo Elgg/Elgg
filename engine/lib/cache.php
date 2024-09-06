@@ -5,24 +5,6 @@
  */
 
 /**
- * Returns an \Elgg\Cache\BaseCache object suitable for caching system information
- *
- * @return \Elgg\Cache\BaseCache
- */
-function elgg_get_system_cache(): \Elgg\Cache\BaseCache {
-	return _elgg_services()->fileCache;
-}
-
-/**
- * Reset the system cache by deleting the caches
- *
- * @return void
- */
-function elgg_reset_system_cache(): void {
-	_elgg_services()->systemCache->reset();
-}
-
-/**
  * Saves a system cache.
  *
  * @param string $type         The type or identifier of the cache
@@ -55,40 +37,6 @@ function elgg_load_system_cache(string $type) {
  */
 function elgg_delete_system_cache(string $type): bool {
 	return _elgg_services()->systemCache->delete($type);
-}
-
-/**
- * Is system cache enabled
- *
- * @return bool
- * @since 2.2.0
- */
-function elgg_is_system_cache_enabled(): bool {
-	return _elgg_services()->systemCache->isEnabled();
-}
-
-/**
- * Enables the system disk cache.
- *
- * Uses the 'system_cache_enabled' config with a boolean value.
- * Resets the system cache.
- *
- * @return void
- */
-function elgg_enable_system_cache(): void {
-	_elgg_services()->systemCache->enable();
-}
-
-/**
- * Disables the system disk cache.
- *
- * Uses the 'system_cache_enabled' config with a boolean value.
- * Resets the system cache.
- *
- * @return void
- */
-function elgg_disable_system_cache(): void {
-	_elgg_services()->systemCache->disable();
 }
 
 /* Simplecache */
@@ -132,40 +80,6 @@ function elgg_get_simplecache_url(string $view): string {
 }
 
 /**
- * Is simple cache enabled
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_is_simplecache_enabled(): bool {
-	return _elgg_services()->simpleCache->isEnabled();
-}
-
-/**
- * Enables the simple cache.
- *
- * @see elgg_register_simplecache_view()
- * @return void
- * @since 1.8.0
- */
-function elgg_enable_simplecache(): void {
-	_elgg_services()->simpleCache->enable();
-}
-
-/**
- * Disables the simple cache.
- *
- * @warning Simplecache is also purged when disabled.
- *
- * @see elgg_register_simplecache_view()
- * @return void
- * @since 1.8.0
- */
-function elgg_disable_simplecache(): void {
-	_elgg_services()->simpleCache->disable();
-}
-
-/**
  * Invalidate all the registered caches
  *
  * @return void
@@ -206,63 +120,4 @@ function elgg_purge_caches(): void {
 	set_time_limit(0);
 	
 	_elgg_services()->events->triggerSequence('cache:purge', 'system');
-}
-
-/**
- * Checks if /cache directory has been symlinked to views simplecache directory
- *
- * @return bool
- * @internal
- */
-function _elgg_is_cache_symlinked(): bool {
-	$simplecache_path = elgg_get_asset_path();
-	if (!is_dir($simplecache_path)) {
-		return false;
-	}
-	
-	$root_path = elgg_get_root_path();
-	$symlink_path = "{$root_path}cache";
-	
-	return is_dir($symlink_path) && realpath($simplecache_path) === realpath($symlink_path);
-}
-
-/**
- * Symlinks /cache directory to views simplecache directory
- *
- * @return bool
- * @internal
- */
-function _elgg_symlink_cache(): bool {
-
-	if (_elgg_is_cache_symlinked()) {
-		// Symlink exists, no need to proceed
-		return true;
-	}
-
-	$root_path = elgg_get_root_path();
-	$simplecache_path = rtrim(elgg_get_asset_path(), '/');
-	$symlink_path = "{$root_path}cache";
-
-	if (is_dir($symlink_path)) {
-		// Cache directory already exists
-		// We can not proceed without overwriting files
-		return false;
-	}
-
-	if (!is_dir($simplecache_path)) {
-		// Views simplecache directory has not yet been created
-		mkdir($simplecache_path, 0755, true);
-	}
-
-	symlink($simplecache_path, $symlink_path);
-
-	if (_elgg_is_cache_symlinked()) {
-		return true;
-	}
-
-	if (is_dir($symlink_path)) {
-		unlink($symlink_path);
-	}
-	
-	return false;
 }

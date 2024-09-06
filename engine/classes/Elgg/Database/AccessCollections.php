@@ -3,7 +3,7 @@
 namespace Elgg\Database;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Elgg\Cache\BaseCache;
+use Elgg\Cache\AccessCache;
 use Elgg\Config;
 use Elgg\Database;
 use Elgg\EventsService;
@@ -34,22 +34,6 @@ class AccessCollections {
 	 */
 	public const MEMBERSHIP_TABLE_NAME = 'access_collection_membership';
 
-	protected Config $config;
-
-	protected Database $db;
-
-	protected BaseCache $access_cache;
-
-	protected EventsService $events;
-
-	protected SessionManagerService $session_manager;
-
-	protected EntityTable $entities;
-
-	protected UserCapabilities $capabilities;
-
-	protected Translator $translator;
-
 	protected bool $init_complete = false;
 
 	/**
@@ -59,28 +43,20 @@ class AccessCollections {
 	 * @param Database              $db              Database
 	 * @param EntityTable           $entities        Entity table
 	 * @param UserCapabilities      $capabilities    User capabilities
-	 * @param BaseCache             $cache           Access cache
+	 * @param AccessCache           $access_cache    Access cache
 	 * @param EventsService         $events          Events
 	 * @param SessionManagerService $session_manager Session
 	 * @param Translator            $translator      Translator
 	 */
 	public function __construct(
-		Config $config,
-		Database $db,
-		EntityTable $entities,
-		UserCapabilities $capabilities,
-		BaseCache $cache,
-		EventsService $events,
-		SessionManagerService $session_manager,
-		Translator $translator) {
-		$this->config = $config;
-		$this->db = $db;
-		$this->entities = $entities;
-		$this->capabilities = $capabilities;
-		$this->access_cache = $cache;
-		$this->events = $events;
-		$this->session_manager = $session_manager;
-		$this->translator = $translator;
+		protected Config $config,
+		protected Database $db,
+		protected EntityTable $entities,
+		protected UserCapabilities $capabilities,
+		protected AccessCache $access_cache,
+		protected EventsService $events,
+		protected SessionManagerService $session_manager,
+		protected Translator $translator) {
 	}
 
 	/**
@@ -128,10 +104,9 @@ class AccessCollections {
 		}
 
 		$hash = $user_guid . 'get_access_array';
-
-		if ($cache[$hash]) {
-			$access_array = $cache[$hash];
-		} else {
+		
+		$access_array = $cache->load($hash);
+		if ($access_array === null) {
 			// Public access is always visible
 			$access_array = [ACCESS_PUBLIC];
 
@@ -165,7 +140,7 @@ class AccessCollections {
 			}
 
 			if ($this->init_complete) {
-				$cache[$hash] = $access_array;
+				$cache->save($hash, $access_array);
 			}
 		}
 
@@ -258,10 +233,9 @@ class AccessCollections {
 		}
 
 		$hash = $user_guid . 'get_write_access_array';
-
-		if ($cache[$hash]) {
-			$access_array = $cache[$hash];
-		} else {
+		
+		$access_array = $cache->load($hash);
+		if ($access_array === null) {
 			$access_array = [
 				ACCESS_PRIVATE => $this->getReadableAccessLevel(ACCESS_PRIVATE),
 				ACCESS_LOGGED_IN => $this->getReadableAccessLevel(ACCESS_LOGGED_IN),
@@ -271,7 +245,7 @@ class AccessCollections {
 			$access_array += $this->getCollectionsForWriteAccess($user_guid);
 			
 			if ($this->init_complete) {
-				$cache[$hash] = $access_array;
+				$cache->save($hash, $access_array);
 			}
 		}
 

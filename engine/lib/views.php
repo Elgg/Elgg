@@ -1136,7 +1136,7 @@ function elgg_view_field(array $params = []): string {
 	}
 
 	$make_special_checkbox_label = false;
-	if ($input_type == 'checkbox' && (isset($params['label']) || isset($params['#label']))) {
+	if (in_array($input_type, ['checkbox', 'switch']) && (isset($params['label']) || isset($params['#label']))) {
 		if (isset($params['#label']) && isset($params['label'])) {
 			$params['label_tag'] = 'div';
 		} else {
@@ -1304,7 +1304,7 @@ function _elgg_has_rss_link(): bool {
  * @internal
  */
 function elgg_views_boot(): void {
-	_elgg_services()->viewCacher->registerCoreViews();
+	_elgg_services()->views->registerCoreViews();
 
 	elgg_register_external_file('css', 'font-awesome', elgg_get_simplecache_url('font-awesome/css/all.min.css'));
 	elgg_load_external_file('css', 'font-awesome');
@@ -1340,7 +1340,7 @@ function elgg_views_boot(): void {
 function _elgg_get_js_page_data(array $params = []): array {
 	$data = elgg_trigger_event_results('elgg.data', 'page', $params, []);
 	if (!is_array($data)) {
-		elgg_log('"elgg.data" Event handlers must return an array. Returned ' . gettype($data) . '.', 'ERROR');
+		_elgg_services()->logger->error('"elgg.data" Event handlers must return an array. Returned ' . gettype($data) . '.');
 		$data = [];
 	}
 	
@@ -1353,7 +1353,7 @@ function _elgg_get_js_page_data(array $params = []): array {
 		'config' => [
 			'lastcache' => (int) _elgg_services()->config->lastcache,
 			'viewtype' => elgg_get_viewtype(),
-			'simplecache_enabled' => (int) elgg_is_simplecache_enabled(),
+			'simplecache_enabled' => (int) _elgg_services()->simpleCache->isEnabled(),
 			'current_language' => elgg_get_current_language(),
 			'language' => _elgg_services()->config->language ?: 'en',
 			'wwwroot' => elgg_get_site_url(),
