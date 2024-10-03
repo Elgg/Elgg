@@ -166,9 +166,16 @@ class DateTime extends PHPDateTime {
 		
 		$locale_for_language = _elgg_services()->locale->getLocaleForLanguage($language);
 		
-		$locale = new \IntlDateFormatter(elgg_extract(0, $locale_for_language, $language), \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
-		$locale->setPattern($correct_format);
+		try {
+			$locale = new \IntlDateFormatter(elgg_extract(0, $locale_for_language, $language), \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
+			$locale->setPattern($correct_format);
+			
+			return $locale->format($this);
+		} catch (\Throwable $t) {
+			// something went wrong
+			// @see https://github.com/Elgg/Elgg/issues/14712
+		}
 		
-		return $locale->format($this);
+		return false;
 	}
 }
