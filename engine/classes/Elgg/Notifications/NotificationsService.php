@@ -5,7 +5,6 @@ namespace Elgg\Notifications;
 use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Traits\Loggable;
-use Elgg\Queue\Queue;
 
 /**
  * Notifications service
@@ -17,15 +16,6 @@ class NotificationsService {
 
 	use Loggable;
 	
-	/** @var Queue */
-	protected $queue;
-
-	/** @var EventsService */
-	protected $elgg_events;
-
-	/** @var \ElggSession */
-	protected $session;
-	
 	/** @var array Registered notification events */
 	protected $events = [];
 
@@ -35,19 +25,15 @@ class NotificationsService {
 	/**
 	 * Constructor
 	 *
-	 * @param Queue         $queue       Queue
-	 * @param \ElggSession  $session     Session service
-	 * @param EventsService $elgg_events Events service
+	 * @param NotificationsQueue $queue       Queue
+	 * @param \ElggSession       $session     Session service
+	 * @param EventsService      $elgg_events Events service
 	 */
 	public function __construct(
-			Queue $queue,
-			\ElggSession $session,
-			EventsService $elgg_events
+			protected NotificationsQueue $queue,
+			protected \ElggSession $session,
+			protected EventsService $elgg_events
 	) {
-
-		$this->queue = $queue;
-		$this->session = $session;
-		$this->elgg_events = $elgg_events;
 	}
 
 	/**

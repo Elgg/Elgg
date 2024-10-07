@@ -22,21 +22,14 @@ class NotificationsQueue extends DatabaseQueue {
 	const QUEUE_NAME = 'notifications';
 	
 	/**
-	 * @var Config
-	 */
-	protected $config;
-	
-	/**
 	 * Create a queue
 	 *
 	 * @param string         $name   Name of the queue. Must be less than 256 characters.
 	 * @param \Elgg\Database $db     Database adapter
 	 * @param \Elgg\Config   $config Global config
 	 */
-	public function __construct(string $name, \Elgg\Database $db, \Elgg\Config $config) {
+	public function __construct(string $name, \Elgg\Database $db, protected \Elgg\Config $config) {
 		parent::__construct($name, $db);
-		
-		$this->config = $config;
 	}
 	
 	/**

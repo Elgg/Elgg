@@ -86,7 +86,7 @@ return [
 	'metadataTable' => DI\autowire(\Elgg\Database\MetadataTable::class),
 	'mimetype' => DI\autowire(\Elgg\Filesystem\MimeTypeService::class),
 	'mutex' => DI\autowire(\Elgg\Database\Mutex::class),
-	'notifications' => DI\autowire(\Elgg\Notifications\NotificationsService::class)->constructorParameter('queue', DI\get('notificationsQueue')),
+	'notifications' => DI\autowire(\Elgg\Notifications\NotificationsService::class),
 	'notificationsQueue' => DI\autowire(\Elgg\Notifications\NotificationsQueue::class)->constructorParameter('name', \Elgg\Notifications\NotificationsQueue::QUEUE_NAME),
 	'pageOwner' => DI\autowire(\Elgg\Page\PageOwnerService::class),
 	'passwords' => DI\autowire(\Elgg\PasswordService::class),
