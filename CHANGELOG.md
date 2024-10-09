@@ -1,3 +1,16 @@
+<a name="5.1.10"></a>
+### 5.1.10 (2024-10-08)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+
+#### Bug fixes
+
+* **thewire:** correctly handle string length for multi-byte characters [77baddcf3](https://github.com/Elgg/Elgg//commit/77baddcf37123ad20950b1ad2b2d01b79e52ec6f)
+* **i18n:** handle invalid locale date format [9a93d5bdc](https://github.com/Elgg/Elgg//commit/9a93d5bdcf6b34e43147362d3600bc8deedd6eb0) closes [#14712](https://github.com/Elgg/Elgg//commit/14712)
+
+
 <a name="5.1.9"></a>
 ### 5.1.9 (2024-08-02)
 
