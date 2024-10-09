@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0095cd917d05636eef3f73908654d59",
+    "content-hash": "b76767d8471b1d3b98a11191d506c531",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -8390,8 +8390,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "roave/security-advisories": 20,
-        "elgg/sniffs": 20
+        "elgg/sniffs": 20,
+        "roave/security-advisories": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
@@ -8403,7 +8403,7 @@
         "ext-pdo": "*",
         "ext-xml": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.1"
     },
