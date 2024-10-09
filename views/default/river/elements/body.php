@@ -64,7 +64,7 @@ if (!empty($summary)) {
 // message (eg excerpt)
 $message = elgg_extract('message', $vars);
 if (!empty($message)) {
-	echo elgg_format_element('div', ['class' => 'elgg-river-message',], $message);
+	echo elgg_format_element('div', ['class' => 'elgg-river-message'], $message);
 }
 
 // attachments
