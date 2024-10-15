@@ -86,7 +86,7 @@ class MoveFiles extends AsynchronousUpgrade {
 					$old_thumb = new \ElggFile();
 					$old_thumb->owner_guid = $entity->owner_guid;
 					
-					$base_filename = "{$entity->filestore_prefix}/{$prefix}{$entity->upload_time}". pathinfo($entity->originalfilename, PATHINFO_FILENAME);
+					$base_filename = "{$entity->filestore_prefix}/{$prefix}{$entity->upload_time}". pathinfo(mb_strtolower($entity->originalfilename), PATHINFO_FILENAME);
 					
 					foreach (['jpg', 'webp'] as $extension) {
 						$old_thumb->setFilename("{$base_filename}.{$extension}");
