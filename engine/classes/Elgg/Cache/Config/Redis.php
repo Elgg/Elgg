@@ -32,7 +32,7 @@ class Redis extends Config {
 			'optPrefix' => $namespace,
 		];
 		if (!empty($config->redis_options) && is_array($config->redis_options)) {
-			$options = $config->redis_options;
+			$options = array_merge($options, $config->redis_options);
 		}
 		
 		if (count($config->redis_servers) > 1) {
