@@ -68,7 +68,7 @@ To force which language should be used for translation, set the third parameter:
 
 .. code-block:: php
 
-    echo elgg_echo('welcome', [], $user->language);
+    echo elgg_echo('welcome', [], $user->getLanguage());
 
 To first test whether ``elgg_echo()`` can find a translation:
 
