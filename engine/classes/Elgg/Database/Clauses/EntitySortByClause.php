@@ -102,9 +102,10 @@ class EntitySortByClause extends OrderByClause {
 
 			case 'relationship':
 				if ($qb->getTableName() !== RelationshipsTable::TABLE_NAME) {
-					$er_alias = $qb->joinRelationshipTable($table_alias, $from_column, $this->property, $this->inverse_relationship, $this->join_type);
+					$inverse = (bool) $this->inverse_relationship;
+					$er_alias = $qb->joinRelationshipTable($table_alias, $from_column, $this->property, $inverse, $this->join_type);
 					if (!empty($this->relationship_guid)) {
-						$guid_column = $this->inverse_relationship ? 'guid_two' : 'guid_one';
+						$guid_column = $inverse ? 'guid_two' : 'guid_one';
 						$qb->andWhere($qb->compare("{$er_alias}.{$guid_column}", '=', $this->relationship_guid, ELGG_VALUE_GUID));
 					}
 				} else {
