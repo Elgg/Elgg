@@ -42,12 +42,12 @@ foreach ($user_guid as $u_guid) {
 		continue;
 	}
 	
-	$subject = elgg_echo('groups:welcome:subject', [$group->getDisplayName()], $user->language);
+	$subject = elgg_echo('groups:welcome:subject', [$group->getDisplayName()], $user->getLanguage());
 
 	$body = elgg_echo('groups:welcome:body', [
 		$group->getDisplayName(),
 		$group->getURL(),
-	], $user->language);
+	], $user->getLanguage());
 	
 	$params = [
 		'action' => 'add_membership',
