@@ -32,21 +32,21 @@ class AdminHeader {
 		
 		$admin = elgg_get_logged_in_user_entity();
 		
-		$online_users_count = elgg_count_entities([
+		$online_users_count = max(1, elgg_count_entities([
 			'type' => 'user',
 			'wheres' => [
 				function(QueryBuilder $qb, $main_alias) {
 					return $qb->compare("{$main_alias}.last_action", '>=', Values::normalizeTimestamp('-10 minutes'), ELGG_VALUE_TIMESTAMP);
 				}
 			],
-		]);
+		]));
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'online_users_count',
 			'icon' => 'user',
 			'text' => false,
 			'title' => elgg_echo('admin:statistics:label:numonline'),
-			'badge' => Values::shortFormatOutput(max(1, $online_users_count)),
+			'badge' => elgg_format_element('span', ['title' => $online_users_count], Values::shortFormatOutput($online_users_count)),
 			'deps' => ['admin/users/online'],
 			'href' => 'admin/users/online',
 			'priority' => 10,
