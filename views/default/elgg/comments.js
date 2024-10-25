@@ -17,6 +17,12 @@ define(['jquery', 'elgg'], function ($, elgg) {
 		var $anchor = $(this);
 		var comment_guid = $anchor.data().loadComment;
 		
+		var $placeholder = $('div[data-comments-placeholder=' + comment_guid + ']');
+		if (!$placeholder.is(':empty')) {
+			$placeholder.slideToggle('medium');
+			return;
+		}
+		
 		require(['elgg/Ajax', 'elgg/toggle'], function(Ajax) {
 			var ajax = new Ajax();
 				
@@ -25,12 +31,10 @@ define(['jquery', 'elgg'], function ($, elgg) {
 					guid: comment_guid
 				},
 				success: function(result) {
-					$('div[data-comments-placeholder=' + comment_guid + ']')
+					$placeholder
 						.html(result)
 						.slideToggle('medium')
 						.find('textarea, [contenteditable]').filter(':visible').first().focus();
-					
-					$anchor.toggleClass('elgg-toggle elgg-toggle-comment');
 				}
 			});
 		});
