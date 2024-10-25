@@ -1,3 +1,17 @@
+<a name="5.1.11"></a>
+### 5.1.11 (2024-10-25)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug fixes
+
+* **comments:** allow multiple replies on the same comment [0ff81db02](https://github.com/Elgg/Elgg//commit/0ff81db02851426016ecf3a7cdbbe8ffb0881e04) closes [#14690](https://github.com/Elgg/Elgg//commit/14690)
+* **i18n:** use correct user language [565605e62](https://github.com/Elgg/Elgg//commit/565605e62e95477134a219e99a7c55aedd70c5fb)
+* **file:** use correct original file name in upgrade [73aaef51e](https://github.com/Elgg/Elgg//commit/73aaef51e3e8c03bc56bc63df32f96dba5ea74a2)
+
+
 <a name="5.1.10"></a>
 ### 5.1.10 (2024-10-08)
 
