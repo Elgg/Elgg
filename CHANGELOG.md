@@ -1,3 +1,16 @@
+<a name="6.0.6"></a>
+### 6.0.6 (2024-10-25)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Jeroen Dalsem (1)
+
+#### Bug fixes
+
+* **db:** correctly check for inverse relationship sorting [25a9cb140](https://github.com/Elgg/Elgg/commit/25a9cb14049af0e510bb22f640688ce6a63bb613)
+
+
 <a name="6.0.5"></a>
 ### 6.0.5 (2024-10-09)
 
@@ -150,6 +163,20 @@
 * **db:** the enabled column for annotations has been removed [bdd17b413](https://github.com/Elgg/Elgg/commit/bdd17b413b6f925d24e60a21c3289bf92817f3bc)
 * **core:** the \ElggEntity->getTags() function has been removed [d3bbe25d0](https://github.com/Elgg/Elgg/commit/d3bbe25d0ff29a94cf920b67a8a804359124317b)
 * **icons:** icontime metadata is no longer available [7e139b935](https://github.com/Elgg/Elgg/commit/7e139b9352908407bf48edec343c96fbf317df35)
+
+
+<a name="5.1.11"></a>
+### 5.1.11 (2024-10-25)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug fixes
+
+* **comments:** allow multiple replies on the same comment [0ff81db02](https://github.com/Elgg/Elgg/commit/0ff81db02851426016ecf3a7cdbbe8ffb0881e04) closes [#14690](https://github.com/Elgg/Elgg/issues/14690)
+* **i18n:** use correct user language [565605e62](https://github.com/Elgg/Elgg/commit/565605e62e95477134a219e99a7c55aedd70c5fb)
+* **file:** use correct original file name in upgrade [73aaef51e](https://github.com/Elgg/Elgg/commit/73aaef51e3e8c03bc56bc63df32f96dba5ea74a2)
 
 
 ### 5.1.10 (2024-10-08)

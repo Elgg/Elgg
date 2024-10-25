@@ -6,19 +6,21 @@
  */
 
 return array(
-	'widgets:river_widget:name' => "Aktivite",
-	'widgets:river_widget:description' => "En son etkinliği aktivite",
-	'widgets:river_widget:type' => "Aktivite çeşidi",
-	'widgets:river_widget:friends' => '
-Arkadaşlar aktivitesi',
-	'widgets:river_widget:all' => 'Tüm site aktivitesi',
+	'widgets:river_widget:name' => "Etkinlik",
+	'widgets:river_widget:description' => "Son etkinlikleri göster",
+	'widgets:river_widget:type' => "Etkinlik türü",
+	'widgets:river_widget:friends' => 'Arkadaşların etkinlikleri',
+	'widgets:river_widget:all' => 'Tüm site etkinlikleri',
 
-	'widgets:group_activity:name' => 'Grup ativitesi',
+	'widgets:group_activity:name' => 'Grup etkinliği',
 	'widgets:group_activity:description' => 'Activite gruplarınızdan birinde görüntüleyin',
 	'widgets:group_activity:edit:select' => 'Bir grup seçin',
-	'widgets:group_activity:content:noactivity' => 'Bu grupta herhangi bir activite yok',
+	'widgets:group_activity:content:noactivity' => 'Bu grupta herhangi bir etkinlik yok',
 	'widgets:group_activity:content:noselect' => 'Bir grup seçmek için widget\'i düzenleyin',
 	
-	'collection:river' => "Aktivite",
-	'collection:river:group' => "Grup ativitesi",
+	'collection:river' => "Etkinlik",
+	'collection:river:group' => "Grup etkinliği",
+	'groups:tool:activity' => 'Grup etkinliğini etkinleştir',
+	
+	'activity:more' => "Daha fazla etkinlik",
 );
