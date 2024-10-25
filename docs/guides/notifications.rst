@@ -31,17 +31,17 @@ rating to the owner.
 .. code-block:: php
 
 	// Subject of the notification
-	$subject = elgg_echo('ratings:notification:subject', array(), $owner->language);
+	$subject = elgg_echo('ratings:notification:subject', array(), $owner->getLanguage());
 
 	// Summary of the notification
-	$summary = elgg_echo('ratings:notification:summary', array($user->getDisplayName()), $owner->language);
+	$summary = elgg_echo('ratings:notification:summary', array($user->getDisplayName()), $owner->getLanguage());
 
 	// Body of the notification message
 	$body = elgg_echo('ratings:notification:body', array(
 		$user->getDisplayName(),
 		$owner->getDisplayName(),
 		$rating->getValue() // A value between 1-5
-	), $owner->language);
+	), $owner->getLanguage());
 
 	$params = array(
 		'object' => $rating,

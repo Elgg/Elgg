@@ -35,7 +35,7 @@ function messageboard_add(\ElggUser $poster, \ElggUser $owner, string $message, 
 
 	// Send notification only if poster isn't the owner
 	if ($poster->guid != $owner->guid) {
-		$subject = elgg_echo('messageboard:email:subject', [], $owner->language);
+		$subject = elgg_echo('messageboard:email:subject', [], $owner->getLanguage());
 		$url = elgg_generate_url('collection:annotation:messageboard:owner', [
 			'username' => $owner->username,
 		]);
@@ -46,7 +46,7 @@ function messageboard_add(\ElggUser $poster, \ElggUser $owner, string $message, 
 			$url,
 			$poster->getDisplayName(),
 			$poster->getURL(),
-		], $owner->language);
+		], $owner->getLanguage());
 
 		$params = [
 			'action' => 'create',

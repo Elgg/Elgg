@@ -55,7 +55,7 @@ class MessagesPluginTest extends IntegrationTestCase {
 
 		$this->assertInstanceOf(Message::class, $notification);
 
-		$expected_subject = elgg_echo('messages:email:subject', [], $recipient->language);
+		$expected_subject = elgg_echo('messages:email:subject', [], $recipient->getLanguage());
 		$expected_body = elgg_echo('messages:email:body', [
 			$sender->getDisplayName(),
 			$body,
@@ -67,7 +67,7 @@ class MessagesPluginTest extends IntegrationTestCase {
 				'send_to' => $sender->guid,
 			]),
 		],
-			$recipient->language
+			$recipient->getLanguage()
 		);
 
 		$plain_text_part = null;

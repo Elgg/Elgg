@@ -73,13 +73,13 @@ class Settings {
 			// notify the user that their password has changed
 			$site = elgg_get_site_entity();
 			
-			$subject = elgg_echo('user:notification:password_change:subject', [], $user->language);
+			$subject = elgg_echo('user:notification:password_change:subject', [], $user->getLanguage());
 			$body = elgg_echo('user:notification:password_change:body', [
 				$user->getDisplayName(),
 				$site->getDisplayName(),
 				elgg_generate_url('account:password:reset'),
 				$site->getURL(),
-			], $user->language);
+			], $user->getLanguage());
 			
 			$params = [
 				'object' => $user,
