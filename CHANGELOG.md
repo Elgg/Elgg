@@ -1,3 +1,16 @@
+<a name="6.0.6"></a>
+### 6.0.6 (2024-10-25)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Jeroen Dalsem (1)
+
+#### Bug fixes
+
+* **db:** correctly check for inverse relationship sorting [25a9cb140](https://github.com/Elgg/Elgg/commit/25a9cb14049af0e510bb22f640688ce6a63bb613)
+
+
 <a name="6.0.5"></a>
 ### 6.0.5 (2024-10-09)
 
