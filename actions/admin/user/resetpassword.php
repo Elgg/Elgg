@@ -12,8 +12,8 @@
  */
 
 $guid = (int) get_input('guid');
-$user = get_user($guid);
 
+$user = get_user($guid);
 if (!$user || !$user->canEdit()) {
 	return elgg_error_response(elgg_echo('admin:user:resetpassword:no'));
 }
@@ -24,8 +24,8 @@ $user->setPassword($password);
 
 notify_user($user->guid,
 	elgg_get_site_entity()->guid,
-	elgg_echo('email:resetpassword:subject', [], $user->language),
-	elgg_echo('email:resetpassword:body', [$password], $user->language),
+	elgg_echo('email:resetpassword:subject', [], $user->getLanguage()),
+	elgg_echo('email:resetpassword:body', [$password], $user->getLanguage()),
 	[
 		'object' => $user,
 		'action' => 'resetpassword',
