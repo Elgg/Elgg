@@ -118,4 +118,11 @@ class CreateLikesEventHandler extends NotificationEventHandler {
 	protected function getNotificationURL(\ElggUser $recipient, string $method): string {
 		return (string) $this->getLikedEntity()?->getURL();
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function isConfigurableByUser(): bool {
+		return false;
+	}
 }
