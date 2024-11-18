@@ -419,7 +419,7 @@ class MetadataTable {
 	 *
 	 * @return int[]|int|null
 	 */
-	protected function getIDsByName(int $entity_guid, string $name) {
+	public function getIDsByName(int $entity_guid, string $name) {
 		$cached_metadata = $this->metadata_cache->load($entity_guid);
 		if ($cached_metadata !== null) {
 			$ids = [];
