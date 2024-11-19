@@ -17,22 +17,22 @@ class UnbanUserEventHandler extends NotificationEventHandler {
 	 * @return bool
 	 */
 	protected function recipientIsBannedUser(\ElggUser $recipient): bool {
-		return $this->event->getObject()->guid === $recipient->guid;
+		return $this->getEventEntity()?->guid === $recipient->guid;
 	}
 		
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
 		if (!$this->recipientIsBannedUser($recipient)) {
 			return parent::getNotificationSubject($recipient, $method);
 		}
 		
-		return elgg_echo('user:notification:unban:subject', [elgg_get_site_entity()->getDisplayName()], $recipient->getLanguage());
+		return elgg_echo('user:notification:unban:subject', [elgg_get_site_entity()->getDisplayName()]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
 		if (!$this->recipientIsBannedUser($recipient)) {
@@ -44,11 +44,11 @@ class UnbanUserEventHandler extends NotificationEventHandler {
 		return elgg_echo('user:notification:unban:body', [
 			$site->getDisplayName(),
 			$site->getURL(),
-		], $recipient->getLanguage());
+		]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function addMuteLink(): bool {
 		return false;
@@ -57,20 +57,20 @@ class UnbanUserEventHandler extends NotificationEventHandler {
 	/**
 	 * Add the user to the subscribers when (un)banning the account
 	 *
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function getSubscriptions(): array {
 		$result = parent::getSubscriptions();
 		
 		if (_elgg_services()->config->security_notify_user_ban) {
-			$result[$this->event->getObject()->guid] = ['email'];
+			$result[$this->getEventEntity()?->guid] = ['email'];
 		}
 		
 		return $result;
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public static function isConfigurableByUser(): bool {
 		return false;

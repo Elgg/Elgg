@@ -82,9 +82,9 @@ class CreateLikesEventHandler extends NotificationEventHandler {
 	 */
 	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
 		return elgg_echo('likes:notifications:subject', [
-			(string) $this->event->getActor()?->getDisplayName(),
+			$this->getEventActor()?->getDisplayName(),
 			$this->getEntityTitle(80),
-		], $recipient->getLanguage());
+		]);
 	}
 
 	/**
@@ -92,24 +92,22 @@ class CreateLikesEventHandler extends NotificationEventHandler {
 	 */
 	protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
 		return elgg_echo('likes:notifications:subject', [
-			(string) $this->event->getActor()?->getDisplayName(),
+			$this->getEventActor()?->getDisplayName(),
 			$this->getEntityTitle(),
-		], $recipient->getLanguage());
+		]);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
-		$actor = $this->event->getActor() ?: null;
-		
 		return elgg_echo('likes:notifications:body', [
-			(string) $actor?->getDisplayName(),
+			$this->getEventActor()?->getDisplayName(),
 			$this->getEntityTitle(),
 			elgg_get_site_entity()->getDisplayName(),
-			(string) $this->getLikedEntity()?->getURL(),
-			(string) $actor?->getURL(),
-		], $recipient->getLanguage());
+			$this->getLikedEntity()?->getURL(),
+			$this->getEventActor()?->getURL(),
+		]);
 	}
 	
 	/**

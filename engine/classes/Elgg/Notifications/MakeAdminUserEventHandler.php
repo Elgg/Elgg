@@ -19,26 +19,25 @@ class MakeAdminUserEventHandler extends NotificationEventHandler {
 	 * @return bool
 	 */
 	protected function recipientIsChangedUser(\ElggUser $recipient): bool {
-		return $this->event->getObject()->guid === $recipient->guid;
+		return $this->getEventEntity()?->guid === $recipient->guid;
 	}
 		
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
 		if ($this->recipientIsChangedUser($recipient)) {
-			return elgg_echo('admin:notification:make_admin:user:subject', [elgg_get_site_entity()->getDisplayName()], $recipient->getLanguage());
-		} else {
-			return elgg_echo('admin:notification:make_admin:admin:subject', [elgg_get_site_entity()->getDisplayName()], $recipient->getLanguage());
+			return elgg_echo('admin:notification:make_admin:user:subject', [elgg_get_site_entity()->getDisplayName()]);
 		}
+		
+		return elgg_echo('admin:notification:make_admin:admin:subject', [elgg_get_site_entity()->getDisplayName()]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
-		
-		$actor = $this->event->getActor();
+		$actor = $this->getEventActor();
 		if (!$actor instanceof \ElggUser) {
 			return parent::getNotificationBody($recipient, $method);
 		}
@@ -50,21 +49,21 @@ class MakeAdminUserEventHandler extends NotificationEventHandler {
 				$actor->getDisplayName(),
 				$site->getDisplayName(),
 				$site->getURL(),
-			], $recipient->getLanguage());
-		} else {
-			$entity = $this->event->getObject();
-			
-			return elgg_echo('admin:notification:make_admin:admin:body', [
-				$actor->getDisplayName(),
-				$entity->getDisplayName(),
-				$site->getDisplayName(),
-				$entity->getURL(),
-			], $recipient->getLanguage());
+			]);
 		}
+		
+		$entity = $this->getEventEntity();
+		
+		return elgg_echo('admin:notification:make_admin:admin:body', [
+			$actor->getDisplayName(),
+			$entity?->getDisplayName(),
+			$site->getDisplayName(),
+			$entity?->getURL(),
+		]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationURL(\ElggUser $recipient, string $method): string {
 		if ($this->recipientIsChangedUser($recipient)) {
@@ -75,7 +74,7 @@ class MakeAdminUserEventHandler extends NotificationEventHandler {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function addMuteLink(): bool {
 		return false;
@@ -84,27 +83,25 @@ class MakeAdminUserEventHandler extends NotificationEventHandler {
 	/**
 	 * Add the user to the subscribers when changing admin rights
 	 *
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function getSubscriptions(): array {
 		$result = parent::getSubscriptions();
 		
-		/* @var $user \ElggUser */
-		$user = $this->event->getObject();
+		$user = $this->getEventEntity();
 		
-		if (_elgg_services()->config->security_notify_user_admin) {
+		if ($user instanceof \ElggUser && _elgg_services()->config->security_notify_user_admin) {
 			// add the user to the subscribers
 			$result[$user->guid] = ['email'];
 		}
 		
 		if (_elgg_services()->config->security_notify_admins) {
 			// add the current site admins to the subscribers
-
 			$admin_batch = elgg_get_admins([
 				'limit' => false,
 				'wheres' => [
 					function (QueryBuilder $qb, $main_alias) use ($user) {
-						return $qb->compare("{$main_alias}.guid", '!=', $user->guid, ELGG_VALUE_GUID);
+						return $qb->compare("{$main_alias}.guid", '!=', $user?->guid, ELGG_VALUE_GUID);
 					},
 				],
 				'batch' => true,
@@ -119,7 +116,7 @@ class MakeAdminUserEventHandler extends NotificationEventHandler {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public static function isConfigurableByUser(): bool {
 		return false;

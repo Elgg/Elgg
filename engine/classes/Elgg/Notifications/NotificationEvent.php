@@ -6,6 +6,7 @@ namespace Elgg\Notifications;
  * Notification event interface
  *
  * @internal
+ * @todo typehint function return values
  */
 interface NotificationEvent {
 
@@ -13,6 +14,7 @@ interface NotificationEvent {
 	 * Get the actor of the event
 	 *
 	 * @return \ElggEntity|false
+	 * @todo change return type to nullable instead of false
 	 */
 	public function getActor();
 
@@ -27,6 +29,7 @@ interface NotificationEvent {
 	 * Get the object of the event
 	 *
 	 * @return \ElggData|false
+	 * @todo change return type to nullable instead of false
 	 */
 	public function getObject();
 
