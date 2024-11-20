@@ -10,7 +10,7 @@ use Elgg\Notifications\NotificationEventHandler;
 class CreateTheWireEventHandler extends NotificationEventHandler {
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function getSubscriptions(): array {
 		$subscriptions = parent::getSubscriptions();
@@ -27,7 +27,7 @@ class CreateTheWireEventHandler extends NotificationEventHandler {
 	 * @return array
 	 */
 	protected function addOriginalPosterToSubscriptions(array $subscriptions): array {
-		$entity = $this->event->getObject();
+		$entity = $this->getEventEntity();
 		if (!$entity instanceof \ElggWire) {
 			return $subscriptions;
 		}
@@ -66,52 +66,54 @@ class CreateTheWireEventHandler extends NotificationEventHandler {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
-		return elgg_echo('thewire:notify:subject', [$this->event->getActor()->getDisplayName()], $recipient->getLanguage());
+		return elgg_echo('thewire:notify:subject', [$this->getEventActor()?->getDisplayName()]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
-		return elgg_echo('thewire:notify:summary', [elgg_get_excerpt((string) $this->event->getObject()->description)], $recipient->getLanguage());
+		return elgg_echo('thewire:notify:summary', [elgg_get_excerpt((string) $this->getEventEntity()?->description)]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
-		/* @var $entity \ElggWire */
-		$entity = $this->event->getObject();
+		$entity = $this->getEventEntity();
+		if (!$entity instanceof \ElggWire) {
+			return '';
+		}
+		
 		$owner = $entity->getOwnerEntity();
-		$language = $recipient->getLanguage();
 		
 		$body = '';
 		if ($entity->reply) {
 			$parent = $entity->getParent();
-			if ($parent) {
+			if ($parent instanceof \ElggWire) {
 				$parent_owner = $parent->getOwnerEntity();
-				$body = elgg_echo('thewire:notify:reply', [$owner->getDisplayName(), $parent_owner->getDisplayName()], $language);
+				$body = elgg_echo('thewire:notify:reply', [$owner?->getDisplayName(), $parent_owner?->getDisplayName()]);
 			}
 		}
 		
 		if (empty($body)) {
-			$body = elgg_echo('thewire:notify:post', [$owner->getDisplayName()], $language);
+			$body = elgg_echo('thewire:notify:post', [$owner?->getDisplayName()]);
 		}
 		
 		$body .= PHP_EOL . PHP_EOL;
 		$body .= $entity->description;
 		$body .= PHP_EOL . PHP_EOL;
 		
-		$body .= elgg_echo('thewire:notify:footer', [$entity->getURL()], $language);
+		$body .= elgg_echo('thewire:notify:footer', [$entity->getURL()]);
 		
 		return $body;
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected static function isConfigurableForGroup(\ElggGroup $group): bool {
 		return false;

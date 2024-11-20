@@ -10,31 +10,34 @@ use Elgg\Notifications\NotificationEventHandler;
 class PublishBlogEventHandler extends NotificationEventHandler {
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
-		return elgg_echo('blog:notify:subject', [$this->event->getObject()->getDisplayName()], $recipient->getLanguage());
+		return elgg_echo('blog:notify:subject', [$this->getEventEntity()?->getDisplayName()]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
-		return elgg_echo('blog:notify:summary', [$this->event->getObject()->getDisplayName()], $recipient->getLanguage());
+		return elgg_echo('blog:notify:summary', [$this->getEventEntity()?->getDisplayName()]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
-		$entity = $this->event->getObject();
+		$entity = $this->getEventEntity();
+		if (!$entity instanceof \ElggBlog) {
+			$entity = null;
+		}
 		
 		return elgg_echo('blog:notify:body', [
-			$this->event->getActor()->getDisplayName(),
-			$entity->getDisplayName(),
-			$entity->getExcerpt(),
-			$entity->getURL(),
-		], $recipient->getLanguage());
+			$this->getEventActor()?->getDisplayName(),
+			$entity?->getDisplayName(),
+			$entity?->getExcerpt(),
+			$entity?->getURL(),
+		]);
 	}
 	
 	/**

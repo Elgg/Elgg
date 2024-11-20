@@ -17,39 +17,39 @@ class CreateCommentEventHandler extends NotificationEventHandler {
 	 * @return bool
 	 */
 	protected function recipientIsCommentContainerOwner(\ElggUser $recipient): bool {
-		return $this->event->getObject()->getContainerEntity()->owner_guid === $recipient->guid;
+		return $this->getEventEntity()?->getContainerEntity()?->owner_guid === $recipient->guid;
 	}
 		
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
-		return elgg_echo('generic_comment:notification:subject', [$this->event->getObject()->getContainerEntity()->getDisplayName()], $recipient->getLanguage());
+		return elgg_echo('generic_comment:notification:subject', [$this->getEventEntity()?->getContainerEntity()?->getDisplayName()]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
 		if ($this->recipientIsCommentContainerOwner($recipient)) {
-			return elgg_echo('generic_comment:notification:owner:summary', [$this->event->getObject()->getContainerEntity()->getDisplayName()], $recipient->getLanguage());
+			return elgg_echo('generic_comment:notification:owner:summary', [$this->getEventEntity()?->getContainerEntity()?->getDisplayName()]);
 		} else {
-			return elgg_echo('generic_comment:notification:user:summary', [$this->event->getObject()->getContainerEntity()->getDisplayName()], $recipient->getLanguage());
+			return elgg_echo('generic_comment:notification:user:summary', [$this->getEventEntity()?->getContainerEntity()?->getDisplayName()]);
 		}
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
-		$entity = $this->event->getObject();
+		$entity = $this->getEventEntity();
 		
 		$key = $this->recipientIsCommentContainerOwner($recipient) ? 'generic_comment:notification:owner:body' : 'generic_comment:notification:user:body';
 		
 		return elgg_echo($key, [
-			elgg_get_excerpt((string) $entity->description, 1000),
-			$entity->getURL(),
-		], $recipient->getLanguage());
+			elgg_get_excerpt((string) $entity?->description, 1000),
+			$entity?->getURL(),
+		]);
 	}
 	
 	/**
@@ -62,7 +62,7 @@ class CreateCommentEventHandler extends NotificationEventHandler {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function excludeOwnerSubscribers(): bool {
 		return true;
