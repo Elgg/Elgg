@@ -59,8 +59,6 @@ return array(
 	'groups:joinrequest' => 'Prośba o członkostwo',
 	'groups:join' => 'Dołącz do grupy',
 	'groups:leave' => 'Odejdź z grupy',
-	'groups:invite' => 'Zaproś przyjaciół',
-	'groups:invite:title' => 'Zaproś znajomych do tej grupy',
 
 	'groups:nofriendsatall' => 'Nie masz znajomych, których mógłbyś zaprosić!',
 	'groups:group' => "Grupa",

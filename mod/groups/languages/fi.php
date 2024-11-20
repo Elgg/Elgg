@@ -59,8 +59,6 @@ return array(
 	'groups:joinrequest' => 'Ano jäsenyyttä',
 	'groups:join' => 'Liity ryhmään',
 	'groups:leave' => 'Eroa ryhmästä',
-	'groups:invite' => 'Kutsu ystäviä',
-	'groups:invite:title' => 'Kutsu ystäviä ryhmään',
 
 	'groups:nofriendsatall' => 'Sinulla ei vielä ole ystäviä, joita kutsua!',
 	'groups:group' => "Ryhmä",
