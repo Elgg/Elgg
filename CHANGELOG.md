@@ -165,6 +165,14 @@
 * **icons:** icontime metadata is no longer available [7e139b935](https://github.com/Elgg/Elgg/commit/7e139b9352908407bf48edec343c96fbf317df35)
 
 
+<a name="5.1.12"></a>
+### 5.1.12 (2024-11-20)
+
+#### Contributors
+
+* Jerôme Bakker (1)
+
+
 <a name="5.1.11"></a>
 ### 5.1.11 (2024-10-25)
 
