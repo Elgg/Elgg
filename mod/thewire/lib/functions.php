@@ -27,7 +27,7 @@ function thewire_save_post(string $text, int $userid, int $access_id, int $paren
 	$limit = elgg_get_plugin_setting('limit', 'thewire');
 	if ($limit > 0) {
 		$text_for_size = elgg_strip_tags($text);
-		if (strlen($text_for_size) > $limit) {
+		if (elgg_strlen($text_for_size) > $limit) {
 			return false;
 		}
 	}

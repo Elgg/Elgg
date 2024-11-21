@@ -21,8 +21,6 @@ class MetadataTable {
 
 	use TimeUsing;
 	
-	protected const MYSQL_TEXT_BYTE_LIMIT = 65535;
-	
 	public const TABLE_NAME = 'metadata';
 	
 	public const DEFAULT_JOIN_ALIAS = 'n_table';
@@ -211,10 +209,6 @@ class MetadataTable {
 			}
 		}
 
-		if (strlen($metadata->value) > self::MYSQL_TEXT_BYTE_LIMIT) {
-			elgg_log("Metadata '{$metadata->name}' is above the MySQL TEXT size limit and may be truncated.", \Psr\Log\LogLevel::WARNING);
-		}
-
 		if (!$allow_multiple) {
 			$id = $this->getIDsByName($metadata->entity_guid, $metadata->name);
 
@@ -286,10 +280,6 @@ class MetadataTable {
 		
 		if (!$this->events->triggerBefore('update', 'metadata', $metadata)) {
 			return false;
-		}
-
-		if (strlen($metadata->value) > self::MYSQL_TEXT_BYTE_LIMIT) {
-			elgg_log("Metadata '{$metadata->name}' is above the MySQL TEXT size limit and may be truncated.", \Psr\Log\LogLevel::WARNING);
 		}
 
 		$qb = Update::table(self::TABLE_NAME);
@@ -429,7 +419,7 @@ class MetadataTable {
 	 *
 	 * @return int[]|int|null
 	 */
-	protected function getIDsByName(int $entity_guid, string $name) {
+	public function getIDsByName(int $entity_guid, string $name) {
 		$cached_metadata = $this->metadata_cache->load($entity_guid);
 		if ($cached_metadata !== null) {
 			$ids = [];

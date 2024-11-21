@@ -1,3 +1,92 @@
+<a name="6.1.0"></a>
+## 6.1.0 (2024-11-20)
+
+#### Contributors
+
+* Jeroen Dalsem (50)
+* Jerôme Bakker (21)
+* Nikolai Shcherbin (1)
+
+#### Features
+
+* **notifications:** notification handler sets language per recipient [9f6ac20ac](https://github.com/Elgg/Elgg/commit/9f6ac20aca4b817bb344f787ba4811dc98f502cb)
+* **likes:** likes notification use event notification handler [ee5fe8acc](https://github.com/Elgg/Elgg/commit/ee5fe8accfdd206e9256cd532c9334e370445446) closes [#14734](https://github.com/Elgg/Elgg/issues/14734)
+* **forms:**
+  * double submit prevention support multiple submit buttons [7d3b282b8](https://github.com/Elgg/Elgg/commit/7d3b282b8ef8fa473903c722066fb27f73bfe7fd)
+  * added a helper input view for switch field types [12c4760e4](https://github.com/Elgg/Elgg/commit/12c4760e4b8c0f7b74df006fb812cb2ff3564718)
+* **cache:** merge default redis options (#14720) [1a84edbed](https://github.com/Elgg/Elgg/commit/1a84edbed409a6311a31401982e3e45233637d85)
+* **relationships:** trigger :before and :after events for relations [a85bae8a6](https://github.com/Elgg/Elgg/commit/a85bae8a699364a4cc4ee5999195ac0209ae6e5a) closes [#14318](https://github.com/Elgg/Elgg/issues/14318)
+* **admin:** admin validation notification setting moved [0b6b3fd14](https://github.com/Elgg/Elgg/commit/0b6b3fd14e648e28231d8ac24d591ec6e87441b0)
+* **user:** improved user settings form [7ad954726](https://github.com/Elgg/Elgg/commit/7ad954726d34ab817d55eb4e95706e797fc0f429)
+* **file:** form fields through the fields service [0d9f70e00](https://github.com/Elgg/Elgg/commit/0d9f70e008343df584e90cfc456d2855a73bb678)
+* **discussions:** form fields through the fields service [b04f761d0](https://github.com/Elgg/Elgg/commit/b04f761d0366518426f90122e3cabc13e342fd39)
+* **bookmarks:** form fields through the fields service [997bdfce1](https://github.com/Elgg/Elgg/commit/997bdfce118dfe9145ab6cbf05af52a8fb8adaaa)
+* **blog:** form fields through the fields service [0d053f0df](https://github.com/Elgg/Elgg/commit/0d053f0df4089110028fe42f8b2819f416d9886e)
+* **groups:**
+  * allow user to revoke their group membership request [375b53e4f](https://github.com/Elgg/Elgg/commit/375b53e4fad31c7bbe353017a5d30dcf9b1dc3a8)
+  * added notice to group profile if you have been invited [b7353cb85](https://github.com/Elgg/Elgg/commit/b7353cb853a5e8e116936219a62e7f2b761a1113) closes [#14630](https://github.com/Elgg/Elgg/issues/14630)
+  * popular groups listing is replaced with a sort menu option [f3d6cae68](https://github.com/Elgg/Elgg/commit/f3d6cae68152b269b89c4dc8dd5f15b2ff2b5821)
+  * added badges with counts to invitations filter menu [0dc3aa9c5](https://github.com/Elgg/Elgg/commit/0dc3aa9c5614f71a720120083f535a16d5b8c374)
+  * you can now invite people without the need for the friends plugin [92b56944a](https://github.com/Elgg/Elgg/commit/92b56944ac04715ee8d0fbcd9c1240837c49338b)
+* **db:** added elgg_count_relationships helper function [b08115702](https://github.com/Elgg/Elgg/commit/b08115702b70692d958851426ab4b7d6dd09069c)
+* **developers:** added restore actions to the entity explorer menu [cfcd8ceca](https://github.com/Elgg/Elgg/commit/cfcd8ceca2e4ae16cb7de0a94b803779ccfde931) closes [#14632](https://github.com/Elgg/Elgg/issues/14632)
+
+
+#### Performance
+
+* **comments:** river comments are no longer full views [7300cf9be](https://github.com/Elgg/Elgg/commit/7300cf9bed8403d96a3884df1c56fbb4d95a5fd9)
+
+
+#### Bug fixes
+
+* **database:** prevent unwanted duplicate metadata records [7e7c9b379](https://github.com/Elgg/Elgg/commit/7e7c9b379504c587b180bd2b184ebd649fb92f71) closes [#14740](https://github.com/Elgg/Elgg/issues/14740)
+* **plugins:** elgg_get_plugin_setting returns default if plugin missing [20d305fc7](https://github.com/Elgg/Elgg/commit/20d305fc7489959b53ac59b2e9c984f38c8e562d)
+* **groups:** show direct join menu item if there is an invitation [d5157dd8a](https://github.com/Elgg/Elgg/commit/d5157dd8acc458b59851dffa93b56b96dacebfba)
+* **core:** prevent notices when passing non array to sort_by [684ce4508](https://github.com/Elgg/Elgg/commit/684ce4508434f5a628e0a8ca3c693ee4c06e9bde)
+
+
+#### Deprecations
+
+* **plugins:** the function elgg_plugin_exists is now deprecated [3f0ab95ef](https://github.com/Elgg/Elgg/commit/3f0ab95efdabebc46ffba6c9f52ec779325df72a)
+* **cache:** various cache related functions have been deprecated [f8644a95e](https://github.com/Elgg/Elgg/commit/f8644a95eefbbb3c0a55615f8e4a8b6d3c4a2099)
+* **core:** the use of non PSR loglevels has been deprecated [f21b153ef](https://github.com/Elgg/Elgg/commit/f21b153efa9a9176ed5817dbe150332562ce9323) closes [#14606](https://github.com/Elgg/Elgg/issues/14606)
+
+
+#### Removed
+
+* **css:** no longer have alternative elgg-form-alt styling [e1b499af9](https://github.com/Elgg/Elgg/commit/e1b499af90d7ea1e96809d0492e59c8e2b4b75d9)
+* **forms:** categories field support [50cd159c3](https://github.com/Elgg/Elgg/commit/50cd159c3c5601f5e92a399a5984fec57a248294)
+
+
+<a name="6.0.7"></a>
+### 6.0.7 (2024-11-20)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+
+
+<a name="6.0.6"></a>
+### 6.0.6 (2024-10-25)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Jeroen Dalsem (1)
+
+#### Bug fixes
+
+* **db:** correctly check for inverse relationship sorting [25a9cb140](https://github.com/Elgg/Elgg/commit/25a9cb14049af0e510bb22f640688ce6a63bb613)
+
+
+<a name="6.0.5"></a>
+### 6.0.5 (2024-10-09)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+
+
 <a name="6.0.4"></a>
 ### 6.0.4 (2024-09-06)
 
@@ -142,6 +231,40 @@
 * **db:** the enabled column for annotations has been removed [bdd17b413](https://github.com/Elgg/Elgg/commit/bdd17b413b6f925d24e60a21c3289bf92817f3bc)
 * **core:** the \ElggEntity->getTags() function has been removed [d3bbe25d0](https://github.com/Elgg/Elgg/commit/d3bbe25d0ff29a94cf920b67a8a804359124317b)
 * **icons:** icontime metadata is no longer available [7e139b935](https://github.com/Elgg/Elgg/commit/7e139b9352908407bf48edec343c96fbf317df35)
+
+
+<a name="5.1.12"></a>
+### 5.1.12 (2024-11-20)
+
+#### Contributors
+
+* Jerôme Bakker (1)
+
+
+<a name="5.1.11"></a>
+### 5.1.11 (2024-10-25)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug fixes
+
+* **comments:** allow multiple replies on the same comment [0ff81db02](https://github.com/Elgg/Elgg/commit/0ff81db02851426016ecf3a7cdbbe8ffb0881e04) closes [#14690](https://github.com/Elgg/Elgg/issues/14690)
+* **i18n:** use correct user language [565605e62](https://github.com/Elgg/Elgg/commit/565605e62e95477134a219e99a7c55aedd70c5fb)
+* **file:** use correct original file name in upgrade [73aaef51e](https://github.com/Elgg/Elgg/commit/73aaef51e3e8c03bc56bc63df32f96dba5ea74a2)
+
+
+### 5.1.10 (2024-10-08)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+
+#### Bug fixes
+
+* **thewire:** correctly handle string length for multi-byte characters [77baddcf3](https://github.com/Elgg/Elgg/commit/77baddcf37123ad20950b1ad2b2d01b79e52ec6f)
+* **i18n:** handle invalid locale date format [9a93d5bdc](https://github.com/Elgg/Elgg/commit/9a93d5bdcf6b34e43147362d3600bc8deedd6eb0) closes [#14712](https://github.com/Elgg/Elgg/issues/14712)
 
 
 <a name="5.1.9"></a>

@@ -1111,8 +1111,8 @@ function _elgg_split_vars(array $vars = [], array $prefixes = null): array {
  */
 function elgg_view_field(array $params = []): string {
 
-	if (!empty($params['#html'])) {
-		return $params['#html'];
+	if (isset($params['#html'])) {
+		return (string) $params['#html'];
 	}
 	
 	if (empty($params['#type'])) {

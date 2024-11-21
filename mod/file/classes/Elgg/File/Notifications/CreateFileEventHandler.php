@@ -10,35 +10,35 @@ use Elgg\Notifications\NotificationEventHandler;
 class CreateFileEventHandler extends NotificationEventHandler {
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
-		return elgg_echo('file:notify:subject', [$this->event->getObject()->getDisplayName()], $recipient->getLanguage());
+		return elgg_echo('file:notify:subject', [$this->getEventEntity()?->getDisplayName()]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
-		return elgg_echo('file:notify:summary', [$this->event->getObject()->getDisplayName()], $recipient->getLanguage());
+		return elgg_echo('file:notify:summary', [$this->getEventEntity()?->getDisplayName()]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
-		$entity = $this->event->getObject();
+		$entity = $this->getEventEntity();
 		
 		return elgg_echo('file:notify:body', [
-			$this->event->getActor()->getDisplayName(),
-			$entity->getDisplayName(),
-			$entity->description,
-			$entity->getURL(),
-		], $recipient->getLanguage());
+			$this->getEventActor()?->getDisplayName(),
+			$entity?->getDisplayName(),
+			$entity?->description,
+			$entity?->getURL(),
+		]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected static function isConfigurableForGroup(\ElggGroup $group): bool {
 		return $group->isToolEnabled('file');

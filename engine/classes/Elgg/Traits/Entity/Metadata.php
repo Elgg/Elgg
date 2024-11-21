@@ -76,22 +76,24 @@ trait Metadata {
 	 * @return bool
 	 */
 	public function setMetadata(string $name, mixed $value, string $value_type = '', bool $multiple = false): bool {
-		if ($value === null || $value === '') {
+		if ($value === null || $value === '' || $value === []) {
 			return $this->deleteMetadata($name);
 		}
 		
 		// normalize value to an array that we will loop over
 		// remove indexes if value already an array.
 		if (is_array($value)) {
-			$value = array_values($value);
+			$value = array_values(array_filter($value, function($var) {
+				// strip null and '' values from array
+				return !is_null($var) && $var !== '';
+			}));
 		} else {
 			$value = [$value];
 		}
 		
-		// strip null values from array
-		$value = array_filter($value, function($var) {
-			return !is_null($var);
-		});
+		if (count($value) === 0) {
+			return $this->deleteMetadata($name);
+		}
 		
 		if (empty($this->guid)) {
 			// unsaved entity. store in temp array
@@ -99,30 +101,33 @@ trait Metadata {
 		}
 		
 		// saved entity. persist md to db.
+		// disable metadatacache to always check the database to prevent racing conditions
+		$md_cache = _elgg_services()->metadataCache;
+		$md_cache_enabled = $md_cache->isEnabled();
+		$md_cache->disable();
+		$restore_md_cache = function() use ($md_cache, $md_cache_enabled) {
+			if ($md_cache_enabled) {
+				$md_cache->enable();
+			}
+		};
+		
 		if (!$multiple) {
-			$current_metadata = $this->getMetadata($name);
+			// using getIDsByName to prevent populating the metadata cache
+			$existing_ids = _elgg_services()->metadataTable->getIDsByName($this->guid, $name);
 			
-			if ((is_array($current_metadata) || count($value) > 1 || $value === []) && isset($current_metadata)) {
+			if ((is_array($existing_ids) || count($value) > 1) && isset($existing_ids)) {
 				// remove current metadata if needed
-				// need to remove access restrictions right now to delete
-				// because this is the expected behavior
-				$delete_result = elgg_call(ELGG_IGNORE_ACCESS, function() use ($name) {
-					return elgg_delete_metadata([
-						'guid' => $this->guid,
-						'metadata_name' => $name,
-						'limit' => false,
-					]);
-				});
-				
-				if ($delete_result === false) {
+				if (!$this->deleteMetadata($name)) {
+					$restore_md_cache();
+					
 					return false;
 				}
 			}
-			
-			if (count($value) > 1) {
-				// new value is a multiple valued metadata
-				$multiple = true;
-			}
+		}
+		
+		if (count($value) > 1) {
+			// new value is a multiple valued metadata
+			$multiple = true;
 		}
 		
 		// create new metadata
@@ -136,11 +141,14 @@ trait Metadata {
 				$metadata->value_type = $value_type;
 			}
 			
-			$md_id = _elgg_services()->metadataTable->create($metadata, $multiple);
-			if ($md_id === false) {
+			if (_elgg_services()->metadataTable->create($metadata, $multiple) === false) {
+				$restore_md_cache();
+				
 				return false;
 			}
 		}
+		
+		$restore_md_cache();
 		
 		return true;
 	}

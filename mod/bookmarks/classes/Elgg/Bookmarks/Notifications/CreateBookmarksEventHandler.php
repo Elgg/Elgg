@@ -10,36 +10,36 @@ use Elgg\Notifications\NotificationEventHandler;
 class CreateBookmarksEventHandler extends NotificationEventHandler {
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
-		return elgg_echo('bookmarks:notify:subject', [$this->event->getObject()->getDisplayName()], $recipient->getLanguage());
+		return elgg_echo('bookmarks:notify:subject', [$this->getEventEntity()?->getDisplayName()]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
-		return elgg_echo('bookmarks:notify:summary', [$this->event->getObject()->getDisplayName()], $recipient->getLanguage());
+		return elgg_echo('bookmarks:notify:summary', [$this->getEventEntity()?->getDisplayName()]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
-		$entity = $this->event->getObject();
+		$entity = $this->getEventEntity();
 		
 		return elgg_echo('bookmarks:notify:body', [
-			$this->event->getActor()->getDisplayName(),
-			$entity->getDisplayName(),
-			$entity->address,
-			$entity->description,
-			$entity->getURL(),
-		], $recipient->getLanguage());
+			$this->getEventActor()?->getDisplayName(),
+			$entity?->getDisplayName(),
+			$entity?->address,
+			$entity?->description,
+			$entity?->getURL(),
+		]);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected static function isConfigurableForGroup(\ElggGroup $group): bool {
 		return $group->isToolEnabled('bookmarks');
