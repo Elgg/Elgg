@@ -125,4 +125,14 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 		
 		$this->assertNull(elgg_get_plugin_from_id('test_plugin_y'));
 	}
+	
+	public function testBootCacheFlushedOnSetPluginSetting() {
+		_elgg_services()->bootCache->save('test', 'test');
+		
+		$this->assertEquals('test', _elgg_services()->bootCache->load('test'));
+		
+		ElggPlugin::fromId('test_plugin')->setSetting('foo', 'bar');
+		
+		$this->assertNull(_elgg_services()->bootCache->load('test'));
+	}
 }
