@@ -884,7 +884,6 @@ trait Seeding {
 	 *
 	 * @param string $msg   Message to log
 	 * @param string $level Message level
-	 *                      Note that 'ERROR' will terminate further code execution
 	 *
 	 * @return void
 	 */
