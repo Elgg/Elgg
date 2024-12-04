@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-25 09:44+0200\n"
+"POT-Creation-Date: 2024-11-20 13:21+0100\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -51,6 +51,7 @@ msgstr "Ci-dessous quelques questions fréquemment posées à propos de Elgg."
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:6
 #: ../../appendix/upgrade-notes/5.0-to-5.1.rst:6
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:6
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:6
 msgid "Contents"
 msgstr "Contenu"
 
@@ -5141,6 +5142,7 @@ msgstr "De 2.0 à 2.1"
 #: ../../appendix/upgrade-notes/4.1-to-4.2.rst:86
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:24
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:439
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:18
 msgid "Deprecated APIs"
 msgstr "APIs dépréciées"
 
@@ -18347,6 +18349,7 @@ msgid "``\\Elgg\\Exceptions\\InvalidParameterException``"
 msgstr "``\\Elgg\\Exceptions\\InvalidParameterException``"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:492
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:9
 msgid "Constants"
 msgstr "Constantes"
 
@@ -18732,3 +18735,73 @@ msgstr "Valeurs de configuration retirées"
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:164
 msgid "``system_cache_loaded``"
 msgstr "``system_cache_loaded``"
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:2
+msgid "From 6.0 to 6.1"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:11
+msgid ""
+"The constant ``ELGG_CACHE_BLACK_HOLE`` is deprecated. Use "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_BLACK_HOLE``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:12
+msgid ""
+"The constant ``ELGG_CACHE_RUNTIME`` is deprecated. Use "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_RUNTIME``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:13
+msgid ""
+"The constant ``ELGG_CACHE_FILESYSTEM`` is deprecated. Use "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_FILESYSTEM``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:14
+msgid ""
+"The constant ``ELGG_CACHE_PERSISTENT`` is deprecated. Use "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_PERSISTENT``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:15
+msgid ""
+"The constant ``ELGG_CACHE_LOCALFILESYSTEM`` is deprecated. Use "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_LOCALFILESYSTEM``."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:20
+msgid "``elgg_disable_simplecache``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:21
+msgid "``elgg_disable_system_cache``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:22
+msgid "``elgg_enable_simplecache``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:23
+msgid "``elgg_enable_system_cache``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:24
+msgid "``elgg_get_system_cache``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:25
+msgid "``elgg_is_simplecache_enabled``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:26
+msgid "``elgg_is_system_cache_enabled``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:27
+msgid "``elgg_plugin_exists`` use ``elgg_get_plugin_from_id()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:28
+msgid "``elgg_reset_system_cache``"
+msgstr ""
