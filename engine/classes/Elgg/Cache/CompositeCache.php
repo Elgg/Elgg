@@ -105,7 +105,7 @@ class CompositeCache extends BaseCache {
 			return $item->get();
 		} catch (PhpfastcacheRootException $e) {
 			// something wrong with the cache
-			elgg_log($e->getMessage(), 'ERROR');
+			elgg_log($e->getMessage(), \Psr\Log\LogLevel::ERROR);
 			return null;
 		}
 	}

@@ -169,7 +169,7 @@ class MetadataTable {
 		$deleted = $this->db->deleteData($qb);
 
 		if ($deleted) {
-			$this->metadata_cache->delete($metadata->entity_guid);
+			$metadata->getEntity()?->invalidateCache();
 		}
 
 		return $deleted !== false;
@@ -258,7 +258,7 @@ class MetadataTable {
 			return false;
 		}
 		
-		$this->metadata_cache->delete($metadata->entity_guid);
+		$metadata->getEntity()?->invalidateCache();
 
 		$this->events->triggerAfter('create', 'metadata', $metadata);
 
@@ -293,8 +293,8 @@ class MetadataTable {
 		if ($result === false) {
 			return false;
 		}
-
-		$this->metadata_cache->delete($metadata->entity_guid);
+		
+		$metadata->getEntity()?->invalidateCache();
 
 		$this->events->trigger('update', 'metadata', $metadata);
 		$this->events->triggerAfter('update', 'metadata', $metadata);

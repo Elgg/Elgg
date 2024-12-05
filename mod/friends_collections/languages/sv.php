@@ -6,7 +6,7 @@
  */
 
 return array(
-	'friends:collections' => 'Listor',
+	'friends:collections' => 'Samlingar',
 	'friends:collections:no_results' => 'Du har inte skapa några listor än',
 	'friends:collection:members:no_results' => 'Den här listan har inte några medlemmar än',
 	

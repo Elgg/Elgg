@@ -78,7 +78,9 @@ function elgg_register_error_message(string|array $options): void {
  * @note Use the developers plugin to display logs
  *
  * @param string $message User message
- * @param string $level   NOTICE | WARNING | ERROR
+ * @param string $level   Log level
+ *
+ * @see \Psr\Log\LogLevel constants
  *
  * @return void
  * @since 1.7.0

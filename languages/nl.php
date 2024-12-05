@@ -334,6 +334,7 @@ return array(
 	'usersettings:notifications:content_create:description' => 'Standaard notificatie instellingen voor nieuwe door jou aangemaakte content. Dit betreft notificaties die te maken hebben met acties op jouw content zoals het achterlaten van een reactie.',
 	'usersettings:notifications:create_comment:description' => "Standaard notificatie instellingen indien je een reactie achterlaat op content om van het vervolg op de hoogte te blijven",
 	'usersettings:notifications:mentions:description' => "Ontvang een notificatie wanneer iemand je ergens vermeld",
+	'usersettings:notifications:admin_validation_notification:description' => "Ontvang een notificatie wanneer er een nieuwe gebruiker wacht op validatie",
 
 	'usersettings:notifications:timed_muting' => "Tijdelijk notificaties uitschakelen",
 	'usersettings:notifications:timed_muting:help' => "Indien je voor een bepaalde periode geen notificaties wilt ontvangen (bijvoorbeeld een vakantie) dan kun je hier een start en einddatum opgeven om tijdelijk alle notificaties te blokkeren.",
@@ -2105,4 +2106,10 @@ Global variables:
 
 	'core:upgrade:2024020901:title' => "Verwijder de icontime metadata",
 	'core:upgrade:2024020901:description' => "Verwijderd de onbetrouwbare metadata icontime uit de database",
+
+	'core:upgrade:2024070201:title' => "Migreer de debug configuratie",
+	'core:upgrade:2024070201:description' => "Verander de database waardes ten behoeve van debug logs naar de nieuwe ondersteunde waardes",
+
+	'core:upgrade:2024071001:title' => "Migreer de beheerder notificatie instellingen ten behoeve van validatie",
+	'core:upgrade:2024071001:description' => "Verhuis de opslag van de beheerder notificatie instellingen naar de notificatie instellingen",
 );

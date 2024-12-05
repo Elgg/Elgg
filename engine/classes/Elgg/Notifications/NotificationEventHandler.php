@@ -410,16 +410,11 @@ class NotificationEventHandler {
 		// Check custom notification body for the action/type/subtype combination
 		$body_key = "notification:{$this->event->getDescription()}:body";
 		if (_elgg_services()->translator->languageKeyExists($body_key)) {
+			$display_name = '';
+			$container_name = '';
 			if ($object instanceof \ElggEntity) {
 				$display_name = $object->getDisplayName();
-				$container_name = '';
-				$container = $object->getContainerEntity();
-				if ($container instanceof \ElggEntity) {
-					$container_name = $container->getDisplayName();
-				}
-			} else {
-				$display_name = '';
-				$container_name = '';
+				$container_name = $object->getContainerEntity()?->getDisplayName();
 			}
 
 			return _elgg_services()->translator->translate($body_key, [
@@ -432,7 +427,7 @@ class NotificationEventHandler {
 		}
 
 		// Fall back to default body
-		return _elgg_services()->translator->translate('notification:body', [$object->getURL()]);
+		return _elgg_services()->translator->translate('notification:body', [$object?->getURL()]);
 	}
 	
 	/**
