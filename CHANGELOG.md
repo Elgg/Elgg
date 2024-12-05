@@ -1,3 +1,17 @@
+<a name="6.1.1"></a>
+### 6.1.1 (2024-12-05)
+
+#### Contributors
+
+* Jeroen Dalsem (4)
+* Jerôme Bakker (2)
+
+#### Bug fixes
+
+* **notifications:** only get url if possible in default body [aa9282122](https://github.com/Elgg/Elgg/commit/aa9282122a09ceb7d310326cb09895b42b32673a)
+* **db:** correctly invalidate caches when changing metadata [f66815cc3](https://github.com/Elgg/Elgg/commit/f66815cc34addeb3b034763c3f2082646f4a01ca)
+
+
 <a name="6.1.0"></a>
 ## 6.1.0 (2024-11-20)
 
