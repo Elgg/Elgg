@@ -16,7 +16,7 @@ echo elgg_view_field([
 	'autocomplete' => 'off',
 	'spellcheck' => 'false',
 	'required' => true,
-	'value' => _elgg_get_display_query($value),
+	'value' => $value,
 	'placeholder' => elgg_echo('search'),
 	'aria-label' => elgg_echo('search'), // because we don't add #label
 ]);
