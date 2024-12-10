@@ -154,7 +154,7 @@ class SearchService {
 
 		$query = elgg_extract('query', $options, '');
 		$query = strip_tags($query);
-		$query = htmlspecialchars($query, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, 'UTF-8');
+		$query = htmlspecialchars($query, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, 'UTF-8', false);
 		$query = trim($query);
 
 		$words = preg_split('/\s+/', $query);

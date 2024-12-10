@@ -6,10 +6,10 @@
  */
 
 $help = elgg_extract('help', $vars, '');
-if (!$help) {
+if (elgg_is_empty($help)) {
 	return;
 }
 
 echo elgg_format_element('div', [
-	'class' => 'elgg-field-help elgg-text-help',
+	'class' => ['elgg-field-help', 'elgg-text-help'],
 ], $help);

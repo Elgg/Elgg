@@ -11,7 +11,7 @@ $label = elgg_extract('label', $vars, '');
 $id = elgg_extract('id', $vars);
 $required = elgg_extract('required', $vars);
 
-if (!$label) {
+if (elgg_is_empty($label)) {
 	return;
 }
 
@@ -31,5 +31,5 @@ if ($required) {
 
 echo elgg_format_element('label', [
 	'for' => $id,
-	'class' => 'elgg-field-label'
+	'class' => 'elgg-field-label',
 ], $label);
