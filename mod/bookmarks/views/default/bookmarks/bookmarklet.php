@@ -30,5 +30,4 @@ $bookmarklet = elgg_view('output/url', [
 
 echo elgg_format_element('p', [], elgg_echo('bookmarks:bookmarklet:description'));
 echo elgg_format_element('p', [], $bookmarklet);
-echo elgg_format_element('p', [], elgg_echo('bookmarks:bookmarklet:descriptionie'));
 echo elgg_format_element('p', [], elgg_echo('bookmarks:bookmarklet:description:conclusion'));
