@@ -10,6 +10,7 @@ $collection_id = (int) elgg_extract('collection_id', $vars);
 $collection = elgg_get_access_collection($collection_id);
 
 if (!$collection || !$collection->canEdit()) {
+	// @todo replace this with a ForbiddenException in 7.0
 	throw new EntityPermissionsException();
 }
 

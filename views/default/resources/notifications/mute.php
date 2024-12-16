@@ -37,6 +37,7 @@ $content = elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity_guid, $recipien
 });
 
 if (empty($content)) {
+	// @todo replace this with a PageNotFoundException in 7.0
 	throw new EntityNotFoundException(elgg_echo('notifications:mute:error:content'));
 }
 

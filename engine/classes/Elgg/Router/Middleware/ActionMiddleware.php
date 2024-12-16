@@ -39,7 +39,7 @@ class ActionMiddleware {
 		
 		$result = $request->elgg()->events->triggerResults('action:validate', $action, ['request' => $request], true);
 		if ($result === false) {
-			throw new ValidationException(elgg_echo('ValidationException'));
+			throw new ValidationException();
 		}
 
 		// set the maximum execution time for actions

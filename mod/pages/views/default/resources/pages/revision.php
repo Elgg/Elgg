@@ -9,6 +9,7 @@ use Elgg\Exceptions\Http\EntityPermissionsException;
 $id = (int) elgg_extract('id', $vars);
 $annotation = elgg_get_annotation_from_id($id);
 if (!$annotation instanceof \ElggAnnotation) {
+	// @todo replace this with a PageNotFoundException in 7.0
 	throw new EntityNotFoundException();
 }
 
