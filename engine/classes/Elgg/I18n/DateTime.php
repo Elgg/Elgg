@@ -14,12 +14,12 @@ class DateTime extends PHPDateTime {
 	/**
 	 * Try to format the date using locale output
 	 *
-	 * @param string $format   output format, supports date() formatting
-	 * @param string $language the output language, defaults to current language
+	 * @param string      $format   output format, supports date() formatting
+	 * @param null|string $language the output language, defaults to current language
 	 *
 	 * @return string
 	 */
-	public function formatLocale(string $format, string $language = null) {
+	public function formatLocale(string $format, ?string $language = null) {
 		if (!isset($language)) {
 			$language = _elgg_services()->translator->getCurrentLanguage();
 		}

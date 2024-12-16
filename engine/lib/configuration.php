@@ -184,23 +184,24 @@ function elgg_remove_config(string $name): bool {
 /**
  * Returns a configuration array of icon sizes
  *
- * @param string $entity_type    Entity type
- * @param string $entity_subtype Entity subtype
- * @param string $type           The name of the icon. e.g., 'icon', 'cover_photo'
+ * @param null|string $entity_type    Entity type
+ * @param null|string $entity_subtype Entity subtype
+ * @param string      $type           The name of the icon. e.g., 'icon', 'cover_photo'
  * @return array
  */
-function elgg_get_icon_sizes(string $entity_type = null, string $entity_subtype = null, $type = 'icon'): array {
+function elgg_get_icon_sizes(?string $entity_type = null, ?string $entity_subtype = null, $type = 'icon'): array {
 	return _elgg_services()->iconService->getSizes($entity_type, $entity_subtype, $type);
 }
 
 /**
  * Are comments displayed with latest first?
  *
- * @param ElggEntity $container Entity containing comments
+ * @param null|\ElggEntity $container Entity containing comments
+ *
  * @return bool False means oldest first.
  * @since 3.0
  */
-function elgg_comments_are_latest_first(\ElggEntity $container = null): bool {
+function elgg_comments_are_latest_first(?\ElggEntity $container = null): bool {
 	$params = [
 		'entity' => $container,
 	];
@@ -210,11 +211,12 @@ function elgg_comments_are_latest_first(\ElggEntity $container = null): bool {
 /**
  * How many comments appear per page.
  *
- * @param ElggEntity $container Entity containing comments
+ * @param null|\ElggEntity $container Entity containing comments
+ *
  * @return int
  * @since 3.0
  */
-function elgg_comments_per_page(\ElggEntity $container = null): int {
+function elgg_comments_per_page(?\ElggEntity $container = null): int {
 	$params = [
 		'entity' => $container,
 	];

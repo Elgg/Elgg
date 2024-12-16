@@ -43,7 +43,7 @@ class ElggRelationship extends \ElggData {
 	 *
 	 * @param null|\stdClass $row Database row
 	 */
-	public function __construct(\stdClass $row = null) {
+	public function __construct(?\stdClass $row = null) {
 		$this->initializeAttributes();
 
 		if (!empty($row)) {

@@ -14,7 +14,7 @@ class AjaxGatekeeperException extends GatekeeperException {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function __construct(string $message = '', int $code = 0, \Throwable $previous = null) {
+	public function __construct(string $message = '', int $code = 0, ?\Throwable $previous = null) {
 		if (!$message) {
 			$message = elgg_echo('ajax:not_is_xhr');
 		}

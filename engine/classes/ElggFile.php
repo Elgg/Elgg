@@ -348,12 +348,12 @@ class ElggFile extends ElggObject {
 	 * This is an alternative to using rename() which fails to move files to
 	 * a non-existent directory under new owner's filestore directory
 	 *
-	 * @param int    $owner_guid New owner's guid
-	 * @param string $filename   New filename (uses old filename if not set)
+	 * @param int         $owner_guid New owner's guid
+	 * @param null|string $filename   New filename (uses old filename if not set)
 	 *
 	 * @return bool
 	 */
-	public function transfer(int $owner_guid, string $filename = null): bool {
+	public function transfer(int $owner_guid, ?string $filename = null): bool {
 		if ($owner_guid < 1) {
 			return false;
 		}

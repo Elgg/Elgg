@@ -102,15 +102,15 @@ function messages_send(string $subject, string $body, int $recipient_guid, int $
 /**
  * Returns the unread messages in a user's inbox
  *
- * @param int  $user_guid GUID of user whose inbox we're counting (0 for logged in user)
- * @param int  $limit     Number of unread messages to return (default from settings)
- * @param int  $offset    Start at a defined offset (for listings)
- * @param bool $count     Switch between entities array or count mode
+ * @param int      $user_guid GUID of user whose inbox we're counting (0 for logged-in user)
+ * @param null|int $limit     Number of unread messages to return (default from settings)
+ * @param int      $offset    Start at a defined offset (for listings)
+ * @param bool     $count     Switch between entities array or count mode
  *
  * @return ElggMessage[]|int|false
  * @since 1.9
  */
-function messages_get_unread(int $user_guid = 0, int $limit = null, int $offset = 0, bool $count = false) {
+function messages_get_unread(int $user_guid = 0, ?int $limit = null, int $offset = 0, bool $count = false) {
 	if (!$user_guid) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}

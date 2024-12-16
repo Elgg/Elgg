@@ -47,13 +47,13 @@ function elgg_get_access_array(int $user_guid = 0): array {
  * If want you to change the default access based on group of other information,
  * use the 'default', 'access' event.
  *
- * @param \ElggUser $user         The user for whom we're getting default access. Defaults to logged in user.
- * @param array     $input_params Parameters passed into an input/access view
+ * @param null|\ElggUser $user         The user for whom we're getting default access. Defaults to logged in user.
+ * @param array          $input_params Parameters passed into an input/access view
  *
  * @return int default access id (see ACCESS defines in constants.php)
  * @since 4.3
  */
-function elgg_get_default_access(\ElggUser $user = null, array $input_params = []): int {
+function elgg_get_default_access(?\ElggUser $user = null, array $input_params = []): int {
 	// site default access
 	$default_access = (int) _elgg_services()->config->default_access;
 	
@@ -137,14 +137,14 @@ function elgg_get_write_access_array(int $user_guid = 0, bool $flush = false, ar
  *
  * Triggers 'create', 'access_collection' event sequence
  *
- * @param string $name       The name of the collection
- * @param int    $owner_guid The GUID of the owner (default: currently logged in user)
- * @param string $subtype    The subtype indicates the usage of the acl
+ * @param string      $name       The name of the collection
+ * @param int         $owner_guid The GUID of the owner (default: currently logged-in user)
+ * @param null|string $subtype    The subtype indicates the usage of the acl
  *
  * @return \ElggAccessCollection|null
  * @since 4.3
  */
-function elgg_create_access_collection(string $name, int $owner_guid = 0, string $subtype = null): ?\ElggAccessCollection {
+function elgg_create_access_collection(string $name, int $owner_guid = 0, ?string $subtype = null): ?\ElggAccessCollection {
 	$acl = new \ElggAccessCollection();
 	$acl->name = $name;
 	$acl->owner_guid = $owner_guid ?: _elgg_services()->session_manager->getLoggedInUserGuid();

@@ -71,15 +71,15 @@ class ElggPlugin extends ElggObject {
 
 	/**
 	 * Load a plugin object from its ID
-	 * Create a new plugin entity if doesn't exist
+	 * Create a new plugin entity if it doesn't exist
 	 *
-	 * @param string $plugin_id Plugin ID
-	 * @param string $path      Path, defaults to /mod
+	 * @param string      $plugin_id Plugin ID
+	 * @param null|string $path      Path, defaults to /mod
 	 *
 	 * @return ElggPlugin
 	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
-	public static function fromId(string $plugin_id, string $path = null): \ElggPlugin {
+	public static function fromId(string $plugin_id, ?string $path = null): \ElggPlugin {
 		if (empty($plugin_id)) {
 			throw new ElggInvalidArgumentException('Plugin ID must be set');
 		}

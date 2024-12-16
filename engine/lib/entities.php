@@ -532,23 +532,23 @@ function elgg_count_entities(array $options = []): int {
  *
  * @note Internal: If the initial COUNT query returns 0, the $getter will not be called again.
  *
- * @param array    $options Any options from $getter options plus:
- *                          - item_view => STR Optional. Alternative view used to render list items
- *                          - full_view => BOOL Display full view of entities (default: false)
- *                          - list_type => STR 'list', 'gallery', or 'table'
- *                          - columns => ARR instances of Elgg\Views\TableColumn if list_type is "table"
- *                          - pagination => BOOL Display pagination links
- *                          - no_results => STR|true for default notfound text|Closure Message to display when there are no entities
+ * @param array         $options Any options from $getter options plus:
+ *                               - item_view => STR Optional. Alternative view used to render list items
+ *                               - full_view => BOOL Display full view of entities (default: false)
+ *                               - list_type => STR 'list', 'gallery', or 'table'
+ *                               - columns => ARR instances of Elgg\Views\TableColumn if list_type is "table"
+ *                               - pagination => BOOL Display pagination links
+ *                               - no_results => STR|true for default notfound text|Closure Message to display when there are no entities
  *
- * @param callable $getter  The entity getter function to use to fetch the entities.
- * @param callable $viewer  The function to use to view the entity list.
+ * @param null|callable $getter  The entity getter function to use to fetch the entities.
+ * @param null|callable $viewer  The function to use to view the entity list.
  *
  * @return string
  * @since 1.7
  * @see elgg_get_entities()
  * @see elgg_view_entity_list()
  */
-function elgg_list_entities(array $options = [], callable $getter = null, callable $viewer = null): string {
+function elgg_list_entities(array $options = [], ?callable $getter = null, ?callable $viewer = null): string {
 	$getter = $getter ?? 'elgg_get_entities'; // callables only support default NULL value
 	$viewer = $viewer ?? 'elgg_view_entity_list'; // callables only support default NULL value
 	$offset_key = $options['offset_key'] ?? 'offset';

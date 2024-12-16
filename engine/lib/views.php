@@ -1060,13 +1060,13 @@ function elgg_get_form_footer(): string {
  *
  * @see elgg_view_field()
  *
- * @param array $vars     Vars to split
- * @param array $prefixes Prefixes to split
+ * @param array      $vars     Vars to split
+ * @param null|array $prefixes Prefixes to split
  *
  * @return array
  * @internal
  */
-function _elgg_split_vars(array $vars = [], array $prefixes = null): array {
+function _elgg_split_vars(array $vars = [], ?array $prefixes = null): array {
 
 	if (!isset($prefixes)) {
 		$prefixes = ['#'];
@@ -1417,14 +1417,14 @@ function _elgg_view_under_viewtype(string $view, array $vars, string $viewtype):
 /**
  * Helper function for outputting urls. Using this helper function defaults to trusted urls
  *
- * @param string $href    The URL
- * @param string $text    The visible text
- * @param array  $options Additional options to pass to the output/url View
+ * @param string      $href    The URL
+ * @param null|string $text    The visible text
+ * @param array       $options Additional options to pass to the output/url View
  *
  * @return string
  * @since 4.0
  */
-function elgg_view_url(string $href, string $text = null, array $options = []): string {
+function elgg_view_url(string $href, ?string $text = null, array $options = []): string {
 	$options['is_trusted'] = elgg_extract('is_trusted', $options, true);
 	$options['href'] = $href;
 	$options['text'] = $text;

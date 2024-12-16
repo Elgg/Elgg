@@ -41,7 +41,7 @@ class CreateLikesEventHandler extends NotificationEventHandler {
 	 *
 	 * @return string
 	 */
-	protected function getEntityTitle(int $max_length = null): string {
+	protected function getEntityTitle(?int $max_length = null): string {
 		$entity = $this->getLikedEntity();
 		if (!$entity instanceof \ElggEntity) {
 			return '';

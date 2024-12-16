@@ -27,15 +27,15 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * - BOOL 'upscale' - if enabled, smaller images
  *   will be upscaled to fit the bounding box.
  *
- * @param string $source      Path to source image
- * @param string $destination Path to destination
- *                            If not set, will modify the source image
- * @param array  $params      An array of cropping/resizing parameters
+ * @param string      $source      Path to source image
+ * @param null|string $destination Path to destination
+ *                                 If not set, will modify the source image
+ * @param array       $params      An array of cropping/resizing parameters
  *
  * @return bool
  * @since 2.3
  */
-function elgg_save_resized_image(string $source, string $destination = null, array $params = []): bool {
+function elgg_save_resized_image(string $source, ?string $destination = null, array $params = []): bool {
 	return _elgg_services()->imageService->resize($source, $destination, $params);
 }
 

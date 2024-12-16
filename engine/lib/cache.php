@@ -7,13 +7,13 @@
 /**
  * Saves a system cache.
  *
- * @param string $type         The type or identifier of the cache
- * @param mixed  $data         The data to be saved
- * @param int    $expire_after Number of seconds to expire the cache after
+ * @param string   $type         The type or identifier of the cache
+ * @param mixed    $data         The data to be saved
+ * @param null|int $expire_after Number of seconds to expire the cache after
  *
  * @return bool
  */
-function elgg_save_system_cache(string $type, $data, int $expire_after = null): bool {
+function elgg_save_system_cache(string $type, $data, ?int $expire_after = null): bool {
 	return _elgg_services()->systemCache->save($type, $data, $expire_after);
 }
 

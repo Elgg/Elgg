@@ -54,7 +54,7 @@ function elgg_push_entity_breadcrumbs(\ElggEntity $entity): void {
  *
  * @return void
  */
-function elgg_push_collection_breadcrumbs(string $entity_type, string $entity_subtype, \ElggEntity $container = null, bool $friends = false): void {
+function elgg_push_collection_breadcrumbs(string $entity_type, string $entity_subtype, ?\ElggEntity $container = null, bool $friends = false): void {
 	
 	if ($container) {
 		if (!$container instanceof \ElggSite && $entity_type !== 'group') {

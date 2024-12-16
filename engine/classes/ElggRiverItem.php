@@ -36,9 +36,9 @@ class ElggRiverItem {
 	/**
 	 * Construct a river item object
 	 *
-	 * @param \stdClass $row (optional) object obtained from database
+	 * @param null|\stdClass $row (optional) object obtained from database
 	 */
-	public function __construct(\stdClass $row = null) {
+	public function __construct(?\stdClass $row = null) {
 		$this->initializeAttributes();
 		
 		if (empty($row)) {
@@ -188,11 +188,11 @@ class ElggRiverItem {
 	/**
 	 * Update the last_action column in the river table.
 	 *
-	 * @param int $last_action Timestamp of last action
+	 * @param null|int $last_action Timestamp of last action
 	 *
 	 * @return int
 	 */
-	public function updateLastAction(int $last_action = null): int {
+	public function updateLastAction(?int $last_action = null): int {
 		$this->last_action = _elgg_services()->riverTable->updateLastAction($this, $last_action);
 
 		return $this->last_action;

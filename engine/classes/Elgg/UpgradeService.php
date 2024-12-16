@@ -272,7 +272,7 @@ class UpgradeService {
 	 *
 	 * @return Result
 	 */
-	public function executeUpgrade(\ElggUpgrade $upgrade, int $max_duration = null): Result {
+	public function executeUpgrade(\ElggUpgrade $upgrade, ?int $max_duration = null): Result {
 		// Upgrade also disabled data, so the compatibility is
 		// preserved in case the data ever gets enabled again
 		return elgg_call(

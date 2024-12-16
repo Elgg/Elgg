@@ -94,16 +94,16 @@ class WidgetsService {
 	/**
 	 * Create a new widget instance
 	 *
-	 * @param int    $owner_guid GUID of entity that owns this widget
-	 * @param string $handler    The handler for this widget
-	 * @param string $context    The context for this widget
-	 * @param int    $access_id  If not specified, it is set to the default access level
+	 * @param int      $owner_guid GUID of entity that owns this widget
+	 * @param string   $handler    The handler for this widget
+	 * @param string   $context    The context for this widget
+	 * @param null|int $access_id  If not specified, it is set to the default access level
 	 *
 	 * @return int|false Widget GUID or false on failure
 	 *
 	 * @see elgg_create_widget()
 	 */
-	public function createWidget(int $owner_guid, string $handler, string $context, int $access_id = null) {
+	public function createWidget(int $owner_guid, string $handler, string $context, ?int $access_id = null) {
 		if (empty($owner_guid) || empty($handler)) {
 			return false;
 		}
@@ -136,7 +136,7 @@ class WidgetsService {
 	 * Can the user edit the widget layout
 	 *
 	 * @param string $context   The widget context
-	 * @param int    $user_guid The GUID of the user (0 for logged in user)
+	 * @param int    $user_guid The GUID of the user (0 for logged-in user)
 	 *
 	 * @return bool
 	 *
@@ -195,15 +195,15 @@ class WidgetsService {
 	/**
 	 * Checks if a widget type exists for a given id
 	 *
-	 * @param string      $id        Widget identifier
-	 * @param string      $context   Optional context to check
-	 * @param \ElggEntity $container Optional limit widget definitions to a container
+	 * @param string           $id        Widget identifier
+	 * @param null|string      $context   Optional context to check
+	 * @param null|\ElggEntity $container Optional limit widget definitions to a container
 	 *
 	 * @return bool
 	 *
 	 * @see elgg_is_widget_type()
 	 */
-	public function validateType(string $id, string $context = null, \ElggEntity $container = null): bool {
+	public function validateType(string $id, ?string $context = null, ?\ElggEntity $container = null): bool {
 		$types = $this->getTypes([
 			'context' => $context,
 			'container' => $container,
@@ -230,15 +230,15 @@ class WidgetsService {
 	/**
 	 * Returns widget name based on id
 	 *
-	 * @param string      $id        Widget identifier
-	 * @param string      $context   Context to check
-	 * @param \ElggEntity $container Optional limit widget definitions to a container
+	 * @param string           $id        Widget identifier
+	 * @param string           $context   Context to check
+	 * @param null|\ElggEntity $container Optional limit widget definitions to a container
 	 *
 	 * @return string|null
 	 *
 	 * @since 2.2.0
 	 */
-	public function getNameById(string $id, string $context = '', \ElggEntity $container = null): ?string {
+	public function getNameById(string $id, string $context = '', ?\ElggEntity $container = null): ?string {
 		$types = $this->getTypes([
 			'context' => $context,
 			'container' => $container,

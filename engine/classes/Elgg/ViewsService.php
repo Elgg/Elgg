@@ -290,17 +290,17 @@ class ViewsService {
 	/**
 	 * Renders a view
 	 *
-	 * @param string $view                 Name of the view
-	 * @param array  $vars                 Variables to pass to the view
-	 * @param string $viewtype             Viewtype to use
-	 * @param bool   $issue_missing_notice Should a missing notice be issued
-	 * @param array  $extensions_tree      Array of views that are before the current view in the extension path
+	 * @param string    $view                 Name of the view
+	 * @param array     $vars                 Variables to pass to the view
+	 * @param string    $viewtype             Viewtype to use
+	 * @param null|bool $issue_missing_notice Should a missing notice be issued
+	 * @param array     $extensions_tree      Array of views that are before the current view in the extension path
 	 *
 	 * @return string
 	 *
 	 * @see elgg_view()
 	 */
-	public function renderView(string $view, array $vars = [], string $viewtype = '', bool $issue_missing_notice = null, array $extensions_tree = []): string {
+	public function renderView(string $view, array $vars = [], string $viewtype = '', ?bool $issue_missing_notice = null, array $extensions_tree = []): string {
 		// basic checking for bad paths
 		if (str_contains($view, '..')) {
 			return '';

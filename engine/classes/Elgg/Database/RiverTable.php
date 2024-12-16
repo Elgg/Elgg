@@ -158,11 +158,11 @@ class RiverTable {
 	 * Update the last_action column in the river table for $item.
 	 *
 	 * @param \ElggRiverItem $item        River item to update
-	 * @param int            $last_action Timestamp of last action
+	 * @param null|int       $last_action Timestamp of last action
 	 *
 	 * @return int
 	 */
-	public function updateLastAction(\ElggRiverItem $item, int $last_action = null): int {
+	public function updateLastAction(\ElggRiverItem $item, ?int $last_action = null): int {
 		if ($last_action === null) {
 			$last_action = $this->getCurrentTime()->getTimestamp();
 		}

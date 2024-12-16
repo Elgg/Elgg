@@ -265,13 +265,13 @@ class SimpleCache {
 	/**
 	 * Get the cache file location
 	 *
-	 * @param string $viewtype   view type
-	 * @param string $view       cached view
-	 * @param int    $cache_time (optional) cache time (default \Elgg\Config->lastcache;
+	 * @param string   $viewtype   view type
+	 * @param string   $view       cached view
+	 * @param null|int $cache_time (optional) cache time (default \Elgg\Config->lastcache;
 	 *
 	 * @return string
 	 */
-	protected function getCacheFilename(string $viewtype, string $view, int $cache_time = null): string {
+	protected function getCacheFilename(string $viewtype, string $view, ?int $cache_time = null): string {
 		if (!isset($cache_time)) {
 			$cache_time = $this->config->lastcache;
 		}

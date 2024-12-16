@@ -79,21 +79,21 @@ interface CollectionInterface {
 	 * Filter collection items using a custom filter
 	 * Returns a new collection instance
 	 *
-	 * @param callable $callback Filter
+	 * @param null|callable $callback Filter
 	 *
 	 * @return static
 	 */
-	public function filter(callable $callback = null);
+	public function filter(?callable $callback = null);
 
 	/**
 	 * Sort fields using custom callable
 	 * If not provided, will sort items by priority
 	 *
-	 * @param callable $callback Sorter
+	 * @param null|callable $callback Sorter
 	 *
 	 * @return static
 	 */
-	public function sort(callable $callback = null);
+	public function sort(?callable $callback = null);
 
 	/**
 	 * Walk through members of the collection and apply a callback

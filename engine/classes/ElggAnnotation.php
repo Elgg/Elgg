@@ -20,9 +20,9 @@ class ElggAnnotation extends \ElggExtender {
 	/**
 	 * Constructor
 	 *
-	 * @param stdClass $row Database row
+	 * @param null|\stdClass $row Database row
 	 */
-	public function __construct(stdClass $row = null) {
+	public function __construct(?\stdClass $row = null) {
 		$this->initializeAttributes();
 
 		if ($row) {

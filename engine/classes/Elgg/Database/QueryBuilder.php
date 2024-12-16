@@ -65,7 +65,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 *
 	 * @return Select
 	 */
-	public function subquery(string $table, string $alias = null): Select {
+	public function subquery(string $table, ?string $alias = null): Select {
 		$qb = new Select($this->getConnection());
 		$qb->from($table, $alias);
 
@@ -80,7 +80,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 *
 	 * @return static
 	 */
-	public function addClause(Clause $clause, string $alias = null): static {
+	public function addClause(Clause $clause, ?string $alias = null): static {
 		if (!isset($alias)) {
 			$alias = $this->getTableAlias();
 		}
@@ -141,7 +141,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 *
 	 * @return string
 	 */
-	public function param($value, string $type = ELGG_VALUE_STRING, string $key = null): string {
+	public function param($value, string $type = ELGG_VALUE_STRING, ?string $key = null): string {
 		if (!$key) {
 			$parameters = $this->getParameters();
 			$key = ':qb' . (count($parameters) + 1);
@@ -359,34 +359,34 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	/**
 	 * Build value comparison clause
 	 *
-	 * @param string $x              Comparison value (e.g. prefixed column name)
-	 * @param string $comparison     Comparison operator
-	 * @param mixed  $y              Value to compare against
-	 *                               If the value is an array, comparisons will be performed in such as a way as
-	 *                               to ensure that either all or none of the elements of the array meet the criteria,
-	 *                               e.g. in case of LIKE will return results where at least one element matches the
-	 *                               criteria, where as with NOT LIKE will return results where none of the criteria
-	 *                               are met
-	 * @param string $type           Value type for sanitization/casting
-	 * @param bool   $case_sensitive Use case sensitive comparison for strings
+	 * @param string      $x              Comparison value (e.g. prefixed column name)
+	 * @param string      $comparison     Comparison operator
+	 * @param mixed       $y              Value to compare against
+	 *                                    If the value is an array, comparisons will be performed in such as a way as
+	 *                                    to ensure that either all or none of the elements of the array meet the criteria,
+	 *                                    e.g. in case of LIKE will return results where at least one element matches the
+	 *                                    criteria, whereas with NOT LIKE will return results where none of the criteria
+	 *                                    are met
+	 * @param null|string $type           Value type for sanitization/casting
+	 * @param null|bool   $case_sensitive Use case-sensitive comparison for strings
 	 *
 	 * @return CompositeExpression|null|string
 	 */
-	public function compare(string $x, string $comparison, $y = null, string $type = null, bool $case_sensitive = null) {
+	public function compare(string $x, string $comparison, $y = null, ?string $type = null, ?bool $case_sensitive = null) {
 		return (new ComparisonClause($x, $comparison, $y, $type, $case_sensitive))->prepare($this);
 	}
 
 	/**
 	 * Build a between clause
 	 *
-	 * @param string $x     Comparison value (e.g. prefixed column name)
-	 * @param mixed  $lower Lower bound
-	 * @param mixed  $upper Upper bound
-	 * @param string $type  Value type for sanitization/casting
+	 * @param string      $x     Comparison value (e.g. prefixed column name)
+	 * @param mixed       $lower Lower bound
+	 * @param mixed       $upper Upper bound
+	 * @param null|string $type  Value type for sanitization/casting
 	 *
 	 * @return CompositeExpression|null|string
 	 */
-	public function between(string $x, $lower = null, $upper = null, string $type = null) {
+	public function between(string $x, $lower = null, $upper = null, ?string $type = null) {
 		$wheres = [];
 		if ($lower) {
 			$wheres[] = $this->compare($x, '>=', $lower, $type);
@@ -420,7 +420,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 *
 	 * @return string
 	 */
-	public function joinEntitiesTable(string $from_alias = '', string $from_column = 'guid', ?string $join_type = 'inner', string $joined_alias = null): string {
+	public function joinEntitiesTable(string $from_alias = '', string $from_column = 'guid', ?string $join_type = 'inner', ?string $joined_alias = null): string {
 		if (in_array($joined_alias, $this->joins)) {
 			return $joined_alias;
 		}
@@ -462,7 +462,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 *
 	 * @return string
 	 */
-	public function joinMetadataTable(string $from_alias = '', string $from_column = 'guid', $name = null, ?string $join_type = 'inner', string $joined_alias = null): string {
+	public function joinMetadataTable(string $from_alias = '', string $from_column = 'guid', $name = null, ?string $join_type = 'inner', ?string $joined_alias = null): string {
 		if (in_array($joined_alias, $this->joins)) {
 			return $joined_alias;
 		}
@@ -509,7 +509,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 *
 	 * @return string
 	 */
-	public function joinAnnotationTable(string $from_alias = '', string $from_column = 'guid', $name = null, ?string $join_type = 'inner', string $joined_alias = null): string {
+	public function joinAnnotationTable(string $from_alias = '', string $from_column = 'guid', $name = null, ?string $join_type = 'inner', ?string $joined_alias = null): string {
 		if (in_array($joined_alias, $this->joins)) {
 			return $joined_alias;
 		}
@@ -557,7 +557,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 *
 	 * @return string
 	 */
-	public function joinRelationshipTable(string $from_alias = '', string $from_column = 'guid', $name = null, bool $inverse = false, ?string $join_type = 'inner', string $joined_alias = null): string {
+	public function joinRelationshipTable(string $from_alias = '', string $from_column = 'guid', $name = null, bool $inverse = false, ?string $join_type = 'inner', ?string $joined_alias = null): string {
 		if (in_array($joined_alias, $this->joins)) {
 			return $joined_alias;
 		}

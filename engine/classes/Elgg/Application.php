@@ -99,11 +99,11 @@ class Application {
 	/**
 	 * Set the global Application instance
 	 *
-	 * @param Application $application Global application
+	 * @param null|Application $application Global application
 	 *
 	 * @return void
 	 */
-	public static function setInstance(Application $application = null) {
+	public static function setInstance(?Application $application = null) {
 		self::$_instance = $application;
 	}
 

@@ -41,7 +41,7 @@ class ElggTempFile extends ElggFile {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function transfer(int $owner_guid, string $filename = null): bool {
+	public function transfer(int $owner_guid, ?string $filename = null): bool {
 		return false;
 	}
 

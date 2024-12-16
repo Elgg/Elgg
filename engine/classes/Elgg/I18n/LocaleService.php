@@ -88,12 +88,12 @@ class LocaleService {
 	/**
 	 * Set the locale from a language key. The key will be mapped to the configured locale settings
 	 *
-	 * @param int    $category which locale settings should be affected
-	 * @param string $language the language te set the locale for (default: current language)
+	 * @param int         $category which locale settings should be affected
+	 * @param null|string $language the language te set the locale for (default: current language)
 	 *
 	 * @return string[]
 	 */
-	public function setLocaleFromLanguageKey(int $category, string $language = null) {
+	public function setLocaleFromLanguageKey(int $category, ?string $language = null) {
 		if (!isset($language)) {
 			$language = elgg_get_current_language();
 		}

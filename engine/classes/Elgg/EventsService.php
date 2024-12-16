@@ -193,15 +193,15 @@ class EventsService {
 	 * Allows running a callable on successful <event> before <event>:after is triggered
 	 * Returns the result of the callable or bool
 	 *
-	 * @param string   $name     The event name
-	 * @param string   $type     The event type
-	 * @param mixed    $object   The object involved in the event
-	 * @param callable $callable Callable to run on successful event, before event:after
-	 * @param array    $options  (internal) options for triggering the event
+	 * @param string        $name     The event name
+	 * @param string        $type     The event type
+	 * @param mixed         $object   The object involved in the event
+	 * @param null|callable $callable Callable to run on successful event, before event:after
+	 * @param array         $options  (internal) options for triggering the event
 	 *
 	 * @return bool
 	 */
-	public function triggerSequence(string $name, string $type, $object = null, callable $callable = null, array $options = []): bool {
+	public function triggerSequence(string $name, string $type, $object = null, ?callable $callable = null, array $options = []): bool {
 		// generate a unique ID to identify this sequence
 		$options['_elgg_sequence_id'] = uniqid("{$name}{$type}", true);
 		
@@ -226,20 +226,20 @@ class EventsService {
 	}
 
 	/**
-	 * Trigger an sequence of <event>:before, <event>, and <event>:after handlers.
+	 * Trigger a sequence of <event>:before, <event>, and <event>:after handlers.
 	 * Allows <event>:before to terminate the sequence by returning false from a handler
 	 * Allows running a callable on successful <event> before <event>:after is triggered
 	 *
-	 * @param string   $name     The event name
-	 * @param string   $type     The event type
-	 * @param mixed    $params   Supplied params for the event
-	 * @param mixed    $value    The value of the event, this can be altered by registered callbacks
-	 * @param callable $callable Callable to run on successful event, before event:after
-	 * @param array    $options  (internal) options for triggering the event
+	 * @param string        $name     The event name
+	 * @param string        $type     The event type
+	 * @param mixed         $params   Supplied params for the event
+	 * @param mixed         $value    The value of the event, this can be altered by registered callbacks
+	 * @param null|callable $callable Callable to run on successful event, before event:after
+	 * @param array         $options  (internal) options for triggering the event
 	 *
 	 * @return mixed
 	 */
-	public function triggerResultsSequence(string $name, string $type, array $params = [], $value = null, callable $callable = null, array $options = []) {
+	public function triggerResultsSequence(string $name, string $type, array $params = [], $value = null, ?callable $callable = null, array $options = []) {
 		// generate a unique ID to identify this sequence
 		$unique_id = uniqid("{$name}{$type}results", true);
 		$options['_elgg_sequence_id'] = $unique_id;
