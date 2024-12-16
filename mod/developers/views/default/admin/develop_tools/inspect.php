@@ -13,6 +13,7 @@ $view_name = 'admin/develop_tools/inspect/' . strtolower(str_replace(' ', '', $i
 $inspector = new \Elgg\Debug\Inspector();
 
 if (!elgg_view_exists($view_name) || !method_exists($inspector, $method)) {
+	// @todo replace this with a PageNotFoundException in 7.0
 	throw new EntityNotFoundException();
 }
 
@@ -22,6 +23,7 @@ switch ($inspect_type) {
 		$viewtype = get_input('type', 'default');
 
 		if (!in_array($viewtype, $viewtypes)) {
+			// @todo replace this with a PageNotFoundException in 7.0
 			throw new EntityNotFoundException();
 		}
 

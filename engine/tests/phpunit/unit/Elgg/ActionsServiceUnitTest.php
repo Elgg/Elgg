@@ -356,7 +356,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->addCsrfTokens($request);
 
 		_elgg_services()->events->registerHandler('action:validate', 'output3', function (\Elgg\Event $event) {
-			throw new ValidationException('Invalid');
+			throw new ValidationException();
 		});
 
 		_elgg_services()->actions->register('output3', "{$this->actionsDir}/output3.php", 'public');

@@ -2,21 +2,19 @@
 
 namespace Elgg\Exceptions\Http;
 
-use Elgg\Exceptions\HttpException;
-
 /**
  * Action validation exception
  *
  * @since 4.0
  */
-class ValidationException extends HttpException {
+class ValidationException extends BadRequestException {
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function __construct(string $message = '', int $code = 0, \Throwable $previous = null) {
-		if (!$code) {
-			$code = ELGG_HTTP_BAD_REQUEST;
+		if (!$message) {
+			$message = elgg_echo('ValidationException');
 		}
 		
 		parent::__construct($message, $code, $previous);

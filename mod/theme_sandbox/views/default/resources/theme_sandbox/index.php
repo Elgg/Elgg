@@ -4,6 +4,7 @@ use Elgg\Exceptions\Http\EntityNotFoundException;
 
 $page = elgg_extract('page', $vars);
 if (!elgg_view_exists("theme_sandbox/{$page}")) {
+	// @todo replace this with a PageNotFoundException in 7.0
 	throw new EntityNotFoundException();
 }
 

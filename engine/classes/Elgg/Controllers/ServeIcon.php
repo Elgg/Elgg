@@ -47,6 +47,7 @@ class ServeIcon {
 		
 		$thumbnail = $entity->getIcon($size);
 		if (!$thumbnail->exists()) {
+			// @todo replace this with a PageNotFoundException in 7.0
 			throw new EntityNotFoundException('Icon does not exist');
 		}
 		

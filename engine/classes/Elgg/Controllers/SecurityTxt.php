@@ -25,6 +25,7 @@ class SecurityTxt {
 		$contact = elgg_get_config('security_txt_contact');
 		$expires = elgg_get_config('security_txt_expires');
 		if (empty($contact) || empty($expires)) {
+			// @todo replace this with a PageNotFoundException in 7.0
 			throw new EntityNotFoundException();
 		}
 		
