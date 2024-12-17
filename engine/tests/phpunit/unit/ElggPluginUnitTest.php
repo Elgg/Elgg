@@ -243,7 +243,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		};
 
 		$upgrade = _elgg_services()->upgrades->run();
-		$upgrade->done($assert, $fail);
+		$upgrade->then($assert, $fail);
 
 		$this->assertEquals(1, $assertions);
 	}
