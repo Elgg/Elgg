@@ -34,4 +34,53 @@ class ElggDiscussion extends ElggObject {
 		// @see \Elgg\Discussions\Notifications::addGroupSubscribersToCommentOnDiscussionSubscriptions()
 		return _elgg_services()->subscriptions->hasSubscriptions($user_guid, $this->container_guid, $methods);
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function getDefaultFields(): array {
+		$result = parent::getDefaultFields();
+		
+		$result[] = [
+			'#type' => 'text',
+			'#label' => elgg_echo('title'),
+			'name' => 'title',
+			'required' => true,
+		];
+		
+		$result[] = [
+			'#type' => 'longtext',
+			'#label' => elgg_echo('discussion:topic:description'),
+			'name' => 'description',
+			'required' => true,
+			'editor_type' => 'simple',
+		];
+		
+		$result[] = [
+			'#type' => 'tags',
+			'#label' => elgg_echo('tags'),
+			'name' => 'tags',
+		];
+		
+		$result[] = [
+			'#type' => 'select',
+			'#label' => elgg_echo('discussion:topic:status'),
+			'name' => 'status',
+			'options_values' => [
+				'open' => elgg_echo('status:open'),
+				'closed' => elgg_echo('status:closed'),
+			],
+		];
+		
+		$result[] = [
+			'#type' => 'access',
+			'#label' => elgg_echo('access'),
+			'#class' => 'discussion-access',
+			'name' => 'access_id',
+			'entity_type' => 'object',
+			'entity_subtype' => 'discussion',
+		];
+		
+		return $result;
+	}
 }

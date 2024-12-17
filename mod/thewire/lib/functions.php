@@ -13,8 +13,11 @@
  * @param string $method      The method (default: 'site')
  *
  * @return false|int
+ *
+ * @deprecated 6.2
  */
 function thewire_save_post(string $text, int $userid, int $access_id, int $parent_guid = 0, string $method = 'site'): int|false {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '6.2');
 	
 	$post = new \ElggWire();
 	$post->owner_guid = $userid;
@@ -23,7 +26,6 @@ function thewire_save_post(string $text, int $userid, int $access_id, int $paren
 	$text = $text ?? '';
 	$text = trim(str_replace('&nbsp;', ' ', $text));
 	
-	// Character limit is now from config
 	$limit = elgg_get_plugin_setting('limit', 'thewire');
 	if ($limit > 0) {
 		$text_for_size = elgg_strip_tags($text);
@@ -83,8 +85,12 @@ function thewire_save_post(string $text, int $userid, int $access_id, int $paren
  * @param string $text The text of a post
  *
  * @return array
+ *
+ * @deprecated 6.2
  */
 function thewire_get_hashtags(string $text): array {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '6.2');
+	
 	// beginning of text or white space followed by hashtag
 	// the hashtag must begin with # and contain at least one character not digit, space, or punctuation
 	$matches = [];
@@ -99,8 +105,12 @@ function thewire_get_hashtags(string $text): array {
  * @param string $text The text of a post
  *
  * @return string
+ *
+ * @deprecated 6.2 use elgg_format_html()
  */
 function thewire_filter(string $text): string {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_format_html().', '6.2');
+	
 	$text = ' ' . $text;
 
 	// email addresses

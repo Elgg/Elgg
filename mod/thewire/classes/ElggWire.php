@@ -17,6 +17,9 @@ class ElggWire extends ElggObject {
 		parent::initializeAttributes();
 
 		$this->attributes['subtype'] = 'thewire';
+		$this->attributes['access_id'] = ACCESS_PUBLIC;
+		
+		$this->attributes['method'] = 'site'; // @todo remove this in Elgg 7.0
 	}
 	
 	/**
@@ -42,5 +45,27 @@ class ElggWire extends ElggObject {
 		]);
 		
 		return $parents ? $parents[0] : null;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function getDefaultFields(): array {
+		$result = parent::getDefaultFields();
+		
+		$char_limit = (int) elgg_get_plugin_setting('limit', 'thewire');
+		
+		$result[] = [
+			'#type' => 'longtext',
+			'name' => 'description',
+			'class' => 'thewire-textarea',
+			'rows' => ($char_limit === 0 || $char_limit > 140) ? 3 : 2,
+			'data-max-length' => $char_limit,
+			'required' => true,
+			'placeholder' => elgg_echo('thewire:form:body:placeholder'),
+			'editor_type' => 'thewire',
+		];
+		
+		return $result;
 	}
 }

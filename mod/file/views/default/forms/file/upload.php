@@ -13,7 +13,9 @@ foreach ($fields as $field) {
 			if ($entity instanceof \ElggFile) {
 				$field['value'] = $entity->getFilename();
 				$field['#label'] = elgg_echo('file:replace');
-				$field['required'] = false;
+			} else {
+				// new uploads require a file
+				$field['required'] = true;
 			}
 			break;
 		case 'access':
@@ -33,7 +35,7 @@ foreach ($fields as $field) {
 if ($entity instanceof \ElggFile) {
 	echo elgg_view_field([
 		'#type' => 'hidden',
-		'name' => 'file_guid',
+		'name' => 'file_guid', // @todo rename to guid in Elgg 7.0
 		'value' => $entity->guid,
 	]);
 }

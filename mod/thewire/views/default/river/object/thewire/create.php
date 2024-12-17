@@ -4,12 +4,15 @@
  */
 
 $item = elgg_extract('item', $vars);
-if (!$item instanceof ElggRiverItem) {
+if (!$item instanceof \ElggRiverItem) {
 	return;
 }
 
-$object = $item->getObjectEntity();
-$vars['message'] = thewire_filter((string) $object->description);
+$vars['message'] = elgg_format_html((string) $item->getObjectEntity()?->description, [
+	'sanitize' => false,
+	'autop' => false,
+	'parse_thewire_hashtags' => true,
+]);
 
 $subject = $item->getSubjectEntity();
 $subject_link = elgg_view_entity_url($subject, ['class' => 'elgg-river-subject']);

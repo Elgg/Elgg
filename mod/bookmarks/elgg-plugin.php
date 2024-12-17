@@ -1,6 +1,5 @@
 <?php
 
-use Elgg\Bookmarks\FieldsHandler;
 use Elgg\Bookmarks\Forms\PrepareFields;
 use Elgg\Bookmarks\GroupToolContainerLogicCheck;
 use Elgg\Bookmarks\Notifications\CreateBookmarksEventHandler;
@@ -24,7 +23,13 @@ return [
 		],
 	],
 	'actions' => [
-		'bookmarks/save' => [],
+		'bookmarks/save' => [
+			'controller' => \Elgg\Controllers\EntityEditAction::class,
+			'options' => [
+				'entity_type' => 'object',
+				'entity_subtype' => 'bookmarks',
+			],
+		],
 	],
 	'routes' => [
 		'default:object:bookmarks' => [
@@ -101,11 +106,6 @@ return [
 		'entity:url' => [
 			'object:widget' => [
 				'Elgg\Bookmarks\Widgets::widgetURL' => [],
-			],
-		],
-		'fields' => [
-			'object:bookmarks' => [
-				FieldsHandler::class => [],
 			],
 		],
 		'form:prepare:fields' => [
