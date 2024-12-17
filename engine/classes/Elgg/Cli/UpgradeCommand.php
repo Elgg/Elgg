@@ -65,7 +65,7 @@ class UpgradeCommand extends BaseCommand {
 		$upgrades = _elgg_services()->upgrades->getPendingUpgrades(false);
 		$job = _elgg_services()->upgrades->run($upgrades);
 
-		$job->done(
+		$job->then(
 			function () {
 				$this->notice(elgg_echo('cli:upgrade:system:upgraded'));
 			},
@@ -99,7 +99,7 @@ class UpgradeCommand extends BaseCommand {
 		$upgrades = _elgg_services()->upgrades->getPendingUpgrades(true);
 		$job = _elgg_services()->upgrades->run($upgrades);
 
-		$job->done(
+		$job->then(
 			function () {
 				$this->notice(elgg_echo('cli:upgrade:async:upgraded'));
 			},

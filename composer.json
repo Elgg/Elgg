@@ -44,7 +44,7 @@
         "php-di/php-di": "~7.0.6",
         "phpfastcache/phpfastcache": "~9.2.3",
         "psr/log": "^2.0 || ^3.0",
-        "react/promise": "^2.5",
+        "react/promise": "^3.2",
         "roave/security-advisories": "dev-master",
         "robmorgan/phinx": "~0.16.0",
         "symfony/console": "~6.4",

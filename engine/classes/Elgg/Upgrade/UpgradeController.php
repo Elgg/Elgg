@@ -20,11 +20,10 @@ class UpgradeController {
 	 *
 	 * @param Request $request Request
 	 *
-	 * @return ResponseBuilder
+	 * @return null|ResponseBuilder
 	 * @throws InternalServerErrorException
 	 */
-	public function __invoke(Request $request) {
-
+	public function __invoke(Request $request): ?ResponseBuilder {
 		$response = null;
 
 		$forward_url = $request->getParam('forward', 'admin');
@@ -32,7 +31,7 @@ class UpgradeController {
 
 		$upgrade = _elgg_services()->upgrades->run();
 
-		$upgrade->done(
+		$upgrade->then(
 			function () use (&$response, $forward_url) {
 				$response = elgg_ok_response('', elgg_echo('upgrade:core'), $forward_url);
 			},
