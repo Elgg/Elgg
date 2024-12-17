@@ -173,15 +173,15 @@ class UserCapabilities {
 	}
 
 	/**
-	 * Determines whether or not the user can edit this annotation
+	 * Determines whether the user can edit this annotation
 	 *
-	 * @param \Elggentity     $entity     Object entity
-	 * @param int             $user_guid  The GUID of the user (defaults to currently logged in user)
-	 * @param \ElggAnnotation $annotation Annotation
+	 * @param \Elggentity          $entity     Object entity
+	 * @param int                  $user_guid  The GUID of the user (defaults to currently logged-in user)
+	 * @param null|\ElggAnnotation $annotation Annotation
 	 *
 	 * @return bool
 	 */
-	public function canEditAnnotation(\ElggEntity $entity, int $user_guid = 0, \ElggAnnotation $annotation = null): bool {
+	public function canEditAnnotation(\ElggEntity $entity, int $user_guid = 0, ?\ElggAnnotation $annotation = null): bool {
 		if (!$annotation) {
 			return false;
 		}

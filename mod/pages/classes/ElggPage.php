@@ -111,7 +111,7 @@ class ElggPage extends ElggObject {
 	 *
 	 * @since 3.0
 	 */
-	public function setParentEntity(\ElggPage $entity = null): bool {
+	public function setParentEntity(?\ElggPage $entity = null): bool {
 		if (empty($entity)) {
 			$this->parent_guid = 0;
 			return true;
@@ -128,7 +128,7 @@ class ElggPage extends ElggObject {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function delete(bool $recursive = true, bool $persistent = null): bool {
+	public function delete(bool $recursive = true, ?bool $persistent = null): bool {
 		$parent_guid = $this->getParentGUID();
 		$result = parent::delete($recursive, $persistent);
 		if ($result) {

@@ -84,12 +84,12 @@ class PersistentLoginService {
 	/**
 	 * Handle a password change
 	 *
-	 * @param \ElggUser $subject  The user whose password changed
-	 * @param \ElggUser $modifier The user who changed the password
+	 * @param \ElggUser      $subject  The user whose password changed
+	 * @param null|\ElggUser $modifier The user who changed the password
 	 *
 	 * @return void
 	 */
-	public function handlePasswordChange(\ElggUser $subject, \ElggUser $modifier = null): void {
+	public function handlePasswordChange(\ElggUser $subject, ?\ElggUser $modifier = null): void {
 		$this->cookie_table->deleteAllHashes($subject);
 		if (!$modifier || ($modifier->guid !== $subject->guid) || !$this->cookie_token) {
 			return;

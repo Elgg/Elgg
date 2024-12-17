@@ -15,7 +15,7 @@ class Select extends QueryBuilder {
 	 *
 	 * @return static
 	 */
-	public static function fromTable(string $table, string $alias = null): static {
+	public static function fromTable(string $table, ?string $alias = null): static {
 		$connection = _elgg_services()->db->getConnection('read');
 
 		$qb = new static($connection);

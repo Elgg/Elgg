@@ -6,12 +6,12 @@
 /**
  * Returns a menu item for leaving a group
  *
- * @param \ElggGroup $group Group to leave
- * @param \ElggUser  $user  User to check leave action for
+ * @param \ElggGroup     $group Group to leave
+ * @param null|\ElggUser $user  User to check leave action for
  *
  * @return \ElggMenuItem|false
  */
-function groups_get_group_leave_menu_item(\ElggGroup $group, \ElggUser $user = null) {
+function groups_get_group_leave_menu_item(\ElggGroup $group, ?\ElggUser $user = null) {
 	
 	if (!$user instanceof \ElggUser) {
 		$user = elgg_get_logged_in_user_entity();
@@ -40,12 +40,12 @@ function groups_get_group_leave_menu_item(\ElggGroup $group, \ElggUser $user = n
 /**
  * Returns a menu item for joining a group
  *
- * @param \ElggGroup $group Group to leave
- * @param \ElggUser  $user  User to check leave action for
+ * @param \ElggGroup     $group Group to leave
+ * @param null|\ElggUser $user  User to check leave action for
  *
  * @return \ElggMenuItem|false
  */
-function groups_get_group_join_menu_item(\ElggGroup $group, \ElggUser $user = null) {
+function groups_get_group_join_menu_item(\ElggGroup $group, ?\ElggUser $user = null) {
 	
 	if (!$user instanceof \ElggUser) {
 		$user = elgg_get_logged_in_user_entity();

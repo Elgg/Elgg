@@ -38,7 +38,7 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getRow(int $guid, int $user_guid = null): ?\stdClass {
+	public function getRow(int $guid, ?int $user_guid = null): ?\stdClass {
 		if ($guid === 1) {
 			return (object) [
 				'guid' => 1,

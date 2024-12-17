@@ -70,12 +70,12 @@ class Logger extends \Monolog\Logger {
 	/**
 	 * Build a new logger
 	 *
-	 * @param $input  InputInterface  Console input
-	 * @param $output OutputInterface Console output
+	 * @param null|InputInterface  $input  Console input
+	 * @param null|OutputInterface $output Console output
 	 *
 	 * @return static
 	 */
-	public static function factory(InputInterface $input = null, OutputInterface $output = null) {
+	public static function factory(?InputInterface $input = null, ?OutputInterface $output = null) {
 		$logger = new static(self::CHANNEL);
 
 		if (\Elgg\Application::isCli()) {

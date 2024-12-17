@@ -201,11 +201,11 @@ class Translator {
 	/**
 	 * Sets current system language
 	 *
-	 * @param string $language Language code
+	 * @param null|string $language Language code
 	 *
 	 * @return void
 	 */
-	public function setCurrentLanguage(string $language = null): void {
+	public function setCurrentLanguage(?string $language = null): void {
 		$this->current_language = $language;
 	}
 
@@ -305,16 +305,16 @@ class Translator {
 	/**
 	 * When given a full path, finds translation files and loads them
 	 *
-	 * @param string $path     Full path
-	 * @param bool   $load_all If true all languages are loaded, if
-	 *                         false only the current language + en are loaded
-	 * @param string $language Language code
+	 * @param string      $path     Full path
+	 * @param bool        $load_all If true all languages are loaded, if
+	 *                              false only the current language + en are loaded
+	 * @param null|string $language Language code
 	 *
 	 * @return bool success
 	 *
 	 * @internal
 	 */
-	public function registerTranslations(string $path, bool $load_all = false, string $language = null): bool {
+	public function registerTranslations(string $path, bool $load_all = false, ?string $language = null): bool {
 		$path = \Elgg\Project\Paths::sanitize($path);
 		
 		// don't need to register translations as the folder is missing

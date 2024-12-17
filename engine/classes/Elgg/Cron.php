@@ -52,7 +52,7 @@ class Cron {
 	 * @return Job[]
 	 * @throws CronException
 	 */
-	public function run(array $intervals = null, bool $force = false): array {
+	public function run(?array $intervals = null, bool $force = false): array {
 		if (!isset($intervals)) {
 			$intervals = array_keys($this->default_intervals);
 		}
@@ -100,7 +100,7 @@ class Cron {
 	 *
 	 * @return void
 	 */
-	protected function before(string $interval, \Elgg\Logger\Cron $cron_logger, \DateTime $time = null): void {
+	protected function before(string $interval, \Elgg\Logger\Cron $cron_logger, ?\DateTime $time = null): void {
 		if (!isset($time)) {
 			$time = $this->getCurrentTime();
 		}
@@ -130,7 +130,7 @@ class Cron {
 	 *
 	 * @return string
 	 */
-	protected function execute(string $interval, \Elgg\Logger\Cron $cron_logger, string $filename, \DateTime $time = null): string {
+	protected function execute(string $interval, \Elgg\Logger\Cron $cron_logger, string $filename, ?\DateTime $time = null): string {
 		if (!isset($time)) {
 			$time = $this->getCurrentTime();
 		}
@@ -302,7 +302,7 @@ class Cron {
 	 *
 	 * @return string
 	 */
-	protected function getLogFilename(string $interval, \DateTime $time = null): string {
+	protected function getLogFilename(string $interval, ?\DateTime $time = null): string {
 		if (!isset($time)) {
 			$time = $this->getCurrentTime();
 		}

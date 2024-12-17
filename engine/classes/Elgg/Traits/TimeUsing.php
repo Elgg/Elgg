@@ -35,11 +35,11 @@ trait TimeUsing {
 	/**
 	 * Set the current time.
 	 *
-	 * @param \DateTime $time Current time (empty for now)
+	 * @param null|\DateTime $time Current time (empty for now)
 	 *
 	 * @return void
 	 */
-	public function setCurrentTime(\DateTime $time = null) {
+	public function setCurrentTime(?\DateTime $time = null) {
 		$time = $time ?? new \DateTime();
 		$this->time = clone $time;
 	}

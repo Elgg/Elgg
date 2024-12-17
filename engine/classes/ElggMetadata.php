@@ -23,9 +23,9 @@ class ElggMetadata extends ElggExtender {
 	/**
 	 * Constructor
 	 *
-	 * @param stdClass $row Database row
+	 * @param null|\stdClass $row Database row
 	 */
-	public function __construct(stdClass $row = null) {
+	public function __construct(?\stdClass $row = null) {
 		$this->initializeAttributes();
 
 		if ($row) {
@@ -36,7 +36,7 @@ class ElggMetadata extends ElggExtender {
 	}
 
 	/**
-	 * Determines whether or not the user can edit this piece of metadata
+	 * Determines whether the user can edit this piece of metadata
 	 *
 	 * @param int $user_guid The GUID of the user (defaults to currently logged in user)
 	 *

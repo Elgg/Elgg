@@ -2,7 +2,6 @@
 
 namespace Elgg\Mocks\Database;
 
-use Elgg\Email\DelayedQueue\DatabaseRecord;
 use Elgg\Database\DelayedEmailQueueTable as DbDelayedEmailQueueTable;
 use Elgg\Database\Insert;
 use Elgg\Database\Select;
@@ -61,7 +60,7 @@ class DelayedEmailQueueTable extends DbDelayedEmailQueueTable{
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getRecipientRows(int $recipient_guid, string $delivery_interval, int $timestamp = null, int $max_results = 0): array {
+	public function getRecipientRows(int $recipient_guid, string $delivery_interval, ?int $timestamp = null, int $max_results = 0): array {
 		$result = [];
 		
 		$timestamp = $timestamp ?? $this->getCurrentTime()->getTimestamp();
@@ -98,7 +97,7 @@ class DelayedEmailQueueTable extends DbDelayedEmailQueueTable{
 	/**
 	 * {@inheritdoc}
 	 */
-	public function deleteRecipientRows(int $recipient_guid, string $delivery_interval, int $timestamp = null, int $max_id = 0): int {
+	public function deleteRecipientRows(int $recipient_guid, string $delivery_interval, ?int $timestamp = null, int $max_id = 0): int {
 		$result = 0;
 		
 		$timestamp = $timestamp ?? $this->getCurrentTime()->getTimestamp();

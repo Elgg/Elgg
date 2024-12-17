@@ -124,14 +124,14 @@ class EntityTable {
 	 *
 	 * @warning This will only return results if a) it exists, b) you have access to it.
 	 *
-	 * @param int $guid      The GUID of the object to extract
-	 * @param int $user_guid GUID of the user accessing the row
-	 *                       Defaults to logged in user if null
-	 *                       Builds an access query for a logged out user if 0
+	 * @param int      $guid      The GUID of the object to extract
+	 * @param null|int $user_guid GUID of the user accessing the row
+	 *                            Defaults to logged-in user if null
+	 *                            Builds an access query for a logged-out user if 0
 	 *
 	 * @return \stdClass|null
 	 */
-	public function getRow(int $guid, int $user_guid = null): ?\stdClass {
+	public function getRow(int $guid, ?int $user_guid = null): ?\stdClass {
 		if ($guid < 0) {
 			return null;
 		}
@@ -235,17 +235,17 @@ class EntityTable {
 	/**
 	 * Loads and returns an entity object from a guid.
 	 *
-	 * @param int    $guid    The GUID of the entity
-	 * @param string $type    The type of the entity
-	 *                        If given, even an existing entity with the given GUID
-	 *                        will not be returned unless its type matches
-	 * @param string $subtype The subtype of the entity
-	 *                        If given, even an existing entity with the given GUID
-	 *                        will not be returned unless its subtype matches
+	 * @param int         $guid    The GUID of the entity
+	 * @param null|string $type    The type of the entity
+	 *                             If given, even an existing entity with the given GUID
+	 *                             will not be returned unless its type matches
+	 * @param null|string $subtype The subtype of the entity
+	 *                             If given, even an existing entity with the given GUID
+	 *                             will not be returned unless its subtype matches
 	 *
 	 * @return \ElggEntity|null The correct Elgg or custom object based upon entity type and subtype
 	 */
-	public function get(int $guid, string $type = null, string $subtype = null): ?\ElggEntity {
+	public function get(int $guid, ?string $type = null, ?string $subtype = null): ?\ElggEntity {
 		$entity = $this->entity_cache->load($guid);
 		if ($entity instanceof \ElggEntity &&
 			(!isset($type) || $entity->type === $type) &&
@@ -340,11 +340,11 @@ class EntityTable {
 	 * Update the time_deleted column in the entities table for $entity.
 	 *
 	 * @param \ElggEntity $entity  Entity to update
-	 * @param int         $deleted Timestamp when the entity was deleted
+	 * @param null|int    $deleted Timestamp when the entity was deleted
 	 *
 	 * @return int
 	 */
-	public function updateTimeDeleted(\ElggEntity $entity, int $deleted = null): int {
+	public function updateTimeDeleted(\ElggEntity $entity, ?int $deleted = null): int {
 		if ($deleted === null) {
 			$deleted = $this->getCurrentTime()->getTimestamp();
 		}
@@ -365,11 +365,11 @@ class EntityTable {
 	 * while last_action is only set when explicitly called.
 	 *
 	 * @param \ElggEntity $entity Entity annotation|relationship action carried out on
-	 * @param int         $posted Timestamp of last action
+	 * @param null|int    $posted Timestamp of last action
 	 *
 	 * @return int
 	 */
-	public function updateLastAction(\ElggEntity $entity, int $posted = null): int {
+	public function updateLastAction(\ElggEntity $entity, ?int $posted = null): int {
 		if ($posted === null) {
 			$posted = $this->getCurrentTime()->getTimestamp();
 		}
@@ -386,12 +386,12 @@ class EntityTable {
 	/**
 	 * Get a user by GUID even if the entity is hidden or disabled
 	 *
-	 * @param int $guid User GUID. Default is logged in user
+	 * @param null|int $guid User GUID. Default is logged in user
 	 *
 	 * @return \ElggUser|null
 	 * @throws UserFetchFailureException
 	 */
-	public function getUserForPermissionsCheck(int $guid = null): ?\ElggUser {
+	public function getUserForPermissionsCheck(?int $guid = null): ?\ElggUser {
 		if (empty($guid) || $guid === $this->session_manager->getLoggedInUserGuid()) {
 			return $this->session_manager->getLoggedInUser();
 		}

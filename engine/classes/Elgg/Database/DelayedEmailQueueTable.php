@@ -75,7 +75,7 @@ class DelayedEmailQueueTable {
 	 *
 	 * @return DatabaseRecord[] database rows
 	 */
-	public function getRecipientRows(int $recipient_guid, string $delivery_interval, int $timestamp = null, int $max_results = 0): array {
+	public function getRecipientRows(int $recipient_guid, string $delivery_interval, ?int $timestamp = null, int $max_results = 0): array {
 		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('*')
 			->where($select->compare('recipient_guid', '=', $recipient_guid, ELGG_VALUE_GUID))
@@ -99,7 +99,7 @@ class DelayedEmailQueueTable {
 	 *
 	 * @return null|int
 	 */
-	public function getNextRecipientGUID(string $delivery_interval, int $timestamp = null): ?int {
+	public function getNextRecipientGUID(string $delivery_interval, ?int $timestamp = null): ?int {
 		$select = Select::fromTable(self::TABLE_NAME);
 		$select->select('recipient_guid')
 			->where($select->compare('delivery_interval', '=', $delivery_interval, ELGG_VALUE_STRING))
@@ -140,7 +140,7 @@ class DelayedEmailQueueTable {
 	 *
 	 * @return int number of deleted rows
 	 */
-	public function deleteRecipientRows(int $recipient_guid, string $delivery_interval, int $timestamp = null, int $max_id = 0): int {
+	public function deleteRecipientRows(int $recipient_guid, string $delivery_interval, ?int $timestamp = null, int $max_id = 0): int {
 		$delete = Delete::fromTable(self::TABLE_NAME);
 		$delete->where($delete->compare('recipient_guid', '=', $recipient_guid, ELGG_VALUE_GUID))
 			->andWhere($delete->compare('delivery_interval', '=', $delivery_interval, ELGG_VALUE_STRING))

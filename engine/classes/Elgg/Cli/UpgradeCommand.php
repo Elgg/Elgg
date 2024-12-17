@@ -4,7 +4,6 @@ namespace Elgg\Cli;
 
 use Elgg\Application as ElggApplication;
 use Elgg\Application\BootHandler;
-use function React\Promise\all;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;

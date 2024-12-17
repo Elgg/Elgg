@@ -68,7 +68,7 @@ class Loop {
 	 *
 	 * @return void
 	 */
-	public function loop(int $max_duration = null): void {
+	public function loop(?int $max_duration = null): void {
 		$started = microtime(true);
 
 		$this->upgrade->setStartTime();
@@ -178,14 +178,14 @@ class Loop {
 	}
 
 	/**
-	 * Check if the loop cand and should continue
+	 * Check if the loop can and should continue
 	 *
 	 * @param float    $started      Timestamp of the loop initiation
 	 * @param int|null $max_duration Maximum loop duration
 	 *
 	 * @return bool
 	 */
-	protected function canContinue($started, int $max_duration = null): bool {
+	protected function canContinue($started, ?int $max_duration = null): bool {
 		if (!isset($max_duration)) {
 			$max_duration = (int) elgg_get_config('batch_run_time_in_secs');
 		}

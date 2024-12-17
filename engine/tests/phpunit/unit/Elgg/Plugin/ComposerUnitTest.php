@@ -139,11 +139,11 @@ class ComposerUnitTest extends UnitTestCase {
 	/**
 	 * Get the composer reader
 	 *
-	 * @param \ElggPlugin $plugin plugin to read
+	 * @param null|\ElggPlugin $plugin plugin to read
 	 *
 	 * @return \Elgg\Plugin\Composer
 	 */
-	protected function getComposer(\ElggPlugin $plugin = null) {
+	protected function getComposer(?\ElggPlugin $plugin = null) {
 		if (!$plugin instanceof \ElggPlugin) {
 			$plugin = $this->plugin;
 		}

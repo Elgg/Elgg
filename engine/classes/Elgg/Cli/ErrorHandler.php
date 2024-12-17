@@ -39,13 +39,13 @@ class ErrorHandler extends AbstractProcessingHandler {
 	/**
 	 * Constructor
 	 *
-	 * @param OutputInterface $stdout STDOUT handler
-	 * @param OutputInterface $stderr STDERR handler
-	 * @param bool            $bubble Bubble severity
+	 * @param OutputInterface      $stdout STDOUT handler
+	 * @param null|OutputInterface $stderr STDERR handler
+	 * @param bool                 $bubble Bubble severity
 	 */
 	public function __construct(
 		OutputInterface $stdout,
-		OutputInterface $stderr = null,
+		?OutputInterface $stderr = null,
 		$bubble = true
 	) {
 		$this->stdout = $stdout;

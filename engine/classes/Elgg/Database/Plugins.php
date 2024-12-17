@@ -117,7 +117,7 @@ class Plugins {
 	 *
 	 * @return void
 	 */
-	public function setBootPlugins(array $plugins = null, bool $order_plugins = true): void {
+	public function setBootPlugins(?array $plugins = null, bool $order_plugins = true): void {
 		$this->cache->clear();
 		if (!is_array($plugins)) {
 			unset($this->boot_plugins);
@@ -156,12 +156,12 @@ class Plugins {
 	/**
 	 * Returns a list of plugin directory names from a base directory.
 	 *
-	 * @param string $dir A dir to scan for plugins. Defaults to config's plugins_path.
-	 *                    Must have a trailing slash.
+	 * @param null|string $dir A dir to scan for plugins. Defaults to config's plugins_path.
+	 *                         Must have a trailing slash.
 	 *
 	 * @return array Array of directory names (not full paths)
 	 */
-	public function getDirsInDir(string $dir = null): array {
+	public function getDirsInDir(?string $dir = null): array {
 		if (!$dir) {
 			$dir = $this->getPath();
 		}
@@ -673,11 +673,11 @@ class Plugins {
 	 * Sorts plugins by priority
 	 *
 	 * @param \ElggPlugin[] $plugins            Array of plugins
-	 * @param string        $volatile_data_name Use an optional volatile data name to retrieve priority
+	 * @param null|string   $volatile_data_name Use an optional volatile data name to retrieve priority
 	 *
 	 * @return \ElggPlugin[]
 	 */
-	protected function orderPluginsByPriority(array $plugins = [], string $volatile_data_name = null): array {
+	protected function orderPluginsByPriority(array $plugins = [], ?string $volatile_data_name = null): array {
 		$priorities = [];
 		$sorted_plugins = [];
 				

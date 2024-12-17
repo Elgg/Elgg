@@ -207,13 +207,13 @@ function elgg_http_url_is_identical(string $url1, string $url2, array $ignore_pa
  *
  * @note Signed URLs do not offer CSRF protection and should not be used instead of action tokens.
  *
- * @param string $url     URL to sign
- * @param string $expires Expiration time
- *                        A string suitable for strtotime()
- *                        Null value indicate non-expiring URL
+ * @param string      $url     URL to sign
+ * @param null|string $expires Expiration time
+ *                             A string suitable for strtotime()
+ *                             Null value indicate non-expiring URL
  * @return string
  */
-function elgg_http_get_signed_url(string $url, string $expires = null): string {
+function elgg_http_get_signed_url(string $url, ?string $expires = null): string {
 	return _elgg_services()->urlSigner->sign($url, $expires);
 }
 

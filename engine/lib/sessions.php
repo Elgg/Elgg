@@ -120,13 +120,13 @@ function elgg_reset_authentication_failures(\ElggUser $user): void {
  * Checks if the authentication failure limit has been reached
  *
  * @param \ElggUser $user     User to check the limit for
- * @param int       $limit    (optional) number of allowed failures
- * @param int       $lifetime (optional) number of seconds before a failure is considered expired
+ * @param null|int  $limit    (optional) number of allowed failures
+ * @param null|int  $lifetime (optional) number of seconds before a failure is considered expired
  *
  * @return bool
  * @since 4.3
  */
-function elgg_is_authentication_failure_limit_reached(\ElggUser $user, int $limit = null, int $lifetime = null): bool {
+function elgg_is_authentication_failure_limit_reached(\ElggUser $user, ?int $limit = null, ?int $lifetime = null): bool {
 	return _elgg_services()->accounts->isAuthenticationFailureLimitReached($user, $limit, $lifetime);
 }
 

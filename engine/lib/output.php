@@ -212,13 +212,13 @@ function elgg_get_friendly_title(string $title): string {
  *
  * @see elgg_view_friendly_time()
  *
- * @param int $time         A UNIX epoch timestamp
- * @param int $current_time Current UNIX epoch timestamp (optional)
+ * @param int      $time         A UNIX epoch timestamp
+ * @param null|int $current_time Current UNIX epoch timestamp (optional)
  *
  * @return string The friendly time string
  * @since 1.7.2
  */
-function elgg_get_friendly_time(int $time, int $current_time = null): string {
+function elgg_get_friendly_time(int $time, ?int $current_time = null): string {
 
 	if (!isset($current_time)) {
 		$current_time = time();
@@ -315,12 +315,12 @@ function elgg_get_friendly_upload_error(int $error_code): string {
  * Plugins register for output:strip_tags event.
  * Original string included in $params['original_string']
  *
- * @param string $string         Formatted string
- * @param string $allowable_tags Optional parameter to specify tags which should not be stripped
+ * @param string      $string         Formatted string
+ * @param null|string $allowable_tags Optional parameter to specify tags which should not be stripped
  *
  * @return string String run through strip_tags() and any events.
  */
-function elgg_strip_tags(string $string, string $allowable_tags = null): string {
+function elgg_strip_tags(string $string, ?string $allowable_tags = null): string {
 	return _elgg_services()->html_formatter->stripTags($string, $allowable_tags);
 }
 

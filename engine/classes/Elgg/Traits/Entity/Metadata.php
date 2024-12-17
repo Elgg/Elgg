@@ -195,7 +195,7 @@ trait Metadata {
 	 * @return bool
 	 * @since 1.8
 	 */
-	public function deleteMetadata(string $name = null): bool {
+	public function deleteMetadata(?string $name = null): bool {
 		if (!$this->guid) {
 			// remove from temp_metadata
 			if (isset($name)) {

@@ -24,7 +24,7 @@ class ErrorResult extends \GenericResult {
 	 *
 	 * @return void
 	 */
-	public function __construct(string $message, int $code = null, \Throwable $exception = null) {
+	public function __construct(string $message, ?int $code = null, ?\Throwable $exception = null) {
 		if (!isset($code)) {
 			$code = self::RESULT_FAIL;
 		}
@@ -45,7 +45,7 @@ class ErrorResult extends \GenericResult {
 	 *
 	 * @return \ErrorResult
 	 */
-	public static function getInstance(string $message, int $code = null, \Throwable $exception = null): \ErrorResult {
+	public static function getInstance(string $message, ?int $code = null, ?\Throwable $exception = null): \ErrorResult {
 		return new self($message, $code, $exception);
 	}
 }

@@ -374,12 +374,12 @@ class ResponseFactory {
 	/**
 	 * Wraps response content in an Ajax2 compatible format
 	 *
-	 * @param string $content     Response content
-	 * @param string $forward_url Forward URL
+	 * @param string      $content     Response content
+	 * @param null|string $forward_url Forward URL
 	 *
 	 * @return string
 	 */
-	public function wrapAjaxResponse($content = '', string $forward_url = null): string {
+	public function wrapAjaxResponse($content = '', ?string $forward_url = null): string {
 		$content = $this->stringify($content);
 
 		if ($forward_url === REFERRER) {

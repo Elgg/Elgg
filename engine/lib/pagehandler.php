@@ -149,14 +149,14 @@ function elgg_generate_url(string $name, array $parameters = []): ?string {
  *      elements.
  *
  *
- * @param ElggEntity $entity      Entity
- * @param string     $resource    Resource name
- * @param string     $subresource Subresource name
- * @param array      $parameters  URL query elements
+ * @param ElggEntity  $entity      Entity
+ * @param string      $resource    Resource name
+ * @param null|string $subresource Subresource name
+ * @param array       $parameters  URL query elements
  *
  * @return string|null
  */
-function elgg_generate_entity_url(ElggEntity $entity, string $resource = 'view', string $subresource = null, array $parameters = []): ?string {
+function elgg_generate_entity_url(ElggEntity $entity, string $resource = 'view', ?string $subresource = null, array $parameters = []): ?string {
 
 	$make_route_name = function ($type, $subtype) use ($resource, $subresource) {
 		$route_parts = [
@@ -214,14 +214,14 @@ function elgg_generate_action_url(string $action, array $query = [], bool $add_c
  *                                  In action handlers, response content can contain either a JSON string or an array of data
  * @param string|array $message     System message visible to the client
  *                                  Can be used by handlers to display a system message
- * @param string       $forward_url Forward URL
+ * @param null|string  $forward_url Forward URL
  *                                  Can be used by handlers to redirect the client on non-ajax requests
  * @param int          $status_code HTTP status code
  *                                  Status code of the HTTP response (defaults to 200)
  *
  * @return \Elgg\Http\OkResponse
  */
-function elgg_ok_response($content = '', string|array $message = '', string $forward_url = null, int $status_code = ELGG_HTTP_OK): \Elgg\Http\OkResponse {
+function elgg_ok_response($content = '', string|array $message = '', ?string $forward_url = null, int $status_code = ELGG_HTTP_OK): \Elgg\Http\OkResponse {
 	if ($message) {
 		elgg_register_success_message($message);
 	}

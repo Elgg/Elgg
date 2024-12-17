@@ -226,7 +226,7 @@ class RouteRegistrationService {
 	 *
 	 * @return array|false
 	 */
-	public function resolveRouteParameters(string $name, \ElggEntity $entity = null, array $parameters = []) {
+	public function resolveRouteParameters(string $name, ?\ElggEntity $entity = null, array $parameters = []) {
 		$route = $this->routes->get($name);
 		if (!$route) {
 			return false;

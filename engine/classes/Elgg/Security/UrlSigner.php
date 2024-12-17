@@ -20,14 +20,14 @@ class UrlSigner {
 	 *
 	 * @note Signed URLs do not offer CSRF protection and should not be used instead of action tokens.
 	 *
-	 * @param string $url     URL to sign
-	 * @param string $expires Expiration time
-	 *                        Accepts a string suitable for strtotime()
-	 *                        Null value indicate non-expiring URL
+	 * @param string      $url     URL to sign
+	 * @param null|string $expires Expiration time
+	 *                             Accepts a string suitable for strtotime()
+	 *                             Null value indicate non-expiring URL
 	 * @return string
 	 * @throws InvalidArgumentException
 	 */
-	public function sign(string $url, string $expires = null): string {
+	public function sign(string $url, ?string $expires = null): string {
 		$url = elgg_normalize_url($url);
 		
 		$parts = parse_url($url);

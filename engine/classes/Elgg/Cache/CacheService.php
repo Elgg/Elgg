@@ -50,7 +50,7 @@ abstract class CacheService {
 	 *
 	 * @return bool
 	 */
-	public function save(string $key, mixed $data, int|\DateTime $expire_after = null): bool {
+	public function save(string $key, mixed $data, null|int|\DateTime $expire_after = null): bool {
 		return $this->isEnabled() && $this->cache->save($key, $data, $expire_after);
 	}
 	
