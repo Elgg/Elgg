@@ -20,6 +20,8 @@ return array(
 	'edit:object:bookmarks' => "Edit bookmark",
 	'notification:object:bookmarks:create' => "Send a notification when a bookmark is created",
 	'notifications:mute:object:bookmarks' => "about the bookmark '%s'",
+	
+	'entity:edit:object:bookmarks:success' => 'The bookmark was saved successfully',
 
 	'bookmarks:this' => "Bookmark this page",
 	'bookmarks:this:group' => "Bookmark in %s",
@@ -64,6 +66,7 @@ View and comment on the bookmark:
 	 */
 
 	'bookmarks:save:success' => "Your item was successfully bookmarked.",
+	'entity:edit:object:bookmarks:success' => "Your item was successfully bookmarked.",
 	'entity:delete:object:bookmarks:success' => "The bookmark was deleted.",
 
 	/**

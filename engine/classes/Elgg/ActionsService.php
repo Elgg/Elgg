@@ -44,6 +44,7 @@ class ActionsService {
 	 * @param string $access  Who is allowed to execute this action: public, logged_in, logged_out, admin. (default: logged_in)
 	 * @param array  $params  Additional params for the action route registration:
 	 *                        - middleware: additional middleware on the action route
+	 *                        - options: additional route options
 	 *
 	 * @return void
 	 * @throws \Elgg\Exceptions\DomainException
@@ -94,6 +95,7 @@ class ActionsService {
 			'file' => $file,
 			'controller' => $controller,
 			'middleware' => $middleware,
+			'options' => (array) elgg_extract('options', $params),
 			'walled' => false,
 		]);
 	}

@@ -28,7 +28,13 @@ return [
 		'Elgg\File\Upgrades\MoveFiles',
 	],
 	'actions' => [
-		'file/upload' => [],
+		'file/upload' => [
+			'controller' => \Elgg\File\Controllers\EditAction::class,
+			'options' => [
+				'entity_type' => 'object',
+				'entity_subtype' => 'file',
+			],
+		],
 	],
 	'routes' => [
 		'default:object:file' => [

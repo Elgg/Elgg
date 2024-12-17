@@ -21,28 +21,19 @@ if ($post instanceof \ElggWire) {
 	]);
 }
 
-$chars_left = elgg_echo('thewire:charleft');
-
-$count_down = ($char_limit === 0) ? '' : elgg_format_element('span', [], $char_limit) . " {$chars_left}";
-$num_lines = ($char_limit === 0) ? 3 : 2;
-	
-if ($char_limit > 140) {
-	$num_lines = 3;
-}
-
 if ($char_limit && !elgg_is_active_plugin('ckeditor')) {
 	elgg_import_esm('forms/thewire/add');
 }
 
-echo elgg_view('input/longtext', [
-	'name' => 'body',
-	'class' => 'thewire-textarea',
-	'rows' => $num_lines,
-	'data-max-length' => $char_limit,
-	'required' => true,
-	'placeholder' => elgg_echo('thewire:form:body:placeholder'),
-	'editor_type' => 'thewire',
-]);
+$fields = elgg()->fields->get('object', 'thewire');
+
+foreach ($fields as $field) {
+	$name = $field['name'];
+	
+	$field['value'] = elgg_extract($name, $vars);
+	
+	echo elgg_view_field($field);
+}
 
 // form footer
 $fields = [
@@ -53,6 +44,8 @@ $fields = [
 ];
 
 if ($char_limit > 0) {
+	$count_down = elgg_format_element('span', [], $char_limit) . ' ' . elgg_echo('thewire:charleft');
+	
 	$chars = elgg_format_element('div', ['class' => 'elgg-field-input'], $count_down);
 	
 	$fields[] = [

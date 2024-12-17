@@ -18,56 +18,17 @@ class Seeder extends Seed {
 	 */
 	public function seed() {
 		$this->advance($this->getCount());
-
-		$max_chars = (int) elgg_get_plugin_setting('limit', 'thewire');
-		if ($max_chars < 1) {
-			// 0 = unlimited
-			$max_chars = 500;
-		}
-		
-		$fix_post = function(int $guid) {
-			$entity = get_entity($guid);
-			if (!$entity instanceof \ElggWire) {
-				return false;
-			}
-			
-			// change time created
-			$entity->time_created = $this->getRandomCreationTimestamp();
-			$entity->save();
-			
-			// add faker metadata
-			$entity->__faker = true;
-			
-			// fix river item
-			$river = elgg_get_river([
-				'view' => 'river/object/thewire/create',
-				'action_type' => 'create',
-				'subject_guid' => $entity->owner_guid,
-				'object_guid' => $entity->guid,
-			]);
-			/* @var $item \ElggRiverItem */
-			foreach ($river as $item) {
-				$update = Update::table(RiverTable::TABLE_NAME);
-				$update->set('posted', $update->param($entity->time_created, ELGG_VALUE_TIMESTAMP))
-					->where($update->compare('id', '=', $item->id, ELGG_VALUE_ID));
-				
-				elgg()->db->updateData($update);
-			}
-			
-			return $entity;
-		};
 		
 		while ($this->getCount() < $this->limit) {
 			$owner = $this->getRandomUser();
-
-			$wire_guid = thewire_save_post($this->faker()->text($max_chars), $owner->guid, $this->getRandomAccessId($owner));
-			if ($wire_guid === false) {
+			
+			$post = $this->createWirePost($owner);
+			if (empty($post)) {
 				continue;
 			}
 			
-			/* @var $post \ElggWire */
-			$post = $fix_post($wire_guid);
-
+			$post->wire_thread = $post->guid; // first post in this thread
+			
 			$this->createLikes($post);
 
 			$num_replies = $this->faker->numberBetween(0, 5);
@@ -78,18 +39,57 @@ class Seeder extends Seed {
 				$reply_owner = $this->getRandomUser($exclude, true);
 				$exclude[] = $reply_owner->guid;
 				
-				$reply_guid = thewire_save_post($this->faker()->text($max_chars), $reply_owner->guid, $this->getRandomAccessId($reply_owner), $post->guid);
-				if ($reply_guid === false) {
+				$reply_post = $this->createWirePost($reply_owner);
+				if (empty($reply_post)) {
 					continue;
 				}
 				
-				$fix_post($reply_guid);
+				$reply_post->reply = true;
+				
+				$reply_post->addRelationship($post->guid, 'parent');
+				$reply_post->wire_thread = get_entity($post->guid)->wire_thread;
 				
 				$this->advance();
 			}
 			
 			$this->advance();
 		}
+	}
+	
+	/**
+	 * Helper function to create a wire post
+	 *
+	 * @param \ElggUser $owner the owner of the wire post
+	 *
+	 * @return null|\ElggWire
+	 */
+	protected function createWirePost(\ElggUser $owner): ?\ElggWire {
+		$max_chars = (int) elgg_get_plugin_setting('limit', 'thewire');
+		if ($max_chars < 1) {
+			// 0 = unlimited
+			$max_chars = 500;
+		}
+		
+		$post = $this->createObject([
+			'subtype' => 'thewire',
+			'title' => false,
+			'description' => $this->faker()->text($max_chars),
+			'tags' => false,
+			'owner_guid' => $owner->guid,
+			'access_id' => $this->getRandomAccessId($owner),
+		]);
+		
+		if (!$post instanceof \ElggWire) {
+			return null;
+		}
+		
+		elgg_create_river_item([
+			'action_type' => 'create',
+			'object_guid' => $post->guid,
+			'target_guid' => $post->container_guid,
+		]);
+		
+		return $post;
 	}
 
 	/**

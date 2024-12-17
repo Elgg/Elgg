@@ -26,7 +26,13 @@ return [
 		'limit' => 140,
 	],
 	'actions' => [
-		'thewire/add' => [],
+		'thewire/add' => [
+			'controller' => \Elgg\TheWire\Controllers\EditAction::class,
+			'options' => [
+				'entity_type' => 'object',
+				'entity_subtype' => 'thewire',
+			],
+		],
 	],
 	'routes' => [
 		'default:object:thewire' => [
@@ -91,6 +97,11 @@ return [
 		'entity:url' => [
 			'object:widget' => [
 				'Elgg\TheWire\Widgets::thewireWidgetURL' => [],
+			],
+		],
+		'prepare' => [
+			'html' => [
+				'Elgg\TheWire\Views::parseTags' => [],
 			],
 		],
 		'register' => [
