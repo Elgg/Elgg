@@ -2,7 +2,7 @@ Routing
 #######
 
 Elgg has two mechanisms to respond to HTTP requests that don't already go through the
-:doc:`/design/actions` and :doc:`/guides/views/simplecache` systems.
+:doc:`/guides/actions` and :doc:`/guides/views/simplecache` systems.
 
 URL Identifier and Segments
 ===========================

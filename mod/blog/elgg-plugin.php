@@ -24,7 +24,13 @@ return [
 		],
 	],
 	'actions' => [
-		'blog/save' => [],
+		'blog/save' => [
+			'controller' => \Elgg\Blog\Controllers\EditAction::class,
+			'options' => [
+				'entity_type' => 'object',
+				'entity_subtype' => 'blog',
+			],
+		],
 	],
 	'routes' => [
 		'collection:object:blog:owner' => [
@@ -114,11 +120,6 @@ return [
 		'entity:url' => [
 			'object:widget' => [
 				'Elgg\Blog\Widgets::blogWidgetUrl' => [],
-			],
-		],
-		'fields' => [
-			'object:blog' => [
-				FieldsHandler::class => [],
 			],
 		],
 		'form:prepare:fields' => [

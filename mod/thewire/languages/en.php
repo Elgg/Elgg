@@ -20,6 +20,8 @@ return array(
 	'collection:object:thewire:mentions' => "Wire posts mentioning @%s",
 	'notification:object:thewire:create' => "Send a notification when a wire post is created",
 	'notifications:mute:object:thewire' => "about the wire post '%s'",
+	
+	'entity:edit:object:thewire:success' => 'The wire post was saved successfully',
 
 	'thewire:menu:filter:mentions' => "Mentions",
 	
@@ -70,4 +72,9 @@ return array(
 	 */
 	'thewire:settings:limit' => "Maximum number of characters for wire messages:",
 	'thewire:settings:limit:none' => "No limit",
+	
+	/**
+	 * Exceptions
+	 */
+	'ValidationException:thewire:limit' => "The wire post length is over the configured limit",
 );

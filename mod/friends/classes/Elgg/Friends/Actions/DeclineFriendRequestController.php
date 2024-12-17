@@ -2,42 +2,53 @@
 
 namespace Elgg\Friends\Actions;
 
-use Elgg\Http\ResponseBuilder;
+use Elgg\Exceptions\Http\BadRequestException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
+use Elgg\Exceptions\Http\InternalServerErrorException;
+use Elgg\Exceptions\Http\ValidationException;
+use Elgg\Http\OkResponse;
 
 /**
  * Action controller to decline a friend request
  *
  * @since 3.2
  */
-class DeclineFriendRequestController {
-
+class DeclineFriendRequestController extends \Elgg\Controllers\GenericAction {
+	
 	/**
-	 * Remove the received friend request
+	 * {@inheritdoc}
 	 *
-	 * @param \Elgg\Request $request the Elgg request
-	 *
-	 * @return ResponseBuilder
+	 * @throws ValidationException
 	 */
-	public function __invoke(\Elgg\Request $request) {
-		
-		$id = (int) $request->getParam('id');
+	protected function validate(): void {
+		$id = (int) $this->request->getParam('id');
 		if (empty($id)) {
-			return elgg_error_response(elgg_echo('error:missing_data'));
+			throw new ValidationException(elgg_echo('ValidationException:field:required', ['id']));
 		}
-		
-		$relationship = elgg_get_relationship($id);
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 *
+	 * @throws BadRequestException
+	 * @throws EntityPermissionsException
+	 * @throws InternalServerErrorException
+	 */
+	protected function execute(): void {
+		$relationship = elgg_get_relationship((int) $this->request->getParam('id'));
 		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'friendrequest') {
-			return elgg_error_response(elgg_echo('error:missing_data'));
+			throw new BadRequestException(elgg_echo('error:missing_data'));
 		}
 		
 		$receiving_user = get_user($relationship->guid_two);
 		if (!$receiving_user instanceof \ElggUser || !$receiving_user->canEdit()) {
-			return elgg_error_response(elgg_echo('actionunauthorized'));
+			throw new EntityPermissionsException();
 		}
 		
 		if (!$relationship->delete()) {
-			return elgg_error_response(elgg_echo('friends:action:friendrequest:decline:fail'));
+			throw new InternalServerErrorException(elgg_echo('friends:action:friendrequest:decline:fail'));
 		}
+		
 		
 		// notify requesting user about decline
 		$requesting_user = get_user($relationship->guid_one);
@@ -55,7 +66,12 @@ class DeclineFriendRequestController {
 			
 			notify_user($requesting_user->guid, $receiving_user->guid, $subject, $message, $params);
 		}
-		
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function success(): OkResponse {
 		return elgg_ok_response('', elgg_echo('friends:action:friendrequest:decline:success'));
 	}
 }

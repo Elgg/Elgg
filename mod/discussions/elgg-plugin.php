@@ -1,6 +1,5 @@
 <?php
 
-use Elgg\Discussions\FieldsHandler;
 use Elgg\Discussions\Forms\PrepareFields;
 use Elgg\Discussions\GroupToolContainerLogicCheck;
 use Elgg\Discussions\Notifications\CreateDiscussionEventHandler;
@@ -27,7 +26,13 @@ return [
 		'enable_global_discussions' => 0,
 	],
 	'actions' => [
-		'discussion/save' => [],
+		'discussion/save' => [
+			'controller' => \Elgg\Discussions\Controllers\EditAction::class,
+			'options' => [
+				'entity_type' => 'object',
+				'entity_subtype' => 'discussion',
+			],
+		],
 		'discussion/toggle_status' => [],
 	],
 	'routes' => [
@@ -93,11 +98,6 @@ return [
 		'entity:url' => [
 			'object:widget' => [
 				'Elgg\Discussions\Widgets::widgetURL' => [],
-			],
-		],
-		'fields' => [
-			'object:discussion' => [
-				FieldsHandler::class => [],
 			],
 		],
 		'form:prepare:fields' => [

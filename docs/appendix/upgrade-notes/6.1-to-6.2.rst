@@ -1,0 +1,13 @@
+From 6.1 to 6.2
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+Deprecated APIs
+~~~~~~~~~~~~~~~
+
+* ``thewire_save_post()``
+* ``thewire_get_hashtags()``
+* ``thewire_filter()`` use ``elgg_format_html()``

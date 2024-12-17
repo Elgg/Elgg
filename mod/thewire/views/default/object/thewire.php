@@ -18,13 +18,21 @@ $params = [
 ];
 
 if (elgg_extract('full_view', $vars)) {
-	$params['body'] = thewire_filter((string) $entity->description);
+	$params['body'] = elgg_format_html((string) $entity->description, [
+		'sanitize' => false,
+		'autop' => false,
+		'parse_thewire_hashtags' => true,
+	]);
 	$params['show_summary'] = true;
 	
 	$params = $params + $vars;
 	echo elgg_view('object/elements/full', $params);
 } else {
-	$params['content'] = thewire_filter((string) $entity->description);
+	$params['content'] = elgg_format_html((string) $entity->description, [
+		'sanitize' => false,
+		'autop' => false,
+		'parse_thewire_hashtags' => true,
+	]);
 	
 	$params = $params + $vars;
 	echo elgg_view('object/elements/summary', $params);

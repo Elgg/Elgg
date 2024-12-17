@@ -28,6 +28,7 @@
  *                         (default: logged_in)
  * @param array  $params   Additional params for the action route registration:
  *                         - middleware: additional middleware on the action route
+ *                         - options: additional route options
  *
  * @return void
  */
