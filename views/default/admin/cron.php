@@ -39,7 +39,12 @@ foreach ($periods as $period) {
 		
 		foreach ($logs as $filename => $contents) {
 			$matches = [];
-			preg_match('/(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})T(?<hour>[0-9]{2})-(?<minute>[0-9]{2})-(?<second>[0-9]{2})(?<offset>[-p])(?<offset_hour>[0-9]{2})-(?<offset_minute>[0-9]{2})\S+/', $filename, $matches);
+			$result = preg_match('/(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})T(?<hour>[0-9]{2})-(?<minute>[0-9]{2})-(?<second>[0-9]{2})(?<offset>[-p])(?<offset_hour>[0-9]{2})-(?<offset_minute>[0-9]{2})\S+/', $filename, $matches);
+			if (empty($result)) {
+				// match on filename format failed or no match found
+				continue;
+			}
+			
 			if ($matches['offset'] === 'p') {
 				$matches['offset'] = '+';
 			}
