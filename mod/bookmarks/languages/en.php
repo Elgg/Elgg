@@ -64,6 +64,7 @@ View and comment on the bookmark:
 	 */
 
 	'bookmarks:save:success' => "Your item was successfully bookmarked.",
+	'entity:edit:object:bookmarks:success' => "The bookmark was saved successfully",
 	'entity:delete:object:bookmarks:success' => "The bookmark was deleted.",
 
 	/**

@@ -169,6 +169,23 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertIsArray($middleware);
 		$this->assertContains(\Elgg\Router\Middleware\AjaxGatekeeper::class, $middleware);
 	}
+	
+	public function testCanRegisterActionWithAdditionalOptions() {
+		$this->assertFalse(_elgg_services()->actions->exists('test/output'));
+		_elgg_services()->actions->register('test/output', "{$this->actionsDir}/output.php", 'public', [
+			'options' => [
+				'entity_type' => 'foo',
+				'entity_subtype' => 'bar',
+			],
+		]);
+		
+		$this->assertTrue(_elgg_services()->actions->exists('test/output'));
+		$route = _elgg_services()->routes->get('action:test/output');
+		$this->assertInstanceOf(\Elgg\Router\Route::class, $route);
+		
+		$this->assertEquals('foo', $route->getOption('entity_type'));
+		$this->assertEquals('bar', $route->getOption('entity_subtype'));
+	}
 
 	public function testCanRegisterActionWithoutFilename() {
 		_elgg_services()->actions->register('login');

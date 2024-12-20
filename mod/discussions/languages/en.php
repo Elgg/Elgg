@@ -26,7 +26,9 @@ return array(
 	'discussion:topic:created' => 'The discussion topic was created.',
 	'discussion:topic:updated' => 'The discussion topic was updated.',
 	'entity:delete:object:discussion:success' => 'Discussion topic has been deleted.',
-
+	
+	'entity:edit:object:discussion:success' => 'The discussion was saved successfully',
+	
 	'discussion:topic:notfound' => 'Discussion topic not found',
 	'discussion:error:notsaved' => 'Unable to save this topic',
 	'discussion:error:missing' => 'Both title and message are required fields',

@@ -33,7 +33,9 @@ return array(
 	'edit:object:file' => "Edit file",
 	'notification:object:file:create' => "Send a notification when a file is created",
 	'notifications:mute:object:file' => "about the file '%s'",
-
+	
+	'entity:edit:object:file:success' => 'The file was saved successfully',
+	
 	'file:more' => "More files",
 	'file:list' => "list view",
 

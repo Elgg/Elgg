@@ -1346,4 +1346,22 @@ abstract class ElggEntity extends \ElggData {
 	public function hasCapability(string $capability): bool {
 		return _elgg_services()->entity_capabilities->hasCapability($this->getType(), $this->getSubtype(), $capability);
 	}
+	
+	/**
+	 * Returns a default set of fields to be used for forms related to this entity
+	 *
+	 * @return array
+	 */
+	public static function getDefaultFields(): array {
+		return [];
+	}
+	
+	/**
+	 * Helper function to easily retrieve form fields for this entity
+	 *
+	 * @return array
+	 */
+	final public function getFields(): array {
+		return _elgg_services()->fields->get($this->getType(), $this->getSubtype());
+	}
 }

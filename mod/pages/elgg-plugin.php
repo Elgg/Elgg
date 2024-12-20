@@ -25,7 +25,13 @@ return [
 		],
 	],
 	'actions' => [
-		'pages/edit' => [],
+		'pages/edit' => [
+			'controller' => \Elgg\Pages\Controllers\EditAction::class,
+			'options' => [
+				'entity_type' => 'object',
+				'entity_subtype' => 'page',
+			],
+		],
 	],
 	'routes' => [
 		'default:object:page' => [
@@ -126,11 +132,6 @@ return [
 		'extender:url' => [
 			'annotation' => [
 				'Elgg\Pages\Extender::setRevisionUrl' => [],
-			],
-		],
-		'fields' => [
-			'object:page' => [
-				\Elgg\Pages\FieldsHandler::class => [],
 			],
 		],
 		'form:prepare:fields' => [
