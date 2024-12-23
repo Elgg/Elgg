@@ -16,7 +16,7 @@ Integrated Development Environment
 
 An IDE does just what its name implies: it includes a set of tools that you would normally use separately. Most IDEs will include source code control which will allow you to directly commit and update your code from your cvs repository. It may have an FTP client built into it to make the transfer of files to a remote server easier. It will have syntax checking to catch errors before you try to execute the code on a server.
 
-The two most popular free IDEs for PHP developers are Eclipse_ and NetBeans_. Eclipse has two different plugins for working with PHP code: PDT_ and PHPEclipse_.
+The two most popular free IDEs for PHP developers are Eclipse_ , NetBeans_ and Codelobster_ . Eclipse has two different plugins for working with PHP code: PDT_ and PHPEclipse_.
 
 .. _integrated development environment: http://en.wikipedia.org/wiki/Integrated_development_environment
 .. _Notepad++: http://notepad-plus-plus.org/
@@ -26,6 +26,7 @@ The two most popular free IDEs for PHP developers are Eclipse_ and NetBeans_. Ec
 .. _NetBeans: http://netbeans.org/
 .. _PDT: http://www.eclipse.org/pdt/
 .. _PHPEclipse: http://www.phpeclipse.com/
+.. _Codelobster: https://codelobster.com/
 
 I don't like the wording of something in Elgg. How do I change it?
 ------------------------------------------------------------------
