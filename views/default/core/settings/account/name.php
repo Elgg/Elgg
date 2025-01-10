@@ -12,7 +12,7 @@ if (!$user instanceof \ElggUser) {
 
 echo elgg_view_field([
 	'#type' => 'text',
-	'#label' => elgg_echo('name'),
+	'#label' => elgg_echo('user:name:label'),
 	'name' => 'name',
 	'value' => $user->name,
 ]);
