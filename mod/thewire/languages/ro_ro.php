@@ -65,4 +65,8 @@ return array(
 	 */
 	'thewire:settings:limit' => "Numărul maxim de caractere pentru mesajele de fir:",
 	'thewire:settings:limit:none' => "Fără limită",
+	
+	/**
+	 * Exceptions
+	 */
 );

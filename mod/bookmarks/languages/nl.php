@@ -64,6 +64,7 @@ Bekijk en reageer op de favoriet:
 	 */
 
 	'bookmarks:save:success' => "Je favoriet is succesvol opgeslagen.",
+	'entity:edit:object:bookmarks:success' => "De favoriet is succesvol opgeslagen",
 	'entity:delete:object:bookmarks:success' => "De favoriet is verwijderd",
 
 	/**

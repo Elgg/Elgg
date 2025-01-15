@@ -6,15 +6,16 @@
 # Translators:
 # Jerôme Bakker, 2024
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024
+# Emmanuel Simond, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-20 13:21+0100\n"
+"POT-Creation-Date: 2024-12-04 14:25+0100\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024\n"
+"Last-Translator: Emmanuel Simond, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -117,8 +118,8 @@ msgid ""
 "If you have an ACL you still need to add users to it in order to grant those"
 " users access to content with the `access_id` of the ACLs `id`."
 msgstr ""
-"Si vous avez une ACL vous devez encore lui ajouter des utilisateurs pour "
-"donner accès à ces utilisateurs au contenu avec l'`access_id` de l'ACL `id`."
+"Si vous avez une ACL vous devez encore lui ajouter des utilisateurs afin de "
+"leur donner accès au contenu avec l'`access_id` de l'ACL `id`."
 
 #: ../../guides/access.rst:55
 msgid "Removing users from an ACL"
@@ -210,7 +211,7 @@ msgid ""
 " engine framework that everyone dreams of."
 msgstr ""
 "Cette page a pour but d'énumérer et de documenter les règles d'accessibilité"
-" et les meilleures pratiques pour aider les développeur du noyau et des "
+" et les meilleures pratiques pour aider les développeurs du noyau et des "
 "plugins à faire de Elgg le meilleur framework applicatif de moteur social "
 "dont tout le monde rêve."
 
@@ -246,7 +247,7 @@ msgid ""
 "`Resources for planning and implementing for accessibility "
 "<https://www.w3.org/WAI/planning/>`_"
 msgstr ""
-"`Ressources pour planifier et implémenter l'accessibilité "
+"`Ressources pour la planification et l'implémentation de l'accessibilité "
 "<https://www.w3.org/WAI/planning/fr>`_"
 
 #: ../../guides/accessibility.rst:16
@@ -304,7 +305,7 @@ msgid ""
 msgstr ""
 "Utilisez les vues du noyau telles que ``output/*``, et ``input/*`` pour "
 "générer le balisage, dans la mesure où nous pouvons intégrer les règles "
-"d'accessibilité dans ces vues"
+"d'accessibilité \"a11y\" dans ces vues"
 
 #: ../../guides/accessibility.rst:26
 msgid ""
@@ -323,10 +324,10 @@ msgid ""
 "text like \"Click here\""
 msgstr ""
 "Toutes les balises ``<a>`` doivent avoir du texte ou une image accessible à "
-"l’intérieur. Sinon, les lecteurs d’écran devront lire l’URL, ce qui est une "
-"mauvaise expérience. Les balises ``<a>`` devraient contenir du texte "
-"descriptif, si possible, par opposition a un texte générique comme \"Cliquez"
-" ici\""
+"l’intérieur. Sinon, les lecteurs d’écran devront lire l’URL, ce qui conduit "
+"à une mauvaise expérience utilisateur. Les balises ``<a>`` devraient "
+"contenir du texte descriptif, si possible, par opposition a un texte "
+"générique comme \"Cliquez ici\""
 
 #: ../../guides/accessibility.rst:28
 msgid "Markup should be valid"
@@ -2372,7 +2373,7 @@ msgstr ""
 "Il n'est **PAS** recommandé de faire cela, car les utilisateurs de votre "
 "plugin pourraient aussi avoir besoin de configurer votre intervalle "
 "personnalisé. Essayez de travailler avec les intervalles par défaut. Si vous"
-" avez seulement à effectuer une certaine tâche à 16:30, vous pouvez utiliser"
+" avez seulement à effectuer une certaine tâche à 16h30, vous pouvez utiliser"
 " l’intervalle d'une demi-heure ``halfhour`` et vérifier que ``date('G', "
 "$start_time) == 16`` et ``date('i', $start_time) == 30``"
 
@@ -4122,9 +4123,10 @@ msgid ""
 "``\\Elgg\\Database\\Seeds\\Seed`` class to be executable via ``elgg-cli "
 "database:seed``."
 msgstr ""
-"Permet aux plugins d’enregistrer leurs propres semences de base de données. "
-"Les graines remplissent la base de données avec de fausses entités à des "
-"fins de test. Les graines doivent étendre la classe "
+"Permet aux plugins d’enregistrer leurs propres génération de données pour "
+"l'ensemencement de la base de données. Les graines remplissent la base de "
+"données avec de fausses entités à des fins de test. Les plugins peuvent "
+"enregistrer leurs propres graines : Les graines doivent étendre la classe "
 "``\\Elgg\\Database\\Seeds\\Seed`` pour qu’elle soit exécutable via ``elgg-"
 "cli database:seed``."
 
@@ -4168,7 +4170,8 @@ msgid ""
 "could be done here and not make the user wait."
 msgstr ""
 "Déclenché après l’envoi de la page à l’utilisateur. Des opérations coûteuses"
-" pourraient être faites ici sans que cela fasse attendre l’utilisateur."
+" peuvent être faites ici sans que cela impacte sur le délai perçu par "
+"l’utilisateur."
 
 #: ../../guides/events-list.rst:223
 msgid ""
@@ -4197,7 +4200,7 @@ msgid ""
 "is not possible."
 msgstr ""
 "La session Elgg est déjà terminée avant cet événement. La manipulation de la"
-" session n’est plus possible."
+" session n’est donc plus possible à ce moment."
 
 #: ../../guides/events-list.rst:233
 msgid "**simplecache:generate, <view>** |results|"
@@ -4220,7 +4223,7 @@ msgid ""
 " but the caches are not cleared."
 msgstr ""
 "Déclenché une fois la mise à niveau du système terminée. Tous les scripts de"
-" mise à niveau sont exécutés, mais les caches ne sont pas effacés."
+" mise à niveau ont été exécutés, cependant les caches n'ont pas été effacés."
 
 #: ../../guides/events-list.rst:240
 msgid "**upgrade:execute, system** |sequence| |results|"
@@ -4245,8 +4248,8 @@ msgstr "**ban, user**"
 #: ../../guides/events-list.rst:246
 msgid "Triggered before a user is banned. Return false to prevent."
 msgstr ""
-"Déclenché avant qu'un utilisateur ne soit banni. Retournez false pour "
-"l'éviter."
+"Déclenché avant qu'un utilisateur ne soit banni. Retourner false pour "
+"empêcher cette action."
 
 #: ../../guides/events-list.rst:257
 msgid "**change:email, user** |results|"
@@ -4259,9 +4262,9 @@ msgid ""
 " The event handler must return false to prevent the email from being changed"
 " right away."
 msgstr ""
-"Déclenché avant la modification de l'adresse email de l'utilisateur. Permet "
-"aux plugins d'implémenter une logique supplémentaire requise pour modifier "
-"l'email, par ex. validation supplémentaire par email. Le gestionnaire "
+"Déclenché avant la modification de l'adresse e-mail de l'utilisateur. Permet"
+" aux plugins d'implémenter une logique supplémentaire requise pour modifier "
+"l'e-mail, par ex. une validation supplémentaire par e-mail. Le gestionnaire "
 "d'événements doit renvoyer false pour empêcher que l'e-mail soit modifié "
 "immédiatement."
 
@@ -4292,7 +4295,7 @@ msgstr "**login, user** |sequence|"
 
 #: ../../guides/events-list.rst:263
 msgid "Triggered when a user is being logged in."
-msgstr ""
+msgstr "Déclenché après que l'utilisateur se soit connecté."
 
 #: ../../guides/events-list.rst:266
 msgid "**login:forward, user** |results|"
@@ -4342,8 +4345,8 @@ msgstr "**make_admin, user**"
 msgid ""
 "Triggered before a user is promoted to an admin. Return false to prevent."
 msgstr ""
-"Déclenché avant qu’un utilisateur ne soit promu administrateur. Retournez "
-"false pour l'éviter."
+"Déclenché avant qu’un utilisateur ne soit promu administrateur. Retourner "
+"false pour empêcher cette action."
 
 #: ../../guides/events-list.rst:281
 msgid "**profileiconupdate, user**"
@@ -8247,6 +8250,9 @@ msgid ""
 "<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules>`_ "
 "for writing JavaScript code in Elgg."
 msgstr ""
+"Les dévelopeurs doivent utiliser les modules ECMAScript natifs du navigateur"
+" <https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules>`_ pour"
+" écrire du code JavaScript dans Elgg."
 
 #: ../../guides/javascript.rst:13
 msgid "Here we'll describe making and importing these modules in Elgg."

@@ -18,7 +18,7 @@ return array(
 	'edit:object:file' => "Editează fișierul",
 	'notification:object:file:create' => "Trimite o notificare atunci când un fișier este creat",
 	'notifications:mute:object:file' => "despre fișierul '%s'",
-
+	
 	'file:more' => "Mai multe fișiere",
 	'file:list' => "vizualizare în listă",
 

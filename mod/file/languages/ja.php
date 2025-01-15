@@ -18,7 +18,7 @@ return array(
 	'edit:object:file' => "ファイル編集",
 	'notification:object:file:create' => "ファイルが作成されたときに通知を送る",
 	'notifications:mute:object:file' => "ファイル '%s' について",
-
+	
 	'file:more' => "もっとみる",
 	'file:list' => "リスト表示",
 

@@ -26,7 +26,9 @@ return array(
 	'discussion:topic:created' => 'Het discussieonderwerp is aangemaakt.',
 	'discussion:topic:updated' => 'De discussie is bijgewerkt.',
 	'entity:delete:object:discussion:success' => 'De discussie is verwijderd.',
-
+	
+	'entity:edit:object:discussion:success' => 'De discussie is succesvol opgeslagen',
+	
 	'discussion:topic:notfound' => 'De discussie kan niet gevonden worden',
 	'discussion:error:notsaved' => 'Fout tijdens het opslaan van deze discussie',
 	'discussion:error:missing' => 'Zowel titel als bericht zijn verplichte velden',

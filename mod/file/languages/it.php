@@ -16,7 +16,7 @@ return array(
 	'collection:object:file:group' => "File del gruppo",
 	'add:object:file' => "Carica un file",
 	'edit:object:file' => "Modifica file",
-
+	
 	'file:more' => "Più file",
 	'file:list' => "vista a elenco",
 

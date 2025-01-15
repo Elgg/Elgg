@@ -33,7 +33,7 @@ return array(
 	'edit:object:file' => "Изменить файл",
 	'notification:object:file:create' => "Отправить уведомление при создании файла",
 	'notifications:mute:object:file' => "о файле '%s'",
-
+	
 	'file:more' => "Еще файлы",
 	'file:list' => "в виде списка",
 
