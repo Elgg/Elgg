@@ -113,7 +113,7 @@ return array(
 	'NotImplementedException' => 'The requested method is not implemented for this resource',
 	'ServiceUnavailableException' => 'The server could not process your request, please try again later',
 	'TooManyRequestsException' => 'Too many requests, please slow down',
-	'UnauthorizedException' => 'Unauthorized you do not have the valid authentication credentials for the target resource',
+	'UnauthorizedException' => 'You do not have the valid authentication credentials for the target resource',
 	
 	'Security:InvalidPasswordCharacterRequirementsException' => "The provided password is doesn't meet the character requirements",
 	'Security:InvalidPasswordLengthException' => "The provided password doesn't meet the minimal length requirement of %s characters",
