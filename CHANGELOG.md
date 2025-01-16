@@ -1,3 +1,23 @@
+<a name="6.1.2"></a>
+### 6.1.2 (2025-01-16)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+* Jeroen Dalsem (3)
+
+#### Bug fixes
+
+* **output:** improved handling of output/url [379c02196](https://github.com/Elgg/Elgg/commit/379c02196d908b412277c534ad130900f7c4ac8d)
+* **breadcrumb:** improved detection for link to self breadcrumb [a84b70afe](https://github.com/Elgg/Elgg/commit/a84b70afef312b56dff5b650a8cbdba5afe60a40)
+* **views:** use a more specific label for setting a user display name [1ce253927](https://github.com/Elgg/Elgg/commit/1ce253927e134967acf597d5cf9b87fa53d66989)
+* **cron:**
+  * the event param 'dt' can no longer be modified by callbacks [8432e77ef](https://github.com/Elgg/Elgg/commit/8432e77ef109f5d664e55f6d2e894e602c2aac51)
+  * handle unexpected files in cron log folder [c226b844a](https://github.com/Elgg/Elgg/commit/c226b844ac259180ae8a0af930027d6b182a83a9)
+* **forms:** if there is no input field do not output field elements [22c3d40bd](https://github.com/Elgg/Elgg/commit/22c3d40bdefa91d03c53e73988f1969d42e6180c)
+* **search:** prevent double encoded search query parameter [7ef21d3e4](https://github.com/Elgg/Elgg/commit/7ef21d3e443178b779d3d0645e7525d2f7a2b1cc)
+
+
 <a name="6.1.1"></a>
 ### 6.1.1 (2024-12-05)
 
