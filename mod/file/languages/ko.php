@@ -16,7 +16,7 @@ return array(
 	'collection:object:file:group' => "모둠 파일",
 	'add:object:file' => "파일 올리기",
 	'edit:object:file' => "파일 수정",
-
+	
 	'file:more' => "파일 더보기",
 	'file:list' => "목록보기",
 

@@ -26,7 +26,7 @@ return array(
 	'discussion:topic:created' => '議題を作成しました',
 	'discussion:topic:updated' => '議題を更新しました',
 	'entity:delete:object:discussion:success' => '議題を削除しました',
-
+	
 	'discussion:topic:notfound' => '議題は見つかりませんでした',
 	'discussion:error:notsaved' => 'この議題を保存できませんでした',
 	'discussion:error:missing' => 'タイトルとメッセージは必須項目です',

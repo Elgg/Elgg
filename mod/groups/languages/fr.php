@@ -71,6 +71,7 @@ return array(
 	'groups:leave' => 'Quitter le groupe',
 	'groups:invite' => 'Inviter des membres',
 	'groups:invite:title' => 'Invitez des membres dans ce groupe',
+	'groups:invite:friends:help' => 'Recherchez un membre par son nom ou son nom d\'utilisateur et sélectionnez le membre dans la liste',
 	'groups:invite:resend' => 'Renvoyer les invitations aux membres déjà invités',
 	'groups:invite:member' => 'Déjà membre du groupe',
 	'groups:invite:invited' => 'Déjà invité dans ce groupe',

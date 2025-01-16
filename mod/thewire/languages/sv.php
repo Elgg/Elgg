@@ -63,4 +63,8 @@ return array(
 	 */
 	'thewire:settings:limit' => "Maximalt antal tecken för meddelanden i nyhetsflödet:",
 	'thewire:settings:limit:none' => "Ingen begränsning",
+	
+	/**
+	 * Exceptions
+	 */
 );

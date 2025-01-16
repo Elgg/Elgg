@@ -22,6 +22,8 @@ return array(
 	'menu:pages_nav:header' => "Subpagina's",
 	'notification:object:page:create' => "Stuur een notificatie wanneer een pagina is gemaakt",
 	'notifications:mute:object:page' => "over de pagina '%s'",
+	
+	'entity:edit:object:page:success' => 'De pagina is succesvol opgeslagen',
 
 	'groups:tool:pages' => 'Schakel groepspagina\'s in',
 	'groups:tool:pages:description' => 'Laat groepsleden samenwerken aan pagina\'s in deze groep.',

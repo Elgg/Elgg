@@ -59,4 +59,8 @@ return array(
 	 */
 	'thewire:settings:limit' => "Número máximo de caracteres por chío:",
 	'thewire:settings:limit:none' => "Sen límite",
+	
+	/**
+	 * Exceptions
+	 */
 );

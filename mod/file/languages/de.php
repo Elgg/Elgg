@@ -18,7 +18,7 @@ return array(
 	'edit:object:file' => "Datei-Eintrag bearbeiten",
 	'notification:object:file:create' => "Sende eine Benachrichtigung beim Hochladen einer Datei",
 	'notifications:mute:object:file' => "über die Datei '%s'",
-
+	
 	'file:more' => "Weitere Dateien",
 	'file:list' => "Listen-Ansicht",
 

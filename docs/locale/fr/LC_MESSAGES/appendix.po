@@ -6,15 +6,16 @@
 # Translators:
 # Jerôme Bakker, 2024
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024
+# Emmanuel Simond, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-20 13:21+0100\n"
+"POT-Creation-Date: 2024-12-04 14:25+0100\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024\n"
+"Last-Translator: Emmanuel Simond, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2749,11 +2750,19 @@ msgstr "**Jusqu'à la 7.0**"
 msgid "6.0"
 msgstr "6.0"
 
+#: ../../appendix/support.rst:83 ../../appendix/support.rst:85
+msgid "November 2024"
+msgstr "Novembre 2024"
+
 #: ../../appendix/support.rst:85
+msgid "6.1"
+msgstr "6.1"
+
+#: ../../appendix/support.rst:87
 msgid "7.0"
 msgstr "7.0"
 
-#: ../../appendix/support.rst:85
+#: ../../appendix/support.rst:87
 msgid "TBD"
 msgstr "A FAIRE"
 
@@ -7890,10 +7899,10 @@ msgid ""
 "need to separate the different sites into separate databases/tables."
 msgstr ""
 "Avant la version 3.0, Elgg disposait d’une certaine prise en charge "
-"(partielle) pour avoir plusieurs sites dans la même base de données. Ce "
-"concept multisite a été complètement supprimé dans la version 3.0. Les "
-"entités n’ont plus l’attribut site_guid. Cela signifie qu’il n’y a plus la "
-"possibilité d’avoir des entités sur différents sites. Si vous avez "
+"(partielle) afin de pouvoir avoir plusieurs sites dans la même base de "
+"données. Ce concept multisite a été complètement supprimé dans la version "
+"3.0. Les entités n’ont plus l’attribut site_guid. Cela signifie qu’il n’y a "
+"plus la possibilité d’avoir des entités sur différents sites. Si vous avez "
 "actuellement plusieurs sites dans votre base de données, la mise à niveau de"
 " Elgg vers Elgg 3.0 échouera. Vous devez séparer les différents sites en "
 "bases de données/tables distinctes."
@@ -8725,7 +8734,7 @@ msgid ""
 " without URLs will no longer result in the site URL"
 msgstr ""
 "``ElggEntity`` : Les URL vides ne seront plus normalisées. Cela signifie que"
-" les entités sans URL ne vont plus avoir l’URL du site"
+" les entités sans URL ne correpondront plus à l’URL de base du site"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:695
 msgid ""
@@ -10191,10 +10200,10 @@ msgid ""
 "have been removed. If there was a generic translation available for the "
 "custom translation key, these have also been updated."
 msgstr ""
-"Tous les plugins ont été scannés pour des clefs de traduction inutilisées. "
-"Les clefs inutilisées ont été supprimées. S’il existait une traduction "
-"générique disponible pour la clef de traduction personnalisée, celles-ci ont"
-" également été mises à jour."
+"Tous les plugins ont été scannés à la recherche des clefs de traduction "
+"inutilisées. Les clefs inutilisées ont été supprimées. S’il existait une "
+"traduction générique disponible pour la clef de traduction personnalisée, "
+"celles-ci ont également été mises à jour."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1115
 msgid "System Log"
@@ -10405,7 +10414,7 @@ msgstr ""
 "méthodes ``__construct`` et ``__destruct``. ``setUp`` et ``tearDown`` ont "
 "été marquées comme privées et sont utilisées pour amorcer des tests "
 "cohérents et pour déclarer des conditions pre et post ; votre cas de test "
-"devrait utiliser les méthodes ``up`` et ``down`` à leur place."
+"devrait utiliser à la place les méthodes ``up`` et ``down``."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1185
 msgid ""
@@ -18448,6 +18457,9 @@ msgid ""
 "Entities can now be marked as deleted in the database. This allows entities "
 "to be restored from the database when deletion was done too soon."
 msgstr ""
+"Les entités peuvent maintenant être marquées comme supprimées dans la base "
+"de données. Cela permet aux entités d'être restaurées à partir de la base de"
+" données lorsque la suppression a été effectuée trop tôt."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:25
 msgid ""
@@ -18602,6 +18614,10 @@ msgid ""
 "used in the correct order. You can read more about the intended usage in "
 ":doc:`/design/a11y`."
 msgstr ""
+"L'utilisation des titres (h1, h2, h3) a été revue dans l'ensemble de la base"
+" de code pour garantir qu'ils sont utilisés lorsque cela est approprié et "
+"qu'ils sont également utilisés dans le bon ordre. Vous pouvez en apprendre "
+"plus sur l'utilisation prévue dans :doc:`/design/a11y`."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:109
 msgid "Most notable changes are the following:"
@@ -18708,6 +18724,8 @@ msgid ""
 "``elgg_get_entity_statistics()`` now requires an ``array`` of ``$options`` "
 "to be used by ``elgg_get_entities()``."
 msgstr ""
+"``elgg_get_entity_statistics()`` requiert désormais un ``array`` de "
+"``$options`` qui est utilisé par ``elgg_get_entities()``."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:153
 msgid ""

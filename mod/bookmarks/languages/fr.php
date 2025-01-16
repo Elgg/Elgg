@@ -64,6 +64,7 @@ Afficher et commenter le signet :
 	 */
 
 	'bookmarks:save:success' => "Votre élément a bien été mis en signet.",
+	'entity:edit:object:bookmarks:success' => "Le signet a bien été enregistré",
 	'entity:delete:object:bookmarks:success' => "Ce signet a été supprimé.",
 
 	/**
