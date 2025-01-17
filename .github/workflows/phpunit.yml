@@ -61,7 +61,7 @@ jobs:
             experimental: false
             extra-title: ''
             memcache: 0
-            db-image: 'mysql:8.2'
+            db-image: 'mysql:8.4'
             redis: 0
           - php-versions: '8.1'
             experimental: false
