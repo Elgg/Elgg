@@ -67,6 +67,12 @@ jobs:
             experimental: false
             extra-title: ''
             memcache: 0
+            db-image: 'mysql:9.0'
+            redis: 0
+          - php-versions: '8.1'
+            experimental: false
+            extra-title: ''
+            memcache: 0
             db-image: 'mariadb:10.6'
             redis: 0
           - php-versions: '8.1'
