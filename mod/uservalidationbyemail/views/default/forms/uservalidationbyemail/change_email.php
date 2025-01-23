@@ -37,7 +37,7 @@ echo elgg_view_field([
 		],
 		[
 			'#type' => 'submit',
-			'value' => elgg_echo('resend'),
+			'text' => elgg_echo('resend'),
 		],
 	],
 	'align' => 'horizontal',
