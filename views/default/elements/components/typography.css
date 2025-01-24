@@ -2,7 +2,7 @@
 	Typography
 *************************************** */
 body {
-	font-family: $(font-family);
+	font-family: var(--elgg-font-family);
 	
 	/* Break everywhere as a fallback */
 	word-break: break-all;
@@ -11,11 +11,11 @@ body {
 }
 
 a {
-	color: $(anchor-color);
+	color: var(--elgg-anchor-color);
 	
 	&:hover,
 	&.selected {
-		color: $(anchor-color-hover);
+		color: var(--elgg-anchor-color-hover);
 		text-decoration: underline;
 	}
 }
@@ -50,42 +50,42 @@ code {
 blockquote {
 	padding: 0.5rem 1rem;
 	margin: 0 0 1rem 0;
-	background-color: $(state-notice-background-color);
-	border: 1px solid $(state-notice-border-color);
-	color: $(state-notice-font-color);
+	background-color: var(--elgg-state-notice-background-color);
+	border: 1px solid var(--elgg-state-notice-border-color);
+	color: var(--elgg-state-notice-font-color);
 }
 
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 500;
-	font-family: $(h-font-family, $(font-family));
+	font-family: var(--elgg-h-font-family, var(--elgg-font-family));
 }
 
 h1 {
-	font-size: $(h1-font-size);
+	font-size: var(--elgg-h1-font-size);
 }
 
 h2 {
-	font-size: $(h2-font-size);
+	font-size: var(--elgg-h2-font-size);
 }
 
 h3 {
-	font-size: $(h3-font-size);
+	font-size: var(--elgg-h3-font-size);
 }
 
 h4 {
-	font-size: $(h4-font-size);
+	font-size: var(--elgg-h4-font-size);
 }
 
 h5 {
-	font-size: $(h5-font-size);
+	font-size: var(--elgg-h5-font-size);
 }
 
 h6 {
-	font-size: $(h6-font-size);
+	font-size: var(--elgg-h6-font-size);
 }
 
 .elgg-subtext {
-	color: $(text-color-mild);
+	color: var(--elgg-text-color-mild);
 	font-size: 0.75rem;
 }
 
@@ -95,7 +95,7 @@ time,
 .elgg-quiet,
 .elgg-tags {
 	display: inline-block;
-	color: $(text-color-soft);
+	color: var(--elgg-text-color-soft);
 	font-size: 0.75rem;
 	line-height: normal;
 }
@@ -106,28 +106,28 @@ time,
 }
 
 .elgg-loud {
-	font-weight: $(font-bold-weight);
+	font-weight: var(--elgg-font-bold-weight);
 }
 
 .elgg-more,
 .elgg-widget-more {
 	padding: 0.5rem;
 	font-size: 0.85rem;
-	font-weight: $(font-bold-weight);
+	font-weight: var(--elgg-font-bold-weight);
 }
 
 .elgg-state {
 	&.elgg-state-success {
-		 color: $(state-success-font-color);
+		 color: var(--elgg-state-success-font-color);
 	}
 	&.elgg-state-error,
 	&.elgg-state-danger {
-		 color: $(state-danger-font-color);
+		 color: var(--elgg-state-danger-font-color);
 	}
 	&.elgg-state-notice {
-		 color: $(state-notice-font-color);
+		 color: var(--elgg-state-notice-font-color);
 	}
 	&.elgg-state-warning {
-		 color: $(state-warning-font-color);
+		 color: var(--elgg-state-warning-font-color);
 	}
 }

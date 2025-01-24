@@ -31,7 +31,7 @@
 	}
 	
 	ul {
-		border-top: 1px solid $(border-color-soft);
+		border-top: 1px solid var(--elgg-border-color-soft);
 		margin-top: 0.5rem;
 		
 		> li {
@@ -39,10 +39,10 @@
 			justify-content: space-between;
 			padding: 0.5rem;
 			transition: background 0.2s linear;
-			border-bottom: 1px solid $(border-color-soft);
+			border-bottom: 1px solid var(--elgg-border-color-soft);
 			
 			&:hover {
-				background: $(background-color-mild);
+				background: var(--elgg-background-color-mild);
 			}
 		}
 	}
@@ -60,7 +60,7 @@
 }
 
 .elgg-module-widget {
-	border: 1px solid $(border-color-soft);
+	border: 1px solid var(--elgg-border-color-soft);
 	
 	&.elgg-state-draggable {
 		&:hover {
@@ -74,7 +74,7 @@
 	}
 		
 	> .elgg-head {
-		background-color: $(background-color-mild);
+		background-color: var(--elgg-background-color-mild);
 		padding: 0.5rem 1rem;
 		height: auto;
 		overflow: hidden;

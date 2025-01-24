@@ -6,7 +6,7 @@
 	/* general spinner styles */
 	background: #fff;
 	padding: 0.5rem;
-	border: 1px solid $(border-color-soft);
+	border: 1px solid var(--elgg-border-color-soft);
 	border-top: 0;
 	border-radius: 0 0 1rem 1rem;
 	/* negative half the width for proper centering */

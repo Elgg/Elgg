@@ -1,13 +1,13 @@
 :root {
-	--tagify-dd-color-primary: $(background-color-highlight);
+	--tagify-dd-color-primary: var(--elgg-background-color-highlight);
 	--tagify-dd-bg-color: white;
 }
 .tagify {
-	--tags-border-color: $(border-color-mild);
-	--tags-hover-border-color: $(border-color-strong);
-	--tags-focus-border-color: $(border-color-strong);
-	--tag-bg: $(background-color-mild);
-	--tag-hover: $(background-color-strong);
+	--tags-border-color: var(--elgg-border-color-mild);
+	--tags-hover-border-color: var(--elgg-border-color-strong);
+	--tags-focus-border-color: var(--elgg-border-color-strong);
+	--tag-bg: var(--elgg-background-color-mild);
+	--tag-hover: var(--elgg-background-color-strong);
 	--tag-text-color: black;
 	--tag-text-color--edit: black;
 	--tag-pad: 0.3em 0.5em;
@@ -453,7 +453,7 @@
 	overflow: hidden;
 	background: #fff;
 	background: var(--tagify-dd-bg-color);
-	border: 1px solid $(border-color-strong);
+	border: 1px solid var(--elgg-border-color-strong);
 	border-color: var(--tagify-dd-color-primary);
 	border-width: 1.1px;
 	border-top-width: 0;

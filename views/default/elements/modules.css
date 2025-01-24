@@ -38,14 +38,14 @@
 	INFO
 *************************************** */
 .elgg-module-info {
-	border: 1px solid $(border-color-soft);
+	border: 1px solid var(--elgg-border-color-soft);
 	
 	> .elgg-head {
-		background-color: $(background-color-mild);
+		background-color: var(--elgg-background-color-mild);
 		padding: 0.5rem 1rem;
 		
 		> * {
-			color: $(text-color-strong);
+			color: var(--elgg-text-color-strong);
 		}
 	}
 	
@@ -66,13 +66,13 @@
 	margin-bottom: 0;
 	padding: 0.5rem;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-	border-top: 1px solid $(border-color-soft);
+	border-top: 1px solid var(--elgg-border-color-soft);
 	
 	> .elgg-head {
 		margin-bottom: 0.5rem;
 		
 		> * {
-			color: $(text-color-strong);
+			color: var(--elgg-text-color-strong);
 		}
 	}
 }
@@ -96,10 +96,10 @@
 	FEATURED MODULE
 *************************************** */
 .elgg-module-featured {
-	border: 1px solid $(border-color-highlight);
+	border: 1px solid var(--elgg-border-color-highlight);
 	
 	> .elgg-head {
-		background-color: $(background-color-highlight);
+		background-color: var(--elgg-background-color-highlight);
 		color: #ffffff;
 		padding: 0.5rem 1rem;
 		height: auto;

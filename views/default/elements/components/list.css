@@ -2,7 +2,7 @@
 	List
 *************************************** */
 .elgg-list > li {
-	border-bottom: 1px solid $(border-color-soft);
+	border-bottom: 1px solid var(--elgg-border-color-soft);
 	padding: 1rem;
 }
 
@@ -10,7 +10,7 @@
 	border-bottom: 0;
 }
 .elgg-module .elgg-list + .elgg-pagination {
-	border-top: 1px solid $(border-color-soft);
+	border-top: 1px solid var(--elgg-border-color-soft);
 	padding-top: 1rem;
 }
 

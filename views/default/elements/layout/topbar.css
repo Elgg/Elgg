@@ -179,7 +179,7 @@ html.elgg-nav-collapsed {
 }
 
 .elgg-page-topbar {
-	background: $(topbar-background-color, $(background-color-highlight));
+	background: var(--elgg-topbar-background-color);
 	position: sticky;
 	top: 0;
 	
@@ -218,7 +218,7 @@ html.elgg-nav-collapsed {
 		order: 2;
 		
 		.elgg-badge {
-			background-color: $(topbar-indicator);
+			background-color: var(--elgg-topbar-indicator);
 		}
 	}
 	
@@ -376,7 +376,7 @@ html.elgg-nav-collapsed {
 					position: absolute;
 					left: 0;
 					width: 12rem;
-					background: $(topbar-background-color, $(background-color-highlight));
+					background: var(--elgg-topbar-background-color);
 					align-items: flex-start;
 					box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.2);
 					

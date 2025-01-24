@@ -12,11 +12,11 @@
 		margin: 0;
 		
 		> a {
-			color: $(text-color-soft);
+			color: var(--elgg-text-color-soft);
 			background-color: white;
 			
 			font-size: 0.9rem;
-			border: 1px solid $(border-color-soft);
+			border: 1px solid var(--elgg-border-color-soft);
 			border-radius: 4px;
 			padding: 0.25rem 0.5rem;
 			
@@ -24,8 +24,8 @@
 			
 			&:hover {
 				text-decoration: none;
-				background-color: $(background-color-mild);
-				color: $(text-color-mild);
+				background-color: var(--elgg-background-color-mild);
+				color: var(--elgg-text-color-mild);
 			}
 		}
 	}

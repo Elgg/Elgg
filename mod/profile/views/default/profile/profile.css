@@ -17,11 +17,11 @@
 
 	.elgg-menu-profile-admin-container {
 		li > a {
-			color: $(state-danger-font-color);
+			color: var(--elgg-state-danger-font-color);
 		}
 		
 		li.elgg-state-selected > a {
-			color: $(state-danger-font-color);
+			color: var(--elgg-state-danger-font-color);
 			background-color: transparent;
 		}
 		
@@ -38,7 +38,7 @@
 }
 
 #profile-details {
-	border: 1px solid $(border-color-soft);
+	border: 1px solid var(--elgg-border-color-soft);
 	background: white;
 	margin-bottom: 1rem;
 }

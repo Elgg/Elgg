@@ -11,9 +11,9 @@
 			display: flex;
 			gap: .5rem;
 			
-			font-weight: $(font-bold-weight);
+			font-weight: var(--elgg-font-bold-weight);
 			font-size: 0.85rem;
-			color: $(text-color-mild);
+			color: var(--elgg-text-color-mild);
 		}
 	}
 }

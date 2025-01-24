@@ -41,7 +41,7 @@
 
 .ck.ck-editor__editable .image .ck-progress-bar,
 .ck.ck-editor__editable .image-inline .ck-progress-bar {
-	background: $(state-notice-border-color);
+	background: var(--elgg-state-notice-border-color);
 	height: .5rem;
 }
 

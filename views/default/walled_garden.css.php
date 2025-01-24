@@ -9,9 +9,9 @@ echo elgg_view('core.css');
 .elgg-heading-walled-garden {
 	font-size: 3rem;
 	line-height: 3rem;
-	color: $(text-color-strong);
+	color: var(--elgg-text-color-strong);
 	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-	font-weight: $(font-bold-weight);
+	font-weight: var(--elgg-font-bold-weight);
 }
 
 .elgg-page-walled-garden {
@@ -51,9 +51,9 @@ echo elgg_view('core.css');
 			border: none;
 			
 			a {
-				color: $(text-color-strong);
+				color: var(--elgg-text-color-strong);
 				text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-				font-weight: $(font-bold-weight);
+				font-weight: var(--elgg-font-bold-weight);
 			}
 		}
 	}

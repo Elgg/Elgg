@@ -35,14 +35,14 @@ label, .elgg-field-label {
 .elgg-required-indicator {
 	font-size: 110%;
 	font-weight: bold;
-	color: $(state-danger-font-color);
+	color: var(--elgg-state-danger-font-color);
 	display: inline;
 	padding: 0 5px;
 }
 
 input, textarea {
-	border: 1px solid $(border-color-mild);
-	color: $(text-color-strong);
+	border: 1px solid var(--elgg-border-color-mild);
+	color: var(--elgg-text-color-strong);
 	font-size: 1rem;
 	padding: 0.25rem 0.5rem;
 	line-height: normal;
@@ -87,8 +87,8 @@ input[type=search]:focus,
 input[type=tel]:focus,
 input[type=week]:focus,
 textarea:focus {
-	border: solid 1px $(border-color-strong);
-	background-color: $(background-color-soft);
+	border: solid 1px var(--elgg-border-color-strong);
+	background-color: var(--elgg-background-color-soft);
 	/* We remove outlines from specific input types so we can leave the browser
 	   defaults (like glows) for everything else */
 	outline: 0 none;
@@ -139,8 +139,8 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 
 select {
 	max-width: 100%;
-	border: 1px solid $(border-color-mild);
-	color: $(text-color-strong);
+	border: 1px solid var(--elgg-border-color-mild);
+	color: var(--elgg-text-color-strong);
 	padding: 0.25rem 0.5rem;
 	line-height: 1.75rem;
 	vertical-align: middle;
@@ -183,7 +183,7 @@ select:not([multiple]) {
 	gap: 1rem;
 	
 	&.elgg-fieldset-has-legend {
-		border: 1px solid $(border-color-soft);
+		border: 1px solid var(--elgg-border-color-soft);
 		padding: 1rem;
 		margin-bottom: 1rem;
 	}

@@ -188,7 +188,7 @@
 .elgg-menu-page,
 .elgg-menu-owner-block {
 	background: #ffffff;
-	border: 1px solid $(border-color-soft);
+	border: 1px solid var(--elgg-border-color-soft);
 
 	li:not(:last-child) {
 		border-bottom: 1px solid #f7f7f8;
@@ -210,9 +210,9 @@
 	li > a,
 	li > a {
 		padding: 0.5rem 1rem;
-		color: $(text-color-strong);
+		color: var(--elgg-text-color-strong);
 		&:hover {
-			background: $(background-color-soft);
+			background: var(--elgg-background-color-soft);
 			text-decoration: none;
 			color: #333;
 		}
@@ -221,7 +221,7 @@
 	li.elgg-state-selected > a,
 	li.elgg-state-selected > a {
 		color: #333;
-		background-color: $(background-color-mild);
+		background-color: var(--elgg-background-color-mild);
 	}
 
 	.elgg-badge {
@@ -264,11 +264,11 @@
 .elgg-menu-hover-actions,
 .elgg-menu-hover-admin {
 	li:not(:last-child) {
-		border-bottom: 1px solid $(border-color-soft);
+		border-bottom: 1px solid var(--elgg-border-color-soft);
 	}
 	
 	li > a {
-		color: $(text-color-strong);
+		color: var(--elgg-text-color-strong);
 		font-size: 0.9rem;
 		transition: background-color 0.5s;
 		text-decoration: none;
@@ -278,7 +278,7 @@
 		text-overflow: ellipsis;
 		
 		&:hover {
-			background: $(background-color-soft);
+			background: var(--elgg-background-color-soft);
 			color: #333;
 		}
 	}
@@ -286,7 +286,7 @@
 
 .elgg-menu-hover {
 	.elgg-child-menu {
-		border: 1px solid $(border-color-soft);
+		border: 1px solid var(--elgg-border-color-soft);
 		border-width: 1px 0;
 		margin: 0 0 -1px;
 		
@@ -294,7 +294,7 @@
 			content: "\25b2";
 			color: #fff;
 			font-size: 0.5rem;
-			text-shadow: 0 -2px $(border-color-mild);
+			text-shadow: 0 -2px var(--elgg-border-color-mild);
 			top: -0.5rem;
 			left: 1.5rem;
 			position: relative;
@@ -313,7 +313,7 @@
 		max-width: 20rem;
 		
 		&.elgg-menu-hover-actions {
-			border-top: 1px solid $(border-color-soft);
+			border-top: 1px solid var(--elgg-border-color-soft);
 		}
 	}
 	
@@ -323,7 +323,7 @@
 }
 
 .elgg-menu.elgg-menu-hover-admin {
-	border-top: 1px solid $(border-color-soft);
+	border-top: 1px solid var(--elgg-border-color-soft);
 	max-width: unset;
 }
 
@@ -333,7 +333,7 @@
 .elgg-menu-general > li,
 .elgg-menu-general > li > a {
 	display: inline-block;
-	color: $(text-color-soft);
+	color: var(--elgg-text-color-soft);
 }
 
 .elgg-menu-general > li:after {
@@ -365,7 +365,7 @@
 .elgg-menu-annotation,
 .elgg-menu-widget {
 	font-size: 0.9rem;
-	color: $(text-color-mild);
+	color: var(--elgg-text-color-mild);
 	height: auto;
 	vertical-align: middle;
 
@@ -381,7 +381,7 @@
 			}
 			
 			&:hover {
-				color: $(text-color-highlight);
+				color: var(--elgg-text-color-highlight);
 				text-decoration: none;
 			}
 		}
@@ -406,7 +406,7 @@
 *************************************** */
 .elgg-menu-login-container {
 	margin-top: 1rem;
-	border-top: 1px solid $(border-color-soft);
+	border-top: 1px solid var(--elgg-border-color-soft);
 }
 
 .elgg-menu-login > li {
@@ -419,7 +419,7 @@
 		display: block;
 		
 		&:hover {
-			background: $(background-color-soft);
+			background: var(--elgg-background-color-soft);
 			text-decoration: none;
 		}
 	}

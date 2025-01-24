@@ -17,7 +17,7 @@
 	animation: infinite-spinning 1s infinite linear;
 	border-radius: 50%;
 	border-width: 5px;
-	border-color: $(border-color-highlight) $(border-color-soft) $(border-color-soft);
+	border-color: var(--elgg-border-color-highlight) var(--elgg-border-color-soft) var(--elgg-border-color-soft);
 	border-style: solid;
 	display: block;
 	margin: 0.75rem auto;
