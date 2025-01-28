@@ -6,17 +6,17 @@
 }
 
 .elgg-river-layout .elgg-list-river {
-	border-top: 1px solid $(border-color-soft);
+	border-top: 1px solid var(--elgg-border-color-soft);
 }
 
 .elgg-list-river > li {
-	border-bottom: 1px solid $(border-color-soft);
+	border-bottom: 1px solid var(--elgg-border-color-soft);
 }
 
 .elgg-river-attachments,
 .elgg-river-message,
 .elgg-river-content {
-	border-left: 1px solid $(border-color-soft);
+	border-left: 1px solid var(--elgg-border-color-soft);
 	margin: 0.5rem 0;
 	padding-left: 1rem;
 }
@@ -31,7 +31,7 @@
 }
 
 .elgg-river-more {
-	border-color: $(border-color-soft);
+	border-color: var(--elgg-border-color-soft);
 	border-style: solid;
 	border-width: 0 1px 1px 1px;
 	padding: 0.5rem 1rem;
@@ -39,7 +39,7 @@
 }
 
 .elgg-river-item form {
-	border-color: $(border-color-soft);
+	border-color: var(--elgg-border-color-soft);
 	border-style: solid;
 	border-width: 0 1px 1px 1px;
 	padding: 0.5rem;

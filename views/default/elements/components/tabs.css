@@ -4,15 +4,15 @@
 .elgg-menu-filter,
 .elgg-tabs {
 	margin-bottom: 0.5rem;
-	border-bottom: 1px solid $(border-color-soft);
+	border-bottom: 1px solid var(--elgg-border-color-soft);
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	
 	> li {
-		border: 1px solid $(border-color-soft);
+		border: 1px solid var(--elgg-border-color-soft);
 		border-bottom-width: 0;
-		background: $(background-color-soft);
+		background: var(--elgg-background-color-soft);
 		flex-grow: 1;
 		
 		&.elgg-state-selected a:hover {
@@ -28,14 +28,14 @@
 			color: #646464;
 			
 			&:hover {
-				background-color: $(background-color-mild);
+				background-color: var(--elgg-background-color-mild);
 				color: #333;
 			}
 		}
 	}
 	
 	> .elgg-state-selected {
-		border-color: $(border-color-soft);
+		border-color: var(--elgg-border-color-soft);
 		background: #ffffff;
 		
 		> a {

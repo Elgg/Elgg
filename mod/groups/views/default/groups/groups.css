@@ -3,7 +3,7 @@
 }
 
 .groups-profile-fields {
-	border: 1px solid $(border-color-soft);
+	border: 1px solid var(--elgg-border-color-soft);
 	background: #fff;
 }
 

@@ -73,13 +73,13 @@ echo elgg_view('core.css');
 		text-align: center;
 		
 		.elgg-icon-times {
-			color: $(state-danger-font-color);
+			color: var(--elgg-state-danger-font-color);
 		}
 		.elgg-icon-exclamation-triangle {
-			color: $(state-warning-font-color);
+			color: var(--elgg-state-warning-font-color);
 		}
 		.elgg-icon-checkmark {
-			color: $(state-success-font-color);
+			color: var(--elgg-state-success-font-color);
 		}
 	}
 }
@@ -122,13 +122,13 @@ echo elgg_view('core.css');
 }
 
 .elgg-plugin {
-	border: 1px solid $(border-color-mild);
+	border: 1px solid var(--elgg-border-color-mild);
 	padding: 0.5rem;
 	border-radius: 3px;
 	position: relative;
 	
 	&:hover {
-		border-color: $(border-color-highlight);
+		border-color: var(--elgg-border-color-highlight);
 	}
 
 	&.elgg-state-active {
@@ -167,15 +167,15 @@ echo elgg_view('core.css');
 	}
 	
 	.elgg-state-error {
-		background: $(state-danger-background-color);
-		color: $(state-danger-font-color);
-		border-color: $(state-danger-border-color);
+		background: var(--elgg-state-danger-background-color);
+		color: var(--elgg-state-danger-font-color);
+		border-color: var(--elgg-state-danger-border-color);
 	}
 	
 	.elgg-state-warning {
-		background: $(state-warning-background-color);
-		color: $(state-warning-font-color);
-		border-color: $(state-warning-border-color);
+		background: var(--elgg-state-warning-background-color);
+		color: var(--elgg-state-warning-font-color);
+		border-color: var(--elgg-state-warning-border-color);
 	}
 	
 	.elgg-state-error,
@@ -198,7 +198,7 @@ echo elgg_view('core.css');
 .elgg-plugin-placeholder {
 	display: block;
 	min-height: 5rem;
-	border: 1px dashed $(border-color-highlight) !important;
+	border: 1px dashed var(--elgg-border-color-highlight) !important;
 }
 
 #elgg-plugin-list-cover {

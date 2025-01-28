@@ -42,7 +42,7 @@ p iframe {
 	}
 	
 	table {
-		border: 1px solid $(border-color-soft);
+		border: 1px solid var(--elgg-border-color-soft);
 		
 		td {
 			padding: 0.25rem 0.5rem;

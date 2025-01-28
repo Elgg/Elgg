@@ -5,7 +5,7 @@
 	position: absolute;
 	cursor: default;
 	background-color: #ffffff;
-	border: 1px solid $(border-color-soft);
+	border: 1px solid var(--elgg-border-color-soft);
 	overflow: hidden;
 	border-radius: 3px;
 	
@@ -14,7 +14,7 @@
 		border-radius: 3px;
 		
 		&:hover {
-			background-color: $(background-color-soft);
+			background-color: var(--elgg-background-color-soft);
 		}
 	}
 	
@@ -25,7 +25,7 @@
 		}
 		
 		&.ui-state-hover {
-			background-color: $(background-color-soft);
+			background-color: var(--elgg-background-color-soft);
 			display: block;
 		}
 	}

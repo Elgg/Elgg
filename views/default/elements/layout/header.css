@@ -4,7 +4,7 @@
 .elgg-layout-header {
 	padding: 0 1rem 1rem;
 	margin-bottom: 1rem;
-	border-bottom: 1px solid $(border-color-soft);
+	border-bottom: 1px solid var(--elgg-border-color-soft);
 	width: 100%;
 	display: flex;
 	flex-direction: column;

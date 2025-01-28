@@ -1,5 +1,6 @@
 <?php
 
+echo elgg_view('elements/variables.css', $vars);
 echo elgg_view('elements/reset.css', $vars);
 echo elgg_view('elements/typography.css', $vars);
 echo elgg_view('elements/forms.css', $vars);

@@ -15,12 +15,12 @@
 		.elgg-subscription-details-toggle {
 			cursor: pointer;
 			margin-top: .25rem;
-			color: $(background-color-strong);
+			color: var(--elgg-background-color-strong);
 
 			&.elgg-state-active,
 			&:hover {
 				text-decoration: none;
-				color: $(background-color-highlight);
+				color: var(--elgg-background-color-highlight);
 			}
 		}
 	}
@@ -28,15 +28,15 @@
 	.elgg-subscription-container-details {
 		display: none;
 		
-		border-left: 1px solid $(background-color-mild);
-		border-top: 1px solid $(background-color-mild);
+		border-left: 1px solid var(--elgg-background-color-mild);
+		border-top: 1px solid var(--elgg-background-color-mild);
 	}
 
 	.elgg-subscription-details {
 		margin-bottom: 0;
 		
 		&:hover {
-			background: $(background-color-mild);
+			background: var(--elgg-background-color-mild);
 		}
 		
 		> .elgg-field-label {

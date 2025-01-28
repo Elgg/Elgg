@@ -11,7 +11,7 @@
 	left: 0;
 	content: ' ';
 	width: 3.4em;
-	background-color: $(background-color-mild);
+	background-color: var(--elgg-background-color-mild);
 	border-radius: 3px;
 	box-shadow: inset 0 0.1em 0 rgba(0, 0, 0, 0.2);
 	transition: all 100ms ease-in;
@@ -28,7 +28,7 @@
 }
 
 input:checked ~ .elgg-input-checkbox-switch:before {
-	background-color: $(background-color-highlight);
+	background-color: var(--elgg-background-color-highlight);
 }
 
 input:checked ~ .elgg-input-checkbox-switch:after {

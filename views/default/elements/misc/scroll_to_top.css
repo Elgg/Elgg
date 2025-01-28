@@ -3,9 +3,9 @@
 	font-size: 1.5rem;
 	padding: 0.5rem 1rem;
 	border-radius: 4px;
-	background: $(background-color-soft);
-	color: $(text-color-highlight);
-	border: 1px solid $(border-color-highlight);
+	background: var(--elgg-background-color-soft);
+	color: var(--elgg-text-color-highlight);
+	border: 1px solid var(--elgg-border-color-highlight);
 	position: fixed;
 	right: 2rem;
 	bottom: 2rem;

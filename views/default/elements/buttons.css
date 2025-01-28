@@ -4,7 +4,7 @@
 .elgg-button,
 button {
 	display: inline-block;
-	color: $(text-color-strong);
+	color: var(--elgg-text-color-strong);
 	width: auto;
 	height: 2.5rem;
 	line-height: 1.75rem;
@@ -17,7 +17,7 @@ button {
 	
 	&:hover,
 	&:focus {
-		background-color: $(background-color-mild);
+		background-color: var(--elgg-background-color-mild);
 		text-decoration: none;
 	}
 }
@@ -27,62 +27,62 @@ button {
 }
 
 .elgg-button-submit {
-	background: $(button-submit-background-color);
-	color: $(button-submit-font-color);
+	background: var(--elgg-button-submit-background-color);
+	color: var(--elgg-button-submit-font-color);
 	
 	&:hover,
 	&:focus {
-		background: $(button-submit-background-color-hover);
-		color: $(button-submit-font-color-hover);
+		background: var(--elgg-button-submit-background-color-hover);
+		color: var(--elgg-button-submit-font-color-hover);
 	}
 }
 
 .elgg-button-cancel {
-	background: $(button-cancel-background-color);
-	color: $(button-cancel-font-color);
+	background: var(--elgg-button-cancel-background-color);
+	color: var(--elgg-button-cancel-font-color);
 	
 	&:hover,
 	&:focus {
-		background: $(button-cancel-background-color-hover);
-		color: $(button-cancel-font-color-hover);
+		background: var(--elgg-button-cancel-background-color-hover);
+		color: var(--elgg-button-cancel-font-color-hover);
 	}
 }
 
 .elgg-button-action {
-	background: $(button-action-background-color);
-	color: $(button-action-font-color);
+	background: var(--elgg-button-action-background-color);
+	color: var(--elgg-button-action-font-color);
 	
 	&:hover,
 	&:focus {
-		background: $(button-action-background-color-hover);
-		color: $(button-action-font-color-hover);
+		background: var(--elgg-button-action-background-color-hover);
+		color: var(--elgg-button-action-font-color-hover);
 	}
 }
 
 .elgg-button-action-done {
-	background: $(button-action-background-color-hover);
-	color: $(button-action-font-color-hover);
+	background: var(--elgg-button-action-background-color-hover);
+	color: var(--elgg-button-action-font-color-hover);
 		
 	&:hover,
 	&:focus {
-		background: $(button-action-background-color-hover);
-		color: $(button-action-font-color-hover);
+		background: var(--elgg-button-action-background-color-hover);
+		color: var(--elgg-button-action-font-color-hover);
 	}
 }
 
 .elgg-button-delete {
-	background: $(button-delete-background-color);
-	color: $(button-delete-font-color);
+	background: var(--elgg-button-delete-background-color);
+	color: var(--elgg-button-delete-font-color);
 	
 	&:hover,
 	&:focus {
-		background: $(button-delete-background-color-hover);
-		color: $(button-delete-font-color-hover);
+		background: var(--elgg-button-delete-background-color-hover);
+		color: var(--elgg-button-delete-font-color-hover);
 	}
 }
 
 .elgg-button-outline {
-	border: 1px solid $(border-color-mild);
+	border: 1px solid var(--elgg-border-color-mild);
 }
 
 .elgg-button-dropdown {
@@ -116,8 +116,8 @@ button {
 
 .elgg-button:disabled,
 .elgg-button.elgg-state-disabled {
-	background: $(background-color-mild);
-	color: $(text-color-mild);
+	background: var(--elgg-background-color-mild);
+	color: var(--elgg-text-color-mild);
 	cursor: not-allowed;
 }
 
