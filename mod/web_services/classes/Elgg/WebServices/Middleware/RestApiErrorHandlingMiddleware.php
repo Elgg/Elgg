@@ -59,7 +59,7 @@ class RestApiErrorHandlingMiddleware {
 		$viewtype = elgg_get_viewtype();
 		switch ($viewtype) {
 			case 'json':
-				$response = new JsonResponse($output);
+				$response = new JsonResponse($output, ELGG_HTTP_OK, ['Content-Type' => 'application/json; charset=utf-8'], true);
 				break;
 			default:
 				$response = new Response($output);
