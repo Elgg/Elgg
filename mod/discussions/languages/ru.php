@@ -27,6 +27,8 @@ return array(
 	'discussion:topic:updated' => 'Дискуссия обновлена.',
 	'entity:delete:object:discussion:success' => 'Дискуссия удалена.',
 	
+	'entity:edit:object:discussion:success' => 'Дискуссия сохранена',
+	
 	'discussion:topic:notfound' => 'Дискуссия не найдена',
 	'discussion:error:notsaved' => 'Не удается сохранить эту дискуссию',
 	'discussion:error:missing' => 'Оба поля заголовок и тема являются обязательными',
