@@ -1,3 +1,18 @@
+<a name="6.1.3"></a>
+### 6.1.3 (2025-02-13)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+* Jeroen Dalsem (2)
+
+#### Bug fixes
+
+* **webservices:** prevent double encoding during API exceptions [3d6537b42](https://github.com/Elgg/Elgg/commit/3d6537b420738101bf3aa64367c486c9076e0094)
+* **admin:** correctly styled user profile fields in admin popup [adc67a272](https://github.com/Elgg/Elgg/commit/adc67a272fa343124e2d31b442437f1f3d4cf9d8)
+* **uservalidationbyemail:** set text correctly on form button [8d1891a11](https://github.com/Elgg/Elgg/commit/8d1891a1117df0eb1feb197b299bf8f20aff69c8) closes [#14783](https://github.com/Elgg/Elgg/issues/14783)
+
+
 <a name="6.1.2"></a>
 ### 6.1.2 (2025-01-16)
 
