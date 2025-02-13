@@ -64,6 +64,7 @@ return array(
 	 */
 
 	'bookmarks:save:success' => "Закладка добавлена.",
+	'entity:edit:object:bookmarks:success' => "Закладка сохранена",
 	'entity:delete:object:bookmarks:success' => "Закладка удалена.",
 
 	/**

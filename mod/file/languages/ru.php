@@ -34,6 +34,8 @@ return array(
 	'notification:object:file:create' => "Отправить уведомление при создании файла",
 	'notifications:mute:object:file' => "о файле '%s'",
 	
+	'entity:edit:object:file:success' => 'Файл сохранен',
+	
 	'file:more' => "Еще файлы",
 	'file:list' => "в виде списка",
 
