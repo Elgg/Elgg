@@ -106,6 +106,9 @@ return array(
 	'BadRequestException:livesearch:no_query' => 'La recherche instantanée a besoin d\'une requête',
 	'ValidationException' => 'Les données envoyées ne satisfont pas les exigences, veuillez vérifier votre saisie.',
 	'LogicException:InterfaceNotImplemented' => '%s doit implémenter %s',
+	'ForbiddenException' => 'Vous n\'avez pas les permissions suffisantes pour voir cette page',
+	'GoneException' => 'La ressource demandée n\'est plus disponible',
+	'InternalServerErrorException' => 'Une erreur inconnue est survenue lors du traitement de votre requête',
 	
 	'Security:InvalidPasswordCharacterRequirementsException' => "Le mot de passe fourni ne correspond pas aux exigences requises",
 	'Security:InvalidPasswordLengthException' => "Le mot de passe fourni ne correspond pas à l'exigence de longueur minimale de %s caractères",

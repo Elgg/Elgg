@@ -16,7 +16,7 @@ return array(
 	'collection:object:file:group' => "Фајлови групе",
 	'add:object:file' => "Додај фајл",
 	'edit:object:file' => "Уреди фајл",
-
+	
 	'file:more' => "Више фајлова",
 	'file:list' => "Листа - преглед",
 

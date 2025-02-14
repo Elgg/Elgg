@@ -354,21 +354,3 @@ function elgg_strip_tags(string $string, ?string $allowable_tags = null): string
 function elgg_html_decode(string $string): string {
 	return _elgg_services()->html_formatter->decode($string);
 }
-
-/**
- * Prepares query string for output to prevent CSRF attacks.
- *
- * @param string $string string to prepare
- *
- * @return string
- * @internal
- */
-function _elgg_get_display_query(string $string): string {
-	if (empty($string)) {
-		return $string;
-	}
-	
-	$string = htmlentities($string,  ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, 'UTF-8');
-	
-	return htmlspecialchars($string, ENT_QUOTES, 'UTF-8', false);
-}

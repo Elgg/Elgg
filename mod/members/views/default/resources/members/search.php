@@ -12,17 +12,12 @@ if (empty($query)) {
 	throw $e;
 }
 
-$display_query = _elgg_get_display_query($query);
-$title = elgg_echo('members:title:search', [$display_query]);
-
-$content = elgg_list_entities([
-	'query' => $query,
-	'type' => 'user',
-	'no_results' => true,
-], 'elgg_search');
-
-echo elgg_view_page($title, [
-	'content' => $content,
+echo elgg_view_page(elgg_echo('members:title:search', [$query]), [
+	'content' => elgg_list_entities([
+		'query' => $query,
+		'type' => 'user',
+		'no_results' => true,
+	], 'elgg_search'),
 	'sidebar' => elgg_view('members/sidebar'),
 	'filter_id' => 'members',
 	'filter_value' => 'search',

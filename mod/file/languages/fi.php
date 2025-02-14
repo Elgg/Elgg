@@ -16,7 +16,7 @@ return array(
 	'collection:object:file:group' => "Ryhmän tiedostot",
 	'add:object:file' => "Lisää uusi tiedosto",
 	'edit:object:file' => "Muokkaa tiedostoa",
-
+	
 	'file:more' => "Lisää tiedostoja",
 	'file:list' => "listanäkymä",
 

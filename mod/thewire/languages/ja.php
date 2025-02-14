@@ -65,4 +65,8 @@ return array(
 	 */
 	'thewire:settings:limit' => "つぶやきに使用できる最大の文字数:",
 	'thewire:settings:limit:none' => "制限なし",
+	
+	/**
+	 * Exceptions
+	 */
 );

@@ -26,7 +26,7 @@ return array(
 	'discussion:topic:created' => 'Die Diskussion wurde hinzugefügt.',
 	'discussion:topic:updated' => 'Die Diskussion wurde aktualisiert.',
 	'entity:delete:object:discussion:success' => 'Die Diskussion wurde gelöscht.',
-
+	
 	'discussion:topic:notfound' => 'Die gewünschte Diskussion wurde leider nicht gefunden.',
 	'discussion:error:notsaved' => 'Die Diskussion konnte nicht gespeichert werden.',
 	'discussion:error:missing' => 'Es müssen sowohl der Titel als auch der Textinhalt der Diskussion ausgefüllt werden.',

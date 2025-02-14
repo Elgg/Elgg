@@ -26,7 +26,7 @@ return array(
 	'discussion:topic:created' => 'Subiectul de discuție a fost creat',
 	'discussion:topic:updated' => 'Subiectul de discuție a fost actualizat.',
 	'entity:delete:object:discussion:success' => 'Subiectul de discuție a fost șters.',
-
+	
 	'discussion:topic:notfound' => 'Nu s-a găsit subiectul de discuție',
 	'discussion:error:notsaved' => 'Nu s-a putut salva acest subiect',
 	'discussion:error:missing' => 'Ambele câmpuri de titlu și mesaj sunt necesare',
