@@ -22,6 +22,8 @@ return array(
 	'menu:pages_nav:header' => "Sous-pages",
 	'notification:object:page:create' => "Envoyer une notification quand une page est créée",
 	'notifications:mute:object:page' => "à propos de la page '%s'",
+	
+	'entity:edit:object:page:success' => 'La page a bien été enregistrée',
 
 	'groups:tool:pages' => 'Activer les pages du groupe',
 	'groups:tool:pages:description' => 'Permettre aux membres du groupe de travailler ensemble sur les pages de ce groupe.',

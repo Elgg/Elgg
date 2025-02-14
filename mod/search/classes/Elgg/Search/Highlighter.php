@@ -30,8 +30,6 @@ class Highlighter {
 	 */
 	public function highlightWords(string $text): string {
 
-		$text = _elgg_get_display_query($text);
-
 		$parts = elgg_extract('query_parts', $this->params);
 		if (empty($parts)) {
 			return $text;

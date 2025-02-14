@@ -18,7 +18,7 @@ return array(
 	'edit:object:file' => "Deasaich am faidhle",
 	'notification:object:file:create' => "Leig fios nuair a thèid faidhle a chruthachadh",
 	'notifications:mute:object:file' => "mu dheidhinn an fhaidhle '%s'",
-
+	
 	'file:more' => "Barrachd fhaidhlichean",
 	'file:list' => "sealladh-liosta",
 

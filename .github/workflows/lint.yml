@@ -3,7 +3,7 @@ on: [pull_request]
 jobs:
   commit_message:
     name: Validate the commit message
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Code checkout
         uses: actions/checkout@v4
@@ -43,7 +43,7 @@ jobs:
           
   php_lint:
     name: Validate composer.json and PHP Coding style
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
@@ -78,7 +78,7 @@ jobs:
 
   languages_lint:
     name: Validate language files are UTF-8 encoded
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Code checkout
         uses: actions/checkout@v4

@@ -1,3 +1,38 @@
+<a name="6.1.3"></a>
+### 6.1.3 (2025-02-13)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+* Jeroen Dalsem (2)
+
+#### Bug fixes
+
+* **webservices:** prevent double encoding during API exceptions [3d6537b42](https://github.com/Elgg/Elgg/commit/3d6537b420738101bf3aa64367c486c9076e0094)
+* **admin:** correctly styled user profile fields in admin popup [adc67a272](https://github.com/Elgg/Elgg/commit/adc67a272fa343124e2d31b442437f1f3d4cf9d8)
+* **uservalidationbyemail:** set text correctly on form button [8d1891a11](https://github.com/Elgg/Elgg/commit/8d1891a1117df0eb1feb197b299bf8f20aff69c8) closes [#14783](https://github.com/Elgg/Elgg/issues/14783)
+
+
+<a name="6.1.2"></a>
+### 6.1.2 (2025-01-16)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+* Jeroen Dalsem (3)
+
+#### Bug fixes
+
+* **output:** improved handling of output/url [379c02196](https://github.com/Elgg/Elgg/commit/379c02196d908b412277c534ad130900f7c4ac8d)
+* **breadcrumb:** improved detection for link to self breadcrumb [a84b70afe](https://github.com/Elgg/Elgg/commit/a84b70afef312b56dff5b650a8cbdba5afe60a40)
+* **views:** use a more specific label for setting a user display name [1ce253927](https://github.com/Elgg/Elgg/commit/1ce253927e134967acf597d5cf9b87fa53d66989)
+* **cron:**
+  * the event param 'dt' can no longer be modified by callbacks [8432e77ef](https://github.com/Elgg/Elgg/commit/8432e77ef109f5d664e55f6d2e894e602c2aac51)
+  * handle unexpected files in cron log folder [c226b844a](https://github.com/Elgg/Elgg/commit/c226b844ac259180ae8a0af930027d6b182a83a9)
+* **forms:** if there is no input field do not output field elements [22c3d40bd](https://github.com/Elgg/Elgg/commit/22c3d40bdefa91d03c53e73988f1969d42e6180c)
+* **search:** prevent double encoded search query parameter [7ef21d3e4](https://github.com/Elgg/Elgg/commit/7ef21d3e443178b779d3d0645e7525d2f7a2b1cc)
+
+
 <a name="6.1.1"></a>
 ### 6.1.1 (2024-12-05)
 

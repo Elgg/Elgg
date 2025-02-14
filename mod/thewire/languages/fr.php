@@ -20,6 +20,8 @@ return array(
 	'collection:object:thewire:mentions' => "Messages du Fil mentionnant @%s",
 	'notification:object:thewire:create' => "Envoyer une notification lorsqu'un message est publié sur le Fil",
 	'notifications:mute:object:thewire' => "à propos du message du Fil \"%s\"",
+	
+	'entity:edit:object:thewire:success' => 'Le Message de ce Fil a bien été enregistré',
 
 	'thewire:menu:filter:mentions' => "Mentions",
 	
@@ -70,4 +72,9 @@ return array(
 	 */
 	'thewire:settings:limit' => "Nombre maximum de caractères pour chaque message du Fil :",
 	'thewire:settings:limit:none' => "Pas de limite",
+	
+	/**
+	 * Exceptions
+	 */
+	'ValidationException:thewire:limit' => "Le nombre de caractères de ce Message du Fil dépasse la limite maximum autorisée",
 );

@@ -17,6 +17,8 @@ return array(
 	'notification:object:blog:publish' => "Отправить уведомление при публикации блога",
 	'notifications:mute:object:blog' => "о блоге '%s'",
 	'menu:blog_archive:header' => "Архив блога",
+	
+	'entity:edit:object:blog:success' => 'Блог сохранен',
 
 	'blog:revisions' => 'Редакции',
 	'blog:archives' => 'Архив',

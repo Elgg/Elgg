@@ -59,4 +59,8 @@ return array(
 	 */
 	'thewire:settings:limit' => "Tilapäivityksen suurin sallittu merkkimäärä:",
 	'thewire:settings:limit:none' => "Ei rajaa",
+	
+	/**
+	 * Exceptions
+	 */
 );

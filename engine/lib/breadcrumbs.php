@@ -35,6 +35,7 @@ function elgg_push_entity_breadcrumbs(\ElggEntity $entity): void {
 	elgg_push_collection_breadcrumbs($entity->type, $entity->subtype, $entity->getContainerEntity());
 
 	$link_self = elgg_get_current_route_name() !== "view:{$entity->type}:{$entity->subtype}";
+	$link_self = $link_self && !elgg_http_url_is_identical(elgg_get_current_url(), $entity->getURL());
 	if ($link_self) {
 		elgg_register_menu_item('breadcrumbs', [
 			'name' => 'entity',

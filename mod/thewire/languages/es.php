@@ -57,4 +57,8 @@ return array(
 	/**
 	 * Settings
 	 */
+	
+	/**
+	 * Exceptions
+	 */
 );

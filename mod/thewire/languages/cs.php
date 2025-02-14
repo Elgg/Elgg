@@ -56,4 +56,8 @@ return array(
 	 */
 	'thewire:settings:limit' => "Maximální počet znaků pro telegrafní zprávy:",
 	'thewire:settings:limit:none' => "Bez omezení",
+	
+	/**
+	 * Exceptions
+	 */
 );

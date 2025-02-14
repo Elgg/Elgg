@@ -61,6 +61,7 @@ class Cron {
 		
 		$scheduler = new Scheduler();
 		$time = $this->getCurrentTime();
+		$immutable = \DateTimeImmutable::createFromInterface($time);
 
 		foreach ($intervals as $interval) {
 			if (!array_key_exists($interval, $allowed_intervals)) {
@@ -68,7 +69,7 @@ class Cron {
 			}
 
 			$cron_interval = $force ? $allowed_intervals['minute'] : $allowed_intervals[$interval];
-			$filename = $this->getLogFilename($interval, $time);
+			$filename = $this->getLogFilename($interval, $immutable);
 			
 			$cron_logger = \Elgg\Logger\Cron::factory([
 				'interval' => $interval,
@@ -76,12 +77,12 @@ class Cron {
 			]);
 			
 			$scheduler
-				->call(function () use ($interval, $time, $cron_logger, $filename) {
-					return $this->execute($interval, $cron_logger, $filename, $time);
+				->call(function () use ($interval, $immutable, $cron_logger, $filename) {
+					return $this->execute($interval, $cron_logger, $filename, $immutable);
 				})
 				->at($cron_interval)
-				->before(function () use ($interval, $time, $cron_logger) {
-					$this->before($interval, $cron_logger, $time);
+				->before(function () use ($interval, $immutable, $cron_logger) {
+					$this->before($interval, $cron_logger, $immutable);
 				})
 				->then(function ($output) use ($interval, $cron_logger) {
 					$this->after($output, $interval, $cron_logger);
@@ -94,17 +95,13 @@ class Cron {
 	/**
 	 * Execute commands before cron interval is run
 	 *
-	 * @param string            $interval    Interval name
-	 * @param \Elgg\Logger\Cron $cron_logger Cron logger
-	 * @param null|\DateTime    $time        Time of the cron initialization (default: current service time)
+	 * @param string             $interval    Interval name
+	 * @param \Elgg\Logger\Cron  $cron_logger Cron logger
+	 * @param \DateTimeImmutable $time        Time of the cron initialization
 	 *
 	 * @return void
 	 */
-	protected function before(string $interval, \Elgg\Logger\Cron $cron_logger, ?\DateTime $time = null): void {
-		if (!isset($time)) {
-			$time = $this->getCurrentTime();
-		}
-
+	protected function before(string $interval, \Elgg\Logger\Cron $cron_logger, \DateTimeImmutable $time): void {
 		try {
 			$this->events->triggerBefore('cron', $interval, $time);
 		} catch (\Throwable $t) {
@@ -123,18 +120,14 @@ class Cron {
 	/**
 	 * Execute handlers attached to a specific cron interval
 	 *
-	 * @param string            $interval    Cron interval to execute
-	 * @param \Elgg\Logger\Cron $cron_logger Cron logger
-	 * @param string            $filename    Filename of the cron log
-	 * @param null|\DateTime    $time        Time of cron initialization (default: current service time)
+	 * @param string             $interval    Cron interval to execute
+	 * @param \Elgg\Logger\Cron  $cron_logger Cron logger
+	 * @param string             $filename    Filename of the cron log
+	 * @param \DateTimeImmutable $time        Time of cron initialization
 	 *
 	 * @return string
 	 */
-	protected function execute(string $interval, \Elgg\Logger\Cron $cron_logger, string $filename, ?\DateTime $time = null): string {
-		if (!isset($time)) {
-			$time = $this->getCurrentTime();
-		}
-		
+	protected function execute(string $interval, \Elgg\Logger\Cron $cron_logger, string $filename, \DateTimeImmutable $time): string {
 		try {
 			$begin_callback = function (array $params) use ($cron_logger) {
 				$readable_callable = (string) elgg_extract('readable_callable', $params);
@@ -220,7 +213,7 @@ class Cron {
 		$files = [];
 		/* @var $file \DirectoryIterator */
 		foreach ($dh as $file) {
-			if ($file->isDot() || !$file->isFile()) {
+			if ($file->isDot() || !$file->isFile() || $file->getExtension() !== 'log') {
 				continue;
 			}
 			
@@ -297,16 +290,12 @@ class Cron {
 	/**
 	 * Get a filename to log in
 	 *
-	 * @param string         $interval cron interval to log
-	 * @param \DateTime|null $time     start time of the cron
+	 * @param string             $interval cron interval to log
+	 * @param \DateTimeInterface $time     start time of the cron
 	 *
 	 * @return string
 	 */
-	protected function getLogFilename(string $interval, ?\DateTime $time = null): string {
-		if (!isset($time)) {
-			$time = $this->getCurrentTime();
-		}
-		
+	protected function getLogFilename(string $interval, \DateTimeInterface $time): string {
 		$date = $time->format(\DateTimeInterface::ATOM);
 		$date = str_replace('+', 'p', $date);
 		$date = preg_replace('/[^a-zA-Z0-9_-]+/', '-', $date);

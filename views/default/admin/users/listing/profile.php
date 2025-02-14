@@ -60,4 +60,4 @@ if (empty($output)) {
 	return;
 }
 
-echo $output;
+echo elgg_format_element('div', ['class' => 'elgg-profile-fields'], $output);

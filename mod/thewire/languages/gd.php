@@ -65,4 +65,8 @@ return array(
 	 */
 	'thewire:settings:limit' => "An àireamh as motha de charactaran a tha ceadaichte ann am brathan-uèir",
 	'thewire:settings:limit:none' => "Neo-chrìochnaichte",
+	
+	/**
+	 * Exceptions
+	 */
 );

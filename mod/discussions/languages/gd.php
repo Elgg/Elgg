@@ -26,7 +26,7 @@ return array(
 	'discussion:topic:created' => 'Chaidh an deasbad a chruthachadh.',
 	'discussion:topic:updated' => 'Chaidh an deasbad ùrachadh.',
 	'entity:delete:object:discussion:success' => 'Chaidh an deasbad a sguabadh às.',
-
+	
 	'discussion:topic:notfound' => 'Cha do ghabh an deasbad a lorg',
 	'discussion:error:notsaved' => 'Cha do ghabh an deasbad seo a shàbhaladh',
 	'discussion:error:missing' => 'Tha an tiotal agus an teachdaireachd nan raointean riatanach',

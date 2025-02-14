@@ -59,4 +59,8 @@ return array(
 	 */
 	'thewire:settings:limit' => "Максимални број знакова у објави на жици:",
 	'thewire:settings:limit:none' => "Без ограничења",
+	
+	/**
+	 * Exceptions
+	 */
 );
