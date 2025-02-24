@@ -99,9 +99,13 @@
 }
 .tagify + input,
 .tagify + textarea {
-	position: absolute !important;
-	left: -9999em !important;
-	transform: scale(0) !important;
+	display: block !important;
+	order: 1;
+	resize: none;
+	border: 0 !important;
+	height: 1px !important;
+	padding: 0 !important;
+	margin: -1px 0 0 0 !important;
 }
 .tagify__tag {
 	display: inline-flex;

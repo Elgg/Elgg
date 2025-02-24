@@ -36,13 +36,11 @@ foreach ($fields as $field) {
 	echo elgg_view_field($field);
 }
 
-if ($blog instanceof \ElggBlog) {
-	echo elgg_view_field([
-		'#type' => 'hidden',
-		'name' => 'guid',
-		'value' => $blog->guid,
-	]);
-}
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'guid',
+	'value' => $blog?->guid,
+]);
 
 echo elgg_view_field([
 	'#type' => 'container_guid',
