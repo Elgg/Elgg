@@ -1,3 +1,16 @@
+<a name="6.1.4"></a>
+### 6.1.4 (2025-03-05)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+
+#### Bug fixes
+
+* **blog:** preview button should only create entity once [3d5ccd320](https://github.com/Elgg/Elgg/commit/3d5ccd320476a790741628543a1e21dff3f8ae99)
+* **forms:** make sure html validation message is visible for tags input [dc81796e7](https://github.com/Elgg/Elgg/commit/dc81796e775c804b484c6824e0757f9457e65ab7)
+
+
 <a name="6.1.3"></a>
 ### 6.1.3 (2025-02-13)
 
