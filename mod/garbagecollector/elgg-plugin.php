@@ -9,6 +9,7 @@ return [
 	],
 	'settings' => [
 		'period' => 'monthly',
+		'optimize' => 1,
 	],
 	'cli_commands' => [
 		\Elgg\GarbageCollector\OptimizeCommand::class,

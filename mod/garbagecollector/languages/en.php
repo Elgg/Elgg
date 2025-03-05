@@ -7,6 +7,7 @@
 
 return array(
 	'garbagecollector:period' => 'How often should the Elgg garbage collector run?',
+	'garbagecollector:period:optimize' => 'Optimize database tables after garbage collector run',
 
 	'garbagecollector:weekly' => 'Once a week',
 	'garbagecollector:monthly' => 'Once a month',

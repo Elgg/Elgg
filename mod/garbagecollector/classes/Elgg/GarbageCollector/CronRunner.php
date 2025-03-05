@@ -3,14 +3,14 @@
 namespace Elgg\GarbageCollector;
 
 /**
- * Garbagecollector cron job
+ * Garbage collector cron job
  */
 class CronRunner {
 
 	/**
-	 * Garbagecollector cron job
+	 * Garbage collector cron job
 	 *
-	 * @param \Elgg\Event $event event
+	 * @param \Elgg\Event $event 'cron', 'all'
 	 *
 	 * @return void
 	 */
@@ -28,10 +28,12 @@ class CronRunner {
 		$params['period'] = $period;
 		elgg_trigger_event_results('gc', 'system', $params);
 		
-		// optimize database tables
-		$instance = GarbageCollector::instance();
-		$instance->setLogger($cron_logger);
-		
-		$instance->optimize(true);
+		if ((bool) elgg_get_plugin_setting('optimize', 'garbagecollector')) {
+			// optimize database tables
+			$instance = GarbageCollector::instance();
+			$instance->setLogger($cron_logger);
+			
+			$instance->optimize(true);
+		}
 	}
 }
