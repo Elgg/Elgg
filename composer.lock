@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aab112bb43586c87616468e4b13c7bb7",
+    "content-hash": "6b59a58826a71311fd06d47200fb717e",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -2513,13 +2513,13 @@
         },
         {
             "name": "npm-asset/jquery-ui",
-            "version": "1.13.3",
+            "version": "1.14.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/jquery-ui/-/jquery-ui-1.13.3.tgz"
+                "url": "https://registry.npmjs.org/jquery-ui/-/jquery-ui-1.14.1.tgz"
             },
             "require": {
-                "npm-asset/jquery": ">=1.8.0,<4.0.0"
+                "npm-asset/jquery": ">=1.12.0,<5.0.0"
             },
             "type": "npm-asset",
             "license": [
