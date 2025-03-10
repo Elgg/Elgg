@@ -18,7 +18,7 @@
         "css-crush/css-crush": "~4.1.0",
         "doctrine/dbal": "~4.0.1",
         "eloquent/composer-config-reader": "~3.0.0",
-        "fakerphp/faker": "~1.23.0",
+        "fakerphp/faker": "~1.24.0",
         "fortawesome/font-awesome": "~5.14",
         "guzzlehttp/guzzle": "~7.8.0",
         "hackzilla/password-generator": "~1.6.0",
