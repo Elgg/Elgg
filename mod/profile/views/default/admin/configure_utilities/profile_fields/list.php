@@ -18,13 +18,15 @@ foreach ($fieldlistarray as $name) {
 	}
 	
 	$url = elgg_view('output/url', [
+		'icon' => 'edit',
+		'text' => false,
 		'href' => "ajax/form/profile/fields/add?id={$name}",
-		'text' => elgg_view_icon('edit'),
 		'class' => 'elgg-lightbox',
 	]);
 	$url .= ' ' . elgg_view('output/url', [
+		'icon' => 'delete-alt',
+		'text' => false,
 		'href' => "action/profile/fields/delete?id={$name}",
-		'text' => elgg_view_icon('delete-alt'),
 		'confirm' => elgg_echo('deleteconfirm'),
 	]);
 	$type = elgg_echo("profile:field:{$type}");

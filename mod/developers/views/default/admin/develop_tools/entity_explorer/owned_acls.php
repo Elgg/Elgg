@@ -29,7 +29,8 @@ if (empty($acls)) {
 		}
 		
 		$result .= elgg_format_element('td', [], elgg_view('output/url', [
-			'text' => elgg_view_icon('remove'),
+			'icon' => 'remove',
+			'text' => false,
 			'href' => elgg_http_add_url_query_elements('action/developers/entity_explorer_delete', [
 				'guid' => $entity->guid,
 				'type' => 'acl',
