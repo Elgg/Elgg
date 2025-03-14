@@ -45,7 +45,7 @@ if ($user->isBanned()) {
 
 $icon = elgg_view('output/img', [
 	'src' => $user->getIconURL($size),
-	'alt' => $name,
+	'alt' => $user->hasIcon($size) ? $name : '',
 	'class' => elgg_extract_class($vars, [], 'img_class'),
 ]);
 

@@ -24,6 +24,7 @@ $checkbox = elgg_view('input/checkbox', [
 	'name' => 'notification_id[]',
 	'value' => $entity->guid,
 	'default' => false,
+	'aria-label' => $entity->getDisplayName(),
 ]);
 
 $params = [
