@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-04 14:25+0100\n"
+"POT-Creation-Date: 2025-02-13 10:34+0100\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -1374,6 +1374,10 @@ msgid ""
 " plugins to collaborate on the request data, the server response, and the "
 "returned client-side data."
 msgstr ""
+"Le module AMD ``elgg/Ajax`` (introduit dans Elgg 2.1) fournit un ensemble de"
+" méthodes pour communiquer avec le serveur d’une manière concise et "
+"uniforme, ce qui permet aux plugins de collaborer sur les données de la "
+"requête, la réponse du serveur et les données renvoyées au côté client."
 
 #: ../../guides/ajax.rst:13
 msgid "All the ajax methods perform the following:"
@@ -1518,6 +1522,8 @@ msgid ""
 "To stop client-side API from requiring modules required server-side with "
 "``elgg_import_esm()``, set ``options.data.elgg_fetch_deps = 0``."
 msgstr ""
+"Pour empêcher l’API côté client d’exiger des modules requis côté serveur "
+"avec ``elgg_import_esm()``, définissez ``options.data.elgg_fetch_deps = 0``."
 
 #: ../../guides/ajax.rst:36
 msgid ""
@@ -4533,7 +4539,7 @@ msgstr "**create, relationship** |sequence|"
 
 #: ../../guides/events-list.rst:341
 msgid "Triggered during the creation of a relationship."
-msgstr ""
+msgstr "Déclenché durant la création d'une relation."
 
 #: ../../guides/events-list.rst:344
 msgid "**delete, relationship** |sequence|"
@@ -4541,7 +4547,7 @@ msgstr "**delete, relationship** |sequence|"
 
 #: ../../guides/events-list.rst:344
 msgid "Triggered during the deletion of a relationship."
-msgstr ""
+msgstr "Déclenché durant la suppression d'une relation."
 
 #: ../../guides/events-list.rst:347
 msgid "**join, group**"
@@ -10979,6 +10985,8 @@ msgid ""
 "Just like any other entity capability you can enable the ``restorable`` "
 "capability in the ``elgg-plugin.php``"
 msgstr ""
+"Tout comme toute autre capacité d'entité, vous pouvez activer la capacité "
+"``restorable`` dans le fichier ``elgg-plugin.php``"
 
 #: ../../guides/restore.rst:36
 msgid "Entity menu"
@@ -11170,6 +11178,14 @@ msgid ""
 "the physical file shouldn't be removed from the disk when the entity is only"
 " marked as deleted in the database."
 msgstr ""
+"Cette fonction est appelée lorsque le paramètre ``$persistent`` vaut "
+"``true`` dans la fonction ``delete()``. Elle doit gérer les cas où l'entité "
+"est définitivement supprimée de la base de données. Un développeur pourrait "
+"par exemple ignorer cette fonction dans un ``ElggFile`` où le fichier "
+"physique sur le disque doit être supprimé lorsque l'entité est supprimée de "
+"la base de données, mais où le fichier physique ne doit pas être supprimé du"
+" disque lorsque l'entité est simplement marquée comme étant supprimée dans "
+"la base de données."
 
 #: ../../guides/restore.rst:132
 msgid "This will trigger the ``'delete', '<entity_type>'`` event sequence."
@@ -11186,6 +11202,9 @@ msgid ""
 "the ``delete()`` function. This function must handle cases where the entity "
 "is marked as deleted in the database."
 msgstr ""
+"Cette fonction est appelée lorsque le paramètre ``$persistent`` vaut "
+"``false`` dans la fonction ``delete()``. Elle doit gérer les cas où l'entité"
+" est marquée comme étant supprimée dans la base de données."
 
 #: ../../guides/restore.rst:140
 msgid "This will trigger the ``'trash', '<entity_type>'`` event sequence."
@@ -11210,12 +11229,18 @@ msgid ""
 "fetching/listing entities the code needs to be wrapped in an ``elgg_call()``"
 " with the flag ``ELGG_SHOW_DELETED_ENTITIES``."
 msgstr ""
+"Lorsqu'un développeur veut s'assurer d'inclure les entités supprimées lors "
+"de la récupération/liste des entités, le code doit être enveloppé dans un "
+"``elgg_call()`` avec le drapeau ``ELGG_SHOW_DELETED_ENTITIES``."
 
 #: ../../guides/restore.rst:153
 msgid ""
 "The same applies when the developer needs to be sure to exclude all deleted "
 "items set the flag ``ELGG_HIDE_DELETED_ENTITIES``."
 msgstr ""
+"La même chose s'applique lorsque le développeur doit s'assurer d'exclure "
+"tous les éléments supprimés en définissant le drapeau "
+"``ELGG_HIDE_DELETED_ENTITIES``."
 
 #: ../../guides/restore.rst:156
 msgid "Cleanup of deleted entities"
@@ -11236,6 +11261,11 @@ msgid ""
 "that period will be removed in the next period. The oldest deleted entity "
 "(by when the entity was deleted) will be removed first."
 msgstr ""
+"Afin de ne pas surcharger le système, la tâche cron ne s'exécutera que 5 "
+"minutes par heure au maximum. Les entités qui n'ont pas pu être supprimées "
+"pendant cette période le seront lors de la période suivante. L'entité "
+"supprimée la plus ancienne (à la date de suppression) sera supprimée en "
+"premier."
 
 #: ../../guides/restore.rst:167
 msgid "More information"
@@ -15353,6 +15383,8 @@ msgid ""
 "**Content-type** - The content type of the data you are sending (this can be"
 " ``application/x-www-form-urlencoded`` or ``multipart/form-data``)"
 msgstr ""
+"**Content-type** - Le type de contenu des données que vous envoyez (cela "
+"peut être ``application/x-www-form-urlencoded`` ou ``multipart/form-data``)"
 
 #: ../../guides/web-services/hmac.rst:32
 msgid "**Content-Length** - The length in bytes of your POST data"
@@ -15394,12 +15426,18 @@ msgid ""
 "urlencoded;`` the post hash needs to be calculated over all the post data "
 "using one of the supported hashing algorithms."
 msgstr ""
+"Lors de l'envoi des données POST en tant que ``Content-Type: "
+"application/x-www-form-urlencoded;``, le hachage de la publication doit être"
+" calculé sur toutes les données de publication à l'aide de l'un des "
+"algorithmes de hachage pris en charge."
 
 #: ../../guides/web-services/hmac.rst:50
 msgid ""
 "When sending the POST data as ``Content-Type: multipart/form-data;`` the "
 "post hash needs to be calculated over an empty string."
 msgstr ""
+"Lors de l'envoi des données POST en tant que ``Content-Type: multipart/form-"
+"data;`` le hachage de publication doit être calculé sur une chaîne vide."
 
 #: ../../guides/web-services/hmac.rst:53
 msgid ""
@@ -15407,6 +15445,9 @@ msgid ""
 "header and the used hashing algorithm must be reported in the ``X-Elgg-"
 "posthash-algo`` header."
 msgstr ""
+"Le résultat du hachage doit être rapporté dans l'entête ``X-Elgg-posthash`` "
+"et l'algorithme de hachage utilisé doit être rapporté dans l'entête "
+"``X-Elgg-posthash-algo``."
 
 #: ../../guides/web-services/hmac.rst:58
 msgid ""

@@ -75,7 +75,7 @@ Voir la discussion et commenter :
 	'discussion:topic:status' => 'Statut de la discussion',
 	'discussion:topic:closed:title' => 'Cette discussion est fermée.',
 	'discussion:topic:closed:desc' => 'Cette discussion a été fermée et n\'accepte plus de nouveau message.',
-	'discussion:topic:container' => 'Sélectionnez un groupe (facultatif) pour démarrer cette discussion',
+	'discussion:topic:container' => 'Sélectionnez un groupe optionnel pour démarrer cette discussion',
 	'discussion:topic:container:help' => 'Commencer une discussion dans un groupe limitera par défaut l\'accès aux membres du groupe',
 
 	'discussion:topic:description' => 'Message du sujet de discussion',
