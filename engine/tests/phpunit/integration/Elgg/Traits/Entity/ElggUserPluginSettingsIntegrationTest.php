@@ -2,6 +2,8 @@
 
 namespace Elgg\Traits\Entity;
 
+use Elgg\Exceptions\PluginException;
+
 class ElggUserPluginSettingsIntegrationTest extends PluginSettingsIntegrationTestCase {
 
 	public function down() {
@@ -24,6 +26,14 @@ class ElggUserPluginSettingsIntegrationTest extends PluginSettingsIntegrationTes
 	
 	public function testPluginSettingsFallbackToPluginDefaults() {
 		$plugin = \ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
+		if (!$plugin->isActive()) {
+			try {
+				$plugin->activate();
+			} catch (PluginException $e) {
+				$this->markTestSkipped();
+			}
+		}
+		
 		$user_settings = $plugin->getStaticConfig('user_settings', []);
 		
 		$this->assertNotEmpty($user_settings);
@@ -39,7 +49,7 @@ class ElggUserPluginSettingsIntegrationTest extends PluginSettingsIntegrationTes
 		$this->assertEquals('foo', $this->entity->getPluginSetting('test_plugin', 'user_default1'));
 		$this->assertEquals('foo', $this->entity->getPluginSetting('test_plugin', 'user_default1', 'my_default'));
 		
-		// remove user value (should fallback to plugin default)
+		// remove user value (should fall back to plugin default)
 		$this->assertTrue($this->entity->removePluginSetting('test_plugin', 'user_default1'));
 		$this->assertEquals($user_settings['user_default1'], $this->entity->getPluginSetting('test_plugin', 'user_default1'));
 		$this->assertEquals($user_settings['user_default1'], $this->entity->getPluginSetting('test_plugin', 'user_default1', 'my_default'));
