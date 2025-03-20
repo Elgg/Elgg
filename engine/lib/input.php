@@ -203,6 +203,12 @@ function _elgg_htmlawed_tag_post_processor(string $tag, array|int $attributes = 
 
 	$result = '';
 	foreach ($attributes as $attr => $value) {
+		if ($tag === 'img' && $attr === 'alt' && $value === 'image') {
+			// htmlAwed adds a default alt to all images
+			// but according to WCAG the default for decorative image should be an empty alt attribute
+			$value = '';
+		}
+		
 		$result .= " {$attr}=\"{$value}\"";
 	}
 	

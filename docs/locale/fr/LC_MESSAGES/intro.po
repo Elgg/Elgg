@@ -5,17 +5,17 @@
 # 
 # Translators:
 # Jerôme Bakker, 2024
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024
 # Emmanuel Simond, 2025
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-04 14:25+0100\n"
+"POT-Creation-Date: 2025-02-13 10:34+0100\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
-"Last-Translator: Emmanuel Simond, 2025\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -240,7 +240,7 @@ msgid ""
 "files."
 msgstr ""
 "Soyez informé que lors de l’utilisation de elgg-cli il peut être nécessaire "
-"d’exécuter la commande avec le même utilisateur que le serveur Web afin "
+"d’exécuter la commande avec le même utilisateur que le serveur web afin "
 "d'éviter les problèmes liés aux droits d'accès aux fichiers."
 
 #: ../../intro/elgg-cli.rst:27

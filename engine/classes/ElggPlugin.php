@@ -192,9 +192,9 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
-	 * Get a value from the plugins's static config file.
+	 * Get a value from the plugins' static config file.
 	 *
-	 * @note     If the system cache is on, Elgg APIs should not call this on every request.
+	 * @note If the system cache is on, Elgg APIs should not call this on every request.
 	 *
 	 * @param string $key     Config key
 	 * @param mixed  $default Value returned if missing
@@ -283,7 +283,8 @@ class ElggPlugin extends ElggObject {
 	// Plugin settings
 
 	/**
-	 * Returns a plugin setting
+	 * Returns a plugin setting when the plugin is active.
+	 * Will return $default when the plugin isn't active.
 	 *
 	 * @param string $name    The setting name
 	 * @param mixed  $default The default value to return if none is set
@@ -296,26 +297,25 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
-	 * Returns an array of all settings saved for this plugin.
+	 * Returns an array of all settings saved for this plugin when the plugin is active.
+	 * Will return an empty array if the plugin isn't active.
 	 *
 	 * @note Unlike user settings, plugin settings are not namespaced.
 	 *
 	 * @return array An array of key/value pairs.
 	 */
 	public function getAllSettings(): array {
-
 		try {
-			$defaults = [];
-			if ($this->isActive()) {
-				// only load settings from static config for active plugins to prevent issues
-				// with internal plugin references ie. classes and language keys
-				$defaults = $this->getStaticConfig('settings', []);
+			if (!$this->isActive()) {
+				return [];
 			}
-
+			
+			$defaults = (array) $this->getStaticConfig('settings', []);
+			
 			$settings = $this->getAllMetadata();
 			
-			// title and description are not considered settings
-			unset($settings['title'], $settings['description']);
+			// title, description and priority are not considered settings
+			unset($settings['title'], $settings['description'], $settings[self::PRIORITY_SETTING_NAME]);
 
 			return array_merge($defaults, $settings);
 		} catch (DatabaseException $ex) {
@@ -369,13 +369,12 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 */
 	public function unsetAllSettings(): bool {
-		$settings = $this->getAllSettings();
+		$settings = $this->getAllMetadata();
+		
+		// title, description and priority are not considered settings
+		unset($settings['title'], $settings['description'], $settings[self::PRIORITY_SETTING_NAME]);
 
 		foreach ($settings as $name => $value) {
-			if (str_starts_with($name, 'elgg:internal:')) {
-				continue;
-			}
-			
 			$this->unsetSetting($name);
 		}
 
@@ -1227,14 +1226,7 @@ class ElggPlugin extends ElggObject {
 			return parent::__get($name);
 		}
 
-		$result = $this->getSetting($name);
-		if ($result !== null) {
-			return $result;
-		}
-
-		$defaults = $this->getStaticConfig('settings', []);
-
-		return elgg_extract($name, $defaults, $result);
+		return $this->getSetting($name);
 	}
 
 	/**

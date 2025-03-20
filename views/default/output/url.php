@@ -125,6 +125,11 @@ if (!elgg_is_empty($text)) {
 	$text = elgg_format_element('span', [
 		'class' => 'elgg-anchor-label',
 	], $text);
+} else {
+	// move title to aria-label
+	if (!isset($vars['aria-label']) && !elgg_is_empty(elgg_extract('title', $vars))) {
+		$vars['aria-label'] = elgg_extract('title', $vars);
+	}
 }
 
 $icon = (string) elgg_extract('icon', $vars);

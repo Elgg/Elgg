@@ -19,7 +19,7 @@ if (empty($plugin_id) || empty($user_guid)) {
 
 $plugin = elgg_get_plugin_from_id($plugin_id);
 $user = get_user($user_guid);
-if (!$plugin || !$user || !$user->canEdit()) {
+if (!$plugin instanceof \ElggPlugin || !$plugin->isActive() || !$user || !$user->canEdit()) {
 	return elgg_error_response(elgg_echo('plugins:usersettings:save:fail', [$plugin_id]));
 }
 
