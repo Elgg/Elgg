@@ -17,7 +17,7 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 		
 		elgg_call(ELGG_IGNORE_ACCESS, function() {
 			foreach ($this->plugins as $plugin) {
-				if ($plugin instanceof ElggEntity) {
+				if ($plugin instanceof \ElggEntity) {
 					$plugin->delete();
 				}
 			}
@@ -25,10 +25,9 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testCanSetPriority() {
-
 		elgg_call(ELGG_IGNORE_ACCESS, function() {
 			for ($i = 0; $i < 5; $i++) {
-				$plugin = new ElggPlugin();
+				$plugin = new \ElggPlugin();
 				$plugin->title = "test_plugin$i";
 				$plugin->save();
 				$this->plugins[] = $plugin;
@@ -59,11 +58,11 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 
 	public function testCanLoadExistingPlugin() {
 		elgg_call(ELGG_IGNORE_ACCESS, function() {
-			$plugin = new ElggPlugin();
+			$plugin = new \ElggPlugin();
 			$plugin->title = "test_plugin_x";
 			$plugin->save();
 	
-			$loaded_plugin = ElggPlugin::fromId('test_plugin_x');
+			$loaded_plugin = \ElggPlugin::fromId('test_plugin_x');
 	
 			$this->assertEquals($plugin->guid, $loaded_plugin->guid);
 	
@@ -72,8 +71,7 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testPersistsPropertiesOnSave() {
-
-		$plugin = ElggPlugin::fromId('test_plugin');
+		$plugin = \ElggPlugin::fromId('test_plugin');
 
 		$admin = $this->getAdmin();
 		_elgg_services()->session_manager->setLoggedInUser($admin);
@@ -91,12 +89,13 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals($site->guid, $plugin->owner_guid);
 		$this->assertEquals($site->guid, $plugin->container_guid);
 		$this->assertEquals(ACCESS_PUBLIC, $plugin->access_id);
-		$this->assertEquals('bar', $plugin->foo);
+		$this->assertNull($plugin->foo);
+		$this->assertNull($plugin->getSetting('foo'));
+		$this->assertEquals('bar', $plugin->getMetadata('foo'));
 	}
 
 	public function testCanSetAndGetProperties() {
-
-		$plugin = ElggPlugin::fromId('test_plugin');
+		$plugin = \ElggPlugin::fromId('test_plugin');
 
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($plugin) {
 			$plugin->title = 'test_plugin_edited';
@@ -112,12 +111,12 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 
 		$this->assertNull($plugin->getSetting('title'));
 		$this->assertNull($plugin->getSetting('description'));
-		$this->assertEquals('bar', $plugin->getSetting('foo'));
+		$this->assertNull($plugin->getSetting('foo'));
+		$this->assertEquals('bar', $plugin->getMetadata('foo'));
 	}
 
 	public function testInvalidatesCacheOnDelete() {
-
-		$plugin = ElggPlugin::fromId('test_plugin_y');
+		$plugin = \ElggPlugin::fromId('test_plugin_y');
 
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($plugin) {
 			$this->assertTrue($plugin->delete());
@@ -131,7 +130,7 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 		
 		$this->assertEquals('test', _elgg_services()->bootCache->load('test'));
 		
-		ElggPlugin::fromId('test_plugin')->setSetting('foo', 'bar');
+		\ElggPlugin::fromId('test_plugin')->setSetting('foo', 'bar');
 		
 		$this->assertNull(_elgg_services()->bootCache->load('test'));
 	}

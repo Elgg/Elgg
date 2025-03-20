@@ -1,3 +1,21 @@
+<a name="6.1.5"></a>
+### 6.1.5 (2025-03-20)
+
+#### Contributors
+
+* Jeroen Dalsem (4)
+* Jerôme Bakker (4)
+
+#### Bug fixes
+
+* **plugins:** fetching settings from inactive plugins returns default [364f8b354](https://github.com/Elgg/Elgg/commit/364f8b354e78dc8b11db11a10dd42e8c379605c8)
+* **output:** no longer add wrong alt attribute on img tags [9de170f5f](https://github.com/Elgg/Elgg/commit/9de170f5fb1ded25a1b186504ba6b143e4f922e1)
+* **icons:** icon is decorative if no custom icon [bd0c6e444](https://github.com/Elgg/Elgg/commit/bd0c6e44436bb934e8677e138e08f88fa051b5e0)
+* **site_notifications:** added missing aria-label on checkbox [873076a5b](https://github.com/Elgg/Elgg/commit/873076a5b26fba4ed71be50bbab9190eba87f95b)
+* **views:** urls get aria-label filled with title if empty text [dafd35e6d](https://github.com/Elgg/Elgg/commit/dafd35e6dd42cb6b5af3f0d1736da57ad234e0f4)
+* **notifications:** correctly show discussions mute notifications action [72b07aa8a](https://github.com/Elgg/Elgg/commit/72b07aa8a893de2ee820b0dc30761338c84875d0)
+
+
 <a name="6.1.4"></a>
 ### 6.1.4 (2025-03-05)
 

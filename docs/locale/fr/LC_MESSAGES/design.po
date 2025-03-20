@@ -5,16 +5,16 @@
 # 
 # Translators:
 # Jerôme Bakker, 2024
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-04 14:25+0100\n"
+"POT-Creation-Date: 2025-02-13 10:34+0100\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -389,7 +389,7 @@ msgstr "Quand l'entité a été créée"
 
 #: ../../design/database.rst:74
 msgid "When was the entity last updated"
-msgstr ""
+msgstr "Quand l'entité a été modifiée pour la dernière fois"
 
 #: ../../design/database.rst:75
 msgid "When did the the entity perform it's last action, or was acted upon"
@@ -678,6 +678,8 @@ msgstr ""
 msgid ""
 "Beyond the standard ``ElggEntity`` properties, ``ElggUser`` also supports:"
 msgstr ""
+"Au-delà des propriétés standards de ``ElggEntity``, ``ElggUser`` supporte "
+"également :"
 
 #: ../../design/database.rst:183
 msgid "``name`` The user's plain text name. e.g. \"Hugh Jackman\""
@@ -727,6 +729,8 @@ msgstr ""
 msgid ""
 "Beyond the standard ``ElggEntity`` properties, ``ElggSite`` also supports:"
 msgstr ""
+"Au-delà des propriétés standards de ``ElggEntity``, ``ElggSite`` supporte "
+"également :"
 
 #: ../../design/database.rst:199
 msgid "``name`` The site name"
@@ -757,6 +761,8 @@ msgstr ""
 msgid ""
 "Beyond the standard ``ElggEntity`` properties, ``ElggGroup`` also supports:"
 msgstr ""
+"Au-delà des propriétés standards de ``ElggEntity``, ``ElggGroup`` supporte "
+"également :"
 
 #: ../../design/database.rst:211
 msgid "``name`` The group's name (HTML escaped text)"
@@ -945,6 +951,7 @@ msgstr "Un type d'annotation interne (tel que *comment*)"
 #: ../../design/database.rst:314
 msgid "A value (which can be a string, a boolean or an integer)"
 msgstr ""
+"Une valeur (qui peut être une chaîne de caractères, un booléen ou un entier)"
 
 #: ../../design/database.rst:315
 msgid "An access permission distinct from the entity it's attached to"
@@ -1052,7 +1059,7 @@ msgstr ""
 
 #: ../../design/database.rst:395
 msgid "The metadata name is case sensitive"
-msgstr ""
+msgstr "Le nom de la métadonnée est sensible à la casse"
 
 #: ../../design/database.rst:398
 msgid "The simple case"
@@ -1691,6 +1698,7 @@ msgstr ""
 #: ../../design/database.rst:744
 msgid "**time\\_deleted** Unix timestamp of when the entity was deleted"
 msgstr ""
+"**time\\_deleted** Le timestamp Unix de la date de suppression de l'entité"
 
 #: ../../design/database.rst:747
 msgid "Table: metadata"
@@ -1723,6 +1731,8 @@ msgstr "**value** La valeur de la chaîne"
 #: ../../design/database.rst:755 ../../design/database.rst:767
 msgid "**value\\_type** The value class, either text, bool or an integer"
 msgstr ""
+"**value\\_type** La classe de la valeur, soit une chaîne de caractères, un "
+"booléen ou un entier"
 
 #: ../../design/database.rst:756
 msgid "**time\\_created** Unix timestamp of when the metadata is created"
@@ -1778,6 +1788,7 @@ msgstr "**guid\\_two** Le GUID de l'entité cible."
 #: ../../design/database.rst:780
 msgid "**time\\_created** Unix timestamp of when the relationship is created."
 msgstr ""
+"**time\\_created** Le timestamp Unix de la date de création de la relation."
 
 #: ../../design/database.rst:783
 msgid "Secundairy tables"

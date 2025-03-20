@@ -109,6 +109,11 @@ return array(
 	'ForbiddenException' => 'Vous n\'avez pas les permissions suffisantes pour voir cette page',
 	'GoneException' => 'La ressource demandée n\'est plus disponible',
 	'InternalServerErrorException' => 'Une erreur inconnue est survenue lors du traitement de votre requête',
+	'MethodNotAllowedException' => 'La méthode demandée n\'est pas autorisée pour cette ressource',
+	'NotImplementedException' => 'La méthode demandée n\'est pas implémentée pour cette ressource',
+	'ServiceUnavailableException' => 'Le serveur n\'a pas pu traiter votre requête, veuillez réessayer plus tard',
+	'TooManyRequestsException' => 'Trop de requêtes, veuillez ralentir',
+	'UnauthorizedException' => 'Vous ne disposez pas des autorisations d\'authentification valides pour la ressource cible',
 	
 	'Security:InvalidPasswordCharacterRequirementsException' => "Le mot de passe fourni ne correspond pas aux exigences requises",
 	'Security:InvalidPasswordLengthException' => "Le mot de passe fourni ne correspond pas à l'exigence de longueur minimale de %s caractères",
@@ -339,6 +344,7 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
 	'usersettings:notifications:content_create:description' => 'Paramètres de notification par défaut pour vos propres publications. Ceci peut provoquer des notifications quand d\'autres personnes y réagissent, par exemple en ajoutant un commentaire',
 	'usersettings:notifications:create_comment:description' => "Paramètre de notification par défaut quand vous ajoutez un commentaire, afin de pouvoir suivre la suite de la conversation",
 	'usersettings:notifications:mentions:description' => "Recevez une notification quand vous êtes @mentionné⋅e",
+	'usersettings:notifications:admin_validation_notification:description' => "Recevoir une notification quand un nouvel compte utilisateur doit être validé",
 
 	'usersettings:notifications:timed_muting' => "Désactiver temporairement les notifications",
 	'usersettings:notifications:timed_muting:help' => "Si vous ne souhaitez pas recevoir de notifications pendant une certaine période (par exemple pendant des vacances ou un déplacement), vous pouvez définir une date de début et de fin pour désactiver temporairement toutes les notifications",
@@ -1724,6 +1730,11 @@ Pour voir le commentaire complet, cliquez sur le lien :
 	'entity:delete:success' => 'L\'entité %s a été supprimée',
 	'entity:delete:fail' => 'L\'entité %s n\'a pas pu être supprimée',
 
+	'entity:edit:success' => 'L\'entité a bien été sauvegardée',
+	'entity:edit:group:success' => 'Le groupe a bien été sauvegardé',
+	'entity:edit:object:success' => 'L\'objet a bien été sauvegardé',
+	'entity:edit:user:success' => 'L\'utilisateur a bien été sauvegardé',
+	
 	'entity:restore:item' => 'Élément',
 	'entity:restore:item_not_found' => 'Élément non trouvé',
 	'entity:restore:container_permission' => 'Vous n\'avez pas les permissions nécessaires pour restaurer cet élément vers %s',
@@ -1747,6 +1758,7 @@ Pour voir le commentaire complet, cliquez sur le lien :
 	'entity:unmute' => "Réactiver les notifications",
 	'entity:unmute:success' => "Vous avez bien réactivé les notifications de %s",
 	'entity:unmute:fail' => "Une erreur est survenue lors de la réactivation des notifications de %s",
+
 
 /**
  * Annotations
@@ -2115,4 +2127,8 @@ Variables globales :
 	'core:upgrade:2024020901:description' => "Supprimez la métadonnée peu fiable icontime de la base de données ",
 
 	'core:upgrade:2024070201:title' => "Migrer la configuration de débogage",
+	'core:upgrade:2024070201:description' => "Modifie la valeur de configuration de la base de données pour la journalisation de débogage vers une valeur prise en charge",
+
+	'core:upgrade:2024071001:title' => "Migre les préférences de notification de validation de l'administrateur",
+	'core:upgrade:2024071001:description' => "Déplace le stockage de la préférence de notification de l'administrateur vers les paramètres de notifications",
 );
