@@ -43,7 +43,7 @@ if (!isset($vars['height'])) {
 
 $img_params = [
 	'src' => $entity->getIconURL($size),
-	'alt' => $title,
+	'alt' => $entity->hasIcon($size) ? $title : '',
 ];
 
 if (!empty($img_class)) {

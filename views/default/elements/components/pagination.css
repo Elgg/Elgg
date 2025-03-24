@@ -10,14 +10,14 @@
 		display: inline-block;
 		text-align: center;
 		margin-left: -1px;
-		border: 1px solid $(border-color-soft);
+		border: 1px solid var(--elgg-border-color-soft);
 		
 		&.elgg-state-disabled > span {
-			color: $(text-color-mild);
+			color: var(--elgg-text-color-mild);
 		}
 		
 		&.elgg-state-selected > span {
-			color: $(text-color-soft);
+			color: var(--elgg-text-color-soft);
 		}
 		
 		&:first-child {
@@ -50,11 +50,11 @@
 		> span {
 			display: inline-block;
 			padding: 0.5rem 1rem;
-			color: $(text-color-strong);
+			color: var(--elgg-text-color-strong);
 		}
 		
 		> a:hover {
-			background: $(background-color-mild);
+			background: var(--elgg-background-color-mild);
 			text-decoration: none;
 		}
 	}

@@ -16,7 +16,7 @@ if (!$entity instanceof ElggDiscussion) {
 $poster = $entity->getOwnerEntity();
 if (!$poster instanceof ElggEntity) {
 	$msg = "User {$entity->owner_guid} could not be loaded, and is needed to display entity {$entity->guid}";
-	elgg_log($msg, 'WARNING');
+	elgg_log($msg, \Psr\Log\LogLevel::WARNING);
 	if ($full_view) {
 		throw new EntityNotFoundException($msg);
 	}

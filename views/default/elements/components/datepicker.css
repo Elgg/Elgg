@@ -9,7 +9,7 @@
 	overflow: hidden;
 	min-width: 300px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-	border-top: 1px solid $(border-color-soft);
+	border-top: 1px solid var(--elgg-border-color-soft);
 	background: #fff;
 }
 
@@ -65,7 +65,7 @@
 		max-width: 6.25rem;
 		display: inline-block;
 		margin: 2px;
-		border: 1px solid $(border-color-mild);
+		border: 1px solid var(--elgg-border-color-mild);
 		padding: 4px;
 		border-radius: 3px;
 	}
@@ -77,8 +77,8 @@
 	font-size: 0.85rem;
 	
 	.ui-state-default {
-		border: 1px solid $(border-color-mild);
-		color: $(text-color-strong);
+		border: 1px solid var(--elgg-border-color-mild);
+		color: var(--elgg-text-color-strong);
 		background: #ffffff;
 		border-radius: 2px;
 	}
@@ -86,16 +86,16 @@
 	.ui-state-hover,
 	.ui-state-active,
 	.ui-state-active.ui-state-hover {
-		border: 1px solid $(border-color-highlight);
-		box-shadow: 0 0 0 0 $(border-color-strong) inset;
+		border: 1px solid var(--elgg-border-color-highlight);
+		box-shadow: 0 0 0 0 var(--elgg-border-color-strong) inset;
 		font-weight: normal;
-		color: $(text-color-highlight);
-		background: $(background-color-soft);
+		color: var(--elgg-text-color-highlight);
+		background: var(--elgg-background-color-soft);
 	}
 	
 	.ui-state-disabled .ui-state-default {
 		border: none;
-		color: $(text-color-mild);
+		color: var(--elgg-text-color-mild);
 		cursor: not-allowed;
 		background: none;
 	}
@@ -103,7 +103,7 @@
 
 .ui-datepicker {
 	th {
-		color: $(text-color-strong);
+		color: var(--elgg-text-color-strong);
 		border: none;
 		font-weight: bold;
 		padding: 0.5rem 0.25rem;

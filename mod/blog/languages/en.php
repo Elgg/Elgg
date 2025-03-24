@@ -17,6 +17,8 @@ return array(
 	'notification:object:blog:publish' => "Send a notification when a blog is published",
 	'notifications:mute:object:blog' => "about the blog '%s'",
 	'menu:blog_archive:header' => "Blog archive",
+	
+	'entity:edit:object:blog:success' => 'The blog was saved successfully',
 
 	'blog:revisions' => 'Revisions',
 	'blog:archives' => 'Archives',

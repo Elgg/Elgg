@@ -87,7 +87,7 @@ th {
 
 html {
 	background-color: white;
-	font-size: $(font-size);
+	font-size: var(--elgg-font-size);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	min-width: 300px;
@@ -122,7 +122,7 @@ button,
 input,
 select,
 textarea {
-	font-family: $(font-family);
+	font-family: var(--elgg-font-family);
 
 }
 
@@ -135,8 +135,8 @@ pre {
 
 body {
 	position: relative;
-	color: $(text-color-strong);
-	background: $(body-background-color);
+	color: var(--elgg-text-color-strong);
+	background: var(--elgg-body-background-color);
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
@@ -152,7 +152,7 @@ a strong {
 }
 
 code {
-	background-color: $(background-color-soft);
+	background-color: var(--elgg-background-color-soft);
 	color: #ff3860;
 	font-size: 0.875em;
 	font-weight: normal;
@@ -160,7 +160,7 @@ code {
 }
 
 hr {
-	background-color: $(border-color-mild);
+	background-color: var(--elgg-border-color-mild);
 	border: none;
 	display: block;
 	height: 1px;
@@ -188,8 +188,8 @@ span {
 
 pre {
 	-webkit-overflow-scrolling: touch;
-	background-color: $(background-color-soft);
-	color: $(text-color-strong);
+	background-color: var(--elgg-background-color-soft);
+	color: var(--elgg-text-color-strong);
 	font-size: 0.875em;
 	overflow-x: auto;
 	padding: 1.25rem 1.5rem;
@@ -232,7 +232,7 @@ strike, del {
 }
 
 strong, b {
-	font-weight: $(font-bold-weight);
+	font-weight: var(--elgg-font-bold-weight);
 }
 
 table {

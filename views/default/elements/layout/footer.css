@@ -3,17 +3,17 @@
 *************************************** */
 .elgg-page-footer {
 	position: relative;
-	background: $(background-color-soft);
-	border-top: 1px solid $(border-color-soft);
-	color: $(text-color-soft);
+	background: var(--elgg-background-color-soft);
+	border-top: 1px solid var(--elgg-border-color-soft);
+	color: var(--elgg-text-color-soft);
 	font-size: 0.9rem;
 	min-height: 4rem;
 	
 	a {
-		color: $(text-color-soft);
+		color: var(--elgg-text-color-soft);
 		
 		&:hover {
-			color: $(text-color-highlight);
+			color: var(--elgg-text-color-highlight);
 		}
 	}
 }

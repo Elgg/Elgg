@@ -34,7 +34,8 @@ trait PluginSettings {
 	}
 	
 	/**
-	 * Get a plugin setting
+	 * Get a plugin setting.
+	 * Will return $default if the plugin isn't active
 	 *
 	 * @param string $plugin_id plugin ID
 	 * @param string $name      setting name
@@ -43,6 +44,11 @@ trait PluginSettings {
 	 * @return mixed
 	 */
 	public function getPluginSetting(string $plugin_id, string $name, $default = null) {
+		$plugin = _elgg_services()->plugins->get($plugin_id);
+		if (!$plugin instanceof \ElggPlugin || !$plugin->isActive()) {
+			return $default;
+		}
+		
 		$name = $this->getNamespacedPluginSettingName($plugin_id, $name);
 		
 		return $this->getMetadata($name) ?? $default;

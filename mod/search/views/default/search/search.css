@@ -2,27 +2,27 @@
 Search plugin
 ***********************************/
 .search-highlight {
-	background-color: $(search-highlight-color);
+	background-color: var(--elgg-search-highlight-color);
 }
 
 .search-highlight-color1 {
-	background-color: $(search-highlight-color-1);
+	background-color: var(--elgg-search-highlight-color-1);
 }
 
 .search-highlight-color2 {
-	background-color: $(search-highlight-color-2);
+	background-color: var(--elgg-search-highlight-color-2);
 }
 
 .search-highlight-color3 {
-	background-color: $(search-highlight-color-3);
+	background-color: var(--elgg-search-highlight-color-3);
 }
 
 .search-highlight-color4 {
-	background-color: $(search-highlight-color-4);
+	background-color: var(--elgg-search-highlight-color-4);
 }
 
 .search-highlight-color5 {
-	background-color: $(search-highlight-color-5);
+	background-color: var(--elgg-search-highlight-color-5);
 }
 
 .elgg-form-search [type="submit"] {

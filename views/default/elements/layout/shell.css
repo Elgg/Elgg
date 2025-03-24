@@ -1,6 +1,6 @@
 .elgg-page-default {
 	.elgg-page-section > .elgg-inner {
-		max-width: $(page-section-max-width);
+		max-width: var(--elgg-page-section-max-width);
 		margin: 0 auto;
 	}
 	
@@ -30,7 +30,7 @@
 	.elgg-page-body {
 		position: relative;
 		padding: 2rem 1rem;
-		background: $(body-background-color);
+		background: var(--elgg-body-background-color);
 	}
 	
 	.elgg-page-footer {

@@ -317,11 +317,14 @@ Let's write our wire posting function:
     function my_post_to_wire($text) {
         
         $text = elgg_substr($text, 0, 140);
+        $post = new \ElggWire();
 
-        $access = ACCESS_PUBLIC;
-       
+        $post->description = $text;
+        $post->method = 'api';
+        $post->save();
+
         // returns guid of wire post
-        return thewire_save_post($text, $access, "api");        
+        return $post->guid;
     }
 
 Exposing this function is the same as the previous except we require

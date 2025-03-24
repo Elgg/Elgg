@@ -142,8 +142,10 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		];
 
 		foreach ($methods as $method) {
+			// need to use getMetadata() because this plugin is disabled
+			// and the magic getter goes through getSetting() which will return null
 			$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
-			$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
+			$this->assertEquals(1, $plugin->getMetadata($prop), "Method {$method} was called {$plugin->getMetadata($prop)} instead of expected 1 times");
 		}
 	}
 
@@ -243,7 +245,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		};
 
 		$upgrade = _elgg_services()->upgrades->run();
-		$upgrade->done($assert, $fail);
+		$upgrade->then($assert, $fail);
 
 		$this->assertEquals(1, $assertions);
 	}

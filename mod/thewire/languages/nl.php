@@ -20,6 +20,8 @@ return array(
 	'collection:object:thewire:mentions' => "Wire berichten die @%s vermelden",
 	'notification:object:thewire:create' => "Stuur een notificatie wanneer een wire bericht is gemaakt",
 	'notifications:mute:object:thewire' => "over het wire bericht '%s'",
+	
+	'entity:edit:object:thewire:success' => 'Het wire bericht is succesvol opgeslagen',
 
 	'thewire:menu:filter:mentions' => "Vermeldingen",
 	
@@ -70,4 +72,9 @@ return array(
 	 */
 	'thewire:settings:limit' => "Maximum aantal karakters voor wire berichten:",
 	'thewire:settings:limit:none' => "Geen limiet",
+	
+	/**
+	 * Exceptions
+	 */
+	'ValidationException:thewire:limit' => "De lengte van het bericht is groter dan de toegestane waarde",
 );

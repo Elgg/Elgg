@@ -17,6 +17,8 @@ return array(
 	'notification:object:blog:publish' => "Stuur een notificatie wanneer een blog is gepubliceerd",
 	'notifications:mute:object:blog' => "over de blog '%s'",
 	'menu:blog_archive:header' => "Blog archief",
+	
+	'entity:edit:object:blog:success' => 'De blog is succesvol opgeslagen',
 
 	'blog:revisions' => 'Revisies',
 	'blog:archives' => 'Archieven',

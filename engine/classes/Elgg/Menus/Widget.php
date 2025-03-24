@@ -34,7 +34,8 @@ class Widget {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'settings',
-			'text' => elgg_view_icon('settings-alt'),
+			'text' => false,
+			'icon' => 'settings-alt',
 			'title' => elgg_echo('widget:edit'),
 			'href' => elgg_http_add_url_query_elements('ajax/view/object/widget/edit', [
 				'guid' => $widget->guid,
@@ -71,7 +72,8 @@ class Widget {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'delete',
-			'text' => elgg_view_icon('delete-alt'),
+			'text' => false,
+			'icon' => 'delete-alt',
 			'title' => elgg_echo('widget:delete', [$widget->getDisplayName()]),
 			'href' => elgg_generate_action_url('widgets/delete', [
 				'widget_guid' => $widget->guid,

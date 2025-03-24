@@ -2,7 +2,10 @@
 
 namespace Elgg\Friends\Actions;
 
-use Elgg\Http\ResponseBuilder;
+use Elgg\Exceptions\Http\BadRequestException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
+use Elgg\Exceptions\Http\ValidationException;
+use Elgg\Http\OkResponse;
 use Elgg\Friends\Notifications;
 
 /**
@@ -10,43 +13,58 @@ use Elgg\Friends\Notifications;
  *
  * @since 3.2
  */
-class AcceptFriendRequestController {
+class AcceptFriendRequestController extends \Elgg\Controllers\GenericAction {
 
+	protected \ElggUser $receiving_user;
+	
+	protected \ElggUser $requesting_user;
+	
 	/**
-	 * Accept the received friend request
+	 * {@inheritdoc}
 	 *
-	 * @param \Elgg\Request $request the Elgg request
-	 *
-	 * @return ResponseBuilder
+	 * @throws BadRequestException
+	 * @throws EntityPermissionsException
+	 * @throws ValidationException
 	 */
-	public function __invoke(\Elgg\Request $request) {
-		
-		$id = (int) $request->getParam('id');
+	protected function validate(): void {
+		$id = (int) $this->request->getParam('id');
 		if (empty($id)) {
-			return elgg_error_response(elgg_echo('error:missing_data'));
+			throw new ValidationException(elgg_echo('ValidationException:field:required', ['id']));
 		}
 		
 		$relationship = elgg_get_relationship($id);
 		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'friendrequest') {
-			return elgg_error_response(elgg_echo('error:missing_data'));
+			throw new BadRequestException(elgg_echo('error:missing_data'));
 		}
 		
 		$receiving_user = get_user($relationship->guid_two);
 		if (!$receiving_user instanceof \ElggUser || !$receiving_user->canEdit()) {
-			return elgg_error_response(elgg_echo('actionunauthorized'));
+			throw new EntityPermissionsException();
 		}
 		
 		$requesting_user = get_user($relationship->guid_one);
 		if (!$requesting_user instanceof \ElggUser) {
-			return elgg_error_response(elgg_echo('error:missing_data'));
+			throw new BadRequestException(elgg_echo('error:missing_data'));
 		}
 		
-		// add friends
-		$receiving_user->addFriend($requesting_user->guid, true);
-		$requesting_user->addFriend($receiving_user->guid, true);
-		
+		$this->receiving_user = $receiving_user;
+		$this->requesting_user = $requesting_user;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function execute(): void {
+		$this->receiving_user->addFriend($this->requesting_user->guid, true);
+		$this->requesting_user->addFriend($this->receiving_user->guid, true);
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function success(): OkResponse {
 		// notify requesting user about acceptance
-		Notifications::sendAcceptedFriendRequestNotification($requesting_user, $receiving_user);
+		Notifications::sendAcceptedFriendRequestNotification($this->requesting_user, $this->receiving_user);
 		
 		return elgg_ok_response('', elgg_echo('friends:action:friendrequest:accept:success'));
 	}

@@ -51,10 +51,10 @@ foreach ($fields as $field) {
 	echo elgg_view_field($field);
 }
 
-if ($entity instanceof ElggPage) {
+if ($entity instanceof \ElggPage) {
 	echo elgg_view_field([
 		'#type' => 'hidden',
-		'name' => 'page_guid',
+		'name' => 'page_guid', // @todo rename to 'guid' in Elgg 7.0
 		'value' => $entity->guid,
 	]);
 }

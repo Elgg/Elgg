@@ -10,6 +10,7 @@ use Elgg\Traits\Loggable;
 use Elgg\Upgrade\Locator;
 use Elgg\Upgrade\Loop;
 use Elgg\Upgrade\Result;
+use React\Promise\PromiseInterface;
 use function React\Promise\all;
 use React\Promise\Deferred;
 use React\Promise\Promise;
@@ -67,7 +68,7 @@ class UpgradeService {
 			\Elgg\Cache\EventHandlers::disable();
 			elgg_clear_caches();
 
-			return $resolve();
+			return $resolve(true);
 		});
 	}
 
@@ -79,7 +80,7 @@ class UpgradeService {
 	protected function down(): Promise {
 		return new Promise(function ($resolve, $reject) {
 			if (!$this->events->trigger('upgrade', 'system', null)) {
-				return $reject();
+				return $reject(false);
 			}
 
 			elgg_invalidate_caches();
@@ -88,7 +89,7 @@ class UpgradeService {
 
 			$this->events->triggerAfter('upgrade', 'system', null);
 
-			return $resolve();
+			return $resolve(true);
 		});
 	}
 
@@ -97,9 +98,9 @@ class UpgradeService {
 	 *
 	 * @param \ElggUpgrade[] $upgrades Upgrades to run
 	 *
-	 * @return Promise
+	 * @return PromiseInterface
 	 */
-	protected function runUpgrades($upgrades): Promise {
+	protected function runUpgrades($upgrades): PromiseInterface {
 		$promises = [];
 
 		foreach ($upgrades as $upgrade) {
@@ -120,9 +121,9 @@ class UpgradeService {
 					]);
 
 					return $reject(new \RuntimeException($msg));
-				} else {
-					return $resolve($result);
 				}
+				
+				return $resolve($result);
 			});
 		}
 
@@ -134,9 +135,9 @@ class UpgradeService {
 	 *
 	 * @param \ElggUpgrade[] $upgrades Upgrades to run
 	 *
-	 * @return Promise
+	 * @return PromiseInterface
 	 */
-	public function run($upgrades = null): Promise {
+	public function run($upgrades = null): PromiseInterface {
 		// turn off time limit
 		set_time_limit(3600);
 
@@ -156,13 +157,13 @@ class UpgradeService {
 			$upgrades = $this->getPendingUpgrades(false);
 		}
 
-		$this->up()->done(
+		$this->up()->then(
 			function () use ($resolve, $reject, $upgrades) {
 				all([
 					$this->runUpgrades($upgrades),
-				])->done(
+				])->finally(
 					function () use ($resolve, $reject) {
-						$this->down()->done(
+						$this->down()->then(
 							function ($result) use ($resolve) {
 								return $resolve($result);
 							},
@@ -272,7 +273,7 @@ class UpgradeService {
 	 *
 	 * @return Result
 	 */
-	public function executeUpgrade(\ElggUpgrade $upgrade, int $max_duration = null): Result {
+	public function executeUpgrade(\ElggUpgrade $upgrade, ?int $max_duration = null): Result {
 		// Upgrade also disabled data, so the compatibility is
 		// preserved in case the data ever gets enabled again
 		return elgg_call(

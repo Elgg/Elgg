@@ -23,6 +23,7 @@ if (!empty($revision_id)) {
 	$title .= ' ' . elgg_echo('blog:edit_revision_notice');
 
 	if (!$revision instanceof \ElggAnnotation || $revision->entity_guid !== $guid) {
+		// @todo replace this with a PageNotFoundException in 7.0
 		throw new EntityNotFoundException(elgg_echo('blog:error:revision_not_found'));
 	}
 }

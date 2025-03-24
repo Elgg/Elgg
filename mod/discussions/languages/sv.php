@@ -24,7 +24,7 @@ return array(
 	'discussion:topic:created' => 'Diskussionsämnet skapades.',
 	'discussion:topic:updated' => 'Diskussionsämnet uppdaterades.',
 	'entity:delete:object:discussion:success' => 'Diskussionsämnet togs bort.',
-
+	
 	'discussion:topic:notfound' => 'Diskussionsämnet hittades inte',
 	'discussion:error:notsaved' => 'Det gick inte att spara det här ämnet',
 	'discussion:error:missing' => 'Både titel och meddelande är obligatoriska fält',

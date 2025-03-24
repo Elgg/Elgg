@@ -44,15 +44,15 @@ class RegisterSubscriptionMenuItemsHandler {
 			];
 		}
 		
-		$has_subscriptions = $entity->hasSubscriptions();
-
+		$can_subscribe = !$entity->hasSubscriptions() || $entity->hasMutedNotifications();
+		
 		// subscribe
 		$subscribe_options = [
 			'name' => 'entity_subscribe',
 			'icon' => 'bell',
 			'text' => elgg_echo('entity:subscribe'),
 			'href' => false,
-			'item_class' => $has_subscriptions ? 'hidden' : '',
+			'item_class' => $can_subscribe ? '' : 'hidden',
 			'link_class' => $link_classes,
 		];
 		
@@ -78,7 +78,7 @@ class RegisterSubscriptionMenuItemsHandler {
 			'href' => elgg_generate_action_url('entity/mute', [
 				'guid' => $entity->guid,
 			]),
-			'item_class' => $has_subscriptions ? '' : 'hidden',
+			'item_class' => $can_subscribe ? 'hidden' : '',
 			'link_class' => $link_classes,
 			'data-toggle' => 'entity_subscribe',
 		]);

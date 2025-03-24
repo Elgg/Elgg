@@ -33,7 +33,9 @@ return array(
 	'edit:object:file' => "Bewerk bestand",
 	'notification:object:file:create' => "Stuur een notificatie wanneer een bestand is geupload",
 	'notifications:mute:object:file' => "over het bestand '%s'",
-
+	
+	'entity:edit:object:file:success' => 'Het bestand is succesvol opgeslagen',
+	
 	'file:more' => "Meer bestanden",
 	'file:list' => "lijstweergave",
 

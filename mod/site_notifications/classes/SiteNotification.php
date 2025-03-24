@@ -141,12 +141,12 @@ class SiteNotification extends \ElggObject {
 	/**
 	 * Create a site notification from an Elgg notification
 	 *
-	 * @param Notification      $notification Notification from the notification system
-	 * @param NotificationEvent $event        Notification event from the notification system
+	 * @param Notification           $notification Notification from the notification system
+	 * @param null|NotificationEvent $event        Notification event from the notification system
 	 *
 	 * @return SiteNotification
 	 */
-	public static function factory(Notification $notification, NotificationEvent $event = null): SiteNotification {
+	public static function factory(Notification $notification, ?NotificationEvent $event = null): SiteNotification {
 		$site_notification = new static();
 		$site_notification->owner_guid = $notification->getRecipientGUID();
 		$site_notification->container_guid = $notification->getRecipientGUID();

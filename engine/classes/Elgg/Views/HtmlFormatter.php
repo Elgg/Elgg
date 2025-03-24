@@ -344,12 +344,12 @@ class HtmlFormatter {
 	 * Plugins register for output:strip_tags event.
 	 * Original string included in $params['original_string']
 	 *
-	 * @param string $string         Formatted string
-	 * @param string $allowable_tags Optional parameter to specify tags which should not be stripped
+	 * @param string      $string         Formatted string
+	 * @param null|string $allowable_tags Optional parameter to specify tags which should not be stripped
 	 *
 	 * @return string String run through strip_tags() and any event.
 	 */
-	public function stripTags(string $string, string $allowable_tags = null): string {
+	public function stripTags(string $string, ?string $allowable_tags = null): string {
 		$params = [
 			'original_string' => $string,
 			'allowable_tags' => $allowable_tags,

@@ -138,7 +138,7 @@ class Collection implements CollectionInterface,
 	/**
 	 * {@inheritdoc}
 	 */
-	public function filter(callable $callback = null) {
+	public function filter(?callable $callback = null) {
 		if ($callback) {
 			$items = array_filter($this->items, $callback);
 		} else {
@@ -151,7 +151,7 @@ class Collection implements CollectionInterface,
 	/**
 	 * {@inheritdoc}
 	 */
-	public function sort(callable $callback = null) {
+	public function sort(?callable $callback = null) {
 		if (!$callback) {
 			$callback = function (CollectionItemInterface $f1, CollectionItemInterface $f2) {
 				$p1 = $f1->getPriority() ?: 500;

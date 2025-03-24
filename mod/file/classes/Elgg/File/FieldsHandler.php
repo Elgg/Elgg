@@ -23,7 +23,6 @@ class FieldsHandler {
 			'#type' => 'file',
 			'#label' => elgg_echo('file:file'),
 			'name' => 'upload',
-			'required' => true,
 		];
 		
 		$result[] = [

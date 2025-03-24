@@ -36,7 +36,7 @@ class Redis extends Config {
 		}
 		
 		if (count($config->redis_servers) > 1) {
-			elgg_log('Multiple Redis servers are not supported. Only the first server will be used. Please update the configuration in elgg-config/settings.php', 'warning');
+			elgg_log('Multiple Redis servers are not supported. Only the first server will be used. Please update the configuration in elgg-config/settings.php', \Psr\Log\LogLevel::WARNING);
 		}
 		
 		$server = $config->redis_servers[0];

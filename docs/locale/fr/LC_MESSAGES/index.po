@@ -6,15 +6,16 @@
 # Translators:
 # Jerôme Bakker, 2024
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024
+# Emmanuel Simond, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-25 09:44+0200\n"
+"POT-Creation-Date: 2025-02-13 10:34+0100\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024\n"
+"Last-Translator: Emmanuel Simond, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -109,6 +110,8 @@ msgid ""
 "**Client-side API** powered by asynchronous ES modules and a built-in Ajax "
 "service for easy communication with the server"
 msgstr ""
+"Une **API côté client** qui fonctionne avec des modules ES asynchrones et un"
+" service Ajax intégré afin de faciliter la communication avec le serveur"
 
 #: ../../index.rst:18
 msgid ""
@@ -156,7 +159,7 @@ msgid ""
 msgstr ""
 "Un **Service de Notifications** qui permet aux applications d'abonner des "
 "utilisateurs à des notifications sur le site ou par e-mail, et d'implémenter"
-" l'intégration avec d'autres services tierce-partie"
+" l'intégration avec d'autres services tiers"
 
 #: ../../index.rst:24
 msgid ""
@@ -172,8 +175,7 @@ msgid ""
 " can be integrated with third-party services such as Transifex"
 msgstr ""
 "L'**Internationalisation** et la localisation des applications Elgg est "
-"simple et peut être intégrée avec des services tierce-partie tels que "
-"Transifex"
+"simple et peut être intégrée avec des services tiers tels que Transifex"
 
 #: ../../index.rst:26
 msgid ""

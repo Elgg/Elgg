@@ -26,7 +26,9 @@ return array(
 	'discussion:topic:created' => 'Le sujet de discussion a été créé.',
 	'discussion:topic:updated' => 'Le sujet de discussion a été mis à jour.',
 	'entity:delete:object:discussion:success' => 'Le sujet de discussion a été supprimé.',
-
+	
+	'entity:edit:object:discussion:success' => 'Le sujet de discussion a bien été enregistré.',
+	
 	'discussion:topic:notfound' => 'Le sujet de discussion n\'a pas été trouvé',
 	'discussion:error:notsaved' => 'Impossible d\'enregistrer ce sujet de discussion',
 	'discussion:error:missing' => 'Les deux champs "titre" et "message" sont obligatoires',
@@ -73,7 +75,7 @@ Voir la discussion et commenter :
 	'discussion:topic:status' => 'Statut de la discussion',
 	'discussion:topic:closed:title' => 'Cette discussion est fermée.',
 	'discussion:topic:closed:desc' => 'Cette discussion a été fermée et n\'accepte plus de nouveau message.',
-	'discussion:topic:container' => 'Sélectionnez un groupe (facultatif) pour démarrer cette discussion',
+	'discussion:topic:container' => 'Sélectionnez un groupe optionnel pour démarrer cette discussion',
 	'discussion:topic:container:help' => 'Commencer une discussion dans un groupe limitera par défaut l\'accès aux membres du groupe',
 
 	'discussion:topic:description' => 'Message du sujet de discussion',

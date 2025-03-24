@@ -24,15 +24,15 @@ function elgg_get_widgets(int $owner_guid, string $context): array {
 /**
  * Create a new widget instance
  *
- * @param int    $owner_guid GUID of entity that owns this widget
- * @param string $handler    The handler for this widget
- * @param string $context    The context for this widget
- * @param int    $access_id  If not specified, it is set to the default access level
+ * @param int      $owner_guid GUID of entity that owns this widget
+ * @param string   $handler    The handler for this widget
+ * @param string   $context    The context for this widget
+ * @param null|int $access_id  If not specified, it is set to the default access level
  *
  * @return int|false Widget GUID or false on failure
  * @since 1.8.0
  */
-function elgg_create_widget(int $owner_guid, string $handler, string $context, int $access_id = null) {
+function elgg_create_widget(int $owner_guid, string $handler, string $context, ?int $access_id = null) {
 	return _elgg_services()->widgets->createWidget($owner_guid, $handler, $context, $access_id);
 }
 
@@ -82,14 +82,14 @@ function elgg_unregister_widget_type(string $handler): void {
 /**
  * Has a widget type with the specified handler been registered
  *
- * @param string      $handler   The widget handler identifying string
- * @param string      $context   Optional context to check
- * @param \ElggEntity $container Optional limit widget definitions to a container
+ * @param string           $handler   The widget handler identifying string
+ * @param null|string      $context   Optional context to check
+ * @param null|\ElggEntity $container Optional limit widget definitions to a container
  *
- * @return bool Whether or not that widget type exists
+ * @return bool Whether that widget type exists
  * @since 1.8.0
  */
-function elgg_is_widget_type(string $handler, string $context = null, \ElggEntity $container = null): bool {
+function elgg_is_widget_type(string $handler, ?string $context = null, ?\ElggEntity $container = null): bool {
 	return _elgg_services()->widgets->validateType($handler, $context, $container);
 }
 

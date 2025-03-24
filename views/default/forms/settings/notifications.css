@@ -4,7 +4,7 @@
 	}
 	
 	&:nth-child(even) {
-		background-color: $(background-color-mild);
+		background-color: var(--elgg-background-color-mild);
 	}
 }
 

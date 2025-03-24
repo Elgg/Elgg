@@ -130,11 +130,11 @@ class ElggUpgrade extends ElggObject {
 	/**
 	 * Sets the timestamp for when the upgrade completed.
 	 *
-	 * @param int $time Timestamp when upgrade finished. Defaults to now
+	 * @param null|int $time Timestamp when upgrade finished. Defaults to now
 	 *
 	 * @return void
 	 */
-	public function setCompletedTime(int $time = null): void {
+	public function setCompletedTime(?int $time = null): void {
 		$this->completed_time = $time ?? $this->getCurrentTime()->getTimestamp();
 	}
 
@@ -164,11 +164,11 @@ class ElggUpgrade extends ElggObject {
 	 * Sets the timestamp for when the upgrade started.
 	 * Once set it can't be altered unless the upgrade gets reset
 	 *
-	 * @param int $time Timestamp when upgrade started. Defaults to now
+	 * @param null|int $time Timestamp when upgrade started. Defaults to now
 	 *
 	 * @return void
 	 */
-	public function setStartTime(int $time = null): void {
+	public function setStartTime(?int $time = null): void {
 		if (isset($this->start_time)) {
 			return;
 		}

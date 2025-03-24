@@ -14,7 +14,7 @@ class InvalidPasswordLengthException extends SecurityException {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function __construct(string $message = '', int $code = 0, \Throwable $previous = null) {
+	public function __construct(string $message = '', int $code = 0, ?\Throwable $previous = null) {
 		if (!$message) {
 			$message = elgg_echo('Security:InvalidPasswordLengthException', [elgg_get_config('min_password_length')]);
 		}

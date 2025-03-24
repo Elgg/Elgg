@@ -1,3 +1,83 @@
+<a name="6.1.5"></a>
+### 6.1.5 (2025-03-20)
+
+#### Contributors
+
+* Jeroen Dalsem (4)
+* Jerôme Bakker (4)
+
+#### Bug fixes
+
+* **plugins:** fetching settings from inactive plugins returns default [364f8b354](https://github.com/Elgg/Elgg/commit/364f8b354e78dc8b11db11a10dd42e8c379605c8)
+* **output:** no longer add wrong alt attribute on img tags [9de170f5f](https://github.com/Elgg/Elgg/commit/9de170f5fb1ded25a1b186504ba6b143e4f922e1)
+* **icons:** icon is decorative if no custom icon [bd0c6e444](https://github.com/Elgg/Elgg/commit/bd0c6e44436bb934e8677e138e08f88fa051b5e0)
+* **site_notifications:** added missing aria-label on checkbox [873076a5b](https://github.com/Elgg/Elgg/commit/873076a5b26fba4ed71be50bbab9190eba87f95b)
+* **views:** urls get aria-label filled with title if empty text [dafd35e6d](https://github.com/Elgg/Elgg/commit/dafd35e6dd42cb6b5af3f0d1736da57ad234e0f4)
+* **notifications:** correctly show discussions mute notifications action [72b07aa8a](https://github.com/Elgg/Elgg/commit/72b07aa8a893de2ee820b0dc30761338c84875d0)
+
+
+<a name="6.1.4"></a>
+### 6.1.4 (2025-03-05)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+
+#### Bug fixes
+
+* **blog:** preview button should only create entity once [3d5ccd320](https://github.com/Elgg/Elgg/commit/3d5ccd320476a790741628543a1e21dff3f8ae99)
+* **forms:** make sure html validation message is visible for tags input [dc81796e7](https://github.com/Elgg/Elgg/commit/dc81796e775c804b484c6824e0757f9457e65ab7)
+
+
+<a name="6.1.3"></a>
+### 6.1.3 (2025-02-13)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+* Jeroen Dalsem (2)
+
+#### Bug fixes
+
+* **webservices:** prevent double encoding during API exceptions [3d6537b42](https://github.com/Elgg/Elgg/commit/3d6537b420738101bf3aa64367c486c9076e0094)
+* **admin:** correctly styled user profile fields in admin popup [adc67a272](https://github.com/Elgg/Elgg/commit/adc67a272fa343124e2d31b442437f1f3d4cf9d8)
+* **uservalidationbyemail:** set text correctly on form button [8d1891a11](https://github.com/Elgg/Elgg/commit/8d1891a1117df0eb1feb197b299bf8f20aff69c8) closes [#14783](https://github.com/Elgg/Elgg/issues/14783)
+
+
+<a name="6.1.2"></a>
+### 6.1.2 (2025-01-16)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+* Jeroen Dalsem (3)
+
+#### Bug fixes
+
+* **output:** improved handling of output/url [379c02196](https://github.com/Elgg/Elgg/commit/379c02196d908b412277c534ad130900f7c4ac8d)
+* **breadcrumb:** improved detection for link to self breadcrumb [a84b70afe](https://github.com/Elgg/Elgg/commit/a84b70afef312b56dff5b650a8cbdba5afe60a40)
+* **views:** use a more specific label for setting a user display name [1ce253927](https://github.com/Elgg/Elgg/commit/1ce253927e134967acf597d5cf9b87fa53d66989)
+* **cron:**
+  * the event param 'dt' can no longer be modified by callbacks [8432e77ef](https://github.com/Elgg/Elgg/commit/8432e77ef109f5d664e55f6d2e894e602c2aac51)
+  * handle unexpected files in cron log folder [c226b844a](https://github.com/Elgg/Elgg/commit/c226b844ac259180ae8a0af930027d6b182a83a9)
+* **forms:** if there is no input field do not output field elements [22c3d40bd](https://github.com/Elgg/Elgg/commit/22c3d40bdefa91d03c53e73988f1969d42e6180c)
+* **search:** prevent double encoded search query parameter [7ef21d3e4](https://github.com/Elgg/Elgg/commit/7ef21d3e443178b779d3d0645e7525d2f7a2b1cc)
+
+
+<a name="6.1.1"></a>
+### 6.1.1 (2024-12-05)
+
+#### Contributors
+
+* Jeroen Dalsem (4)
+* Jerôme Bakker (2)
+
+#### Bug fixes
+
+* **notifications:** only get url if possible in default body [aa9282122](https://github.com/Elgg/Elgg/commit/aa9282122a09ceb7d310326cb09895b42b32673a)
+* **db:** correctly invalidate caches when changing metadata [f66815cc3](https://github.com/Elgg/Elgg/commit/f66815cc34addeb3b034763c3f2082646f4a01ca)
+
+
 <a name="6.1.0"></a>
 ## 6.1.0 (2024-11-20)
 

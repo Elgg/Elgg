@@ -18,7 +18,7 @@ if (empty($plugin_id)) {
 }
 
 $plugin = elgg_get_plugin_from_id($plugin_id);
-if (!$plugin) {
+if (!$plugin instanceof \ElggPlugin || !$plugin->isActive()) {
 	return elgg_error_response(elgg_echo('plugins:settings:save:fail', [$plugin_id]));
 }
 

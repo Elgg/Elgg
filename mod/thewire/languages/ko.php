@@ -63,4 +63,8 @@ return array(
 	 */
 	'thewire:settings:limit' => "쪽글의 최대 문자수:",
 	'thewire:settings:limit:none' => "제한없슴",
+	
+	/**
+	 * Exceptions
+	 */
 );

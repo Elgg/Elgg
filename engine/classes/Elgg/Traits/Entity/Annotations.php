@@ -28,7 +28,7 @@ trait Annotations {
 	 * @return bool
 	 * @since 1.8
 	 */
-	public function deleteAnnotations(string $name = null): bool {
+	public function deleteAnnotations(?string $name = null): bool {
 		if ($this->guid) {
 			return elgg_delete_annotations([
 				'guid' => $this->guid,
@@ -55,7 +55,7 @@ trait Annotations {
 	 * @return bool
 	 * @since 1.8
 	 */
-	public function deleteOwnedAnnotations(string $name = null): bool {
+	public function deleteOwnedAnnotations(?string $name = null): bool {
 		// access is turned off for this because they might
 		// no longer have access to an entity they created annotations on
 		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($name) {

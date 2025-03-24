@@ -67,7 +67,7 @@ class ElggSite extends \ElggEntity {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function delete(bool $recursive = true, bool $persistent = null): bool {
+	public function delete(bool $recursive = true, ?bool $persistent = null): bool {
 		if ($this->guid === 1) {
 			throw new SecurityException('You cannot delete the current site');
 		}
@@ -175,9 +175,9 @@ class ElggSite extends \ElggEntity {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
-	public function updateLastAction(int $posted = null): int {
+	public function updateLastAction(?int $posted = null): int {
 		// setting last action on ElggSite makes no sense... just returning current value to be compliant
 		return $this->last_action;
 	}

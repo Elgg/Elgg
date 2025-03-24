@@ -456,7 +456,8 @@ class ElggUser extends \ElggEntity {
 	}
 	
 	/**
-	 * Get a plugin setting
+	 * Get a plugin setting.
+	 * Will return $default if the plugin isn't active
 	 *
 	 * @param string $plugin_id plugin ID
 	 * @param string $name      setting name
@@ -467,11 +468,13 @@ class ElggUser extends \ElggEntity {
 	 */
 	public function getPluginSetting(string $plugin_id, string $name, $default = null) {
 		$plugin = _elgg_services()->plugins->get($plugin_id);
-		if ($plugin instanceof \ElggPlugin) {
-			$static_defaults = (array) $plugin->getStaticConfig('user_settings', []);
-			
-			$default = elgg_extract($name, $static_defaults, $default);
+		if (!$plugin instanceof \ElggPlugin || !$plugin->isActive()) {
+			return $default;
 		}
+		
+		$static_defaults = (array) $plugin->getStaticConfig('user_settings', []);
+		
+		$default = elgg_extract($name, $static_defaults, $default);
 		
 		return $this->psGetPluginSetting($plugin_id, $name, $default);
 	}

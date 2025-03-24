@@ -61,7 +61,7 @@ class QueryCache extends CacheService {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function save(string $key, mixed $data, int|\DateTime $expire_after = null): bool {
+	public function save(string $key, mixed $data, null|int|\DateTime $expire_after = null): bool {
 		$result = parent::save($key, $data, $expire_after);
 		if ($result && !isset($this->keys[$key])) {
 			$this->keys[$key] = true;

@@ -317,12 +317,12 @@ class AccessCollections {
 	 *
 	 * Respects access control disabling for admin users and {@link elgg_call()}
 	 *
-	 * @param int $collection_id The collection id
-	 * @param int $user_guid     The user GUID to check for. Defaults to logged in user.
+	 * @param int      $collection_id The collection id
+	 * @param null|int $user_guid     The user GUID to check for. Defaults to logged in user.
 	 *
 	 * @return bool
 	 */
-	public function canEdit(int $collection_id, int $user_guid = null): bool {
+	public function canEdit(int $collection_id, ?int $user_guid = null): bool {
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {

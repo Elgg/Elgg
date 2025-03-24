@@ -8,7 +8,6 @@ and why it's built the way it is.
    :maxdepth: 1
 
    a11y
-   actions
    database
    events
    security

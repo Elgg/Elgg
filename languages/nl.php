@@ -97,7 +97,7 @@ return array(
 	'UserFetchFailureException' => 'Kan voor user_guid [%s] niet de rechten nakijken omdat de gebruiker niet bestaat.',
 
 	'PageNotFoundException' => 'De pagina die je opvraagt bestaat niet, of je hebt onvoldoende rechten om deze te mogen bekijken.',
-	'EntityNotFoundException' => 'De inhoud is verwijderd of je hebt geen rechten om die te mogen bekijken.',
+	'EntityNotFoundException' => 'De content die je opvraagt bestaat niet, of je hebt onvoldoende rechten om deze te mogen bekijken.',
 	'EntityPermissionsException' => 'Je hebt onvoldoende rechten om deze actie uit te mogen voeren',
 	'GatekeeperException' => 'Je hebt niet de juiste rechten om deze pagina te zien.',
 	'RegistrationAllowedGatekeeperException:invalid_invitecode' => "De opgegeven uitnodigingscode is niet geldig",
@@ -105,7 +105,16 @@ return array(
 	'BadRequestException:invalid_host_header' => 'Het verzoek bevat een ongeldige HOST header',
 	'BadRequestException:livesearch:no_query' => 'Livesearch vereist een zoekopdracht',
 	'ValidationException' => 'De opgestuurde data voldoet niet aan de vereisten, controleer de invoer',
+	'ValidationException:field:required' => 'Het veld %sis verplicht, maar er is geen informatie aangeleverd',
+	'ValidationException:field:url' => 'Veld %s voldoet niet aan de URL vereisten. Controleer de invoer.',
 	'LogicException:InterfaceNotImplemented' => '%smoet %s implementeren',
+	'ForbiddenException' => 'Je hebt onvoldoende rechten om deze pagina te mogen bekijken',
+	'GoneException' => 'De verzochte resource is niet langer beschikbaar',
+	'InternalServerErrorException' => 'Een onbekend probleem is opgetreden tijdens de verwerking van uw verzoek',
+	'MethodNotAllowedException' => 'De verzochte methode is niet toegestaan voor deze resource',
+	'NotImplementedException' => 'De verzochte methode is niet geïmplementeerd voor deze resource',
+	'ServiceUnavailableException' => 'De server was niet in staat het verzoek af te handelen. Probeer het later opnieuw.',
+	'TooManyRequestsException' => 'Te veel verzoeken, doe rustiger aan',
 	
 	'Security:InvalidPasswordCharacterRequirementsException' => "Het opgegeven wachtwoord voldoet niet aan de minimale eisen",
 	'Security:InvalidPasswordLengthException' => "Het opgegeven wachtwoord voldoet niet aan de minimale lengte van %s",
@@ -334,6 +343,7 @@ return array(
 	'usersettings:notifications:content_create:description' => 'Standaard notificatie instellingen voor nieuwe door jou aangemaakte content. Dit betreft notificaties die te maken hebben met acties op jouw content zoals het achterlaten van een reactie.',
 	'usersettings:notifications:create_comment:description' => "Standaard notificatie instellingen indien je een reactie achterlaat op content om van het vervolg op de hoogte te blijven",
 	'usersettings:notifications:mentions:description' => "Ontvang een notificatie wanneer iemand je ergens vermeld",
+	'usersettings:notifications:admin_validation_notification:description' => "Ontvang een notificatie wanneer er een nieuwe gebruiker wacht op validatie",
 
 	'usersettings:notifications:timed_muting' => "Tijdelijk notificaties uitschakelen",
 	'usersettings:notifications:timed_muting:help' => "Indien je voor een bepaalde periode geen notificaties wilt ontvangen (bijvoorbeeld een vakantie) dan kun je hier een start en einddatum opgeven om tijdelijk alle notificaties te blokkeren.",
@@ -1715,6 +1725,11 @@ Bekijk de volledige reactie hier:
 	'entity:delete:success' => '%s is verwijderd.',
 	'entity:delete:fail' => '%s kon niet worden verwijderd.',
 
+	'entity:edit:success' => 'De entiteit is succesvol opgeslagen',
+	'entity:edit:group:success' => 'De groep is succesvol opgeslagen',
+	'entity:edit:object:success' => 'Het object is succesvol opgeslagen',
+	'entity:edit:user:success' => 'De gebruiker is succesvol opgeslagen',
+	
 	'entity:restore:item' => 'Item',
 	'entity:restore:item_not_found' => 'Item niet gevonden',
 	'entity:restore:container_permission' => 'U beschikt niet over de juiste rechten om dit item te herstellen naar %s',
@@ -1738,6 +1753,7 @@ Bekijk de volledige reactie hier:
 	'entity:unmute' => "Notificaties deblokkeren",
 	'entity:unmute:success' => "Notificaties voor %s succesvol gedeblokkeerd",
 	'entity:unmute:fail' => "Een fout is opgetreden tijdens het deblokkeren van notificaties van %s",
+
 
 /**
  * Annotations
@@ -2105,4 +2121,10 @@ Global variables:
 
 	'core:upgrade:2024020901:title' => "Verwijder de icontime metadata",
 	'core:upgrade:2024020901:description' => "Verwijderd de onbetrouwbare metadata icontime uit de database",
+
+	'core:upgrade:2024070201:title' => "Migreer de debug configuratie",
+	'core:upgrade:2024070201:description' => "Verander de database waardes ten behoeve van debug logs naar de nieuwe ondersteunde waardes",
+
+	'core:upgrade:2024071001:title' => "Migreer de beheerder notificatie instellingen ten behoeve van validatie",
+	'core:upgrade:2024071001:description' => "Verhuis de opslag van de beheerder notificatie instellingen naar de notificatie instellingen",
 );

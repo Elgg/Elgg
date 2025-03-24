@@ -9,15 +9,15 @@ use Elgg\Exceptions\Http\Gatekeeper\GroupToolGatekeeperException;
  * Checks if a group has a specific tool enabled.
  * Forward to the group if the tool is disabled.
  *
- * @param string $tool_name  The name of the group tool to check
- * @param int    $group_guid The group that owns the page. If not set, this
- *                           will be pulled from elgg_get_page_owner_guid().
+ * @param string   $tool_name  The name of the group tool to check
+ * @param null|int $group_guid The group that owns the page. If not set, this
+ *                             will be pulled from elgg_get_page_owner_guid().
  *
  * @return void
  * @throws GroupToolGatekeeperException
  * @since 3.0.0
  */
-function elgg_group_tool_gatekeeper(string $tool_name, int $group_guid = null): void {
+function elgg_group_tool_gatekeeper(string $tool_name, ?int $group_guid = null): void {
 	$group_guid = $group_guid ?? elgg_get_page_owner_guid();
 	
 	$group = get_entity($group_guid);
@@ -83,10 +83,10 @@ function elgg_admin_gatekeeper(): void {
  * if it does. If the viewer cannot view this entity, it forwards to an
  * appropriate page.
  *
- * @param int    $guid              Entity GUID
- * @param string $type              Optional required entity type
- * @param string $subtype           Optional required entity subtype
- * @param bool   $validate_can_edit flag to check canEdit access
+ * @param int         $guid              Entity GUID
+ * @param null|string $type              Optional required entity type
+ * @param null|string $subtype           Optional required entity subtype
+ * @param bool        $validate_can_edit flag to check canEdit access
  *
  * @return void
  *
@@ -96,7 +96,7 @@ function elgg_admin_gatekeeper(): void {
  * @throws \Elgg\Exceptions\HttpException
  * @since 1.9.0
  */
-function elgg_entity_gatekeeper(int $guid, string $type = null, string $subtype = null, bool $validate_can_edit = false): void {
+function elgg_entity_gatekeeper(int $guid, ?string $type = null, ?string $subtype = null, bool $validate_can_edit = false): void {
 	$entity = _elgg_services()->gatekeeper->assertExists($guid, $type, $subtype);
 	_elgg_services()->gatekeeper->assertAccessibleEntity($entity, null, $validate_can_edit);
 }

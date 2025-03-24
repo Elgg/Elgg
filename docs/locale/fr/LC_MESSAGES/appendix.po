@@ -5,16 +5,17 @@
 # 
 # Translators:
 # Jerôme Bakker, 2024
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024
+# Emmanuel Simond, 2025
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-25 09:44+0200\n"
+"POT-Creation-Date: 2025-02-13 10:34+0100\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,6 +52,7 @@ msgstr "Ci-dessous quelques questions fréquemment posées à propos de Elgg."
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:6
 #: ../../appendix/upgrade-notes/5.0-to-5.1.rst:6
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:6
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:6
 msgid "Contents"
 msgstr "Contenu"
 
@@ -2748,11 +2750,19 @@ msgstr "**Jusqu'à la 7.0**"
 msgid "6.0"
 msgstr "6.0"
 
+#: ../../appendix/support.rst:83 ../../appendix/support.rst:85
+msgid "November 2024"
+msgstr "Novembre 2024"
+
 #: ../../appendix/support.rst:85
+msgid "6.1"
+msgstr "6.1"
+
+#: ../../appendix/support.rst:87
 msgid "7.0"
 msgstr "7.0"
 
-#: ../../appendix/support.rst:85
+#: ../../appendix/support.rst:87
 msgid "TBD"
 msgstr "A FAIRE"
 
@@ -5141,6 +5151,7 @@ msgstr "De 2.0 à 2.1"
 #: ../../appendix/upgrade-notes/4.1-to-4.2.rst:86
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:24
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:439
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:18
 msgid "Deprecated APIs"
 msgstr "APIs dépréciées"
 
@@ -7888,10 +7899,10 @@ msgid ""
 "need to separate the different sites into separate databases/tables."
 msgstr ""
 "Avant la version 3.0, Elgg disposait d’une certaine prise en charge "
-"(partielle) pour avoir plusieurs sites dans la même base de données. Ce "
-"concept multisite a été complètement supprimé dans la version 3.0. Les "
-"entités n’ont plus l’attribut site_guid. Cela signifie qu’il n’y a plus la "
-"possibilité d’avoir des entités sur différents sites. Si vous avez "
+"(partielle) afin de pouvoir avoir plusieurs sites dans la même base de "
+"données. Ce concept multisite a été complètement supprimé dans la version "
+"3.0. Les entités n’ont plus l’attribut site_guid. Cela signifie qu’il n’y a "
+"plus la possibilité d’avoir des entités sur différents sites. Si vous avez "
 "actuellement plusieurs sites dans votre base de données, la mise à niveau de"
 " Elgg vers Elgg 3.0 échouera. Vous devez séparer les différents sites en "
 "bases de données/tables distinctes."
@@ -8723,7 +8734,7 @@ msgid ""
 " without URLs will no longer result in the site URL"
 msgstr ""
 "``ElggEntity`` : Les URL vides ne seront plus normalisées. Cela signifie que"
-" les entités sans URL ne vont plus avoir l’URL du site"
+" les entités sans URL ne correpondront plus à l’URL de base du site"
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:695
 msgid ""
@@ -10189,10 +10200,10 @@ msgid ""
 "have been removed. If there was a generic translation available for the "
 "custom translation key, these have also been updated."
 msgstr ""
-"Tous les plugins ont été scannés pour des clefs de traduction inutilisées. "
-"Les clefs inutilisées ont été supprimées. S’il existait une traduction "
-"générique disponible pour la clef de traduction personnalisée, celles-ci ont"
-" également été mises à jour."
+"Tous les plugins ont été scannés à la recherche des clefs de traduction "
+"inutilisées. Les clefs inutilisées ont été supprimées. S’il existait une "
+"traduction générique disponible pour la clef de traduction personnalisée, "
+"celles-ci ont également été mises à jour."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1115
 msgid "System Log"
@@ -10403,7 +10414,7 @@ msgstr ""
 "méthodes ``__construct`` et ``__destruct``. ``setUp`` et ``tearDown`` ont "
 "été marquées comme privées et sont utilisées pour amorcer des tests "
 "cohérents et pour déclarer des conditions pre et post ; votre cas de test "
-"devrait utiliser les méthodes ``up`` et ``down`` à leur place."
+"devrait utiliser à la place les méthodes ``up`` et ``down``."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1185
 msgid ""
@@ -11589,7 +11600,7 @@ msgstr "auteurs/contributeurs du plugin -> composer.json"
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:298
 msgid "Hookable field configurations"
-msgstr "Champs de configuration hookables"
+msgstr "Configurations de champ hookables"
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:300
 msgid ""
@@ -15285,7 +15296,7 @@ msgstr "``thewire/previous``"
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:993
 msgid "Removed hooks / events"
-msgstr "Hooks/événements retirés"
+msgstr "Hooks / événements supprimés"
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:995
 msgid ""
@@ -18347,6 +18358,7 @@ msgid "``\\Elgg\\Exceptions\\InvalidParameterException``"
 msgstr "``\\Elgg\\Exceptions\\InvalidParameterException``"
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:492
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:9
 msgid "Constants"
 msgstr "Constantes"
 
@@ -18445,6 +18457,9 @@ msgid ""
 "Entities can now be marked as deleted in the database. This allows entities "
 "to be restored from the database when deletion was done too soon."
 msgstr ""
+"Les entités peuvent maintenant être marquées comme supprimées dans la base "
+"de données. Cela permet aux entités d'être restaurées à partir de la base de"
+" données lorsque la suppression a été effectuée trop tôt."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:25
 msgid ""
@@ -18472,22 +18487,29 @@ msgid ""
 "we now rely on the native use of ECMAScript modules. All modules can be "
 "referenced under the same name as an importable module."
 msgstr ""
+"Nous n'utilisons plus RequireJS pour l'inclusion des modules JavaScript AMD."
+" Nous utilisons désormais les modules ECMAScript en natif. Tous les modules "
+"peuvent être référencés sous le même nom qu'un module importable."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:41
 msgid "Related functions changes"
-msgstr ""
+msgstr "Modifications de fonctions associées"
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:43
 msgid ""
 "``elgg_define_js()`` this function has been removed. You might need "
 "``elgg_register_esm()`` as a replacement."
 msgstr ""
+"``elgg_define_js()`` cette fonction a été supprimée. Vous pourriez utiliser "
+"``elgg_register_esm()`` en remplacement."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:44
 msgid ""
 "``elgg_require_js()`` this function has been removed. You might need "
 "``elgg_import_esm()`` as a replacement."
 msgstr ""
+"``elgg_require_js()`` cette fonction a été supprimée. Vous pourriez utiliser"
+" ``elgg_import_esm()`` en remplacement."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:45
 msgid "``elgg_unrequire_js()`` this function has been removed"
@@ -18516,6 +18538,8 @@ msgid ""
 "The minimal PHP version is now 8.1. Also the ``intl`` module is now required"
 " to be enabled."
 msgstr ""
+"La version minimale de PHP est désormais la 8.1. Le module ``intl`` doit "
+"également être activé."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:67
 msgid "PHPUnit"
@@ -18545,7 +18569,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:81
 msgid "Enabled column"
-msgstr ""
+msgstr "Colonnes activées"
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:83
 msgid ""
@@ -18599,6 +18623,10 @@ msgid ""
 "used in the correct order. You can read more about the intended usage in "
 ":doc:`/design/a11y`."
 msgstr ""
+"L'utilisation des titres (h1, h2, h3) a été revue dans l'ensemble de la base"
+" de code pour garantir qu'ils sont utilisés lorsque cela est approprié et "
+"qu'ils sont également utilisés dans le bon ordre. Vous pouvez en apprendre "
+"plus sur l'utilisation prévue dans :doc:`/design/a11y`."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:109
 msgid "Most notable changes are the following:"
@@ -18644,6 +18672,9 @@ msgid ""
 "Some other styling changes include a new background color for the body, "
 "improved styling of breadcrumbs and a more basic owner block chip."
 msgstr ""
+"D'autres changements de style concernent une nouvelle couleur d'arrière-plan"
+" pour le corps, un style amélioré pour le fil d'Ariane et un bloc "
+"propriétaire plus basique."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:131
 msgid "Removed lib functions"
@@ -18705,18 +18736,26 @@ msgid ""
 "``elgg_get_entity_statistics()`` now requires an ``array`` of ``$options`` "
 "to be used by ``elgg_get_entities()``."
 msgstr ""
+"``elgg_get_entity_statistics()`` requiert désormais un ``array`` de "
+"``$options`` qui est utilisé par ``elgg_get_entities()``."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:153
 msgid ""
 "``elgg_get_simplecache_url()`` has the second argument (``$subview``) "
 "removed. The full ``$view`` name needs to be provided as the first argument."
 msgstr ""
+"Le deuxième argument (``$subview``) de ``elgg_get_simplecache_url()`` est "
+"supprimé. Le nom complet de ``$view`` doit être fourni comme premier "
+"argument."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:158
 msgid ""
 "The interface ``\\Elgg\\EntityIcon`` has been removed. Implemented functions"
 " in ``\\ElggEntity`` have been moved to ``\\Elgg\\Traits\\Entity\\Icons``"
 msgstr ""
+"L'interface ``\\Elgg\\EntityIcon`` a été supprimée. Les fonctions "
+"implémentées dans ``ElggEntity`` ont été déplacées vers "
+"``Elgg\\Traits\\Entity\\Icons``"
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:159
 msgid ""
@@ -18732,3 +18771,83 @@ msgstr "Valeurs de configuration retirées"
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:164
 msgid "``system_cache_loaded``"
 msgstr "``system_cache_loaded``"
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:2
+msgid "From 6.0 to 6.1"
+msgstr "De 6.0 à 6.1"
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:11
+msgid ""
+"The constant ``ELGG_CACHE_BLACK_HOLE`` is deprecated. Use "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_BLACK_HOLE``."
+msgstr ""
+"La constante ``ELGG_CACHE_BLACK_HOLE`` es dépréciée. Utilisez "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_BLACK_HOLE``."
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:12
+msgid ""
+"The constant ``ELGG_CACHE_RUNTIME`` is deprecated. Use "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_RUNTIME``."
+msgstr ""
+"La constante ``ELGG_CACHE_RUNTIME`` est déprciée. Utilsiez "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_RUNTIME``."
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:13
+msgid ""
+"The constant ``ELGG_CACHE_FILESYSTEM`` is deprecated. Use "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_FILESYSTEM``."
+msgstr ""
+"La constante ``ELGG_CACHE_FILESYSTEM`` es dépréciée. Utilisez "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_FILESYSTEM``."
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:14
+msgid ""
+"The constant ``ELGG_CACHE_PERSISTENT`` is deprecated. Use "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_PERSISTENT``."
+msgstr ""
+"La constante ``ELGG_CACHE_PERSISTENT`` est dépréciée. Utilisez "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_PERSISTENT``."
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:15
+msgid ""
+"The constant ``ELGG_CACHE_LOCALFILESYSTEM`` is deprecated. Use "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_LOCALFILESYSTEM``."
+msgstr ""
+"La constante ``ELGG_CACHE_LOCALFILESYSTEM`` est dépréciée. Utilisez "
+"``\\Elgg\\Cache\\CompositeCache::CACHE_LOCALFILESYSTEM``."
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:20
+msgid "``elgg_disable_simplecache``"
+msgstr "``elgg_disable_simplecache``"
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:21
+msgid "``elgg_disable_system_cache``"
+msgstr "``elgg_disable_system_cache``"
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:22
+msgid "``elgg_enable_simplecache``"
+msgstr "``elgg_enable_simplecache``"
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:23
+msgid "``elgg_enable_system_cache``"
+msgstr "``elgg_enable_system_cache``"
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:24
+msgid "``elgg_get_system_cache``"
+msgstr "``elgg_get_system_cache``"
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:25
+msgid "``elgg_is_simplecache_enabled``"
+msgstr "``elgg_is_simplecache_enabled``"
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:26
+msgid "``elgg_is_system_cache_enabled``"
+msgstr "``elgg_is_system_cache_enabled``"
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:27
+msgid "``elgg_plugin_exists`` use ``elgg_get_plugin_from_id()``"
+msgstr "``elgg_plugin_exists`` use ``elgg_get_plugin_from_id()``"
+
+#: ../../appendix/upgrade-notes/6.0-to-6.1.rst:28
+msgid "``elgg_reset_system_cache``"
+msgstr "``elgg_reset_system_cache``"

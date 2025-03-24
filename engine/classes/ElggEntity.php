@@ -115,11 +115,11 @@ abstract class ElggEntity extends \ElggData {
 	 * If a database result is passed as a \stdClass instance, it instantiates
 	 * that entity.
 	 *
-	 * @param stdClass $row Database row result. Default is null to create a new object.
+	 * @param null|\stdClass $row Database row result. Default is null to create a new object.
 	 *
 	 * @throws IOException If cannot load remaining data from db
 	 */
-	public function __construct(stdClass $row = null) {
+	public function __construct(?\stdClass $row = null) {
 		$this->initializeAttributes();
 
 		if (!empty($row) && !$this->load($row)) {
@@ -1018,7 +1018,7 @@ abstract class ElggEntity extends \ElggData {
 	 *
 	 * @return bool
 	 */
-	public function delete(bool $recursive = true, bool $persistent = null): bool {
+	public function delete(bool $recursive = true, ?bool $persistent = null): bool {
 		if (!$this->canDelete()) {
 			return false;
 		}
@@ -1234,12 +1234,12 @@ abstract class ElggEntity extends \ElggData {
 	 * @warning This is different to time_updated.  Time_updated is automatically set,
 	 * while last_action is only set when explicitly called.
 	 *
-	 * @param int $posted Timestamp of last action
+	 * @param null|int $posted Timestamp of last action
 	 *
 	 * @return int
 	 * @internal
 	 */
-	public function updateLastAction(int $posted = null): int {
+	public function updateLastAction(?int $posted = null): int {
 		$posted = _elgg_services()->entityTable->updateLastAction($this, $posted);
 		
 		$this->attributes['last_action'] = $posted;
@@ -1251,12 +1251,12 @@ abstract class ElggEntity extends \ElggData {
 	/**
 	 * Update the time_deleted column in the entities table.
 	 *
-	 * @param int $deleted Timestamp of deletion
+	 * @param null|int $deleted Timestamp of deletion
 	 *
 	 * @return int
 	 * @internal
 	 */
-	public function updateTimeDeleted(int $deleted = null): int {
+	public function updateTimeDeleted(?int $deleted = null): int {
 		$deleted = _elgg_services()->entityTable->updateTimeDeleted($this, $deleted);
 		
 		$this->attributes['time_deleted'] = $deleted;
@@ -1345,5 +1345,23 @@ abstract class ElggEntity extends \ElggData {
 	 */
 	public function hasCapability(string $capability): bool {
 		return _elgg_services()->entity_capabilities->hasCapability($this->getType(), $this->getSubtype(), $capability);
+	}
+	
+	/**
+	 * Returns a default set of fields to be used for forms related to this entity
+	 *
+	 * @return array
+	 */
+	public static function getDefaultFields(): array {
+		return [];
+	}
+	
+	/**
+	 * Helper function to easily retrieve form fields for this entity
+	 *
+	 * @return array
+	 */
+	final public function getFields(): array {
+		return _elgg_services()->fields->get($this->getType(), $this->getSubtype());
 	}
 }

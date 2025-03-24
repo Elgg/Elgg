@@ -33,13 +33,13 @@ class SubscriptionNotificationEvent implements NotificationEvent {
 	/**
 	 * Create a notification event
 	 *
-	 * @param \ElggData   $object The object of the event (ElggEntity)
-	 * @param string      $action The name of the action (default: create)
-	 * @param \ElggEntity $actor  The entity that caused the event (default: logged in user)
+	 * @param \ElggData        $object The object of the event (ElggEntity)
+	 * @param string           $action The name of the action (default: create)
+	 * @param null|\ElggEntity $actor  The entity that caused the event (default: logged-in user)
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct(\ElggData $object, string $action, \ElggEntity $actor = null) {
+	public function __construct(\ElggData $object, string $action, ?\ElggEntity $actor = null) {
 		if (!$action) {
 			throw new InvalidArgumentException(__METHOD__ . ' expects a valid action name');
 		}
@@ -61,7 +61,7 @@ class SubscriptionNotificationEvent implements NotificationEvent {
 	 * may have been deleted/disabled since the event was serialized and
 	 * stored in the database.
 	 *
-	 * @return \ElggEntity|false|null
+	 * @return \ElggEntity|null
 	 */
 	public function getActor() {
 		return $this->actor;

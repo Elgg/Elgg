@@ -56,32 +56,32 @@ class ImageService {
 	/**
 	 * Crop and resize an image
 	 *
-	 * @param string $source      Path to source image
-	 * @param string $destination Path to destination
-	 *                            If not set, will modify the source image
-	 * @param array  $params      An array of cropping/resizing parameters
-	 *                            - INT 'w' represents the width of the new image
-	 *                            With upscaling disabled, this is the maximum width
-	 *                            of the new image (in case the source image is
-	 *                            smaller than the expected width)
+	 * @param string      $source      Path to source image
+	 * @param null|string $destination Path to destination
+	 *                                 If not set, will modify the source image
+	 * @param array       $params      An array of cropping/resizing parameters
+	 *                                 - INT 'w' represents the width of the new image
+	 *                                 With upscaling disabled, this is the maximum width
+	 *                                 of the new image (in case the source image is
+	 *                                 smaller than the expected width)
 	 *
-	 *                            - INT 'h' represents the height of the new image
-	 *                            With upscaling disabled, this is the maximum height
+	 *                                 - INT 'h' represents the height of the new image
+	 *                                 With upscaling disabled, this is the maximum height
 	 *
-	 *                            - INT 'x1', 'y1', 'x2', 'y2' represent optional cropping
-	 *                            coordinates. The source image will first be cropped
-	 *                            to these coordinates, and then resized to match
-	 *                            width/height parameters
+	 *                                 - INT 'x1', 'y1', 'x2', 'y2' represent optional cropping
+	 *                                 coordinates. The source image will first be cropped
+	 *                                 to these coordinates, and then resized to match
+	 *                                 width/height parameters
 	 *
-	 *                            - BOOL 'square' - square images will fill the
-	 *                            bounding box (width x height). In Imagine's terms,
-	 *                            this equates to OUTBOUND mode
+	 *                                 - BOOL 'square' - square images will fill the
+	 *                                 bounding box (width x height). In Imagine's terms,
+	 *                                 this equates to OUTBOUND mode
 	 *
-	 *                            - BOOL 'upscale' - if enabled, smaller images
-	 *                            will be upscaled to fit the bounding box.
+	 *                                 - BOOL 'upscale' - if enabled, smaller images
+	 *                                 will be upscaled to fit the bounding box.
 	 * @return bool
 	 */
-	public function resize(string $source, string $destination = null, array $params = []): bool {
+	public function resize(string $source, ?string $destination = null, array $params = []): bool {
 
 		$destination = $destination ?? $source;
 
@@ -223,7 +223,7 @@ class ImageService {
 			$max_width = min($max_width, $max_height);
 			$max_height = $max_width;
 			
-			// find largest square that fits within the selected region
+			// find the largest square that fits within the selected region
 			$crop_width = min($crop_width, $crop_height);
 			$crop_height = $crop_width;
 			

@@ -111,7 +111,7 @@ class ElggPage extends ElggObject {
 	 *
 	 * @since 3.0
 	 */
-	public function setParentEntity(\ElggPage $entity = null): bool {
+	public function setParentEntity(?\ElggPage $entity = null): bool {
 		if (empty($entity)) {
 			$this->parent_guid = 0;
 			return true;
@@ -128,7 +128,7 @@ class ElggPage extends ElggObject {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function delete(bool $recursive = true, bool $persistent = null): bool {
+	public function delete(bool $recursive = true, ?bool $persistent = null): bool {
 		$parent_guid = $this->getParentGUID();
 		$result = parent::delete($recursive, $persistent);
 		if ($result) {
@@ -167,5 +167,57 @@ class ElggPage extends ElggObject {
 				}
 			}
 		});
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function getDefaultFields(): array {
+		$result = parent::getDefaultFields();
+		
+		$result[] = [
+			'#type' => 'text',
+			'#label' => elgg_echo('pages:title'),
+			'name' => 'title',
+			'required' => true,
+		];
+		
+		$result[] = [
+			'#type' => 'longtext',
+			'#label' => elgg_echo('pages:description'),
+			'name' => 'description',
+		];
+		
+		$result[] = [
+			'#type' => 'tags',
+			'#label' => elgg_echo('pages:tags'),
+			'name' => 'tags',
+		];
+		
+		$result[] = [
+			'#type' => 'pages/parent',
+			'#label' => elgg_echo('pages:parent_guid'),
+			'name' => 'parent_guid',
+		];
+		
+		$result[] = [
+			'#type' => 'access',
+			'#label' => elgg_echo('access:read'),
+			'name' => 'access_id',
+			'entity_type' => 'object',
+			'entity_subtype' => 'page',
+		];
+		
+		$result[] = [
+			'#type' => 'access',
+			'#label' => elgg_echo('access:write'),
+			'name' => 'write_access_id',
+			'entity_type' => 'object',
+			'entity_subtype' => 'page',
+			'purpose' => 'write',
+			'entity_allows_comments' => false, // no access change warning for write access input
+		];
+		
+		return $result;
 	}
 }

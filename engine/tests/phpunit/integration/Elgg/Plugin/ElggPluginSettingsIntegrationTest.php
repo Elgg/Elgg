@@ -41,7 +41,6 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 			'default1' => 'set1',
 			'foo1' => 'bar1',
 			'foo3' => 'bar3',
-			'elgg:internal:priority' => $plugin->getPriority(),
 		], $plugin->getAllSettings());
 		
 		_elgg_services()->logger->enable();
@@ -53,7 +52,6 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertEquals([
 			'default1' => 'set1',
-			'elgg:internal:priority' => $plugin->getPriority(),
 		], $plugin->getAllSettings());
 	}
 	
@@ -61,13 +59,15 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 		$plugin = new \ElggPlugin();
 		
 		$this->assertTrue($plugin->setSetting('foo1', 'bar1'));
-		$this->assertEquals('bar1', $plugin->getSetting('foo1'));
+		$this->assertNull($plugin->getSetting('foo1'));
+		$this->assertEquals('bar1', $plugin->getMetadata('foo1'));
 		$this->assertNull($plugin->getSetting('foo2'));
+		$this->assertNull($plugin->getMetadata('foo2'));
 		
-		$all = $plugin->getAllSettings();
+		$this->assertEmpty($plugin->getAllSettings());
 		$this->assertEquals([
 			'foo1' => 'bar1',
-		], $all);
+		], $plugin->getAllMetadata());
 	}
 	
 	public function testCanSetUserSetting() {
@@ -117,20 +117,23 @@ class ElggPluginSettingsIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($user->setPluginSetting($untouched_plugin->getID(), "{$plugin_setting_name}:user", $plugin_setting_value));
 		
 		// check if set correctly
-		$this->assertEquals($plugin_setting_value, $plugin->getSetting($plugin_setting_name));
-		$this->assertEquals($plugin_setting_value, $user->getPluginSetting($plugin->getID(), "{$plugin_setting_name}:user"));
-		$this->assertEquals($plugin_setting_value, $untouched_plugin->getSetting($plugin_setting_name));
-		$this->assertEquals($plugin_setting_value, $user->getPluginSetting($untouched_plugin->getID(), "{$plugin_setting_name}:user"));
+		// since the plugins aren't active we need to use the metadata functions
+		$this->assertEquals($plugin_setting_value, $plugin->getMetadata($plugin_setting_name));
+		$this->assertEquals($plugin_setting_value, $user->getMetadata($user->getNamespacedPluginSettingName($plugin->getID(), "{$plugin_setting_name}:user")));
+		$this->assertEquals($plugin_setting_value, $untouched_plugin->getMetadata($plugin_setting_name));
+		$this->assertEquals($plugin_setting_value, $user->getMetadata($user->getNamespacedPluginSettingName($untouched_plugin->getID(), "{$plugin_setting_name}:user")));
 		
 		// remove all settings
 		$this->assertTrue($plugin->unsetAllEntityAndPluginSettings());
 		
 		// verify
 		$this->assertNull($plugin->getSetting($plugin_setting_name));
+		$this->assertNull($plugin->getMetadata($plugin_setting_name));
 		$this->assertEmpty($user->getPluginSetting($plugin->getID(), "{$plugin_setting_name}:user"));
+		$this->assertEmpty($user->getMetadata($user->getNamespacedPluginSettingName($plugin->getID(), "{$plugin_setting_name}:user")));
 		// verify just the one plugin settings where removed
-		$this->assertEquals($plugin_setting_value, $untouched_plugin->getSetting($plugin_setting_name));
-		$this->assertEquals($plugin_setting_value, $user->getPluginSetting($untouched_plugin->getID(), "{$plugin_setting_name}:user"));
+		$this->assertEquals($plugin_setting_value, $untouched_plugin->getMetadata($plugin_setting_name));
+		$this->assertEquals($plugin_setting_value, $user->getMetadata($user->getNamespacedPluginSettingName($untouched_plugin->getID(), "{$plugin_setting_name}:user")));
 		
 		// verify other settings still exists
 		$this->assertNotEmpty($plugin->getPriority());

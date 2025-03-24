@@ -60,4 +60,8 @@ return array(
 	 */
 	'thewire:settings:limit' => "Numero massimo di caratteri per un messaggio:",
 	'thewire:settings:limit:none' => "Nessun limite",
+	
+	/**
+	 * Exceptions
+	 */
 );

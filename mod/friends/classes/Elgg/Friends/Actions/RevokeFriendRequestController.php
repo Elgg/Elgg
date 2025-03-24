@@ -2,43 +2,58 @@
 
 namespace Elgg\Friends\Actions;
 
-use Elgg\Http\ResponseBuilder;
+use Elgg\Exceptions\Http\BadRequestException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
+use Elgg\Exceptions\Http\InternalServerErrorException;
+use Elgg\Exceptions\Http\ValidationException;
+use Elgg\Http\OkResponse;
 
 /**
  * Action controller to revoke a friend request
  *
  * @since 3.2
  */
-class RevokeFriendRequestController {
-
+class RevokeFriendRequestController extends \Elgg\Controllers\GenericAction {
+	
 	/**
-	 * Remove the sent friend request
+	 * {@inheritdoc}
 	 *
-	 * @param \Elgg\Request $request the Elgg request
-	 *
-	 * @return ResponseBuilder
+	 * @throws ValidationException
 	 */
-	public function __invoke(\Elgg\Request $request) {
-		
-		$id = (int) $request->getParam('id');
+	protected function validate(): void {
+		$id = (int) $this->request->getParam('id');
 		if (empty($id)) {
-			return elgg_error_response(elgg_echo('error:missing_data'));
+			throw new ValidationException(elgg_echo('ValidationException:field:required', ['id']));
 		}
-		
-		$relationship = elgg_get_relationship($id);
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 *
+	 * @throws BadRequestException
+	 * @throws EntityPermissionsException
+	 * @throws InternalServerErrorException
+	 */
+	protected function execute(): void {
+		$relationship = elgg_get_relationship((int) $this->request->getParam('id'));
 		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'friendrequest') {
-			return elgg_error_response(elgg_echo('error:missing_data'));
+			throw new BadRequestException(elgg_echo('error:missing_data'));
 		}
 		
 		$sending_user = get_user($relationship->guid_one);
 		if (!$sending_user instanceof \ElggUser || !$sending_user->canEdit()) {
-			return elgg_error_response(elgg_echo('actionunauthorized'));
+			throw new EntityPermissionsException();
 		}
 		
 		if (!$relationship->delete()) {
-			return elgg_error_response(elgg_echo('friends:action:friendrequest:revoke:fail'));
+			throw new InternalServerErrorException(elgg_echo('friends:action:friendrequest:revoke:fail'));
 		}
-		
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function success(): OkResponse {
 		return elgg_ok_response('', elgg_echo('friends:action:friendrequest:revoke:success'));
 	}
 }

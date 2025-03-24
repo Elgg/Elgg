@@ -33,7 +33,9 @@ return array(
 	'edit:object:file' => "Modifier le fichier",
 	'notification:object:file:create' => "Envoyer une notification lorsqu'un fichier est créé",
 	'notifications:mute:object:file' => "à propos du fichier '%s'",
-
+	
+	'entity:edit:object:file:success' => 'Le fichier a bien été enregistré.',
+	
 	'file:more' => "Plus de fichiers",
 	'file:list' => "vue liste",
 

@@ -2,6 +2,7 @@
 
 namespace Elgg\Forms;
 
+use Elgg\Database\EntityTable;
 use Elgg\EventsService;
 use Elgg\I18n\Translator;
 use Elgg\Traits\Loggable;
@@ -20,10 +21,11 @@ class FieldsService {
 	/**
 	 * Constructor
 	 *
-	 * @param EventsService $events     events service
-	 * @param Translator    $translator translator service
+	 * @param EventsService $events      events service
+	 * @param Translator    $translator  translator service
+	 * @param EntityTable   $entityTable entity table
 	 */
-	public function __construct(protected EventsService $events, protected Translator $translator) {
+	public function __construct(protected EventsService $events, protected Translator $translator, protected EntityTable $entityTable) {
 	}
 	
 	/**
@@ -39,10 +41,13 @@ class FieldsService {
 			return $this->fields[$type][$subtype];
 		}
 		
+		$entity_class = $this->entityTable->getEntityClass($type, $subtype);
+		$defaults = !empty($entity_class) ? $entity_class::getDefaultFields() : [];
+		
 		$result = (array) $this->events->triggerResults('fields', "{$type}:{$subtype}", [
 			'type' => $type,
 			'subtype' => $subtype,
-		], []);
+		], $defaults);
 		
 		$fields = [];
 		// validate fields and generate labels

@@ -2,7 +2,7 @@
 
 namespace Elgg\Upgrade;
 
-use Elgg\Exceptions\HttpException;
+use Elgg\Exceptions\Http\InternalServerErrorException;
 use Elgg\Http\ResponseBuilder;
 use Elgg\Request;
 use Elgg\Traits\Loggable;
@@ -20,11 +20,10 @@ class UpgradeController {
 	 *
 	 * @param Request $request Request
 	 *
-	 * @return ResponseBuilder
-	 * @throws HttpException
+	 * @return null|ResponseBuilder
+	 * @throws InternalServerErrorException
 	 */
-	public function __invoke(Request $request) {
-
+	public function __invoke(Request $request): ?ResponseBuilder {
 		$response = null;
 
 		$forward_url = $request->getParam('forward', 'admin');
@@ -32,14 +31,14 @@ class UpgradeController {
 
 		$upgrade = _elgg_services()->upgrades->run();
 
-		$upgrade->done(
+		$upgrade->then(
 			function () use (&$response, $forward_url) {
 				$response = elgg_ok_response('', elgg_echo('upgrade:core'), $forward_url);
 			},
 			function ($error) use ($forward_url) {
 				$this->log(LogLevel::ERROR, $error);
 
-				$exception = new HttpException($error, ELGG_HTTP_INTERNAL_SERVER_ERROR);
+				$exception = new InternalServerErrorException($error);
 				$exception->setRedirectUrl($forward_url);
 
 				throw $exception;

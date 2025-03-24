@@ -10,26 +10,26 @@
 .elgg-message {
 	border-width: 1px;
 	border-style: solid;
-	@include elgg-message($(text-color-strong), $(background-color-soft), $(border-color-strong));
+	@include elgg-message(var(--elgg-text-color-strong), var(--elgg-background-color-soft), var(--elgg-border-color-strong));
 
 	border-radius: 3px;
 	
 	margin-bottom: 1rem;
 	
 	&.elgg-message-success {
-		@include elgg-message($(state-success-font-color), $(state-success-background-color), $(state-success-border-color));
+		@include elgg-message(var(--elgg-state-success-font-color), var(--elgg-state-success-background-color), var(--elgg-state-success-border-color));
 	}
 
 	&.elgg-message-error {
-		@include elgg-message($(state-danger-font-color), $(state-danger-background-color), $(state-danger-border-color));
+		@include elgg-message(var(--elgg-state-danger-font-color), var(--elgg-state-danger-background-color), var(--elgg-state-danger-border-color));
 	}
 	&.elgg-message-help,
 	&.elgg-message-info,
 	&.elgg-message-notice {
-		@include elgg-message($(state-notice-font-color), $(state-notice-background-color), $(state-notice-border-color));
+		@include elgg-message(var(--elgg-state-notice-font-color), var(--elgg-state-notice-background-color), var(--elgg-state-notice-border-color));
 	}
 	&.elgg-message-warning {
-		@include elgg-message($(state-warning-font-color), $(state-warning-background-color), $(state-warning-border-color));
+		@include elgg-message(var(--elgg-state-warning-font-color), var(--elgg-state-warning-background-color), var(--elgg-state-warning-border-color));
 	}
 	
 	> .elgg-inner {

@@ -18,21 +18,6 @@ class RouteRegistrationService {
 	use Loggable;
 
 	/**
-	 * @var EventsService
-	 */
-	protected $events;
-
-	/**
-	 * @var RouteCollection
-	 */
-	protected $routes;
-
-	/**
-	 * @var UrlGenerator
-	 */
-	protected $generator;
-
-	/**
 	 * Constructor
 	 *
 	 * @param EventsService   $events    Events service
@@ -40,13 +25,10 @@ class RouteRegistrationService {
 	 * @param UrlGenerator    $generator URL Generator
 	 */
 	public function __construct(
-		EventsService $events,
-		RouteCollection $routes,
-		UrlGenerator $generator
+		protected EventsService $events,
+		protected RouteCollection $routes,
+		protected UrlGenerator $generator
 	) {
-		$this->events = $events;
-		$this->routes = $routes;
-		$this->generator = $generator;
 	}
 
 	/**
@@ -67,6 +49,7 @@ class RouteRegistrationService {
 	 *                       - defaults : default values of wildcard segments
 	 *                       - requirements : regex patterns for wildcard segment requirements
 	 *                       - methods : HTTP methods
+	 *                       - options : additional route options
 	 *
 	 * @return Route
 	 * @throws InvalidArgumentException
@@ -149,9 +132,9 @@ class RouteRegistrationService {
 		$defaults['_required_plugins'] = $required_plugins;
 		$defaults['_detect_page_owner'] = $detect_page_owner;
 
-		$route = new Route($path, $defaults, $requirements, [
-			'utf8' => true,
-		], '', [], $methods);
+		$options = array_merge((array) elgg_extract('options', $params, []), ['utf8' => true]);
+		
+		$route = new Route($path, $defaults, $requirements, $options, '', [], $methods);
 
 		$this->routes->add($name, $route, $priority);
 
@@ -226,7 +209,7 @@ class RouteRegistrationService {
 	 *
 	 * @return array|false
 	 */
-	public function resolveRouteParameters(string $name, \ElggEntity $entity = null, array $parameters = []) {
+	public function resolveRouteParameters(string $name, ?\ElggEntity $entity = null, array $parameters = []) {
 		$route = $this->routes->get($name);
 		if (!$route) {
 			return false;

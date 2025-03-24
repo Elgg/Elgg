@@ -609,13 +609,13 @@ trait Seeding {
 	/**
 	 * Get random access id
 	 *
-	 * @param \ElggUser   $user      User
-	 * @param \ElggEntity $container Container
+	 * @param null|\ElggUser   $user      User
+	 * @param null|\ElggEntity $container Container
 	 *
 	 * @return int
 	 */
-	public function getRandomAccessId(\ElggUser $user = null, \ElggEntity $container = null) {
-		$access_array = elgg_get_write_access_array($user->guid, false, [
+	public function getRandomAccessId(?\ElggUser $user = null, ?\ElggEntity $container = null) {
+		$access_array = elgg_get_write_access_array($user?->guid, false, [
 			'container_guid' => $container?->guid,
 		]);
 
@@ -884,7 +884,6 @@ trait Seeding {
 	 *
 	 * @param string $msg   Message to log
 	 * @param string $level Message level
-	 *                      Note that 'ERROR' will terminate further code execution
 	 *
 	 * @return void
 	 */

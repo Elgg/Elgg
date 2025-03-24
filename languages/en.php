@@ -97,15 +97,25 @@ return array(
 	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
 
 	'PageNotFoundException' => 'The page you are trying to view does not exist or you do not have permissions to view it',
-	'EntityNotFoundException' => 'The content you were trying to access has been removed or you do not have permissions to access it.',
-	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
+	'EntityNotFoundException' => 'The content you were trying to access has been removed or you do not have permissions to access it',
+	'EntityPermissionsException' => 'You do not have sufficient permissions for this action',
 	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
 	'RegistrationAllowedGatekeeperException:invalid_invitecode' => "The provided invite code is not valid",
 	'BadRequestException' => 'Bad request',
 	'BadRequestException:invalid_host_header' => 'The request contains an invalid HOST header',
 	'BadRequestException:livesearch:no_query' => 'Livesearch requires a query',
-	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
+	'ValidationException' => 'Submitted data did not meet the requirements, please check your input',
+	'ValidationException:field:required' => 'Field %s is required, empty data provided',
+	'ValidationException:field:url' => 'Field %s does not meet the URL requirements, please check your input',
 	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
+	'ForbiddenException' => 'You do not have sufficient permissions to view this page',
+	'GoneException' => 'The requested resource is no longer available',
+	'InternalServerErrorException' => 'An unknown error occurred while trying to process your request',
+	'MethodNotAllowedException' => 'The requested method is not allowed for this resource',
+	'NotImplementedException' => 'The requested method is not implemented for this resource',
+	'ServiceUnavailableException' => 'The server could not process your request, please try again later',
+	'TooManyRequestsException' => 'Too many requests, please slow down',
+	'UnauthorizedException' => 'You do not have the valid authentication credentials for the target resource',
 	
 	'Security:InvalidPasswordCharacterRequirementsException' => "The provided password is doesn't meet the character requirements",
 	'Security:InvalidPasswordLengthException' => "The provided password doesn't meet the minimal length requirement of %s characters",
@@ -1720,6 +1730,11 @@ To see the full comment, click on the link below:
 	'entity:delete:success' => '%s has been deleted.',
 	'entity:delete:fail' => '%s could not be deleted.',
 
+	'entity:edit:success' => 'The entity was saved successfully',
+	'entity:edit:group:success' => 'The group was saved successfully',
+	'entity:edit:object:success' => 'The object was saved successfully',
+	'entity:edit:user:success' => 'The user was saved successfully',
+	
 	'entity:restore:item' => 'Item',
 	'entity:restore:item_not_found' => 'Item not found',
 	'entity:restore:container_permission' => 'You do not have permissions to restore this item to %s',
@@ -1743,6 +1758,7 @@ To see the full comment, click on the link below:
 	'entity:unmute' => "Unmute notifications",
 	'entity:unmute:success' => "You've successfully unmuted notifications of %s",
 	'entity:unmute:fail' => "An error occured while unmuting notifications of %s",
+
 
 /**
  * Annotations

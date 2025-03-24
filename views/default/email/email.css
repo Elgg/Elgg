@@ -11,15 +11,15 @@ body{
 	margin:0;
 	padding:0;
 	
-	font-family: $(font-family);
+	font-family: var(--elgg-font-family);
 	
 	/* Break everywhere as a fallback */
 	word-break: break-all;
 	/* Instead use this non-standard one as it is better */
 	word-break: break-word;
 	
-	color: $(text-color-strong);
-	background: $(body-background-color);
+	color: var(--elgg-text-color-strong);
+	background: var(--elgg-body-background-color);
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
@@ -59,7 +59,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: black !important;
 	
 	font-weight: 500;
-	font-family: $(h-font-family, $(font-family));
+	font-family: var(--elgg-h-font-family, var(--elgg-font-family));
 }
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
 h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
@@ -88,13 +88,13 @@ table { border-collapse:collapse; mso-table-lspace:0; mso-table-rspace:0; }
 Your link colors will be uniform across clients when brought inline.
 Bring inline: Yes. */
 a {
-	color: $(anchor-color);
+	color: var(--elgg-anchor-color);
 	text-decoration: none;
 }
 
 a:hover,
 a.selected {
-	color: $(anchor-color-hover);
+	color: var(--elgg-anchor-color-hover);
 	text-decoration: underline;
 }
 
@@ -140,7 +140,7 @@ p {
 	margin: 0 auto;
 }
 .edge-wrapper {
-	background: $(background-color-mild);
+	background: var(--elgg-background-color-mild);
 }
 
 .edge-wrapper > tr > td {

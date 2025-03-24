@@ -13,9 +13,9 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * Create an access collection object
 	 *
-	 * @param stdClass $row Database row
+	 * @param null|\stdClass $row Database row
 	 */
-	public function __construct(stdClass $row = null) {
+	public function __construct(?\stdClass $row = null) {
 		$this->initializeAttributes();
 
 		foreach ((array) $row as $key => $value) {
@@ -151,11 +151,11 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * Check if user can edit this collection
 	 *
-	 * @param int $user_guid GUID of the user
+	 * @param null|int $user_guid GUID of the user
 	 *
 	 * @return bool
 	 */
-	public function canEdit(int $user_guid = null): bool {
+	public function canEdit(?int $user_guid = null): bool {
 		return _elgg_services()->accessCollections->canEdit($this->id, $user_guid);
 	}
 

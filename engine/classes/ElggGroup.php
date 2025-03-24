@@ -105,11 +105,11 @@ class ElggGroup extends \ElggEntity {
 	/**
 	 * Is the given user a member of this group?
 	 *
-	 * @param \ElggUser $user The user. Default is logged in user.
+	 * @param null|\ElggUser $user The user. Default is logged-in user.
 	 *
 	 * @return bool
 	 */
-	public function isMember(\ElggUser $user = null): bool {
+	public function isMember(?\ElggUser $user = null): bool {
 		if ($user === null) {
 			$user = _elgg_services()->session_manager->getLoggedInUser();
 		}
@@ -258,10 +258,11 @@ class ElggGroup extends \ElggEntity {
 	 * Check if current user can access group content based on his/her membership status
 	 * and group's content access policy
 	 *
-	 * @param ElggUser|null $user User
+	 * @param \ElggUser|null $user User
+	 *
 	 * @return bool
 	 */
-	public function canAccessContent(ElggUser $user = null): bool {
+	public function canAccessContent(?\ElggUser $user = null): bool {
 		if (!isset($user)) {
 			$user = _elgg_services()->session_manager->getLoggedInUser();
 		}

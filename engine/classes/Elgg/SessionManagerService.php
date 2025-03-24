@@ -115,16 +115,16 @@ class SessionManagerService {
 	}
 	
 	/**
-	 * Set a user specific token in the session for the currently logged in user
+	 * Set a user specific token in the session for the currently logged-in user
 	 *
-	 * This will invalidate the session on a password change of the logged in user
+	 * This will invalidate the session on a password change of the logged-in user
 	 *
-	 * @param \ElggUser $user the user to set the token for (default: logged in user)
+	 * @param null|\ElggUser $user the user to set the token for (default: logged-in user)
 	 *
 	 * @return void
 	 * @since 3.3.25
 	 */
-	public function setUserToken(\ElggUser $user = null): void {
+	public function setUserToken(?\ElggUser $user = null): void {
 		if (!$user instanceof \ElggUser) {
 			$user = $this->getLoggedInUser();
 		}
@@ -264,15 +264,15 @@ class SessionManagerService {
 	}
 	
 	/**
-	 * Sets the logged in user
+	 * Sets the logged-in user
 	 *
-	 * @param \ElggUser $user    The user who is logged in
+	 * @param \ElggUser $user    The user who is logged-in
 	 * @param bool|null $migrate Migrate the session (default: !\Elgg\Application::isCli())
 	 *
 	 * @return void
 	 * @since 1.9
 	 */
-	public function setLoggedInUser(\ElggUser $user, bool $migrate = null): void {
+	public function setLoggedInUser(\ElggUser $user, ?bool $migrate = null): void {
 		$current_user = $this->getLoggedInUser();
 		if ($current_user != $user) {
 			if (!isset($migrate)) {
@@ -292,7 +292,7 @@ class SessionManagerService {
 	}
 	
 	/**
-	 * Gets the logged in user
+	 * Gets the logged-in user
 	 *
 	 * @return \ElggUser|null
 	 *
@@ -303,7 +303,7 @@ class SessionManagerService {
 	}
 	
 	/**
-	 * Return the current logged in user by guid.
+	 * Return the current logged-in user by guid.
 	 *
 	 * @return int
 	 */
@@ -313,7 +313,7 @@ class SessionManagerService {
 	}
 	
 	/**
-	 * Returns whether or not the viewer is currently logged in and an admin user.
+	 * Returns whether the viewer is currently logged-in and an admin user.
 	 *
 	 * @return bool
 	 */
@@ -324,7 +324,7 @@ class SessionManagerService {
 	}
 	
 	/**
-	 * Returns whether or not the user is currently logged in
+	 * Returns whether the user is currently logged-in
 	 *
 	 * @return bool
 	 */
@@ -333,7 +333,7 @@ class SessionManagerService {
 	}
 	
 	/**
-	 * Remove the logged in user
+	 * Remove the logged-in user
 	 *
 	 * @return void
 	 * @since 1.9

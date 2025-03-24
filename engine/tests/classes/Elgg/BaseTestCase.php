@@ -188,11 +188,11 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 		// performing some additional cleanup as we can't rely on php garbage collection
 		foreach (CacheManager::getInstances() as $instance) {
 			if ($instance instanceof \Phpfastcache\Drivers\Memcached\Driver) {
-				$memcached_software = $this->getInaccessableProperty($instance, 'instance');
+				$memcached_software = self::getInaccessableProperty($instance, 'instance');
 				$memcached_software->flush();
 				$memcached_software->quit();
 			} elseif ($instance instanceof \Phpfastcache\Drivers\Redis\Driver) {
-				$redis_software = $this->getInaccessableProperty($instance, 'instance');
+				$redis_software = self::getInaccessableProperty($instance, 'instance');
 				$redis_software->flushAll();
 				$redis_software->close();
 			}

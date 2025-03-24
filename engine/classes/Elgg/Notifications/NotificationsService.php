@@ -191,13 +191,13 @@ class NotificationsService {
 	/**
 	 * Add a notification event to the queue
 	 *
-	 * @param string      $action Action name
-	 * @param \ElggData   $object The object of the action
-	 * @param \ElggEntity $actor  (optional) The actor of the notification (default: logged in user or owner of $object)
+	 * @param string           $action Action name
+	 * @param \ElggData        $object The object of the action
+	 * @param null|\ElggEntity $actor  (optional) The actor of the notification (default: logged-in user or owner of $object)
 	 *
 	 * @return void
 	 */
-	public function enqueueEvent(string $action, \ElggData $object, \ElggEntity $actor = null): void {
+	public function enqueueEvent(string $action, \ElggData $object, ?\ElggEntity $actor = null): void {
 		$object_type = $object->getType();
 		$object_subtype = $object->getSubtype();
 		$actor = $actor ?? elgg_get_logged_in_user_entity(); // default to logged in user
