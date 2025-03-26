@@ -300,7 +300,7 @@ return array(
  */
 	'link:view' => 'view link',
 	'link:view:all' => 'View all',
-
+	'link:skip_to_main' => 'Skip to main content',
 
 /**
  * River

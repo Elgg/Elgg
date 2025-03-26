@@ -53,6 +53,7 @@
 	z-index: 100;
 }
 
+.elgg-skiplink,
 .elgg-system-messages {
 	z-index: 1000;
 }
