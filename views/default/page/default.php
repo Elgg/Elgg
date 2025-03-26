@@ -18,6 +18,7 @@ $sections = elgg_extract('sections', $vars);
 if (empty($sections)) {
 	// render content before head so that JavaScript and CSS can be loaded. See #4032
 	$sections = [
+		'skiplink' => elgg_view('page/elements/skiplink', $vars),
 		'messages' => elgg_view('page/elements/messages', [
 			'object' => elgg_extract('sysmessages', $vars),
 		]),

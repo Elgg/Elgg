@@ -39,3 +39,22 @@
 	line-height: 1rem;
 	font-weight: bold;
 }
+
+.elgg-skiplink {
+	position: absolute;
+	left: -10000px;
+	top: auto;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	
+	&:focus {
+		position: fixed;
+		
+		width: auto;
+		height: auto;
+		
+		left: 1rem;
+		top: 1rem;
+	}
+}
