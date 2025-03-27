@@ -44,7 +44,6 @@ class Widget {
 			'data-colorbox-opts' => json_encode([
 				'width' => 750,
 				'max-height' => '80%',
-				'trapFocus' => false,
 				'fixed' => true,
 			]),
 			'link_class' => ['elgg-widget-edit-button', 'elgg-lightbox'],

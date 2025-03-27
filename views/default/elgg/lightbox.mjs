@@ -26,7 +26,10 @@ import 'jquery';
 import '../jquery.colorbox.js'; 
 import elgg from 'elgg'; 
 import Ajax from 'elgg/Ajax'; 
-import hooks from 'elgg/hooks'; 
+import hooks from 'elgg/hooks';
+import * as focusTrap from 'focus-trap';
+
+let menuTrap;
 
 var lightbox = {
 
@@ -52,7 +55,46 @@ var lightbox = {
 		
 		var settings = $.extend({}, defaults, opts);
 
-		return hooks.trigger('getOptions', 'ui.lightbox', null, settings);
+		settings = hooks.trigger('getOptions', 'ui.lightbox', null, settings);
+		
+		// always let focusTrap logic handle trapping the focus in a lightbox
+		settings.trapFocus = false;
+		
+		const customOnComplete = settings.onComplete;
+		
+		settings.onComplete = function() {
+			if (typeof customOnComplete === 'function') {
+				customOnComplete();
+			}
+			
+			if ($('#cboxContent .elgg-input-longtext').length > 0) {
+				// editors such as CKEditor currently conflict with focus trapping, so we do not trap focus if
+				// we potentially have a text editor present in the lightbox
+				return;
+			}
+			
+			menuTrap = focusTrap.createFocusTrap('#cboxContent', {
+				returnFocusOnDeactivate: false,
+				clickOutsideDeactivates: false,
+				allowOutsideClick: true,
+				escapeDeactivates: false
+			});
+			menuTrap.activate();
+		};
+		
+		const customOnClosed = settings.onClosed;
+		
+		settings.onClosed = function() {
+			if (typeof customOnClosed === 'function') {
+				customOnClosed();
+			}
+			
+			if (typeof menuTrap !== 'undefined') {
+				menuTrap.deactivate();
+			}
+		};
+		
+		return settings;
 	},
 
 	/**
@@ -78,9 +120,6 @@ var lightbox = {
 		$(document)
 			.off('click.lightbox', selector)
 			.on('click.lightbox', selector, function (e) {
-				// trigger a click event on document to close open menus / dropdowns like the entity menu #11748
-				$(document).click();
-				
 				// remove system messages when opening a lightbox
 				$('.elgg-system-messages .elgg-message').remove();
 				

@@ -3,7 +3,6 @@
  */
 
 import 'jquery';
-import elgg from 'elgg';
 import popup from 'elgg/popup';
 
 var dropdown = {

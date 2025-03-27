@@ -3,7 +3,6 @@
  */
 
 import 'jquery';
-import elgg from 'elgg';
 
 var toggle = {
 	init: function () {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e2cabbfd27922a3c1872e239c94f76e",
+    "content-hash": "f814097a3ef47dd30f6ee6e94d6acd11",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -2473,6 +2473,21 @@
             ]
         },
         {
+            "name": "npm-asset/focus-trap",
+            "version": "7.6.4",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/focus-trap/-/focus-trap-7.6.4.tgz"
+            },
+            "require": {
+                "npm-asset/tabbable": ">=6.2.0,<7.0.0"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
             "name": "npm-asset/jquery",
             "version": "3.7.1",
             "dist": {
@@ -2560,6 +2575,18 @@
             "type": "npm-asset",
             "license": [
                 "BSD-3-Clause"
+            ]
+        },
+        {
+            "name": "npm-asset/tabbable",
+            "version": "6.2.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/tabbable/-/tabbable-6.2.0.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
             ]
         },
         {
@@ -8432,8 +8459,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "elgg/sniffs": 20,
-        "roave/security-advisories": 20
+        "roave/security-advisories": 20,
+        "elgg/sniffs": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
@@ -8445,7 +8472,7 @@
         "ext-pdo": "*",
         "ext-xml": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.1"
     },

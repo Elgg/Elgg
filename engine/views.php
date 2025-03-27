@@ -17,6 +17,10 @@ return [
 		"jquery.ui.touch-punch.js" => "vendor/npm-asset/jquery-ui-touch-punch/jquery.ui.touch-punch.js",
 		"sprintf.js" => "vendor/npm-asset/sprintf-js/src/sprintf.js",
 		
+		// focus trap
+		"focus-trap.mjs" => "vendor/npm-asset/focus-trap/dist/focus-trap.esm.js",
+		"tabbable.mjs" => "vendor/npm-asset/tabbable/dist/index.esm.js",
+		
 		// need to use some folder structure, because FontAwesome includes fonts relative to css
 		"font-awesome/" => "vendor/fortawesome/font-awesome/",
 		
