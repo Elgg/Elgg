@@ -1,6 +1,4 @@
 import 'jquery';
-import elgg from 'elgg';
-import 'elgg/toggle';
 
 /* Autofocuses first text input in a comment form when toggled */
 $(document).on('elgg_ui_toggle', function (e, data) {

@@ -2,43 +2,19 @@ import 'jquery';
 import elgg from 'elgg';
 import hooks from 'elgg/hooks';
 import 'jquery-ui';
+import * as focusTrap from 'focus-trap';
+
+let menuTrap;
 
 var popup = {
+	
 	/**
-	 * Initializes a popup module and binds an event to hide visible popup
-	 * modules on a click event outside of their DOM stack.
-	 *
-	 * This method is called before the popup module is displayed.
+	 * Deprecated function
 	 *
 	 * @return void
+	 * @deprecated Since v6.2 this function is no longer in use
 	 */
-	init: function () {
-		$(document).on('click', function (e) {
-			// close the popup when clicked outside the popup
-			if (e.isDefaultPrevented()) {
-				return;
-			}
-			
-			var $eventTargets = $(e.target).parents().addBack();
-			if ($eventTargets.is('.elgg-state-popped')) {
-				return;
-			}
-			
-			popup.close();
-		});
-		
-		$(document).on('keydown', function (e) {
-			// close the popup when the escape key is pressed
-			if (e.isDefaultPrevented() || e.key !== "Escape") {
-				return;
-			}
-			
-			popup.close();
-		});
-		
-		// Bind events only once
-		popup.init = function() {};
-	},
+	init: function () {},
 	/**
 	 * Shortcut to bind a click event on a set of $triggers.
 	 *
@@ -123,21 +99,12 @@ var popup = {
 			return;
 		}
 
-		popup.init();
-
-		// If the user is clicking on the trigger while the popup is open
-		// we should just close the popup
-		if ($target.is('.elgg-state-popped')) {
-			popup.close($target);
-			return;
-		}
-		
 		popup.close(); // close any open popup modules
 
 		$target.data('trigger', $trigger); // used to remove elgg-state-active class when popup is closed
 		$target.data('position', position); // used to reposition the popup module on window manipulations
 
-		if (!$trigger.is('.elgg-popup-inline')) {
+		if (!$trigger.is('.elgg-popup-inline')) { // @todo remove this class check in Elgg 7.0
 			$target.appendTo('body');
 		}
 		
@@ -148,25 +115,32 @@ var popup = {
 			   .position(position);
 
 		$trigger.addClass('elgg-state-active');
-
+		
 		$target.trigger('open');
 		
-		if ($trigger.is('a')) {
-			$target.on('close', function() {
-				if ($target.find(':focus').length) {
-					$trigger.focus();
-				}
-			});
-		}
+		menuTrap = focusTrap.createFocusTrap(targetSelector, {
+			returnFocusOnDeactivate: false,
+			clickOutsideDeactivates: true,
+			onDeactivate: (e) => {
+				popup.close(undefined,false);
+			}
+		});
+		menuTrap.activate();
 	},
 	/**
 	 * Hides a set of $targets. If not defined, closes all visible popup modules.
 	 *
-	 * @param {jQuery} $targets Popup modules to hide
+	 * @param {jQuery}  $targets           Popup modules to hide
+	 * @param {boolean} deactive_menu_trap should we try to deactivate the menu trap first
 	 *
 	 * @return void
 	 */
-	close: function ($targets) {
+	close: function ($targets, deactive_menu_trap = true) {
+		if (deactive_menu_trap && (typeof menuTrap !== 'undefined')) {
+			menuTrap.deactivate();
+			return;
+		}
+		
 		if (typeof $targets === 'undefined') {
 			$targets = $('.elgg-state-popped');
 		}
@@ -176,18 +150,19 @@ var popup = {
 		}
 		
 		$targets.each(function () {
-			var $target = $(this);
+			const $target = $(this);
 			if (!$target.is(':visible')) {
 				return;
 			}
-
-			var $trigger = $target.data('trigger');
+			
+			const $trigger = $target.data('trigger');
 			if ($trigger.length) {
 				$trigger.removeClass('elgg-state-active');
+				$trigger.trigger('focus');
 			}
-
+			
 			$target.fadeOut().removeClass('elgg-state-active elgg-state-popped');
-
+			
 			$target.trigger('close');
 		});
 	}
