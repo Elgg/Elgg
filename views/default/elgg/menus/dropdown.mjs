@@ -16,17 +16,18 @@ var dropdown = {
 			} else {
 				var $target = $trigger.siblings('.elgg-child-menu').eq(0);
 				$trigger.data('dropdownMenu', $target);
-
 				$target.on('open', function () {
 					$trigger.addClass('elgg-menu-opened')
-							.removeClass('elgg-menu-closed');
+							.removeClass('elgg-menu-closed')
+							.prop('ariaExpanded', true);
 					$trigger.parent().addClass('elgg-state-selected');
 					$target.find('a:first').focus();
 				});
 
 				$target.on('close', function () {
 					$trigger.addClass('elgg-menu-closed')
-							.removeClass('elgg-menu-opened');
+							.removeClass('elgg-menu-opened')
+							.prop('ariaExpanded', false);
 					$trigger.parent().removeClass('elgg-state-selected');
 				});
 			}

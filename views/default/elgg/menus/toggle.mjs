@@ -20,11 +20,13 @@ var toggle = {
 				if ($target.is(':visible')) {
 					$target.css('display', 'flex');
 					$trigger.addClass('elgg-menu-opened')
-							.removeClass('elgg-menu-closed');
+							.removeClass('elgg-menu-closed')
+							.prop('ariaExpanded', true);
 					$trigger.parent().addClass('elgg-state-selected');
 				} else {
 					$trigger.addClass('elgg-menu-closed')
-							.removeClass('elgg-menu-opened');
+							.removeClass('elgg-menu-opened')
+							.prop('ariaExpanded', false);
 					$trigger.parent().removeClass('elgg-state-selected');
 				}
 			});
