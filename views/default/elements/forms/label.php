@@ -30,6 +30,7 @@ if ($required) {
 }
 
 echo elgg_format_element('label', [
+	'id' => "{$id}-field-label",
 	'for' => $id,
 	'class' => 'elgg-field-label',
 ], $label);
