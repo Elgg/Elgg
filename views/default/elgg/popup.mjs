@@ -120,8 +120,12 @@ var popup = {
 		
 		menuTrap = focusTrap.createFocusTrap(targetSelector, {
 			returnFocusOnDeactivate: false,
-			clickOutsideDeactivates: true,
-			onDeactivate: (e) => {
+			clickOutsideDeactivates: function(e) {
+				// prevent deactivation for outside clicks on autocomplete results
+				return $(e.target).parents('.ui-autocomplete').length === 0;
+			},
+			allowOutsideClick: true,
+			onDeactivate: function() {
 				popup.close(undefined,false);
 			}
 		});

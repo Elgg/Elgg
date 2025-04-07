@@ -27,6 +27,7 @@ import '../jquery.colorbox.js';
 import elgg from 'elgg'; 
 import Ajax from 'elgg/Ajax'; 
 import hooks from 'elgg/hooks';
+import popup from 'elgg/popup';
 import * as focusTrap from 'focus-trap';
 
 let menuTrap;
@@ -120,6 +121,9 @@ var lightbox = {
 		$(document)
 			.off('click.lightbox', selector)
 			.on('click.lightbox', selector, function (e) {
+				// close open menus / dropdowns like the entity menu #11748
+				popup.close();
+				
 				// remove system messages when opening a lightbox
 				$('.elgg-system-messages .elgg-message').remove();
 				
