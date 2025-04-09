@@ -14,7 +14,7 @@ var toggle = {
 			var $trigger = $(this);
 			var $target = $trigger.siblings('.elgg-child-menu').eq(0);
 
-			var duration = $target.data('toggleDuration') || 'fast';
+			var duration = $target.data('toggleDuration') || 0;
 
 			$target.slideToggle(duration, function () {
 				if ($target.is(':visible')) {
@@ -29,6 +29,11 @@ var toggle = {
 							.prop('ariaExpanded', false);
 					$trigger.parent().removeClass('elgg-state-selected');
 				}
+				
+				$trigger.parents('ul.elgg-menu[data-position]').each(function() {
+					$(this).position($(this).data().position);
+				});
+				
 			});
 		});
 		
