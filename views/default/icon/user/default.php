@@ -18,7 +18,7 @@
 $user = elgg_extract('entity', $vars, elgg_get_logged_in_user_entity());
 $size = elgg_extract('size', $vars, 'medium');
 
-if (!($user instanceof ElggUser)) {
+if (!$user instanceof \ElggUser) {
 	return;
 }
 
@@ -62,7 +62,7 @@ if ($show_menu) {
 	
 	$wrapper_class[] = 'elgg-avatar-menu';
 	
-	elgg_import_esm('icon/user/default');
+	elgg_import_esm('icon/user/default'); // @todo move this file to navigation/menu/user_hover in Elgg 7.0
 }
 
 if (elgg_extract('use_link', $vars, true)) {
