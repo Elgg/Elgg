@@ -11,6 +11,12 @@ var dropdown = {
 		// handles clicking on a menu item that has a dropdown menu
 		$(document).on('click', '.elgg-menu-item-has-dropdown > a', function (e) {
 			var $trigger = $(this);
+			if ($trigger.attr('data-popup-trigger-closed')) {
+				// popup was closed by clicking on this trigger
+				$trigger.removeAttr('data-popup-trigger-closed');
+				return;
+			}
+			
 			if ($trigger.data('dropdownMenu')) {
 				var $target = $trigger.data('dropdownMenu');
 			} else {
@@ -21,7 +27,6 @@ var dropdown = {
 							.removeClass('elgg-menu-closed')
 							.prop('ariaExpanded', true);
 					$trigger.parent().addClass('elgg-state-selected');
-					$target.find('a:first').focus();
 				});
 
 				$target.on('close', function () {
