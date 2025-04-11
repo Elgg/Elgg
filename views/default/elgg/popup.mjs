@@ -123,6 +123,11 @@ var popup = {
 		
 		menuTrap = focusTrap.createFocusTrap(targetSelector, {
 			returnFocusOnDeactivate: false,
+			initialFocus: function() {
+				if ($target.find(':focus').length || $target.is(':focus')) {
+					return false;
+				}
+			},
 			clickOutsideDeactivates: function(e) {
 				if ($trigger.is($(e.target)) || ($trigger.find($(e.target)).length)) {
 					$trigger.attr('data-popup-trigger-closed', true);
