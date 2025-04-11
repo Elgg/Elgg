@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 10:34+0100\n"
+"POT-Creation-Date: 2025-03-20 11:40+0100\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -294,7 +294,7 @@ msgid ""
 msgstr ""
 "Pour résoudre ce problème, vous pouvez ajouter des règles de réécriture. "
 "Pour rediriger de www.elgg.org vers elgg.org dans Apache, les règles peuvent"
-" ressembler à :"
+" ressembler à :"
 
 #: ../../appendix/faqs/general.rst:71 ../../appendix/faqs/general.rst:71
 msgid "Redirecting from non-www to www could look like this:"
@@ -9891,7 +9891,7 @@ msgid ""
 " the entity byline."
 msgstr ""
 "l'élément de menu ``access`` a été supprimé. L'information sur les accès est"
-" désormais affichée dans la signature (byline) de l'entité."
+" désormais affichée dans la signature \"byline\" de l'entité."
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1012
 msgid "``user_hover`` menu:"
@@ -11345,7 +11345,7 @@ msgid ""
 "keys have been (re)moved or renamed."
 msgstr ""
 "Cela signifie que les gestionnaires d'événements, les gestionnaires de "
-"crochets, les actions, les vues et les clés de langue ont été déplacés, "
+"hooks, les actions, les vues et les clefs de langue ont été déplacés, "
 "retirés ou renommés."
 
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:169
@@ -18470,12 +18470,21 @@ msgid ""
 "file. This was changed and ``ElggFile::delete()`` will now always delete "
 "both the symlink and the target file."
 msgstr ""
+"En raison des changements apportés à ``ElggEntity::delete()`` le "
+"fonctionnement de ``ElggFile::delete()`` a été modifié. Il était possible de"
+" créer un lien symbolique entre un fichier et un emplacement différent (par "
+"d'autres moyens que Elgg) et lors de la suppression du ``ElggFile``, il "
+"était possible de supprimer uniquement le lien symbolique et non le fichier "
+"cible. Cela a été modifié et ``ElggFile::delete()`` supprimera désormais "
+"toujours à la fois le lien symbolique et le fichier cible."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:32
 msgid ""
 "Check the :ref:`database <database-deleted>` documentation or the "
 ":doc:`/guides/restore` documentation for more information."
 msgstr ""
+"Consultez la documentation :ref:`database <database-deleted>` ou la "
+"documentation :doc:`/guides/restore` pour plus d'informations."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:35
 msgid "ES Modules"
@@ -18520,18 +18529,25 @@ msgid ""
 "The event 'config', 'amd' has been removed. The event 'elgg.data', 'site' "
 "has been removed. You can switch to the 'elgg.data', 'page' event."
 msgstr ""
+"L'événement 'config', 'amd' a été supprimé. L'événement 'elgg.data', 'site' "
+"a été supprimé. Vous pouvez passer à l'événement 'elgg.data', 'page'."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:52
 msgid ""
 "With the switch to ECMAScript modules we can no longer add Sub-Resource "
 "Integrity checks to the imported modules."
 msgstr ""
+"Avec le passage aux modules ECMAScript, nous ne pouvons plus ajouter de "
+"contrôles d'intégrité des sous-ressources aux modules importés."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:56
 msgid ""
 "With the switch to ECMAScript modules we temporarily dropped Javascript "
 "testing features. This will be added in the future."
 msgstr ""
+"Avec le passage aux modules ECMAScript, nous avons temporairement abandonné "
+"les fonctionnalités de test JavaScript. Celles-ci seront ajoutées "
+"ultérieurement."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:64
 msgid ""
@@ -18548,6 +18564,8 @@ msgstr "PHPUnit"
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:69
 msgid "Elgg now uses PHPUnit 10.5. You might need to update your tests."
 msgstr ""
+"Elgg utilise désormais PHPUnit 10.5. Vous devrez peut-être mettre à jour vos"
+" tests."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:72
 msgid "Annotations"
@@ -18559,6 +18577,9 @@ msgid ""
 "``annotations`` and ``metadata`` table, the default join alias for the "
 "``annotations`` table has been changed from ``n_table`` to ``a_table``."
 msgstr ""
+"En raison d'un conflit de nom dans l'alias de jointure par défaut entre les "
+"tables ``annotations`` et ``metadata``, l'alias de jointure par défaut pour "
+"la table ``annotations`` a été modifié de ``n_table`` à ``a_table``."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:77
 msgid ""
@@ -18566,10 +18587,14 @@ msgid ""
 "need to update your code. If you use the ``\\Elgg\\Database\\QueryBuilder`` "
 "for your query parts you should be ok."
 msgstr ""
+"Si votre code utilise des clauses très spécifiques (select, where, order_by,"
+" etc.), vous devez le mettre à jour. Si vous utilisez "
+"``\\Elgg\\Database\\QueryBuilder`` pour vos parties de requête, vous ne "
+"devriez rien avoir à faire."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:81
 msgid "Enabled column"
-msgstr "Colonnes activées"
+msgstr "Colonne activée"
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:83
 msgid ""
@@ -18578,6 +18603,10 @@ msgid ""
 "``disable`` API calls on annotations. Other related API functions have been "
 "removed."
 msgstr ""
+"La colonne ``enabled`` pour les annotations a été supprimée. Une annotation "
+"n'est plus activée ni désactivée. Vous ne pouvez plus effectuer les appels "
+"d'API ``enable`` et ``disable`` sur les annotations. D'autres fonctions API "
+"associées ont été supprimées."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:87
 msgid "Entity Icons"
@@ -18594,6 +18623,10 @@ msgid ""
 "``x2``, ``y1`` and ``y2`` no longer exist. Use the new ``\\ElggEntity`` "
 "function ``getIconCoordinates()``."
 msgstr ""
+"Les coordonnées de recadrage de l'icône par défaut (``icon``) sont désormais"
+" stockées de manière uniforme, comme celles des autres types d'icônes. Les "
+"métadonnées ``x1``, ``x2``, ``y1`` et ``y2`` n'existent plus. Utilisez la "
+"nouvelle fonction ``\\ElggEntity`` ``getIconCoordonnées()``."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:96
 msgid "Icontime"
@@ -18605,12 +18638,17 @@ msgid ""
 "unreliable way to check if an icon was uploaded. This was only stored for "
 "the icon type ``icon``."
 msgstr ""
+"Les métadonnées ``icontime`` ont été supprimées de la base de données. Ce "
+"moyen de vérifier si une icône était téléchargée était peu fiable. Ceci "
+"n'était stocké que pour le type d'icône ``icon``."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:101
 msgid ""
 "A reliable way to check if an icon was uploaded is to use the "
 "``\\ElggEntity::hasIcon()`` function."
 msgstr ""
+"Un moyen fiable de vérifier si une icône a été téléchargée est d'utiliser la"
+" fonction ``\\ElggEntity::hasIcon()``."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:104
 msgid "Headings"
@@ -18634,17 +18672,19 @@ msgstr "Les changements les plus importants sont les suivants :"
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:111
 msgid "H1 is always the page title (and no longer the logo / site name)"
-msgstr ""
+msgstr "H1 est toujours le titre de la page (et non plus le logo/nom du site)"
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:112
 msgid "Modules (info, sidebar, widgets) use the H2 heading"
-msgstr ""
+msgstr "Les Modules (info, sidebar, widgets) utilisent le niveau de titre H2"
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:113
 msgid ""
 "H3 headings on entity / relationship / annotation summary titles have been "
 "replaced by a regular text element"
 msgstr ""
+"Les titres H3 des titres de résumé d'entité/relation/annotation ont été "
+"remplacés par un élément de texte normal"
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:116
 msgid "CSS and HTML structure changes"
@@ -18659,6 +18699,13 @@ msgid ""
 "classes on the same element like ``elgg-body`` and ``elgg-layout-body`` have"
 " been removed."
 msgstr ""
+"La structure HTML des pages a été modifiée. Les résumés d'entités et les "
+"pages d'entités en vue complète sont désormais intégrés dans un élément "
+"``article``. Les éléments de la barre latérale utilisent désormais l'élément"
+" HTML ``aside``. Les modules (comme les widgets des info-modules) utilisent "
+"désormais un élément ``section`` au lieu d'un ``div``. Les classes CSS en "
+"double sur le même élément comme ``elgg-body`` et ``elgg-layout-body`` ont "
+"été supprimées."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:122
 msgid ""
@@ -18666,6 +18713,10 @@ msgid ""
 "grid``, ``elgg-col``, ``elgg-row``). These helper classes have been removed."
 " You can do all those things with regular css like ``display: grid``."
 msgstr ""
+"Elgg a fourni quelques classes d'assistance pour créer une disposition en "
+"grille (comme ``elgg-grid``, ``elgg-col``, ``elgg-row``). Ces classes d'aide"
+" ont été supprimées. Vous pouvez faire toutes ces choses avec du CSS "
+"classique comme `` display: grid``."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:125
 msgid ""
@@ -18763,6 +18814,9 @@ msgid ""
 " by their full view name (previously is was possible to omit the first "
 "folder if it was 'css' or 'js')"
 msgstr ""
+"Les noms de vue d'un dossier de vue 'css' ou 'js' doivent désormais toujours"
+" être référencés par leur nom de vue complet (auparavant, il était possible "
+"d'omettre le premier dossier s'il s'agissait de 'css' ou 'js')."
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:162
 msgid "Removed Config values"

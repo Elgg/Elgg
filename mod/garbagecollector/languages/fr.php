@@ -7,6 +7,7 @@
 
 return array(
 	'garbagecollector:period' => 'A quelle fréquence souhaitez-vous faire tourner le ramasse-miettes ?',
+	'garbagecollector:period:optimize' => 'Optimiser les tables de la base de données après l\'exécution du ramasse-miettes',
 
 	'garbagecollector:weekly' => 'Une fois par semaine',
 	'garbagecollector:monthly' => 'Une fois par mois',

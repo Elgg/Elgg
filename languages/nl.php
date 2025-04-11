@@ -300,7 +300,6 @@ return array(
 	'link:view' => 'Bekijk link',
 	'link:view:all' => 'Bekijk alles',
 
-
 /**
  * River
  */

@@ -105,6 +105,8 @@ return array(
 	'BadRequestException:invalid_host_header' => 'La requête contient un entête HOST invalide',
 	'BadRequestException:livesearch:no_query' => 'La recherche instantanée a besoin d\'une requête',
 	'ValidationException' => 'Les données envoyées ne satisfont pas les exigences, veuillez vérifier votre saisie.',
+	'ValidationException:field:required' => 'Le champ %s est requis, aucune valeur fournie',
+	'ValidationException:field:url' => 'Le champ %s ne satisfait pas les exigences d\'une URL, veuillez vérifier votre saisie.',
 	'LogicException:InterfaceNotImplemented' => '%s doit implémenter %s',
 	'ForbiddenException' => 'Vous n\'avez pas les permissions suffisantes pour voir cette page',
 	'GoneException' => 'La ressource demandée n\'est plus disponible',
@@ -144,7 +146,7 @@ return array(
 	'upload:error:no_file' => 'Aucun fichier n\'a été sélectionné.',
 	'upload:error:no_tmp_dir' => 'Impossible d\'enregistrer le fichier téléchargé - pas de répertoire temporaire.',
 	'upload:error:cant_write' => 'Impossible d\'enregistrer le fichier téléchargé - écriture impossible.',
-	'upload:error:extension' => 'Impossible d\'enregistrer le fichier téléchargé (extension).',
+	'upload:error:extension' => 'Impossible d\'enregistrer le fichier téléchargé',
 	'upload:error:unknown' => 'Le chargement du fichier a échoué.',
 
 /**
@@ -153,7 +155,7 @@ return array(
 	'table_columns:fromView:admin' => 'Admin',
 	'table_columns:fromView:banned' => 'Banni',
 	'table_columns:fromView:checkbox' => 'Sélectionner',
-	'table_columns:fromView:container' => 'Conteneur (container)',
+	'table_columns:fromView:container' => 'Conteneur',
 	'table_columns:fromView:entity_menu' => 'Menu',
 	'table_columns:fromView:excerpt' => 'Description',
 	'table_columns:fromView:link' => 'Nom/Titre',
@@ -300,7 +302,6 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
  */
 	'link:view' => 'voir le lien',
 	'link:view:all' => 'Voir tout',
-
 
 /**
  * River
@@ -1982,7 +1983,7 @@ Variables globales :
 	"fr" => "Français",
 	"fy" => "Frison",
 	"ga" => "Irlandais",
-	"gd" => "Écossais",
+	"gd" => "(Écossais) Gaélique",
 	"gl" => "Galicien",
 	"gn" => "Guarani",
 	"gu" => "Gujarâtî",
@@ -1994,7 +1995,7 @@ Variables globales :
 	"hy" => "Arménien",
 	"ia" => "Interlingua",
 	"id" => "Indonésien",
-	"ie" => "Interlingue (ex Occidental)",
+	"ie" => "Interlingue",
 	"ik" => "Inupiaq",
 	"is" => "Islandais",
 	"it" => "Italien",
