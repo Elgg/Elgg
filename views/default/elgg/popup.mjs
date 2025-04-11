@@ -51,7 +51,7 @@ var popup = {
 	 *	source:         The jquery element whose click event initiated a popup.
 	 *
 	 * The return value of the function is used as the options object to .position().
-	 * Handles can also return false to abort the default behvior and override it with their own.
+	 * Handles can also return false to abort the default behavior and override it with their own.
 	 *
 	 * @param {jQuery} $trigger Trigger element
 	 * @param {jQuery} $target  Target popup module
@@ -98,7 +98,10 @@ var popup = {
 		if (!position) {
 			return;
 		}
-
+		
+		// cleanup trigger tracking
+		$('[data-popup-trigger-closed]').removeAttr('data-popup-trigger-closed');
+		
 		popup.close(); // close any open popup modules
 
 		$target.data('trigger', $trigger); // used to remove elgg-state-active class when popup is closed
@@ -121,8 +124,12 @@ var popup = {
 		menuTrap = focusTrap.createFocusTrap(targetSelector, {
 			returnFocusOnDeactivate: false,
 			clickOutsideDeactivates: function(e) {
+				if ($trigger.is($(e.target)) || ($trigger.find($(e.target)).length)) {
+					$trigger.attr('data-popup-trigger-closed', true);
+				}
+				
 				// prevent deactivation for outside clicks on autocomplete results
-				return $(e.target).parents('.ui-autocomplete').length === 0;
+				return $(e.target).parents('.ui-autocomplete, .ui-datepicker').length === 0;
 			},
 			allowOutsideClick: true,
 			onDeactivate: function() {
