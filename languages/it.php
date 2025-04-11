@@ -72,8 +72,6 @@ return array(
 	'LoginException:Unknown' => 'Impossibile accedere a causa di un errore non identificato.',
 
 	'UserFetchFailureException' => 'Impossibile verificare i permessi per user_guid [%s] perchè l\'utente non esiste.',
-	'EntityNotFoundException' => 'Il contenuto, a cui stavi tentando di accedere, è stato rimosso o non disponi delle autorizzazioni per accedervi.',
-	'EntityPermissionsException' => 'Non disponi di autorizzazioni sufficienti per questa azione.',
 	'GatekeeperException' => 'Non disponi delle autorizzazioni per visualizzare la pagina a cui stai tentando di accedere',
 	'BadRequestException' => 'Richiesta non valida',
 
@@ -208,7 +206,6 @@ return array(
  */
 	'link:view' => 'visualizza link',
 	'link:view:all' => 'Visualizza tutto',
-
 
 /**
  * River
@@ -1088,7 +1085,7 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
 	'entity:delete:permission_denied' => 'Permessi insufficienti per visualizzare questo elemento.',
 	'entity:delete:success' => 'L\'elemento %s è stato eliminato',
 	'entity:delete:fail' => 'L\'elemento %s non può essere eliminato',
-
+	
 	'entity:restore:item' => 'Elemento',
 	
 	'entity:subscribe' => "Sottoscrivi",
@@ -1096,6 +1093,7 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
 	'entity:unsubscribe:success' => "Hai annullato con successo l'iscrizione a %s",
 	
 	'entity:mute' => "Silenzia le notifiche",
+
 
 /**
  * Annotations

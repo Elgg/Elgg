@@ -88,12 +88,9 @@ return array(
 	'UserFetchFailureException' => 'No se pueden revisar los permisos para el user_guid [%s] porque el usuario no existe.',
 
 	'PageNotFoundException' => 'La pagina que estas intentando ver no existe o no tienes permisos para verla',
-	'EntityNotFoundException' => 'El contenido al que intentas acceder ha sido eliminado o no tienes permiso para verlo.',
-	'EntityPermissionsException' => 'No tienes permisos suficientes para esta acción.',
 	'GatekeeperException' => 'No tienes permisos para ver la pagina a la que intentas acceder',
 	'RegistrationAllowedGatekeeperException:invalid_invitecode' => "El código de invitación proporcionado no es válido",
 	'BadRequestException' => 'Petición incorrecta',
-	'ValidationException' => 'Los datos enviados no cumplen los requerimientos, por favor comprueba los datos.',
 	'LogicException:InterfaceNotImplemented' => '%s debe de ser implementado %s',
 	
 	'Security:InvalidPasswordCharacterRequirementsException' => "La contraseña proporcionada no cumple los requisitos de caracteres.",
@@ -274,7 +271,6 @@ return array(
  */
 	'link:view' => 'Ver enlace',
 	'link:view:all' => 'Ver todos',
-
 
 /**
  * River
@@ -1315,10 +1311,11 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	'entity:delete:permission_denied' => 'No tiene permisos para borrar este elemento',
 	'entity:delete:success' => '%s se ha borrado.',
 	'entity:delete:fail' => '%s no se ha podido borrar.',
-
+	
 	'entity:restore:item' => 'Elemento',
 	
 	'entity:mute' => "Silenciar notificaciones",
+
 
 /**
  * Annotations

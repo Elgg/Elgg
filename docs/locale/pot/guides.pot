@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-20 11:40+0100\n"
+"POT-Creation-Date: 2025-04-11 11:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,6 @@ msgid "An Access Control List (or ACL) can grant one or more users access to an 
 msgstr ""
 
 #: ../../guides/access.rst:8
-#: ../../guides/actions.rst:16
 #: ../../guides/ajax.rst:8
 #: ../../guides/capabilities.rst:6
 #: ../../guides/database.rst:8
@@ -264,591 +263,680 @@ msgid "Forms + Actions"
 msgstr ""
 
 #: ../../guides/actions.rst:4
-msgid "Create, update, or delete content."
+msgid "Actions are the primary way users interact with an Elgg site. Elgg forms submit to actions. Actions define the behavior for form submission."
 msgstr ""
 
-#: ../../guides/actions.rst:6
-msgid "Elgg forms submit to actions. Actions define the behavior for form submission."
-msgstr ""
-
-#: ../../guides/actions.rst:8
-msgid "This guide assumes basic familiarity with:"
-msgstr ""
-
-#: ../../guides/actions.rst:10
-#: ../../guides/themes.rst:9
-msgid ":doc:`/admin/plugins`"
-msgstr ""
-
-#: ../../guides/actions.rst:11
-#: ../../guides/themes.rst:10
-msgid ":doc:`views`"
-msgstr ""
-
-#: ../../guides/actions.rst:12
-msgid ":doc:`i18n`"
-msgstr ""
-
-#: ../../guides/actions.rst:19
-msgid "Registering actions"
-msgstr ""
-
-#: ../../guides/actions.rst:21
-msgid "Actions must be registered before use."
-msgstr ""
-
-#: ../../guides/actions.rst:23
-msgid "There are two ways to register actions:"
-msgstr ""
-
-#: ../../guides/actions.rst:25
-msgid "Using ``elgg_register_action()``"
-msgstr ""
-
-#: ../../guides/actions.rst:31
-msgid "The ``mod/example/actions/example.php`` script will now be run whenever a form is submitted to ``http://localhost/elgg/action/example``."
-msgstr ""
-
-#: ../../guides/actions.rst:33
-msgid "Use ``elgg-plugin.php``"
-msgstr ""
-
-#: ../../guides/actions.rst:59
-msgid "A stumbling point for many new developers is the URL for actions. The URL always uses ``/action/`` (singular) and never ``/actions/`` (plural). However, action script files are usually saved under the directory ``/actions/`` (plural) and always have an extension. Use ``elgg_generate_action_url()`` to avoid confusion."
-msgstr ""
-
-#: ../../guides/actions.rst:64
-msgid "Registering actions using plugin config file"
-msgstr ""
-
-#: ../../guides/actions.rst:65
-msgid "You can also register actions via the :doc:`elgg-plugin</guides/plugins>` config file. To do this you need to provide an action section in the config file. The location of the action files are assumed to be in the plugin folder  ``/actions``."
-msgstr ""
-
-#: ../../guides/actions.rst:84
-msgid "Permissions"
-msgstr ""
-
-#: ../../guides/actions.rst:85
-msgid "By default, actions are only available to logged in users."
-msgstr ""
-
-#: ../../guides/actions.rst:87
-msgid "To make an action available to logged out users, pass ``\"public\"`` as the third parameter:"
-msgstr ""
-
-#: ../../guides/actions.rst:93
-msgid "To restrict an action to only administrators, pass ``\"admin\"`` for the last parameter:"
-msgstr ""
-
-#: ../../guides/actions.rst:99
-msgid "To restrict an action to only logged out users, pass ``\"logged_out\"`` for the last parameter:"
-msgstr ""
-
-#: ../../guides/actions.rst:106
-msgid "Writing action files"
-msgstr ""
-
-#: ../../guides/actions.rst:108
-msgid "Use the ``get_input()`` function to get access to request parameters:"
-msgstr ""
-
-#: ../../guides/actions.rst:114
-msgid "You can then use the :doc:`database` api to load entities and perform actions on them accordingly."
-msgstr ""
-
-#: ../../guides/actions.rst:116
-msgid "To indicate a successful action, use ``elgg_ok_response()``. This function accepts data that you want to make available to the client for XHR calls (this data will be ignored for non-XHR calls)"
-msgstr ""
-
-#: ../../guides/actions.rst:138
-msgid "To indicate an error, use ``elgg_error_response()``"
-msgstr ""
-
-#: ../../guides/actions.rst:156
-msgid "Customizing actions"
-msgstr ""
-
-#: ../../guides/actions.rst:158
-msgid "Before executing any action, Elgg triggers an event:"
-msgstr ""
-
-#: ../../guides/actions.rst:164
-msgid "Where ``$action`` is the action being called. If the event returns ``false`` then the action will not be executed. Don't return anything if your validation passes."
-msgstr ""
-
-#: ../../guides/actions.rst:168
-msgid "Example: Captcha"
-msgstr ""
-
-#: ../../guides/actions.rst:170
-msgid "The captcha module uses this to intercept the ``register`` and ``user/requestnewpassword`` actions and redirect them to a function which checks the captcha code. This check returns ``false`` if the captcha validation fails (which prevents the associated action from executing)."
-msgstr ""
-
-#: ../../guides/actions.rst:174
-msgid "This is done as follows:"
-msgstr ""
-
-#: ../../guides/actions.rst:196
-msgid "This lets a plugin extend an existing action without the need to replace the whole action. In the case of the captcha plugin it allows the plugin to provide captcha support in a very loosely coupled way."
-msgstr ""
-
-#: ../../guides/actions.rst:200
-msgid "Actions available in core"
-msgstr ""
-
-#: ../../guides/actions.rst:203
-msgid "``entity/delete``"
-msgstr ""
-
-#: ../../guides/actions.rst:205
-msgid "If your plugin does not implement any custom logic when deleting an entity, you can use bundled delete action"
-msgstr ""
-
-#: ../../guides/actions.rst:221
-msgid "You can customize the success message keys for your entity type and subtype, using ``\"entity:delete:$type:$subtype:success\"`` and ``\"entity:delete:$type:success\"`` keys."
-msgstr ""
-
-#: ../../guides/actions.rst:234
-msgid "Forms"
-msgstr ""
-
-#: ../../guides/actions.rst:236
-msgid "To output a form, use the elgg_view_form function like so:"
-msgstr ""
-
-#: ../../guides/actions.rst:242
-msgid "Doing this generates something like the following markup:"
-msgstr ""
-
-#: ../../guides/actions.rst:253
-msgid "Elgg does some things automatically for you when you generate forms this way:"
-msgstr ""
-
-#: ../../guides/actions.rst:255
-msgid "It sets the action to the appropriate URL based on the name of the action you pass to it"
-msgstr ""
-
-#: ../../guides/actions.rst:256
-msgid "It adds some anti-csrf tokens (``__elgg_ts`` and ``__elgg_token``) to help keep your actions secure"
-msgstr ""
-
-#: ../../guides/actions.rst:257
-msgid "It automatically looks for the body of the form in the ``forms/example`` view."
-msgstr ""
-
-#: ../../guides/actions.rst:259
-msgid "Put the content of your form in your plugin’s ``forms/example`` view:"
-msgstr ""
-
-#: ../../guides/actions.rst:270
-msgid "Now when you call ``elgg_view_form('example')``, Elgg will produce:"
-msgstr ""
-
-#: ../../guides/actions.rst:287
-msgid "Inputs"
-msgstr ""
-
-#: ../../guides/actions.rst:289
-msgid "To render a form input, use one of the bundled input views, which cover all standard HTML input elements. See individual view files for a list of accepted parameters."
-msgstr ""
-
-#: ../../guides/actions.rst:306
-msgid "The above example will render a dropdown select input:"
-msgstr ""
-
-#: ../../guides/actions.rst:315
-msgid "To ensure consistency in field markup, use ``elgg_view_field()``, which accepts all the parameters of the input being rendered, as well as ``#label`` and ``#help`` parameters (both of which are optional and accept HTML or text)."
-msgstr ""
-
-#: ../../guides/actions.rst:334
-msgid "The above will generate the following markup:"
-msgstr ""
-
-#: ../../guides/actions.rst:352
-msgid "Input types"
-msgstr ""
-
-#: ../../guides/actions.rst:354
-msgid "A list of bundled input types/views:"
-msgstr ""
-
-#: ../../guides/actions.rst:356
-msgid "``input/text`` - renders a text input ``<input type=\"text\">``"
-msgstr ""
-
-#: ../../guides/actions.rst:357
-msgid "``input/plaintext`` - renders a textarea ``<textarea></textarea>``"
-msgstr ""
-
-#: ../../guides/actions.rst:358
-msgid "``input/longtext`` - renders a WYSIWYG text input"
-msgstr ""
-
-#: ../../guides/actions.rst:359
-msgid "``input/url`` - renders a url input ``<input type=\"url\">``"
-msgstr ""
-
-#: ../../guides/actions.rst:360
-msgid "``input/email`` - renders an email input ``<input type=\"email\">``"
-msgstr ""
-
-#: ../../guides/actions.rst:361
-msgid "``input/checkbox`` - renders a single checkbox ``<input type=\"checkbox\">``"
-msgstr ""
-
-#: ../../guides/actions.rst:362
-msgid "``input/checkboxes`` - renders a set of checkboxes with the same name"
-msgstr ""
-
-#: ../../guides/actions.rst:363
-msgid "``input/radio`` - renders one or more radio buttons ``<input type=\"radio\">``"
-msgstr ""
-
-#: ../../guides/actions.rst:364
-msgid "``input/submit`` - renders a submit button ``<button type=\"submit\">``"
-msgstr ""
-
-#: ../../guides/actions.rst:365
-msgid "``input/button`` - renders a button ``<button></button>``"
-msgstr ""
-
-#: ../../guides/actions.rst:366
-msgid "``input/file`` - renders a file input ``<input type=\"file\">``"
-msgstr ""
-
-#: ../../guides/actions.rst:367
-msgid "``input/select`` - renders a select input ``<select></select>``"
-msgstr ""
-
-#: ../../guides/actions.rst:368
-msgid "``input/hidden`` - renders a hidden input ``<input type=\"hidden\">``"
-msgstr ""
-
-#: ../../guides/actions.rst:369
-msgid "``input/password`` - renders a password input ``<input type=\"password\">``"
-msgstr ""
-
-#: ../../guides/actions.rst:370
-msgid "``input/number`` - renders a number input ``<input type=\"number\">``"
-msgstr ""
-
-#: ../../guides/actions.rst:371
-msgid "``input/date`` - renders a jQuery datepicker"
-msgstr ""
-
-#: ../../guides/actions.rst:373
-msgid "Elgg offers some helper input types"
-msgstr ""
-
-#: ../../guides/actions.rst:375
-msgid "``input/access`` - renders an Elgg access level select"
-msgstr ""
-
-#: ../../guides/actions.rst:376
-msgid "``input/tags`` - renders an Elgg tags input"
-msgstr ""
-
-#: ../../guides/actions.rst:377
-msgid "``input/autocomplete`` - renders an Elgg entity autocomplete"
-msgstr ""
-
-#: ../../guides/actions.rst:378
-msgid "``input/captcha`` - placeholder view for plugins to extend"
-msgstr ""
-
-#: ../../guides/actions.rst:379
-msgid "``input/friendspicker`` - renders an Elgg friend autocomplete"
-msgstr ""
-
-#: ../../guides/actions.rst:380
-msgid "``input/userpicker`` - renders an Elgg user autocomplete"
-msgstr ""
-
-#: ../../guides/actions.rst:381
-msgid "``input/grouppicker`` - renders an Elgg group autocomplete"
-msgstr ""
-
-#: ../../guides/actions.rst:382
-msgid "``input/objectpicker`` - renders an Elgg object autocomplete"
-msgstr ""
-
-#: ../../guides/actions.rst:383
-msgid "``input/location`` renders an Elgg location input"
-msgstr ""
-
-#: ../../guides/actions.rst:386
-msgid "Files and images"
-msgstr ""
-
-#: ../../guides/actions.rst:388
-msgid "Use the ``input/file`` view in your form’s content view."
-msgstr ""
-
-#: ../../guides/actions.rst:395
-msgid "If you wish to upload an icon for entity you can use the helper view ``entity/edit/icon``. This view shows a file input for uploading a new icon for the entity, an thumbnail of the current icon and the option to remove the current icon."
-msgstr ""
-
-#: ../../guides/actions.rst:399
-msgid "The view supports some variables to control the output"
-msgstr ""
-
-#: ../../guides/actions.rst:401
-msgid "``entity`` - the entity to add/remove the icon for. If provided based on this entity the thumbnail and remove option wil be shown"
-msgstr ""
-
-#: ../../guides/actions.rst:402
-msgid "``entity_type`` - the entity type for which the icon will be uploaded. Plugins could find this useful, maybe to validate icon sizes"
-msgstr ""
-
-#: ../../guides/actions.rst:403
-msgid "``entity_subtype`` - the entity subtype for which the icon will be uploaded. Plugins could find this useful, maybe to validate icon sizes"
-msgstr ""
-
-#: ../../guides/actions.rst:404
-msgid "``icon_type`` - the type of the icon (default: icon)"
-msgstr ""
-
-#: ../../guides/actions.rst:405
-msgid "``name`` - name of the input/file (default: icon)"
-msgstr ""
-
-#: ../../guides/actions.rst:406
-msgid "``remove_name`` - name of the remove icon toggle (default: $vars['name'] . '_remove')"
-msgstr ""
-
-#: ../../guides/actions.rst:407
-msgid "``required`` - is icon upload required (default: false)"
-msgstr ""
-
-#: ../../guides/actions.rst:408
-msgid "``cropper_enabled`` - is icon cropping allowed (default: true)"
-msgstr ""
-
-#: ../../guides/actions.rst:409
-msgid "``show_remove`` - show the remove icon option (default: true)"
-msgstr ""
-
-#: ../../guides/actions.rst:410
-msgid "``show_thumb`` - show the thumb of the entity if available (default: true)"
-msgstr ""
-
-#: ../../guides/actions.rst:411
-msgid "``thumb_size`` - the icon size to use as the thumb (default: medium)"
-msgstr ""
-
-#: ../../guides/actions.rst:413
-msgid "If using the helper view you can use the following code in you action to save the icon to the entity or remove the current icon."
-msgstr ""
-
-#: ../../guides/actions.rst:423
-msgid "Set the enctype of the form to ``multipart/form-data``:"
-msgstr ""
-
-#: ../../guides/actions.rst:433
-msgid "The ``enctype`` of all forms that use the method ``POST`` defaults to ``multipart/form-data``."
-msgstr ""
-
-#: ../../guides/actions.rst:435
-msgid "In your action file, use ``elgg_get_uploaded_file('your-input-name')`` to access the uploaded file:"
-msgstr ""
-
-#: ../../guides/actions.rst:442
-msgid "Sticky forms"
-msgstr ""
-
-#: ../../guides/actions.rst:444
-msgid "Sticky forms are forms that retain user input if saving fails. They are \"sticky\" because the user's data \"sticks\" in the form after submitting, though it was never saved to the database. This greatly improves the user experience by minimizing data loss. Elgg includes helper functions so you can make any form sticky."
-msgstr ""
-
-#: ../../guides/actions.rst:449
-#: ../../guides/helpers.rst:2
-msgid "Helper functions"
-msgstr ""
-
-#: ../../guides/actions.rst:451
-msgid "Sticky forms are implemented in Elgg by the following functions:"
-msgstr ""
-
-#: ../../guides/actions.rst:453
-msgid "``elgg_make_sticky_form($name)`` - Tells the engine to make all input on a form sticky."
-msgstr ""
-
-#: ../../guides/actions.rst:454
-msgid "``elgg_clear_sticky_form($name)`` - Tells the engine to discard all sticky input on a form."
-msgstr ""
-
-#: ../../guides/actions.rst:455
-msgid "``elgg_is_sticky_form($name)`` - Checks if ``$name`` is a valid sticky form."
-msgstr ""
-
-#: ../../guides/actions.rst:456
-msgid "``elgg_get_sticky_values($name)`` - Returns all sticky values saved for ``$name`` by ``elgg_make_sticky_form($name)``."
-msgstr ""
-
-#: ../../guides/actions.rst:459
+#: ../../guides/actions.rst:7
+#: ../../guides/actions.rst:563
 #: ../../guides/ajax.rst:11
 #: ../../guides/i18n.rst:15
 #: ../../guides/plugins/dependencies.rst:11
 msgid "Overview"
 msgstr ""
 
+#: ../../guides/actions.rst:9
+msgid "An action in Elgg is the code that runs to make changes to the database when a user does something. For example, logging in, posting a comment, and making a blog post are actions. The action script processes input, makes the appropriate modifications to the database, and provides feedback to the user about the action."
+msgstr ""
+
+#: ../../guides/actions.rst:12
+msgid "Action Handler"
+msgstr ""
+
+#: ../../guides/actions.rst:14
+msgid "Actions are registered during the boot process by calling ``elgg_register_action()``. All actions URLs start with ``action/`` and are served by Elgg's front end controller through the routing service. The default action middleware performs :doc:`CSRF security checks </design/security>`."
+msgstr ""
+
+#: ../../guides/actions.rst:16
+msgid "This guide assumes basic familiarity with:"
+msgstr ""
+
+#: ../../guides/actions.rst:18
+#: ../../guides/themes.rst:9
+msgid ":doc:`/admin/plugins`"
+msgstr ""
+
+#: ../../guides/actions.rst:19
+#: ../../guides/themes.rst:10
+msgid ":doc:`views`"
+msgstr ""
+
+#: ../../guides/actions.rst:20
+msgid ":doc:`i18n`"
+msgstr ""
+
+#: ../../guides/actions.rst:27
+msgid "Registering actions"
+msgstr ""
+
+#: ../../guides/actions.rst:29
+msgid "Actions must be registered before use."
+msgstr ""
+
+#: ../../guides/actions.rst:31
+msgid "There are two ways to register actions:"
+msgstr ""
+
+#: ../../guides/actions.rst:33
+msgid "Using ``elgg_register_action()``"
+msgstr ""
+
+#: ../../guides/actions.rst:39
+msgid "The ``mod/example/actions/example.php`` script will now be run whenever a form is submitted to ``http://localhost/elgg/action/example``."
+msgstr ""
+
+#: ../../guides/actions.rst:41
+msgid "Use ``elgg-plugin.php``"
+msgstr ""
+
+#: ../../guides/actions.rst:67
+msgid "A stumbling point for many new developers is the URL for actions. The URL always uses ``/action/`` (singular) and never ``/actions/`` (plural). However, action script files are usually saved under the directory ``/actions/`` (plural) and always have an extension. Use ``elgg_generate_action_url()`` to avoid confusion."
+msgstr ""
+
+#: ../../guides/actions.rst:72
+msgid "Registering actions using plugin config file"
+msgstr ""
+
+#: ../../guides/actions.rst:73
+msgid "You can also register actions via the :doc:`elgg-plugin</guides/plugins>` config file. To do this you need to provide an action section in the config file. The location of the action files are assumed to be in the plugin folder  ``/actions``."
+msgstr ""
+
+#: ../../guides/actions.rst:92
+msgid "Permissions"
+msgstr ""
+
+#: ../../guides/actions.rst:93
+msgid "By default, actions are only available to logged in users."
+msgstr ""
+
+#: ../../guides/actions.rst:95
+msgid "To make an action available to logged out users, pass ``\"public\"`` as the third parameter:"
+msgstr ""
+
+#: ../../guides/actions.rst:101
+msgid "To restrict an action to only administrators, pass ``\"admin\"`` for the last parameter:"
+msgstr ""
+
+#: ../../guides/actions.rst:107
+msgid "To restrict an action to only logged out users, pass ``\"logged_out\"`` for the last parameter:"
+msgstr ""
+
+#: ../../guides/actions.rst:114
+msgid "Writing action files"
+msgstr ""
+
+#: ../../guides/actions.rst:116
+msgid "Use the ``get_input()`` function to get access to request parameters:"
+msgstr ""
+
+#: ../../guides/actions.rst:122
+msgid "You can then use the :doc:`database` api to load entities and perform actions on them accordingly."
+msgstr ""
+
+#: ../../guides/actions.rst:124
+msgid "To indicate a successful action, use ``elgg_ok_response()``. This function accepts data that you want to make available to the client for XHR calls (this data will be ignored for non-XHR calls)"
+msgstr ""
+
+#: ../../guides/actions.rst:146
+msgid "To indicate an error, use ``elgg_error_response()``"
+msgstr ""
+
+#: ../../guides/actions.rst:164
+msgid "Writing action controllers"
+msgstr ""
+
+#: ../../guides/actions.rst:166
+msgid "As an alternative to action files it is also possible to write the action code in a controller class."
+msgstr ""
+
+#: ../../guides/actions.rst:168
+msgid "You can extend a generic action class called ``\\Elgg\\Controllers\\GenericAction`` to have it invoked with a set of functions in the following order:"
+msgstr ""
+
+#: ../../guides/actions.rst:170
+msgid "``sanitize()`` - sanitize your input"
+msgstr ""
+
+#: ../../guides/actions.rst:171
+msgid "``validate()`` - validate the input or check permissions"
+msgstr ""
+
+#: ../../guides/actions.rst:172
+msgid "``executeBefore()`` - a preparation before the main execution"
+msgstr ""
+
+#: ../../guides/actions.rst:173
+msgid "``execute()`` - the main execution of the action"
+msgstr ""
+
+#: ../../guides/actions.rst:174
+msgid "``executeAfter()`` - executed after the main execution"
+msgstr ""
+
+#: ../../guides/actions.rst:175
+msgid "``success()`` - if nothing went wrong handle a successful response"
+msgstr ""
+
+#: ../../guides/actions.rst:176
+msgid "``error()`` - if one of the previous steps throws an exception they will be handled by the error step by showing the error as a system message and forwarding back to the ``REFERER``"
+msgstr ""
+
+#: ../../guides/actions.rst:178
+msgid "For entity save/edit actions there is an additional helper controller ``\\Elgg\\Controllers\\EntityEditAction``. This controller will do most generic checks based on the fields configuration of an entity. It will also create a river item on create of the new entity. When using/extending this controller make sure to configure the entity type/subtype when registering the action."
+msgstr ""
+
+#: ../../guides/actions.rst:199
+msgid "Customizing actions"
+msgstr ""
+
+#: ../../guides/actions.rst:201
+msgid "Before executing any action, Elgg triggers an event:"
+msgstr ""
+
+#: ../../guides/actions.rst:207
+msgid "Where ``$action`` is the action being called. If the event returns ``false`` then the action will not be executed. Don't return anything if your validation passes."
+msgstr ""
+
+#: ../../guides/actions.rst:211
+msgid "Example: Captcha"
+msgstr ""
+
+#: ../../guides/actions.rst:213
+msgid "The captcha module uses this to intercept the ``register`` and ``user/requestnewpassword`` actions and redirect them to a function which checks the captcha code. This check returns ``false`` if the captcha validation fails (which prevents the associated action from executing)."
+msgstr ""
+
+#: ../../guides/actions.rst:217
+msgid "This is done as follows:"
+msgstr ""
+
+#: ../../guides/actions.rst:239
+msgid "This lets a plugin extend an existing action without the need to replace the whole action. In the case of the captcha plugin it allows the plugin to provide captcha support in a very loosely coupled way."
+msgstr ""
+
+#: ../../guides/actions.rst:243
+msgid "Actions available in core"
+msgstr ""
+
+#: ../../guides/actions.rst:246
+msgid "``entity/delete``"
+msgstr ""
+
+#: ../../guides/actions.rst:248
+msgid "If your plugin does not implement any custom logic when deleting an entity, you can use bundled delete action"
+msgstr ""
+
+#: ../../guides/actions.rst:264
+msgid "You can customize the success message keys for your entity type and subtype, using ``\"entity:delete:$type:$subtype:success\"`` and ``\"entity:delete:$type:success\"`` keys."
+msgstr ""
+
+#: ../../guides/actions.rst:277
+msgid "Fields"
+msgstr ""
+
+#: ../../guides/actions.rst:279
+msgid "Forms and actions for storing (save/edit) entities use various fields to provide input to users, but also to validate the input. Forms and actions need to keep these field configurations in line. To help with this a generic ``FieldsService``` is available to access the configured fields for a certain entity type/subtype."
+msgstr ""
+
+#: ../../guides/actions.rst:283
+msgid "These fields can be requested using one of the following functions:"
+msgstr ""
+
+#: ../../guides/actions.rst:285
+msgid "``$entity->getFields()`` - retrieves the field configuration for a entity"
+msgstr ""
+
+#: ../../guides/actions.rst:286
+msgid "``elgg()->fields->get('entity_type', 'entity_subtype')`` - retrieves the field configuration for a given type/subtype"
+msgstr ""
+
+#: ../../guides/actions.rst:288
+msgid "They will both return an array of field configurations directly usable for passing to ``elgg_view_field($field_config)``."
+msgstr ""
+
+#: ../../guides/actions.rst:290
+msgid "Developers can configure a default set of fields for their own entities in the related entity class or provide them via an event."
+msgstr ""
+
+#: ../../guides/actions.rst:292
+msgid "Configure the default fields in your entity class."
+msgstr ""
+
+#: ../../guides/actions.rst:313
+msgid "You can also configure your fields in an event callback or use the callback to extend other field configurations."
+msgstr ""
+
+#: ../../guides/actions.rst:338
+msgid "Forms"
+msgstr ""
+
+#: ../../guides/actions.rst:340
+msgid "To output a form, use the elgg_view_form function like so:"
+msgstr ""
+
+#: ../../guides/actions.rst:346
+msgid "Doing this generates something like the following markup:"
+msgstr ""
+
+#: ../../guides/actions.rst:357
+msgid "Elgg does some things automatically for you when you generate forms this way:"
+msgstr ""
+
+#: ../../guides/actions.rst:359
+msgid "It sets the action to the appropriate URL based on the name of the action you pass to it"
+msgstr ""
+
+#: ../../guides/actions.rst:360
+msgid "It adds some anti-csrf tokens (``__elgg_ts`` and ``__elgg_token``) to help keep your actions secure"
+msgstr ""
+
+#: ../../guides/actions.rst:361
+msgid "It automatically looks for the body of the form in the ``forms/example`` view."
+msgstr ""
+
+#: ../../guides/actions.rst:363
+msgid "Put the content of your form in your plugin’s ``forms/example`` view:"
+msgstr ""
+
+#: ../../guides/actions.rst:374
+msgid "Now when you call ``elgg_view_form('example')``, Elgg will produce:"
+msgstr ""
+
+#: ../../guides/actions.rst:391
+msgid "Inputs"
+msgstr ""
+
+#: ../../guides/actions.rst:393
+msgid "To render a form input, use one of the bundled input views, which cover all standard HTML input elements. See individual view files for a list of accepted parameters."
+msgstr ""
+
+#: ../../guides/actions.rst:410
+msgid "The above example will render a dropdown select input:"
+msgstr ""
+
+#: ../../guides/actions.rst:419
+msgid "To ensure consistency in field markup, use ``elgg_view_field()``, which accepts all the parameters of the input being rendered, as well as ``#label`` and ``#help`` parameters (both of which are optional and accept HTML or text)."
+msgstr ""
+
+#: ../../guides/actions.rst:438
+msgid "The above will generate the following markup:"
+msgstr ""
+
+#: ../../guides/actions.rst:456
+msgid "Input types"
+msgstr ""
+
+#: ../../guides/actions.rst:458
+msgid "A list of bundled input types/views:"
+msgstr ""
+
+#: ../../guides/actions.rst:460
+msgid "``input/text`` - renders a text input ``<input type=\"text\">``"
+msgstr ""
+
 #: ../../guides/actions.rst:461
-msgid "The basic flow of using sticky forms is:"
+msgid "``input/plaintext`` - renders a textarea ``<textarea></textarea>``"
+msgstr ""
+
+#: ../../guides/actions.rst:462
+msgid "``input/longtext`` - renders a WYSIWYG text input"
 msgstr ""
 
 #: ../../guides/actions.rst:463
-msgid "Call ``elgg_make_sticky_form($name)`` at the top of actions for forms you want to be sticky."
+msgid "``input/url`` - renders a url input ``<input type=\"url\">``"
 msgstr ""
 
 #: ../../guides/actions.rst:464
-msgid "Use ``elgg_is_sticky_form($name)`` and ``elgg_get_sticky_values($name)`` to get sticky values when rendering a form view."
+msgid "``input/email`` - renders an email input ``<input type=\"email\">``"
 msgstr ""
 
 #: ../../guides/actions.rst:465
-msgid "Call ``elgg_clear_sticky_form($name)`` after the action has completed successfully or after data has been loaded by ``elgg_get_sticky_values($name)``."
+msgid "``input/checkbox`` - renders a single checkbox ``<input type=\"checkbox\">``"
+msgstr ""
+
+#: ../../guides/actions.rst:466
+msgid "``input/checkboxes`` - renders a set of checkboxes with the same name"
+msgstr ""
+
+#: ../../guides/actions.rst:467
+msgid "``input/radio`` - renders one or more radio buttons ``<input type=\"radio\">``"
+msgstr ""
+
+#: ../../guides/actions.rst:468
+msgid "``input/submit`` - renders a submit button ``<button type=\"submit\">``"
 msgstr ""
 
 #: ../../guides/actions.rst:469
-msgid "As of Elgg 5.0 forms rendered with ``elgg_view_form()`` can set the ``$form_vars['sticky_enabled'] = true`` flag to automatically get sticky form support. The submitted values to the action will automatically be filled in the ``$body_vars`` when an error occured in the action."
+msgid "``input/button`` - renders a button ``<button></button>``"
+msgstr ""
+
+#: ../../guides/actions.rst:470
+msgid "``input/file`` - renders a file input ``<input type=\"file\">``"
+msgstr ""
+
+#: ../../guides/actions.rst:471
+msgid "``input/select`` - renders a select input ``<select></select>``"
 msgstr ""
 
 #: ../../guides/actions.rst:472
-msgid "``elgg_view_form()`` supports the following ``$form_vars`` to help with sticky form support:"
+msgid "``input/hidden`` - renders a hidden input ``<input type=\"hidden\">``"
+msgstr ""
+
+#: ../../guides/actions.rst:473
+msgid "``input/password`` - renders a password input ``<input type=\"password\">``"
 msgstr ""
 
 #: ../../guides/actions.rst:474
-msgid "``sticky_enabled``: a ``bool`` to enable automatic sticky form support"
+msgid "``input/number`` - renders a number input ``<input type=\"number\">``"
 msgstr ""
 
 #: ../../guides/actions.rst:475
-msgid "``sticky_form_name``: an optional ``string`` to set where the sticky form values are saved. This defaults to the ``$action_name`` and should only be changed if the ``$action_name`` is different from the actual action"
+msgid "``input/date`` - renders a jQuery datepicker"
 msgstr ""
 
-#: ../../guides/actions.rst:476
-msgid "``sticky_ignored_fields``: an ``array`` with the names fo the form fields that should be saved. For example password fields"
+#: ../../guides/actions.rst:477
+msgid "Elgg offers some helper input types"
 msgstr ""
 
 #: ../../guides/actions.rst:479
-msgid "Example: User registration"
+msgid "``input/access`` - renders an Elgg access level select"
+msgstr ""
+
+#: ../../guides/actions.rst:480
+msgid "``input/tags`` - renders an Elgg tags input"
 msgstr ""
 
 #: ../../guides/actions.rst:481
-msgid "Simple sticky forms require little logic to determine the input values for the form. This logic is placed at the top of the form body view itself."
+msgid "``input/autocomplete`` - renders an Elgg entity autocomplete"
+msgstr ""
+
+#: ../../guides/actions.rst:482
+msgid "``input/captcha`` - placeholder view for plugins to extend"
+msgstr ""
+
+#: ../../guides/actions.rst:483
+msgid "``input/friendspicker`` - renders an Elgg friend autocomplete"
 msgstr ""
 
 #: ../../guides/actions.rst:484
-msgid "The registration form view first sets default values for inputs, then checks if there are sticky values. If so, it loads the sticky values before clearing the sticky form:"
+msgid "``input/userpicker`` - renders an Elgg user autocomplete"
 msgstr ""
 
-#: ../../guides/actions.rst:500
-msgid "The registration action sets creates the sticky form and clears it once the action is completed:"
+#: ../../guides/actions.rst:485
+msgid "``input/grouppicker`` - renders an Elgg group autocomplete"
 msgstr ""
 
-#: ../../guides/actions.rst:518
-msgid "The function ``elgg_make_sticky_form()`` supports an optional second argument ``$ignored_field_names``. This needs to be an ``array`` of the field names you don't wish to be made sticky. This is usefull for fields which contain sensitive data, like passwords."
+#: ../../guides/actions.rst:486
+msgid "``input/objectpicker`` - renders an Elgg object autocomplete"
 msgstr ""
 
-#: ../../guides/actions.rst:522
-msgid "Example: Bookmarks"
+#: ../../guides/actions.rst:487
+msgid "``input/location`` renders an Elgg location input"
 msgstr ""
 
-#: ../../guides/actions.rst:524
-msgid "The bundled plugin Bookmarks' save form and action is an example of a complex sticky form."
+#: ../../guides/actions.rst:490
+msgid "Files and images"
 msgstr ""
 
-#: ../../guides/actions.rst:526
-msgid "The form view for the save bookmark action uses ``elgg_extract()`` to pull values from the ``$vars`` array:"
+#: ../../guides/actions.rst:492
+msgid "Use the ``input/file`` view in your form’s content view."
 msgstr ""
 
-#: ../../guides/actions.rst:540
-msgid "The page handler scripts enables sticky form support by passing the correct values to ``elgg_view_form()``:"
+#: ../../guides/actions.rst:499
+msgid "If you wish to upload an icon for entity you can use the helper view ``entity/edit/icon``. This view shows a file input for uploading a new icon for the entity, an thumbnail of the current icon and the option to remove the current icon."
 msgstr ""
 
-#: ../../guides/actions.rst:547
-msgid "Similarly, ``mod/bookmarks/pages/edit.php`` uses the same sticky support, but passes the entity that is being edited:"
+#: ../../guides/actions.rst:503
+msgid "The view supports some variables to control the output"
+msgstr ""
+
+#: ../../guides/actions.rst:505
+msgid "``entity`` - the entity to add/remove the icon for. If provided based on this entity the thumbnail and remove option wil be shown"
+msgstr ""
+
+#: ../../guides/actions.rst:506
+msgid "``entity_type`` - the entity type for which the icon will be uploaded. Plugins could find this useful, maybe to validate icon sizes"
+msgstr ""
+
+#: ../../guides/actions.rst:507
+msgid "``entity_subtype`` - the entity subtype for which the icon will be uploaded. Plugins could find this useful, maybe to validate icon sizes"
+msgstr ""
+
+#: ../../guides/actions.rst:508
+msgid "``icon_type`` - the type of the icon (default: icon)"
+msgstr ""
+
+#: ../../guides/actions.rst:509
+msgid "``name`` - name of the input/file (default: icon)"
+msgstr ""
+
+#: ../../guides/actions.rst:510
+msgid "``remove_name`` - name of the remove icon toggle (default: $vars['name'] . '_remove')"
+msgstr ""
+
+#: ../../guides/actions.rst:511
+msgid "``required`` - is icon upload required (default: false)"
+msgstr ""
+
+#: ../../guides/actions.rst:512
+msgid "``cropper_enabled`` - is icon cropping allowed (default: true)"
+msgstr ""
+
+#: ../../guides/actions.rst:513
+msgid "``show_remove`` - show the remove icon option (default: true)"
+msgstr ""
+
+#: ../../guides/actions.rst:514
+msgid "``show_thumb`` - show the thumb of the entity if available (default: true)"
+msgstr ""
+
+#: ../../guides/actions.rst:515
+msgid "``thumb_size`` - the icon size to use as the thumb (default: medium)"
+msgstr ""
+
+#: ../../guides/actions.rst:517
+msgid "If using the helper view you can use the following code in you action to save the icon to the entity or remove the current icon."
+msgstr ""
+
+#: ../../guides/actions.rst:527
+msgid "Set the enctype of the form to ``multipart/form-data``:"
+msgstr ""
+
+#: ../../guides/actions.rst:537
+msgid "The ``enctype`` of all forms that use the method ``POST`` defaults to ``multipart/form-data``."
+msgstr ""
+
+#: ../../guides/actions.rst:539
+msgid "In your action file, use ``elgg_get_uploaded_file('your-input-name')`` to access the uploaded file:"
+msgstr ""
+
+#: ../../guides/actions.rst:546
+msgid "Sticky forms"
+msgstr ""
+
+#: ../../guides/actions.rst:548
+msgid "Sticky forms are forms that retain user input if saving fails. They are \"sticky\" because the user's data \"sticks\" in the form after submitting, though it was never saved to the database. This greatly improves the user experience by minimizing data loss. Elgg includes helper functions so you can make any form sticky."
+msgstr ""
+
+#: ../../guides/actions.rst:553
+#: ../../guides/helpers.rst:2
+msgid "Helper functions"
+msgstr ""
+
+#: ../../guides/actions.rst:555
+msgid "Sticky forms are implemented in Elgg by the following functions:"
+msgstr ""
+
+#: ../../guides/actions.rst:557
+msgid "``elgg_make_sticky_form($name)`` - Tells the engine to make all input on a form sticky."
 msgstr ""
 
 #: ../../guides/actions.rst:558
-msgid "The plugin has an event listener on the ``'form:prepare:fields', 'bookmarks/save'`` event and the handler does 2 things:"
+msgid "``elgg_clear_sticky_form($name)`` - Tells the engine to discard all sticky input on a form."
+msgstr ""
+
+#: ../../guides/actions.rst:559
+msgid "``elgg_is_sticky_form($name)`` - Checks if ``$name`` is a valid sticky form."
 msgstr ""
 
 #: ../../guides/actions.rst:560
+msgid "``elgg_get_sticky_values($name)`` - Returns all sticky values saved for ``$name`` by ``elgg_make_sticky_form($name)``."
+msgstr ""
+
+#: ../../guides/actions.rst:565
+msgid "The basic flow of using sticky forms is:"
+msgstr ""
+
+#: ../../guides/actions.rst:567
+msgid "Call ``elgg_make_sticky_form($name)`` at the top of actions for forms you want to be sticky."
+msgstr ""
+
+#: ../../guides/actions.rst:568
+msgid "Use ``elgg_is_sticky_form($name)`` and ``elgg_get_sticky_values($name)`` to get sticky values when rendering a form view."
+msgstr ""
+
+#: ../../guides/actions.rst:569
+msgid "Call ``elgg_clear_sticky_form($name)`` after the action has completed successfully or after data has been loaded by ``elgg_get_sticky_values($name)``."
+msgstr ""
+
+#: ../../guides/actions.rst:573
+msgid "As of Elgg 5.0 forms rendered with ``elgg_view_form()`` can set the ``$form_vars['sticky_enabled'] = true`` flag to automatically get sticky form support. The submitted values to the action will automatically be filled in the ``$body_vars`` when an error occured in the action."
+msgstr ""
+
+#: ../../guides/actions.rst:576
+msgid "``elgg_view_form()`` supports the following ``$form_vars`` to help with sticky form support:"
+msgstr ""
+
+#: ../../guides/actions.rst:578
+msgid "``sticky_enabled``: a ``bool`` to enable automatic sticky form support"
+msgstr ""
+
+#: ../../guides/actions.rst:579
+msgid "``sticky_form_name``: an optional ``string`` to set where the sticky form values are saved. This defaults to the ``$action_name`` and should only be changed if the ``$action_name`` is different from the actual action"
+msgstr ""
+
+#: ../../guides/actions.rst:580
+msgid "``sticky_ignored_fields``: an ``array`` with the names fo the form fields that should be saved. For example password fields"
+msgstr ""
+
+#: ../../guides/actions.rst:583
+msgid "Example: User registration"
+msgstr ""
+
+#: ../../guides/actions.rst:585
+msgid "Simple sticky forms require little logic to determine the input values for the form. This logic is placed at the top of the form body view itself."
+msgstr ""
+
+#: ../../guides/actions.rst:588
+msgid "The registration form view first sets default values for inputs, then checks if there are sticky values. If so, it loads the sticky values before clearing the sticky form:"
+msgstr ""
+
+#: ../../guides/actions.rst:604
+msgid "The registration action sets creates the sticky form and clears it once the action is completed:"
+msgstr ""
+
+#: ../../guides/actions.rst:622
+msgid "The function ``elgg_make_sticky_form()`` supports an optional second argument ``$ignored_field_names``. This needs to be an ``array`` of the field names you don't wish to be made sticky. This is usefull for fields which contain sensitive data, like passwords."
+msgstr ""
+
+#: ../../guides/actions.rst:626
+msgid "Example: Bookmarks"
+msgstr ""
+
+#: ../../guides/actions.rst:628
+msgid "The bundled plugin Bookmarks' save form and action is an example of a complex sticky form."
+msgstr ""
+
+#: ../../guides/actions.rst:630
+msgid "The form view for the save bookmark action uses ``elgg_extract()`` to pull values from the ``$vars`` array:"
+msgstr ""
+
+#: ../../guides/actions.rst:644
+msgid "The page handler scripts enables sticky form support by passing the correct values to ``elgg_view_form()``:"
+msgstr ""
+
+#: ../../guides/actions.rst:651
+msgid "Similarly, ``mod/bookmarks/pages/edit.php`` uses the same sticky support, but passes the entity that is being edited:"
+msgstr ""
+
+#: ../../guides/actions.rst:662
+msgid "The plugin has an event listener on the ``'form:prepare:fields', 'bookmarks/save'`` event and the handler does 2 things:"
+msgstr ""
+
+#: ../../guides/actions.rst:664
 msgid "Defines the input names and default values for form inputs."
 msgstr ""
 
-#: ../../guides/actions.rst:561
+#: ../../guides/actions.rst:665
 msgid "Extracts the values from a bookmark object if it's passed."
 msgstr ""
 
-#: ../../guides/actions.rst:608
+#: ../../guides/actions.rst:712
 msgid "The save action doesn't need to do anything with sticky form support as this is all handled by the system."
 msgstr ""
 
-#: ../../guides/actions.rst:611
+#: ../../guides/actions.rst:715
 #: ../../guides/ajax.rst:2
 #: ../../guides/events-list.rst:851
 msgid "Ajax"
 msgstr ""
 
-#: ../../guides/actions.rst:613
+#: ../../guides/actions.rst:717
 msgid "See the :doc:`Ajax guide</guides/ajax>` for instructions on calling actions from JavaScript."
 msgstr ""
 
-#: ../../guides/actions.rst:616
+#: ../../guides/actions.rst:720
 #: ../../guides/web-services.rst:27
 msgid "Security"
 msgstr ""
 
-#: ../../guides/actions.rst:618
+#: ../../guides/actions.rst:722
 msgid "For enhanced security, all actions require an CSRF token. Calls to action URLs that do not include security tokens will be ignored and a warning will be generated."
 msgstr ""
 
-#: ../../guides/actions.rst:621
+#: ../../guides/actions.rst:725
 msgid "A few views and functions automatically generate security tokens:"
 msgstr ""
 
-#: ../../guides/actions.rst:630
+#: ../../guides/actions.rst:734
 msgid "In rare cases, you may need to generate tokens manually:"
 msgstr ""
 
-#: ../../guides/actions.rst:637
+#: ../../guides/actions.rst:741
 msgid "You can also access the tokens from javascript:"
 msgstr ""
 
-#: ../../guides/actions.rst:644
+#: ../../guides/actions.rst:748
 msgid "These are refreshed periodically so should always be up-to-date."
 msgstr ""
 
-#: ../../guides/actions.rst:647
+#: ../../guides/actions.rst:751
 msgid "Security Tokens"
 msgstr ""
 
-#: ../../guides/actions.rst:649
+#: ../../guides/actions.rst:753
 msgid "On occasion we need to pass data through an untrusted party or generate an \"unguessable token\" based on some data. The industry-standard `HMAC <http://security.stackexchange.com/a/20301/4982>`_ algorithm is the right tool for this. It allows us to verify that received data were generated by our site, and were not tampered with. Note that even strong hash functions like SHA-2 should *not* be used without HMAC for these tasks."
 msgstr ""
 
-#: ../../guides/actions.rst:654
+#: ../../guides/actions.rst:758
 msgid "Elgg provides ``elgg_build_hmac()`` to generate and validate HMAC message authentication codes that are unguessable without the site's private key."
 msgstr ""
 
-#: ../../guides/actions.rst:678
+#: ../../guides/actions.rst:782
 msgid "Note: If you use a non-string as HMAC data, you must use types consistently. Consider the following:"
 msgstr ""
 
-#: ../../guides/actions.rst:691
+#: ../../guides/actions.rst:795
 msgid "Signed URLs"
 msgstr ""
 
-#: ../../guides/actions.rst:693
+#: ../../guides/actions.rst:797
 msgid "Signed URLs offer a limited level of security for situations where action tokens are not suitable, for example when sending a confirmation link via email. URL signatures verify that the URL has been generated by your Elgg installation (using site secret) and that the URL query elements were not tampered with."
 msgstr ""
 
-#: ../../guides/actions.rst:697
+#: ../../guides/actions.rst:801
 msgid "URLs a signed with an unguessable SHA-256 HMAC key. See `Security Tokens`_ for more details."
 msgstr ""
 
-#: ../../guides/actions.rst:711
+#: ../../guides/actions.rst:815
 msgid "Signed URLs do not offer CSRF protection and should not be used instead of action tokens."
 msgstr ""
 
@@ -6293,7 +6381,7 @@ msgstr ""
 
 #: ../../guides/plugins.rst:322
 #: ../../guides/views.rst:647
-#: ../../guides/web-services.rst:398
+#: ../../guides/web-services.rst:401
 msgid "Related"
 msgstr ""
 
@@ -6995,7 +7083,7 @@ msgid "For example, the blog plugin uses the following code for its river view:"
 msgstr ""
 
 #: ../../guides/routing.rst:4
-msgid "Elgg has two mechanisms to respond to HTTP requests that don't already go through the :doc:`/design/actions` and :doc:`/guides/views/simplecache` systems."
+msgid "Elgg has two mechanisms to respond to HTTP requests that don't already go through the :doc:`/guides/actions` and :doc:`/guides/views/simplecache` systems."
 msgstr ""
 
 #: ../../guides/routing.rst:8
@@ -9036,35 +9124,35 @@ msgstr ""
 msgid "Let's write our wire posting function:"
 msgstr ""
 
-#: ../../guides/web-services.rst:327
+#: ../../guides/web-services.rst:330
 msgid "Exposing this function is the same as the previous except we require user authentication and we're going to make this use POST rather than GET HTTP requests."
 msgstr ""
 
-#: ../../guides/web-services.rst:350
+#: ../../guides/web-services.rst:353
 msgid "Please note that you will not be able to test this using a web browser as you did with the other methods. You need to write some client code to do this."
 msgstr ""
 
-#: ../../guides/web-services.rst:355
+#: ../../guides/web-services.rst:358
 msgid "Building out your API"
 msgstr ""
 
-#: ../../guides/web-services.rst:357
+#: ../../guides/web-services.rst:360
 msgid "As soon as you feel comfortable with Elgg's web services API framework, you will want to step back and design your API. What sort of data are you trying to expose? Who or what will be API users? How do you want them to get access to authentication keys? How are you going to document your API? Be sure to take a look at the APIs created by popular Web 2.0 sites for inspiration. If you are looking for 3rd party developers to build applications using your API, you will probably want to provide one or more language-specific clients."
 msgstr ""
 
-#: ../../guides/web-services.rst:367
+#: ../../guides/web-services.rst:370
 msgid "Determining the authentication available"
 msgstr ""
 
-#: ../../guides/web-services.rst:369
+#: ../../guides/web-services.rst:372
 msgid "Elgg's web services API uses a type of `pluggable authentication module (PAM)`_ architecture to manage how users and developers are authenticated. This provides you the flexibility to add and remove authentication modules. Do you want to not use the default user authentication PAM but would prefer using OAuth? You can do this."
 msgstr ""
 
-#: ../../guides/web-services.rst:375
+#: ../../guides/web-services.rst:378
 msgid "The first step is registering a callback function for the ``'rest', 'init'`` event:"
 msgstr ""
 
-#: ../../guides/web-services.rst:381
+#: ../../guides/web-services.rst:384
 msgid "Then in the callback function, you register the PAMs that you want to use:"
 msgstr ""
 

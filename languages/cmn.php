@@ -77,8 +77,6 @@ return array(
 	'UserFetchFailureException' => '用户user_guid [%s]校验失败，因为用户不存在。',
 
 	'PageNotFoundException' => '您试图查看的页面不存在，或者您没有查看它的权限。',
-	'EntityNotFoundException' => '您试图访问的内容已被删除，或者您没有访问它的权限。',
-	'EntityPermissionsException' => '此操作没有足够的权限。',
 	'GatekeeperException' => '您没有权限查看要访问的页面。',
 	'BadRequestException' => '错误请求！',
 
@@ -232,7 +230,6 @@ return array(
  */
 	'link:view' => '查看链接',
 	'link:view:all' => '查看所有',
-
 
 /**
  * River
@@ -1137,8 +1134,9 @@ return array(
 	'entity:delete:permission_denied' => '您还没有权限删除此项目。',
 	'entity:delete:success' => '%s 已删除。',
 	'entity:delete:fail' => '%s 删除失败。',
-
+	
 	'entity:restore:item' => '栏目',
+
 
 /**
  * Annotations

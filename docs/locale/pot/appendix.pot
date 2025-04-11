@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-20 11:40+0100\n"
+"POT-Creation-Date: 2025-04-11 11:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,6 +47,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/5.0-to-5.1.rst:6
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:6
 #: ../../appendix/upgrade-notes/6.0-to-6.1.rst:6
+#: ../../appendix/upgrade-notes/6.1-to-6.2.rst:6
 msgid "Contents"
 msgstr ""
 
@@ -446,15 +447,15 @@ msgid "Another option is to use the `Profile Manager`_ plugin that lets you add 
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:204
-#: ../../appendix/faqs/development.rst:36
-#: ../../appendix/faqs/development.rst:36
+#: ../../appendix/faqs/development.rst:37
+#: ../../appendix/faqs/development.rst:37
 #: ../../appendix/faqs/general.rst:204
 msgid "Create the plugin skeleton"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:204
-#: ../../appendix/faqs/development.rst:38
-#: ../../appendix/faqs/development.rst:38
+#: ../../appendix/faqs/development.rst:39
+#: ../../appendix/faqs/development.rst:39
 #: ../../appendix/faqs/general.rst:204
 msgid ":doc:`/guides/plugins/plugin-skeleton`"
 msgstr ""
@@ -942,251 +943,251 @@ msgstr ""
 
 #: ../../appendix/faqs/development.rst:19
 #: ../../appendix/faqs/development.rst:19
-msgid "The two most popular free IDEs for PHP developers are Eclipse_ and NetBeans_. Eclipse has two different plugins for working with PHP code: PDT_ and PHPEclipse_."
+msgid "The three most popular free IDEs for PHP developers are Eclipse_ , NetBeans_ and Codelobster_ . Eclipse has two different plugins for working with PHP code: PDT_ and PHPEclipse_."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:31
-#: ../../appendix/faqs/development.rst:31
+#: ../../appendix/faqs/development.rst:32
+#: ../../appendix/faqs/development.rst:32
 msgid "I don't like the wording of something in Elgg. How do I change it?"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:33
-#: ../../appendix/faqs/development.rst:33
+#: ../../appendix/faqs/development.rst:34
+#: ../../appendix/faqs/development.rst:34
 msgid "The best way to do this is with a plugin."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:41
-#: ../../appendix/faqs/development.rst:41
+#: ../../appendix/faqs/development.rst:42
+#: ../../appendix/faqs/development.rst:42
 msgid "Locate the string that you want to change"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:43
-#: ../../appendix/faqs/development.rst:43
+#: ../../appendix/faqs/development.rst:44
+#: ../../appendix/faqs/development.rst:44
 msgid "All the strings that a user sees should be in the ``/languages`` directory or in a plugin's languages directory (``/mod/<plugin name>/languages``). This is done so that it is easy to change what language Elgg uses. For more information on this see the developer documentation on :doc:`/guides/i18n` ."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:45
-#: ../../appendix/faqs/development.rst:45
+#: ../../appendix/faqs/development.rst:46
+#: ../../appendix/faqs/development.rst:46
 msgid "To find the string use ``grep`` or a text editor that provides searching through files to locate the string. (A good text editor for Windows is `Notepad++`_ ) Let's say we want to change the string \"Add friend\" to \"Make a new friend\". The ``grep`` command to find this string would be ``grep -r \"Add friend\" *``. Using `Notepad++`_ , you would use the \"Find in files\" command. You would search for the string, set the filter to ``*.php``, set the directory to the base directory of Elgg, and make sure it searches all subdirectories. You might want to set it to be case sensitive also."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:47
-#: ../../appendix/faqs/development.rst:47
+#: ../../appendix/faqs/development.rst:48
+#: ../../appendix/faqs/development.rst:48
 msgid "You should locate the string \"Add friend\" in ``/languages/en.php``. You should see something like this in the file:"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:53
-#: ../../appendix/faqs/development.rst:53
+#: ../../appendix/faqs/development.rst:54
+#: ../../appendix/faqs/development.rst:54
 msgid "This means every time Elgg sees ``friend:add`` it replaces it with \"Add friend\". We want to change the definition of ``friend:add``."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:56
-#: ../../appendix/faqs/development.rst:56
+#: ../../appendix/faqs/development.rst:57
+#: ../../appendix/faqs/development.rst:57
 msgid "Override the string"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:58
-#: ../../appendix/faqs/development.rst:58
+#: ../../appendix/faqs/development.rst:59
+#: ../../appendix/faqs/development.rst:59
 msgid "To override this definition, we will add a languages file to the plugin that we built in the first step."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:60
-#: ../../appendix/faqs/development.rst:60
+#: ../../appendix/faqs/development.rst:61
+#: ../../appendix/faqs/development.rst:61
 msgid "Create a new directory: ``/mod/<your plugin name>/languages``"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:61
-#: ../../appendix/faqs/development.rst:61
+#: ../../appendix/faqs/development.rst:62
+#: ../../appendix/faqs/development.rst:62
 msgid "Create a file in that directory called ``en.php``"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:62
-#: ../../appendix/faqs/development.rst:62
+#: ../../appendix/faqs/development.rst:63
+#: ../../appendix/faqs/development.rst:63
 msgid "Add these lines to that file"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:72
-#: ../../appendix/faqs/development.rst:72
+#: ../../appendix/faqs/development.rst:73
+#: ../../appendix/faqs/development.rst:73
 msgid "Make sure that you do not have any spaces or newlines before the ``<?php``."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:74
-#: ../../appendix/faqs/development.rst:74
+#: ../../appendix/faqs/development.rst:75
+#: ../../appendix/faqs/development.rst:75
 msgid "You're done now and should be able to enable the plugin and see the change. If you are override the language of a plugin, make sure your plugin is loaded after the one you are trying to modify. The loading order is determined in the Tools Administration page of the admin section. As you find more things that you'd like to change, you can keep adding them to this plugin."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:77
-#: ../../appendix/faqs/development.rst:77
+#: ../../appendix/faqs/development.rst:78
+#: ../../appendix/faqs/development.rst:78
 msgid "How do I find the code that does x?"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:79
-#: ../../appendix/faqs/development.rst:79
+#: ../../appendix/faqs/development.rst:80
+#: ../../appendix/faqs/development.rst:80
 msgid "The best way to find the code that does something that you would like to change is to use ``grep`` or a similar search tool. If you do not have ``grep`` as a part of your operating system, you will want to install a grep tool or use a text-editor/IDE that has good searching in files. `Notepad++`_ is a good choice for Windows users. `Eclipse`_ with PHP and `NetBeans`_ are good choices for any platform."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:82
-#: ../../appendix/faqs/development.rst:82
+#: ../../appendix/faqs/development.rst:83
+#: ../../appendix/faqs/development.rst:83
 msgid "String Example"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:84
-#: ../../appendix/faqs/development.rst:84
+#: ../../appendix/faqs/development.rst:85
+#: ../../appendix/faqs/development.rst:85
 msgid "Let's say that you want to find where the *Log In* box code is located. A string from the *Log In* box that should be fairly unique is ``Remember me``. ``Grep`` for that string. You will find that it is only used in the ``en.php`` file in the ``/languages`` directory. There it is used to define the :doc:`/guides/i18n` string ``user:persistent``. ``Grep`` for that string now. You will find it in two places: the same ``en.php`` language file and in ``/views/default/forms/login.php``. The latter defines the html code that makes up the *Log In* box."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:87
-#: ../../appendix/faqs/development.rst:87
+#: ../../appendix/faqs/development.rst:88
+#: ../../appendix/faqs/development.rst:88
 msgid "Action Example"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:89
-#: ../../appendix/faqs/development.rst:89
+#: ../../appendix/faqs/development.rst:90
+#: ../../appendix/faqs/development.rst:90
 msgid "Let's say that you want to find the code that is run when a user clicks on the *Save* button when arranging widgets on a profile page. View the Profile page for a test user. Use Firebug to drill down through the html of the page until you come to the action of the edit widgets form. You'll see the url from the base is ``action/widgets/move``."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:91
-#: ../../appendix/faqs/development.rst:91
+#: ../../appendix/faqs/development.rst:92
+#: ../../appendix/faqs/development.rst:92
 msgid "``Grep`` on ``widgets/move`` and two files are returned. One is the JavaScript code for the widgets : ``/js/lib/ui.widgets.js``. The other one, ``/engine/lib/widgets.php``, is where the action is registered using ``elgg_register_action('widgets/reorder')``. You may not be familiar with that function in which case, you should look it up at the API reference. Do a search on the function and it returns the documentation on the function. This tells you that the action is in the default location since a file location was not specified. The default location for actions is ``/actions`` so you will find the file at ``/actions/widgets/move.php``."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:94
-#: ../../appendix/faqs/development.rst:94
+#: ../../appendix/faqs/development.rst:95
+#: ../../appendix/faqs/development.rst:95
 msgid "Debug mode"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:96
-#: ../../appendix/faqs/development.rst:96
+#: ../../appendix/faqs/development.rst:97
+#: ../../appendix/faqs/development.rst:97
 msgid "During the installation process you might have noticed a checkbox that controlled whether debug mode was turned on or off. This setting can also be changed on the Site Administration page. Debug mode writes a lot of extra data to your php log. For example, when running in this mode every query to the database is written to your logs. It may be useful for debugging a problem though it can produce an overwhelming amount of data that may not be related to the problem at all. You may want to experiment with this mode to understand what it does, but make sure you run Elgg in normal mode on a production server."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:100
-#: ../../appendix/faqs/development.rst:100
+#: ../../appendix/faqs/development.rst:101
+#: ../../appendix/faqs/development.rst:101
 msgid "Because of the amount of data being logged, don't enable this on a production server as it can fill up the log files really quick."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:103
-#: ../../appendix/faqs/development.rst:103
+#: ../../appendix/faqs/development.rst:104
+#: ../../appendix/faqs/development.rst:104
 msgid "What goes into the log in debug mode?"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:105
-#: ../../appendix/faqs/development.rst:105
+#: ../../appendix/faqs/development.rst:106
+#: ../../appendix/faqs/development.rst:106
 msgid "All database queries"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:106
-#: ../../appendix/faqs/development.rst:106
+#: ../../appendix/faqs/development.rst:107
+#: ../../appendix/faqs/development.rst:107
 msgid "Database query profiling"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:107
-#: ../../appendix/faqs/development.rst:107
+#: ../../appendix/faqs/development.rst:108
+#: ../../appendix/faqs/development.rst:108
 msgid "Page generation time"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:108
-#: ../../appendix/faqs/development.rst:108
+#: ../../appendix/faqs/development.rst:109
+#: ../../appendix/faqs/development.rst:109
 msgid "Number of queries per page"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:109
-#: ../../appendix/faqs/development.rst:109
+#: ../../appendix/faqs/development.rst:110
+#: ../../appendix/faqs/development.rst:110
 msgid "List of plugin language files"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:110
-#: ../../appendix/faqs/development.rst:110
+#: ../../appendix/faqs/development.rst:111
+#: ../../appendix/faqs/development.rst:111
 msgid "Additional errors/warnings compared to normal mode (it's very rare for these types of errors to be related to any problem that you might be having)"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:113
-#: ../../appendix/faqs/development.rst:113
+#: ../../appendix/faqs/development.rst:114
+#: ../../appendix/faqs/development.rst:114
 msgid "What does the data look like?"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:144
-#: ../../appendix/faqs/development.rst:144
+#: ../../appendix/faqs/development.rst:145
+#: ../../appendix/faqs/development.rst:145
 msgid "What events are triggered on every page load?"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:146
-#: ../../appendix/faqs/development.rst:146
+#: ../../appendix/faqs/development.rst:147
+#: ../../appendix/faqs/development.rst:147
 msgid "There are 4 :doc:`Elgg events </design/events>` that are triggered on every page load:"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:148
-#: ../../appendix/faqs/development.rst:148
+#: ../../appendix/faqs/development.rst:149
+#: ../../appendix/faqs/development.rst:149
 msgid "plugins_boot, system"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:149
-#: ../../appendix/faqs/development.rst:149
+#: ../../appendix/faqs/development.rst:150
+#: ../../appendix/faqs/development.rst:150
 msgid "init, system"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:150
-#: ../../appendix/faqs/development.rst:150
+#: ../../appendix/faqs/development.rst:151
+#: ../../appendix/faqs/development.rst:151
 msgid "ready, system"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:151
-#: ../../appendix/faqs/development.rst:151
+#: ../../appendix/faqs/development.rst:152
+#: ../../appendix/faqs/development.rst:152
 msgid "shutdown, system"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:153
-#: ../../appendix/faqs/development.rst:153
+#: ../../appendix/faqs/development.rst:154
+#: ../../appendix/faqs/development.rst:154
 msgid "The first three are triggered in ``Elgg\\Application::bootCore``. **shutdown, system** is triggered in ``\\Elgg\\Application\\ShutdownHandler`` after the response has been sent to the client. They are all :doc:`documented </guides/events-list>`."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:156
-#: ../../appendix/faqs/development.rst:156
+#: ../../appendix/faqs/development.rst:157
+#: ../../appendix/faqs/development.rst:157
 msgid "There are other events triggered by Elgg occasionally (such as when a user logs in)."
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:159
-#: ../../appendix/faqs/development.rst:159
+#: ../../appendix/faqs/development.rst:160
+#: ../../appendix/faqs/development.rst:160
 msgid "Copy a plugin"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:161
-#: ../../appendix/faqs/development.rst:161
+#: ../../appendix/faqs/development.rst:162
+#: ../../appendix/faqs/development.rst:162
 msgid "There are many questions asked about how to copy a plugin. Let's say you want to copy the ``blog`` plugin in order to run one plugin called ``blog`` and another called ``poetry``. This is not difficult but it does require a lot of work. You would need to"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:163
-#: ../../appendix/faqs/development.rst:163
+#: ../../appendix/faqs/development.rst:164
+#: ../../appendix/faqs/development.rst:164
 msgid "change the directory name"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:164
-#: ../../appendix/faqs/development.rst:164
+#: ../../appendix/faqs/development.rst:165
+#: ../../appendix/faqs/development.rst:165
 msgid "change the names of every function (having two functions causes PHP to crash)"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:165
-#: ../../appendix/faqs/development.rst:165
+#: ../../appendix/faqs/development.rst:166
+#: ../../appendix/faqs/development.rst:166
 msgid "change the name of every view (so as not to override the views on the original plugin)"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:166
-#: ../../appendix/faqs/development.rst:166
+#: ../../appendix/faqs/development.rst:167
+#: ../../appendix/faqs/development.rst:167
 msgid "change any data model subtypes"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:167
-#: ../../appendix/faqs/development.rst:167
+#: ../../appendix/faqs/development.rst:168
+#: ../../appendix/faqs/development.rst:168
 msgid "change the language file"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:168
-#: ../../appendix/faqs/development.rst:168
+#: ../../appendix/faqs/development.rst:169
+#: ../../appendix/faqs/development.rst:169
 msgid "change anything else that was specific to the original plugin"
 msgstr ""
 
-#: ../../appendix/faqs/development.rst:172
-#: ../../appendix/faqs/development.rst:172
+#: ../../appendix/faqs/development.rst:173
+#: ../../appendix/faqs/development.rst:173
 msgid "If you are trying to clone the ``groups`` plugin, you will have the additional difficulty that the group plugin does not set a subtype."
 msgstr ""
 
@@ -3405,6 +3406,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:24
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:439
 #: ../../appendix/upgrade-notes/6.0-to-6.1.rst:18
+#: ../../appendix/upgrade-notes/6.1-to-6.2.rst:9
 msgid "Deprecated APIs"
 msgstr ""
 
@@ -11841,4 +11843,20 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/6.0-to-6.1.rst:28
 msgid "``elgg_reset_system_cache``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.1-to-6.2.rst:2
+msgid "From 6.1 to 6.2"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.1-to-6.2.rst:11
+msgid "``thewire_save_post()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.1-to-6.2.rst:12
+msgid "``thewire_get_hashtags()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.1-to-6.2.rst:13
+msgid "``thewire_filter()`` use ``elgg_format_html()``"
 msgstr ""
