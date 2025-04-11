@@ -9,8 +9,16 @@ var dropdown = {
 
 	init: function () {
 		// handles clicking on a menu item that has a dropdown menu
-		$(document).on('click', '.elgg-menu-item-has-dropdown > a', function (e) {
+		$(document).on('click keydown', '.elgg-menu-item-has-dropdown > a', function (e) {
+			if (e.type === 'keydown' && e.key !== 'Enter') {
+				return;
+			}
+			
 			var $trigger = $(this);
+			
+			// keep track of eventType for popup 'open' event callback
+			$trigger.data('eventType', e.type);
+			
 			if ($trigger.attr('data-popup-trigger-closed')) {
 				// popup was closed by clicking on this trigger
 				$trigger.removeAttr('data-popup-trigger-closed');
@@ -27,6 +35,11 @@ var dropdown = {
 							.removeClass('elgg-menu-closed')
 							.prop('ariaExpanded', true);
 					$trigger.parent().addClass('elgg-state-selected');
+					
+					// set focus on div if mouse clicked so first element does not get focussed by focus trap
+					if ($trigger.data().eventType === 'click') {
+						$target.attr('tabindex', '-1').focus();
+					}
 				});
 
 				$target.on('close', function () {
