@@ -1,3 +1,37 @@
+<a name="6.2.0"></a>
+## 6.2.0 (2025-04-14)
+
+#### Contributors
+
+* Jerôme Bakker (18)
+* Jeroen Dalsem (16)
+* callpri (1)
+
+#### Features
+
+* **a11y:**
+  * dropdown and toggle menus have the aria-expanded attribute [1765376e6](https://github.com/Elgg/Elgg/commit/1765376e695680168625f41549f20f97ba72e583)
+  * added a skip to main content link for keyboard users [53c677b39](https://github.com/Elgg/Elgg/commit/53c677b398d1184e4cbdbf53391d3e4f59d0f83a)
+* **js:** added focus trap logic on popup and lightbox elements [1d0ac8841](https://github.com/Elgg/Elgg/commit/1d0ac8841dd5bf28406ed9e7eac62c0cfce9bb44)
+* **garbagecollector:** added plugin setting to control optimize table [90abe17e6](https://github.com/Elgg/Elgg/commit/90abe17e60c077c60366bc329288ecd8c20b7c49)
+* **css:** introduced css variables for all css crush theme variables [0619fa8a3](https://github.com/Elgg/Elgg/commit/0619fa8a3cf9a71e6f795ddfa810276463caf340)
+* **views:** added output views for plaintext and number fields [501dc5ec2](https://github.com/Elgg/Elgg/commit/501dc5ec2c5f2f3be14afe4daf2ab848eecab6b2)
+* **actions:** introduced a generic action class [0b2a89d12](https://github.com/Elgg/Elgg/commit/0b2a89d12b6bab12b1e6d388c45768b49a0dee73)
+* **composer:** updated react/promise to v3.2 to support PHP 8.4 [8197ad5bb](https://github.com/Elgg/Elgg/commit/8197ad5bb595ccad93a79d78c160e5560a6c19d5) closes [#14767](https://github.com/Elgg/Elgg/issues/14767)
+* **core:**
+  * support PHP 8.4 [e572c5375](https://github.com/Elgg/Elgg/commit/e572c53758dd6f4ce978ed484e86ffeded04fbc5)
+  * added more HTTP exceptions for frequently used errors [d828f5f45](https://github.com/Elgg/Elgg/commit/d828f5f45a1b796e1b27925788056032de0ffb22)
+
+
+#### Bug fixes
+
+* **cache:** allow SRI calculations to be saved in the CacheHandler [ab1a9829f](https://github.com/Elgg/Elgg/commit/ab1a9829fa83d2fecb1ca1895f7489e877c9dec4)
+* **js:**
+  * icon cropper correctly sets cropped area after tab switch [db9f8690a](https://github.com/Elgg/Elgg/commit/db9f8690a74e37983bce6bc1913b0b6fc1a5c403)
+  * reposition dropdown menus after toggle of submenus [ac0320ae5](https://github.com/Elgg/Elgg/commit/ac0320ae51bac8a36ec8a0cb4f5660201e431f43)
+* **a11y:** improved input/tags usability for screenreaders [c880f314d](https://github.com/Elgg/Elgg/commit/c880f314d9a894e417e5fcc8a2cc64980059ef93)
+
+
 <a name="6.1.5"></a>
 ### 6.1.5 (2025-03-20)
 
