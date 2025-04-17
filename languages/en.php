@@ -892,8 +892,8 @@ See the full list of users here:
 	'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
 	'plugins:settings:remove:ok' => "All settings for the %s plugin have been removed",
 	'plugins:settings:remove:fail' => "An error occured while removing all settings for the plugin %s",
-	'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
-	'plugins:usersettings:save:fail' => "There was a problem saving  user settings for the %s plugin.",
+	'plugins:usersettings:save:ok' => "Your settings for %s were saved successfully.",
+	'plugins:usersettings:save:fail' => "There was a problem saving the settings for %s.",
 	
 	'item:object:plugin' => 'Plugin',
 	'collection:object:plugin' => 'Plugins',
