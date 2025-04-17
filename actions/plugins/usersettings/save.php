@@ -23,7 +23,11 @@ if (!$plugin instanceof \ElggPlugin || !$plugin->isActive() || !$user || !$user-
 	return elgg_error_response(elgg_echo('plugins:usersettings:save:fail', [$plugin_id]));
 }
 
-$plugin_name = $plugin->getDisplayName();
+if (elgg_language_key_exists("{$plugin_id}:usersettings:title")) {
+	$plugin_name = elgg_echo("{$plugin_id}:usersettings:title");
+} else {
+	$plugin_name = $plugin->getDisplayName();
+}
 
 $result = false;
 
