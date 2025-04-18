@@ -11,7 +11,7 @@ return array(
 	*/
 
 	'messages' => "Messages",
-	'messages:unreadcount' => "%s non lu(s)",
+	'messages:unreadcount' => "%s non lu",
 	'messages:user' => "Boîte de réception de %s",
 	'messages:inbox' => "Boîte de réception",
 	'messages:sent' => "Messages envoyés",

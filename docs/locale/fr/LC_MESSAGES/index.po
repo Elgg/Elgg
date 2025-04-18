@@ -5,17 +5,17 @@
 # 
 # Translators:
 # Jerôme Bakker, 2024
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2024
 # Emmanuel Simond, 2025
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 10:34+0100\n"
+"POT-Creation-Date: 2025-03-20 11:40+0100\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
-"Last-Translator: Emmanuel Simond, 2025\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -183,7 +183,7 @@ msgid ""
 "repository of **1000+ open source plugins**"
 msgstr ""
 "La **Communauté Elgg** peut aider sur n'importe quelle problématique, et "
-"héberge un répertoire de **plusieurs milliersde plugins open source**"
+"héberge un répertoire de **de 1000+ plugins open source**"
 
 #: ../../index.rst:28
 msgid "Under the hood:"
@@ -193,7 +193,7 @@ msgstr "Sous le capot :"
 msgid "Elgg is a modular OOP framework that is driven by DI services"
 msgstr ""
 "Elgg est un framework modulaire orienté objet (OOP) qui est dirigé par des "
-"services DI"
+"services d'injection de dépendances (DI)"
 
 #: ../../index.rst:31
 msgid "NGINX or Apache compatible"

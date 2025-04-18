@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "6.1.5",
+    "version": "6.2.0",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0-only",
     "minimum-stability": "dev",
@@ -31,6 +31,7 @@
         "misd/linkify": "~1.1.2",
         "monolog/monolog": "~3.8.0",
         "npm-asset/cropperjs": "~1.6.1",
+        "npm-asset/focus-trap": "~7.6.0",
         "npm-asset/jquery": "~3.7.1",
         "npm-asset/jquery-cropper": "~1.0.0",
         "npm-asset/jquery-colorbox": "^1.6.4",

@@ -42,6 +42,8 @@ function Cropper() {
 					
 					if ($field.data('resetNeeded')) {
 						$img.cropper('reset');
+						// need to set data as reset does not set cropped area box correctly
+						$img.cropper('setData', $img.data().iconCropper.data);
 						
 						// only need a reset once
 						$field.data('resetNeeded', false);

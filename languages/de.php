@@ -92,11 +92,8 @@ return array(
 	'UserFetchFailureException' => 'Die Überprüfung der Zugriffsrechte des Benutzers mit der Benutzer-GUID [%s] ist fehlgeschlagen, da dieser Benutzer nicht existiert.',
 
 	'PageNotFoundException' => 'Die Seite, auf die Du zugreifen möchtest, existiert entweder nicht oder Du hast nicht die notwendige Berechtigung, um sie anzuzeigen.',
-	'EntityNotFoundException' => 'Der Inhalt, auf den Du zugreifen möchtest, wurde entweder entfernt oder Du hast nicht die notwendige Berechtigung, um ihn anzuzeigen.',
-	'EntityPermissionsException' => 'Du hast keine ausreichende Berechtigung für diese Aktion.',
 	'GatekeeperException' => 'Du hast nicht die notwendige Berechtigung, um auf die gewünschte Seite zuzugreifen.',
 	'BadRequestException' => 'Fehlerhafte Anfrage.',
-	'ValidationException' => 'Die eingegebenen Daten erfüllen nicht die Anforderungen. Bitte prüfe Deine Eingaben.',
 	'LogicException:InterfaceNotImplemented' => '%s muss %s implementieren.',
 	
 	'Security:InvalidPasswordCharacterRequirementsException' => "Das eingegebene Passwort genügt nicht den Anforderungen bezüglich der Anzahl der Zeichen.",
@@ -258,7 +255,6 @@ return array(
  */
 	'link:view' => 'Link aufrufen',
 	'link:view:all' => 'Alle ansehen',
-
 
 /**
  * River
@@ -1516,7 +1512,7 @@ Um zu antworten oder den ursprünglichen Beitrag aufzurufen, folge diesem Link:
 	'entity:delete:permission_denied' => 'Du hast keine ausreichende Berechtigung, um diesen Beitrag zu löschen.',
 	'entity:delete:success' => '%s wurde gelöscht.',
 	'entity:delete:fail' => 'Das Löschen von %s ist fehlgeschlagen.',
-
+	
 	'entity:restore:item' => 'Beitrag',
 	
 	'entity:subscribe' => "Abonnieren",
@@ -1534,6 +1530,7 @@ Um zu antworten oder den ursprünglichen Beitrag aufzurufen, folge diesem Link:
 	'entity:unmute' => "Benachrichtigungen freigeben",
 	'entity:unmute:success' => "Du hast zukünftige Benachrichtigungen zugehörig zu %s wieder freigegeben.",
 	'entity:unmute:fail' => "Bei der Freigabe von Benachrichtigungen zugehörig zu %s ist ein Fehler aufgetreten.",
+
 
 /**
  * Annotations

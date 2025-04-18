@@ -51,6 +51,10 @@ class BootService {
 		foreach ($config::SENSITIVE_PROPERTIES as $name) {
 			unset($config->{$name});
 		}
+		
+		// reset services which could depend on config values
+		// need to reset the ServerCache in order to be able to save SRI calculations
+		$services->reset('serverCache');
 
 		// early config is done, now get the core boot data
 		$data = $this->getBootData($config, $config->hasValue('installed'));

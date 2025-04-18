@@ -17,8 +17,10 @@ $child_menu_view = '';
 $children = $item->getChildren();
 if (!empty($children)) {
 	$link_class = 'elgg-menu-closed';
+	$item->{'aria-expanded'} = 'false';
 	if ($item->getSelected()) {
 		$link_class = 'elgg-menu-opened';
+		$item->{'aria-expanded'} = 'true';
 	}
 	
 	$item->addLinkClass($link_class);
@@ -28,7 +30,7 @@ if (!empty($children)) {
 	$child_menu_vars = $item->getChildMenuOptions();
 	$child_menu_vars['items'] = $children;
 	$child_menu_vars['class'] = elgg_extract_class($child_menu_vars, ['elgg-menu', 'elgg-child-menu']);
-
+	
 	$display = elgg_extract('display', $child_menu_vars, 'default');
 	unset($child_menu_vars['display']);
 

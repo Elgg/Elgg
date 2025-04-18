@@ -28,4 +28,9 @@ $inner = elgg_format_element('div', ['class' => 'elgg-inner'], $html);
 
 $element = elgg_extract($section, $section_elements, 'div');
 
-echo elgg_format_element($element, ['class' => $class], $inner);
+$section_attributes = ['class' => $class];
+if ($element === 'main') {
+	$section_attributes['id'] = 'main-content';
+}
+
+echo elgg_format_element($element, $section_attributes, $inner);

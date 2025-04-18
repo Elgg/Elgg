@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 10:34+0100\n"
+"POT-Creation-Date: 2025-03-20 11:40+0100\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -31,6 +31,8 @@ msgid ""
 "This document describes various design choices to improve accessibility of "
 "an Elgg site."
 msgstr ""
+"Ce document décrit différents choix de conception pour améliorer "
+"l'accessibilité d'un site Elgg."
 
 #: ../../design/a11y.rst:10
 msgid "Forms"
@@ -43,6 +45,10 @@ msgid ""
 " ``$options['#label']  = elgg_echo('my_field:label')`` to have a correct "
 "label with your field."
 msgstr ""
+"Les champs de saisie doivent toujours être associés à un label. Lorsque vous"
+" utilisez ``elgg_view_field($options)`` pour dessiner des champs sur un "
+"formulaire, vous devrez passer ``$options['#label'] = "
+"elgg_echo('my_field:label')`` pour avoir un label correcte avec votre champ."
 
 #: ../../design/a11y.rst:15
 msgid ""
@@ -50,6 +56,10 @@ msgid ""
 "recommended to add ``'role' => 'search'`` to your form attributes. You can "
 "provide this in ``$form_vars`` when using ``elgg_view_form()``."
 msgstr ""
+"Si vous disposez d'un formulaire qui effectuera une recherche une fois "
+"soumis, il est recommandé d'ajouter ``'role' => 'search'`` aux attributs de "
+"votre formulaire. Vous pouvez fournir cela dans ``$form_vars`` en utilisant "
+"``elgg_view_form()``."
 
 #: ../../design/a11y.rst:19
 msgid "Images"
@@ -61,6 +71,9 @@ msgid ""
 "provide an ``alt`` description of the image. Elgg will report notices in the"
 " error log to let developers know when an ``alt`` attribute is missing."
 msgstr ""
+"Lors de l'utilisation de ``elgg_view('output/img', $options)``, il est "
+"recommandé de fournir une description ``alt`` de l'image. Elgg signalera les"
+" erreurs manquantes aux développeurs dans le journal des erreurs."
 
 #: ../../design/a11y.rst:25
 msgid "Headings"
@@ -72,6 +85,9 @@ msgid ""
 "a ``h1`` on the page and there should also be no gaps (so no ``h3`` without "
 "a ``h2``)."
 msgstr ""
+"Les titres doivent servir à structurer une page. Il devrait toujours y avoir"
+" un ``h1`` sur la page, et il ne devrait y avoir aucune rupture dans "
+"l'arborescence (donc pas de ``h3`` sans un ``h2``)."
 
 #: ../../design/a11y.rst:30
 msgid ""
@@ -80,6 +96,10 @@ msgid ""
 "used by modules on a page, like an 'info' module, a widget or a module in "
 "the sidebar."
 msgstr ""
+"Elgg utilise ``h1`` pour le titre de la page (comme 'Tous les blogs', le "
+"titre d'un blog ou le nom d'un groupe sur la page de profil du groupe). Le "
+"titre ``h2`` est utilisé par les modules d'une page, comme un module 'info',"
+" un widget, ou un module de la barre latérale."
 
 #: ../../design/a11y.rst:33
 msgid ""
@@ -88,6 +108,10 @@ msgid ""
 "first level heading. The configuration of the CKEditor plugin already "
 "handles this."
 msgstr ""
+"Le contenu généré par l'utilisateur avec balisage, par exemple une "
+"description d'un blog, ne devrait pas autoriser l'utilisation de ``h1``, "
+"mais commencer par ``h2`` comme titre de premier niveau. La configuration du"
+" plugin CKEditor gère déjà ce paramètre."
 
 #: ../../design/a11y.rst:37
 msgid "Sections"
@@ -96,22 +120,28 @@ msgstr "Sections"
 #: ../../design/a11y.rst:39
 msgid "A webpage in Elgg is typically sectioned into the following sections:"
 msgstr ""
+"Une page Web dans Elgg est généralement divisée en sections suivantes :"
 
 #: ../../design/a11y.rst:41
 msgid ""
 "``header`` for the topbar contents like the site logo, site navigation and "
 "search"
 msgstr ""
+"``header`` pour le contenu de la barre supérieure comme le logo du site, la "
+"navigation sur le site et la recherche"
 
 #: ../../design/a11y.rst:42
 msgid "``main`` the main content like the blog page or an overview of members"
 msgstr ""
+"``main`` le contenu principal comme la page du blog ou un aperçu des membres"
 
 #: ../../design/a11y.rst:43
 msgid ""
 "``footer`` typically found at the bottom of the page containing some links "
 "or other site related information"
 msgstr ""
+"``footer`` se trouve généralement au bas de la page contenant des liens ou "
+"d'autres informations relatives au site"
 
 #: ../../design/a11y.rst:46
 msgid "Menus"
@@ -124,6 +154,10 @@ msgid ""
 " functionality of Elgg by using the function ``elgg_view_menu()`` Elgg will "
 "take care of this."
 msgstr ""
+"Tous nos menus doivent être accessibles au clavier. Ceci est "
+"particulièrement important pour les menus à plusieurs niveaux ou sous-menus."
+" Si vous utilisez la fonctionnalité de menu par défaut d'Elgg en utilisant "
+"la fonction ``elgg_view_menu()``, Elgg s'en chargera."
 
 #: ../../design/a11y.rst:51
 msgid ""
@@ -134,6 +168,13 @@ msgid ""
 "provide a translation. You need to register this translation with the "
 "following key: ``menu:name_of_the_menu:header``."
 msgstr ""
+"Lors de l'utilisation de ``elgg_view_menu()``, les éléments du menu sont "
+"inclus dans une balise HTML ``nav``. Pour permettre aux lecteurs d'écran de "
+"savoir quel menu est affiché, l'attribut ``aria-label`` est ajouté à "
+"l'élément ``nav`` pour décrire le menu. Par défaut, Elgg utilise le ``name``"
+" du menu, mais il est possible de fournir une traduction. Vous devez "
+"enregistrer cette traduction avec la clé suivante : "
+"``menu:name_of_the_menu:header``."
 
 #: ../../design/actions.rst:2
 msgid "Actions"
@@ -394,6 +435,8 @@ msgstr "Quand l'entité a été modifiée pour la dernière fois"
 #: ../../design/database.rst:75
 msgid "When did the the entity perform it's last action, or was acted upon"
 msgstr ""
+"Quand l'entité a-t-elle effectué sa dernière action ou a-t-elle été "
+"sollicitée ? "
 
 #: ../../design/database.rst:76
 msgid "When was the entity deleted"
@@ -403,11 +446,15 @@ msgstr "Quand l'entité a été supprimée"
 msgid ""
 "A deleted state (deleted entities aren't shown in normal circumstances)"
 msgstr ""
+"Un état supprimé (les entités supprimées ne sont pas affichées dans des "
+"circonstances normales)"
 
 #: ../../design/database.rst:78
 msgid ""
 "A disabled state (disabled entities aren't shown in normal circumstances)"
 msgstr ""
+"Un état désactivé (les entités désactivées ne sont pas affichées dans des "
+"circonstances normales)"
 
 #: ../../design/database.rst:81
 msgid "Types"
@@ -419,6 +466,9 @@ msgid ""
 "having a distinct **type** property and their own additional properties and "
 "methods."
 msgstr ""
+"Les entités **réelles** seront des instances de quatre sous-classes "
+"différentes, chacune ayant une propriété **type** distincte et ses propres "
+"propriétés et méthodes supplémentaires."
 
 #: ../../design/database.rst:87
 msgid "Type"
@@ -532,6 +582,11 @@ msgid ""
 "blog plugin could use ``elgg_set_entity_class('object', 'blog', "
 "\\ElggBlog::class)``."
 msgstr ""
+"Les plugins peuvent utiliser des classes d'entités personnalisées qui "
+"étendent la classe de base du type. Pour cela, ils doivent enregistrer leur "
+"classe au démarrage (par ex. dans le gestionnaire ``'init', 'system'``), en "
+"utilisant ``elgg_set_entity_class()``. Par exemple, le plugin blog pourrait "
+"utiliser ``elgg_set_entity_class('object', 'blog', \\ElggBlog::class)``."
 
 #: ../../design/database.rst:113
 msgid ""
@@ -593,6 +648,13 @@ msgid ""
 "this shouldn't have been done. Now the user has the option to restore the "
 "blog in it's original state without having to rewrite it."
 msgstr ""
+"Depuis Elgg 6.0, les entités ont également un état supprimé. Lorsqu'un "
+"type/sous-type d'entité le prend en charge avant d'être supprimé de la base "
+"de données, il peut obtenir cet état. Ainsi, un utilisateur peut restaurer "
+"l'entité si la suppression a été effectuée trop rapidement. Par exemple, un "
+"utilisateur supprime un article de blog, alors qu'il n'aurait pas dû le "
+"faire. Il a désormais la possibilité de restaurer le blog dans son état "
+"d'origine sans avoir à le réécrire."
 
 #: ../../design/database.rst:143
 msgid ""
@@ -601,6 +663,10 @@ msgid ""
 " by the ``time_deleted`` column which holds a UNIX timestamp when the entity"
 " was deleted."
 msgstr ""
+"Dans la base de données, ceci est géré par la colonne ``deleted`` dans la "
+"table ``entities`` qui peut avoir une valeur de ``yes`` ou ``no`` (par "
+"défaut) et par la colonne ``time_deleted`` qui contient un horodatage UNIX "
+"de la suppression de l'entité."
 
 #: ../../design/database.rst:146
 msgid ""
@@ -608,6 +674,9 @@ msgid ""
 "retention period is passed the entity will be permanently removed from the "
 "database."
 msgstr ""
+"L'administrateur du site peut définir une période de conservation pour les "
+"éléments supprimés. Une fois cette période écoulée, l'entité sera "
+"définitivement supprimée de la base de données."
 
 #: ../../design/database.rst:149
 msgid ""
@@ -615,6 +684,10 @@ msgid ""
 "post, the blog will not show up in the blog listing and if anyone has saved "
 "a link to the blog post the page will return a ``404 - Not Found`` error."
 msgstr ""
+"Les éléments supprimés ne s'afficheront pas dans les cas d'utilisation "
+"normaux. Dans l'exemple de l'article de blog, le blog n'apparaîtra pas dans "
+"la liste du blog, et si quelqu'un a enregistré un lien vers l'article de "
+"blog, la page renverra une erreur ``404 - Not Found``."
 
 #: ../../design/database.rst:152
 msgid ""
@@ -622,17 +695,25 @@ msgid ""
 "entities of the user can be viewed. Here the user has the option to restore "
 "the entity or permanently delete it before the retention period has passed."
 msgstr ""
+"Une page spéciale dans les paramètres de l'utilisateur permet de consulter "
+"toutes les entités supprimées. L'utilisateur peut alors choisir de restaurer"
+" l'entité ou de la supprimer définitivement avant la fin de la période de "
+"conservation."
 
 #: ../../design/database.rst:155
 msgid ""
 "This special page is also available to group owners for deleted entities in "
 "their group."
 msgstr ""
+"Cette page spéciale est également disponible pour les propriétaires de "
+"groupe pour les entités supprimées dans leur groupe."
 
 #: ../../design/database.rst:159
 msgid ""
 "For more information check out the :doc:`/guides/restore` documentation"
 msgstr ""
+"Pour plus d'information veuillez consulter la :doc:`/guides/restore` "
+"documentation"
 
 #: ../../design/database.rst:162
 msgid "ElggObject"
@@ -643,11 +724,16 @@ msgid ""
 "The ``ElggObject`` entity type represents arbitrary content within an Elgg "
 "installation things like blog posts, uploaded files, etc."
 msgstr ""
+"Le type d'entité ``ElggObject`` représente un type de contenu arbitraire au "
+"sein d'une installation Elgg, tel que des articles de blog, des fichiers, "
+"etc."
 
 #: ../../design/database.rst:167
 msgid ""
 "Beyond the standard ``ElggEntity`` properties, ``ElggObject`` also supports:"
 msgstr ""
+"Au-delà des propriétés standards de ``ElggEntity``, ``ElggObject`` supporte "
+"également :"
 
 #: ../../design/database.rst:169
 msgid "``title`` The title of the object (HTML escaped text)"
@@ -673,6 +759,10 @@ msgid ""
 "These will be set to disabled until their accounts have been activated "
 "(unless they were created from within the admin panel)."
 msgstr ""
+"Le type d'entité ``ElggUser`` représente les utilisateurs au sein d'une "
+"installation Elgg. Ils seront définis comme désactivés jusqu'à-ce que leur "
+"compte ait été activé (à moins qu'ils n'aient été créés à partir du panneau "
+"d'administration)."
 
 #: ../../design/database.rst:181
 msgid ""
@@ -808,6 +898,9 @@ msgid ""
 "Several of the Elgg core plugins offer support for group content like blogs,"
 " bookmarks, discussions, files and pages."
 msgstr ""
+"Plusieurs des plugins principaux d'Elgg offrent une prise en charge du "
+"contenu de groupe comme les blogs, les signets, les discussions, les "
+"fichiers et les pages."
 
 #: ../../design/database.rst:230
 msgid "Writing a group-aware plugin"
@@ -918,6 +1011,11 @@ msgid ""
 "model a parent-child relationship between entities (e.g. a \"folder\" object"
 " containing a file object)."
 msgstr ""
+"Note : Ceci n'est pas toujours vrai. Les entités des commentaires sont "
+"contenues par l'objet commenté, et dans certains plugins tierce-partie le "
+"conteneur peut être utilisé pour modéliser des relations parents-enfants "
+"entre entités (par ex. un objet dossier \"folder\" qui contient un objet de "
+"type fichier)."
 
 #: ../../design/database.rst:303
 msgid "Annotations"
@@ -1123,6 +1221,10 @@ msgid ""
 "metadata as an ``ElggMetadata`` object, you will need to use the methods "
 "described in the *finer control* section below."
 msgstr ""
+"Notez que ceci va retourner la valeur absolue de la métadonnée. Pour "
+"récupérer des métadonnées sous forme d'objet ``ElggMetadata``, vous devrez  "
+"utiliser les méthodes décrites dans la section *contrôle plus fin* ci-"
+"dessous."
 
 #: ../../design/database.rst:446
 msgid ""
@@ -1151,6 +1253,8 @@ msgid ""
 "``elgg_get_metadata`` is the best function for retrieving metadata as "
 "``ElggMetadata`` objects:"
 msgstr ""
+"``elgg_get_metadata`` est la meilleure fonction pour récupérer les "
+"métadonnées sous forme d'objets ElggMetadata :"
 
 #: ../../design/database.rst:469
 msgid "E.g., to retrieve a user's DOB"
@@ -1165,6 +1269,10 @@ msgid ""
 "When retrieving metadata by name the names are matched case-insensitive. "
 "Keep your code clean and do not mix uppercase and lowercase metadata names."
 msgstr ""
+"Lors de la récupération des métadonnées par nom, les noms sont mis en "
+"correspondance sans distinction de casse. Veillez à la propreté de votre "
+"code et évitez de mélanger les majuscules et les minuscules dans les noms de"
+" métadonnées."
 
 #: ../../design/database.rst:493
 msgid "Common mistakes"
@@ -1322,6 +1430,10 @@ msgid ""
 " and can be edited with code at any privilege level, with the caveat that "
 "*the entities* in a relationship may be invisible due to access control!"
 msgstr ""
+"**Les relations n'ont pas de contrôle d'accès.** Elles ne sont jamais "
+"cachées d'une vue et peuvent être modifiées par le code avec n'importe quel "
+"niveau de privilège, par contre *les entités* d'une relation peuvent être "
+"invisible en raison du contrôle d'accès !"
 
 #: ../../design/database.rst:571
 msgid "Working with relationships"
@@ -1626,6 +1738,10 @@ msgid ""
 " groups. When you first install Elgg this is automatically populated with "
 "your first site, your first user and a set of bundled plugins."
 msgstr ""
+"Ceci est la table principale `Entities`_ qui contient les utilisateurs, "
+"sites, objets et groupes Elgg. Quand vous installez Elgg la première fois "
+"elle est automatiquement remplie avec votre premier site, votre premier "
+"utilisateur, et un jeu de plugins intégré."
 
 #: ../../design/database.rst:727
 msgid "It contains the following fields:"
@@ -1677,6 +1793,9 @@ msgid ""
 "**last\\_action** Unix timestamp of when the user last performed an action "
 "or when within the entity as container something happened"
 msgstr ""
+"**last\\_action** Horodatage Unix du moment où l'utilisateur a effectué une "
+"dernière action ou du moment où quelque chose s'est produit dans l'entité en"
+" tant que conteneur"
 
 #: ../../design/database.rst:738
 msgid ""
@@ -1694,6 +1813,9 @@ msgid ""
 "(default) the entity is visible within the regular site. Deleted entities "
 "can be viewed in the trash"
 msgstr ""
+"**deleted** Si la valeur est 'oui', l'entité est marquée comme supprimée. Si "
+"la valeur est 'no' (par défaut), l'entité est visible sur un site standard. "
+"Les entités supprimées peuvent être consultées dans la corbeille."
 
 #: ../../design/database.rst:744
 msgid "**time\\_deleted** Unix timestamp of when the entity was deleted"
@@ -1937,6 +2059,10 @@ msgid ""
 " happened. Handlers **cannot** cancel these events; all handlers will always"
 " be called."
 msgstr ""
+"Les événements After, dont les noms se terminent par \":after\", sont "
+"déclenchés après que quelque chose s'est produit. Les gestionnaires ne "
+"peuvent pas annuler ces événements ; tous les gestionnaires seront "
+"systématiquement appelés."
 
 #: ../../design/events.rst:53
 msgid ""
@@ -2180,6 +2306,14 @@ msgid ""
 "implied that the user was deleted. Now this is only triggered when the user "
 "is actually removed from the database."
 msgstr ""
+"Depuis Elgg 6.0, l'événement ``:after`` ne sera plus déclenché si le "
+"résultat de la fonction appelable est ``false``. Cette mesure vise à "
+"empêcher le système de penser qu'une action a échoué. Par exemple la "
+"séquence d'événements ``'delete', 'user'``. Si le rappel (qui gère la "
+"suppression réelle de la base de données) n'a pas réussi, l'événement "
+"``:after`` impliquait que l'utilisateur avait été supprimé. Désormais, cet "
+"événement n'est déclenché que lorsque l'utilisateur est effectivement "
+"supprimé de la base de données."
 
 #: ../../design/events.rst:241
 msgid "Unregister Event Handlers"

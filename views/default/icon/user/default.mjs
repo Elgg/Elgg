@@ -51,10 +51,6 @@ function showPopup($icon) {
 		$icon.data('hovermenu', $hovermenu);
 	}
 
-	$hovermenu.on('open', function() {
-		$hovermenu.find('a:first').focus();
-	});
-
 	import('elgg/popup').then((popup) => {
 		if ($hovermenu.is(':visible')) {
 			// close hovermenu if arrow is clicked & menu already open

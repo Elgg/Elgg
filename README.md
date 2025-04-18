@@ -1,10 +1,10 @@
 Elgg
 ====
 
-[![PHPUnit test suites](https://github.com/Elgg/Elgg/actions/workflows/phpunit.yml/badge.svg?branch=6.1)](https://github.com/Elgg/Elgg/actions/workflows/phpunit.yml)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/quality-score.png?s=6.1)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=6.1) 
-[![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/coverage.png?b=6.1)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=6.1) 
-[![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?badge=6.1)](http://learn.elgg.org/en/6.1/)
+[![PHPUnit test suites](https://github.com/Elgg/Elgg/actions/workflows/phpunit.yml/badge.svg?branch=6.2)](https://github.com/Elgg/Elgg/actions/workflows/phpunit.yml)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/quality-score.png?s=6.2)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=6.2) 
+[![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/coverage.png?b=6.2)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=6.2) 
+[![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?badge=6.2)](http://learn.elgg.org/en/6.2/)
 
 Elgg is an open source rapid development framework for socially aware web applications.
 
@@ -60,7 +60,7 @@ The Elgg project was started in 2004 by
 License
 -------
 
-Copyright (c) 2008-2024, see COPYRIGHT.txt
+Copyright (c) 2008-2025, see COPYRIGHT.txt
 
 Elgg is released under the GNU General Public License (GPL) Version 2 and the
 Massachusetts Institute of Technology (MIT-X11) License. 
