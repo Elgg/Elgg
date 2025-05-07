@@ -527,8 +527,6 @@ return array(
 	'plugins:disabled' => '插件不能装载,因为有一个名为“disabled”的文件存在于mod文件夹。',
 	'plugins:settings:save:ok' => "%s插件的设置保存成功。",
 	'plugins:settings:save:fail' => "保存 %s 插件设置时遇到问题。",
-	'plugins:usersettings:save:ok' => "%s插件的用户设置成功保存。",
-	'plugins:usersettings:save:fail' => "保存%s插件的用户设置时遇到问题。",
 	
 	'item:object:plugin' => '插件',
 	'collection:object:plugin' => '所有插件',

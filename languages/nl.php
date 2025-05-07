@@ -115,6 +115,7 @@ return array(
 	'NotImplementedException' => 'De verzochte methode is niet geïmplementeerd voor deze resource',
 	'ServiceUnavailableException' => 'De server was niet in staat het verzoek af te handelen. Probeer het later opnieuw.',
 	'TooManyRequestsException' => 'Te veel verzoeken, doe rustiger aan',
+	'UnauthorizedException' => 'Je hebt niet de correcte authenticatie gegevens voor de gevraagde pagina',
 	
 	'Security:InvalidPasswordCharacterRequirementsException' => "Het opgegeven wachtwoord voldoet niet aan de minimale eisen",
 	'Security:InvalidPasswordLengthException' => "Het opgegeven wachtwoord voldoet niet aan de minimale lengte van %s",
@@ -299,6 +300,7 @@ return array(
  */
 	'link:view' => 'Bekijk link',
 	'link:view:all' => 'Bekijk alles',
+	'link:skip_to_main' => 'Direct naar de inhoud',
 
 /**
  * River
@@ -886,8 +888,8 @@ Bekijk hier de volledige lijst van gebruikers:
 	'plugins:settings:save:fail' => "Er is een fout opgetreden tijdens het opslaan van de instellingen voor de plugin '%s'.",
 	'plugins:settings:remove:ok' => "Alle instellingen voor de %s plugin zijn verwijderd",
 	'plugins:settings:remove:fail' => "Er is een probleem  opgetreden tijdens het verwijderen van alle instellingen voor de %s plugin",
-	'plugins:usersettings:save:ok' => "Gebruikersinstellingen voor de plugin '%s' zijn succesvol opgeslagen.",
-	'plugins:usersettings:save:fail' => "Er is een fout opgetreden tijden het opslaan van de gebruikersinstellingen van de plugin '%s'.",
+	'plugins:usersettings:save:ok' => "Je instellingen voor %s zijn succesvol opgeslagen.",
+	'plugins:usersettings:save:fail' => "Er heeft zich een probleem voorgedaan tijdens het opslaan van de instellingen voor %s.",
 	
 	'item:object:plugin' => 'Plugins',
 	'collection:object:plugin' => 'Plugins',
