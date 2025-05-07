@@ -892,8 +892,6 @@ Voir la liste complète des utilisateurs :
 	'plugins:settings:save:fail' => "Il y a eu un problème lors de l'enregistrement des paramètres du plugin %s.",
 	'plugins:settings:remove:ok' => "Tous les paramètres du plugin %s ont été supprimés",
 	'plugins:settings:remove:fail' => "Une erreur est survenue lors de la suppression des paramètres du plugin %s",
-	'plugins:usersettings:save:ok' => "Les paramètres utilisateur du plugin %s ont bien été enregistrés.",
-	'plugins:usersettings:save:fail' => "Il y a eu un problème lors de l'enregistrement des paramètres utilisateur du plugin %s.",
 	
 	'item:object:plugin' => 'Plugin',
 	'collection:object:plugin' => 'Plugins',

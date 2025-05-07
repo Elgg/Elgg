@@ -7,6 +7,7 @@
 
 return array(
 	'garbagecollector:period' => 'Hoe vaak wil je dat Elgg de garbage collector draait?',
+	'garbagecollector:period:optimize' => 'Optimaliseer databasetabellen na het uitvoeren van de garbage collector',
 
 	'garbagecollector:weekly' => 'Eens per week',
 	'garbagecollector:monthly' => 'Eens per maand',
