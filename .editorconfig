@@ -1,0 +1,30 @@
+# EditorConfig is awesome: https://editorconfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = tab
+indent_size = 4
+insert_final_newline = true
+
+[composer.{json,lock}]
+indent_style = space
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.rst]
+indent_style = space
+
+[*.txt]
+indent_style = space
+
+[*.yml]
+indent_style = space
+indent_size = 2
+
+[COMMIT_EDITMSG]
+max_line_length = 160

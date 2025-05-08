@@ -71,6 +71,7 @@ startup.sh
 !/.travis.yml
 !/.readthedocs.yml
 !/.scrutinizer.yml
+!.editorconfig
 !.github
 !.gitignore
 !.scripts
