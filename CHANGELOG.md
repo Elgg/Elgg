@@ -1,3 +1,17 @@
+<a name="6.2.1"></a>
+### 6.2.1 (2025-05-07)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+
+#### Bug fixes
+
+* **discussions:** correctly edit a discussion [657a4fb62](https://github.com/Elgg/Elgg/commit/657a4fb62ca255c52e33ab34c9e1781ed41caca1)
+* **pages:** show all children in the sidebar menu [9153e227c](https://github.com/Elgg/Elgg/commit/9153e227c267010440c53d4968efb2d449dccf5e)
+* **settings:** use correct plugin name in user settings save action [f4b84a304](https://github.com/Elgg/Elgg/commit/f4b84a3040ebcce8f16f845ca29d36b1d3ce5027)
+
+
 <a name="6.2.0"></a>
 ## 6.2.0 (2025-04-14)
 
