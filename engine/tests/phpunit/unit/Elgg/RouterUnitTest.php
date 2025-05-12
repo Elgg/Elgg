@@ -514,7 +514,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'current_url' => elgg_normalize_url('foo/bar/baz'),
 			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
-			'_elgg_deps' => [],
+			'_elgg_deps' => ['js' => [], 'css' => []],
 		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
@@ -578,7 +578,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'current_url' => elgg_normalize_url('foo/bar/baz'),
 			'forward_url' => elgg_normalize_url('foo2/bar2/baz2'),
 			'_elgg_msgs' => (object) [],
-			'_elgg_deps' => [],
+			'_elgg_deps' => ['js' => [], 'css' => []],
 		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
@@ -618,7 +618,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			]),
 			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
-			'_elgg_deps' => [],
+			'_elgg_deps' => ['js' => [], 'css' => []],
 		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
@@ -651,7 +651,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'current_url' => elgg_normalize_url('phpunit'),
 			'forward_url' => elgg_normalize_url('index'),
 			'_elgg_msgs' => (object) [],
-			'_elgg_deps' => [],
+			'_elgg_deps' => ['js' => [], 'css' => []],
 		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
@@ -891,7 +891,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'current_url' => elgg_normalize_url('ajax/view/cacheable.xml'),
 			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
-			'_elgg_deps' => [],
+			'_elgg_deps' => ['js' => [], 'css' => []],
 		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
@@ -917,7 +917,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'current_url' => elgg_normalize_url('ajax/view/styles.css'),
 			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
-			'_elgg_deps' => [],
+			'_elgg_deps' => ['js' => [], 'css' => []],
 		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
@@ -943,7 +943,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'current_url' => elgg_normalize_url('ajax/view/javascript.js'),
 			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
-			'_elgg_deps' => [],
+			'_elgg_deps' => ['js' => [], 'css' => []],
 		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
@@ -974,7 +974,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			]),
 			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
-			'_elgg_deps' => [],
+			'_elgg_deps' => ['js' => [], 'css' => []],
 		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
@@ -1126,7 +1126,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			]),
 			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
-			'_elgg_deps' => [],
+			'_elgg_deps' => ['js' => [], 'css' => []],
 		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());

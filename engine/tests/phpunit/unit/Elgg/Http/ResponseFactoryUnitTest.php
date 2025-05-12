@@ -56,7 +56,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->createRequest('', 'GET');
 
 		$this->system_messages = new SystemMessagesService($this->session);
-		$this->ajax = new Service($this->events, $this->system_messages, $this->request, _elgg_services()->esm);
+		$this->ajax = new Service($this->events, $this->system_messages, $this->request, _elgg_services()->esm, _elgg_services()->externalFiles);
 
 		_elgg_services()->logger->disable();
 	}

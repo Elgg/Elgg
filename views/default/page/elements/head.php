@@ -40,8 +40,9 @@ foreach ($js_foot as $resource) {
 }
 
 $stylesheets = elgg_get_loaded_external_resources('css', 'head');
-foreach ($stylesheets as $resource) {
+foreach ($stylesheets as $name => $resource) {
 	$options = [
+		'data-name' => $name,
 		'rel' => 'stylesheet',
 		'href' => $resource->url,
 	];
