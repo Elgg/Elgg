@@ -62,7 +62,7 @@ function Ajax(use_spinner) {
 			status_code = status_code || 200;
 
 			if (!metadata_extracted) {
-				var m = data._elgg_msgs;
+				const m = data._elgg_msgs;
 				if (m && m.error) {
 					data.error = m.error;
 				}
@@ -81,10 +81,32 @@ function Ajax(use_spinner) {
 				m && m.success && options.showSuccessMessages && system_messages.success(m.success);
 				delete data._elgg_msgs;
 
-				var deps = data._elgg_deps;
-				if (deps && deps.length) {
-					deps.forEach((dep) => import(dep));
+				const deps = data._elgg_deps;
+				if (deps && deps.js) {
+					deps.js.forEach((dep) => import(dep));
 				}
+				
+				if (deps && deps.css) {
+					deps.css.forEach(function (dep) {
+						if ($('link[rel="stylesheet"][data-name="' + dep.name + '"]').length) {
+							return;
+						}
+						
+						let link = document.createElement('link');
+						link.type = 'text/css';
+						link.rel = 'stylesheet';
+						
+						link.href = dep.href;
+						link.setAttribute('data-name', dep.name);
+						if (dep.integrity) {
+							link.integrity = dep.integrity;
+							link.crossorigin = 'anonymous';
+						}
+						
+						document.head.appendChild(link);
+					});
+				}
+				
 				delete data._elgg_deps;
 
 				metadata_extracted = true;
