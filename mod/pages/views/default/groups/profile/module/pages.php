@@ -19,7 +19,6 @@ $content = elgg_list_entities([
 		'parent_guid' => 0,
 	],
 	'limit' => 6,
-	'full_view' => false,
 	'pagination' => false,
 	'no_results' => elgg_echo('pages:none'),
 ]);

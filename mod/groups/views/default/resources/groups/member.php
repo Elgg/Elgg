@@ -19,7 +19,6 @@ $content = elgg_list_entities([
 	'relationship' => 'member',
 	'relationship_guid' => elgg_get_page_owner_guid(),
 	'inverse_relationship' => false,
-	'full_view' => false,
 	'sort_by' => [
 		'property' => 'name',
 		'direction' => 'ASC',

@@ -17,8 +17,6 @@ $getter = $query ? 'elgg_search' : 'elgg_get_entities';
 // make selection options
 $default_options = [
 	'type' => 'user',
-	'subtype' => null,
-	'full_view' => false,
 	'list_type' => 'table',
 	'limit' => max(25, elgg_get_config('default_limit'), (int) get_input('limit', 0)),
 	'columns' => [

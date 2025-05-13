@@ -10,7 +10,6 @@
 $defaults = [
 	'type' => 'object',
 	'subtype' => 'bookmarks',
-	'full_view' => false,
 	'no_results' => elgg_echo('bookmarks:none'),
 	'distinct' => false,
 ];

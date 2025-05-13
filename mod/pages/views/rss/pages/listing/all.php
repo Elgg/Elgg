@@ -13,7 +13,6 @@ $defaults = [
 	'metadata_name_value_pairs' => [
 		'parent_guid' => 0,
 	],
-	'full_view' => false,
 	'distinct' => false,
 	'pagination' => false,
 ];

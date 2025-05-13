@@ -20,7 +20,6 @@ $options = [
 		'value' => $page_owner->guid,
 	],
 	'owner_guid' => $page_owner->guid,
-	'full_view' => false,
 	'bulk_actions' => true,
 	'pagination' => true,
 	'pagination_behaviour' => 'ajax-replace',
