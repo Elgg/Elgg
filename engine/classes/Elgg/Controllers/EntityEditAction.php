@@ -85,7 +85,9 @@ class EntityEditAction extends GenericAction {
 			$field_type = (string) elgg_extract('#type', $field);
 			$value = $this->request->getParam($name);
 			
-			if ($field_type === 'tags') {
+			if ($field_type === 'switch') {
+				$value = (bool) $value;
+			} elseif ($field_type === 'tags') {
 				$value = elgg_string_to_array((string) $value);
 			} elseif ($name === 'title') {
 				$value = elgg_get_title_input();
