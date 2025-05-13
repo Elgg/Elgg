@@ -10,7 +10,6 @@
 
 $defaults = [
 	'type' => 'group',
-	'full_view' => false,
 	'pagination' => false,
 ];
 

@@ -9,7 +9,6 @@ $options = [
 	'type' => 'object',
 	'subtype' => 'site_notification',
 	'owner_guid' => $page_owner->guid,
-	'full_view' => false,
 	'metadata_name_value_pairs' => [
 		'read' => false,
 	],

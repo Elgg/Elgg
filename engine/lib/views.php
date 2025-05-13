@@ -498,7 +498,7 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = []): string {
 
 	$vars = array_merge($defaults, $vars);
 	
-	if (elgg_extract('register_rss_link', $vars, elgg_extract('full_view', $vars))) {
+	if (elgg_extract('register_rss_link', $vars, $vars['full_view'])) {
 		elgg_register_rss_link();
 	}
 
@@ -507,8 +507,11 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = []): string {
 	$entity_type = $entity->getType();
 	$entity_subtype = $entity->getSubtype();
 
+	$subview = $vars['full_view'] ? 'full' : 'summary';
+
 	$entity_views = [
 		(string) elgg_extract('item_view', $vars, ''),
+		"{$entity_type}/{$entity_subtype}/{$subview}",
 		"{$entity_type}/{$entity_subtype}",
 		"{$entity_type}/default",
 	];

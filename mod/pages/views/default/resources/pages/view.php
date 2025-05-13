@@ -34,9 +34,7 @@ if ($page->canEdit() && $container->canWriteToContainer(0, 'object', 'page')) {
 }
 
 echo elgg_view_page($page->getDisplayName(), [
-	'content' => elgg_view_entity($page, [
-		'show_responses' => true,
-	]),
+	'content' => elgg_view_entity($page),
 	'sidebar' => elgg_view('pages/sidebar/navigation', [
 		'page' => $page,
 	]),

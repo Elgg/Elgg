@@ -14,7 +14,6 @@ $defaults = [
 		'parent_guid' => 0,
 	],
 	'no_results' => elgg_echo('pages:none'),
-	'full_view' => false,
 	'distinct' => false,
 ];
 

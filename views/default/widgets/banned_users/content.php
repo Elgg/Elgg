@@ -12,7 +12,6 @@ $num_display = (int) $widget->num_display ?: 4;
 
 echo elgg_list_entities([
 	'type' => 'user',
-	'subtype' => null,
 	'metadata_name_value_pairs' => [
 		'banned' => 'yes',
 	],

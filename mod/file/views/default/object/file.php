@@ -26,7 +26,6 @@ if (elgg_extract('full_view', $vars) && !elgg_in_context('gallery')) {
 		'icon_entity' => $entity->getOwnerEntity(),
 		'body' => elgg_view('output/longtext', ['value' => $entity->description]),
 		'attachments' => $extra,
-		'show_responses' => elgg_extract('show_responses', $vars, false),
 		'show_navigation' => true,
 	];
 	$params = $params + $vars;
