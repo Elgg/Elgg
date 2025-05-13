@@ -194,14 +194,12 @@ select:not([multiple]) {
 }
 
 @media $(media-phone-up) {
-	.elgg-fieldset-horizontal {
-		flex-direction: row;
-		
-		> .elgg-field {
-			vertical-align: top;
-			
+	.elgg-field {
+		&.elgg-field-horizontal {
 			display: flex;
-			flex-direction: column;
+			flex-direction: row;
+			align-items: baseline;
+			column-gap: 1rem;
 			
 			&.elgg-field-stretch {
 				flex-basis: 1%;
@@ -212,20 +210,19 @@ select:not([multiple]) {
 				}
 			}
 			
-			&.elgg-field-horizontal {
-				flex-direction: row;
-				align-items: baseline;
-				
-				> *:not(:first-child) {
-					padding-left: 1rem;
-				}
-			}
-			
 			> .elgg-field-label {
 				align-items: center;
 				display: flex;
 				flex-shrink: 0;
 			}
+		}
+	}
+
+	.elgg-fieldset-horizontal {
+		flex-direction: row;
+		
+		> .elgg-field {
+			vertical-align: top;
 		}
 		
 		&.elgg-fieldset-wrap {
