@@ -683,6 +683,25 @@ $ipsum = elgg_view('theme_sandbox/demo/ipsum');
 				],
 			]
 		]);
+		
+		echo elgg_view_field([
+			'#type' => 'fieldset',
+			'name' => 'f18',
+			'legend' => 'Vertical Fieldset with fields that have horizontal labels',
+			'fields' => [
+				[
+					'#type' => 'text',
+					'#label' => 'Text field 1',
+					'#class' => 'elgg-field-horizontal',
+					'required' => true,
+				],
+				[
+					'#type' => 'text',
+					'#label' => 'Text field 2 stretched',
+					'#class' => ['elgg-field-horizontal', 'elgg-field-stretch'],
+				],
+			],
+		]);
 
 		echo elgg_view('theme_sandbox/forms/extend');
 		?>
