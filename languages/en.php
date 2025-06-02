@@ -2132,4 +2132,7 @@ Global variables:
 
 	'core:upgrade:2024071001:title' => "Migrate admin validation notification preference",
 	'core:upgrade:2024071001:description' => "Moves the storage of the admin notification preference to notifications settings",
+
+	'core:upgrade:2025060201:title' => "Store correct database value for boolean values",
+	'core:upgrade:2025060201:description' => "In the annotations and metadata table the value for a falsy boolean value was stored incorrect",
 );

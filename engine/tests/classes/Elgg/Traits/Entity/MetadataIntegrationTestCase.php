@@ -46,35 +46,35 @@ abstract class MetadataIntegrationTestCase extends IntegrationTestCase {
 	public function testEntitySetSingleValue() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = 'bar';
-			$this->assertEquals($entity->foo, 'bar');
+			$this->assertEquals('bar', $entity->foo);
 		}
 	}
 	
 	public function testEntitySetSingleIntValue() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = 123;
-			$this->assertEquals($entity->foo, 123);
+			$this->assertEquals(123, $entity->foo);
 		}
 	}
 	
 	public function testEntitySetTrueValue() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = true;
-			$this->assertEquals($entity->foo, 1);
+			$this->assertTrue($entity->foo);
 		}
 	}
 	
 	public function testEntitySetFalseValue() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = false;
-			$this->assertEquals($entity->foo, 0);
+			$this->assertFalse($entity->foo);
 		}
 	}
 	
 	public function testEntitySetEmptyStringValue() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = '';
-			$this->assertEquals($entity->foo, '');
+			$this->assertNull($entity->foo);
 		}
 	}
 	
@@ -88,7 +88,7 @@ abstract class MetadataIntegrationTestCase extends IntegrationTestCase {
 	public function testEntitySetOverwriteWithNullValue() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = 'bar';
-			$this->assertEquals($entity->foo, 'bar');
+			$this->assertEquals('bar', $entity->foo);
 			$entity->foo = null;
 			$this->assertNull($entity->foo);
 		}
@@ -97,57 +97,57 @@ abstract class MetadataIntegrationTestCase extends IntegrationTestCase {
 	public function testEntitySetSingleValueOverwrite() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = 'bar';
-			$this->assertEquals($entity->foo, 'bar');
+			$this->assertEquals('bar', $entity->foo);
 			$entity->foo = 'bar2';
-			$this->assertEquals($entity->foo, 'bar2');
+			$this->assertEquals('bar2', $entity->foo);
 		}
 	}
 
 	public function testEntitySetSingleValueOverwriteNoChanges() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = 'bar';
-			$this->assertEquals($entity->foo, 'bar');
+			$this->assertEquals('bar', $entity->foo);
 			$entity->foo = 'bar';
-			$this->assertEquals($entity->foo, 'bar');
+			$this->assertEquals('bar', $entity->foo);
 		}
 	}
 
 	public function testEntitySetSingleElementArrayValue() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = ['bar'];
-			$this->assertEquals($entity->foo, 'bar');
+			$this->assertEquals('bar', $entity->foo);
 		}
 	}
 
 	public function testEntitySetMultipleValue() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = ['a', 'b'];
-			$this->assertEquals($entity->foo, ['a', 'b']);
+			$this->assertEquals(['a', 'b'], $entity->foo);
 		}
 	}
 
 	public function testEntitySetMultipleValueOverwrite() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = ['a', 'b'];
-			$this->assertEquals($entity->foo, ['a', 'b']);
+			$this->assertEquals(['a', 'b'], $entity->foo);
 			$entity->foo = ['b', 'a'];
-			$this->assertEquals($entity->foo, ['b', 'a']);
+			$this->assertEquals(['b', 'a'], $entity->foo);
 		}
 	}
 
 	public function testEntitySetMultipleValueOverwriteNoChanges() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = ['a', 'b'];
-			$this->assertEquals($entity->foo, ['a', 'b']);
+			$this->assertEquals(['a', 'b'], $entity->foo);
 			$entity->foo = ['a', 'b'];
-			$this->assertEquals($entity->foo, ['a', 'b']);
+			$this->assertEquals(['a', 'b'], $entity->foo);
 		}
 	}
 
 	public function testEntitySetEmptyArray() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = 'bar';
-			$this->assertEquals($entity->foo, 'bar');
+			$this->assertEquals('bar', $entity->foo);
 			$entity->foo = [];
 			$this->assertNull($entity->foo);
 		}
@@ -156,7 +156,7 @@ abstract class MetadataIntegrationTestCase extends IntegrationTestCase {
 	public function testEntityUnsetSingleValue() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = 'bar';
-			$this->assertEquals($entity->foo, 'bar');
+			$this->assertEquals('bar', $entity->foo);
 			unset($entity->foo);
 			$this->assertNull($entity->foo);
 		}
@@ -165,7 +165,7 @@ abstract class MetadataIntegrationTestCase extends IntegrationTestCase {
 	public function testEntityUnsetMultipleValue() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = ['a', 'b'];
-			$this->assertEquals($entity->foo, ['a', 'b']);
+			$this->assertEquals(['a', 'b'], $entity->foo);
 			unset($entity->foo);
 			$this->assertNull($entity->foo);
 		}
@@ -248,17 +248,17 @@ abstract class MetadataIntegrationTestCase extends IntegrationTestCase {
 		// @link https://github.com/elgg/elgg/issues/2273
 		$this->assertTrue($this->entity->setMetadata('foo', 'bar'));
 		$this->assertTrue($this->entity->deleteMetadata('notfoo'));
-		$this->assertEquals($this->entity->getMetadata('foo'), 'bar');
+		$this->assertEquals('bar', $this->entity->getMetadata('foo'));
 	}
 
 	public function testDeleteMetadataSingleName() {
 		$this->assertTrue($this->entity->setMetadata('foo', 'bar'));
-		$this->assertEquals($this->entity->getMetadata('foo'), 'bar');
+		$this->assertEquals('bar', $this->entity->getMetadata('foo'));
 		$this->assertTrue($this->entity->setMetadata('important', 'indeed!'));
-		$this->assertEquals($this->entity->getMetadata('important'), 'indeed!');
+		$this->assertEquals('indeed!', $this->entity->getMetadata('important'));
 		$this->assertTrue($this->entity->deleteMetadata('important'));
 		$this->assertNull($this->entity->getMetadata('important'));
-		$this->assertEquals($this->entity->getMetadata('foo'), 'bar');
+		$this->assertEquals('bar', $this->entity->getMetadata('foo'));
 	}
 
 	public function testDeleteMetadataDeletesAll() {

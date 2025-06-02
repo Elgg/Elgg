@@ -284,7 +284,7 @@ class MetadataTable {
 
 		$qb = Update::table(self::TABLE_NAME);
 		$qb->set('name', $qb->param($metadata->name, ELGG_VALUE_STRING))
-			->set('value', $qb->param($metadata->value, $metadata->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING))
+			->set('value', $qb->param($metadata->value, $metadata->value_type === 'text' ? ELGG_VALUE_STRING : ELGG_VALUE_INTEGER))
 			->set('value_type', $qb->param($metadata->value_type, ELGG_VALUE_STRING))
 			->where($qb->compare('id', '=', $metadata->id, ELGG_VALUE_INTEGER));
 
