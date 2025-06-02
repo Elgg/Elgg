@@ -164,7 +164,7 @@ class AnnotationsTable {
 
 		$qb = Update::table(self::TABLE_NAME);
 		$qb->set('name', $qb->param($annotation->name, ELGG_VALUE_STRING))
-			->set('value', $qb->param($annotation->value, $annotation->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING))
+			->set('value', $qb->param($annotation->value, $annotation->value_type === 'text' ? ELGG_VALUE_STRING : ELGG_VALUE_INTEGER))
 			->set('value_type', $qb->param($annotation->value_type, ELGG_VALUE_STRING))
 			->set('access_id', $qb->param($annotation->access_id, ELGG_VALUE_INTEGER))
 			->set('owner_guid', $qb->param($annotation->owner_guid, ELGG_VALUE_INTEGER))
