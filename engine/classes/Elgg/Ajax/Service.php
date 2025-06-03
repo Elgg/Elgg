@@ -230,6 +230,11 @@ class Service {
 			];
 			
 			foreach ($this->externalFiles->getLoadedResources('css', 'head') as $name => $resource) {
+				if ($name === 'elgg') {
+					// prevent loading of elgg.css in admin context
+					continue;
+				}
+				
 				$deps['css'][] = [
 					'name' => $name,
 					'href' => $resource->url,
