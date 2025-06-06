@@ -633,8 +633,8 @@ E.g. retrieving users who joined your group in January 2014.
         'relationship_guid' => $group->guid,
         'inverse_relationship' => true,
 
-        'relationship_created_time_lower' => 1388534400, // January 1st 2014
-        'relationship_created_time_upper' => 1391212800, // February 1st 2014
+        'relationship_created_after' => 1388534400, // January 1st 2014
+        'relationship_created_before' => 1391212800, // February 1st 2014
     ));
 
 .. _database-access-control:

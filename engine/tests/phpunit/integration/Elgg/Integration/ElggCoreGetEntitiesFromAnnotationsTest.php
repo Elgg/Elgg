@@ -55,7 +55,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesIntegrat
 
 		$entities = elgg_get_entities([
 			'annotation_owner_guid' => $user1->guid,
-			'annotation_created_time_lower' => (time() - 3600),
+			'annotation_created_after' => (time() - 3600),
 			'annotation_name' => $annotation_name,
 		]);
 
@@ -64,7 +64,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesIntegrat
 
 		$entities = elgg_get_entities([
 			'annotation_owner_guid' => $user1->guid,
-			'annotation_created_time_upper' => (time() - 3600),
+			'annotation_created_before' => (time() - 3600),
 			'annotation_name' => $annotation_name,
 		]);
 

@@ -95,8 +95,8 @@ trait LegacyQueryOptionsAdapter {
 			'metadata_name_value_pairs_operator' => 'AND',
 			'metadata_case_sensitive' => true,
 			'metadata_ids' => null,
-			'metadata_created_time_lower' => null,
-			'metadata_created_time_upper' => null,
+			'metadata_created_after' => null,
+			'metadata_created_before' => null,
 			'metadata_calculation' => null,
 
 			'search_name_value_pairs' => null,
@@ -107,8 +107,8 @@ trait LegacyQueryOptionsAdapter {
 			'annotation_name_value_pairs_operator' => 'AND',
 			'annotation_case_sensitive' => true,
 			'annotation_ids' => null,
-			'annotation_created_time_lower' => null,
-			'annotation_created_time_upper' => null,
+			'annotation_created_after' => null,
+			'annotation_created_before' => null,
 			'annotation_owner_guids' => null,
 			'annotation_calculation' => null,
 
@@ -118,8 +118,8 @@ trait LegacyQueryOptionsAdapter {
 			'relationship_guid' => null,
 			'inverse_relationship' => false,
 			'relationship_join_on' => 'guid',
-			'relationship_created_time_lower' => null,
-			'relationship_created_time_upper' => null,
+			'relationship_created_after' => null,
+			'relationship_created_before' => null,
 
 			'preload_owners' => false,
 			'preload_containers' => false,
@@ -713,16 +713,31 @@ trait LegacyQueryOptionsAdapter {
 		foreach ($props as $prop) {
 			foreach ($bounds as $bound) {
 				$prop_name = "{$prop}_{$bound}";
-
+				if (!isset($options[$prop_name])) {
+					// required to remove key from array of defaults
+					unset($options[$prop_name]);
+					continue;
+				}
+				
 				$new_prop_name = $prop_name;
 				$new_prop_name = str_replace('modified', 'updated', $new_prop_name);
 				$new_prop_name = str_replace('posted', 'created', $new_prop_name);
 				$new_prop_name = str_replace('time_lower', 'after', $new_prop_name);
 				$new_prop_name = str_replace('time_upper', 'before', $new_prop_name);
+				
+				if ($new_prop_name === $prop_name) {
+					// no changes
+					continue;
+				}
 
 				if (!isset($options[$new_prop_name])) {
+					// elgg deprecated notice
+					elgg_deprecated_notice("Using the option '{$prop_name}' is deprecated. Update your code to use '{$new_prop_name}' instead.", '6.3');
 					$options[$new_prop_name] = elgg_extract($prop_name, $options);
 				}
+				
+				// always remove unwanted prop name
+				unset($options[$prop_name]);
 			}
 		}
 
@@ -1000,53 +1015,6 @@ trait LegacyQueryOptionsAdapter {
 			}
 			
 			$options['group_by'][$key] = new GroupByClause($expr);
-		}
-
-		return $options;
-	}
-
-	/**
-	 * Normalizes metadata / annotation option names to their corresponding metastrings name.
-	 *
-	 * @param array $options An options array
-	 *
-	 * @return array
-	 * @internal
-	 */
-	public static function normalizeMetastringOptions(array $options = []): array {
-
-		// support either metastrings_type or metastring_type
-		// because I've made this mistake many times and hunting it down is a pain...
-		$type = elgg_extract('metastring_type', $options, null);
-		$type = elgg_extract('metastrings_type', $options, $type);
-
-		$options['metastring_type'] = $type;
-
-		// support annotation_ and annotations_ because they're way too easy to confuse
-		$prefixes = ['metadata_', 'annotation_', 'annotations_'];
-
-		// map the metadata_* options to metastring_* options
-		$map = [
-			'names'                 => 'metastring_names',
-			'values'                => 'metastring_values',
-			'case_sensitive'        => 'metastring_case_sensitive',
-			'owner_guids'           => 'metastring_owner_guids',
-			'created_time_lower'    => 'metastring_created_time_lower',
-			'created_time_upper'    => 'metastring_created_time_upper',
-			'calculation'           => 'metastring_calculation',
-			'ids'                   => 'metastring_ids',
-		];
-
-		foreach ($prefixes as $prefix) {
-			$singulars = ["{$prefix}name", "{$prefix}value", "{$prefix}owner_guid", "{$prefix}id"];
-			$options = self::normalizePluralOptions($options, $singulars);
-
-			foreach ($map as $specific => $normalized) {
-				$key = $prefix . $specific;
-				if (isset($options[$key])) {
-					$options[$normalized] = $options[$key];
-				}
-			}
 		}
 
 		return $options;
