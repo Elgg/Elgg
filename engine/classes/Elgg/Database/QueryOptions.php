@@ -30,6 +30,8 @@ use Elgg\Traits\Database\LegacyQueryOptionsAdapter;
  * @property \DateTime|string|int        $updated_before
  * @property \DateTime|string|int        $last_action_after
  * @property \DateTime|string|int        $last_action_before
+ * @property \DateTime|string|int        $deleted_after
+ * @property \DateTime|string|int        $deleted_before
  *
  * @property boolean                     $distinct
  * @property SelectClause[]              $selects
