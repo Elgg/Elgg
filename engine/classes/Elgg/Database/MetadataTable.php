@@ -314,9 +314,6 @@ class MetadataTable {
 	 * @return \ElggMetadata[]|mixed
 	 */
 	public function getAll(array $options = []) {
-		$options['metastring_type'] = 'metadata';
-		$options = QueryOptions::normalizeMetastringOptions($options);
-
 		return Metadata::find($options);
 	}
 

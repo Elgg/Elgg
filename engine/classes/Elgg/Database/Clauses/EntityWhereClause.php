@@ -64,6 +64,16 @@ class EntityWhereClause extends WhereClause {
 	 * @var \DateTime|string|int
 	 */
 	public $last_action_before;
+	
+	/**
+	 * @var \DateTime|string|int
+	 */
+	public $deleted_after;
+	
+	/**
+	 * @var \DateTime|string|int
+	 */
+	public $deleted_before;
 
 	/**
 	 * @var string
@@ -124,6 +134,7 @@ class EntityWhereClause extends WhereClause {
 		$wheres[] = $qb->between($alias('time_created'), $this->created_after, $this->created_before, ELGG_VALUE_TIMESTAMP);
 		$wheres[] = $qb->between($alias('time_updated'), $this->updated_after, $this->updated_before, ELGG_VALUE_TIMESTAMP);
 		$wheres[] = $qb->between($alias('last_action'), $this->last_action_after, $this->last_action_before, ELGG_VALUE_TIMESTAMP);
+		$wheres[] = $qb->between($alias('time_deleted'), $this->deleted_after, $this->deleted_before, ELGG_VALUE_TIMESTAMP);
 		$wheres[] = $qb->compare($alias('enabled'), '=', $this->enabled, ELGG_VALUE_STRING);
 		$wheres[] = $qb->compare($alias('deleted'), '=', $this->deleted, ELGG_VALUE_STRING);
 		$wheres[] = $qb->compare($alias('access_id'), '=', $this->access_ids, ELGG_VALUE_ID);
@@ -149,6 +160,8 @@ class EntityWhereClause extends WhereClause {
 		$where->updated_before = $options->updated_before;
 		$where->last_action_after = $options->last_action_after;
 		$where->last_action_before = $options->last_action_before;
+		$where->deleted_after = $options->deleted_after;
+		$where->deleted_before = $options->deleted_before;
 		$where->access_ids = $options->access_ids;
 
 		return $where;

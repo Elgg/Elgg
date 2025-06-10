@@ -43,8 +43,8 @@ class River extends Repository {
 			'annotation_ids' => null,
 			'views' => null,
 			'action_types' => null,
-			'posted_time_lower' => null,
-			'posted_time_upper' => null,
+			'created_after' => null,
+			'created_before' => null,
 			'limit' => 20,
 			'offset' => 0,
 		];

@@ -192,9 +192,6 @@ class AnnotationsTable {
 	 * @return \ElggAnnotation[]|mixed
 	 */
 	public function find(array $options = []) {
-		$options['metastring_type'] = 'annotations';
-		$options = QueryOptions::normalizeMetastringOptions($options);
-
 		return Annotations::find($options);
 	}
 

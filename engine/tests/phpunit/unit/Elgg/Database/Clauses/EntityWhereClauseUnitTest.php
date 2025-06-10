@@ -167,9 +167,38 @@ class EntityWhereClauseUnitTest extends UnitTestCase {
 
 		$this->assertEquals($expected, $actual);
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
-
 	}
-
+	
+	public function testBuildQueryFromTimeDeleted() {
+		
+		$after = (new \DateTime())->modify('-1 day');
+		$before = (new \DateTime())->modify('+1 day');
+		
+		$parts = [];
+		
+		$time_parts = [];
+		$time_parts[] = $this->qb->expr()->gte('alias.time_deleted', ':qb1');
+		$time_parts[] = $this->qb->expr()->lte('alias.time_deleted', ':qb2');
+		$this->qb->param($after->getTimestamp(), ELGG_VALUE_INTEGER);
+		$this->qb->param($before->getTimestamp(), ELGG_VALUE_INTEGER);
+		$parts[] = $this->qb->merge($time_parts);
+		
+		$expected = $this->qb->merge($parts);
+		
+		$query = new EntityWhereClause();
+		$query->ignore_access = true;
+		$query->use_enabled_clause = false;
+		$query->use_deleted_clause = false;
+		$query->deleted_after = $after;
+		$query->deleted_before = $before;
+		
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$actual = $query->prepare($qb, $qb->getTableAlias());
+		
+		$this->assertEquals($expected, $actual);
+		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
+	}
+	
 	public function testBuildQueryFromEnabled() {
 
 		$parts = [];

@@ -23,7 +23,7 @@ abstract class Repository {
 	 * @param array $options ege* options
 	 */
 	public function __construct(array $options = []) {
-		$this->options = new QueryOptions($options, \ArrayObject::ARRAY_AS_PROPS);
+		$this->options = new QueryOptions($options, \ArrayObject::STD_PROP_LIST);
 	}
 
 	/**
