@@ -9,7 +9,7 @@ return [
     ],
 
     'site' => [
-        'url' => 'http://192.168.22.132/',
+        'url' => 'http://10.204.0.16/',
         'name' => 'Marjane News',
         'email' => 'oussamabitaa10@gmail.com',
     ],
