@@ -302,6 +302,7 @@ Certains widgets peuvent être ajoutés plusieurs fois.",
  */
 	'link:view' => 'voir le lien',
 	'link:view:all' => 'Voir tout',
+	'link:skip_to_main' => 'Aller au contenu principal',
 
 /**
  * River
@@ -892,6 +893,8 @@ Voir la liste complète des utilisateurs :
 	'plugins:settings:save:fail' => "Il y a eu un problème lors de l'enregistrement des paramètres du plugin %s.",
 	'plugins:settings:remove:ok' => "Tous les paramètres du plugin %s ont été supprimés",
 	'plugins:settings:remove:fail' => "Une erreur est survenue lors de la suppression des paramètres du plugin %s",
+	'plugins:usersettings:save:ok' => "Vos paramètres pour %s ont bien été enregistrés",
+	'plugins:usersettings:save:fail' => "Il y a eu un problème lors de l'enregistrement des paramètres pour %s.",
 	
 	'item:object:plugin' => 'Plugin',
 	'collection:object:plugin' => 'Plugins',

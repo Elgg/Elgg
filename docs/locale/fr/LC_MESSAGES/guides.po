@@ -5,17 +5,17 @@
 # 
 # Translators:
 # Emmanuel Simond, 2025
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025
 # Jerôme Bakker, 2025
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-14 10:07+0200\n"
+"POT-Creation-Date: 2025-05-07 14:08+0200\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
-"Last-Translator: Jerôme Bakker, 2025\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -407,6 +407,9 @@ msgid ""
 "Actions are the primary way users interact with an Elgg site. Elgg forms "
 "submit to actions. Actions define the behavior for form submission."
 msgstr ""
+"Les actions constituent le principal moyen d'interaction des utilisateurs "
+"avec un site Elgg. Les formulaires Elgg sont envoyés à des actions. Les "
+"actions définissent le comportement d'envoi des formulaires."
 
 #: ../../guides/actions.rst:7 ../../guides/actions.rst:563
 #: ../../guides/ajax.rst:11 ../../guides/i18n.rst:15
@@ -441,6 +444,11 @@ msgid ""
 "default action middleware performs :doc:`CSRF security checks "
 "</design/security>`."
 msgstr ""
+"Les actions sont enregistrées pendant le processus de démarrage en appelant "
+"``elgg_register_action()``. Toutes les URL d'actions commencent par "
+"``action/`` et sont servies par le contrôleur frontal d'Elgg via le service "
+"de routage. Le middleware d'action par défaut effectue les :doc:`CSRF "
+"security checks </design/security>`."
 
 #: ../../guides/actions.rst:16
 msgid "This guide assumes basic familiarity with:"
@@ -589,13 +597,15 @@ msgstr "Pour indiquer une erreur utilisez ``elgg_error_response()``"
 
 #: ../../guides/actions.rst:164
 msgid "Writing action controllers"
-msgstr ""
+msgstr "Écrire des contrôleurs d'action"
 
 #: ../../guides/actions.rst:166
 msgid ""
 "As an alternative to action files it is also possible to write the action "
 "code in a controller class."
 msgstr ""
+"En alternative aux fichiers d'action, il est également possible d'écrire le "
+"code d'action dans une classe de contrôleur."
 
 #: ../../guides/actions.rst:168
 msgid ""
@@ -603,30 +613,33 @@ msgid ""
 "``\\Elgg\\Controllers\\GenericAction`` to have it invoked with a set of "
 "functions in the following order:"
 msgstr ""
+"Vous pouvez étendre une classe d'action générique appelée "
+"``\\Elgg\\Controllers\\GenericAction`` pour qu'elle soit invoquée avec un "
+"ensemble de fonctions dans l'ordre suivant :"
 
 #: ../../guides/actions.rst:170
 msgid "``sanitize()`` - sanitize your input"
-msgstr ""
+msgstr "``sanitize()`` - assainissez votre saisie"
 
 #: ../../guides/actions.rst:171
 msgid "``validate()`` - validate the input or check permissions"
-msgstr ""
+msgstr "``validate()`` - valider la saisie ou vérifier les autorisations"
 
 #: ../../guides/actions.rst:172
 msgid "``executeBefore()`` - a preparation before the main execution"
-msgstr ""
+msgstr "``executeBefore()`` - une préparation avant l'exécution principale "
 
 #: ../../guides/actions.rst:173
 msgid "``execute()`` - the main execution of the action"
-msgstr ""
+msgstr "``execute()`` - l'exécution principale de l'action"
 
 #: ../../guides/actions.rst:174
 msgid "``executeAfter()`` - executed after the main execution"
-msgstr ""
+msgstr "``executeAfter()`` - exécuté après l'exécution principale"
 
 #: ../../guides/actions.rst:175
 msgid "``success()`` - if nothing went wrong handle a successful response"
-msgstr ""
+msgstr "``success()`` - si tout se passe bien, gérer une réponse de réussite"
 
 #: ../../guides/actions.rst:176
 msgid ""
@@ -634,6 +647,9 @@ msgid ""
 "handled by the error step by showing the error as a system message and "
 "forwarding back to the ``REFERER``"
 msgstr ""
+"``error()`` - si l'une des étapes précédentes génère une exception, elle "
+"sera gérée par l'étape d'erreur en affichant l'erreur sous forme de message "
+"système et en la renvoyant au ``REFERER``"
 
 #: ../../guides/actions.rst:178
 msgid ""
@@ -644,6 +660,14 @@ msgid ""
 "controller make sure to configure the entity type/subtype when registering "
 "the action."
 msgstr ""
+"Pour les actions de sauvegarde/modification d'entité, il existe un "
+"contrôleur d'assistance supplémentaire "
+"``\\Elgg\\Controllers\\EntityEditAction``. Ce contrôleur effectue la plupart"
+" des vérifications génériques en fonction de la configuration des champs "
+"d'une entité. Il crée également un élément de rivière lors de la création de"
+" la nouvelle entité. Lors de l'utilisation ou de l'extension de ce "
+"contrôleur, veillez à configurer le type/sous-type de l'entité lors de "
+"l'enregistrement de l'action."
 
 #: ../../guides/actions.rst:199
 msgid "Customizing actions"
@@ -722,7 +746,7 @@ msgstr ""
 
 #: ../../guides/actions.rst:277
 msgid "Fields"
-msgstr ""
+msgstr "Champs"
 
 #: ../../guides/actions.rst:279
 msgid ""
@@ -732,43 +756,63 @@ msgid ""
 " ``FieldsService``` is available to access the configured fields for a "
 "certain entity type/subtype."
 msgstr ""
+"Les formulaires et actions de stockage (enregistrement/modification) "
+"d'entités utilisent différents champs pour fournir des informations aux "
+"utilisateurs, mais aussi pour valider les saisies. Les formulaires et "
+"actions doivent conserver la configuration de ces champs. Pour vous aider, "
+"un service ``FieldsService``` générique est disponible pour accéder aux "
+"champs configurés pour un certain type/sous-type d'entité."
 
 #: ../../guides/actions.rst:283
 msgid "These fields can be requested using one of the following functions:"
 msgstr ""
+"Ces champs peuvent être demandés à l'aide de l'une des fonctions suivantes :"
 
 #: ../../guides/actions.rst:285
 msgid ""
 "``$entity->getFields()`` - retrieves the field configuration for a entity"
 msgstr ""
+"``$entity->getFields()`` - récupère la configuration de champ pour une "
+"entité"
 
 #: ../../guides/actions.rst:286
 msgid ""
 "``elgg()->fields->get('entity_type', 'entity_subtype')`` - retrieves the "
 "field configuration for a given type/subtype"
 msgstr ""
+"``elgg()->fields->get('entity_type', 'entity_subtype')`` - récupère la "
+"configuration de champ pour un type/sous-type donné"
 
 #: ../../guides/actions.rst:288
 msgid ""
 "They will both return an array of field configurations directly usable for "
 "passing to ``elgg_view_field($field_config)``."
 msgstr ""
+"Elles renverront toutes deux un tableau de configuration de champs "
+"directement utilisables pour être transmis à "
+"``elgg_view_field($field_config)``."
 
 #: ../../guides/actions.rst:290
 msgid ""
 "Developers can configure a default set of fields for their own entities in "
 "the related entity class or provide them via an event."
 msgstr ""
+"Les développeurs peuvent configurer un ensemble de champs par défaut pour "
+"leurs propres entités dans la classe d'entité associée ou les fournir via un"
+" événement."
 
 #: ../../guides/actions.rst:292
 msgid "Configure the default fields in your entity class."
-msgstr ""
+msgstr "Configurez les champs par défaut dans votre classe d'entité"
 
 #: ../../guides/actions.rst:313
 msgid ""
 "You can also configure your fields in an event callback or use the callback "
 "to extend other field configurations."
 msgstr ""
+"Vous pouvez également configurer vos champs dans un callback d'événement ou "
+"utiliser la fonction de rappel pour étendre d'autres configurations de "
+"champs."
 
 #: ../../guides/actions.rst:338
 msgid "Forms"
@@ -11803,6 +11847,9 @@ msgid ""
 "through the :doc:`/guides/actions` and :doc:`/guides/views/simplecache` "
 "systems."
 msgstr ""
+"Elgg dispose de deux mécanismes pour répondre aux requêtes HTTP qui ne "
+"passent pas déjà par les systèmes des :doc:`/guides/actions` et du "
+":doc:`/guides/views/simplecache`."
 
 #: ../../guides/routing.rst:8
 msgid "URL Identifier and Segments"

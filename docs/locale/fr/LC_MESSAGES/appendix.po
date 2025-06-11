@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-14 10:07+0200\n"
+"POT-Creation-Date: 2025-05-07 14:08+0200\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -1497,6 +1497,9 @@ msgid ""
 " and Codelobster_ . Eclipse has two different plugins for working with PHP "
 "code: PDT_ and PHPEclipse_."
 msgstr ""
+"Les trois IDE gratuits les plus populaires pour les développeurs PHP sont "
+"Eclipse_ et NetBeans_ et Codelobster_. Eclipse dispose de deux plugins "
+"différents pour travailler avec le code PHP : PDT_ et PHPEclipse_."
 
 #: ../../appendix/faqs/development.rst:32
 #: ../../appendix/faqs/development.rst:32
@@ -2758,15 +2761,15 @@ msgstr "6.1"
 
 #: ../../appendix/support.rst:85
 msgid "April 2025"
-msgstr ""
+msgstr "Avril 2025"
 
 #: ../../appendix/support.rst:87
 msgid "6.2"
-msgstr ""
+msgstr "6.2"
 
 #: ../../appendix/support.rst:87
 msgid "April 2024"
-msgstr ""
+msgstr "Avril 2024"
 
 #: ../../appendix/support.rst:89
 msgid "7.0"
@@ -18919,16 +18922,16 @@ msgstr "``elgg_reset_system_cache``"
 
 #: ../../appendix/upgrade-notes/6.1-to-6.2.rst:2
 msgid "From 6.1 to 6.2"
-msgstr ""
+msgstr "De 6.1 à 6.2"
 
 #: ../../appendix/upgrade-notes/6.1-to-6.2.rst:11
 msgid "``thewire_save_post()``"
-msgstr ""
+msgstr "``thewire_save_post()``"
 
 #: ../../appendix/upgrade-notes/6.1-to-6.2.rst:12
 msgid "``thewire_get_hashtags()``"
-msgstr ""
+msgstr "``thewire_get_hashtags()``"
 
 #: ../../appendix/upgrade-notes/6.1-to-6.2.rst:13
 msgid "``thewire_filter()`` use ``elgg_format_html()``"
-msgstr ""
+msgstr "``thewire_filter()`` utilisez ``elgg_format_html()``"
