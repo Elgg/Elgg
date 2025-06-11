@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - 6.x
-    paths:
-      - 'Dockerfile'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -34,5 +33,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
           cache-to: type=inline
