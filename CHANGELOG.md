@@ -1,3 +1,17 @@
+<a name="6.2.2"></a>
+### 6.2.2 (2025-06-11)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+
+#### Bug fixes
+
+* **db:** use correct database connection fallback when using split DB [79bbe1a14](https://github.com/Elgg/Elgg/commit/79bbe1a146ae25a259008f173edc8c05f2967d18) closes [#14843](https://github.com/Elgg/Elgg/issues/14843)
+* **users:** correctly validate duplicate email address [cd684853b](https://github.com/Elgg/Elgg/commit/cd684853bd10fe98f48530c939f471deb505e8ed) closes [#14842](https://github.com/Elgg/Elgg/issues/14842)
+* **database:** correctly store falsy boolean values [aac8d3848](https://github.com/Elgg/Elgg/commit/aac8d38486993210dd1cbc4df93e55ddb65cd974)
+
+
 <a name="6.2.1"></a>
 ### 6.2.1 (2025-05-07)
 
