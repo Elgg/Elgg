@@ -6,9 +6,6 @@ on:
       - 6.x
     paths:
       - 'Dockerfile'
-      - 'src/**'
-      - '000-default.conf'
-      - 'docker-compose.yml'
 
 permissions:
   contents: read
