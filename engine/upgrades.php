@@ -19,4 +19,5 @@ return [
 	\Elgg\Upgrades\RemoveOrphanedThreadedComments::class,
 	\Elgg\Upgrades\MigrateDebugConfig::class,
 	\Elgg\Upgrades\MigrateAdminValidationNotificationPreference::class,
+	\Elgg\Upgrades\UpdateMetastringBoolDatabaseValue::class,
 ];

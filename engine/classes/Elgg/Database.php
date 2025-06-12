@@ -112,9 +112,14 @@ class Database {
 	 */
 	public function getConnection(string $type): Connection {
 		if (isset($this->connections[$type])) {
+			// type is configured
 			return $this->connections[$type];
-		} else if (isset($this->connections['readwrite'])) {
+		} elseif (isset($this->connections['readwrite'])) {
+			// fallback, for request of read/write but no split db
 			return $this->connections['readwrite'];
+		} elseif (isset($this->connections['read'])) {
+			// split db configured, readwrite requested
+			return $this->connections['read'];
 		}
 		
 		$this->setupConnections();
