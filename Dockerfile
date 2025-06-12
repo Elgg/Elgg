@@ -56,7 +56,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN composer install --no-dev --no-scripts --no-progress --optimize-autoloader || true
 
 # Donner les bons droits à Apache
-RUN chown -R root:root /var/www/html/elgg
+RUN chown -R www-data:www-data /var/www/html/elgg
 
 # Exposer le port HTTP
 EXPOSE 80
