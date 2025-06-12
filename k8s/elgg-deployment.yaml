@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elgg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elgg
+  template:
+    metadata:
+      labels:
+        app: elgg
+    spec:
+      containers:
+        - name: elgg
+          image: bitaouioussama/elgg-app:v6
+          ports:
+            - containerPort: 80
