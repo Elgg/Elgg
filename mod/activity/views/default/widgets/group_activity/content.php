@@ -14,9 +14,7 @@ $guid = (int) $widget->group_guid;
 $group = get_entity($guid);
 if (!$group instanceof ElggGroup) {
 	// no group selected yet
-	echo elgg_view('page/components/no_results', [
-		'no_results' => elgg_echo('widgets:group_activity:content:noselect'),
-	]);
+	echo elgg_view_no_results(elgg_echo('widgets:group_activity:content:noselect'));
 	return;
 }
 

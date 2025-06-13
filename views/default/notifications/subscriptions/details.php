@@ -72,9 +72,7 @@ foreach ($notification_events as $type => $subtypes) {
 }
 
 if (empty($details)) {
-	echo elgg_view('page/components/no_results', [
-		'no_results' => elgg_echo('notifications:subscriptions:details:no_results'),
-	]);
+	echo elgg_view_no_results(elgg_echo('notifications:subscriptions:details:no_results'));
 	return;
 }
 
