@@ -23,9 +23,7 @@ $user_groups = $entity->getGroups([
 ]);
 
 if (empty($user_groups)) {
-	echo elgg_view('page/components/no_results', [
-		'no_results' => elgg_echo('discussion:error:no_groups'),
-	]);
+	echo elgg_view_no_results(elgg_echo('discussion:error:no_groups'));
 	return;
 }
 

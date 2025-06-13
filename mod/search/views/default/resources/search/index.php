@@ -128,9 +128,7 @@ elgg_register_menu_item('page', [
 ]);
 
 if (empty($results)) {
-	$results = elgg_view('page/components/no_results', [
-		'no_results' => true,
-	]);
+	$results = elgg_view_no_results();
 }
 
 echo elgg_view_page(elgg_echo('search'), [

@@ -9,9 +9,7 @@ use Elgg\Database\Seeds\Seed;
 
 $seeders = elgg_extract('data', $vars);
 if (empty($seeders)) {
-	echo elgg_view('page/components/no_results', [
-		'no_results' => true,
-	]);
+	echo elgg_view_no_results();
 }
 
 $header = elgg_format_element('tr', [], implode(PHP_EOL, [
