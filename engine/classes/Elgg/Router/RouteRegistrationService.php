@@ -6,6 +6,7 @@ use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Router\Middleware\MaintenanceGatekeeper;
 use Elgg\Router\Middleware\WalledGarden;
+use Elgg\SessionManagerService;
 use Elgg\Traits\Loggable;
 
 /**
@@ -20,14 +21,16 @@ class RouteRegistrationService {
 	/**
 	 * Constructor
 	 *
-	 * @param EventsService   $events    Events service
-	 * @param RouteCollection $routes    Route collection
-	 * @param UrlGenerator    $generator URL Generator
+	 * @param EventsService         $events          Events service
+	 * @param RouteCollection       $routes          Route collection
+	 * @param UrlGenerator          $generator       URL Generator
+	 * @param SessionManagerService $session_manager Session manager service
 	 */
 	public function __construct(
 		protected EventsService $events,
 		protected RouteCollection $routes,
-		protected UrlGenerator $generator
+		protected UrlGenerator $generator,
+		protected SessionManagerService $session_manager
 	) {
 	}
 
@@ -38,7 +41,7 @@ class RouteRegistrationService {
 	 * To make a certain wildcard segment optional, add ? to its name,
 	 * i.e. /blog/owner/{username?}
 	 *
-	 * Wildcard requirements for common named variables such as 'guid' and 'username'
+	 * Wildcard requirements for commonly named variables such as 'guid' and 'username'
 	 * will be set automatically.
 	 *
 	 * @param string $name   Unique route name
@@ -67,7 +70,8 @@ class RouteRegistrationService {
 		$walled = elgg_extract('walled', $params, true);
 		$deprecated = elgg_extract('deprecated', $params, '');
 		$required_plugins = elgg_extract('required_plugins', $params, []);
-		$detect_page_owner = (bool) elgg_extract('detect_page_owner', $params, false);
+		$use_logged_in = (bool) elgg_extract('use_logged_in', $params, false);
+		$detect_page_owner = (bool) elgg_extract('detect_page_owner', $params, $use_logged_in);
 		$priority = (int) elgg_extract('priority', $params);
 
 		if (!$path || (!$controller && !$resource && !$handler && !$file)) {
@@ -79,6 +83,12 @@ class RouteRegistrationService {
 		$defaults = elgg_extract('defaults', $params, []);
 		$requirements = elgg_extract('requirements', $params, []);
 		$methods = elgg_extract('methods', $params, []);
+
+		$user = $this->session_manager->getLoggedInUser();
+		if ($use_logged_in && $user instanceof \ElggUser) {
+			$defaults['username'] = $defaults['username'] ?? $user->username;
+			$defaults['guid'] = $defaults['guid'] ?? $user->guid;
+		}
 
 		$patterns = [
 			'guid' => '\d+',
@@ -131,6 +141,7 @@ class RouteRegistrationService {
 		$defaults['_middleware'] = $middleware;
 		$defaults['_required_plugins'] = $required_plugins;
 		$defaults['_detect_page_owner'] = $detect_page_owner;
+		$defaults['_use_logged_in'] = $use_logged_in;
 
 		$options = array_merge((array) elgg_extract('options', $params, []), ['utf8' => true]);
 		

@@ -1,6 +1,5 @@
 <?php
 
-use Elgg\Router\Middleware\Gatekeeper;
 use Elgg\TheWire\Notifications\CreateTheWireEventHandler;
 
 require_once(__DIR__ . '/lib/functions.php');
@@ -72,6 +71,7 @@ return [
 			'path' => '/thewire/mentions/{username}',
 			'resource' => 'thewire/mentions',
 			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
@@ -83,7 +83,7 @@ return [
 			'path' => '/thewire/reply/{guid}',
 			'resource' => 'thewire/reply',
 			'middleware' => [
-				Gatekeeper::class,
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
 			],
 		],

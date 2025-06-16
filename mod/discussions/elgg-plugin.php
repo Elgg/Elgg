@@ -55,6 +55,7 @@ return [
 			'path' => '/discussion/my_groups/{username}',
 			'resource' => 'discussion/my_groups',
 			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],

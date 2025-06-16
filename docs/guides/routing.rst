@@ -162,6 +162,11 @@ By default, Elgg will set the following requirements for named URL segments:
 		'username' => '[\p{L}\p{Nd}._-]+', // letters, digits, underscores, dashes
 	];
 
+.. note::
+
+    You can have the route params ``username`` and/or ``guid`` filled with the values of the logged in user by
+    default if you add the flag ``use_logged_in`` and set it to ``true``.
+
 Plugin dependent routes
 -----------------------
 

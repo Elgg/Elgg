@@ -84,6 +84,7 @@ return [
 			'path' => '/groups/invitations/{username}',
 			'resource' => 'groups/invitations',
 			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
@@ -146,6 +147,7 @@ return [
 			'path' => '/settings/notifications/groups/{username}',
 			'resource' => 'settings/notifications/groups',
 			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],

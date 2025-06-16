@@ -1,8 +1,6 @@
 <?php
 
 use Elgg\Friends\Actions\AddFriendController;
-use Elgg\Router\Middleware\UserPageOwnerGatekeeper;
-use Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper;
 use Elgg\Friends\Actions\RevokeFriendRequestController;
 use Elgg\Friends\Actions\DeclineFriendRequestController;
 use Elgg\Friends\Actions\AcceptFriendRequestController;
@@ -34,28 +32,30 @@ return [
 			'path' => '/friends/{username}',
 			'resource' => 'friends/index',
 			'middleware' => [
-				UserPageOwnerGatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:friends_of:owner' => [
 			'path' => '/friendsof/{username}',
 			'resource' => 'friends/of',
 			'middleware' => [
-				UserPageOwnerGatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:relationship:friendrequest:pending' => [
 			'path' => '/friends/{username}/pending',
 			'resource' => 'friends/pending',
 			'middleware' => [
-				UserPageOwnerCanEditGatekeeper::class,
+				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
 		'collection:relationship:friendrequest:sent' => [
 			'path' => '/friends/{username}/sent',
 			'resource' => 'friends/sent',
 			'middleware' => [
-				UserPageOwnerCanEditGatekeeper::class,
+				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
 	],
