@@ -1,5 +1,4 @@
-# Utiliser une image officielle avec PHP 8.2 et Apache
-FROM php:8.2-apache
+FROM php:8.1-apache
 
 # Installer les dépendances système nécessaires
 RUN apt-get update && apt-get install -y \
@@ -17,9 +16,9 @@ RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     libssl-dev \
     libxslt-dev \
-    && apt-get clean
+    && rm -rf /var/lib/apt/lists/*
 
-# Configurer les extensions PHP compatibles avec PHP 8.2
+# Configurer et installer les extensions PHP
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu && \
     docker-php-ext-install -j$(nproc) \
@@ -43,23 +42,23 @@ RUN a2enmod rewrite
 # Copier la configuration Apache personnalisée
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
+# Copier le code source Elgg dans le dossier racine web d’Apache
+COPY . /var/www/html/elgg
+
 # Définir le dossier de travail
 WORKDIR /var/www/html/elgg
 
-# Copier le code source Elgg dans le conteneur
-COPY . .
-
-# Installer Composer (v2 recommandé pour PHP 8.2)
+# Installer Composer (version recommandée)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Installer les dépendances PHP avec Composer
+# Installer les dépendances PHP avec Composer, ignore les scripts si besoin
 RUN composer install --no-dev --no-scripts --no-progress --optimize-autoloader || true
 
 # Donner les bons droits à Apache
 RUN chown -R www-data:www-data /var/www/html/elgg
 
-# Exposer le port HTTP
+# Exposer le port HTTP d’Apache
 EXPOSE 80
 
-# Lancer Apache
+# Démarrer Apache en mode foreground
 CMD ["apache2-foreground"]
