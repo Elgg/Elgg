@@ -30,6 +30,7 @@ return [
 			'path' => '/site_notifications/owner/{username}',
 			'resource' => 'site_notifications/owner',
 			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
@@ -37,6 +38,7 @@ return [
 			'path' => '/site_notifications/read/{username}',
 			'resource' => 'site_notifications/read',
 			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],

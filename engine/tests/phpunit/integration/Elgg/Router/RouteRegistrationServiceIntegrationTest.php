@@ -77,4 +77,48 @@ class RouteRegistrationServiceIntegrationTest extends IntegrationTestCase {
 			['देवनागरी'], // https://github.com/Elgg/Elgg/issues/12518 and https://github.com/Elgg/Elgg/issues/13067
 		];
 	}
+	
+	public function testUseLoggedInRegistration() {
+		// no logged-in user present
+		$route = $this->route_service->register('foo', [
+			'path' => '/foo/{username}',
+			'controller' => function($request) {
+			},
+			'use_logged_in' => true,
+		]);
+		
+		$this->assertEmpty($route->getDefault('username'));
+		$this->assertEmpty($route->getDefault('guid'));
+		
+		// with a logged-in user
+		$user = $this->createUser();
+		
+		$session = _elgg_services()->session_manager;
+		$session->setLoggedInUser($user);
+		
+		$route2 = $this->route_service->register('foo2', [
+			'path' => '/foo2/{username}',
+			'controller' => function($request) {
+			},
+			'use_logged_in' => true,
+		]);
+		
+		$this->assertEquals($user->username, $route2->getDefault('username'));
+		$this->assertEquals($user->guid, $route2->getDefault('guid'));
+		
+		// make sure existing defaults aren't overruled
+		$route2 = $this->route_service->register('foo2', [
+			'path' => '/foo2/{username}',
+			'controller' => function($request) {
+			},
+			'defaults' => [
+				'username' => "{$user->username}_foo",
+				'guid' => -1000,
+			],
+			'use_logged_in' => true,
+		]);
+		
+		$this->assertEquals("{$user->username}_foo", $route2->getDefault('username'));
+		$this->assertEquals(-1000, $route2->getDefault('guid'));
+	}
 }

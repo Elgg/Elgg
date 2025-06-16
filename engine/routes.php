@@ -168,47 +168,54 @@ return [
 		'resource' => 'settings/account',
 		'middleware' => [
 			\Elgg\Router\Middleware\Gatekeeper::class,
+			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
+		'use_logged_in' => true,
 	],
 	'settings:account' => [
-		'path' => '/settings/user/{username?}',
+		'path' => '/settings/user/{username}',
 		'resource' => 'settings/account',
 		'middleware' => [
 			\Elgg\Router\Middleware\Gatekeeper::class,
+			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
-		'detect_page_owner' => true,
+		'use_logged_in' => true,
 	],
 	'settings:notifications' => [
 		'path' => '/settings/notifications/{username}',
 		'resource' => 'settings/notifications',
 		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
 			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
-		'detect_page_owner' => true,
+		'use_logged_in' => true,
 	],
 	'settings:notifications:users' => [
 		'path' => '/settings/notifications/users/{username}',
 		'resource' => 'settings/notifications/users',
 		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
 			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
-		'detect_page_owner' => true,
+		'use_logged_in' => true,
 	],
 	'settings:statistics' => [
-		'path' => '/settings/statistics/{username?}',
+		'path' => '/settings/statistics/{username}',
 		'resource' => 'settings/statistics',
 		'middleware' => [
 			\Elgg\Router\Middleware\Gatekeeper::class,
+			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
-		'detect_page_owner' => true,
+		'use_logged_in' => true,
 	],
 	'settings:tools' => [
 		'path' => '/settings/plugins/{username}/{plugin_id}',
 		'resource' => 'settings/tools',
 		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
 			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
-		'detect_page_owner' => true,
+		'use_logged_in' => true,
 	],
 	'widgets:add_panel' => [
 		// @todo this route could also be a ajax view or have some parameters (context/container) in the route definition
@@ -225,18 +232,24 @@ return [
 	'view:user' => [
 		'path' => '/user/{guid}',
 		'resource' => 'user/view',
+		'middleware' => [
+			\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+		],
+		'use_logged_in' => true,
 	],
 	'delete:user' => [
 		'path' => '/user/delete/{guid}',
 		'resource' => 'user/delete',
 		'middleware' => [
 			\Elgg\Router\Middleware\AdminGatekeeper::class,
+			\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 		],
 	],
 	'edit:user:avatar' => [
 		'path' => '/avatar/edit/{username}',
 		'resource' => 'avatar/edit',
 		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
 			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
 	],

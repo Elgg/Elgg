@@ -29,6 +29,7 @@ return [
 			'path' => '/messages/inbox/{username}',
 			'resource' => 'messages/inbox',
 			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
@@ -36,6 +37,7 @@ return [
 			'path' => '/messages/sent/{username}',
 			'resource' => 'messages/sent',
 			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
@@ -50,6 +52,7 @@ return [
 			'path' => '/messages/read/{guid}',
 			'resource' => 'messages/read',
 			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],

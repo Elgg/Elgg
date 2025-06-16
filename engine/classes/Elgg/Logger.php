@@ -316,8 +316,11 @@ class Logger extends \Monolog\Logger {
 	 * @param mixed $data The data to log
 	 *
 	 * @return void
+	 * @deprecated 6.3 Use self::error()
 	 */
 	public function dump($data) {
+		$this->warning('Deprecated in 6.3: ' . __METHOD__ . ' has been deprecated use ->error()');
+		
 		$this->log(LogLevel::ERROR, $data);
 	}
 

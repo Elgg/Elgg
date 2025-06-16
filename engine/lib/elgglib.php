@@ -90,22 +90,6 @@ function elgg_log($message, $level = \Psr\Log\LogLevel::NOTICE): void {
 }
 
 /**
- * Logs $value to PHP's {@link error_log()}
- *
- * A 'debug', log' event is triggered. If a handler returns
- * false, it will stop the default logging method.
- *
- * @note Use the developers plugin to display logs
- *
- * @param mixed $value The value
- * @return void
- * @since 1.7.0
- */
-function elgg_dump($value): void {
-	_elgg_services()->logger->dump($value);
-}
-
-/**
  * Log a notice about deprecated use of a function, view, etc.
  *
  * @param string $msg         Message to log

@@ -1,0 +1,16 @@
+From 6.2 to 6.3
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+Deprecated APIs
+~~~~~~~~~~~~~~~
+
+* ``elgg_dump()`` use ``elgg_log()``
+
+Deprecated class functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* ``\Elgg\Logger::dump()`` use ``\Elgg\Logger::error()``
