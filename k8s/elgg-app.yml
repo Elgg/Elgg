@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elgg-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elgg-app
+  template:
+    metadata:
+      labels:
+        app: elgg-app
+    spec:
+      containers:
+      - name: elgg-app
+        image: bitaouioussama/elgg-app:v6
+        envFrom:
+          - secretRef:
+              name: elgg-env
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        volumeMounts:
+        - mountPath: /var/elgg_data
+          name: elgg-data
+      volumes:
+      - name: elgg-data
+        persistentVolumeClaim:
+          claimName: elgg-pvc
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: elgg-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: elgg-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  loadBalancerIP: 34.22.137.184
