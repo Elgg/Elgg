@@ -1,9 +1,7 @@
 name: Build, Push and Deploy Elgg
 
 on:
-  push:
-    branches:
-      - 6.x
+
   workflow_dispatch:
 
 permissions:
