@@ -8,7 +8,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write  # Needed for Google Auth
+  id-token: write  # Needed for Workload Identity Federation or GCP Auth
 
 jobs:
   docker-build:
@@ -40,30 +40,38 @@ jobs:
     needs: docker-build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GKE_SA_KEY }}  # Add service account key to GitHub secrets
+          credentials_json: ${{ secrets.GKE_SA_KEY }}
 
-      - name: Set up Kubectl
+      - name: Set up gcloud CLI and kubectl
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ secrets.GKE_PROJECT }}
-          cluster_name: ${{ secrets.GKE_CLUSTER }}
-          location: ${{ secrets.GKE_REGION }}
           install_kubectl: true
+
+      - name: Install GKE Auth Plugin
+        run: |
+          gcloud components install gke-gcloud-auth-plugin -q
+          gcloud config set container/use_application_default_credentials true
+
+      - name: Get GKE credentials
+        run: |
+          gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
+            --region ${{ secrets.GKE_REGION }} \
+            --project ${{ secrets.GKE_PROJECT }}
 
       - name: Deploy to GKE
         run: |
-          # Apply Kubernetes manifests
           kubectl apply -f k8s/mariadb.yml
           kubectl apply -f k8s/pvc.yml
           kubectl apply -f k8s/elgg-app.yml
           kubectl apply -f k8s/phpMyAdmin.yml
           kubectl apply -f k8s/elgg-env.yml
-          # Wait for rollout
+
           kubectl rollout status deployment/elgg-app
           kubectl rollout status deployment/elgg-phpmyadmin
