@@ -735,7 +735,7 @@ class ElggInstaller {
 
 		try {
 			// check that the config table has been created
-			$result = $db->getConnection('read')->executeQuery('SHOW TABLES');
+			$result = $db->getConnection(DbConfig::READ)->executeQuery('SHOW TABLES');
 			if (empty($result)) {
 				return;
 			}
@@ -1205,7 +1205,7 @@ class ElggInstaller {
 		$db = new Database($config, $app->internal_services->queryCache, $app->internal_services->config);
 
 		try {
-			$db->getConnection('read')->executeQuery('SELECT 1');
+			$db->getConnection(DbConfig::READ)->executeQuery('SELECT 1');
 		} catch (DatabaseException $e) {
 			if (str_starts_with($e->getMessage(), "Elgg couldn't connect")) {
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:databasesettings'));

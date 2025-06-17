@@ -39,7 +39,7 @@ class Mutex {
 
 		if (!$this->isLocked($namespace)) {
 			// Lock it
-			$this->db->getConnection('write')->executeStatement("CREATE TABLE {$this->db->prefix}{$namespace}_lock (id INT)");
+			$this->db->getConnection(DbConfig::WRITE)->executeStatement("CREATE TABLE {$this->db->prefix}{$namespace}_lock (id INT)");
 
 			$this->getLogger()->info("Locked mutex for {$namespace}");
 			return true;
@@ -59,7 +59,7 @@ class Mutex {
 	public function unlock(string $namespace): void {
 		$this->assertNamespace($namespace);
 
-		$this->db->getConnection('write')->executeStatement("DROP TABLE {$this->db->prefix}{$namespace}_lock");
+		$this->db->getConnection(DbConfig::WRITE)->executeStatement("DROP TABLE {$this->db->prefix}{$namespace}_lock");
 
 		$this->getLogger()->notice("Mutex unlocked for {$namespace}.");
 	}
@@ -74,7 +74,7 @@ class Mutex {
 	public function isLocked(string $namespace): bool {
 		$this->assertNamespace($namespace);
 
-		$result = $this->db->getConnection('read')->executeQuery("SHOW TABLES LIKE '{$this->db->prefix}{$namespace}_lock'");
+		$result = $this->db->getConnection(DbConfig::READ)->executeQuery("SHOW TABLES LIKE '{$this->db->prefix}{$namespace}_lock'");
 		return $result->rowCount() > 0;
 	}
 

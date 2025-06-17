@@ -114,12 +114,12 @@ class Database {
 		if (isset($this->connections[$type])) {
 			// type is configured
 			return $this->connections[$type];
-		} elseif (isset($this->connections['readwrite'])) {
+		} elseif (isset($this->connections[DbConfig::READ_WRITE])) {
 			// fallback, for request of read/write but no split db
-			return $this->connections['readwrite'];
-		} elseif (isset($this->connections['read'])) {
+			return $this->connections[DbConfig::READ_WRITE];
+		} elseif (isset($this->connections[DbConfig::READ])) {
 			// split db configured, readwrite requested
-			return $this->connections['read'];
+			return $this->connections[DbConfig::READ];
 		}
 		
 		$this->setupConnections();
@@ -137,10 +137,10 @@ class Database {
 	 */
 	public function setupConnections(): void {
 		if ($this->db_config->isDatabaseSplit()) {
-			$this->connect('read');
-			$this->connect('write');
+			$this->connect(DbConfig::READ);
+			$this->connect(DbConfig::WRITE);
 		} else {
-			$this->connect('readwrite');
+			$this->connect(DbConfig::READ_WRITE);
 		}
 	}
 
@@ -154,7 +154,7 @@ class Database {
 	 * @return void
 	 * @throws DatabaseException
 	 */
-	public function connect(string $type = 'readwrite'): void {
+	public function connect(string $type = DbConfig::READ_WRITE): void {
 		$conf = $this->db_config->getConnectionConfig($type);
 
 		$params = [
@@ -563,7 +563,7 @@ class Database {
 	 *
 	 * @return string Empty if version cannot be determined
 	 */
-	public function getServerVersion(string $type = DbConfig::READ_WRITE): string {
+	public function getServerVersion(string $type = DbConfig::READ): string {
 		return $this->getConnection($type)->getServerVersion();
 	}
 
@@ -574,7 +574,7 @@ class Database {
 	 *
 	 * @return bool if MariaDB is detected
 	 */
-	public function isMariaDB(string $type = DbConfig::READ_WRITE): bool {
+	public function isMariaDB(string $type = DbConfig::READ): bool {
 		return $this->getConnection($type)->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MariaDBPlatform;
 	}
 	
@@ -587,7 +587,7 @@ class Database {
 	 *
 	 * @since 6.0
 	 */
-	public function isMySQL(string $type = DbConfig::READ_WRITE): bool {
+	public function isMySQL(string $type = DbConfig::READ): bool {
 		return $this->getConnection($type)->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MySQLPlatform;
 	}
 	

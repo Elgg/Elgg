@@ -2,6 +2,7 @@
 
 namespace Elgg\Upgrades;
 
+use Elgg\Database\DbConfig;
 use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
 
@@ -122,7 +123,7 @@ class AlterDatabaseToMultiByteCharset extends AsynchronousUpgrade {
 	public function shouldBeSkipped(): bool {
 
 		$config = _elgg_services()->dbConfig->getConnectionConfig();
-		$rows = _elgg_services()->db->getConnection('read')->executeQuery("SHOW TABLE STATUS FROM `{$config['database']}`");
+		$rows = _elgg_services()->db->getConnection(DbConfig::READ)->executeQuery("SHOW TABLE STATUS FROM `{$config['database']}`");
 
 		$prefixed_table_names = array_map(function ($t) use ($config) {
 			return "{$config['prefix']}{$t}";
@@ -154,12 +155,12 @@ class AlterDatabaseToMultiByteCharset extends AsynchronousUpgrade {
 
 		try {
 			// check if we need to change a global variable
-			$db_result = _elgg_services()->db->getConnection('read')->executeQuery("SHOW GLOBAL VARIABLES LIKE 'innodb_large_prefix'");
+			$db_result = _elgg_services()->db->getConnection(DbConfig::READ)->executeQuery("SHOW GLOBAL VARIABLES LIKE 'innodb_large_prefix'");
 			$rows = $db_result->fetchAllAssociative();
 			
 			if (empty($rows) || $rows[0]['Value'] === 'OFF') {
 				// required to allow bigger index sizes required for utf8mb4
-				_elgg_services()->db->getConnection('write')->executeStatement("SET GLOBAL innodb_large_prefix = 'ON'");
+				_elgg_services()->db->getConnection(DbConfig::WRITE)->executeStatement("SET GLOBAL innodb_large_prefix = 'ON'");
 			}
 		} catch (\Exception $e) {
 			// something went wrong, maybe database permissions, or version
@@ -173,7 +174,7 @@ class AlterDatabaseToMultiByteCharset extends AsynchronousUpgrade {
 		
 		try {
 			// alter table structure
-			$connection = _elgg_services()->db->getConnection('write');
+			$connection = _elgg_services()->db->getConnection(DbConfig::WRITE);
 			$connection->executeStatement("
 				ALTER DATABASE
     			`{$config['database']}`
