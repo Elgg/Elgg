@@ -1,4 +1,4 @@
-name: Build and Push Elgg Docker Image
+name: Build, Push and Deploy Elgg
 
 on:
   push:
@@ -8,11 +8,11 @@ on:
 
 permissions:
   contents: read
+  id-token: write  # Needed for Google Auth
 
 jobs:
   docker-build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -26,7 +26,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push Docker image with cache support
+      - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -35,7 +35,6 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
           cache-to: type=inline
-
 
   deploy:
     needs: docker-build
