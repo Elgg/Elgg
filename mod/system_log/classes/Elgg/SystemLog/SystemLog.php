@@ -3,6 +3,7 @@
 namespace Elgg\SystemLog;
 
 use Elgg\Application\Database;
+use Elgg\Database\DbConfig;
 use Elgg\Database\Delete;
 use Elgg\Database\Insert;
 use Elgg\Database\Select;
@@ -196,7 +197,7 @@ class SystemLog {
 
 		$query = "CREATE TABLE {$dbprefix}system_log_{$now} AS {$select->getSQL()}";
 		
-		if (!$this->db->getConnection('write')->executeStatement($query, $select->getParameters())) {
+		if (!$this->db->getConnection(DbConfig::WRITE)->executeStatement($query, $select->getParameters())) {
 			return false;
 		}
 
@@ -207,7 +208,7 @@ class SystemLog {
 		$this->db->deleteData($delete);
 
 		// alter table to archive engine (when available)
-		$available_engines_result = $this->db->getConnection('read')->executeQuery('SHOW ENGINES');
+		$available_engines_result = $this->db->getConnection(DbConfig::READ)->executeQuery('SHOW ENGINES');
 		$available_engines = array_filter($available_engines_result->fetchAllAssociative(), function($row_array) {
 			// filter only enabled engines
 			return in_array($row_array['Support'], ['YES', 'DEFAULT']);
@@ -219,7 +220,7 @@ class SystemLog {
 		
 		if (in_array('ARCHIVE', $available_engines)) {
 			try {
-				$this->db->getConnection('write')->executeStatement("ALTER TABLE {$dbprefix}system_log_{$now} ENGINE=ARCHIVE");
+				$this->db->getConnection(DbConfig::WRITE)->executeStatement("ALTER TABLE {$dbprefix}system_log_{$now} ENGINE=ARCHIVE");
 			} catch (\Exception $e) {
 				return false;
 			}
@@ -238,7 +239,7 @@ class SystemLog {
 	public function deleteArchive(\DateTime $archived_before): bool {
 		$dbprefix = $this->db->prefix;
 
-		$results = $this->db->getConnection('read')->executeQuery("SHOW TABLES like '{$dbprefix}system_log_%'");
+		$results = $this->db->getConnection(DbConfig::READ)->executeQuery("SHOW TABLES like '{$dbprefix}system_log_%'");
 		if (empty($results) || empty($results->rowCount())) {
 			return false;
 		}
@@ -252,7 +253,7 @@ class SystemLog {
 
 			if ($log_time <= $archived_before->getTimestamp()) {
 				try {
-					$this->db->getConnection('write')->executeStatement("DROP TABLE {$table_name}");
+					$this->db->getConnection(DbConfig::WRITE)->executeStatement("DROP TABLE {$table_name}");
 					$deleted_tables = true;
 				} catch (\Exception $e) {
 					elgg_log("Failed to delete the log table {$table_name}", \Psr\Log\LogLevel::ERROR);

@@ -15,7 +15,7 @@ class Insert extends QueryBuilder {
 	 * @return static
 	 */
 	public static function intoTable(string $table): static {
-		$connection = _elgg_services()->db->getConnection('write');
+		$connection = _elgg_services()->db->getConnection(DbConfig::WRITE);
 		$qb = new static($connection);
 		$qb->insert($table);
 

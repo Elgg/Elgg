@@ -5,6 +5,7 @@ namespace Elgg\GarbageCollector;
 use Elgg\Application\Database;
 use Elgg\Database\AccessCollections;
 use Elgg\Database\AnnotationsTable;
+use Elgg\Database\DbConfig;
 use Elgg\Database\DelayedEmailQueueTable;
 use Elgg\Database\Delete;
 use Elgg\Database\EntityTable;
@@ -152,7 +153,7 @@ class GarbageCollector {
 		}
 
 		$table_prefix = $this->db->prefix;
-		$result = $this->db->getConnection('read')->executeQuery("SHOW TABLES LIKE '{$table_prefix}%'");
+		$result = $this->db->getConnection(DbConfig::READ)->executeQuery("SHOW TABLES LIKE '{$table_prefix}%'");
 
 		$this->tables = [];
 
@@ -178,7 +179,7 @@ class GarbageCollector {
 	 * @return int
 	 */
 	protected function optimizeTable(string $table): int {
-		$result = $this->db->getConnection('write')->executeQuery("OPTIMIZE TABLE {$table}");
+		$result = $this->db->getConnection(DbConfig::WRITE)->executeQuery("OPTIMIZE TABLE {$table}");
 		return (int) $result->rowCount();
 	}
 	
