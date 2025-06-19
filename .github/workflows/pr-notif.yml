@@ -10,10 +10,8 @@ jobs:
     permissions:
       checks: read
       pull-requests: write
-    
     steps:
-      - name: Get all check results
-        id: get-checks
+      - name: Get check results
         uses: actions/github-script@v6
         with:
           script: |
@@ -23,32 +21,14 @@ jobs:
               ref: context.payload.pull_request.head.sha
             });
             
-            const checkResults = checks.check_runs.map(check => ({
-              name: check.name,
-              status: check.conclusion === 'success' ? '✅ Passed' : '❌ Failed',
-              url: check.html_url
-            }));
+            const passed = checks.check_runs.filter(c => c.conclusion === 'success');
+            const failed = checks.check_runs.filter(c => c.conclusion === 'failure');
             
-            core.setOutput('results', JSON.stringify(checkResults));
-            core.setOutput('passed_count', checkResults.filter(c => c.status === '✅ Passed').length);
-
-      - name: Post detailed report
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const results = JSON.parse('${{ steps.get-checks.outputs.results }}');
-            const passedCount = '${{ steps.get-checks.outputs.passed_count }}';
-            const totalChecks = results.length;
-            
-            let message = `## PR Quality Report\n\n`;
-            
-            // Detailed check list
-            message += `### Individual Checks:\n`;
-            message += results.map(c => `- ${c.name} ${c.status}`).join('\n');
-            
-            // Summary
-            message += `\n\n✅ Passed: ${passedCount}/${totalChecks} checks\n`;
-            message += `🎉 ${passedCount == totalChecks ? 'All checks passed!' : 'Some checks failed'}`;
+            let message = `## PR Quality Report\n\n` +
+                         `### Individual Checks:\n` +
+                         `${checks.check_runs.map(c => `- ${c.name} ${c.conclusion === 'success' ? '✅ Passed' : '❌ Failed'}`).join('\n')}\n\n` +
+                         `✅ Passed: ${passed.length}/${checks.check_runs.length} checks\n` +
+                         `${failed.length ? '❌ Some checks failed' : '🎉 All checks passed!'}`;
             
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
