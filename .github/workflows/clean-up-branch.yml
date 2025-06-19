@@ -13,14 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Skip if branch doesn't match "feature"
-        if: startsWith(github.event.pull_request.head.ref, 'feature') != true
+      - name: Check for feature branch
+        id: branch-check
         run: |
-          echo "Branch is not a feature/* branch. Skipping."
-          exit 0
+          if [[ "${{ github.event.pull_request.head.ref }}" != feature ]]; then
+            echo "::notice::Skipping non-feature branch"
+            echo "skip=true" >> $GITHUB_OUTPUT
+          fi
 
       - name: Delete branch
+        if: steps.branch-check.outputs.skip != 'true'
         uses: dawidd6/action-delete-branch@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ github.token }}  # Use the default token
           branches: ${{ github.event.pull_request.head.ref }}
