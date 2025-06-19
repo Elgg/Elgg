@@ -149,6 +149,7 @@ class Cron {
 			], null, [
 				EventsService::OPTION_BEGIN_CALLBACK => $begin_callback,
 				EventsService::OPTION_END_CALLBACK => $end_callback,
+				EventsService::OPTION_CONTINUE_ON_EXCEPTION => true,
 			]);
 		} catch (\Throwable $t) {
 			$this->getLogger()->error($t);

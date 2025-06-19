@@ -285,6 +285,74 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(1, $this->counter2);
 	}
 	
+	public function testTriggerPassesException() {
+		$this->events->registerHandler('foo', 'bar', [$this, 'incrementCounter']);
+		$this->events->registerHandler('foo', 'bar', function(\Elgg\Event $event) {
+			throw new \Elgg\Exceptions\Exception('testing');
+		});
+		$this->events->registerHandler('foo', 'bar', [$this, 'incrementCounter2']);
+		
+		$this->expectException(\Elgg\Exceptions\Exception::class);
+		$this->events->trigger('foo', 'bar');
+	}
+	
+	public function testTriggerContinuesOnException() {
+		$this->events->registerHandler('foo', 'bar', [$this, 'incrementCounter']);
+		$this->events->registerHandler('foo', 'bar', function(\Elgg\Event $event) {
+			throw new \Elgg\Exceptions\Exception('testing');
+		});
+		$this->events->registerHandler('foo', 'bar', [$this, 'incrementCounter2']);
+		
+		$this->events->trigger('foo', 'bar', null, [EventsService::OPTION_CONTINUE_ON_EXCEPTION => true]);
+		
+		$this->assertEquals(1, $this->counter);
+		$this->assertEquals(1, $this->counter2);
+	}
+	
+	public function testTriggerResultsPassesException() {
+		$this->events->registerHandler('foo', 'bar', [$this, 'incrementCounter']);
+		$this->events->registerHandler('foo', 'bar', function(\Elgg\Event $event) {
+			throw new \Elgg\Exceptions\Exception('testing');
+		});
+		$this->events->registerHandler('foo', 'bar', [$this, 'incrementCounter2']);
+		
+		$this->expectException(\Elgg\Exceptions\Exception::class);
+		$this->events->triggerResults('foo', 'bar');
+	}
+	
+	public function testTriggerResultsContinuesOnException() {
+		$this->events->registerHandler('foo', 'bar', function(\Elgg\Event $event) {
+			$this->counter++;
+			
+			return $event->getValue() . 'a';
+		});
+		$this->events->registerHandler('foo', 'bar', function(\Elgg\Event $event) {
+			$this->counter++;
+			
+			throw new \Elgg\Exceptions\Exception('testing');
+		});
+		$this->events->registerHandler('foo', 'bar', function(\Elgg\Event $event) {
+			$this->counter++;
+			
+			return $event->getValue() . 'b';
+		});
+		$this->events->registerHandler('foo', 'bar', function(\Elgg\Event $event) {
+			$this->counter++;
+			
+			throw new \Elgg\Exceptions\Exception('testing');
+		});
+		$this->events->registerHandler('foo', 'bar', function(\Elgg\Event $event) {
+			$this->counter++;
+			
+			return $event->getValue() . 'c';
+		});
+		
+		$result = $this->events->triggerResults('foo', 'bar', [], '', [EventsService::OPTION_CONTINUE_ON_EXCEPTION => true]);
+		
+		$this->assertEquals(5, $this->counter);
+		$this->assertEquals('abc', $result);
+	}
+	
 	public function testCanRegisterHandlers() {
 		$f = function () {
 			
