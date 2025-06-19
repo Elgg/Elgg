@@ -1,0 +1,40 @@
+name: Elgg CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  lint-and-validate:
+    name: PHP Lint & Composer Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Run PHP lint
+        run: find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \;
+
+  codeql:
+    name: CodeQL Scan
+    uses: github/codeql-action/init@v2
+    with:
+      languages: php
+
+  secrets-scan:
+    name: GitHub Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Simulate secret scanning
+        run: echo "GitHub automatically performs secret scanning on pushes and PRs"
