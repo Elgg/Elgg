@@ -43,6 +43,7 @@ class ESMService {
 	public function getImportMapData(): array {
 		$modules = $this->views->getESModules();
 		$imports = [];
+		$result = [];
 		
 		foreach ($modules as $name) {
 			$short_name = str_replace('.mjs', '', $name);
