@@ -27,14 +27,26 @@ jobs:
 
   codeql:
     name: CodeQL Scan
-    uses: github/codeql-action/init@v2
-    with:
-      languages: php
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: php
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
 
   secrets-scan:
     name: GitHub Secret Scanning
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - name: Simulate secret scanning
         run: echo "GitHub automatically performs secret scanning on pushes and PRs"
