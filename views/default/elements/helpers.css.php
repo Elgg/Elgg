@@ -7,19 +7,11 @@
 ?>
 /* <style> /**/
 
-.clearfloat { 
-	clear: both;
-}
-
 <?php /* Need .elgg-page to be able to override .elgg-menu-hz > li {display:inline-block} and such */ ?>
 .hidden,
 .elgg-page .hidden,
 .elgg-menu > li.hidden {
 	display: none;
-}
-
-.centered {
-	margin: 0 auto;
 }
 
 .center,
@@ -53,12 +45,6 @@
 
 .elgg-discover:hover .elgg-discoverable {
 	display: block;
-}
-
-.elgg-transition:hover,
-.elgg-transition:focus,
-:focus > .elgg-transition {
-	opacity: .7;
 }
 
 /* ***************************************

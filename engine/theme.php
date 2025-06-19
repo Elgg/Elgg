@@ -8,6 +8,7 @@ return [
 	// layout and shell
 	'body-background-color' => '#f3f3f3',
 	'page-section-max-width' => '90rem',
+	'maintenance-background-image' => 'graphics/maintenance.jpg',
 	'walled-garden-background-image' => 'graphics/walled_garden.jpg',
 	
 	// Typography
