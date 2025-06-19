@@ -1,0 +1,25 @@
+name: Cleanup Merged Feature Branches
+on:
+  pull_request:
+    types: [closed]
+    
+jobs:
+  cleanup:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete merged feature branch
+        uses: actions/github-script@v6
+        with:
+          script: |
+            // Only delete feature branches
+            if (github.event.pull_request.head.ref.startsWith('feature/')) {
+              await github.rest.git.deleteRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `heads/${github.event.pull_request.head.ref}`
+              });
+              console.log(`Deleted merged feature branch: ${github.event.pull_request.head.ref}`);
+            } else {
+              console.log(`Skipping non-feature branch: ${github.event.pull_request.head.ref}`);
+            }
