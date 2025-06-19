@@ -1,22 +1,14 @@
 name: Elgg CI Pipeline
 
-permissions:
-  contents: read
-
 on:
   pull_request:
     branches:
       - dev
 
-permissions:
-  contents: read
-
 jobs:
   lint-and-validate:
     name: PHP Lint & Composer Validate
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
       - name: Checkout code
@@ -36,17 +28,12 @@ jobs:
   codeql:
     name: CodeQL Scan
     uses: github/codeql-action/init@v2
-    permissions:
-      contents: read
-      security-events: write
     with:
       languages: php
 
   secrets-scan:
     name: GitHub Secret Scanning
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - uses: actions/checkout@v4
       - name: Simulate secret scanning
