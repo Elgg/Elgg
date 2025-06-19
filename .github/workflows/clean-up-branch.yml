@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Skip if branch doesn't match "feature/*"
+      - name: Skip if branch doesn't match "feature"
         if: startsWith(github.event.pull_request.head.ref, 'feature') != true
         run: |
           echo "Branch is not a feature/* branch. Skipping."
