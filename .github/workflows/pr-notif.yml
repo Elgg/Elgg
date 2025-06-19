@@ -10,35 +10,63 @@ jobs:
     permissions:
       checks: read
       pull-requests: write
+      contents: read
     steps:
-      - name: Report required checks
+      - name: Get all check results
+        id: get-checks
         uses: actions/github-script@v6
         with:
           script: |
-            const knownRequiredChecks = [
-              'CodeQL',
-              'Validate composer.json and PHP Coding style',
-              'Validate language files are UTF-8 encoded'
-            ];
+            try {
+              // Get all checks (both status checks and GH Actions)
+              const { data: statusChecks } = await github.rest.repos.getCombinedStatusForRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: context.payload.pull_request.head.sha
+              });
 
-            const { data: checks } = await github.rest.checks.listForRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: context.payload.pull_request.head.sha
-            });
+              const { data: actionChecks } = await github.rest.checks.listForRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: context.payload.pull_request.head.sha
+              });
 
-            const requiredChecks = checks.check_runs.filter(check =>
-              knownRequiredChecks.some(name => check.name.includes(name))
-            );
+              // Combine all checks
+              const allChecks = [
+                ...(statusChecks.statuses || []).map(s => ({
+                  name: s.context,
+                  conclusion: s.state === 'success' ? 'success' : 'failure'
+                })),
+                ...(actionChecks.check_runs || []).map(c => ({
+                  name: c.name,
+                  conclusion: c.conclusion
+                }))
+              ];
 
-            if (requiredChecks.length > 0) {
-              const message = [
-                '## PR Quality Report',
-                '### Required Checks:',
-                ...requiredChecks.map(c => `- ${c.name} ${c.conclusion === 'success' ? '✅ Passed' : '❌ Failed'}`),
-                '',
-                `✅ Passed: ${requiredChecks.filter(c => c.conclusion === 'success').length}/${requiredChecks.length}`
-              ].join('\n');
+              // Your known required checks (update this list)
+              const requiredCheckPatterns = [
+                'CodeQL',
+                'Validate composer.json',
+                'Validate language files',
+                'Build the sphinx documentation',
+                'Analyze (actions)',
+                'Analyze (javascript-typescript)'
+              ];
+
+              // Filter checks that match any required pattern
+              const requiredChecks = allChecks.filter(check =>
+                requiredCheckPatterns.some(pattern => check.name.includes(pattern))
+              );
+
+              // Generate report
+              const passed = requiredChecks.filter(c => c.conclusion === 'success');
+              const failed = requiredChecks.filter(c => c.conclusion !== 'success');
+
+              let message = `## PR Quality Report\n\n` +
+                           `### Required Checks (${requiredChecks.length}):\n` +
+                           requiredChecks.map(c => `- ${c.name} ${c.conclusion === 'success' ? '✅ Passed' : '❌ Failed'}`).join('\n') +
+                           `\n\n✅ Passed: ${passed.length}/${requiredChecks.length} checks\n` +
+                           `${failed.length ? '❌ Some checks failed' : '🎉 All checks passed!'}`;
 
               await github.rest.issues.createComment({
                 issue_number: context.issue.number,
@@ -46,4 +74,6 @@ jobs:
                 repo: context.repo.repo,
                 body: message
               });
+            } catch (error) {
+              core.error('Reporting error: ' + error.message);
             }
