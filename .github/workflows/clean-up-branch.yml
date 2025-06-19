@@ -1,3 +1,21 @@
+name: Auto-delete feature branches
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  delete-merged-branch:
+    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'feature')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Delete branch
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branches: ${{ github.event.pull_request.head.ref }}
+
 name: Cleanup Merged Feature Branches
 on:
   pull_request:
