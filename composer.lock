@@ -6153,16 +6153,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elgg/elgg-coding-standards.git",
-                "reference": "d3a1c058dc8324a3db0602a9a57e319a1c01ba3b"
+                "reference": "7d757f3fbebf7686fb75f500ffb38102e0131865"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elgg/elgg-coding-standards/zipball/d3a1c058dc8324a3db0602a9a57e319a1c01ba3b",
-                "reference": "d3a1c058dc8324a3db0602a9a57e319a1c01ba3b",
+                "url": "https://api.github.com/repos/Elgg/elgg-coding-standards/zipball/7d757f3fbebf7686fb75f500ffb38102e0131865",
+                "reference": "7d757f3fbebf7686fb75f500ffb38102e0131865",
                 "shasum": ""
             },
             "require": {
-                "squizlabs/php_codesniffer": "^3.5.4"
+                "squizlabs/php_codesniffer": "^3.9.0"
             },
             "default-branch": true,
             "type": "library",
@@ -6180,7 +6180,7 @@
                 "issues": "https://github.com/Elgg/elgg-coding-standards/issues",
                 "source": "https://github.com/Elgg/elgg-coding-standards/tree/master"
             },
-            "time": "2023-01-12T14:16:07+00:00"
+            "time": "2025-06-19T09:53:40+00:00"
         },
         {
             "name": "jms/metadata",
@@ -8262,16 +8262,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.11.3",
+            "version": "3.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "ba05f990e79cbe69b9f35c8c1ac8dca7eecc3a10"
+                "reference": "5b5e3821314f947dd040c70f7992a64eac89025c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/ba05f990e79cbe69b9f35c8c1ac8dca7eecc3a10",
-                "reference": "ba05f990e79cbe69b9f35c8c1ac8dca7eecc3a10",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/5b5e3821314f947dd040c70f7992a64eac89025c",
+                "reference": "5b5e3821314f947dd040c70f7992a64eac89025c",
                 "shasum": ""
             },
             "require": {
@@ -8338,11 +8338,11 @@
                     "type": "open_collective"
                 },
                 {
-                    "url": "https://thanks.dev/phpcsstandards",
+                    "url": "https://thanks.dev/u/gh/phpcsstandards",
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2025-01-23T17:04:15+00:00"
+            "time": "2025-06-17T22:17:01+00:00"
         },
         {
             "name": "symfony/process",
