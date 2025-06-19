@@ -23,7 +23,17 @@ jobs:
 
       - name: Delete branch
         if: steps.branch-check.outputs.skip != 'true'
+        id: delete-branch
         uses: dawidd6/action-delete-branch@v3
         with:
-          github_token: ${{ github.token }}  # Use the default token
+          github_token: ${{ github.token }}
           branches: ${{ github.event.pull_request.head.ref }}
+
+      - name: Mark job success
+        if: always()
+        run: |
+          if [[ "${{ steps.delete-branch.outcome }}" == 'success' || "${{ steps.branch-check.outputs.skip }}" == 'true' ]]; then
+            echo "::set-output name=status::success"
+          else
+            echo "::set-output name=status::failure"
+          fi
