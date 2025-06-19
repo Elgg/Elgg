@@ -9,7 +9,10 @@ on:
 
 jobs:
   delete-merged-branch:
-    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'feature')
+    if: >
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.head.ref =~ '^feature'
+
     runs-on: ubuntu-latest
 
     steps:
