@@ -17,7 +17,7 @@ jobs:
         id: extract-branch
         run: |
           echo "branch_name=${{ github.event.pull_request.head.ref }}" >> $GITHUB_OUTPUT
-          echo "is_feature=${{ startsWith(github.event.pull_request.head.ref, 'feature') }}" >> $GITHUB_OUTPUT
+          echo "is_feature=${{ startsWith(github.event.pull_request.head.ref, 'feature/') }}" >> $GITHUB_OUTPUT
 
       - name: Delete feature branch
         if: steps.extract-branch.outputs.is_feature == 'true'
