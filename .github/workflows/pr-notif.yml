@@ -11,32 +11,39 @@ jobs:
       checks: read
       pull-requests: write
     steps:
-      - name: Get check results
+      - name: Get required checks
         id: get-checks
         uses: actions/github-script@v6
         with:
           script: |
             try {
+              // 1. Get branch protection rules
+              const { data: protection } = await github.rest.repos.getBranchProtection({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                branch: context.payload.pull_request.base.ref
+              });
+              
+              // 2. Get all check runs
               const { data: checks } = await github.rest.checks.listForRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 ref: context.payload.pull_request.head.sha
               });
-
-              // Handle case where no checks exist
-              if (!checks.check_runs || checks.check_runs.length === 0) {
-                core.info('No checks found to report');
-                return;
-              }
               
-              const passed = checks.check_runs.filter(c => c.conclusion === 'success');
-              const failed = checks.check_runs.filter(c => c.conclusion === 'failure');
+              // 3. Filter only required checks
+              const requiredChecks = checks.check_runs.filter(check => 
+                protection.required_status_checks.contexts.includes(check.name)
               
-              let message = `## PR Quality Report\n\n`;
-              message += `### Individual Checks:\n`;
-              message += checks.check_runs.map(c => `- ${c.name} ${c.conclusion === 'success' ? '✅ Passed' : '❌ Failed'}`).join('\n');
-              message += `\n\n✅ Passed: ${passed.length}/${checks.check_runs.length} checks\n`;
-              message += `${failed.length ? '❌ Some checks failed' : '🎉 All checks passed!'}`;
+              // 4. Generate report
+              const passed = requiredChecks.filter(c => c.conclusion === 'success');
+              const failed = requiredChecks.filter(c => c.conclusion === 'failure');
+              
+              let message = `## PR Quality Report (Required Checks Only)\n\n`;
+              message += `### Required Checks:\n`;
+              message += requiredChecks.map(c => `- ${c.name} ${c.conclusion === 'success' ? '✅ Passed' : '❌ Failed'}`).join('\n');
+              message += `\n\n✅ Passed: ${passed.length}/${requiredChecks.length} checks\n`;
+              message += `${failed.length ? '❌ Some checks failed' : '🎉 All required checks passed!'}`;
               
               await github.rest.issues.createComment({
                 issue_number: context.issue.number,
@@ -44,10 +51,8 @@ jobs:
                 repo: context.repo.repo,
                 body: message
               });
+              
+              core.setOutput('status', 'success');
             } catch (error) {
-              core.info(`Reporting error: ${error.message}`);
-              // Don't fail the workflow for reporting issues
+              core.setFailed(`Error: ${error.message}`);
             }
-
-      - name: Ensure success
-        run: echo "Report completed"
