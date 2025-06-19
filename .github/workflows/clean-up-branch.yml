@@ -1,7 +1,8 @@
 name: Auto-delete feature branches
 
 permissions:
-  contents: write
+  contents: write  # Required for branch deletion
+  pull-requests: write  # Required to detect PR status
 
 on:
   pull_request:
@@ -11,29 +12,16 @@ jobs:
   delete-merged-branch:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check for feature branch
-        id: branch-check
+      - name: Extract branch name
+        id: extract-branch
         run: |
-          if [[ "${{ github.event.pull_request.head.ref }}" != feature/* ]]; then
-            echo "::notice::Skipping non-feature branch"
-            echo "skip=true" >> $GITHUB_OUTPUT
-          fi
+          echo "branch_name=${{ github.event.pull_request.head.ref }}" >> $GITHUB_OUTPUT
+          echo "is_feature=${{ startsWith(github.event.pull_request.head.ref, 'feature/') }}" >> $GITHUB_OUTPUT
 
-      - name: Delete branch
-        if: steps.branch-check.outputs.skip != 'true'
-        id: delete-branch
+      - name: Delete feature branch
+        if: steps.extract-branch.outputs.is_feature == 'true'
         uses: dawidd6/action-delete-branch@v3
         with:
           github_token: ${{ github.token }}
-          branches: ${{ github.event.pull_request.head.ref }}
-
-      - name: Mark job success
-        if: always()
-        run: |
-          if [[ "${{ steps.delete-branch.outcome }}" == 'success' || "${{ steps.branch-check.outputs.skip }}" == 'true' ]]; then
-            echo "::set-output name=status::success"
-          else
-            echo "::set-output name=status::failure"
-          fi
+          branches: ${{ steps.extract-branch.outputs.branch_name }}

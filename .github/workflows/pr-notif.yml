@@ -22,15 +22,21 @@ jobs:
                 repo: context.repo.repo,
                 ref: context.payload.pull_request.head.sha
               });
+
+              // Handle case where no checks exist
+              if (!checks.check_runs || checks.check_runs.length === 0) {
+                core.info('No checks found to report');
+                return;
+              }
               
               const passed = checks.check_runs.filter(c => c.conclusion === 'success');
               const failed = checks.check_runs.filter(c => c.conclusion === 'failure');
               
-              let message = `## PR Quality Report\n\n` +
-                           `### Individual Checks:\n` +
-                           `${checks.check_runs.map(c => `- ${c.name} ${c.conclusion === 'success' ? '✅ Passed' : '❌ Failed'}`).join('\n')}\n\n` +
-                           `✅ Passed: ${passed.length}/${checks.check_runs.length} checks\n` +
-                           `${failed.length ? '❌ Some checks failed' : '🎉 All checks passed!'}`;
+              let message = `## PR Quality Report\n\n`;
+              message += `### Individual Checks:\n`;
+              message += checks.check_runs.map(c => `- ${c.name} ${c.conclusion === 'success' ? '✅ Passed' : '❌ Failed'}`).join('\n');
+              message += `\n\n✅ Passed: ${passed.length}/${checks.check_runs.length} checks\n`;
+              message += `${failed.length ? '❌ Some checks failed' : '🎉 All checks passed!'}`;
               
               await github.rest.issues.createComment({
                 issue_number: context.issue.number,
@@ -38,16 +44,10 @@ jobs:
                 repo: context.repo.repo,
                 body: message
               });
-              core.setOutput('status', 'success');
             } catch (error) {
-              core.setOutput('status', 'failure');
-              core.setFailed(error.message);
+              core.info(`Reporting error: ${error.message}`);
+              // Don't fail the workflow for reporting issues
             }
 
-      - name: Force success status
-        if: always()
-        run: |
-          echo "Workflow completed with status: ${{ steps.get-checks.outputs.status }}"
-          if [[ "${{ steps.get-checks.outputs.status }}" != 'success' ]]; then
-            exit 0  # Override failure if needed
-          fi
+      - name: Ensure success
+        run: echo "Report completed"
