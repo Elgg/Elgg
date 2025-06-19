@@ -129,8 +129,6 @@ trait LegacyQueryOptionsAdapter {
 			'batch' => false,
 			'batch_inc_offset' => true,
 			'batch_size' => 25,
-
-			'__ElggBatch' => null,
 		];
 	}
 
