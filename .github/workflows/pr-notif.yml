@@ -1,0 +1,48 @@
+name: PR Quality Analyzer
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  analyze:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      checks: read  # To view check results
+      pull-requests: write  # To post comments
+
+    steps:
+      - name: Analyze checks
+        id: analyze
+        uses: actions/github-script@v6
+        with:
+          script: |
+            // Get all check results
+            const { data: checks } = await github.rest.checks.listForRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.payload.pull_request.head.sha
+            });
+
+            // Count passed/failed
+            const passed = checks.check_runs.filter(c => c.conclusion === 'success');
+            const failed = checks.check_runs.filter(c => c.conclusion === 'failure');
+
+            // Generate report
+            let report = `## 📊 PR Quality Report\n\n`;
+            report += `✅ **Passed:** ${passed.length} checks\n`;
+            report += failed.length > 0 ? `❌ **Failed:** ${failed.length} checks\n\n` : '🎉 All checks passed!\n\n';
+
+            // Add details if failures exist
+            if (failed.length > 0) {
+              report += `### Failed Checks:\n`;
+              report += failed.map(c => `- [${c.name}](${c.html_url})`).join('\n');
+            }
+
+            // Post comment
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
