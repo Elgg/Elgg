@@ -1,46 +1,6 @@
 name: Lint checks
 on: [pull_request]
 jobs:
-  commit_message:
-    name: Validate the commit message
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Code checkout
-        uses: actions/checkout@v4
-        
-      - name: Check format
-        uses: gsactions/commit-message-checker@v2
-        with:
-          pattern: '^((Merge )|(Revert )|((\w*)\(([\w]+)\)\: ([^\n]*)(\n\n?(.*))?)$)'
-          flags: 'is'
-          error: 'Invalid commit message format'
-          excludeTitle: true
-          excludeDescription: true
-          checkAllCommitMessages: true
-          accessToken: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Check line length
-        uses: gsactions/commit-message-checker@v2
-        with:
-          pattern: '^.{1,160}(\n|$)'
-          flags: ''
-          error: 'Maximum line length of 160 characters exceeded on the first line'
-          excludeTitle: true
-          excludeDescription: true
-          checkAllCommitMessages: true
-          accessToken: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Check type
-        uses: gsactions/commit-message-checker@v2
-        with:
-          pattern: '^((Merge )|(Revert )|(feat(ure)?|fix(es|ed)?|doc(s)?|chore|perf(ormance)?|security|deprecate(s|d)?|break(s)?|removed)?\()'
-          flags: 'is'
-          error: 'Invalid commit message type'
-          excludeTitle: true
-          excludeDescription: true
-          checkAllCommitMessages: true
-          accessToken: ${{ secrets.GITHUB_TOKEN }}
-          
   php_lint:
     name: Validate composer.json and PHP Coding style
     runs-on: ubuntu-24.04
