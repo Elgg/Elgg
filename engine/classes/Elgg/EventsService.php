@@ -26,6 +26,7 @@ class EventsService {
 	const OPTION_TIMER_KEYS = 'timer_keys';
 	const OPTION_BEGIN_CALLBACK = 'begin_callback';
 	const OPTION_END_CALLBACK = 'end_callback';
+	const OPTION_CONTINUE_ON_EXCEPTION = 'continue_on_exception';
 
 	protected int $next_index = 0;
 	
@@ -47,7 +48,7 @@ class EventsService {
 	}
 
 	/**
-	 * Triggers an Elgg event
+	 * Trigger an Elgg event
 	 *
 	 * @param string $name    The event name
 	 * @param string $type    The event type
@@ -59,6 +60,7 @@ class EventsService {
 	 * @see elgg_trigger_before_event()
 	 *
 	 * @return bool
+	 * @throws \Throwable
 	 */
 	public function trigger(string $name, string $type, $object = null, array $options = []): bool {
 		$options = array_merge([
@@ -89,14 +91,25 @@ class EventsService {
 			],
 		];
 		foreach ($handlers as $handler) {
-			list($success, $return, $event) = $this->callHandler($handler, $event, $event_args, $options);
-
-			if (!$success) {
-				continue;
-			}
-
-			if (!empty($options[self::OPTION_STOPPABLE]) && ($return === false)) {
-				return false;
+			try {
+				list($success, $return, $event) = $this->callHandler($handler, $event, $event_args, $options);
+				
+				if (!$success) {
+					continue;
+				}
+				
+				if (!empty($options[self::OPTION_STOPPABLE]) && ($return === false)) {
+					return false;
+				}
+			} catch (\Throwable $t) {
+				if (!empty($options[self::OPTION_CONTINUE_ON_EXCEPTION])) {
+					$handler_string = $this->handlers->describeCallable($handler);
+					
+					$this->getLogger()->error("Callback '{$handler_string}' for the event '{$name}', '{$type}' caused an exception: {$t->getMessage()}");
+					continue;
+				}
+				
+				throw $t;
 			}
 		}
 
@@ -104,7 +117,7 @@ class EventsService {
 	}
 	
 	/**
-	 * Triggers a event that is allowed to return a mixed result
+	 * Trigger an event allowed to return a mixed result
 	 *
 	 * @param string $name    The name of the event
 	 * @param string $type    The type of the event
@@ -115,6 +128,7 @@ class EventsService {
 	 * @return mixed
 	 *
 	 * @see elgg_trigger_event_results()
+	 * @throws \Throwable
 	 */
 	public function triggerResults(string $name, string $type, array $params = [], $value = null, array $options = []) {
 		// This starts as a string, but if a handler type-hints an object we convert it on-demand inside
@@ -123,17 +137,28 @@ class EventsService {
 		/* @var $event Event|string */
 		$event = 'event';
 		foreach ($this->getOrderedHandlers($name, $type) as $handler) {
-			$event_args = [$name, $type, $value, $params];
-			
-			list($success, $return, $event) = $this->callHandler($handler, $event, $event_args, $options);
-			
-			if (!$success) {
-				continue;
-			}
-			
-			if ($return !== null) {
-				$value = $return;
-				$event->setValue($value);
+			try {
+				$event_args = [$name, $type, $value, $params];
+				
+				list($success, $return, $event) = $this->callHandler($handler, $event, $event_args, $options);
+				
+				if (!$success) {
+					continue;
+				}
+				
+				if ($return !== null) {
+					$value = $return;
+					$event->setValue($value);
+				}
+			} catch (\Throwable $t) {
+				if (!empty($options[self::OPTION_CONTINUE_ON_EXCEPTION])) {
+					$handler_string = $this->handlers->describeCallable($handler);
+					
+					$this->getLogger()->error("Callback '{$handler_string}' for the event '{$name}', '{$type}' caused an exception: {$t->getMessage()}");
+					continue;
+				}
+				
+				throw $t;
 			}
 		}
 		
