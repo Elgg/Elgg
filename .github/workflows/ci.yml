@@ -5,6 +5,9 @@ on:
     branches:
       - dev
 
+permissions:
+  contents: read
+
 jobs:
   lint-and-validate:
     name: PHP Lint & Composer Validate
