@@ -9,13 +9,16 @@ on:
 
 jobs:
   delete-merged-branch:
-    if: >
-      github.event.pull_request.merged == true &&
-      github.event.pull_request.head.ref =~ '^feature'
-
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
+      - name: Skip if branch doesn't match "feature/*"
+        if: startsWith(github.event.pull_request.head.ref, 'feature/') != true
+        run: |
+          echo "Branch is not a feature/* branch. Skipping."
+          exit 0
+
       - name: Delete branch
         uses: dawidd6/action-delete-branch@v3
         with:
