@@ -287,7 +287,6 @@ class ElggBatch implements \Countable, \Iterator {
 		$current_options = [
 			'limit' => $limit,
 			'offset' => $offset,
-			'__ElggBatch' => $this,
 		];
 
 		$options = array_merge($this->options, $current_options);
