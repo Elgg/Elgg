@@ -24,7 +24,7 @@ jobs:
                 repo: context.repo.repo,
                 ref: context.payload.pull_request.head.sha
               });
-              
+
               const { data: actionChecks } = await github.rest.checks.listForRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -61,13 +61,13 @@ jobs:
               // Generate report
               const passed = requiredChecks.filter(c => c.conclusion === 'success');
               const failed = requiredChecks.filter(c => c.conclusion !== 'success');
-              
+
               let message = `## PR Quality Report\n\n` +
                            `### Required Checks (${requiredChecks.length}):\n` +
                            requiredChecks.map(c => `- ${c.name} ${c.conclusion === 'success' ? '✅ Passed' : '❌ Failed'}`).join('\n') +
                            `\n\n✅ Passed: ${passed.length}/${requiredChecks.length} checks\n` +
                            `${failed.length ? '❌ Some checks failed' : '🎉 All checks passed!'}`;
-              
+
               await github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
