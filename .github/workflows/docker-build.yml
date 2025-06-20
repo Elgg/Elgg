@@ -1,4 +1,4 @@
-name: Build, Deploy and Test to Recette Environment
+name: Build, Deploy and Scan to Recette
 
 on:
   workflow_dispatch:
@@ -7,129 +7,83 @@ on:
 
 env:
   RECETTE_IP: "34.22.137.184"
-  IMAGE_NAME: elgg-app
-  K8S_NAMESPACE: recette
-  DEPLOYMENT_TIMEOUT: 300s
 
 jobs:
   docker-build:
-    name: Build and Push Docker Image
     runs-on: ubuntu-latest
     outputs:
-      image-tag: ${{ steps.tags.outputs.primary-tag }}
+      image-tag: ${{ steps.set-output.outputs.image-tag }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Generate image tags
-        id: tags
-        run: |
-          TIMESTAMP=$(date +%Y%m%d)
-          SHORT_SHA=$(git rev-parse --short HEAD)
-          IMAGE_BASE="${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}"
-          
-          TIMESTAMPED_TAG="${IMAGE_BASE}:recette-${TIMESTAMP}-${SHORT_SHA}"
-          LATEST_TAG="${IMAGE_BASE}:recette-latest"
-          
-          echo "timestamped-tag=${TIMESTAMPED_TAG}" >> $GITHUB_OUTPUT
-          echo "latest-tag=${LATEST_TAG}" >> $GITHUB_OUTPUT
-          echo "primary-tag=${TIMESTAMPED_TAG}" >> $GITHUB_OUTPUT
-          
-          echo "Generated tags:"
-          echo "- Timestamped: ${TIMESTAMPED_TAG}"
-          echo "- Latest: ${LATEST_TAG}"
-          echo "- Primary: ${TIMESTAMPED_TAG}"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Login to Docker Hub
+      - name: Log in to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v4
+        id: build
+        uses: docker/build-push-action@v5
         with:
+          context: .
+          file: ./Dockerfile
           push: true
-          tags: |
-            ${{ steps.tags.outputs.timestamped-tag }}
-            ${{ steps.tags.outputs.latest-tag }}
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
           cache-to: type=inline
 
+      - name: Set image tag output
+        id: set-output
+        run: |
+          echo "image-tag=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6" >> $GITHUB_OUTPUT
+
   deploy:
-    name: Deploy to Recette Environment
     needs: docker-build
-    permissions:
-      contents: read
-      deployments: write
+    runs-on: ubuntu-latest
     environment:
       name: recette
-      url: http://${{ env.RECETTE_IP }}
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GKE_SA_KEY }}
 
-      - name: Set up gcloud CLI
+      - name: Set up gcloud CLI and kubectl
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ secrets.GKE_PROJECT }}
           install_kubectl: true
 
-      - name: Configure GKE Auth
+      - name: Install GKE Auth Plugin
         run: |
           gcloud components install gke-gcloud-auth-plugin -q
           gcloud config set container/use_application_default_credentials true
 
-      - name: Connect to GKE Cluster
+      - name: Get GKE credentials
         run: |
           gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
             --region ${{ secrets.GKE_REGION }} \
             --project ${{ secrets.GKE_PROJECT }}
 
-      - name: Verify Image Tag
+      - name: Deploy to GKE (recette namespace)
         run: |
-          echo "Image tag to deploy: ${{ needs.docker-build.outputs.image-tag }}"
-          if [ -z "${{ needs.docker-build.outputs.image-tag }}" ]; then
-            echo "::error::Image tag is empty!"
-            exit 1
-          fi
+          kubectl apply -f k8s/mariadb.yml -n recette
+          kubectl apply -f k8s/pvc.yml -n recette
+          kubectl apply -f k8s/elgg-app.yml -n recette
+          kubectl apply -f k8s/phpMyAdmin.yml -n recette
+          kubectl apply -f k8s/elgg-env.yml -n recette
 
-      - name: Deploy Application Stack
-        run: |
-          # Apply Kubernetes manifests
-          kubectl apply -f k8s/ -n ${{ env.K8S_NAMESPACE }}
-
-          # Update image in deployment
-          kubectl set image deployment/elgg-app \
-            elgg-app=${{ needs.docker-build.outputs.image-tag }} \
-            -n ${{ env.K8S_NAMESPACE }} || \
-            { echo "::warning::Failed to set image, may be first deployment"; }
-
-          # Verify deployments
-          kubectl rollout status deployment/elgg-app \
-            -n ${{ env.K8S_NAMESPACE }} \
-            --timeout=${{ env.DEPLOYMENT_TIMEOUT }} || \
-            { kubectl describe deployment elgg-app -n ${{ env.K8S_NAMESPACE }}; exit 1; }
-
-          kubectl rollout status deployment/elgg-phpmyadmin \
-            -n ${{ env.K8S_NAMESPACE }} \
-            --timeout=${{ env.DEPLOYMENT_TIMEOUT }}
-
-          # Display deployment status
-          kubectl get svc,deploy,pods -n ${{ env.K8S_NAMESPACE }}
-          kubectl get events -n ${{ env.K8S_NAMESPACE }} --sort-by='.lastTimestamp'
-
-      - name: Rollback if deployment failed
-        if: failure()
-        run: |
-          echo "::warning::Deployment failed, attempting rollback"
-          kubectl rollout undo deployment/elgg-app -n ${{ env.K8S_NAMESPACE }}
-          kubectl rollout status deployment/elgg-app -n ${{ env.K8S_NAMESPACE }} --timeout=60s
-          echo "Rollback completed for elgg-app deployment"
+          kubectl rollout status deployment/elgg-app -n recette
+          kubectl rollout status deployment/elgg-phpmyadmin -n recette
+          kubectl get all -n recette
 
   security-scan:
     name: Security Scan with ZAP
@@ -164,20 +118,40 @@ jobs:
       pull-requests: read
       issues: read
     steps:
+      - name: Get PR Information
+        id: pr-info
+        uses: octokit/graphql-action@v2.x
+        with:
+          query: |
+            query($owner:String!, $repo:String!, $prNumber:Int!) {
+              repository(owner:$owner, name:$repo) {
+                pullRequest(number:$prNumber) {
+                  headRefOid
+                  title
+                }
+              }
+            }
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          prNumber: ${{ github.event.pull_request.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create Deployment Notification
         uses: actions/github-script@v6
         with:
           script: |
+            const commitHash = '${{ steps.pr-info.outputs.data.repository.pullRequest.headRefOid }}'.substring(0, 7);
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '🚀 UAT Deployment Ready for Review\n\n' +
+              body: 'UAT Deployment Ready for Review\n\n' +
                     '**Application Details:**\n' +
                     '```yaml\n' +
                     `image: ${{ needs.docker-build.outputs.image-tag }}\n` +
                     `environment: http://${{ env.RECETTE_IP }}\n` +
-                    `commit: ${context.sha.substring(0, 7)}\n` +
+                    `commit: ${commitHash}\n` +
                     '```\n\n' +
                     '**Security Scan:** [View Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n\n' +
                     'To approve this deployment, comment with:\n' +
