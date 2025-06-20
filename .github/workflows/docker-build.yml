@@ -16,24 +16,27 @@ jobs:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     outputs:
-      full-image-tag: ${{ steps.extract_tag.outputs.full-image }}
+      full-image-tag: ${{ steps.output.outputs.image-tag }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate timestamp and short commit
-        id: vars
+      - name: Generate image tags
+        id: tags
         run: |
-          echo "timestamp=$(date +%Y%m%d)" >> $GITHUB_OUTPUT
-          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=raw,value=recette-${{ steps.vars.outputs.timestamp }}-${{ steps.vars.outputs.short_sha }}
-            type=raw,value=recette-latest
+          TIMESTAMP=$(date +%Y%m%d)
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          IMAGE_BASE="${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}"
+          
+          TIMESTAMPED_TAG="${IMAGE_BASE}:recette-${TIMESTAMP}-${SHORT_SHA}"
+          LATEST_TAG="${IMAGE_BASE}:recette-latest"
+          
+          echo "timestamped-tag=${TIMESTAMPED_TAG}" >> $GITHUB_OUTPUT
+          echo "latest-tag=${LATEST_TAG}" >> $GITHUB_OUTPUT
+          echo "primary-tag=${TIMESTAMPED_TAG}" >> $GITHUB_OUTPUT
+          
+          echo "Generated tags:"
+          echo "- ${TIMESTAMPED_TAG}"
+          echo "- ${LATEST_TAG}"
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -42,20 +45,21 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push Docker image
+        id: build_and_push
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ${{ steps.tags.outputs.timestamped-tag }}
+            ${{ steps.tags.outputs.latest-tag }}
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
           cache-to: type=inline
 
-      - name: Extract full image tag
-        id: extract_tag
+      - name: Set output
+        id: output
         run: |
-          # Get the first tag from the comma-separated list
-          FULL_IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
-          echo "full-image=${FULL_IMAGE_TAG}" >> $GITHUB_OUTPUT
-          echo "Using image: ${FULL_IMAGE_TAG}"
+          echo "image-tag=${{ steps.tags.outputs.primary-tag }}" >> $GITHUB_OUTPUT
+          echo "✅ Build job output set to: ${{ steps.tags.outputs.primary-tag }}"
 
   deploy:
     name: Deploy to Recette Environment
@@ -100,13 +104,27 @@ jobs:
 
       - name: Verify Image Exists
         run: |
-          # Install Docker CLI
-          sudo apt-get update && sudo apt-get install -y docker.io
-          # Login to Docker Hub
-          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          # Debug: Show what image we're trying to pull
+          echo "Image to deploy: ${{ needs.docker-build.outputs.full-image-tag }}"
+          
+          # Verify image tag is not empty
+          if [ -z "${{ needs.docker-build.outputs.full-image-tag }}" ]; then
+            echo "::error::Image tag is empty!"
+            exit 1
+          fi
+          
+          # Use crane to verify image exists (crane is pre-installed in GitHub runners)
+          curl -sL "https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz" | tar -xz crane
+          sudo mv crane /usr/local/bin/
+          
+          # Login to Docker Hub using crane
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | crane auth login docker.io -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          
           # Verify image exists
-          docker pull ${{ needs.docker-build.outputs.full-image-tag }} || \
+          crane manifest ${{ needs.docker-build.outputs.full-image-tag }} > /dev/null || \
             { echo "::error::Image not found in registry: ${{ needs.docker-build.outputs.full-image-tag }}"; exit 1; }
+          
+          echo "✅ Image verification successful"
 
       - name: Deploy Application Stack
         run: |
