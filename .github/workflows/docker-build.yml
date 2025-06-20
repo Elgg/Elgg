@@ -10,7 +10,6 @@ env:
   IMAGE_NAME: elgg-app
   K8S_NAMESPACE: recette
   DEPLOYMENT_TIMEOUT: 300s
-
 jobs:
   docker-build:
     name: Build and Push Docker Image
@@ -19,14 +18,6 @@ jobs:
       full-image-tag: ${{ steps.output.outputs.image-tag }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Debug - Check received outputs
-        run: |
-          echo "DEBUG - Received from build job:"
-          echo "full-image-tag: '${{ needs.docker-build.outputs.full-image-tag }}'"
-          echo "Length: ${#FULL_IMAGE_TAG}"
-        env:
-          FULL_IMAGE_TAG: ${{ needs.docker-build.outputs.full-image-tag }}
 
       - name: Generate image tags
         id: tags
@@ -46,9 +37,6 @@ jobs:
           echo "- Timestamped: ${TIMESTAMPED_TAG}"
           echo "- Latest: ${LATEST_TAG}"
           echo "- Primary: ${TIMESTAMPED_TAG}"
-          
-          echo "DEBUG - GITHUB_OUTPUT contents:"
-          cat $GITHUB_OUTPUT
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -57,7 +45,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push Docker image
-        id: build_and_push
         uses: docker/build-push-action@v4
         with:
           push: true
@@ -70,16 +57,14 @@ jobs:
       - name: Set output for next job
         id: output
         run: |
-          PRIMARY_TAG="${{ steps.tags.outputs.primary-tag }}"
-          echo "Setting output: ${PRIMARY_TAG}"
-          echo "image-tag=${PRIMARY_TAG}" >> $GITHUB_OUTPUT
-          echo "✅ Build job output set to: ${PRIMARY_TAG}"
+          echo "image-tag=${{ steps.tags.outputs.primary-tag }}" >> $GITHUB_OUTPUT
+          echo "✅ Build job output set to: ${{ steps.tags.outputs.primary-tag }}"
 
   deploy:
     name: Deploy to Recette Environment
     needs: docker-build
     outputs:
-      image-tag: ${{ needs.docker-build.outputs.full-image-tag }}
+      deployed-image-tag: ${{ needs.docker-build.outputs.full-image-tag }}
     permissions:
       contents: read
       deployments: write
