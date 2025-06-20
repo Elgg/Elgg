@@ -1,6 +1,4 @@
 name: Build, Deploy and Test to Recette Environment
-permissions:
-  contents: read
 
 on:
   workflow_dispatch:
@@ -48,6 +46,9 @@ jobs:
   deploy:
     name: Deploy to Recette Environment
     needs: docker-build
+    permissions:
+      contents: read
+      deployments: write
     environment:
       name: recette
       url: http://${{ env.RECETTE_IP }}
@@ -79,12 +80,12 @@ jobs:
 
       - name: Deploy Application Stack
         run: |
-          # Update application with new image
-          kubectl set image deployment/elgg-app elgg-app=${{ needs.docker-build.outputs.image-tag }} -n ${{ env.K8S_NAMESPACE }}
-
           # Apply Kubernetes manifests
           kubectl apply -f k8s/ -n ${{ env.K8S_NAMESPACE }}
 
+          if kubectl get deployment elgg-app -n ${{ env.K8S_NAMESPACE }} >/dev/null 2>&1; then
+            kubectl set image deployment/elgg-app elgg-app=${{ needs.docker-build.outputs.image-tag }} -n ${{ env.K8S_NAMESPACE }}
+          fi
           # Verify deployments
           kubectl rollout status deployment/elgg-app -n ${{ env.K8S_NAMESPACE }} --timeout=${{ env.DEPLOYMENT_TIMEOUT }}
           kubectl rollout status deployment/elgg-phpmyadmin -n ${{ env.K8S_NAMESPACE }} --timeout=${{ env.DEPLOYMENT_TIMEOUT }}
@@ -96,6 +97,9 @@ jobs:
     name: Security Scan with ZAP
     needs: deploy
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
     steps:
       - name: Run OWASP ZAP Scan
         uses: zaproxy/action-full-scan@v0.12.0
@@ -118,6 +122,9 @@ jobs:
     name: Quality Approval Gate
     needs: security-scan
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+      issues: read
     steps:
       - name: Get PR Information
         id: pr-info
