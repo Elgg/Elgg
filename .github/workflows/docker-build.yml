@@ -7,6 +7,8 @@ on:
 
 env:
   RECETTE_IP: "34.22.137.184"
+  # Add a unique cache key based on commit SHA
+  CACHE_KEY: ${{ github.sha }}
 
 jobs:
   docker-build:
@@ -73,7 +75,23 @@ jobs:
             --region ${{ secrets.GKE_REGION }} \
             --project ${{ secrets.GKE_PROJECT }}
 
-      - name: Deploy to GKE (recette namespace)
+      - name: Check if deployment is needed
+        id: check-deploy
+        run: |
+          # Check if the current image matches what's deployed
+          CURRENT_IMAGE=$(kubectl get deployment elgg-app -n recette -o jsonpath='{.spec.template.spec.containers[0].image}')
+          DESIRED_IMAGE="${{ needs.docker-build.outputs.image-tag }}"
+          
+          if [ "$CURRENT_IMAGE" = "$DESIRED_IMAGE" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "Deployment not needed - image already matches"
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+            echo "Deployment needed - image differs"
+          fi
+
+      - name: Deploy to GKE
+        if: steps.check-deploy.outputs.skip != 'true'
         run: |
           kubectl apply -f k8s/mariadb.yml -n recette
           kubectl apply -f k8s/pvc.yml -n recette
@@ -86,7 +104,6 @@ jobs:
           kubectl get all -n recette
 
   security-scan:
-    name: Security Scan with ZAP
     needs: deploy
     runs-on: ubuntu-latest
     permissions:
@@ -103,7 +120,7 @@ jobs:
           report_md: true
 
       - name: Upload Scan Reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: security-scan-reports
           path: |
@@ -111,7 +128,6 @@ jobs:
             zap-report.md
 
   quality-gate:
-    name: Quality Approval Gate
     needs: security-scan
     runs-on: ubuntu-latest
     permissions:
@@ -146,7 +162,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'UAT Deployment Ready for Review\n\n' +
+              body: '🚀 UAT Deployment Ready for Review\n\n' +
                     '**Application Details:**\n' +
                     '```yaml\n' +
                     `image: ${{ needs.docker-build.outputs.image-tag }}\n` +
