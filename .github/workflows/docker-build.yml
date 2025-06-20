@@ -15,6 +15,9 @@ jobs:
   docker-build:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
     outputs:
       image-tag: ${{ steps.meta.outputs.tags }}
     steps:
@@ -77,12 +80,12 @@ jobs:
 
       - name: Deploy Application Stack
         run: |
-          # Update application with new image
-          kubectl set image deployment/elgg-app elgg-app=${{ needs.docker-build.outputs.image-tag }} -n ${{ env.K8S_NAMESPACE }}
-
           # Apply Kubernetes manifests
           kubectl apply -f k8s/ -n ${{ env.K8S_NAMESPACE }}
 
+          if kubectl get deployment elgg-app -n ${{ env.K8S_NAMESPACE }} >/dev/null 2>&1; then
+            kubectl set image deployment/elgg-app elgg-app=${{ needs.docker-build.outputs.image-tag }} -n ${{ env.K8S_NAMESPACE }}
+          fi
           # Verify deployments
           kubectl rollout status deployment/elgg-app -n ${{ env.K8S_NAMESPACE }} --timeout=${{ env.DEPLOYMENT_TIMEOUT }}
           kubectl rollout status deployment/elgg-phpmyadmin -n ${{ env.K8S_NAMESPACE }} --timeout=${{ env.DEPLOYMENT_TIMEOUT }}
