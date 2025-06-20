@@ -1,0 +1,164 @@
+name: Build, Deploy and Test to Recette Environment
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [dev]
+
+env:
+  RECETTE_IP: "34.22.137.184"
+  IMAGE_NAME: elgg-app
+  K8S_NAMESPACE: recette
+  DEPLOYMENT_TIMEOUT: 300s
+
+jobs:
+  docker-build:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tags }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=recette-$(date +%Y%m%d)-$(git rev-parse --short HEAD)
+            type=raw,value=recette-latest
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+          cache-to: type=inline
+
+  deploy:
+    name: Deploy to Recette Environment
+    needs: docker-build
+    permissions:
+      contents: read
+      deployments: write
+    environment:
+      name: recette
+      url: http://${{ env.RECETTE_IP }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GKE_SA_KEY }}
+
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GKE_PROJECT }}
+          install_kubectl: true
+
+      - name: Configure GKE Auth
+        run: |
+          gcloud components install gke-gcloud-auth-plugin -q
+          gcloud config set container/use_application_default_credentials true
+
+      - name: Connect to GKE Cluster
+        run: |
+          gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
+            --region ${{ secrets.GKE_REGION }} \
+            --project ${{ secrets.GKE_PROJECT }}
+
+      - name: Deploy Application Stack
+        run: |
+          # Apply Kubernetes manifests
+          kubectl apply -f k8s/ -n ${{ env.K8S_NAMESPACE }}
+
+          if kubectl get deployment elgg-app -n ${{ env.K8S_NAMESPACE }} >/dev/null 2>&1; then
+            kubectl set image deployment/elgg-app elgg-app=${{ needs.docker-build.outputs.image-tag }} -n ${{ env.K8S_NAMESPACE }}
+          fi
+          # Verify deployments
+          kubectl rollout status deployment/elgg-app -n ${{ env.K8S_NAMESPACE }} --timeout=${{ env.DEPLOYMENT_TIMEOUT }}
+          kubectl rollout status deployment/elgg-phpmyadmin -n ${{ env.K8S_NAMESPACE }} --timeout=${{ env.DEPLOYMENT_TIMEOUT }}
+
+          # Display deployment status
+          kubectl get svc,deploy,pods -n ${{ env.K8S_NAMESPACE }}
+
+  security-scan:
+    name: Security Scan with ZAP
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run OWASP ZAP Scan
+        uses: zaproxy/action-full-scan@v0.12.0
+        with:
+          target: 'http://${{ env.RECETTE_IP }}'
+          rules_file_name: '.zap/recette-rules.tsv'
+          cmd_options: '-a -T 60'
+          report_html: true
+          report_md: true
+
+      - name: Upload Scan Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-scan-reports
+          path: |
+            zap-report.html
+            zap-report.md
+
+  quality-gate:
+    name: Quality Approval Gate
+    needs: security-scan
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+      issues: read
+    steps:
+      - name: Get PR Information
+        id: pr-info
+        uses: octokit/graphql-action@v2.x
+        with:
+          query: |
+            query($owner:String!, $repo:String!, $prNumber:Int!) {
+              repository(owner:$owner, name:$repo) {
+                pullRequest(number:$prNumber) {
+                  headRefOid
+                  title
+                }
+              }
+            }
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          prNumber: ${{ github.event.pull_request.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Deployment Notification
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const commitHash = '${{ steps.pr-info.outputs.data.repository.pullRequest.headRefOid }}'.substring(0, 7);
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: ' UAT Deployment Ready for Review\n\n' +
+                    '**Application Details:**\n' +
+                    '```yaml\n' +
+                    `image: ${{ needs.docker-build.outputs.image-tag }}\n` +
+                    `environment: http://${{ env.RECETTE_IP }}\n` +
+                    `commit: ${commitHash}\n` +
+                    '```\n\n' +
+                    '**Security Scan:** [View Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n\n' +
+                    'To approve this deployment, comment with:\n' +
+                    '`/approve-recette`'
+            })
