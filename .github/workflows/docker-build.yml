@@ -10,12 +10,13 @@ env:
   IMAGE_NAME: elgg-app
   K8S_NAMESPACE: recette
   DEPLOYMENT_TIMEOUT: 300s
+
 jobs:
   docker-build:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     outputs:
-      full-image-tag: ${{ steps.output.outputs.image-tag }}
+      image-tag: ${{ steps.tags.outputs.primary-tag }}
     steps:
       - uses: actions/checkout@v4
 
@@ -54,17 +55,11 @@ jobs:
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
           cache-to: type=inline
 
-      - name: Set output for next job
-        id: output
-        run: |
-          echo "image-tag=${{ steps.tags.outputs.primary-tag }}" >> $GITHUB_OUTPUT
-          echo "✅ Build job output set to: ${{ steps.tags.outputs.primary-tag }}"
-
   deploy:
     name: Deploy to Recette Environment
     needs: docker-build
     outputs:
-      deployed-image-tag: ${{ needs.docker-build.outputs.full-image-tag }}
+      deployed-image-tag: ${{ needs.docker-build.outputs.image-tag }}
     permissions:
       contents: read
       deployments: write
@@ -99,31 +94,7 @@ jobs:
 
       - name: Debug Image Tag
         run: |
-          echo "Deploying image: ${{ needs.docker-build.outputs.full-image-tag }}"
-
-      - name: Verify Image Exists
-        run: |
-          # Debug: Show what image we're trying to pull
-          echo "Image to deploy: ${{ needs.docker-build.outputs.full-image-tag }}"
-          
-          # Verify image tag is not empty
-          if [ -z "${{ needs.docker-build.outputs.full-image-tag }}" ]; then
-            echo "::error::Image tag is empty!"
-            exit 1
-          fi
-          
-          # Use crane to verify image exists (crane is pre-installed in GitHub runners)
-          curl -sL "https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz" | tar -xz crane
-          sudo mv crane /usr/local/bin/
-          
-          # Login to Docker Hub using crane
-          echo "${{ secrets.DOCKERHUB_TOKEN }}" | crane auth login docker.io -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-          
-          # Verify image exists
-          crane manifest ${{ needs.docker-build.outputs.full-image-tag }} > /dev/null || \
-            { echo "::error::Image not found in registry: ${{ needs.docker-build.outputs.full-image-tag }}"; exit 1; }
-          
-          echo "✅ Image verification successful"
+          echo "Deploying image: ${{ needs.docker-build.outputs.image-tag }}"
 
       - name: Deploy Application Stack
         run: |
@@ -133,7 +104,7 @@ jobs:
           # Update image if deployment exists
           if kubectl get deployment elgg-app -n ${{ env.K8S_NAMESPACE }} >/dev/null 2>&1; then
             kubectl set image deployment/elgg-app \
-              elgg-app=${{ needs.docker-build.outputs.full-image-tag }} \
+              elgg-app=${{ needs.docker-build.outputs.image-tag }} \
               -n ${{ env.K8S_NAMESPACE }}
           fi
 
@@ -223,7 +194,7 @@ jobs:
               body: '🚀 UAT Deployment Ready for Review\n\n' +
                     '**Application Details:**\n' +
                     '```yaml\n' +
-                    `image: ${{ needs.deploy.outputs.image-tag }}\n` +
+                    `image: ${{ needs.deploy.outputs.deployed-image-tag }}\n` +
                     `environment: http://${{ env.RECETTE_IP }}\n` +
                     `commit: ${commitHash}\n` +
                     '```\n\n' +
