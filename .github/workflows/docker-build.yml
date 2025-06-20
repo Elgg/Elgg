@@ -45,7 +45,7 @@ jobs:
       - name: Extract primary image tag
         id: extract_tag
         run: |
-          tag=$(echo "${{ steps.meta.outputs.tags }}" | cut -d',' -f1)
+          tag=$(echo "${{ steps.meta.outputs.tags }}" | grep -E '^.+/elgg-app:.+' | head -n 1)
           echo "tag=$tag"
           echo "tag=$tag" >> $GITHUB_OUTPUT
 
