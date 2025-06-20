@@ -15,9 +15,6 @@ jobs:
   docker-build:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
     outputs:
       image-tag: ${{ steps.meta.outputs.tags }}
     steps:
