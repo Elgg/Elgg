@@ -16,7 +16,7 @@ jobs:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     outputs:
-      image-tag: ${{ steps.extract_tag.outputs.tag }}
+      full-image-tag: ${{ steps.extract_tag.outputs.full-image }}
     steps:
       - uses: actions/checkout@v4
 
@@ -42,18 +42,21 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
           cache-to: type=inline
-      - name: Extract primary image tag
+
+      - name: Extract full image tag
         id: extract_tag
         run: |
-          tag=$(echo "${{ steps.meta.outputs.tags }}" | grep -E '^.+/elgg-app:.+' | head -n 1)
-          echo "tag=$tag"
-          echo "tag=$tag" >> $GITHUB_OUTPUT
+          # Get the first tag from the comma-separated list
+          FULL_IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | cut -d',' -f1)
+          echo "full-image=${FULL_IMAGE_TAG}" >> $GITHUB_OUTPUT
+          echo "Using image: ${FULL_IMAGE_TAG}"
+
 
   deploy:
     name: Deploy to Recette Environment
     needs: docker-build
     outputs:
-      image-tag: ${{ needs.docker-build.outputs.image-tag }}
+      image-tag: ${{ needs.docker-build.outputs.full-image-tag }}
     permissions:
       contents: read
       deployments: write
@@ -88,23 +91,33 @@ jobs:
 
       - name: Debug Image Tag
         run: |
-          echo "Deploying image: ${{ needs.docker-build.outputs.image-tag }}"
-          echo "Full image: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ needs.docker-build.outputs.image-tag }}"
+          echo "Deploying image: ${{ needs.docker-build.outputs.full-image-tag }}"
 
       - name: Deploy Application Stack
         run: |
           # Apply Kubernetes manifests
           kubectl apply -f k8s/ -n ${{ env.K8S_NAMESPACE }}
 
+          # Update image if deployment exists
           if kubectl get deployment elgg-app -n ${{ env.K8S_NAMESPACE }} >/dev/null 2>&1; then
-            kubectl set image deployment/elgg-app elgg-app=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ needs.docker-build.outputs.image-tag }} -n ${{ env.K8S_NAMESPACE }}
+            kubectl set image deployment/elgg-app \
+              elgg-app=${{ needs.docker-build.outputs.full-image-tag }} \
+              -n ${{ env.K8S_NAMESPACE }}
           fi
+
           # Verify deployments
-          kubectl rollout status deployment/elgg-app -n ${{ env.K8S_NAMESPACE }} --timeout=${{ env.DEPLOYMENT_TIMEOUT }}
-          kubectl rollout status deployment/elgg-phpmyadmin -n ${{ env.K8S_NAMESPACE }} --timeout=${{ env.DEPLOYMENT_TIMEOUT }}
+          kubectl rollout status deployment/elgg-app \
+            -n ${{ env.K8S_NAMESPACE }} \
+            --timeout=${{ env.DEPLOYMENT_TIMEOUT }} || \
+            { kubectl describe deployment elgg-app -n ${{ env.K8S_NAMESPACE }}; exit 1; }
+
+          kubectl rollout status deployment/elgg-phpmyadmin \
+            -n ${{ env.K8S_NAMESPACE }} \
+            --timeout=${{ env.DEPLOYMENT_TIMEOUT }}
 
           # Display deployment status
           kubectl get svc,deploy,pods -n ${{ env.K8S_NAMESPACE }}
+          kubectl get events -n ${{ env.K8S_NAMESPACE }} --sort-by='.lastTimestamp'
 
   security-scan:
     name: Security Scan with ZAP
