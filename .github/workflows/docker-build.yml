@@ -16,7 +16,7 @@ jobs:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     outputs:
-      image-tag: ${{ steps.meta.outputs.tags }}
+      image-tag: ${{ steps.extract_tag.outputs.tag }}
     steps:
       - uses: actions/checkout@v4
 
@@ -42,10 +42,18 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
           cache-to: type=inline
+      - name: Extract primary image tag
+        id: extract_tag
+        run: |
+        tag=$(echo "${{ steps.meta.outputs.tags }}" | cut -d',' -f1)
+        echo "tag=$tag"
+        echo "tag=$tag" >> $GITHUB_OUTPUT
 
   deploy:
     name: Deploy to Recette Environment
     needs: docker-build
+    outputs:
+      image-tag: ${{ needs.docker-build.outputs.image-tag }}
     permissions:
       contents: read
       deployments: write
@@ -78,13 +86,16 @@ jobs:
             --region ${{ secrets.GKE_REGION }} \
             --project ${{ secrets.GKE_PROJECT }}
 
+      - name: Debug Image Tag
+        run: echo "Deploying image: ${{ needs.docker-build.outputs.image-tag }}"
+
       - name: Deploy Application Stack
         run: |
           # Apply Kubernetes manifests
           kubectl apply -f k8s/ -n ${{ env.K8S_NAMESPACE }}
 
           if kubectl get deployment elgg-app -n ${{ env.K8S_NAMESPACE }} >/dev/null 2>&1; then
-            kubectl set image deployment/elgg-app elgg-app=${{ needs.docker-build.outputs.image-tag }} -n ${{ env.K8S_NAMESPACE }}
+            kubectl set image deployment/elgg-app elgg-app=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ needs.docker-build.outputs.image-tag }} -n ${{ env.K8S_NAMESPACE }}
           fi
           # Verify deployments
           kubectl rollout status deployment/elgg-app -n ${{ env.K8S_NAMESPACE }} --timeout=${{ env.DEPLOYMENT_TIMEOUT }}
