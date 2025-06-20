@@ -58,8 +58,6 @@ jobs:
   deploy:
     name: Deploy to Recette Environment
     needs: docker-build
-    outputs:
-      deployed-image-tag: ${{ needs.docker-build.outputs.image-tag }}
     permissions:
       contents: read
       deployments: write
@@ -92,21 +90,24 @@ jobs:
             --region ${{ secrets.GKE_REGION }} \
             --project ${{ secrets.GKE_PROJECT }}
 
-      - name: Debug Image Tag
+      - name: Verify Image Tag
         run: |
-          echo "Deploying image: ${{ needs.docker-build.outputs.image-tag }}"
+          echo "Image tag to deploy: ${{ needs.docker-build.outputs.image-tag }}"
+          if [ -z "${{ needs.docker-build.outputs.image-tag }}" ]; then
+            echo "::error::Image tag is empty!"
+            exit 1
+          fi
 
       - name: Deploy Application Stack
         run: |
           # Apply Kubernetes manifests
           kubectl apply -f k8s/ -n ${{ env.K8S_NAMESPACE }}
 
-          # Update image if deployment exists
-          if kubectl get deployment elgg-app -n ${{ env.K8S_NAMESPACE }} >/dev/null 2>&1; then
-            kubectl set image deployment/elgg-app \
-              elgg-app=${{ needs.docker-build.outputs.image-tag }} \
-              -n ${{ env.K8S_NAMESPACE }}
-          fi
+          # Update image in deployment
+          kubectl set image deployment/elgg-app \
+            elgg-app=${{ needs.docker-build.outputs.image-tag }} \
+            -n ${{ env.K8S_NAMESPACE }} || \
+            { echo "::warning::Failed to set image, may be first deployment"; }
 
           # Verify deployments
           kubectl rollout status deployment/elgg-app \
@@ -163,30 +164,10 @@ jobs:
       pull-requests: read
       issues: read
     steps:
-      - name: Get PR Information
-        id: pr-info
-        uses: octokit/graphql-action@v2.x
-        with:
-          query: |
-            query($owner:String!, $repo:String!, $prNumber:Int!) {
-              repository(owner:$owner, name:$repo) {
-                pullRequest(number:$prNumber) {
-                  headRefOid
-                  title
-                }
-              }
-            }
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.event.repository.name }}
-          prNumber: ${{ github.event.pull_request.number }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Create Deployment Notification
         uses: actions/github-script@v6
         with:
           script: |
-            const commitHash = '${{ steps.pr-info.outputs.data.repository.pullRequest.headRefOid }}'.substring(0, 7);
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
@@ -194,9 +175,9 @@ jobs:
               body: '🚀 UAT Deployment Ready for Review\n\n' +
                     '**Application Details:**\n' +
                     '```yaml\n' +
-                    `image: ${{ needs.deploy.outputs.deployed-image-tag }}\n` +
+                    `image: ${{ needs.docker-build.outputs.image-tag }}\n` +
                     `environment: http://${{ env.RECETTE_IP }}\n` +
-                    `commit: ${commitHash}\n` +
+                    `commit: ${context.sha.substring(0, 7)}\n` +
                     '```\n\n' +
                     '**Security Scan:** [View Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n\n' +
                     'To approve this deployment, comment with:\n' +
