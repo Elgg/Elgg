@@ -130,12 +130,12 @@ jobs:
           kubectl get events -n ${{ env.K8S_NAMESPACE }} --sort-by='.lastTimestamp'
 
       - name: Rollback if deployment failed
-              if: failure()
-              run: |
-                echo "::warning::Deployment failed, attempting rollback"
-                kubectl rollout undo deployment/elgg-app -n ${{ env.K8S_NAMESPACE }}
-                kubectl rollout status deployment/elgg-app -n ${{ env.K8S_NAMESPACE }} --timeout=60s
-                echo "Rollback completed for elgg-app deployment"
+        if: failure()
+        run: |
+          echo "::warning::Deployment failed, attempting rollback"
+          kubectl rollout undo deployment/elgg-app -n ${{ env.K8S_NAMESPACE }}
+          kubectl rollout status deployment/elgg-app -n ${{ env.K8S_NAMESPACE }} --timeout=60s
+          echo "Rollback completed for elgg-app deployment"
 
   security-scan:
     name: Security Scan with ZAP
