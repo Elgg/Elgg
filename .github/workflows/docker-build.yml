@@ -94,6 +94,9 @@ jobs:
     name: Security Scan with ZAP
     needs: deploy
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
     steps:
       - name: Run OWASP ZAP Scan
         uses: zaproxy/action-full-scan@v0.12.0
@@ -116,6 +119,9 @@ jobs:
     name: Quality Approval Gate
     needs: security-scan
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+      issues: read
     steps:
       - name: Get PR Information
         id: pr-info
