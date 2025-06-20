@@ -49,6 +49,9 @@ jobs:
   deploy:
     name: Deploy to Recette Environment
     needs: docker-build
+    permissions:
+      contents: read
+      deployments: write
     environment:
       name: recette
       url: http://${{ env.RECETTE_IP }}
