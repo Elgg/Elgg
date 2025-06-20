@@ -20,6 +20,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Debug - Check received outputs
+        run: |
+          echo "DEBUG - Received from build job:"
+          echo "full-image-tag: '${{ needs.docker-build.outputs.full-image-tag }}'"
+          echo "Length: ${#FULL_IMAGE_TAG}"
+        env:
+          FULL_IMAGE_TAG: ${{ needs.docker-build.outputs.full-image-tag }}
+
       - name: Generate image tags
         id: tags
         run: |
@@ -35,8 +43,12 @@ jobs:
           echo "primary-tag=${TIMESTAMPED_TAG}" >> $GITHUB_OUTPUT
           
           echo "Generated tags:"
-          echo "- ${TIMESTAMPED_TAG}"
-          echo "- ${LATEST_TAG}"
+          echo "- Timestamped: ${TIMESTAMPED_TAG}"
+          echo "- Latest: ${LATEST_TAG}"
+          echo "- Primary: ${TIMESTAMPED_TAG}"
+          
+          echo "DEBUG - GITHUB_OUTPUT contents:"
+          cat $GITHUB_OUTPUT
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -55,11 +67,13 @@ jobs:
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
           cache-to: type=inline
 
-      - name: Set output
+      - name: Set output for next job
         id: output
         run: |
-          echo "image-tag=${{ steps.tags.outputs.primary-tag }}" >> $GITHUB_OUTPUT
-          echo "✅ Build job output set to: ${{ steps.tags.outputs.primary-tag }}"
+          PRIMARY_TAG="${{ steps.tags.outputs.primary-tag }}"
+          echo "Setting output: ${PRIMARY_TAG}"
+          echo "image-tag=${PRIMARY_TAG}" >> $GITHUB_OUTPUT
+          echo "✅ Build job output set to: ${PRIMARY_TAG}"
 
   deploy:
     name: Deploy to Recette Environment
