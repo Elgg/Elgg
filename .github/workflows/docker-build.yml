@@ -20,13 +20,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Generate timestamp and short commit
+        id: vars
+        run: |
+          echo "timestamp=$(date +%Y%m%d)" >> $GITHUB_OUTPUT
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
         with:
           images: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=recette-$(date +%Y%m%d)-$(git rev-parse --short HEAD)
+            type=raw,value=recette-${{ steps.vars.outputs.timestamp }}-${{ steps.vars.outputs.short_sha }}
             type=raw,value=recette-latest
 
       - name: Login to Docker Hub
@@ -47,10 +53,9 @@ jobs:
         id: extract_tag
         run: |
           # Get the first tag from the comma-separated list
-          FULL_IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | cut -d',' -f1)
+          FULL_IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
           echo "full-image=${FULL_IMAGE_TAG}" >> $GITHUB_OUTPUT
           echo "Using image: ${FULL_IMAGE_TAG}"
-
 
   deploy:
     name: Deploy to Recette Environment
@@ -198,10 +203,10 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: ' UAT Deployment Ready for Review\n\n' +
+              body: '🚀 UAT Deployment Ready for Review\n\n' +
                     '**Application Details:**\n' +
                     '```yaml\n' +
-                    `image: ${{ needs.docker-build.outputs.image-tag }}\n` +
+                    `image: ${{ needs.deploy.outputs.image-tag }}\n` +
                     `environment: http://${{ env.RECETTE_IP }}\n` +
                     `commit: ${commitHash}\n` +
                     '```\n\n' +
