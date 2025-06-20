@@ -45,9 +45,9 @@ jobs:
       - name: Extract primary image tag
         id: extract_tag
         run: |
-        tag=$(echo "${{ steps.meta.outputs.tags }}" | cut -d',' -f1)
-        echo "tag=$tag"
-        echo "tag=$tag" >> $GITHUB_OUTPUT
+          tag=$(echo "${{ steps.meta.outputs.tags }}" | cut -d',' -f1)
+          echo "tag=$tag"
+          echo "tag=$tag" >> $GITHUB_OUTPUT
 
   deploy:
     name: Deploy to Recette Environment
