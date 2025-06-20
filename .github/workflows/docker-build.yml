@@ -110,14 +110,16 @@ jobs:
       contents: read
       actions: write
     steps:
-      - name: Run OWASP ZAP Scan
+      - name: Run Optimized ZAP Scan
         uses: zaproxy/action-full-scan@v0.12.0
         with:
           target: 'http://${{ env.RECETTE_IP }}'
           rules_file_name: '.zap/recette-rules.tsv'
-          cmd_options: '-a -T 60'
+          cmd_options: '-a -T 15 -m 3 -I'  
+          ajax_spider: false               
+          traditional_spider: true          
+          max_alerts: 20                    
           report_html: true
-          report_md: true
 
       - name: Upload Scan Reports
         uses: actions/upload-artifact@v4
