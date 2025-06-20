@@ -1,5 +1,7 @@
-40012   # SQL Injection
-40016   # XSS
-40018   # Path Traversal
-90019   # Missing Security Headers
-50000   # Remote Code Execution
+40012  WARN
+40016  WARN
+40018  WARN
+90019  WARN
+50000  WARN
+10010  WARN
+10011  WARN

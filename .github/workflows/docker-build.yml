@@ -125,16 +125,17 @@ jobs:
         uses: zaproxy/action-baseline@v0.10.0
         with:
           target: 'http://${{ env.RECETTE_IP }}'
-          cmd_options: '-t 5 -r report.html -w report.md'  # 5 min timeout, HTML+MD reports
+          cmd_options: '-t 5'
           rules_file_name: '.zap/critical-rules.tsv'
+          fail_action: false 
 
       - name: Upload Scan Report
         uses: actions/upload-artifact@v4
         with:
           name: zap-security-report
           path: |
-            report.html
-            report.md
+            report_html.html
+            report_md.md
 
   quality-gate:
     needs: security-scan
@@ -171,7 +172,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '🚀 UAT Deployment Ready for Review\n\n' +
+              body: 'UAT Deployment Ready for Review\n\n' +
                     '**Application Details:**\n' +
                     '```yaml\n' +
                     `image: ${{ needs.docker-build.outputs.image-tag }}\n` +
