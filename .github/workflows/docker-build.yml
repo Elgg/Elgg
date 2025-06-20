@@ -87,7 +87,9 @@ jobs:
             --project ${{ secrets.GKE_PROJECT }}
 
       - name: Debug Image Tag
-        run: echo "Deploying image: ${{ needs.docker-build.outputs.image-tag }}"
+        run: |
+          echo "Deploying image: ${{ needs.docker-build.outputs.image-tag }}"
+          echo "Full image: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ needs.docker-build.outputs.image-tag }}"
 
       - name: Deploy Application Stack
         run: |
