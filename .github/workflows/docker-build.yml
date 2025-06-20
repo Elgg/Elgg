@@ -93,6 +93,16 @@ jobs:
         run: |
           echo "Deploying image: ${{ needs.docker-build.outputs.full-image-tag }}"
 
+      - name: Verify Image Exists
+        run: |
+          # Install Docker CLI
+          sudo apt-get update && sudo apt-get install -y docker.io
+          # Login to Docker Hub
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          # Verify image exists
+          docker pull ${{ needs.docker-build.outputs.full-image-tag }} || \
+            { echo "::error::Image not found in registry: ${{ needs.docker-build.outputs.full-image-tag }}"; exit 1; }
+
       - name: Deploy Application Stack
         run: |
           # Apply Kubernetes manifests
@@ -118,6 +128,14 @@ jobs:
           # Display deployment status
           kubectl get svc,deploy,pods -n ${{ env.K8S_NAMESPACE }}
           kubectl get events -n ${{ env.K8S_NAMESPACE }} --sort-by='.lastTimestamp'
+
+      - name: Rollback if deployment failed
+        if: failure()
+        run: |
+          echo "::warning::Deployment failed, attempting rollback"
+          kubectl rollout undo deployment/elgg-app -n ${{ env.K8S_NAMESPACE }}
+          kubectl rollout status deployment/elgg-app -n ${{ env.K8S_NAMESPACE }} --timeout=60s
+          echo "Rollback completed for elgg-app deployment"
 
   security-scan:
     name: Security Scan with ZAP
