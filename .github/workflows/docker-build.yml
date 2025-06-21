@@ -125,9 +125,8 @@ jobs:
         uses: zaproxy/action-baseline@v0.10.0
         with:
           target: 'http://${{ env.RECETTE_IP }}'
-          cmd_options: '-t 5'
-          rules_file_name: '.zap/critical-rules.tsv'
-          fail_action: false 
+          cmd_options: '-T 5'  # Just the 5-minute timeout
+          fail_action: false   # Don't fail workflow on findings
 
       - name: Upload Scan Report
         uses: actions/upload-artifact@v4
@@ -136,7 +135,7 @@ jobs:
           path: |
             report_html.html
             report_md.md
-
+      
   quality-gate:
     needs: security-scan
     runs-on: ubuntu-latest
