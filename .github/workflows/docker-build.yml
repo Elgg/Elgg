@@ -81,7 +81,6 @@ jobs:
           # Check if the current image matches what's deployed
           CURRENT_IMAGE=$(kubectl get deployment elgg-app -n recette -o jsonpath='{.spec.template.spec.containers[0].image}')
           DESIRED_IMAGE="${{ needs.docker-build.outputs.image-tag }}"
-          
           if [ "$CURRENT_IMAGE" = "$DESIRED_IMAGE" ]; then
             echo "skip=true" >> $GITHUB_OUTPUT
             echo "Deployment not needed - image already matches"
