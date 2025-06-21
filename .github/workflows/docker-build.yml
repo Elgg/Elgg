@@ -137,14 +137,19 @@ jobs:
       actions: write
       security-events: write
     steps:
+
+      - name: Create ZAP working directory
+        run: mkdir -p zap_work_dir && chmod 777 zap_work_dir
+        
       - name: Run Quick Security Scan
         uses: zaproxy/action-baseline@v0.10.0
         with:
           target: 'http://${{ env.RECETTE_IP }}'
-          cmd_options: '-T 5'
+          cmd_options: '-T 5 -z "-config api.disablekey=true" -r report.html -w report.md'
           fail_action: false
           allow_issue_writing: false
-          artifact_name: zap-scan-${{ github.run_number }}
+          working_directory: './zap_work_dir'
+          artifact_name: ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -152,12 +157,10 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: zap-scan-${{ github.run_number }}
+          name: security-scan-results
           path: |
-            report_html.html
-            report_md.md
-            report_json.json
-          retention-days: 30
+            zap_work_dir/report.html
+            zap_work_dir/report.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
