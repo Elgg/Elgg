@@ -144,6 +144,7 @@ jobs:
           cmd_options: '-T 5'
           fail_action: false
           allow_issue_writing: false
+          artifact_name: zap-scan-${{ github.run_number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -151,7 +152,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: security-scan-report-${{ github.run_number }}
+          name: zap-scan-${{ github.run_number }}
           path: |
             report_html.html
             report_md.md
