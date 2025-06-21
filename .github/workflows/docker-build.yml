@@ -5,6 +5,14 @@ on:
   push:
     branches: [dev]
 
+# Add workflow-level permissions
+permissions:
+  contents: read
+  actions: write
+  pull-requests: write
+  issues: write
+  id-token: write
+
 env:
   RECETTE_IP: "34.22.137.184"
   # Add a unique cache key based on commit SHA
@@ -13,6 +21,9 @@ env:
 jobs:
   docker-build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     outputs:
       image-tag: ${{ steps.set-output.outputs.image-tag }}
     steps:
@@ -47,6 +58,8 @@ jobs:
   deploy:
     needs: docker-build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     environment:
       name: recette
     steps:
@@ -79,7 +92,7 @@ jobs:
         id: check-deploy
         run: |
           # Check if the current image matches what's deployed
-          CURRENT_IMAGE=$(kubectl get deployment elgg-app -n recette -o jsonpath='{.spec.template.spec.containers[0].image}')
+          CURRENT_IMAGE=$(kubectl get deployment elgg-app -n recette -o jsonpath='{.spec.template.spec.containers[0].image}' 2>/dev/null || echo "none")
           DESIRED_IMAGE="${{ needs.docker-build.outputs.image-tag }}"
           if [ "$CURRENT_IMAGE" = "$DESIRED_IMAGE" ]; then
             echo "skip=true" >> $GITHUB_OUTPUT
@@ -98,9 +111,23 @@ jobs:
           kubectl apply -f k8s/phpMyAdmin.yml -n recette
           kubectl apply -f k8s/elgg-env.yml -n recette
 
-          kubectl rollout status deployment/elgg-app -n recette
-          kubectl rollout status deployment/elgg-phpmyadmin -n recette
+          kubectl rollout status deployment/elgg-app -n recette --timeout=300s
+          kubectl rollout status deployment/elgg-phpmyadmin -n recette --timeout=300s
           kubectl get all -n recette
+
+      - name: Wait for service to be ready
+        run: |
+          echo "Waiting for application to be ready..."
+          sleep 30
+          # Test if the application is responding
+          for i in {1..10}; do
+            if curl -f -s "http://${{ env.RECETTE_IP }}" > /dev/null; then
+              echo "Application is ready!"
+              break
+            fi
+            echo "Attempt $i: Application not ready yet, waiting..."
+            sleep 10
+          done
 
   security-scan:
     needs: deploy
@@ -108,6 +135,7 @@ jobs:
     permissions:
       contents: read
       actions: write
+      security-events: write
     steps:
       - name: Run Quick Security Scan
         uses: zaproxy/action-baseline@v0.10.0
@@ -116,59 +144,101 @@ jobs:
           cmd_options: '-T 5'
           fail_action: false
           allow_issue_writing: false
-          artifact_name: zap-security-report
-
-      - name: Upload Scan Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: zap-security-report
-          path: |
-            report_html.html
-            report_md.md
-      
-  quality-gate:
-    needs: security-scan
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: read
-      issues: read
-    steps:
-      - name: Get PR Information
-        id: pr-info
-        uses: octokit/graphql-action@v2.x
-        with:
-          query: |
-            query($owner:String!, $repo:String!, $prNumber:Int!) {
-              repository(owner:$owner, name:$repo) {
-                pullRequest(number:$prNumber) {
-                  headRefOid
-                  title
-                }
-              }
-            }
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.event.repository.name }}
-          prNumber: ${{ github.event.pull_request.number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create Deployment Notification
-        uses: actions/github-script@v6
+      - name: Upload Scan Report
+        uses: actions/upload-artifact@v4
+        if: always()
         with:
+          name: security-scan-report-${{ github.run_number }}
+          path: |
+            report_html.html
+            report_md.md
+            report_json.json
+          retention-days: 30
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  quality-gate:
+    needs: [docker-build, deploy, security-scan]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Download security scan report
+        uses: actions/download-artifact@v4
+        with:
+          name: security-scan-report-${{ github.run_number }}
+          path: ./security-reports
+
+      - name: Parse security scan results
+        id: parse-results
+        run: |
+          if [ -f "./security-reports/report_json.json" ]; then
+            HIGH_ALERTS=$(jq '.site[0].alerts[] | select(.riskdesc | contains("High"))' ./security-reports/report_json.json | jq -s 'length')
+            MEDIUM_ALERTS=$(jq '.site[0].alerts[] | select(.riskdesc | contains("Medium"))' ./security-reports/report_json.json | jq -s 'length')
+            echo "high-alerts=$HIGH_ALERTS" >> $GITHUB_OUTPUT
+            echo "medium-alerts=$MEDIUM_ALERTS" >> $GITHUB_OUTPUT
+          else
+            echo "high-alerts=0" >> $GITHUB_OUTPUT
+            echo "medium-alerts=0" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Deployment Notification
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const commitHash = '${{ steps.pr-info.outputs.data.repository.pullRequest.headRefOid }}'.substring(0, 7);
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'UAT Deployment Ready for Review\n\n' +
-                    '**Application Details:**\n' +
-                    '```yaml\n' +
-                    `image: ${{ needs.docker-build.outputs.image-tag }}\n` +
-                    `environment: http://${{ env.RECETTE_IP }}\n` +
-                    `commit: ${commitHash}\n` +
-                    '```\n\n' +
-                    '**Security Scan:** [View Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n\n' +
-                    'To approve this deployment, comment with:\n' +
-                    '`/approve-recette`'
-            })
+            const commitHash = context.sha.substring(0, 7);
+            const highAlerts = parseInt('${{ steps.parse-results.outputs.high-alerts }}') || 0;
+            const mediumAlerts = parseInt('${{ steps.parse-results.outputs.medium-alerts }}') || 0;
+            
+            const securityStatus = highAlerts > 0 ? '🔴 High Risk Issues Found' : 
+                                  mediumAlerts > 0 ? '🟡 Medium Risk Issues Found' : '✅ No High/Medium Risk Issues';
+            
+            const imageTag = '${{ needs.docker-build.outputs.image-tag }}';
+            const environment = 'http://${{ env.RECETTE_IP }}';
+            const runId = '${{ github.run_id }}';
+            const repository = '${{ github.repository }}';
+            
+            const body = '## 🚀 UAT Deployment Ready for Review\n\n' +
+                        '**Application Details:**\n' +
+                        '```yaml\n' +
+                        'image: ' + imageTag + '\n' +
+                        'environment: ' + environment + '\n' +
+                        'commit: ' + commitHash + '\n' +
+                        '```\n\n' +
+                        '**Security Scan Results:** ' + securityStatus + '\n' +
+                        '- High Risk: ' + highAlerts + ' issues\n' +
+                        '- Medium Risk: ' + mediumAlerts + ' issues\n\n' +
+                        '📊 **Reports:** [View Security Scan](https://github.com/' + repository + '/actions/runs/' + runId + ')\n\n' +
+                        '---\n' +
+                        'To approve this deployment, comment with: `/approve-recette`';
+
+            if (context.payload.pull_request) {
+              await github.rest.issues.createComment({
+                issue_number: context.payload.pull_request.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+              });
+            }
+
+  deployment-summary:
+    needs: [docker-build, deploy, security-scan]
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    permissions:
+      contents: read
+    steps:
+      - name: Deployment Summary
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Image:** ${{ needs.docker-build.outputs.image-tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment:** http://${{ env.RECETTE_IP }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Security Scan:** Completed - Check artifacts for details" >> $GITHUB_STEP_SUMMARY
