@@ -140,7 +140,6 @@ jobs:
 
       - name: Create ZAP working directory
         run: mkdir -p zap_work_dir && chmod 777 zap_work_dir
-        
       - name: Run Quick Security Scan
         uses: zaproxy/action-baseline@v0.10.0
         with:
@@ -200,15 +199,13 @@ jobs:
             const commitHash = context.sha.substring(0, 7);
             const highAlerts = parseInt('${{ steps.parse-results.outputs.high-alerts }}') || 0;
             const mediumAlerts = parseInt('${{ steps.parse-results.outputs.medium-alerts }}') || 0;
-            
+
             const securityStatus = highAlerts > 0 ? '🔴 High Risk Issues Found' : 
                                   mediumAlerts > 0 ? '🟡 Medium Risk Issues Found' : '✅ No High/Medium Risk Issues';
-            
             const imageTag = '${{ needs.docker-build.outputs.image-tag }}';
             const environment = 'http://${{ env.RECETTE_IP }}';
             const runId = '${{ github.run_id }}';
             const repository = '${{ github.repository }}';
-            
             const body = '## 🚀 UAT Deployment Ready for Review\n\n' +
                         '**Application Details:**\n' +
                         '```yaml\n' +
