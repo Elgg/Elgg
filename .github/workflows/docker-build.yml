@@ -2,8 +2,8 @@ name: Build, Deploy and Scan to Recette
 
 on:
   workflow_dispatch:
-  push:
-    branches: [dev]
+  #push:
+    #branches: [dev]
 
 # Add workflow-level permissions
 permissions:
@@ -144,8 +144,10 @@ jobs:
       - name: Prepare ZAP workspace
         run: |
           mkdir -p .zap
-          touch zap.yaml
-          chmod a+rw zap.yaml
+          #touch zap.yaml
+          touch report.html report.md
+          chmod a+rw report.html report.md
+          #chmod a+rw zap.yaml
 
       - name: Run Quick Security Scan
         uses: zaproxy/action-baseline@v0.10.0
