@@ -2,6 +2,9 @@ name: Build, Deploy and Scan to Recette
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [ recette ]
+    types: [opened, synchronize, reopened]
   #push:
     #branches: [dev]
 
@@ -137,108 +140,63 @@ jobs:
       actions: write
       security-events: write
     steps:
-
-      - name: Create ZAP working directory
-        run: mkdir -p zap_work_dir && chmod 777 zap_work_dir
-
-      - name: Prepare ZAP workspace
-        run: |
-          mkdir -p .zap
-          #touch zap.yaml
-          touch report.html report.md
-          chmod a+rw report.html report.md
-          #chmod a+rw zap.yaml
-
       - name: Run Quick Security Scan
         uses: zaproxy/action-baseline@v0.14.0
         with:
           target: 'http://${{ env.RECETTE_IP }}'
-          cmd_options: '-T 5 -z "-config api.disablekey=true" -r report.html -w report.md'
+          cmd_options: '-T 5 -z "-config api.disablekey=true"'
           fail_action: false
           allow_issue_writing: false
-          #working_directory: './zap_work_dir'
-          artifact_name: 'zapscan'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          ZAP_LOG_LEVEL: DEBUG
+          
       - name: Upload Scan Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: zapscan
+          name: security-scan-report
           path: |
-            report.html
-            report.md
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            report_html.html
+            report_json.json
+            report_md.md
+          if-no-files-found: error
 
   quality-gate:
     needs: [docker-build, deploy, security-scan]
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
     permissions:
       contents: read
       pull-requests: write
-      issues: write
+
     steps:
-      - name: Download security scan report
-        uses: actions/download-artifact@v4
-        with:
-          name: security-scan-report-${{ github.run_number }}
-          path: ./security-reports
+    # Download the security report
+    - name: Get scan results
+      uses: actions/download-artifact@v4
+      with:
+        name: security-scan-report
 
-      - name: Parse security scan results
-        id: parse-results
-        run: |
-          if [ -f "./security-reports/report_json.json" ]; then
-            HIGH_ALERTS=$(jq '.site[0].alerts[] | select(.riskdesc | contains("High"))' ./security-reports/report_json.json | jq -s 'length')
-            MEDIUM_ALERTS=$(jq '.site[0].alerts[] | select(.riskdesc | contains("Medium"))' ./security-reports/report_json.json | jq -s 'length')
-            echo "high-alerts=$HIGH_ALERTS" >> $GITHUB_OUTPUT
-            echo "medium-alerts=$MEDIUM_ALERTS" >> $GITHUB_OUTPUT
-          else
-            echo "high-alerts=0" >> $GITHUB_OUTPUT
-            echo "medium-alerts=0" >> $GITHUB_OUTPUT
-          fi
+    # Count High/Medium alerts
+    - name: Check risks
+      id: risk-check
+      run: |
+        HIGH=$(jq '[.site[0].alerts[] | select(.riskcode == "3")] | length' report_json.json || echo 0)
+        MEDIUM=$(jq '[.site[0].alerts[] | select(.riskcode == "2")] | length' report_json.json || echo 0)
+        echo "high=$HIGH" >> $GITHUB_OUTPUT
+        echo "medium=$MEDIUM" >> $GITHUB_OUTPUT
 
-      - name: Create Deployment Notification
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const commitHash = context.sha.substring(0, 7);
-            const highAlerts = parseInt('${{ steps.parse-results.outputs.high-alerts }}') || 0;
-            const mediumAlerts = parseInt('${{ steps.parse-results.outputs.medium-alerts }}') || 0;
-
-            const securityStatus = highAlerts > 0 ? ' High Risk Issues Found':
-                                  mediumAlerts > 0 ? ' Medium Risk Issues Found' : ' No High/Medium Risk Issues';
-
-            const imageTag = '${{ needs.docker-build.outputs.image-tag }}';
-            const environment = 'http://${{ env.RECETTE_IP }}';
-            const runId = '${{ github.run_id }}';
-            const repository = '${{ github.repository }}';
-
-            const body = '## UAT Deployment Ready for Review\n\n' +
-                        '**Application Details:**\n' +
-                        '```yaml\n' +
-                        'image: ' + imageTag + '\n' +
-                        'environment: ' + environment + '\n' +
-                        'commit: ' + commitHash + '\n' +
-                        '```\n\n' +
-                        '**Security Scan Results:** ' + securityStatus + '\n' +
-                        '- High Risk: ' + highAlerts + ' issues\n' +
-                        '- Medium Risk: ' + mediumAlerts + ' issues\n\n' +
-                        ' **Reports:** [View Security Scan](https://github.com/' + repository + '/actions/runs/' + runId + ')\n\n' +
-                        '---\n' +
-                        'To approve this deployment, comment with: `/approve-recette`';
-
-            if (context.payload.pull_request) {
-              await github.rest.issues.createComment({
-                issue_number: context.payload.pull_request.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: body
-              });
-            }
+    # Simple pass/fail decision
+    - name: Evaluate gate
+      run: |
+        if [ ${{ steps.risk-check.outputs.high }} -gt 0 ]; then
+          echo "❌ BLOCKED: High-risk vulnerabilities detected"
+          exit 1
+        elif [ ${{ steps.risk-check.outputs.medium }} -gt 3 ]; then
+          echo "⚠️ WARNING: Too many medium-risk issues"
+          exit 1
+        else
+          echo "✅ Quality gate passed"
+        fi
 
   deployment-summary:
     needs: [docker-build, deploy, security-scan]
