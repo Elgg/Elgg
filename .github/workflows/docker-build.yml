@@ -145,7 +145,7 @@ jobs:
         run: |
           mkdir -p .zap
           touch zap.yaml
-          chmod a+rw .zap/* zap.yaml
+          chmod a+rw zap.yaml
 
       - name: Run Quick Security Scan
         uses: zaproxy/action-baseline@v0.10.0
