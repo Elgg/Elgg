@@ -2,30 +2,25 @@ name: PR Gatekeeper
 on:
   pull_request_target:
     branches: [recette]
-    types: [opened, reopened, synchronize]
 
 permissions:
   pull-requests: write
+  issues: write
 
 jobs:
-  validate-pr-source:
+  validate-pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR source branch
+      - name: Check PR source
         id: check-branch
         run: |
-          if [ "${{ github.event.pull_request.head.ref }}" != "dev" ]; then
-            echo "::error::PRs to recette must come from dev branch!"
-            gh pr comment ${{ github.event.pull_request.number }} \
-              --body "❌ Invalid source branch. Only PRs from `dev` are allowed to merge into `recette`."
-            exit 1
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          [ "${{ github.event.pull_request.head.ref }}" = "dev" ] || exit 1
 
-      - name: Auto-label valid PRs
+      - name: Label valid PR
         if: steps.check-branch.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           gh pr edit ${{ github.event.pull_request.number }} \
             --add-label "recette-merge" \
-            --body "This PR meets the recette merge criteria."
+            --body "Updated: This PR meets all merge criteria for recette"
