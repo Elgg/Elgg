@@ -12,6 +12,14 @@ spec:
       labels:
         app: elgg-app
     spec:
+      initContainers:
+      - name: fix-permissions
+        image: bitaouioussama/elgg-app:v6
+        command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data && chmod -R 775 /var/elgg_data"]
+        volumeMounts:
+        - mountPath: /var/elgg_data
+          name: elgg-data
+
       containers:
       - name: elgg-app
         image: bitaouioussama/elgg-app:v6
@@ -30,6 +38,7 @@ spec:
         volumeMounts:
         - mountPath: /var/elgg_data
           name: elgg-data
+
       volumes:
       - name: elgg-data
         persistentVolumeClaim:
