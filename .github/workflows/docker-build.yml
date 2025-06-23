@@ -2,6 +2,9 @@ name: Build, Deploy and Scan to Recette
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [ recette ]
+    types: [opened, synchronize, reopened]
   #push:
     #branches: [dev]
 
@@ -195,17 +198,17 @@ jobs:
           echo "✅ Quality gate passed"
         fi
 
-  # deployment-summary:
-  #   needs: [docker-build, deploy, security-scan]
-  #   runs-on: ubuntu-latest
-  #   if: github.event_name != 'pull_request'
-  #   permissions:
-  #     contents: read
-  #   steps:
-  #     - name: Deployment Summary
-  #       run: |
-  #         echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
-  #         echo "- **Image:** ${{ needs.docker-build.outputs.image-tag }}" >> $GITHUB_STEP_SUMMARY
-  #         echo "- **Environment:** http://${{ env.RECETTE_IP }}" >> $GITHUB_STEP_SUMMARY
-  #         echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-  #         echo "- **Security Scan:** Completed - Check artifacts for details" >> $GITHUB_STEP_SUMMARY
+  deployment-summary:
+    needs: [docker-build, deploy, security-scan]
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    permissions:
+      contents: read
+    steps:
+      - name: Deployment Summary
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Image:** ${{ needs.docker-build.outputs.image-tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment:** http://${{ env.RECETTE_IP }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Security Scan:** Completed - Check artifacts for details" >> $GITHUB_STEP_SUMMARY
