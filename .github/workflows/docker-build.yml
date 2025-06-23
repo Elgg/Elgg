@@ -129,6 +129,55 @@ jobs:
             sleep 10
           done
 
+  # security-scan:
+  #   needs: deploy
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     actions: write
+  #     security-events: write
+  #   steps:
+
+  #     - name: Create ZAP working directory
+  #       run: mkdir -p zap_work_dir && chmod 777 zap_work_dir
+
+  #     # - name: Prepare ZAP workspace
+  #     #   run: |
+  #     #     mkdir -p reports
+  #     #     chmod 777 reports
+
+  #     - name: Run Quick Security Scan
+  #       uses: zaproxy/action-baseline@v0.14.0
+  #       with:
+  #         target: 'http://${{ env.RECETTE_IP }}'
+  #         cmd_options: '-T 5 -z "-config api.disablekey=true" -J report_json.json -w report_md.md -r report_html.html'
+  #         fail_action: false
+  #         allow_issue_writing: false
+  #         #artifact_name: 'zapscan'
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         ZAP_LOG_LEVEL: DEBUG
+
+  #     # - name: Verify reports exist
+  #     #   run: |
+  #     #     ls -la /github/workspace/reports/
+  #     #     [ -f /github/workspace/reports/report_html.html ] || echo "HTML report missing"
+  #     #     [ -f /github/workspace/reports/report_md.md ] || echo "MD report missing"
+  #     #     [ -f /github/workspace/reports/report_json.json ] || echo "JSON report missing"
+
+  #     - name: Upload Scan Report
+  #       uses: actions/upload-artifact@v4
+  #       if: always()
+  #       with:
+  #         name: security-scan-report
+  #         path: |
+  #           report_html.html
+  #           report_json.json
+  #           report_md.md
+  #         if-no-files-found: warn
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   security-scan:
     needs: deploy
     runs-on: ubuntu-latest
@@ -137,46 +186,40 @@ jobs:
       actions: write
       security-events: write
     steps:
+      # Create working directory (this is where reports will go)
+      - name: Prepare workspace
+        run: |
+          mkdir -p reports
+          chmod 777 reports
 
-      - name: Create ZAP working directory
-        run: mkdir -p zap_work_dir && chmod 777 zap_work_dir
-
-      # - name: Prepare ZAP workspace
-      #   run: |
-      #     mkdir -p reports
-      #     chmod 777 reports
-
+      # Run ZAP scan (using relative paths)
       - name: Run Quick Security Scan
         uses: zaproxy/action-baseline@v0.14.0
         with:
           target: 'http://${{ env.RECETTE_IP }}'
-          cmd_options: '-T 5 -z "-config api.disablekey=true" -J report_json.json -w report_md.md -r report_html.html'
+          cmd_options: '-T 5 -z "api.disablekey=true" -J reports/report_json.json -w reports/report_md.md -r reports/report_html.html'
           fail_action: false
           allow_issue_writing: false
-          #artifact_name: 'zapscan'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ZAP_LOG_LEVEL: DEBUG
 
-      # - name: Verify reports exist
-      #   run: |
-      #     ls -la /github/workspace/reports/
-      #     [ -f /github/workspace/reports/report_html.html ] || echo "HTML report missing"
-      #     [ -f /github/workspace/reports/report_md.md ] || echo "MD report missing"
-      #     [ -f /github/workspace/reports/report_json.json ] || echo "JSON report missing"
+      # Verify reports were created
+      - name: Check reports
+        run: |
+          ls -la reports/
+          [ -f reports/report_html.html ] || echo "HTML report missing"
+          [ -f reports/report_md.md ] || echo "MD report missing"
+          [ -f reports/report_json.json ] || echo "JSON report missing"
 
+      # Upload the reports
       - name: Upload Scan Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: security-scan-report
-          path: |
-            report_html.html
-            report_json.json
-            report_md.md
-          if-no-files-found: warn
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: reports/
+          if-no-files-found: error
 
   # quality-gate:
   #   needs: [docker-build, deploy, security-scan]
