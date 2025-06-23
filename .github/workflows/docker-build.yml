@@ -112,15 +112,14 @@ jobs:
           kubectl apply -f k8s/phpMyAdmin.yml -n recette
           kubectl apply -f k8s/elgg-env.yml -n recette
 
-          kubectl rollout status deployment/elgg-app -n recette --timeout=300s
-          kubectl rollout status deployment/elgg-phpmyadmin -n recette --timeout=300s
+          kubectl rollout status deployment/elgg-app -n recette
+          kubectl rollout status deployment/elgg-phpmyadmin -n recette
           kubectl get all -n recette
 
       - name: Wait for service to be ready
         run: |
           echo "Waiting for application to be ready..."
           sleep 30
-          # Test if the application is responding
           for i in {1..10}; do
             if curl -f -s "http://${{ env.RECETTE_IP }}" > /dev/null; then
               echo "Application is ready!"
@@ -141,7 +140,7 @@ jobs:
 
       - name: Create ZAP working directory
         run: mkdir -p zap_work_dir && chmod 777 zap_work_dir
-        
+
       - name: Run Quick Security Scan
         uses: zaproxy/action-baseline@v0.10.0
         with:
@@ -150,7 +149,7 @@ jobs:
           fail_action: false
           allow_issue_writing: false
           working_directory: './zap_work_dir'
-          artifact_name: ''
+          artifact_name: 'security-scan'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -158,7 +157,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: security-scan-results
+          name: security-scan
           path: |
             zap_work_dir/report.html
             zap_work_dir/report.md
@@ -201,16 +200,16 @@ jobs:
             const commitHash = context.sha.substring(0, 7);
             const highAlerts = parseInt('${{ steps.parse-results.outputs.high-alerts }}') || 0;
             const mediumAlerts = parseInt('${{ steps.parse-results.outputs.medium-alerts }}') || 0;
-            
-            const securityStatus = highAlerts > 0 ? '🔴 High Risk Issues Found' : 
-                                  mediumAlerts > 0 ? '🟡 Medium Risk Issues Found' : '✅ No High/Medium Risk Issues';
-            
+
+            const securityStatus = highAlerts > 0 ? ' High Risk Issues Found':
+                                  mediumAlerts > 0 ? ' Medium Risk Issues Found' : ' No High/Medium Risk Issues';
+
             const imageTag = '${{ needs.docker-build.outputs.image-tag }}';
             const environment = 'http://${{ env.RECETTE_IP }}';
             const runId = '${{ github.run_id }}';
             const repository = '${{ github.repository }}';
-            
-            const body = '## 🚀 UAT Deployment Ready for Review\n\n' +
+
+            const body = '## UAT Deployment Ready for Review\n\n' +
                         '**Application Details:**\n' +
                         '```yaml\n' +
                         'image: ' + imageTag + '\n' +
@@ -220,7 +219,7 @@ jobs:
                         '**Security Scan Results:** ' + securityStatus + '\n' +
                         '- High Risk: ' + highAlerts + ' issues\n' +
                         '- Medium Risk: ' + mediumAlerts + ' issues\n\n' +
-                        '📊 **Reports:** [View Security Scan](https://github.com/' + repository + '/actions/runs/' + runId + ')\n\n' +
+                        ' **Reports:** [View Security Scan](https://github.com/' + repository + '/actions/runs/' + runId + ')\n\n' +
                         '---\n' +
                         'To approve this deployment, comment with: `/approve-recette`';
 
