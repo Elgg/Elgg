@@ -1,0 +1,27 @@
+name: Auto-delete feature branches
+
+permissions:
+  contents: write  # Required for branch deletion
+  pull-requests: write  # Required to detect PR status
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  delete-merged-branch:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract branch name
+        id: extract-branch
+        run: |
+          echo "branch_name=${{ github.event.pull_request.head.ref }}" >> $GITHUB_OUTPUT
+          echo "is_feature=${{ startsWith(github.event.pull_request.head.ref, 'feature') }}" >> $GITHUB_OUTPUT
+
+      - name: Delete feature branch
+        if: steps.extract-branch.outputs.is_feature == 'true'
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ github.token }}
+          branches: ${{ steps.extract-branch.outputs.branch_name }}

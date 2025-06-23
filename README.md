@@ -85,3 +85,13 @@ Contributors
 ------------
 
 For development credits, see CONTRIBUTORS.txt.
+# Test commit for GHAS checks
+# test again
+
+# test automatic merge
+
+
+# test automatic merge
+
+
+#welcome to test
