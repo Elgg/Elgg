@@ -7,7 +7,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 10Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -16,6 +16,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: "standard"
   resources:
     requests:
-      storage: 5Gi
+      storage: 10Gi

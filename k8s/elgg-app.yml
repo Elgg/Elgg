@@ -12,6 +12,14 @@ spec:
       labels:
         app: elgg-app
     spec:
+      initContainers:
+      - name: fix-permissions
+        image: bitaouioussama/elgg-app:v6
+        command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data && chmod -R 775 /var/elgg_data"]
+        volumeMounts:
+        - mountPath: /var/elgg_data
+          name: elgg-data
+
       containers:
       - name: elgg-app
         image: bitaouioussama/elgg-app:v6
@@ -22,14 +30,15 @@ spec:
         - containerPort: 80
         resources:
           requests:
-            cpu: "100m"
-            memory: "256Mi"
+            cpu: "50m"
+            memory: "128Mi"
           limits:
-            cpu: "500m"
-            memory: "512Mi"
+            cpu: "300m"
+            memory: "384Mi"
         volumeMounts:
         - mountPath: /var/elgg_data
           name: elgg-data
+
       volumes:
       - name: elgg-data
         persistentVolumeClaim:
