@@ -75,7 +75,8 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ secrets.GKE_PROJECT }}
-          install_kubectl: true
+          #install_kubectl: true
+          install_components: 'gcloud,kubectl'
 
       - name: Install GKE Auth Plugin
         run: |
