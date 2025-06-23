@@ -141,16 +141,16 @@ jobs:
       - name: Create ZAP working directory
         run: mkdir -p zap_work_dir && chmod 777 zap_work_dir
 
-      - name: Prepare ZAP workspace
-        run: |
-          mkdir -p reports
-          chmod 777 reports
+      # - name: Prepare ZAP workspace
+      #   run: |
+      #     mkdir -p reports
+      #     chmod 777 reports
 
       - name: Run Quick Security Scan
         uses: zaproxy/action-baseline@v0.14.0
         with:
           target: 'http://${{ env.RECETTE_IP }}'
-          cmd_options: '-T 5 -z "-config api.disablekey=true" -J /github/workspace/reports/report_json.json -w /github/workspace/reports/report_md.md -r /github/workspace/reports/report_html.html'
+          cmd_options: '-T 5 -z "-config api.disablekey=true" -J report_json.json -w report_md.md -r report_html.html'
           fail_action: false
           allow_issue_writing: false
           #artifact_name: 'zapscan'
@@ -158,19 +158,22 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ZAP_LOG_LEVEL: DEBUG
 
-      - name: Verify reports exist
-        run: |
-          ls -la /github/workspace/reports/
-          [ -f /github/workspace/reports/report_html.html ] || echo "HTML report missing"
-          [ -f /github/workspace/reports/report_md.md ] || echo "MD report missing"
-          [ -f /github/workspace/reports/report_json.json ] || echo "JSON report missing"
+      # - name: Verify reports exist
+      #   run: |
+      #     ls -la /github/workspace/reports/
+      #     [ -f /github/workspace/reports/report_html.html ] || echo "HTML report missing"
+      #     [ -f /github/workspace/reports/report_md.md ] || echo "MD report missing"
+      #     [ -f /github/workspace/reports/report_json.json ] || echo "JSON report missing"
 
       - name: Upload Scan Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: security-scan-report
-          path: /github/workspace/reports/
+          path: |
+            report_html.html
+            report_json.json
+            report_md.md
           if-no-files-found: warn
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
