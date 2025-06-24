@@ -20,7 +20,7 @@ jobs:
           script: |
             const allowedSource = 'dev';
             const sourceBranch = context.payload.pull_request.head.ref;
-
+            
             if (sourceBranch !== allowedSource) {
               core.setFailed(`❌ Invalid source branch. Only PRs from ${allowedSource} branch allowed.`);
               await github.rest.issues.createComment({
