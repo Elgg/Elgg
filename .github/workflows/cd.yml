@@ -1,11 +1,11 @@
-name: Build, Deploy and Scan to Recette
+name: Pre-Deploy To Recette
 
 on:
   workflow_dispatch:
-  pull_request:
-    branches: [recette]
-  push:
-    branches: [recette]
+  #pull_request:
+   # branches: [recette]
+  #push:
+    #branches: [recette]
 
 permissions:
   contents: read
@@ -13,6 +13,7 @@ permissions:
   pull-requests: write
   issues: write
   id-token: write
+  security-events: write  # Required for CodeQL uploads
 
 env:
   RECETTE_IP: "34.22.137.184"
@@ -57,9 +58,13 @@ jobs:
 
   pre-deploy:
     needs: docker-build
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    outputs:
+      TEST_URL: ${{ steps.get-test-url.outputs.TEST_URL }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
@@ -72,9 +77,7 @@ jobs:
 
       - name: Deploy to test namespace
         run: |
-          kubectl apply -f k8s/mariadb.yml -n test
-          kubectl apply -f k8s/pvc.yml -n test
-          kubectl apply -f k8s/elgg-app.yml -n test
+          kubectl apply -f k8s/ -n test
           kubectl rollout status deployment/elgg-app -n test
 
       - name: Get test URL
@@ -82,30 +85,47 @@ jobs:
         run: |
           IP=$(kubectl get svc elgg-app -n test -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
           echo "TEST_URL=http://$IP" >> $GITHUB_ENV
+          echo "::set-output name=TEST_URL::http://$IP"
+        # set output for downstream jobs
 
   pr-scan:
     needs: pre-deploy
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Run security scan
         uses: zaproxy/action-baseline@v0.14.0
         with:
-          target: ${{ env.TEST_URL }}
+          target: ${{ needs.pre-deploy.outputs.TEST_URL }}
           cmd_options: '-T 5'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload scan report
-        uses: actions/upload-artifact@v4
+  codeql-scan:
+    needs: docker-build
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
         with:
-          name: pr-scan-report
-          path: report_html.html
+          languages: javascript  # adapt your languages here
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
 
   deploy:
     needs:
       - docker-build
       - pr-scan
+      - codeql-scan
+      - quality-gate
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment:
@@ -148,25 +168,15 @@ jobs:
             sleep 10
           done
 
-  cleanup-test:
-    needs: deploy
-    if: always() && github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cleanup test deployment
-        run: |
-          kubectl delete -f k8s/elgg-app.yml -n test --ignore-not-found
-          kubectl delete -f k8s/mariadb.yml -n test --ignore-not-found
-
   security-scan:
     needs: deploy
-    if: github.event_name == 'push'
+    #if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Run production scan
         uses: zaproxy/action-baseline@v0.14.0
         with:
-          target: 'http://${{ env.RECETTE_IP }}'
+          target: "http://${{ env.RECETTE_IP }}"
           cmd_options: '-T 5'
 
       - name: Upload scan report
@@ -177,16 +187,17 @@ jobs:
 
   quality-gate:
     needs:
-      - docker-build
-      - deploy
+      - pr-scan
       - security-scan
+      - codeql-scan
     runs-on: ubuntu-latest
     steps:
-      - name: Download scan results
+      - name: Download ZAP scan report artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ github.event_name == 'pull_request' && 'pr-scan-report' || 'prod-scan-report' }}
+          name: prod-scan-report
 
+      # Assuming you want to parse ZAP JSON for risk check; adapt as needed
       - name: Check risks
         id: risk-check
         run: |
@@ -210,7 +221,7 @@ jobs:
   deployment-summary:
     needs: [docker-build, deploy, security-scan]
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request'
+    #if: github.event_name != 'pull_request'
     steps:
       - name: Deployment Summary
         run: |
