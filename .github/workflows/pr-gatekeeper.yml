@@ -18,16 +18,16 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const validSources = ['dev', 'hotfix/'];
+            const allowedSource = 'dev';
             const sourceBranch = context.payload.pull_request.head.ref;
             
-            if (!validSources.some(prefix => sourceBranch.startsWith(prefix))) {
-              core.setFailed(`❌ Invalid source branch. Only PRs from dev or hotfix/ branches allowed.`);
+            if (sourceBranch !== allowedSource) {
+              core.setFailed(`❌ Invalid source branch. Only PRs from ${allowedSource} branch allowed.`);
               await github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: 'This PR was created from an invalid branch. Only `dev` or `hotfix/*` branches can target `recette`.'
+                body: `This PR was created from branch '${sourceBranch}'. Only the \`${allowedSource}\` branch can target \`recette\`.`
               });
               return false;
             }
@@ -53,7 +53,7 @@ jobs:
                 pull_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: `This PR meets the recette merge criteria.\n\n✅ Approved for recette merge - ${new Date().toISOString()}`
+                body: `This PR from ${context.payload.pull_request.head.ref} meets the recette merge criteria.\n\n✅ Approved for recette merge - ${new Date().toISOString()}`
               });
             } catch (error) {
               core.error(`Failed to update PR: ${error}`);
