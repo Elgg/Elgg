@@ -39,19 +39,23 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            // Add label
-            await github.rest.issues.addLabels({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              labels: ['recette-merge']
-            });
+            try {
+              // Add label
+              await github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['recette-merge']
+              });
 
-            // Update PR body
-            const currentBody = context.payload.pull_request.body || '';
-            await github.rest.pulls.update({
-              pull_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `${currentBody}\n\n✅ Approved for recette merge - ${new Date().toISOString()}`
-            });
+              // Update PR description
+              await github.rest.pulls.update({
+                pull_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `This PR meets the recette merge criteria.\n\n✅ Approved for recette merge - ${new Date().toISOString()}`
+              });
+            } catch (error) {
+              core.error(`Failed to update PR: ${error}`);
+              core.setFailed(error.message);
+            }
