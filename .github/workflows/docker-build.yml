@@ -4,7 +4,6 @@ on:
   workflow_dispatch:
   pull_request:
     branches: [ recette ]
-    types: [opened, synchronize, reopened]
   #push:
     #branches: [dev]
 
@@ -150,7 +149,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ZAP_LOG_LEVEL: DEBUG
-          
       - name: Upload Scan Report
         uses: actions/upload-artifact@v4
         if: always()
