@@ -6,26 +6,56 @@ on:
 
 permissions:
   pull-requests: write
+  issues: write
 
 jobs:
-  validate-pr-source:
+  validate-and-label:
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR source branch
-        id: check-branch
-        run: |
-          if [ "${{ github.event.pull_request.head.ref }}" != "dev" ]; then
-            echo "::error::PRs to recette must come from dev branch!"
-            gh pr comment ${{ github.event.pull_request.number }} \
-              --body "❌ Invalid source branch. Only PRs from `dev` are allowed to merge into `recette`."
-            exit 1
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Validate PR source branch
+        id: validate-branch
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const validSources = ['dev', 'hotfix/'];
+            const sourceBranch = context.payload.pull_request.head.ref;
+            
+            if (!validSources.some(prefix => sourceBranch.startsWith(prefix))) {
+              core.setFailed(`❌ Invalid source branch. Only PRs from dev or hotfix/ branches allowed.`);
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: 'This PR was created from an invalid branch. Only `dev` or `hotfix/*` branches can target `recette`.'
+              });
+              return false;
+            }
+            return true;
 
-      - name: Auto-label valid PRs
-        if: steps.check-branch.outcome == 'success'
-        run: |
-          gh pr edit ${{ github.event.pull_request.number }} \
-            --add-label "recette-merge" \
-            --body "This PR meets the recette merge criteria."
+      - name: Add label and update description
+        if: steps.validate-branch.outputs.result == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            try {
+              // Add label
+              await github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['recette-merge']
+              });
+
+              // Update PR description
+              await github.rest.pulls.update({
+                pull_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `This PR meets the recette merge criteria.\n\n✅ Approved for recette merge - ${new Date().toISOString()}`
+              });
+            } catch (error) {
+              core.error(`Failed to update PR: ${error}`);
+              core.setFailed(error.message);
+            }
