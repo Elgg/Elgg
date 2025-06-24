@@ -20,6 +20,13 @@ spec:
               name: elgg-env
         ports:
         - containerPort: 3306
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "128Mi"
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
         volumeMounts:
         - mountPath: /var/lib/mysql
           name: db-data

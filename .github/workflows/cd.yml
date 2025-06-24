@@ -2,12 +2,11 @@ name: Build, Deploy and Scan to Recette
 
 on:
   workflow_dispatch:
-  #pull_request:
-    #branches: [ recette ]
-  #push:
-    #branches: [dev]
+  pull_request:
+    branches: [recette]
+  push:
+    branches: [recette]
 
-# Add workflow-level permissions
 permissions:
   contents: read
   actions: write
@@ -17,7 +16,6 @@ permissions:
 
 env:
   RECETTE_IP: "34.22.137.184"
-  # Add a unique cache key based on commit SHA
   CACHE_KEY: ${{ github.sha }}
 
 jobs:
@@ -57,11 +55,59 @@ jobs:
         run: |
           echo "image-tag=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6" >> $GITHUB_OUTPUT
 
-  deploy:
+  pre-deploy:
     needs: docker-build
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    steps:
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GKE_SA_KEY }}
+
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GKE_PROJECT }}
+
+      - name: Deploy to test namespace
+        run: |
+          kubectl apply -f k8s/mariadb.yml -n test
+          kubectl apply -f k8s/pvc.yml -n test
+          kubectl apply -f k8s/elgg-app.yml -n test
+          kubectl rollout status deployment/elgg-app -n test
+
+      - name: Get test URL
+        id: get-test-url
+        run: |
+          IP=$(kubectl get svc elgg-app -n test -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          echo "TEST_URL=http://$IP" >> $GITHUB_ENV
+
+  pr-scan:
+    needs: pre-deploy
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run security scan
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: ${{ env.TEST_URL }}
+          cmd_options: '-T 5'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload scan report
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-scan-report
+          path: report_html.html
+
+  deploy:
+    needs:
+      - docker-build
+      - pr-scan
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
     environment:
       name: recette
     steps:
@@ -73,40 +119,12 @@ jobs:
         with:
           credentials_json: ${{ secrets.GKE_SA_KEY }}
 
-      - name: Set up gcloud CLI and kubectl
+      - name: Set up gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ secrets.GKE_PROJECT }}
-          #install_kubectl: true
-          install_components: 'gcloud,kubectl'
 
-      - name: Install GKE Auth Plugin
-        run: |
-          gcloud components install gke-gcloud-auth-plugin -q
-          gcloud config set container/use_application_default_credentials true
-
-      - name: Get GKE credentials
-        run: |
-          gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
-            --region ${{ secrets.GKE_REGION }} \
-            --project ${{ secrets.GKE_PROJECT }}
-
-      - name: Check if deployment is needed
-        id: check-deploy
-        run: |
-          # Check if the current image matches what's deployed
-          CURRENT_IMAGE=$(kubectl get deployment elgg-app -n recette -o jsonpath='{.spec.template.spec.containers[0].image}' 2>/dev/null || echo "none")
-          DESIRED_IMAGE="${{ needs.docker-build.outputs.image-tag }}"
-          if [ "$CURRENT_IMAGE" = "$DESIRED_IMAGE" ]; then
-            echo "skip=true" >> $GITHUB_OUTPUT
-            echo "Deployment not needed - image already matches"
-          else
-            echo "skip=false" >> $GITHUB_OUTPUT
-            echo "Deployment needed - image differs"
-          fi
-
-      - name: Deploy to GKE
-        if: steps.check-deploy.outputs.skip != 'true'
+      - name: Deploy to production
         run: |
           kubectl apply -f k8s/mariadb.yml -n recette
           kubectl apply -f k8s/pvc.yml -n recette
@@ -115,7 +133,6 @@ jobs:
           kubectl apply -f k8s/elgg-env.yml -n recette
 
           kubectl rollout status deployment/elgg-app -n recette
-          kubectl rollout status deployment/elgg-phpmyadmin -n recette
           kubectl get all -n recette
 
       - name: Wait for service to be ready
@@ -131,77 +148,69 @@ jobs:
             sleep 10
           done
 
+  cleanup-test:
+    needs: deploy
+    if: always() && github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleanup test deployment
+        run: |
+          kubectl delete -f k8s/elgg-app.yml -n test --ignore-not-found
+          kubectl delete -f k8s/mariadb.yml -n test --ignore-not-found
+
   security-scan:
     needs: deploy
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: write
-      security-events: write
     steps:
-      - name: Run Quick Security Scan
+      - name: Run production scan
         uses: zaproxy/action-baseline@v0.14.0
         with:
           target: 'http://${{ env.RECETTE_IP }}'
-          cmd_options: '-T 5 -z "-config api.disablekey=true"'
-          fail_action: false
-          allow_issue_writing: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ZAP_LOG_LEVEL: DEBUG
-      - name: Upload Scan Report
+          cmd_options: '-T 5'
+
+      - name: Upload scan report
         uses: actions/upload-artifact@v4
-        if: always()
         with:
-          name: security-scan-report
-          path: |
-            report_html.html
-            report_json.json
-            report_md.md
-          if-no-files-found: error
+          name: prod-scan-report
+          path: report_html.html
 
   quality-gate:
-    needs: [docker-build, deploy, security-scan]
+    needs:
+      - docker-build
+      - deploy
+      - security-scan
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-
     steps:
-    # Download the security report
-    - name: Get scan results
-      uses: actions/download-artifact@v4
-      with:
-        name: security-scan-report
+      - name: Download scan results
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ github.event_name == 'pull_request' && 'pr-scan-report' || 'prod-scan-report' }}
 
-    # Count High/Medium alerts
-    - name: Check risks
-      id: risk-check
-      run: |
-        HIGH=$(jq '[.site[0].alerts[] | select(.riskcode == "3")] | length' report_json.json || echo 0)
-        MEDIUM=$(jq '[.site[0].alerts[] | select(.riskcode == "2")] | length' report_json.json || echo 0)
-        echo "high=$HIGH" >> $GITHUB_OUTPUT
-        echo "medium=$MEDIUM" >> $GITHUB_OUTPUT
+      - name: Check risks
+        id: risk-check
+        run: |
+          HIGH=$(jq '[.site[0].alerts[] | select(.riskcode == "3")] | length' report_json.json || echo 0)
+          MEDIUM=$(jq '[.site[0].alerts[] | select(.riskcode == "2")] | length' report_json.json || echo 0)
+          echo "high=$HIGH" >> $GITHUB_OUTPUT
+          echo "medium=$MEDIUM" >> $GITHUB_OUTPUT
 
-    # Simple pass/fail decision
-    - name: Evaluate gate
-      run: |
-        if [ ${{ steps.risk-check.outputs.high }} -gt 0 ]; then
-          echo "❌ BLOCKED: High-risk vulnerabilities detected"
-          exit 1
-        elif [ ${{ steps.risk-check.outputs.medium }} -gt 3 ]; then
-          echo "⚠️ WARNING: Too many medium-risk issues"
-          exit 1
-        else
-          echo "✅ Quality gate passed"
-        fi
+      - name: Evaluate gate
+        run: |
+          if [ ${{ steps.risk-check.outputs.high }} -gt 0 ]; then
+            echo "❌ BLOCKED: High-risk vulnerabilities detected"
+            exit 1
+          elif [ ${{ steps.risk-check.outputs.medium }} -gt 3 ]; then
+            echo "⚠️ WARNING: Too many medium-risk issues"
+            exit 1
+          else
+            echo "✅ Quality gate passed"
+          fi
 
   deployment-summary:
     needs: [docker-build, deploy, security-scan]
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
-    permissions:
-      contents: read
     steps:
       - name: Deployment Summary
         run: |
