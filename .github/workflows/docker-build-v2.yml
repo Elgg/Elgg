@@ -69,13 +69,22 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y trivy
 
+      # - name: Scan local image
+      #   run: |
+      #     trivy image \
+      #       --exit-code 1 \
+      #       --severity CRITICAL,HIGH \
+      #       --ignore-unfixed \
+      #       ${{ env.LOCAL_IMAGE }}
+
       - name: Scan local image
         run: |
           trivy image \
             --exit-code 1 \
             --severity CRITICAL,HIGH \
             --ignore-unfixed \
-            ${{ env.LOCAL_IMAGE }}
+            ${{ env.LOCAL_IMAGE }}:${{ env.IMAGE_TAG }}
+
 
   docker-push:
     needs: [docker-build, trivy-scan]
