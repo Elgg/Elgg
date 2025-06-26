@@ -2,10 +2,11 @@ name: Build, Scan, Pre-Deploy and Deploy
 
 on:
   workflow_dispatch:
-  #pull_request:
-    #branches: [ recette ]
-  #push:
-    #branches: [dev]
+  # Optional triggers:
+  # pull_request:
+  #   branches: [recette]
+  # push:
+  #   branches: [dev]
 
 permissions:
   contents: read
@@ -19,14 +20,12 @@ permissions:
 env:
   RECETTE_IP: "34.22.137.184"
   CACHE_KEY: ${{ github.sha }}
+  IMAGE_NAME: elgg-app
+  IMAGE_TAG: v6
 
 jobs:
-
   docker-build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     outputs:
       image-tag: ${{ steps.set-output.outputs.image-tag }}
     steps:
@@ -42,39 +41,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build without push
         id: build
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+          tags: localbuild/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          load: true  # Keeps image locally instead of pushing
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           cache-to: type=inline
 
       - name: Set image tag output
         id: set-output
         run: |
-          echo "image-tag=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6" >> $GITHUB_OUTPUT
-
-  # codeql-scan:
-  #   name: CodeQL Scan
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: read
-  #     security-events: write
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-
-  #     - name: Initialize CodeQL
-  #       uses: github/codeql-action/init@v3
-  #       with:
-  #         languages: javascript
-
-  #     - name: Perform CodeQL Analysis
-  #       uses: github/codeql-action/analyze@v3
+          FULL_TAG="${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
+          echo "image-tag=$FULL_TAG" >> $GITHUB_OUTPUT
 
   trivy-scan:
     needs: docker-build
@@ -99,20 +81,39 @@ jobs:
             --exit-code 1 \
             --severity CRITICAL,HIGH \
             --ignore-unfixed \
-            ${{ needs.docker-build.outputs.image-tag }}
+            localbuild/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
           # Generate HTML report
           trivy image \
             --format template \
             --template "@contrib/html.tpl" \
             -o trivy-report.html \
-            ${{ needs.docker-build.outputs.image-tag }}
+            localbuild/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
       - name: Upload Trivy report
         uses: actions/upload-artifact@v4
         with:
           name: trivy-scan-report
           path: trivy-report.html
+
+  docker-push:
+    needs: [docker-build, trivy-scan]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ needs.docker-build.outputs.image-tag }}
+          cache-from: type=registry,ref=${{ needs.docker-build.outputs.image-tag }}
+
 
   pre-deploy-test:
     name: Pre-Deployment to test namespace
