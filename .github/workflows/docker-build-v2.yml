@@ -86,7 +86,7 @@ jobs:
           # Generate HTML report
           trivy image \
             --format template \
-            --template "@contrib/html.tpl" \
+            --template "@/usr/local/share/trivy/templates/html.tpl" \
             -o trivy-report.html \
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
