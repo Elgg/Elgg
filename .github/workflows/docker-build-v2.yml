@@ -82,10 +82,21 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # - name: Tag and push
+      #   run: |
+      #     docker tag bitaouioussama/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} ${{ needs.docker-build.outputs.image-tag }}
+      #     docker push ${{ needs.docker-build.outputs.image-tag }}
+
       - name: Tag and push
         run: |
-          docker tag bitaouioussama/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} ${{ needs.docker-build.outputs.image-tag }}
-          docker push ${{ needs.docker-build.outputs.image-tag }}
+          docker images
+          docker inspect bitaouioussama/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+      
+          # Tag with registry path
+          docker tag bitaouioussama/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+      
+          # Push to registry
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
   pre-deploy-test:
     name: Pre-Deployment to test namespace
