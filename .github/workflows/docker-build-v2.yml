@@ -111,8 +111,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ needs.docker-build.outputs.image-tag }}
-          cache-from: type=registry,ref=${{ needs.docker-build.outputs.image-tag }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
 
   pre-deploy-test:
