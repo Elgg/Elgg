@@ -361,7 +361,3 @@ jobs:
             echo "Attempt $i: Application not ready yet, waiting..."
             sleep 10
           done
-<<<<<<< HEAD
-
-=======
->>>>>>> ed67b6e1e23bd827c1a9011678b9fed43bae3be7
