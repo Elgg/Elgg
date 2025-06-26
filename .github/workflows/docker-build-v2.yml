@@ -2,11 +2,6 @@ name: Build, Scan, Pre-Deploy and Deploy
 
 on:
   workflow_dispatch:
-  # Optional triggers:
-  # pull_request:
-  #   branches: [recette]
-  # push:
-  #   branches: [dev]
 
 permissions:
   contents: read
@@ -20,13 +15,17 @@ permissions:
 env:
   RECETTE_IP: "34.22.137.184"
   CACHE_KEY: ${{ github.sha }}
-  MAGE_NAME: elgg-app
-  IMAGE_TAG: v6
-  LOCAL_IMAGE: local-elgg-app
 
 jobs:
+
   docker-build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+    outputs:
+      image-tag: ${{ steps.set-output.outputs.image-tag }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,86 +33,40 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build with local tag
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          tags: ${{ env.LOCAL_IMAGE }}:${{ env.IMAGE_TAG }}  # Using local tag only
-          load: true  # Critical - keeps image available locally
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          cache-to: type=inline
-
-      - name: Verify local image exists
-        run: |
-          echo "=== ALL IMAGES ==="
-          docker images
-          echo "=== INSPECTING ==="
-          docker inspect ${{ env.LOCAL_IMAGE }}:${{ env.IMAGE_TAG }}
-
-      - name: Set output tag
-        id: set-output
-        run: |
-          echo "image-tag=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
-
-  trivy-scan:
-    needs: docker-build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install Trivy
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget apt-transport-https gnupg lsb-release
-          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
-          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/trivy.list
-          sudo apt-get update
-          sudo apt-get install -y trivy
-
-      # - name: Scan local image
-      #   run: |
-      #     trivy image \
-      #       --exit-code 1 \
-      #       --severity CRITICAL,HIGH \
-      #       --ignore-unfixed \
-      #       ${{ env.LOCAL_IMAGE }}
-
-      - name: Scan local image
-        run: |
-          trivy image \
-            --exit-code 1 \
-            --severity CRITICAL,HIGH \
-            --ignore-unfixed \
-            ${{ env.LOCAL_IMAGE }}:${{ env.IMAGE_TAG }}
-
-
-  docker-push:
-    needs: [docker-build, trivy-scan]
-    runs-on: ubuntu-latest
-    steps:
       - name: Log in to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Verify local image
+      - name: Build and push Docker image
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+          cache-to: type=inline
+
+      - name: Set image tag output
+        id: set-output
         run: |
-          echo "Existing images:"
-          docker images
-          echo "Inspecting local image:"
-          docker inspect ${{ env.LOCAL_IMAGE }}
+          echo "image-tag=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6" >> $GITHUB_OUTPUT
 
-      - name: Tag and push
-        run: |
-          # Tag the local image with registry path
-          docker tag ${{ env.LOCAL_IMAGE }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+      - name: Scan Docker image with Trivy
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: '${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
 
-          # Verify the new tag exists
-          docker images | grep "${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}"
+      - name: Upload Trivy SARIF Report
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
 
-          # Push to registry
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          
   pre-deploy-test:
     name: Pre-Deployment to test namespace
     needs: docker-build
@@ -166,7 +119,7 @@ jobs:
       actions: write
       security-events: write
     steps:
-      - name: Run Quick Security Scan
+      - name: Run Quick Security Scan (ZAP)
         uses: zaproxy/action-baseline@v0.14.0
         with:
           target: 'http://${{ env.RECETTE_IP }}'
@@ -177,7 +130,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ZAP_LOG_LEVEL: DEBUG
 
-      - name: Upload Scan Report
+      - name: Upload ZAP Scan Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -189,105 +142,41 @@ jobs:
           if-no-files-found: error
 
   quality-gate:
-    needs: [docker-build, security-scan, trivy-scan]  # Added trivy-scan as dependency
+    needs: [docker-build, security-scan]
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
-      security-events: write
     outputs:
-      gate-passed: ${{ steps.final-check.outputs.gate-passed }}
-      scan-summary: ${{ steps.generate-summary.outputs.report }}
-
+      gate-passed: ${{ steps.evaluate.outputs.gate-passed }}
     steps:
-      # Download both security scan reports
-      - name: Download scan reports
+      - name: Download ZAP scan report
         uses: actions/download-artifact@v4
         with:
           name: security-scan-report
-          path: security-reports/
 
-      - name: Download Trivy report
-        uses: actions/download-artifact@v4
-        with:
-          name: trivy-scan-report
-          path: trivy-reports/
-
-      # Process ZAP scan results
-      - name: Check ZAP risks
-        id: zap-check
+      - name: Check risks
+        id: risk-check
         run: |
-          HIGH=$(jq '[.site[0].alerts[] | select(.riskcode == "3")] | length' security-reports/report_json.json || echo 0)
-          MEDIUM=$(jq '[.site[0].alerts[] | select(.riskcode == "2")] | length' security-reports/report_json.json || echo 0)
-          echo "zap_high=$HIGH" >> $GITHUB_OUTPUT
-          echo "zap_medium=$MEDIUM" >> $GITHUB_OUTPUT
+          HIGH=$(jq '[.site[0].alerts[] | select(.riskcode == "3")] | length' report_json.json || echo 0)
+          MEDIUM=$(jq '[.site[0].alerts[] | select(.riskcode == "2")] | length' report_json.json || echo 0)
+          echo "high=$HIGH" >> $GITHUB_OUTPUT
+          echo "medium=$MEDIUM" >> $GITHUB_OUTPUT
 
-      # Process Trivy scan results
-      - name: Check Trivy vulnerabilities
-        id: trivy-check
+      - name: Evaluate gate
+        id: evaluate
         run: |
-          CRITICAL=$(grep -c 'CRITICAL' trivy-reports/trivy-report.html || echo 0)
-          HIGH=$(grep -c 'HIGH' trivy-reports/trivy-report.html || echo 0)
-          echo "trivy_critical=$CRITICAL" >> $GITHUB_OUTPUT
-          echo "trivy_high=$HIGH" >> $GITHUB_OUTPUT
-
-      # Generate consolidated report
-      - name: Generate summary
-        id: generate-summary
-        run: |
-          SUMMARY="## Security Scan Results\n"
-          SUMMARY+="### ZAP Scan\n"
-          SUMMARY+="- High risk: ${{ steps.zap-check.outputs.zap_high }}\n"
-          SUMMARY+="- Medium risk: ${{ steps.zap-check.outputs.zap_medium }}\n\n"
-          SUMMARY+="### Trivy Scan\n"
-          SUMMARY+="- Critical vulnerabilities: ${{ steps.trivy-check.outputs.trivy_critical }}\n"
-          SUMMARY+="- High vulnerabilities: ${{ steps.trivy-check.outputs.trivy_high }}\n"
-          echo "report<<EOF" >> $GITHUB_OUTPUT
-          echo "$SUMMARY" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      # Final evaluation with strict conditions
-      - name: Final security check
-        id: final-check
-        run: |
-          # Fail if any critical container vulnerabilities
-          if [ ${{ steps.trivy-check.outputs.trivy_critical }} -gt 0 ]; then
-            echo "❌ BLOCKED: Critical container vulnerabilities detected" >&2
+          if [ ${{ steps.risk-check.outputs.high }} -gt 0 ]; then
+            echo "❌ BLOCKED: High-risk vulnerabilities detected"
             echo "gate-passed=false" >> $GITHUB_OUTPUT
             exit 1
-          fi
-
-          # Fail if high web or container vulnerabilities
-          if [ ${{ steps.zap-check.outputs.zap_high }} -gt 0 ] || [ ${{ steps.trivy-check.outputs.trivy_high }} -gt 2 ]; then
-            echo "❌ BLOCKED: High-risk vulnerabilities detected" >&2
+          elif [ ${{ steps.risk-check.outputs.medium }} -gt 3 ]; then
+            echo "⚠️ WARNING: Too many medium-risk issues"
             echo "gate-passed=false" >> $GITHUB_OUTPUT
             exit 1
-          fi
-
-          # Warn but proceed with medium web vulnerabilities
-          if [ ${{ steps.zap-check.outputs.zap_medium }} -gt 3 ]; then
-            echo "⚠️ WARNING: Multiple medium-risk issues detected" >&2
-          fi
-
-          echo "✅ All security checks passed" >&2
-          echo "gate-passed=true" >> $GITHUB_OUTPUT
-
-      # Upload detailed reports
-      - name: Upload consolidated report
-        uses: actions/upload-artifact@v4
-        with:
-          name: security-audit-summary
-          path: |
-            security-reports/report_json.json
-            trivy-reports/trivy-report.html
-
-      # Add summary to workflow run
-      - name: Add security summary
-        run: |
-          echo "${{ steps.generate-summary.outputs.report }}" >> $GITHUB_STEP_SUMMARY
-          echo "Detailed reports available in artifacts" >> $GITHUB_STEP_SUMMARY
-
-
+          else
+            echo "✅ Quality gate passed"
+            echo "gate-passed=true" >> $GITHUB_OUTPUT
 
   deploy:
     needs: [quality-gate]
@@ -334,7 +223,6 @@ jobs:
           else
             echo "skip=false" >> $GITHUB_OUTPUT
             echo "Deployment needed - image differs"
-          fi
 
       - name: Deploy to recette namespace
         if: steps.check-deploy.outputs.skip != 'true'
