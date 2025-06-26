@@ -230,6 +230,7 @@ jobs:
           else
             echo "skip=false" >> $GITHUB_OUTPUT
             echo "Deployment needed - image differs"
+          fi
 
       - name: Deploy to recette namespace
         if: steps.check-deploy.outputs.skip != 'true'
