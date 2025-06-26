@@ -67,6 +67,12 @@ jobs:
         with:
           sarif_file: 'trivy-results.sarif'
 
+      - name: Upload SARIF file as artifact (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-sarif-report
+          path: trivy-results.sarif
+
   pre-deploy-test:
     name: Pre-Deployment to test namespace
     needs: docker-build
