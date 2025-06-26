@@ -22,13 +22,11 @@ env:
   CACHE_KEY: ${{ github.sha }}
   MAGE_NAME: elgg-app
   IMAGE_TAG: v6
-  LOCAL_IMAGE: bitaouioussama/elgg-app:v6
+  LOCAL_IMAGE: local-elgg-app
 
 jobs:
   docker-build:
     runs-on: ubuntu-latest
-    outputs:
-      image-tag: ${{ steps.set-output.outputs.image-tag }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -37,20 +35,21 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build with local tag
-        id: build
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
-          tags: ${{ env.LOCAL_IMAGE }}  # Using local tag only
-          load: true  # Keep image available locally
+          tags: ${{ env.LOCAL_IMAGE }}:${{ env.IMAGE_TAG }}  # Using local tag only
+          load: true  # Critical - keeps image available locally
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           cache-to: type=inline
 
       - name: Verify local image exists
         run: |
+          echo "=== ALL IMAGES ==="
           docker images
-          docker inspect ${{ env.LOCAL_IMAGE }}
+          echo "=== INSPECTING ==="
+          docker inspect ${{ env.LOCAL_IMAGE }}:${{ env.IMAGE_TAG }}
 
       - name: Set output tag
         id: set-output
