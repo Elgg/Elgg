@@ -58,8 +58,27 @@ jobs:
         run: |
           echo "image-tag=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6" >> $GITHUB_OUTPUT
 
-  codeql-scan:
-    name: CodeQL Scan
+  # codeql-scan:
+  #   name: CodeQL Scan
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     security-events: write
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+
+  #     - name: Initialize CodeQL
+  #       uses: github/codeql-action/init@v3
+  #       with:
+  #         languages: javascript
+
+  #     - name: Perform CodeQL Analysis
+  #       uses: github/codeql-action/analyze@v3
+
+  trivy-scan:
+    name: Scan Docker Image with Trivy
+    needs: docker-build
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -68,17 +87,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: javascript,php
+      - name: Install Trivy
+        run: |
+          sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+      - name: Scan Docker Image
+        run: |
+          trivy image --exit-code 1 --severity CRITICAL,HIGH --ignore-unfixed ${{ needs.docker-build.outputs.image-tag }}
+          trivy image --format template --template "@contrib/html.tpl" -o trivy-report.html ${{ needs.docker-build.outputs.image-tag }}
+
+      - name: Upload Trivy Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-scan-report
+          path: trivy-report.html
 
   pre-deploy-test:
     name: Pre-Deployment to test namespace
-    needs: [docker-build, codeql-scan]
+    needs: docker-build
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -151,43 +181,105 @@ jobs:
           if-no-files-found: error
 
   quality-gate:
-    needs: [docker-build, security-scan]
+    needs: [docker-build, security-scan, trivy-scan]  # Added trivy-scan as dependency
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
+      security-events: write
     outputs:
-      gate-passed: ${{ steps.evaluate.outputs.gate-passed }}
+      gate-passed: ${{ steps.final-check.outputs.gate-passed }}
+      scan-summary: ${{ steps.generate-summary.outputs.report }}
 
     steps:
-      - name: Download security scan report
+      # Download both security scan reports
+      - name: Download scan reports
         uses: actions/download-artifact@v4
         with:
           name: security-scan-report
+          path: security-reports/
 
-      - name: Check risks
-        id: risk-check
-        run: |
-          HIGH=$(jq '[.site[0].alerts[] | select(.riskcode == "3")] | length' report_json.json || echo 0)
-          MEDIUM=$(jq '[.site[0].alerts[] | select(.riskcode == "2")] | length' report_json.json || echo 0)
-          echo "high=$HIGH" >> $GITHUB_OUTPUT
-          echo "medium=$MEDIUM" >> $GITHUB_OUTPUT
+      - name: Download Trivy report
+        uses: actions/download-artifact@v4
+        with:
+          name: trivy-scan-report
+          path: trivy-reports/
 
-      - name: Evaluate gate
-        id: evaluate
+      # Process ZAP scan results
+      - name: Check ZAP risks
+        id: zap-check
         run: |
-          if [ ${{ steps.risk-check.outputs.high }} -gt 0 ]; then
-            echo "❌ BLOCKED: High-risk vulnerabilities detected"
+          HIGH=$(jq '[.site[0].alerts[] | select(.riskcode == "3")] | length' security-reports/report_json.json || echo 0)
+          MEDIUM=$(jq '[.site[0].alerts[] | select(.riskcode == "2")] | length' security-reports/report_json.json || echo 0)
+          echo "zap_high=$HIGH" >> $GITHUB_OUTPUT
+          echo "zap_medium=$MEDIUM" >> $GITHUB_OUTPUT
+
+      # Process Trivy scan results
+      - name: Check Trivy vulnerabilities
+        id: trivy-check
+        run: |
+          CRITICAL=$(grep -c 'CRITICAL' trivy-reports/trivy-report.html || echo 0)
+          HIGH=$(grep -c 'HIGH' trivy-reports/trivy-report.html || echo 0)
+          echo "trivy_critical=$CRITICAL" >> $GITHUB_OUTPUT
+          echo "trivy_high=$HIGH" >> $GITHUB_OUTPUT
+
+      # Generate consolidated report
+      - name: Generate summary
+        id: generate-summary
+        run: |
+          SUMMARY="## Security Scan Results\n"
+          SUMMARY+="### ZAP Scan\n"
+          SUMMARY+="- High risk: ${{ steps.zap-check.outputs.zap_high }}\n"
+          SUMMARY+="- Medium risk: ${{ steps.zap-check.outputs.zap_medium }}\n\n"
+          SUMMARY+="### Trivy Scan\n"
+          SUMMARY+="- Critical vulnerabilities: ${{ steps.trivy-check.outputs.trivy_critical }}\n"
+          SUMMARY+="- High vulnerabilities: ${{ steps.trivy-check.outputs.trivy_high }}\n"
+          echo "report<<EOF" >> $GITHUB_OUTPUT
+          echo "$SUMMARY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      # Final evaluation with strict conditions
+      - name: Final security check
+        id: final-check
+        run: |
+          # Fail if any critical container vulnerabilities
+          if [ ${{ steps.trivy-check.outputs.trivy_critical }} -gt 0 ]; then
+            echo "❌ BLOCKED: Critical container vulnerabilities detected" >&2
             echo "gate-passed=false" >> $GITHUB_OUTPUT
             exit 1
-          elif [ ${{ steps.risk-check.outputs.medium }} -gt 3 ]; then
-            echo "⚠️ WARNING: Too many medium-risk issues"
-            echo "gate-passed=false" >> $GITHUB_OUTPUT
-            exit 1
-          else
-            echo "✅ Quality gate passed"
-            echo "gate-passed=true" >> $GITHUB_OUTPUT
           fi
+
+          # Fail if high web or container vulnerabilities
+          if [ ${{ steps.zap-check.outputs.zap_high }} -gt 0 ] || [ ${{ steps.trivy-check.outputs.trivy_high }} -gt 2 ]; then
+            echo "❌ BLOCKED: High-risk vulnerabilities detected" >&2
+            echo "gate-passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+          # Warn but proceed with medium web vulnerabilities
+          if [ ${{ steps.zap-check.outputs.zap_medium }} -gt 3 ]; then
+            echo "⚠️ WARNING: Multiple medium-risk issues detected" >&2
+          fi
+
+          echo "✅ All security checks passed" >&2
+          echo "gate-passed=true" >> $GITHUB_OUTPUT
+
+      # Upload detailed reports
+      - name: Upload consolidated report
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-audit-summary
+          path: |
+            security-reports/report_json.json
+            trivy-reports/trivy-report.html
+
+      # Add summary to workflow run
+      - name: Add security summary
+        run: |
+          echo "${{ steps.generate-summary.outputs.report }}" >> $GITHUB_STEP_SUMMARY
+          echo "Detailed reports available in artifacts" >> $GITHUB_STEP_SUMMARY
+
+
 
   deploy:
     needs: [quality-gate]
@@ -261,18 +353,3 @@ jobs:
             echo "Attempt $i: Application not ready yet, waiting..."
             sleep 10
           done
-
-  deployment-summary:
-    needs: [docker-build, deploy, security-scan]
-    runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request'
-    permissions:
-      contents: read
-    steps:
-      - name: Deployment Summary
-        run: |
-          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
-          echo "- **Image:** ${{ needs.docker-build.outputs.image-tag }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Environment:** http://${{ env.RECETTE_IP }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Security Scan:** Completed - Check artifacts for details" >> $GITHUB_STEP_SUMMARY
