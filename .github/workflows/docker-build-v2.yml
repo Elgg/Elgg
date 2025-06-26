@@ -1,0 +1,363 @@
+name: Build, Scan, Pre-Deploy and Deploy
+
+on:
+  workflow_dispatch:
+  #pull_request:
+    #branches: [ recette ]
+  #push:
+    #branches: [dev]
+
+permissions:
+  contents: read
+  actions: write
+  pull-requests: write
+  issues: write
+  id-token: write
+  security-events: write
+  packages: write
+
+env:
+  RECETTE_IP: "34.22.137.184"
+  CACHE_KEY: ${{ github.sha }}
+
+jobs:
+
+  docker-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image-tag: ${{ steps.set-output.outputs.image-tag }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+          cache-to: type=inline
+
+      - name: Set image tag output
+        id: set-output
+        run: |
+          echo "image-tag=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6" >> $GITHUB_OUTPUT
+
+  # codeql-scan:
+  #   name: CodeQL Scan
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     security-events: write
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+
+  #     - name: Initialize CodeQL
+  #       uses: github/codeql-action/init@v3
+  #       with:
+  #         languages: javascript
+
+  #     - name: Perform CodeQL Analysis
+  #       uses: github/codeql-action/analyze@v3
+
+  trivy-scan:
+    needs: docker-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
+
+      - name: Update Trivy DB
+        run: trivy image --download-db-only
+
+      - name: Scan local Docker image
+        run: |
+          # Scan for critical/high vulnerabilities (will fail if found)
+          trivy image \
+            --exit-code 1 \
+            --severity CRITICAL,HIGH \
+            --ignore-unfixed \
+            ${{ needs.docker-build.outputs.image-tag }}
+
+          # Generate HTML report
+          trivy image \
+            --format template \
+            --template "@contrib/html.tpl" \
+            -o trivy-report.html \
+            ${{ needs.docker-build.outputs.image-tag }}
+
+      - name: Upload Trivy report
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-scan-report
+          path: trivy-report.html
+
+  pre-deploy-test:
+    name: Pre-Deployment to test namespace
+    needs: docker-build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GKE_SA_KEY }}
+
+      - name: Set up gcloud CLI and kubectl
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GKE_PROJECT }}
+          install_components: 'gcloud,kubectl'
+
+      - name: Install GKE Auth Plugin
+        run: |
+          gcloud components install gke-gcloud-auth-plugin -q
+          gcloud config set container/use_application_default_credentials true
+
+      - name: Get GKE credentials
+        run: |
+          gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
+            --region ${{ secrets.GKE_REGION }} \
+            --project ${{ secrets.GKE_PROJECT }}
+
+      - name: Deploy to test namespace
+        run: |
+          kubectl apply -f k8s/mariadb.yml -n test
+          kubectl apply -f k8s/pvc.yml -n test
+          kubectl apply -f k8s/elgg-app.yml -n test
+          kubectl apply -f k8s/phpMyAdmin.yml -n test
+          kubectl apply -f k8s/elgg-env.yml -n test
+
+          kubectl rollout status deployment/elgg-app -n test
+          kubectl rollout status deployment/elgg-phpmyadmin -n test
+          kubectl get all -n test
+
+  security-scan:
+    needs: pre-deploy-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+      security-events: write
+    steps:
+      - name: Run Quick Security Scan
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: 'http://${{ env.RECETTE_IP }}'
+          cmd_options: '-T 5 -z "-config api.disablekey=true"'
+          fail_action: false
+          allow_issue_writing: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ZAP_LOG_LEVEL: DEBUG
+
+      - name: Upload Scan Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-scan-report
+          path: |
+            report_html.html
+            report_json.json
+            report_md.md
+          if-no-files-found: error
+
+  quality-gate:
+    needs: [docker-build, security-scan, trivy-scan]  # Added trivy-scan as dependency
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      security-events: write
+    outputs:
+      gate-passed: ${{ steps.final-check.outputs.gate-passed }}
+      scan-summary: ${{ steps.generate-summary.outputs.report }}
+
+    steps:
+      # Download both security scan reports
+      - name: Download scan reports
+        uses: actions/download-artifact@v4
+        with:
+          name: security-scan-report
+          path: security-reports/
+
+      - name: Download Trivy report
+        uses: actions/download-artifact@v4
+        with:
+          name: trivy-scan-report
+          path: trivy-reports/
+
+      # Process ZAP scan results
+      - name: Check ZAP risks
+        id: zap-check
+        run: |
+          HIGH=$(jq '[.site[0].alerts[] | select(.riskcode == "3")] | length' security-reports/report_json.json || echo 0)
+          MEDIUM=$(jq '[.site[0].alerts[] | select(.riskcode == "2")] | length' security-reports/report_json.json || echo 0)
+          echo "zap_high=$HIGH" >> $GITHUB_OUTPUT
+          echo "zap_medium=$MEDIUM" >> $GITHUB_OUTPUT
+
+      # Process Trivy scan results
+      - name: Check Trivy vulnerabilities
+        id: trivy-check
+        run: |
+          CRITICAL=$(grep -c 'CRITICAL' trivy-reports/trivy-report.html || echo 0)
+          HIGH=$(grep -c 'HIGH' trivy-reports/trivy-report.html || echo 0)
+          echo "trivy_critical=$CRITICAL" >> $GITHUB_OUTPUT
+          echo "trivy_high=$HIGH" >> $GITHUB_OUTPUT
+
+      # Generate consolidated report
+      - name: Generate summary
+        id: generate-summary
+        run: |
+          SUMMARY="## Security Scan Results\n"
+          SUMMARY+="### ZAP Scan\n"
+          SUMMARY+="- High risk: ${{ steps.zap-check.outputs.zap_high }}\n"
+          SUMMARY+="- Medium risk: ${{ steps.zap-check.outputs.zap_medium }}\n\n"
+          SUMMARY+="### Trivy Scan\n"
+          SUMMARY+="- Critical vulnerabilities: ${{ steps.trivy-check.outputs.trivy_critical }}\n"
+          SUMMARY+="- High vulnerabilities: ${{ steps.trivy-check.outputs.trivy_high }}\n"
+          echo "report<<EOF" >> $GITHUB_OUTPUT
+          echo "$SUMMARY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      # Final evaluation with strict conditions
+      - name: Final security check
+        id: final-check
+        run: |
+          # Fail if any critical container vulnerabilities
+          if [ ${{ steps.trivy-check.outputs.trivy_critical }} -gt 0 ]; then
+            echo "❌ BLOCKED: Critical container vulnerabilities detected" >&2
+            echo "gate-passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+          # Fail if high web or container vulnerabilities
+          if [ ${{ steps.zap-check.outputs.zap_high }} -gt 0 ] || [ ${{ steps.trivy-check.outputs.trivy_high }} -gt 2 ]; then
+            echo "❌ BLOCKED: High-risk vulnerabilities detected" >&2
+            echo "gate-passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+          # Warn but proceed with medium web vulnerabilities
+          if [ ${{ steps.zap-check.outputs.zap_medium }} -gt 3 ]; then
+            echo "⚠️ WARNING: Multiple medium-risk issues detected" >&2
+          fi
+
+          echo "✅ All security checks passed" >&2
+          echo "gate-passed=true" >> $GITHUB_OUTPUT
+
+      # Upload detailed reports
+      - name: Upload consolidated report
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-audit-summary
+          path: |
+            security-reports/report_json.json
+            trivy-reports/trivy-report.html
+
+      # Add summary to workflow run
+      - name: Add security summary
+        run: |
+          echo "${{ steps.generate-summary.outputs.report }}" >> $GITHUB_STEP_SUMMARY
+          echo "Detailed reports available in artifacts" >> $GITHUB_STEP_SUMMARY
+
+
+
+  deploy:
+    needs: [quality-gate]
+    if: needs.quality-gate.outputs.gate-passed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    environment:
+      name: recette
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GKE_SA_KEY }}
+
+      - name: Set up gcloud CLI and kubectl
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GKE_PROJECT }}
+          install_components: 'gcloud,kubectl'
+
+      - name: Install GKE Auth Plugin
+        run: |
+          gcloud components install gke-gcloud-auth-plugin -q
+          gcloud config set container/use_application_default_credentials true
+
+      - name: Get GKE credentials
+        run: |
+          gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
+            --region ${{ secrets.GKE_REGION }} \
+            --project ${{ secrets.GKE_PROJECT }}
+
+      - name: Check if deployment is needed
+        id: check-deploy
+        run: |
+          CURRENT_IMAGE=$(kubectl get deployment elgg-app -n recette -o jsonpath='{.spec.template.spec.containers[0].image}' 2>/dev/null || echo "none")
+          DESIRED_IMAGE="${{ needs.docker-build.outputs.image-tag }}"
+          if [ "$CURRENT_IMAGE" = "$DESIRED_IMAGE" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "Deployment not needed - image already matches"
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+            echo "Deployment needed - image differs"
+          fi
+
+      - name: Deploy to recette namespace
+        if: steps.check-deploy.outputs.skip != 'true'
+        run: |
+          kubectl apply -f k8s/mariadb.yml -n recette
+          kubectl apply -f k8s/pvc.yml -n recette
+          kubectl apply -f k8s/elgg-app.yml -n recette
+          kubectl apply -f k8s/phpMyAdmin.yml -n recette
+          kubectl apply -f k8s/elgg-env.yml -n recette
+
+          kubectl rollout status deployment/elgg-app -n recette
+          kubectl rollout status deployment/elgg-phpmyadmin -n recette
+          kubectl get all -n recette
+
+      - name: Wait for service to be ready
+        run: |
+          echo "Waiting for application to be ready..."
+          sleep 30
+          for i in {1..10}; do
+            if curl -f -s "http://${{ env.RECETTE_IP }}" > /dev/null; then
+              echo "Application is ready!"
+              break
+            fi
+            echo "Attempt $i: Application not ready yet, waiting..."
+            sleep 10
+          done
