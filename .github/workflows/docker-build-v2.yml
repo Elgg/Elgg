@@ -20,8 +20,9 @@ permissions:
 env:
   RECETTE_IP: "34.22.137.184"
   CACHE_KEY: ${{ github.sha }}
-  IMAGE_NAME: elgg-app
+  MAGE_NAME: elgg-app
   IMAGE_TAG: v6
+  LOCAL_IMAGE: bitaouioussama/elgg-app:v6
 
 jobs:
   docker-build:
@@ -41,10 +42,15 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          tags: bitaouioussama/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          load: true
+          tags: ${{ env.LOCAL_IMAGE }}  # Using local tag only
+          load: true  # Keep image available locally
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           cache-to: type=inline
+
+      - name: Verify local image exists
+        run: |
+          docker images
+          docker inspect ${{ env.LOCAL_IMAGE }}
 
       - name: Set output tag
         id: set-output
@@ -70,7 +76,7 @@ jobs:
             --exit-code 1 \
             --severity CRITICAL,HIGH \
             --ignore-unfixed \
-            bitaouioussama/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            ${{ env.LOCAL_IMAGE }}
 
   docker-push:
     needs: [docker-build, trivy-scan]
@@ -82,22 +88,24 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # - name: Tag and push
-      #   run: |
-      #     docker tag bitaouioussama/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} ${{ needs.docker-build.outputs.image-tag }}
-      #     docker push ${{ needs.docker-build.outputs.image-tag }}
+      - name: Verify local image
+        run: |
+          echo "Existing images:"
+          docker images
+          echo "Inspecting local image:"
+          docker inspect ${{ env.LOCAL_IMAGE }}
 
       - name: Tag and push
         run: |
-          docker images
-          docker inspect bitaouioussama/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-      
-          # Tag with registry path
-          docker tag bitaouioussama/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-      
+          # Tag the local image with registry path
+          docker tag ${{ env.LOCAL_IMAGE }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+
+          # Verify the new tag exists
+          docker images | grep "${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}"
+
           # Push to registry
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-
+          
   pre-deploy-test:
     name: Pre-Deployment to test namespace
     needs: docker-build
