@@ -242,12 +242,7 @@ jobs:
       - name: Deploy to recette namespace
         if: steps.check-deploy.outputs.skip != 'true'
         run: |
-          kubectl apply -f k8s/mariadb.yml -n recette
-          kubectl apply -f k8s/pvc.yml -n recette
-          kubectl apply -f k8s/elgg-app.yml -n recette
-          kubectl apply -f k8s/phpMyAdmin.yml -n recette
-          kubectl apply -f k8s/elgg-env.yml -n recette
-
+          kubectl apply -f k8s/ -n recette
           kubectl rollout status deployment/elgg-app -n recette
           kubectl rollout status deployment/elgg-phpmyadmin -n recette
           kubectl get all -n recette
