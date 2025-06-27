@@ -232,6 +232,13 @@ jobs:
             echo "Deployment needed - image differs"
           fi
 
+      - name: Cleanup test namespace
+        run: |
+          echo "Cleaning up all resources in 'test' namespace to avoid PVC conflicts..."
+          kubectl delete all --all -n test || true
+          kubectl delete pvc --all -n test || true
+
+
       - name: Deploy to recette namespace
         if: steps.check-deploy.outputs.skip != 'true'
         run: |
