@@ -1,3 +1,59 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: elgg-app
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: elgg-app
+#   template:
+#     metadata:
+#       labels:
+#         app: elgg-app
+#     spec:
+#       initContainers:
+#       - name: fix-permissions
+#         image: bitaouioussama/elgg-app:v6
+#         command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data && chmod -R 775 /var/elgg_data"]
+#       - name: init-elgg-config
+#         image: bitaouioussama/elgg-app:v6
+#         command: ["sh", "-c", "cp -r /var/www/html/elgg/elgg-config/* /mnt/elgg-config || true"]
+#         volumeMounts:
+#         - mountPath: /var/elgg_data
+#           name: elgg-data
+#         - mountPath: /var/www/html/elgg/elgg-config
+#           name: elgg-config-volume
+
+#       containers:
+#       - name: elgg-app
+#         image: bitaouioussama/elgg-app:v6
+#         envFrom:
+#           - secretRef:
+#               name: elgg-env
+#         ports:
+#         - containerPort: 80
+#         resources:
+#           requests:
+#             cpu: "50m"
+#             memory: "128Mi"
+#           limits:
+#             cpu: "300m"
+#             memory: "384Mi"
+#         volumeMounts:
+#         - mountPath: /var/elgg_data
+#           name: elgg-data
+#         - mountPath: /var/www/html/elgg/elgg-config
+#           name: elgg-config-volume
+
+#       volumes:
+#       - name: elgg-data
+#         persistentVolumeClaim:
+#           claimName: elgg-pvc
+#       - name: elgg-config-volume
+#         persistentVolumeClaim:
+#           claimName: elgg-config-pvc
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,18 +72,22 @@ spec:
       - name: fix-permissions
         image: bitaouioussama/elgg-app:v6
         command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data && chmod -R 775 /var/elgg_data"]
+
+      - name: init-elgg-config
+        image: bitaouioussama/elgg-app:v6
+        command: ["sh", "-c", "cp -rn /var/www/html/elgg/elgg-config/* /mnt/elgg-config || true"]
         volumeMounts:
-        - mountPath: /var/elgg_data
-          name: elgg-data
+        - mountPath: /mnt/elgg-config
+          name: elgg-config-volume
         - mountPath: /var/www/html/elgg/elgg-config
-          name: elgg-data
+          name: elgg-code
 
       containers:
       - name: elgg-app
         image: bitaouioussama/elgg-app:v6
         envFrom:
-          - secretRef:
-              name: elgg-env
+        - secretRef:
+            name: elgg-env
         ports:
         - containerPort: 80
         resources:
@@ -41,12 +101,17 @@ spec:
         - mountPath: /var/elgg_data
           name: elgg-data
         - mountPath: /var/www/html/elgg/elgg-config
-          name: elgg-data
+          name: elgg-config-volume
 
       volumes:
       - name: elgg-data
         persistentVolumeClaim:
           claimName: elgg-pvc
+      - name: elgg-config-volume
+        persistentVolumeClaim:
+          claimName: elgg-config-pvc
+      - name: elgg-code
+        emptyDir: {}
 ---
 
 apiVersion: v1
