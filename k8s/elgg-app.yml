@@ -19,8 +19,7 @@ spec:
         volumeMounts:
         - mountPath: /var/elgg_data
           name: elgg-data
-        - mountPath: /var/www/html/elgg/elgg-config/settings.php
-          subPath: settings.php
+        - mountPath: /var/www/html/elgg/elgg-config
           name: elgg-data
 
       containers:
@@ -41,8 +40,7 @@ spec:
         volumeMounts:
         - mountPath: /var/elgg_data
           name: elgg-data
-        - mountPath: /var/www/html/elgg/elgg-config/settings.php
-          subPath: settings.php
+        - mountPath: /var/www/html/elgg/elgg-config
           name: elgg-data
 
       volumes:
