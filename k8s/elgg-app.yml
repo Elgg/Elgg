@@ -15,7 +15,7 @@
 #       initContainers:
 #       - name: fix-permissions
 #         image: bitaouioussama/elgg-app:v6
-#         command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data && chmod -R 775 /var/elgg_data"]
+#         command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data && chmod -R 775 /var/elgg_data && chown -R www-data:www-data /var/www/html/elgg/elgg-config && chmod -R 775 /var/www/html/elgg/elgg-config "]
 #       - name: init-elgg-config
 #         image: bitaouioussama/elgg-app:v6
 #         command: ["sh", "-c", "cp -r /var/www/html/elgg/elgg-config/* /mnt/elgg-config || true"]
@@ -92,10 +92,10 @@ spec:
         - containerPort: 80
         resources:
           requests:
-            cpu: "50m"
-            memory: "128Mi"
+            cpu: "100m"
+            memory: "256Mi"
           limits:
-            cpu: "300m"
+            cpu: "500m"
             memory: "384Mi"
         volumeMounts:
         - mountPath: /var/elgg_data
