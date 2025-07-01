@@ -103,20 +103,27 @@ jobs:
       - name: Get GKE credentials
         run: |
           gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
-            --region ${{ secrets.GKE_REGION }} \
+            --zone ${{ secrets.GKE_REGION }} \
             --project ${{ secrets.GKE_PROJECT }}
 
       - name: Deploy to test namespace
         run: |
-          kubectl apply -f k8s/mariadb.yml -n test
-          kubectl apply -f k8s/pvc.yml -n test
-          kubectl apply -f k8s/elgg-app.yml -n test
-          kubectl apply -f k8s/phpMyAdmin.yml -n test
-          kubectl apply -f k8s/elgg-env.yml -n test
-
+          kubectl apply -f k8s/ -n test
           kubectl rollout status deployment/elgg-app -n test
           kubectl rollout status deployment/elgg-phpmyadmin -n test
           kubectl get all -n test
+
+      - name: Notify on success
+        if: success()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ Deployment to test namespace completed successfully!'
+            })
 
   security-scan:
     needs: pre-deploy-test
@@ -217,7 +224,7 @@ jobs:
       - name: Get GKE credentials
         run: |
           gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
-            --region ${{ secrets.GKE_REGION }} \
+            --zone ${{ secrets.GKE_REGION }} \
             --project ${{ secrets.GKE_PROJECT }}
 
       - name: Check if deployment is needed
@@ -260,3 +267,21 @@ jobs:
             echo "Attempt $i: Application not ready yet, waiting..."
             sleep 10
           done
+
+
+      - name: Deployment success notification
+        if: success()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Deployment to recette succeeded!\n\n' +
+                    'Environment: recette\n' +
+                    'Image: ${{ needs.docker-build.outputs.image-tag }}\n' +
+                    'Access IP: ${{ env.RECETTE_IP }}\n' +
+                    'Commit: ${{ github.sha }}\n' +
+                    'Workflow: ${{ github.workflow }}'
+            })
