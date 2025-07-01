@@ -113,16 +113,37 @@ jobs:
           kubectl rollout status deployment/elgg-phpmyadmin -n test
           kubectl get all -n test
 
-      - name: Notify on success
+      # - name: Notify on success
+      #   if: success()
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       github.rest.issues.createComment({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         body: '✅ Deployment to test namespace completed successfully!'
+      #       })
+
+      # - name: Success notification
+      #   if: success()
+      #   run: |
+      #     echo "Deployment successful!" >> $GITHUB_STEP_SUMMARY
+      #     echo "Access IP: ${{ env.RECETTE_IP }}" >> $GITHUB_STEP_SUMMARY
+
+
+      - name: Success notification
         if: success()
         uses: actions/github-script@v6
         with:
           script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
+            github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '✅ Deployment to test namespace completed successfully!'
+              sha: context.sha,
+              state: 'success',
+              description: 'Deployment succeeded',
+              context: 'Deployment/test'
             })
 
   security-scan:
@@ -267,7 +288,6 @@ jobs:
             echo "Attempt $i: Application not ready yet, waiting..."
             sleep 10
           done
-
 
       - name: Deployment success notification
         if: success()
