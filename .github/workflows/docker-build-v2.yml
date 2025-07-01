@@ -305,19 +305,19 @@ jobs:
             sleep 10
           done
 
-      - name: Deployment success notification
-        # if: success()
-        # uses: actions/github-script@v6
-        # with:
-        #   script: |
-        #     github.rest.issues.createComment({
-        #       issue_number: context.issue.number,
-        #       owner: context.repo.owner,
-        #       repo: context.repo.repo,
-        #       body: 'Deployment to recette succeeded!\n\n' +
-        #             'Environment: recette\n' +
-        #             'Image: ${{ needs.docker-build.outputs.image-tag }}\n' +
-        #             'Access IP: ${{ env.RECETTE_IP }}\n' +
-        #             'Commit: ${{ github.sha }}\n' +
-        #             'Workflow: ${{ github.workflow }}'
-        #     })
+      # - name: Deployment success notification
+      #   if: success()
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       github.rest.issues.createComment({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         body: 'Deployment to recette succeeded!\n\n' +
+      #               'Environment: recette\n' +
+      #               'Image: ${{ needs.docker-build.outputs.image-tag }}\n' +
+      #               'Access IP: ${{ env.RECETTE_IP }}\n' +
+      #               'Commit: ${{ github.sha }}\n' +
+      #               'Workflow: ${{ github.workflow }}'
+      #       })
