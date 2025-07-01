@@ -45,7 +45,11 @@ COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 # Copier le code source Elgg dans le dossier racine web d’Apache
 COPY . /var/www/html/elgg
 
+# Copier les fichiers de config initiaux
+COPY elgg-config/* /var/www/html/elgg/elgg-config/
+
 RUN mkdir -p /var/elgg_data && chown -R www-data:www-data /var/elgg_data
+RUN mkdir -p /var/www/html/elgg/elgg-config && chown -R www-data:www-data /var/www/html/elgg/elgg-config
 
 # Définir le dossier de travail
 WORKDIR /var/www/html/elgg
