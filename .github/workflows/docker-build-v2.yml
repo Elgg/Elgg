@@ -132,19 +132,35 @@ jobs:
       #     echo "Access IP: ${{ env.RECETTE_IP }}" >> $GITHUB_STEP_SUMMARY
 
 
-      - name: Success notification
+      - name: Update deployment status
         if: success()
         uses: actions/github-script@v6
         with:
           script: |
-            github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.sha,
-              state: 'success',
-              description: 'Deployment succeeded',
-              context: 'Deployment/test'
-            })
+            try {
+              await github.rest.repos.createCommitStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                sha: context.sha,
+                state: 'success',
+                description: 'Deployed to test namespace',
+                context: 'GKE Deployment/test',
+                target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+              })
+              console.log('Successfully updated commit status')
+            } catch (error) {
+              console.error('Failed to update commit status:', error.message)
+              // Fallback to workflow summary
+              core.summary
+                .addHeading('Deployment Status')
+                .addRaw('✅ Successfully deployed to test namespace')
+                .addTable([
+                  ['Commit', context.sha],
+                  ['Cluster', '${{ secrets.GKE_CLUSTER }}'],
+                  ['Access IP', '${{ env.RECETTE_IP }}']
+                ])
+                .write()
+            }
 
   security-scan:
     needs: pre-deploy-test
@@ -290,18 +306,18 @@ jobs:
           done
 
       - name: Deployment success notification
-        if: success()
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Deployment to recette succeeded!\n\n' +
-                    'Environment: recette\n' +
-                    'Image: ${{ needs.docker-build.outputs.image-tag }}\n' +
-                    'Access IP: ${{ env.RECETTE_IP }}\n' +
-                    'Commit: ${{ github.sha }}\n' +
-                    'Workflow: ${{ github.workflow }}'
-            })
+        # if: success()
+        # uses: actions/github-script@v6
+        # with:
+        #   script: |
+        #     github.rest.issues.createComment({
+        #       issue_number: context.issue.number,
+        #       owner: context.repo.owner,
+        #       repo: context.repo.repo,
+        #       body: 'Deployment to recette succeeded!\n\n' +
+        #             'Environment: recette\n' +
+        #             'Image: ${{ needs.docker-build.outputs.image-tag }}\n' +
+        #             'Access IP: ${{ env.RECETTE_IP }}\n' +
+        #             'Commit: ${{ github.sha }}\n' +
+        #             'Workflow: ${{ github.workflow }}'
+        #     })
