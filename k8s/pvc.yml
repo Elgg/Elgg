@@ -16,10 +16,10 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: regional-standard
+  storageClassName: "standard"
   resources:
     requests:
-      storage: 200Gi
+      storage: 10Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -28,10 +28,10 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: regional-standard
+  storageClassName: "standard"
   resources:
     requests:
-      storage: 200Gi
+      storage: 20Gi
 ---
 
 apiVersion: v1
@@ -41,7 +41,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: regional-standard
+  storageClassName: "standard"
   resources:
     requests:
-      storage: 200Gi
+      storage: 10Gi
