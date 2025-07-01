@@ -13,7 +13,8 @@ permissions:
   packages: write
 
 env:
-  RECETTE_IP: "34.22.137.184"
+  # RECETTE_IP: "34.22.137.184"
+  RECETTE_IP: ${{ secrets.RECETTE_IP }}
   CACHE_KEY: ${{ github.sha }}
 
 jobs:
