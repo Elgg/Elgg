@@ -19,7 +19,7 @@ spec:
   storageClassName: regional-standard
   resources:
     requests:
-      storage: 200Gi
+      storage: 50Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -31,7 +31,7 @@ spec:
   storageClassName: regional-standard
   resources:
     requests:
-      storage: 200Gi
+      storage: 50Gi
 ---
 
 apiVersion: v1
@@ -44,4 +44,4 @@ spec:
   storageClassName: regional-standard
   resources:
     requests:
-      storage: 200Gi
+      storage: 30Gi
