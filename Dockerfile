@@ -120,7 +120,8 @@ COPY elgg-config/ /var/www/html/elgg/elgg-config/
 
 # Droits sur les dossiers nécessaires
 RUN mkdir -p /var/elgg_data && \
-    chown -R www-data:www-data /var/elgg_data /var/www/html/elgg/elgg-config
+    chown -R www-data:www-data /var/elgg_data /var/www/html/elgg/elgg-config && \
+	chmod -R 775 /var/www/html/elgg/elgg-config
 
 # Définir le dossier de travail
 WORKDIR /var/www/html/elgg
@@ -139,5 +140,3 @@ EXPOSE 80
 
 # Démarrer Apache
 CMD ["apache2-foreground"]
-
-
