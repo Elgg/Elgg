@@ -1,0 +1,4 @@
+.topbar-assets__preview {
+    background-color: $(background-color-mild);
+    max-width: 250px;
+}

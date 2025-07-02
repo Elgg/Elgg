@@ -1,0 +1,31 @@
+{
+	"name": "rivervanrain/custom_topbar",
+	"type": "elgg-plugin",
+	"description": "Topbar customizations for Elgg",
+    "license": "AGPL-3.0-or-later",
+	"keywords": ["ui"],
+	"homepage": "https://wzm.me",
+	"authors": [
+		{
+		  "name": "Nikolai Shcherbin",
+		  "email": "support@wzm.me"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"": "classes/"
+		}
+	},
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+	"conflict": {
+		"elgg/elgg": "<6.1"
+	},
+	"support": {
+		"source": "https://github.com/rivervanrain/custom_topbar"
+	}
+}
