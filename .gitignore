@@ -5,7 +5,6 @@
 /cache
 /caches/
 /mod/*
-/elgg-config/*
 /phpunit.xml
 # don't ignore example settings
 !/elgg-config/settings.example.php
@@ -18,6 +17,7 @@
 !/mod/custom_topbar
 !/mod/activity
 !/mod/blog/
+!/elgg-config/*
 !/mod/bookmarks/
 !/mod/ckeditor/
 !/mod/custom_index/
