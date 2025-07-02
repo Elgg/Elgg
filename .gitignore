@@ -1,13 +1,11 @@
 # ignore Elgg configuration
 /engine/settings.php
-/elgg-config/*
 /.htaccess
-/mod/*
 /composer.phar
 /cache
 /caches/
+/mod/*
 /phpunit.xml
-
 # don't ignore example settings
 !/elgg-config/settings.example.php
 
@@ -16,8 +14,10 @@
 /vendor
 
 # don't ignore bundled plugins
+!/mod/custom_topbar
 !/mod/activity
 !/mod/blog/
+!/elgg-config/*
 !/mod/bookmarks/
 !/mod/ckeditor/
 !/mod/custom_index/
@@ -48,7 +48,6 @@
 !/mod/thewire/
 !/mod/uservalidationbyemail/
 !/mod/web_services/
-
 # ignore IDE/hidden/testing/OS cache files
 .*
 *~
