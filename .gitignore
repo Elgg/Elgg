@@ -4,6 +4,8 @@
 /composer.phar
 /cache
 /caches/
+/mod/*
+/elgg-config/*
 /phpunit.xml
 # don't ignore example settings
 !/elgg-config/settings.example.php
@@ -13,7 +15,7 @@
 /vendor
 
 # don't ignore bundled plugins
-!/mod/*
+!/mod/custom_topbar
 !/mod/activity
 !/mod/blog/
 !/mod/bookmarks/
