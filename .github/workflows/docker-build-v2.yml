@@ -3,6 +3,7 @@ name: Build, Scan, Pre-Deploy and Deploy
 on:
   workflow_dispatch:
   pull_request:
+
     branches:
       - recette
     types: [opened, synchronize, reopened]
