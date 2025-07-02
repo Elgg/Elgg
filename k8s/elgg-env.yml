@@ -15,8 +15,8 @@ stringData:
   PMA_HOST: elgg-db
   PMA_USER: admin
   PMA_PASSWORD: admin1234
-  ELGG_SITE_URL: http://34.175.245.43/elgg
-  ELGG_SITE_NAME: Marjane_News
+  ELGG_SITE_URL: http://34.175.206.89/
+  ELGG_SITE_NAME: MarjaneNews
   ELGG_SITE_EMAIL: oussamabitaa10@gmail.com
   ELGG_ADMIN_USER: admin
   ELGG_ADMIN_PASS: adminadmin
