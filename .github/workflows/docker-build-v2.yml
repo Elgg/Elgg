@@ -2,7 +2,12 @@ name: Build, Scan, Pre-Deploy and Deploy
 
 on:
   workflow_dispatch:
-
+  pull_request:
+    types:
+      - opened
+    branches:
+      - 'recette'
+  
 permissions:
   contents: read
   actions: write
@@ -321,3 +326,4 @@ jobs:
       #               'Commit: ${{ github.sha }}\n' +
       #               'Workflow: ${{ github.workflow }}'
       #       })
+
