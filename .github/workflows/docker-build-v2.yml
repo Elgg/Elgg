@@ -7,7 +7,7 @@ on:
       - opened
     branches:
       - 'recette'
-  
+
 permissions:
   contents: read
   actions: write
@@ -326,4 +326,3 @@ jobs:
       #               'Commit: ${{ github.sha }}\n' +
       #               'Workflow: ${{ github.workflow }}'
       #       })
-
