@@ -165,9 +165,14 @@ spec:
       - name: fix-permissions
         image: bitaouioussama/elgg-app:v6
         command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data && chmod -R 775 /var/elgg_data"]
+        #fichiers de configuration
+        command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/www/html/elgg/elgg-config && chmod -R 775 /var/wwww/html/elgg/elgg-config"]
         volumeMounts:
         - mountPath: /var/elgg_data
           name: elgg-data
+
+        - mountPath: /var/www/html/elgg/elgg-config
+          name: elgg-config-volume
 
       containers:
       - name: elgg-app
@@ -188,10 +193,16 @@ spec:
         - mountPath: /var/elgg_data
           name: elgg-data
 
+        - mountPath: /var/www/html/elgg/elgg-config
+          name: elgg-config-volume
+
       volumes:
       - name: elgg-data
         persistentVolumeClaim:
           claimName: elgg-pvc
+      - name: elgg-config-volume
+        persistentVolumeClaim:
+          claimName: elgg-config-pvc
 ---
 
 apiVersion: v1
