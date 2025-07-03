@@ -34,14 +34,14 @@ spec:
       storage: 20Gi
 # ---
 
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: elgg-config-pvc
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   storageClassName: "standard"
-#   resources:
-#     requests:
-#       storage: 10Gi
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: elgg-config-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: "standard"
+  resources:
+    requests:
+      storage: 10Gi
