@@ -311,7 +311,7 @@ jobs:
 
   deploy-to-rancher:
     needs: [docker-build]
-    runs-on: elgg-runner
+    runs-on: [self-hosted, Linux, X64]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
