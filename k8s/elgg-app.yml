@@ -161,7 +161,7 @@ spec:
       labels:
         app: elgg-app
     spec:
-    securityContext:
+      securityContext:
         fsGroup: 33
       initContainers:
       - name: fix-permissions
@@ -179,6 +179,9 @@ spec:
       containers:
       - name: elgg-app
         image: bitaouioussama/elgg-app:v6
+        securityContext:
+          runAsUser: 33
+          runAsGroup: 33
         envFrom:
           - secretRef:
               name: elgg-env
