@@ -191,11 +191,11 @@ spec:
         - containerPort: 80
         resources:
           requests:
-            cpu: "400m"
+            cpu: "500m"
             memory: "500Mi"
           limits:
             cpu: "800m"
-            memory: "500Mi"
+            memory: "700Mi"
         volumeMounts:
         - mountPath: /var/elgg_data
           name: elgg-data
