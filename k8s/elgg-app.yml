@@ -161,6 +161,8 @@ spec:
       labels:
         app: elgg-app
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s01-mng-1008c2-k8s01-mng-worker-2
       securityContext:
         fsGroup: 33
       initContainers:
@@ -168,13 +170,13 @@ spec:
         image: bitaouioussama/elgg-app:v6
         command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data && chmod -R 775 /var/elgg_data"]
         #fichiers de configuration
-        command: ["/bin/sh", "-c", "chown -R 33:33 /var/www/html/elgg/elgg-config && chmod -R 775 /var/www/html/elgg/elgg-config"]
+        # command: ["/bin/sh", "-c", "chown -R 33:33 /var/www/html/elgg/elgg-config && chmod -R 775 /var/www/html/elgg/elgg-config"]
         volumeMounts:
         - mountPath: /var/elgg_data
           name: elgg-data
 
-        - mountPath: /var/www/html/elgg/elgg-config
-          name: elgg-config-volume
+        # - mountPath: /var/www/html/elgg/elgg-config
+        #   name: elgg-config-volume
 
       containers:
       - name: elgg-app
@@ -189,37 +191,52 @@ spec:
         - containerPort: 80
         resources:
           requests:
-            cpu: "100m"
-            memory: "256Mi"
+            cpu: "400m"
+            memory: "500Mi"
           limits:
-            cpu: "300m"
-            memory: "384Mi"
+            cpu: "800m"
+            memory: "500Mi"
         volumeMounts:
         - mountPath: /var/elgg_data
           name: elgg-data
 
-        - mountPath: /var/www/html/elgg/elgg-config
-          name: elgg-config-volume
+        # - mountPath: /var/www/html/elgg/elgg-config
+        #   name: elgg-config-volume
 
       volumes:
       - name: elgg-data
         persistentVolumeClaim:
           claimName: elgg-pvc
-      - name: elgg-config-volume
-        persistentVolumeClaim:
-          claimName: elgg-config-pvc
+      # - name: elgg-config-volume
+      #   persistentVolumeClaim:
+      #     claimName: elgg-config-pvc
 ---
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: elgg-app
+# spec:
+#   type: LoadBalancer
+#   selector:
+#     app: elgg-app
+#   ports:
+#     - protocol: TCP
+#       port: 80
+#       targetPort: 80
+#   loadBalancerIP: 34.175.206.89
+
 
 apiVersion: v1
 kind: Service
 metadata:
   name: elgg-app
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: elgg-app
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
-  loadBalancerIP: 34.175.206.89
+      port: 80 
+      targetPort: 80  
+      nodePort: 30080
