@@ -3,6 +3,7 @@
 /.htaccess
 /composer.phar
 /cache
+/elgg-config/*
 /caches/
 /mod/*
 /phpunit.xml
