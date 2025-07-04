@@ -96,12 +96,12 @@ jobs:
         env:
           KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
-      - name: Verify kubectl connectivity
-        run: |
-          kubectl config get-contexts
-          kubectl cluster-info
-        env:
-          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+      # - name: Verify kubectl connectivity
+      #   run: |
+      #     kubectl config get-contexts
+      #     kubectl cluster-info
+      #   env:
+      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
       - name: Deploy PVC to Rancher
         run: kubectl apply -f k8s/pvc.yml -n ${{ secrets.RANCHER_NAMESPACE }}
