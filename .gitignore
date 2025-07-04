@@ -18,7 +18,6 @@
 !/mod/custom_topbar
 !/mod/activity
 !/mod/blog/
-!/elgg-config/*
 !/mod/bookmarks/
 !/mod/ckeditor/
 !/mod/custom_index/
