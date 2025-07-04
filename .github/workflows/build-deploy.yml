@@ -1,4 +1,4 @@
-name: Build & Deploy To Rnacher
+name: Build & Deploy To Rancher
 
 on:
   workflow_dispatch:
@@ -24,7 +24,7 @@ env:
 jobs:
 
   docker-build:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
     permissions:
       contents: read
       packages: write
@@ -108,12 +108,12 @@ jobs:
         env:
           KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
-      - name: Deploy Elgg Deployment
-        run: kubectl apply -f k8s/elgg-deployment.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-        env:
-          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+      # - name: Deploy Elgg Deployment
+      #   run: kubectl apply -f k8s/elgg-deployment.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+      #   env:
+      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
-      - name: Verify Deployment rollout
-        run: kubectl rollout status deployment/elgg-app -n ${{ secrets.RANCHER_NAMESPACE }} --timeout=300s
-        env:
-          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+      # - name: Verify Deployment rollout
+      #   run: kubectl rollout status deployment/elgg-app -n ${{ secrets.RANCHER_NAMESPACE }} --timeout=300s
+      #   env:
+      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
