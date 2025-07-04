@@ -12,9 +12,9 @@ spec:
       labels:
         app: elgg-db
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s01-mng-1008c2-k8s01-mng-worker-2
       containers:
-        nodeSelector:
-          kubernetes.io/hostname: k8s01-mng-1008c2-k8s01-mng-worker-2
       - name: mariadb
         image: mariadb:10.6
         envFrom:
