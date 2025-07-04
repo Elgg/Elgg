@@ -108,6 +108,11 @@ jobs:
       #   env:
       #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
+      - name: Deploy Secret 
+        run: kubectl apply -f k8s/elgg-env.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
       - name: Deploy Elgg Deployment
         run: kubectl apply -f k8s/elgg-app.yml -n ${{ secrets.RANCHER_NAMESPACE }}
         env:
