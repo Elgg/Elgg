@@ -163,8 +163,8 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: k8s01-mng-1008c2-k8s01-mng-worker-2
-      securityContext:
-        fsGroup: 33
+      # securityContext:
+      #   fsGroup: 33
       initContainers:
       - name: fix-permissions
         image: bitaouioussama/elgg-app:v6
@@ -181,9 +181,9 @@ spec:
       containers:
       - name: elgg-app
         image: bitaouioussama/elgg-app:v6
-        securityContext:
-          runAsUser: 33
-          runAsGroup: 33
+        # securityContext:
+        #   runAsUser: 33
+        #   runAsGroup: 33
         envFrom:
           - secretRef:
               name: elgg-env
@@ -238,5 +238,4 @@ spec:
   ports:
     - protocol: TCP
       port: 80 
-      targetPort: 80  
-      nodePort: 30080
+      targetPort: 80
