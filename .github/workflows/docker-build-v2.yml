@@ -327,7 +327,7 @@ jobs:
 
       - name: Deploy to Rancher
         run: kubectl apply -f k8s/pvc.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-          
+
 # kubectl rollout status deployment/elgg-app -n ${{ secrets.RANCHER_NAMESPACE }}
 
       # - name: Deployment success notification
@@ -346,5 +346,3 @@ jobs:
       #               'Commit: ${{ github.sha }}\n' +
       #               'Workflow: ${{ github.workflow }}'
       #       })
-
-      

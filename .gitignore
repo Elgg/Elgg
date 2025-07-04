@@ -3,8 +3,8 @@
 /.htaccess
 /composer.phar
 /cache
-/caches/
 /elgg-config/*
+/caches/
 /mod/*
 /phpunit.xml
 # don't ignore example settings
