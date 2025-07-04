@@ -123,10 +123,12 @@ jobs:
       #   env:
       #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
+
       # - name: Deploy Elgg Deployment
       #   run: kubectl apply -f k8s/elgg-app.yml -n ${{ secrets.RANCHER_NAMESPACE }}
       #   env:
       #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
 
       # - name: Verify Deployment rollout
       #   run: kubectl rollout status deployment/elgg-app -n ${{ secrets.RANCHER_NAMESPACE }}

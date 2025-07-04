@@ -71,6 +71,7 @@ $CONFIG->dbname = 'elggdb';
  *
  * @global string $CONFIG->dbhost
  */
+
 $CONFIG->dbhost = 'elgg-db';
 
 /**
