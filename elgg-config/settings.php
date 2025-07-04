@@ -71,7 +71,7 @@ $CONFIG->dbname = 'elggdb';
  *
  * @global string $CONFIG->dbhost
  */
-$CONFIG->dbhost = 'localhost';
+$CONFIG->dbhost = 'elgg-db';
 
 /**
  * The database port.
