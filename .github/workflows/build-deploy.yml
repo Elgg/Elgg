@@ -1,4 +1,4 @@
-name: Build, Scan, Pre-Deploy and Deploy
+name: Build & Deploy To Rnacher
 
 on:
   workflow_dispatch:
