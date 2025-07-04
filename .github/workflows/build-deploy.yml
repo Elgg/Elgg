@@ -80,7 +80,7 @@ jobs:
           path: trivy-results.sarif
 
   deploy-to-rancher:
-    # needs: [docker-build]
+    needs: [docker-build]
     runs-on: [self-hosted, Linux, X64]
 
     steps:
