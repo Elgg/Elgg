@@ -1,7 +1,7 @@
 <?php
 return [
     'db' => [
-        'host' => 'localhost',
+        'host' => 'elgg-db',
         'port' => 3306,
         'database' => 'elggdb',
         'username' => 'admin',
