@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elgg-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elgg-db
+  template:
+    metadata:
+      labels:
+        app: elgg-db
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s01-mng-1008c2-k8s01-mng-worker-2
+      containers:
+      - name: mariadb
+        image: mariadb:10.6
+        envFrom:
+          - secretRef:
+              name: elgg-env
+        ports:
+        - containerPort: 3306
+        resources:
+          requests:
+            cpu: "400m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "300Mi"
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: db-data
+      volumes:
+      - name: db-data
+        persistentVolumeClaim:
+          claimName: db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elgg-db
+spec:
+  selector:
+    app: elgg-db
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+  type: ClusterIP
