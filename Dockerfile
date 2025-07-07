@@ -122,6 +122,9 @@ CMD ["apache2-foreground"]
 # # Copier les fichiers de config initiaux
 # COPY elgg-config/ /var/www/html/elgg/elgg-config/
 
+# Copier les fichiers de config initiaux
+COPY elgg-config/ /var/www/html/elgg/elgg-config/
+
 # # Droits sur les dossiers nécessaires
 # RUN mkdir -p /var/elgg_data && \
 #     chown -R www-data:www-data /var/elgg_data /var/www/html/elgg/elgg-config && \
