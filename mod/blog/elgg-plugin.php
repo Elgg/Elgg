@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\Blog\Controllers\ContentListing;
 use Elgg\Blog\Forms\PrepareFields;
 use Elgg\Blog\GroupToolContainerLogicCheck;
 use Elgg\Blog\Notifications\PublishBlogEventHandler;
@@ -35,7 +36,10 @@ return [
 	'routes' => [
 		'collection:object:blog:owner' => [
 			'path' => '/blog/owner/{username}/{lower?}/{upper?}',
-			'resource' => 'blog/owner',
+			'controller' => ContentListing::class,
+			'options' => [
+				'sidebar_view' => 'blog/sidebar',
+			],
 			'requirements' => [
 				'lower' => '\d+',
 				'upper' => '\d+',
@@ -46,7 +50,10 @@ return [
 		],
 		'collection:object:blog:friends' => [
 			'path' => '/blog/friends/{username}/{lower?}/{upper?}',
-			'resource' => 'blog/friends',
+			'controller' => ContentListing::class,
+			'options' => [
+				'sidebar_view' => 'blog/sidebar',
+			],
 			'requirements' => [
 				'lower' => '\d+',
 				'upper' => '\d+',
@@ -82,9 +89,13 @@ return [
 		],
 		'collection:object:blog:group' => [
 			'path' => '/blog/group/{guid}/{subpage?}/{lower?}/{upper?}',
-			'resource' => 'blog/group',
+			'controller' => ContentListing::class,
 			'defaults' => [
 				'subpage' => 'all',
+			],
+			'options' => [
+				'group_tool' => 'blog',
+				'sidebar_view' => 'blog/sidebar',
 			],
 			'requirements' => [
 				'subpage' => 'all|archive',
@@ -100,7 +111,10 @@ return [
 		],
 		'collection:object:blog:all' => [
 			'path' => '/blog/all/{lower?}/{upper?}',
-			'resource' => 'blog/all',
+			'controller' => ContentListing::class,
+			'options' => [
+				'sidebar_view' => 'blog/sidebar',
+			],
 			'requirements' => [
 				'lower' => '\d+',
 				'upper' => '\d+',
@@ -108,7 +122,10 @@ return [
 		],
 		'default:object:blog' => [
 			'path' => '/blog',
-			'resource' => 'blog/all',
+			'controller' => ContentListing::class,
+			'options' => [
+				'sidebar_view' => 'blog/sidebar',
+			],
 		],
 	],
 	'events' => [

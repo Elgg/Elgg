@@ -3,6 +3,7 @@
 use Elgg\Bookmarks\Forms\PrepareFields;
 use Elgg\Bookmarks\GroupToolContainerLogicCheck;
 use Elgg\Bookmarks\Notifications\CreateBookmarksEventHandler;
+use Elgg\Controllers\GenericContentListing;
 
 return [
 	'plugin' => [
@@ -35,22 +36,31 @@ return [
 	'routes' => [
 		'default:object:bookmarks' => [
 			'path' => '/bookmarks',
-			'resource' => 'bookmarks/all',
+			'controller' => GenericContentListing::class,
+			'options' => [
+				'sidebar_view' => 'bookmarks/sidebar',
+			],
 		],
 		'collection:object:bookmarks:all' => [
 			'path' => '/bookmarks/all',
-			'resource' => 'bookmarks/all',
+			'controller' => GenericContentListing::class,
+			'options' => [
+				'sidebar_view' => 'bookmarks/sidebar',
+			],
 		],
 		'collection:object:bookmarks:owner' => [
 			'path' => '/bookmarks/owner/{username}',
-			'resource' => 'bookmarks/owner',
+			'controller' => GenericContentListing::class,
+			'options' => [
+				'sidebar_view' => 'bookmarks/sidebar',
+			],
 			'middleware' => [
 				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:object:bookmarks:friends' => [
 			'path' => '/bookmarks/friends/{username}',
-			'resource' => 'bookmarks/friends',
+			'controller' => GenericContentListing::class,
 			'required_plugins' => [
 				'friends',
 			],
@@ -60,9 +70,12 @@ return [
 		],
 		'collection:object:bookmarks:group' => [
 			'path' => '/bookmarks/group/{guid}/{subpage?}',
-			'resource' => 'bookmarks/group',
+			'controller' => GenericContentListing::class,
 			'defaults' => [
 				'subpage' => 'all',
+			],
+			'options' => [
+				'group_tool' => 'bookmarks',
 			],
 			'required_plugins' => [
 				'groups',
