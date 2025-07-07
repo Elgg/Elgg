@@ -13,9 +13,7 @@ spec:
         app: elgg-phpmyadmin
     spec:
       nodeSelector:
-
         kubernetes.io/hostname: gke-elgg-cluster-default-pool-613e100a-jnqh
-
       containers:
       - name: phpmyadmin
         image: phpmyadmin/phpmyadmin
@@ -26,30 +24,16 @@ spec:
         - containerPort: 80
 ---
 
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: elgg-phpmyadmin
-# spec:
-#   type: LoadBalancer
-#   selector:
-#     app: elgg-phpmyadmin
-#   ports:
-#     - protocol: TCP
-#       port: 80
-#       targetPort: 80
-#   loadBalancerIP: 34.175.63.179
-
-
 apiVersion: v1
 kind: Service
 metadata:
   name: elgg-phpmyadmin
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: elgg-phpmyadmin
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
+  loadBalancerIP: 34.175.63.179

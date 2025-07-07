@@ -212,30 +212,16 @@ spec:
       #     claimName: elgg-config-pvc
 ---
 
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: elgg-app
-# spec:
-#   type: LoadBalancer
-#   selector:
-#     app: elgg-app
-#   ports:
-#     - protocol: TCP
-#       port: 80
-#       targetPort: 80
-#   loadBalancerIP: 34.175.206.89
-
-
 apiVersion: v1
 kind: Service
 metadata:
   name: elgg-app
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: elgg-app
   ports:
     - protocol: TCP
-      port: 80 
+      port: 80
       targetPort: 80
+  loadBalancerIP: 34.175.206.89
