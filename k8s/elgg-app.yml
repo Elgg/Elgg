@@ -163,7 +163,6 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: gke-elgg-cluster-default-pool-613e100a-jnqh
-        #k8s01-mng-1008c2-k8s01-mng-worker-2
       # securityContext:
       #   fsGroup: 33
       initContainers:
