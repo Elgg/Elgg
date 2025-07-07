@@ -78,44 +78,44 @@ jobs:
           name: trivy-sarif-report
           path: trivy-results.sarif
 
-  # pre-deploy-test:
-  #   name: Pre-Deployment to test namespace
-  #   needs: docker-build
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: read
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
+  pre-deploy-test:
+    name: Pre-Deployment to test namespace
+    needs: docker-build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  #     - name: Authenticate to Google Cloud
-  #       uses: google-github-actions/auth@v2
-  #       with:
-  #         credentials_json: ${{ secrets.GKE_SA_KEY }}
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GKE_SA_KEY }}
 
-  #     - name: Set up gcloud CLI and kubectl
-  #       uses: google-github-actions/setup-gcloud@v2
-  #       with:
-  #         project_id: ${{ secrets.GKE_PROJECT }}
-  #         install_components: 'gcloud,kubectl'
+      - name: Set up gcloud CLI and kubectl
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GKE_PROJECT }}
+          install_components: 'gcloud,kubectl'
 
-  #     - name: Install GKE Auth Plugin
-  #       run: |
-  #         gcloud components install gke-gcloud-auth-plugin -q
-  #         gcloud config set container/use_application_default_credentials true
+      - name: Install GKE Auth Plugin
+        run: |
+          gcloud components install gke-gcloud-auth-plugin -q
+          gcloud config set container/use_application_default_credentials true
 
-  #     - name: Get GKE credentials
-  #       run: |
-  #         gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
-  #           --zone ${{ secrets.GKE_REGION }} \
-  #           --project ${{ secrets.GKE_PROJECT }}
+      - name: Get GKE credentials
+        run: |
+          gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
+            --zone ${{ secrets.GKE_REGION }} \
+            --project ${{ secrets.GKE_PROJECT }}
 
-  #     - name: Deploy to test namespace
-  #       run: |
-  #         kubectl apply -f k8s/ -n test
-  #         kubectl rollout status deployment/elgg-app -n test
-  #         kubectl rollout status deployment/elgg-phpmyadmin -n test
-  #         kubectl get all -n test
+      - name: Deploy to test namespace
+        run: |
+          kubectl apply -f k8s/ -n test
+          kubectl rollout status deployment/elgg-app -n test
+          kubectl rollout status deployment/elgg-phpmyadmin -n test
+          kubectl get all -n test
 
       # - name: Notify on success
       #   if: success()
@@ -136,107 +136,107 @@ jobs:
       #     echo "Access IP: ${{ env.RECETTE_IP }}" >> $GITHUB_STEP_SUMMARY
 
 
-      # - name: Update deployment status
-      #   if: success()
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       try {
-      #         await github.rest.repos.createCommitStatus({
-      #           owner: context.repo.owner,
-      #           repo: context.repo.repo,
-      #           sha: context.sha,
-      #           state: 'success',
-      #           description: 'Deployed to test namespace',
-      #           context: 'GKE Deployment/test',
-      #           target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
-      #         })
-      #         console.log('Successfully updated commit status')
-      #       } catch (error) {
-      #         console.error('Failed to update commit status:', error.message)
-      #         // Fallback to workflow summary
-      #         core.summary
-      #           .addHeading('Deployment Status')
-      #           .addRaw('✅ Successfully deployed to test namespace')
-      #           .addTable([
-      #             ['Commit', context.sha],
-      #             ['Cluster', '${{ secrets.GKE_CLUSTER }}'],
-      #             ['Access IP', '${{ env.RECETTE_IP }}']
-      #           ])
-      #           .write()
-      #       }
+      - name: Update deployment status
+        if: success()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            try {
+              await github.rest.repos.createCommitStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                sha: context.sha,
+                state: 'success',
+                description: 'Deployed to test namespace',
+                context: 'GKE Deployment/test',
+                target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+              })
+              console.log('Successfully updated commit status')
+            } catch (error) {
+              console.error('Failed to update commit status:', error.message)
+              // Fallback to workflow summary
+              core.summary
+                .addHeading('Deployment Status')
+                .addRaw('✅ Successfully deployed to test namespace')
+                .addTable([
+                  ['Commit', context.sha],
+                  ['Cluster', '${{ secrets.GKE_CLUSTER }}'],
+                  ['Access IP', '${{ env.RECETTE_IP }}']
+                ])
+                .write()
+            }
 
-  # security-scan:
-  #   needs: pre-deploy-test
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: read
-  #     actions: write
-  #     security-events: write
-  #   steps:
-  #     - name: Run Quick Security Scan (ZAP)
-  #       uses: zaproxy/action-baseline@v0.14.0
-  #       with:
-  #         target: 'http://${{ env.RECETTE_IP }}'
-  #         cmd_options: '-T 5 -z "-config api.disablekey=true"'
-  #         fail_action: false
-  #         allow_issue_writing: false
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         ZAP_LOG_LEVEL: DEBUG
+  security-scan:
+    needs: pre-deploy-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+      security-events: write
+    steps:
+      - name: Run Quick Security Scan (ZAP)
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: 'http://${{ env.RECETTE_IP }}'
+          cmd_options: '-T 5 -z "-config api.disablekey=true"'
+          fail_action: false
+          allow_issue_writing: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ZAP_LOG_LEVEL: DEBUG
 
-  #     - name: Upload ZAP Scan Report
-  #       uses: actions/upload-artifact@v4
-  #       if: always()
-  #       with:
-  #         name: security-scan-report
-  #         path: |
-  #           report_html.html
-  #           report_json.json
-  #           report_md.md
-  #         if-no-files-found: error
+      - name: Upload ZAP Scan Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-scan-report
+          path: |
+            report_html.html
+            report_json.json
+            report_md.md
+          if-no-files-found: error
 
-  # quality-gate:
-  #   needs: [docker-build, security-scan]
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: read
-  #     pull-requests: write
-  #   outputs:
-  #     gate-passed: ${{ steps.evaluate.outputs.gate-passed }}
-  #   steps:
-  #     - name: Download ZAP scan report
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: security-scan-report
+  quality-gate:
+    needs: [docker-build, security-scan]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    outputs:
+      gate-passed: ${{ steps.evaluate.outputs.gate-passed }}
+    steps:
+      - name: Download ZAP scan report
+        uses: actions/download-artifact@v4
+        with:
+          name: security-scan-report
 
-  #     - name: Check risks
-  #       id: risk-check
-  #       run: |
-  #         HIGH=$(jq '[.site[0].alerts[] | select(.riskcode == "3")] | length' report_json.json || echo 0)
-  #         MEDIUM=$(jq '[.site[0].alerts[] | select(.riskcode == "2")] | length' report_json.json || echo 0)
-  #         echo "high=$HIGH" >> $GITHUB_OUTPUT
-  #         echo "medium=$MEDIUM" >> $GITHUB_OUTPUT
+      - name: Check risks
+        id: risk-check
+        run: |
+          HIGH=$(jq '[.site[0].alerts[] | select(.riskcode == "3")] | length' report_json.json || echo 0)
+          MEDIUM=$(jq '[.site[0].alerts[] | select(.riskcode == "2")] | length' report_json.json || echo 0)
+          echo "high=$HIGH" >> $GITHUB_OUTPUT
+          echo "medium=$MEDIUM" >> $GITHUB_OUTPUT
 
-      # - name: Evaluate gate
-      #   id: evaluate
-      #   run: |
-      #     if [ ${{ steps.risk-check.outputs.high }} -gt 0 ]; then
-      #       echo "❌ BLOCKED: High-risk vulnerabilities detected"
-      #       echo "gate-passed=false" >> $GITHUB_OUTPUT
-      #       exit 1
-      #     elif [ ${{ steps.risk-check.outputs.medium }} -gt 3 ]; then
-      #       echo "⚠️ WARNING: Too many medium-risk issues"
-      #       echo "gate-passed=false" >> $GITHUB_OUTPUT
-      #       exit 1
-      #     else
-      #       echo "✅ Quality gate passed"
-      #       echo "gate-passed=true" >> $GITHUB_OUTPUT
-      #     fi
+      - name: Evaluate gate
+        id: evaluate
+        run: |
+          if [ ${{ steps.risk-check.outputs.high }} -gt 0 ]; then
+            echo "❌ BLOCKED: High-risk vulnerabilities detected"
+            echo "gate-passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          elif [ ${{ steps.risk-check.outputs.medium }} -gt 3 ]; then
+            echo "⚠️ WARNING: Too many medium-risk issues"
+            echo "gate-passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          else
+            echo "✅ Quality gate passed"
+            echo "gate-passed=true" >> $GITHUB_OUTPUT
+          fi
 
   deploy:
-    needs: docker-build
-    # if: needs.quality-gate.outputs.gate-passed == 'true'
+    needs: [quality-gate]
+    if: needs.quality-gate.outputs.gate-passed == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -296,15 +296,15 @@ jobs:
           kubectl rollout status deployment/elgg-phpmyadmin -n recette
           kubectl get all -n recette
 
-      # - name: Wait for service to be ready
-      #   run: |
-      #     echo "Waiting for application to be ready..."
-      #     sleep 30
-      #     for i in {1..10}; do
-      #       if curl -f -s "http://${{ env.RECETTE_IP }}" > /dev/null; then
-      #         echo "Application is ready!"
-      #         break
-      #       fi
-      #       echo "Attempt $i: Application not ready yet, waiting..."
-      #       sleep 10
-      #     done
+      - name: Wait for service to be ready
+        run: |
+          echo "Waiting for application to be ready..."
+          sleep 30
+          for i in {1..10}; do
+            if curl -f -s "http://${{ env.RECETTE_IP }}" > /dev/null; then
+              echo "Application is ready!"
+              break
+            fi
+            echo "Attempt $i: Application not ready yet, waiting..."
+            sleep 10
+          done
