@@ -16,7 +16,7 @@ $defaults = [
 	'subtype' => 'discussion',
 	'order_by' => new OrderByClause('e.last_action', 'desc'),
 	'limit' => max(20, elgg_get_config('default_limit')),
-	'no_results' => elgg_echo('discussion:none'),
+	'no_results' => true,
 ];
 
 $options = (array) elgg_extract('options', $vars, []);

@@ -21,7 +21,7 @@ $options = [
 		new OrderByClause('a_table.time_created', 'DESC'),
 		new OrderByClause('a_table.id', 'DESC'),
 	],
-	'no_results' => elgg_echo('messageboard:none'),
+	'no_results' => true,
 ];
 
 $title = elgg_echo('messageboard:owner', [$page_owner->getDisplayName()]);

@@ -19,7 +19,7 @@ $options = [
 	'limit' => $num_display,
 	'pagination' => false,
 	'distinct' => false,
-	'no_results' => elgg_echo('pages:none'),
+	'no_results' => true,
 	'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('pages:more')),
 ];
 

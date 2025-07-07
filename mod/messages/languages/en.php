@@ -28,6 +28,7 @@ return array(
 
 	'item:object:messages' => 'Message',
 	'collection:object:messages' => 'Messages',
+	'list:object:messages:no_results' => 'No messages found',
 
 	/**
 	* Status messages
@@ -60,7 +61,7 @@ To send %s a message, click here:
 	*/
 
 	'messages:blank' => "Sorry; you need to actually put something in the message body before we can save it.",
-	'messages:nomessages' => "There are no messages.",
+	'messages:nomessages' => "There are no messages.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "We could not find the recipient in the user database.",
 	'messages:user:blank' => "You did not select someone to send this to.",
 	'messages:user:self' => "You cannot send a message to yourself.",

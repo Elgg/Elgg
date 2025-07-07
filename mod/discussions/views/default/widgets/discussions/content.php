@@ -20,7 +20,7 @@ $options = [
 		'property' => 'last_action',
 		'direction' => 'DESC',
 	],
-	'no_results' => elgg_echo('discussion:none'),
+	'no_results' => true,
 	'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('more'))
 ];
 
