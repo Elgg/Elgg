@@ -16,7 +16,8 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: "standard"
+  #storageClassName: "default-storageclass"
+  storageClassName: "default-storageclass"
   resources:
     requests:
       storage: 20Gi
@@ -28,22 +29,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: "standard"
+  storageClassName: "default-storageclass"
   resources:
     requests:
       storage: 20Gi
-
-# ---
-
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: elgg-config-pvc
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   storageClassName: "standard"
-#   resources:
-#     requests:
-#       storage: 10Gi
-

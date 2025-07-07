@@ -234,99 +234,99 @@ jobs:
       #       echo "gate-passed=true" >> $GITHUB_OUTPUT
       #     fi
 
-  # deploy:
-  #   needs: [quality-gate]
-  #   if: needs.quality-gate.outputs.gate-passed == 'true'
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: read
-  #   environment:
-  #     name: recette
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
-
-  #     - name: Authenticate to Google Cloud
-  #       uses: google-github-actions/auth@v2
-  #       with:
-  #         credentials_json: ${{ secrets.GKE_SA_KEY }}
-
-  #     - name: Set up gcloud CLI and kubectl
-  #       uses: google-github-actions/setup-gcloud@v2
-  #       with:
-  #         project_id: ${{ secrets.GKE_PROJECT }}
-  #         install_components: 'gcloud,kubectl'
-
-  #     - name: Install GKE Auth Plugin
-  #       run: |
-  #         gcloud components install gke-gcloud-auth-plugin -q
-  #         gcloud config set container/use_application_default_credentials true
-
-  #     - name: Get GKE credentials
-  #       run: |
-  #         gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
-  #           --zone ${{ secrets.GKE_REGION }} \
-  #           --project ${{ secrets.GKE_PROJECT }}
-
-  #     - name: Check if deployment is needed
-  #       id: check-deploy
-  #       run: |
-  #         CURRENT_IMAGE=$(kubectl get deployment elgg-app -n recette -o jsonpath='{.spec.template.spec.containers[0].image}' 2>/dev/null || echo "none")
-  #         DESIRED_IMAGE="${{ needs.docker-build.outputs.image-tag }}"
-  #         if [ "$CURRENT_IMAGE" = "$DESIRED_IMAGE" ]; then
-  #           echo "skip=true" >> $GITHUB_OUTPUT
-  #           echo "Deployment not needed - image already matches"
-  #         else
-  #           echo "skip=false" >> $GITHUB_OUTPUT
-  #           echo "Deployment needed - image differs"
-  #         fi
-
-  #     - name: Cleanup test namespace
-  #       run: |
-  #         echo "Cleaning up all resources in 'test' namespace to avoid PVC conflicts..."
-  #         kubectl delete all --all -n test || true
-  #         kubectl delete pvc --all -n test || true
-
-
-  #     - name: Deploy to recette namespace
-  #       if: steps.check-deploy.outputs.skip != 'true'
-  #       run: |
-  #         kubectl apply -f k8s/ -n recette
-  #         kubectl rollout status deployment/elgg-app -n recette
-  #         kubectl rollout status deployment/elgg-phpmyadmin -n recette
-  #         kubectl get all -n recette
-
-  #     - name: Wait for service to be ready
-  #       run: |
-  #         echo "Waiting for application to be ready..."
-  #         sleep 30
-  #         for i in {1..10}; do
-  #           if curl -f -s "http://${{ env.RECETTE_IP }}" > /dev/null; then
-  #             echo "Application is ready!"
-  #             break
-  #           fi
-  #           echo "Attempt $i: Application not ready yet, waiting..."
-  #           sleep 10
-  #         done
-
-  deploy-to-rancher:
-    needs: [docker-build]
-    runs-on: [self-hosted, Linux, X64]
+  deploy:
+    needs: docker-build
+    # if: needs.quality-gate.outputs.gate-passed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    environment:
+      name: recette
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Kubectl
-        uses: azure/setup-kubectl@v3
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GKE_SA_KEY }}
 
-      - name: Configure Rancher Access
+      - name: Set up gcloud CLI and kubectl
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GKE_PROJECT }}
+          install_components: 'gcloud,kubectl'
+
+      - name: Install GKE Auth Plugin
         run: |
-          echo "${{ secrets.RANCHER_KUBECONFIG_B64 }}" | base64 -d > kubeconfig.yaml
-          export KUBECONFIG=kubeconfig.yaml
-          kubectl config use-context "${{ secrets.RANCHER_CLUSTER_NAME }}"
+          gcloud components install gke-gcloud-auth-plugin -q
+          gcloud config set container/use_application_default_credentials true
 
-      - name: Deploy to Rancher
-        run: kubectl apply -f k8s/pvc.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+      - name: Get GKE credentials
+        run: |
+          gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
+            --zone ${{ secrets.GKE_REGION }} \
+            --project ${{ secrets.GKE_PROJECT }}
+
+      - name: Check if deployment is needed
+        id: check-deploy
+        run: |
+          CURRENT_IMAGE=$(kubectl get deployment elgg-app -n recette -o jsonpath='{.spec.template.spec.containers[0].image}' 2>/dev/null || echo "none")
+          DESIRED_IMAGE="${{ needs.docker-build.outputs.image-tag }}"
+          if [ "$CURRENT_IMAGE" = "$DESIRED_IMAGE" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "Deployment not needed - image already matches"
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+            echo "Deployment needed - image differs"
+          fi
+
+      - name: Cleanup test namespace
+        run: |
+          echo "Cleaning up all resources in 'test' namespace to avoid PVC conflicts..."
+          kubectl delete all --all -n test || true
+          kubectl delete pvc --all -n test || true
+
+
+      - name: Deploy to recette namespace
+        if: steps.check-deploy.outputs.skip != 'true'
+        run: |
+          kubectl apply -f k8s/ -n recette
+          kubectl rollout status deployment/elgg-app -n recette
+          kubectl rollout status deployment/elgg-phpmyadmin -n recette
+          kubectl get all -n recette
+
+      # - name: Wait for service to be ready
+      #   run: |
+      #     echo "Waiting for application to be ready..."
+      #     sleep 30
+      #     for i in {1..10}; do
+      #       if curl -f -s "http://${{ env.RECETTE_IP }}" > /dev/null; then
+      #         echo "Application is ready!"
+      #         break
+      #       fi
+      #       echo "Attempt $i: Application not ready yet, waiting..."
+      #       sleep 10
+      #     done
+
+  # deploy-to-rancher:
+  #   needs: [docker-build]
+  #   runs-on: [self-hosted, Linux, X64]
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+
+  #     - name: Setup Kubectl
+  #       uses: azure/setup-kubectl@v3
+
+  #     - name: Configure Rancher Access
+  #       run: |
+  #         echo "${{ secrets.RANCHER_KUBECONFIG_B64 }}" | base64 -d > kubeconfig.yaml
+  #         export KUBECONFIG=kubeconfig.yaml
+  #         kubectl config use-context "${{ secrets.RANCHER_CLUSTER_NAME }}"
+
+  #     - name: Deploy to Rancher
+  #       run: kubectl apply -f k8s/pvc.yml -n ${{ secrets.RANCHER_NAMESPACE }}
 
 # kubectl rollout status deployment/elgg-app -n ${{ secrets.RANCHER_NAMESPACE }}
 

@@ -113,20 +113,21 @@ jobs:
         env:
           KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
-      # - name: Deploy MariaDB 
-      #   run: kubectl apply -f k8s/mariadb.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-      #   env:
-      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+      - name: Deploy MariaDB 
+        run: kubectl apply -f k8s/mariadb.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
-      # - name: Deploy PhpMyAdmin 
-      #   run: kubectl apply -f k8s/phpMyAdmin.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-      #   env:
-      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+      - name: Deploy PhpMyAdmin 
+        run: kubectl apply -f k8s/phpMyAdmin.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
-      # - name: Deploy Elgg Deployment
-      #   run: kubectl apply -f k8s/elgg-app.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-      #   env:
-      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+      - name: Deploy Elgg Deployment
+        run: kubectl apply -f k8s/elgg-app.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
 
       # - name: Verify Deployment rollout
