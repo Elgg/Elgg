@@ -6,13 +6,13 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => 'Page',
 	'collection:object:page' => 'Pages',
+	'list:object:page:no_results' => 'No pages found',
+	
 	'collection:object:page:all' => "All site pages",
 	'collection:object:page:owner' => "%s's pages",
 	'collection:object:page:friends' => "Friends' pages",
@@ -20,6 +20,7 @@ return array(
 	'add:object:page' => "Add a page",
 	'edit:object:page' => "Edit this page",
 	'menu:pages_nav:header' => "Sub-pages",
+	
 	'notification:object:page:create' => "Send a notification when a page is created",
 	'notifications:mute:object:page' => "about the page '%s'",
 	
@@ -48,7 +49,7 @@ View and comment on the page:
 	'notification:mentions:object:page:subject' => '%s mentioned you in a page',
 
 	'pages:more' => 'More pages',
-	'pages:none' => 'No pages created yet',
+	'pages:none' => 'No pages created yet', // @todo remove in Elgg 7.0
 
 	/**
 	* River

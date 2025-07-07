@@ -26,7 +26,7 @@ $content = elgg_list_annotations([
 		new OrderByClause('a_table.time_created', 'desc'),
 		new OrderByClause('a_table.id', 'desc'),
 	],
-	'no_results' => elgg_echo('pages:none'),
+	'no_results' => elgg_echo('list:object:page:no_results'),
 ]);
 
 echo elgg_view_page($title, [

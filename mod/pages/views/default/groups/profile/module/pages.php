@@ -20,7 +20,6 @@ $content = elgg_list_entities([
 	],
 	'limit' => 6,
 	'pagination' => false,
-	'no_results' => elgg_echo('pages:none'),
 ]);
 
 elgg_pop_context();

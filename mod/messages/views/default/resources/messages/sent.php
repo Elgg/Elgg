@@ -29,7 +29,7 @@ $list = elgg_list_entities($options);
 if (empty($list)) {
 	$options['count'] = elgg_count_entities($options);
 	
-	$content = elgg_view_no_results(elgg_echo('messages:nomessages'));
+	$content = elgg_view_no_results(elgg_echo('list:object:messages:no_results'));
 	$content .= elgg_view('page/components/list/out_of_bounds', $options);
 } else {
 	$content = elgg_view_form('messages/process', [

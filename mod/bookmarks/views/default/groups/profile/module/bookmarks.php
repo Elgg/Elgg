@@ -6,7 +6,6 @@
 $params = [
 	'entity_type' => 'object',
 	'entity_subtype' => 'bookmarks',
-	'no_results' => elgg_echo('bookmarks:none'),
 ];
 $params = $params + $vars;
 

@@ -12,7 +12,7 @@ file_register_toggle();
 $defaults = [
 	'type' => 'object',
 	'subtype' => 'file',
-	'no_results' => elgg_echo('file:none'),
+	'no_results' => true,
 	'distinct' => false,
 ];
 

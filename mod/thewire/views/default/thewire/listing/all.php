@@ -11,7 +11,7 @@ $defaults = [
 	'limit' => max((int) get_input('limit'), (int) elgg_get_config('default_limit'), 15),
 	'distinct' => false,
 	'preload_owners' => true,
-	'no_results' => elgg_echo('thewire:noposts'),
+	'no_results' => true,
 ];
 
 $options = (array) elgg_extract('options', $vars, []);

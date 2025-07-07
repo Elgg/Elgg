@@ -6,7 +6,6 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
@@ -14,10 +13,13 @@ return array(
 
 	'item:object:thewire' => "Wire post",
 	'collection:object:thewire' => 'Wire posts',
+	'list:object:thewire:no_results' => 'No wire posts found',
+	
 	'collection:object:thewire:all' => "All wire posts",
 	'collection:object:thewire:owner' => "%s's wire posts",
 	'collection:object:thewire:friends' => "Friends' wire posts",
 	'collection:object:thewire:mentions' => "Wire posts mentioning @%s",
+	
 	'notification:object:thewire:create' => "Send a notification when a wire post is created",
 	'notifications:mute:object:thewire' => "about the wire post '%s'",
 	
@@ -29,7 +31,7 @@ return array(
 	'thewire:thread' => "Thread",
 	'thewire:charleft' => "characters remaining",
 	'thewire:tags' => "Wire posts tagged with '%s'",
-	'thewire:noposts' => "No wire posts yet",
+	'thewire:noposts' => "No wire posts yet", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Wire post by %s',
 

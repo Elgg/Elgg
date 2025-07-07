@@ -16,7 +16,22 @@ if ($no_results instanceof Closure) {
 }
 
 if ($no_results === true) {
-	$no_results = elgg_echo('notfound');
+	$no_results = call_user_func(function() use ($vars) {
+		// try for an entity listing
+		$type = (string) elgg_extract('type', $vars);
+		$subtype = (string) elgg_extract('subtype', $vars);
+		if (elgg_language_key_exists("list:{$type}:{$subtype}:no_results")) {
+			return elgg_echo("list:{$type}:{$subtype}:no_results");
+		}
+		
+		// try for an annotation listing
+		$annotation_name = (string) elgg_extract('annotation_name', $vars);
+		if (elgg_language_key_exists("list:annotation:{$annotation_name}:no_results")) {
+			return elgg_echo("list:annotation:{$annotation_name}:no_results");
+		}
+		
+		return elgg_echo('notfound');
+	});
 }
 
 echo elgg_format_element('p', ['class' => ['elgg-no-results']], $no_results);

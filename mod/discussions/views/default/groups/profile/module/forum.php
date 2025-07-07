@@ -6,7 +6,6 @@
 $params = [
 	'entity_type' => 'object',
 	'entity_subtype' => 'discussion',
-	'no_results' => elgg_echo('discussion:none'),
 ];
 $params = $params + $vars;
 
