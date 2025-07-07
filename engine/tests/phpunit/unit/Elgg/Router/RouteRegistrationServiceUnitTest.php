@@ -3,6 +3,9 @@
 namespace Elgg\Router;
 
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Router\Middleware\GroupToolGatekeeper;
+use Elgg\Router\Middleware\MaintenanceGatekeeper;
+use Elgg\Router\Middleware\WalledGarden;
 use Elgg\UnitTestCase;
 
 class RouteRegistrationServiceUnitTest extends UnitTestCase {
@@ -45,6 +48,62 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 		$this->service->register('view:object:blog', [
 			'path' => '/blog/view/{guid}/{title?}',
 		]);
+	}
+	
+	public function testRegisterRouteGetsMaintenanceGateKeeper() {
+		$route = $this->service->register('view:object:blog', [
+			'path' => '/blog/view/{guid}/{title?}',
+			'resource' => 'blog/view',
+		]);
+		
+		$this->assertInstanceOf(Route::class, $route);
+		
+		$middleware = $route->getDefault('_middleware');
+		$this->assertIsArray($middleware);
+		$this->assertContains(MaintenanceGatekeeper::class, $middleware);
+	}
+	
+	public function testRegisterRouteGetsWalledGardenGateKeeper() {
+		$route = $this->service->register('view:object:blog', [
+			'path' => '/blog/view/{guid}/{title?}',
+			'resource' => 'blog/view',
+		]);
+		
+		$this->assertInstanceOf(Route::class, $route);
+		
+		$middleware = $route->getDefault('_middleware');
+		$this->assertIsArray($middleware);
+		$this->assertContains(WalledGarden::class, $middleware);
+	}
+	
+	public function testRegisterRouteDoesntGetsWalledGardenGateKeeper() {
+		$route = $this->service->register('view:object:blog', [
+			'path' => '/blog/view/{guid}/{title?}',
+			'resource' => 'blog/view',
+			'walled' => false,
+		]);
+		
+		$this->assertInstanceOf(Route::class, $route);
+		
+		$middleware = $route->getDefault('_middleware');
+		$this->assertIsArray($middleware);
+		$this->assertNotContains(WalledGarden::class, $middleware);
+	}
+	
+	public function testRegisterRouteGetsGroupToolGateKeeper() {
+		$route = $this->service->register('view:object:blog', [
+			'path' => '/blog/view/{guid}/{title?}',
+			'resource' => 'blog/view',
+			'options' => [
+				'group_tool' => 'foo'
+			],
+		]);
+		
+		$this->assertInstanceOf(Route::class, $route);
+		
+		$middleware = $route->getDefault('_middleware');
+		$this->assertIsArray($middleware);
+		$this->assertContains(GroupToolGatekeeper::class, $middleware);
 	}
 	
 	public function testUnregisterRoute() {

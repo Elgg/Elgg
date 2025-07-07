@@ -42,10 +42,10 @@ echo "<?xml version='1.0'?>";
 ?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom" <?= $namespaces; ?>>
 <channel>
-	<title><![CDATA[<?= $title; ?>}]]></title>
+	<title><![CDATA[<?= $title; ?>]]></title>
 	<link><?= $url; ?></link>
 	<atom:link href="<?= $rssurl; ?>" rel="self" type="application/rss+xml" />
-	<description><![CDATA[<?= $description; ?>}]]></description>
+	<description><![CDATA[<?= $description; ?>]]></description>
 	<?= $extensions; ?>
 	<?= $body; ?>
 </channel>

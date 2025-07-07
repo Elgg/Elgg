@@ -75,7 +75,6 @@ class BlogArchive {
 			} else if ($page_owner instanceof \ElggGroup) {
 				$url_segment = elgg_generate_url('collection:object:blog:group', [
 					'guid' => $page_owner->guid,
-					'subpage' => 'archive',
 					'lower' => $lower,
 					'upper' => $upper,
 				]);

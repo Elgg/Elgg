@@ -60,7 +60,6 @@ class OwnerBlock {
 			'text' => elgg_echo('collection:object:blog:group'),
 			'href' => elgg_generate_url('collection:object:blog:group', [
 				'guid' => $entity->guid,
-				'subpage' => 'all',
 			]),
 		]);
 		

@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Controllers\GenericContentListing;
+use Elgg\Discussions\Controllers\ContentListing;
 use Elgg\Discussions\Forms\PrepareFields;
 use Elgg\Discussions\GroupToolContainerLogicCheck;
 use Elgg\Discussions\Notifications\CreateDiscussionEventHandler;
@@ -39,22 +41,22 @@ return [
 	'routes' => [
 		'default:object:discussion' => [
 			'path' => '/discussion',
-			'resource' => 'discussion/all',
+			'controller' => ContentListing::class,
 		],
 		'collection:object:discussion:all' => [
 			'path' => '/discussion/all',
-			'resource' => 'discussion/all',
+			'controller' => ContentListing::class,
 		],
 		'collection:object:discussion:owner' => [
 			'path' => '/discussion/owner/{username}',
-			'resource' => 'discussion/owner',
+			'controller' => ContentListing::class,
 			'middleware' => [
 				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:object:discussion:my_groups' => [
 			'path' => '/discussion/my_groups/{username}',
-			'resource' => 'discussion/my_groups',
+			'controller' => ContentListing::class,
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
@@ -62,12 +64,12 @@ return [
 		],
 		'collection:object:discussion:group' => [
 			'path' => '/discussion/group/{guid}',
-			'resource' => 'discussion/group',
+			'controller' => ContentListing::class,
+			'options' => [
+				'group_tool' => 'forum',
+			],
 			'required_plugins' => [
 				'groups',
-			],
-			'middleware' => [
-				\Elgg\Router\Middleware\GroupPageOwnerGatekeeper::class,
 			],
 		],
 		'add:object:discussion' => [

@@ -25,18 +25,7 @@ function elgg_group_tool_gatekeeper(string $tool_name, ?int $group_guid = null):
 		return;
 	}
 	
-	if ($group->isToolEnabled($tool_name)) {
-		return;
-	}
-	
-	$ex = new GroupToolGatekeeperException();
-	$ex->setRedirectUrl($group->getURL());
-	$ex->setParams([
-		'entity' => $group,
-		'tool' => $tool_name,
-	]);
-	
-	throw $ex;
+	_elgg_services()->gatekeeper->assertGroupToolEnabled($tool_name, $group);
 }
 
 /**

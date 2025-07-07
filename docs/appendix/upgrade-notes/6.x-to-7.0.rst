@@ -1,4 +1,4 @@
-From 5.x to 6.0
+From 6.x to 7.0
 ===============
 
 .. contents:: Contents
@@ -22,15 +22,35 @@ need to call ``set_time_limit(0);``
 Entity restore
 ~~~~~~~~~~~~~~
 
-The ``entity/chooserestoredestination`` form and action now use a singular parameter value for the ``destination_container_guid`` when selecting a different entity to restore to.
+The ``entity/chooserestoredestination`` form and action now use a singular parameter value for the
+``destination_container_guid`` when selecting a different entity to restore to.
+
+Entity listings
+~~~~~~~~~~~~~~~
+
+The behaviour of ``elgg_list_entities()`` has been changed. The default value for the ``limit`` parameter which can be
+provided by the query parameter ``limit`` (eg. ``/blog/all?limit=20``) has been limited to a minimum of 1 and a maximum
+of 100.
 
 Plugin changes
 --------------
 
+Group route definitions
+~~~~~~~~~~~~~~~~~~~~~~~
+
+In the group route definition we've dropped the ``subpage`` variable for the following routes:
+
+- ``collection:object:blog:group``
+- ``collection:object:bookmarks:group``
+- ``collection:object:page:group``
+
+This could break user favorites to those pages.
+
 Groups
 ~~~~~~
 
-The ``group/edit`` form and action now use a singular parameter value for the ``owner_guid`` when selecting a different group owner.
+The ``group/edit`` form and action now use a singular parameter value for the ``owner_guid`` when selecting a
+different group owner.
 
 Likes
 ~~~~~
@@ -40,7 +60,8 @@ By default only content owners can see who likes their content. This can be made
 Messages
 ~~~~~~~~
 
-The ``messages/send`` form and action parameter ``recipients`` has been renamed to ``recipient`` and now contains a singular value when selecting a recipient.
+The ``messages/send`` form and action parameter ``recipients`` has been renamed to ``recipient`` and now contains a
+singular value when selecting a recipient.
 
 Profile
 ~~~~~~~

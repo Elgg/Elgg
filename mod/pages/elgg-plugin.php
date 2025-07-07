@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\Pages\Controllers\ContentListing;
 use Elgg\Pages\Forms\PrepareFields;
 use Elgg\Pages\GroupToolContainerLogicCheck;
 use Elgg\Pages\Notifications\CreatePageEventHandler;
@@ -37,22 +38,31 @@ return [
 	'routes' => [
 		'default:object:page' => [
 			'path' => '/pages',
-			'resource' => 'pages/all',
+			'controller' => ContentListing::class,
+			'options' => [
+				'sidebar_view' => 'pages/sidebar',
+			],
 		],
 		'collection:object:page:all' => [
 			'path' => '/pages/all',
-			'resource' => 'pages/all',
+			'controller' => ContentListing::class,
+			'options' => [
+				'sidebar_view' => 'pages/sidebar',
+			],
 		],
 		'collection:object:page:owner' => [
 			'path' => '/pages/owner/{username}',
-			'resource' => 'pages/owner',
+			'controller' => ContentListing::class,
+			'options' => [
+				'sidebar_view' => 'pages/sidebar',
+			],
 			'middleware' => [
 				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:object:page:friends' => [
 			'path' => '/pages/friends/{username}',
-			'resource' => 'pages/friends',
+			'controller' => ContentListing::class,
 			'required_plugins' => [
 				'friends',
 			],
@@ -61,13 +71,14 @@ return [
 			],
 		],
 		'collection:object:page:group' => [
-			'path' => '/pages/group/{guid}/{subpage?}',
-			'resource' => 'pages/group',
+			'path' => '/pages/group/{guid}',
+			'controller' => ContentListing::class,
+			'options' => [
+				'group_tool' => 'pages',
+				'sidebar_view' => 'pages/sidebar',
+			],
 			'required_plugins' => [
 				'groups',
-			],
-			'middleware' => [
-				\Elgg\Router\Middleware\GroupPageOwnerGatekeeper::class,
 			],
 		],
 		'add:object:page' => [
