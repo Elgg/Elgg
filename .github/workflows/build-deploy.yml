@@ -104,30 +104,30 @@ jobs:
       #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
       - name: Deploy PVC to Rancher
-        run: kubectl apply -f k8s/pvc.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        run: kubectl apply -f k8s-rancher/pvc.yml -n ${{ secrets.RANCHER_NAMESPACE }}
         env:
           KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
       - name: Deploy Secret 
-        run: kubectl apply -f k8s/elgg-env.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        run: kubectl apply -f k8s-rancher/elgg-env.yml -n ${{ secrets.RANCHER_NAMESPACE }}
         env:
           KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
-      # - name: Deploy MariaDB 
-      #   run: kubectl apply -f k8s/mariadb.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-      #   env:
-      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+      - name: Deploy MariaDB 
+        run: kubectl apply -f k8s-rancher/mariadb.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
-      # - name: Deploy PhpMyAdmin 
-      #   run: kubectl apply -f k8s/phpMyAdmin.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-      #   env:
-      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+      - name: Deploy PhpMyAdmin 
+        run: kubectl apply -f k8s-rancher/phpMyAdmin.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
 
-      # - name: Deploy Elgg Deployment
-      #   run: kubectl apply -f k8s/elgg-app.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-      #   env:
-      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+      - name: Deploy Elgg Deployment
+        run: kubectl apply -f k8s-rancher/elgg-app.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
 
       # - name: Verify Deployment rollout
