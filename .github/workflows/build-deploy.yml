@@ -2,10 +2,10 @@ name: Build & Deploy To Rancher
 
 on:
   workflow_dispatch:
-  pull_request:
-    branches:
-      - recette
-    types: [opened, synchronize, reopened]
+  # pull_request:
+  #   branches:
+  #     - recette
+  #   types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
