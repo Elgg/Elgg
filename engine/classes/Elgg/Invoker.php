@@ -70,7 +70,7 @@ class Invoker {
 					$system_log_service->disableLogging();
 				}
 			} catch (\DI\NotFoundException $e) {
-				// somehow the service isn't correctly registered
+				// somehow the service isn't correctly registered or unavailable
 			}
 		}
 
