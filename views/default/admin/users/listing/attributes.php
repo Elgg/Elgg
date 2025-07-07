@@ -27,6 +27,22 @@ $data = [
 		elgg_echo('table_columns:fromView:time_created'),
 		elgg_view('output/datetime-local', ['value' => $entity->time_created, 'format' => elgg_echo('friendlytime:date_format')]),
 	],
+	function() use ($entity) {
+		try {
+			$log = elgg_extract(0, \Elgg\SystemLog\SystemLog::instance()->getAll([
+				'object_id' => $entity->guid,
+				'event' => 'create:user',
+				'object_type' => 'user',
+				'limit' => 1,
+			]));
+
+			if ($log && !empty($log->ip_address)) {
+				return [' - ' . elgg_echo('usersettings:statistics:login_history:ip'), $log->ip_address];
+			}
+		} catch (\DI\NotFoundException $e) {
+			// somehow the service isn't correctly registered or unavailable
+		}
+	},
 	[
 		elgg_echo('table_columns:fromView:time_updated'),
 		elgg_view('output/datetime-local', ['value' => $entity->time_updated, 'format' => elgg_echo('friendlytime:date_format')]),
@@ -60,6 +76,13 @@ $data = [
 $rows = [];
 foreach ($data as $row) {
 	$cells = [];
+
+	if (is_callable($row)) {
+		$row = call_user_func($row);
+		if (!is_array($row)) {
+			continue;
+		}
+	}
 	
 	foreach ($row as $cell) {
 		$cells[] = elgg_format_element('td', [], (string) $cell);
