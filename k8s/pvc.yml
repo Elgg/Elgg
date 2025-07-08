@@ -45,5 +45,9 @@ spec:
 #   storageClassName: "standard"
 #   resources:
 #     requests:
+<<<<<<< HEAD
 #       storage: 10Gi
 
+=======
+#       storage: 10Gi
+>>>>>>> 413930836491fa59c1d3c78d649f6cf633daf9dd
