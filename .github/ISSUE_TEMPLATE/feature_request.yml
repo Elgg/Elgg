@@ -1,6 +1,5 @@
 name: "Feature request"
 description: "Are you missing a feature? Please suggest how we can improve Elgg."
-title: ""
 type: "Feature"
 body:
   - type: textarea
