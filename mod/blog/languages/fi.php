@@ -8,6 +8,7 @@
 return array(
 	'item:object:blog' => 'Blogit',
 	'collection:object:blog' => 'Blogit',
+	
 	'collection:object:blog:all' => 'Kaikki blogit',
 	'collection:object:blog:owner' => 'Käyttäjän %s blogit',
 	'collection:object:blog:friends' => 'Ystävien blogit',
@@ -31,7 +32,7 @@ return array(
 	'blog:error:cannot_save' => 'Blogiviestiä ei voida tallentaa.',
 	'blog:error:cannot_write_to_container' => 'Sinulla ei ole oikeuksia luoda blogia tähän ryhmään.',
 	'blog:edit_revision_notice' => '(Vanha versio)',
-	'blog:none' => 'Ei blogiviestejä',
+	'blog:none' => 'Ei blogiviestejä', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Syötä blogille otsikko!',
 	'blog:error:missing:description' => 'Syötä blogiviestin sisältö!',
 	'blog:error:post_not_found' => 'Blogiviestiä ei löydy.',

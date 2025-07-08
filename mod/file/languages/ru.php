@@ -6,7 +6,6 @@
  */
 
 return array(
-
 	'item:object:file' => 'Файл',
 	'item:object:file:application' => 'Приложение',
 	'item:object:file:archive' => 'Архив',
@@ -20,17 +19,18 @@ return array(
 	'item:object:file:vcard' => 'vCard',
 	'item:object:file:video' => 'Видео',
 	'item:object:file:word' => 'Word',
+	'collection:object:file' => 'Файлы',
 	
 	'file:upgrade:2022092801:title' => 'Переместить файлы',
 	'file:upgrade:2022092801:description' => 'Перемещает файлы, загруженные с помощью плагина "Файлы", в папку объекта, а не в папку владельца.',
 	
-	'collection:object:file' => 'Файлы',
 	'collection:object:file:all' => "Все файлы",
 	'collection:object:file:owner' => "Файлы %s",
 	'collection:object:file:friends' => "Файлы друзей",
 	'collection:object:file:group' => "Файлы группы",
 	'add:object:file' => "Загрузить файл",
 	'edit:object:file' => "Изменить файл",
+	
 	'notification:object:file:create' => "Отправить уведомление при создании файла",
 	'notifications:mute:object:file' => "о файле '%s'",
 	
@@ -99,7 +99,7 @@ return array(
 	 * Error messages
 	 */
 
-	'file:none' => "Файлов нет.",
+	'file:none' => "Файлов нет.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Не удается сохранить файл.",
 	'file:noaccess' => "У Вас нет прав для изменения этого файла.",
 	'file:cannotload' => "Ошибка загрузки файла",

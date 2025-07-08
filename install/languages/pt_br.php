@@ -15,15 +15,15 @@ return array(
 	'install:complete' => 'Finalizado',
 
 	'install:next' => 'Proximo',
-	'install:refresh' => 'Atualiza',
-	'install:change_language' => 'Mudar idioma',
+	'install:refresh' => 'Atualizar',
+	'install:change_language' => 'Alterar Idioma',
 
 	'install:welcome:instructions' => "A Instalação do Elgg tem 6 etapas simples. Esta é a primeira delas!
 Se você ainda não fez, leia as instruções de instalação inclusas no Elgg (ou clique no botão de link para instruções na parte inferior da página)
 Se você já está pronto para iniciar, clique no botão Próximo.",
 	
 	'install:footer:instructions' => "Instruções de instalação",
-	'install:footer:troubleshooting' => "Solução de problemas de instalação",
+	'install:footer:troubleshooting' => "Solução de problemas da instalação",
 	'install:footer:community' => "Fóruns da Comunidade Elgg",
 	
 	'install:requirements:instructions:success' => "Seu servidor passou na verificacao de requisitos.",

@@ -7,12 +7,13 @@
 
 return array(
 	'item:object:discussion' => "Дискуссия",
+	'collection:object:discussion' => 'Дискуссии',
 	
 	'add:object:discussion' => 'Добавить дискуссию',
 	'edit:object:discussion' => 'Изменить дискуссию',
-	'collection:object:discussion' => 'Дискуссии',
 	'collection:object:discussion:group' => 'Дискуссии группы',
 	'collection:object:discussion:my_groups' => 'Дискуссии в моих группах',
+	
 	'notification:object:discussion:create' => "Отправить уведомление при создании дискуссии",
 	'notifications:mute:object:discussion' => "о дискуссии '%s'",
 	
@@ -20,7 +21,7 @@ return array(
 	'discussion:settings:enable_global_discussions:help' => 'Разрешить создавать дискуссии вне групп',
 
 	'discussion:latest' => 'Недавние дискуссии',
-	'discussion:none' => 'Нет дискуссий',
+	'discussion:none' => 'Нет дискуссий', // @todo remove in Elgg 7.0
 	'discussion:updated' => "Последний комментарий%s %s",
 
 	'discussion:topic:created' => 'Дискуссия создана.',

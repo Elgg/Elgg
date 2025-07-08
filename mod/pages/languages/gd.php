@@ -6,19 +6,19 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => 'Duilleag',
 	'collection:object:page' => 'Duilleagan',
+	
 	'collection:object:page:all' => "Duilleagan gu lèir",
 	'collection:object:page:owner' => "Duilleagan le %s",
 	'collection:object:page:friends' => "Duilleagan aig mo chàirdean",
 	'collection:object:page:group' => "Duilleagan a' bhuidhinn",
 	'add:object:page' => "Cuir ann duilleag",
 	'edit:object:page' => "Deasaich an duilleag seo",
+	
 	'notification:object:page:create' => "Leig fios nuair a thèid duilleag ùr a chruthachadh",
 	'notifications:mute:object:page' => "mu dheidhinn na duilleage '%s'",
 
@@ -42,7 +42,7 @@ Faodaidh tu fhaicinn is beachd fhàgail air aig:
 %s',
 
 	'pages:more' => 'Barrachd duilleagan',
-	'pages:none' => 'Cha deach duilleag a chruthachadh fhathast',
+	'pages:none' => 'Cha deach duilleag a chruthachadh fhathast', // @todo remove in Elgg 7.0
 
 	/**
 	* River

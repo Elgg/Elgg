@@ -6,7 +6,6 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
@@ -14,16 +13,18 @@ return array(
 
 	'item:object:thewire' => "Nachrichten im Heißen Draht",
 	'collection:object:thewire' => 'Nachrichten im Heißen Draht',
+	
 	'collection:object:thewire:all' => "Alle Nachrichten im Heißen Draht",
 	'collection:object:thewire:owner' => "Der Heiße Draht von %s",
 	'collection:object:thewire:friends' => "Deine Freunde im Heißen Draht",
+	
 	'notification:object:thewire:create' => "Sende eine Benachrichtigung, wenn eine neue Nachricht im Heißen Draht geschrieben wurde",
 	'notifications:mute:object:thewire' => "über die Nachricht '%s' im Heißen Draht",
 	
 	'thewire:replying' => "Antworten auf %s (@%s), der schrieb",
 	'thewire:charleft' => "Zeichen übrig",
 	'thewire:tags' => "Nachrichten im Heißen Draht mit dem Tag '%s'",
-	'thewire:noposts' => "Noch keine Nachrichten im Heißen Draht.",
+	'thewire:noposts' => "Noch keine Nachrichten im Heißen Draht.", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Nachricht im Heißen Draht von %s',
 

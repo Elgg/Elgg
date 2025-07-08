@@ -6,19 +6,19 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => 'Pagină',
 	'collection:object:page' => 'Pagini',
+	
 	'collection:object:page:all' => "Toate paginile site-ului",
 	'collection:object:page:owner' => "Paginile utilizatorului %s",
 	'collection:object:page:friends' => "Paginile prietenilor",
 	'collection:object:page:group' => "Paginile grupului",
 	'add:object:page' => "Adaugă o pagină",
 	'edit:object:page' => "Editează această pagină",
+	
 	'notification:object:page:create' => "Trimite o notificare atunci când o pagină este creată",
 	'notifications:mute:object:page' => "despre pagina '%s'",
 
@@ -42,7 +42,7 @@ Vezi și comentează pe pagină:
 %s',
 
 	'pages:more' => 'Mai multe pagini',
-	'pages:none' => 'Încă nu s-au creat pagini',
+	'pages:none' => 'Încă nu s-au creat pagini', // @todo remove in Elgg 7.0
 
 	/**
 	* River

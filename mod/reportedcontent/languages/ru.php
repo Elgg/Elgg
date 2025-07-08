@@ -8,13 +8,14 @@
 return array(
 	'item:object:reported_content' => 'Жалоба',
 	'collection:object:reported_content' => 'Жалобы',
+	
 	'admin:administer_utilities:reportedcontent' => 'Жалобы',
 	'admin:administer_utilities:reportedcontent:archive' => 'Жалобы - архив',
 	
 	'reportedcontent' => 'Жалобы',
 	'reportedcontent:this' => 'Пожаловаться',
 	'reportedcontent:this:tooltip' => 'Сообщить об этой странице администратору',
-	'reportedcontent:none' => 'Жалоб нет',
+	'reportedcontent:none' => 'Жалоб нет', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Пожаловаться администратору',
 	'reportedcontent:archive' => 'Архивировать',
 	'reportedcontent:archived' => 'Жалоба заархивирована',

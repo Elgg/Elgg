@@ -6,13 +6,12 @@
  */
 
 return array(
-
+	
 	/**
 	 * Menu items and titles
 	 */
-
 	'messageboard:board' => "Bòrd-brath",
-	'messageboard:none' => "Chan eil dad air a' bhòrd-brath seo fhathast",
+	'messageboard:none' => "Chan eil dad air a' bhòrd-brath seo fhathast", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "An àireamh de bhrathan a chithear",
 	'messageboard:owner' => 'Am bòrd-brath aig %s',
 	'messageboard:owner_history' => 'Postaichean le %s air a\' bhòrd-brath aig %s',

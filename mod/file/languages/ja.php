@@ -6,16 +6,16 @@
  */
 
 return array(
-
 	'item:object:file' => 'ファイル',
-	
 	'collection:object:file' => 'ファイル',
+	
 	'collection:object:file:all' => "サイト全体のファイル",
 	'collection:object:file:owner' => "%s さんのファイル",
 	'collection:object:file:friends' => "友達のファイル",
 	'collection:object:file:group' => "グループファイル",
 	'add:object:file' => "ファイルをアップロード",
 	'edit:object:file' => "ファイル編集",
+	
 	'notification:object:file:create' => "ファイルが作成されたときに通知を送る",
 	'notifications:mute:object:file' => "ファイル '%s' について",
 	
@@ -79,7 +79,7 @@ return array(
 	 * Error messages
 	 */
 
-	'file:none' => "ファイルがありません。",
+	'file:none' => "ファイルがありません。", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "申し訳ありません。ファイルを保存できません。",
 	'file:noaccess' => "あなたには、このファイルを変更する権限がありません。",
 	'file:cannotload' => "ファイルをアップロードするときにエラーが生じました",

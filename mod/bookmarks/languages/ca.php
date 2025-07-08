@@ -6,12 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => 'elements marcats com adreces d\'interés',
 	'collection:object:bookmarks' => 'Adreces d\'interès',
+	
 	'collection:object:bookmarks:group' => 'Adreces',
 	'collection:object:bookmarks:all' => "Totes les adreces d'interès",
 	'collection:object:bookmarks:owner' => "Enllaços de %s",
@@ -24,7 +24,7 @@ return array(
 	'bookmarks:bookmarklet' => "Descarrega els marcadors dinàmics",
 	'bookmarks:bookmarklet:group' => "Descarrega un grup de marcadors dinàmics",
 	'bookmarks:address' => "URL del recurs a marcar com adreça d'interès",
-	'bookmarks:none' => 'No hi ha enllaços',
+	'bookmarks:none' => 'No hi ha enllaços', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => '´Nou enllaç anomenat %s',
 	'bookmarks:notify:subject' => 'Nou enllaç: %s',

@@ -8,6 +8,7 @@
 return array(
 	'item:object:blog' => 'Entrades del bloc',
 	'collection:object:blog' => 'Blocs',
+	
 	'collection:object:blog:all' => 'Tots els blocs',
 	'collection:object:blog:owner' => 'Bloc de %s',
 	'collection:object:blog:friends' => 'Blocs d\'amics',
@@ -31,7 +32,7 @@ return array(
 	'blog:error:cannot_save' => 'No s\'ha pogut desar l\'entrada del bloc.',
 	'blog:error:cannot_write_to_container' => 'No tens els permisos necessaris per afegir el bloc al grup.',
 	'blog:edit_revision_notice' => '(Versió anterior)',
-	'blog:none' => 'No hi ha cap entrada al bloc',
+	'blog:none' => 'No hi ha cap entrada al bloc', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'siusplau, entra un títol per al bloc!',
 	'blog:error:missing:description' => 'Siusplau, afegeix el cos del teu bloc!',
 	'blog:error:post_not_found' => 'No ha estat possible trobar l\'entrade de bloc especificada.',

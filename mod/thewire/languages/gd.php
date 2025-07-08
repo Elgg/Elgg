@@ -6,7 +6,6 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
@@ -14,9 +13,11 @@ return array(
 
 	'item:object:thewire' => "Brath-uèir",
 	'collection:object:thewire' => 'Brathan-uèir',
+	
 	'collection:object:thewire:all' => "Brathan-uèir gu lèir",
 	'collection:object:thewire:owner' => "Brathan-uèir le %s",
 	'collection:object:thewire:friends' => "Brathan-uèir mo chàirdean",
+	
 	'notification:object:thewire:create' => "Leig fios nuair a thèid brath-uèir a chruthachadh",
 	'notifications:mute:object:thewire' => "mu dheidhinn a' bhrath-ùeir '%s'",
 	
@@ -24,7 +25,7 @@ return array(
 	'thewire:thread' => "Snàth",
 	'thewire:charleft' => "caractaran air fhàgail",
 	'thewire:tags' => "Brathan-uèir leis an taga '%s'",
-	'thewire:noposts' => "Gun brath-uèir fhathast",
+	'thewire:noposts' => "Gun brath-uèir fhathast", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Brath-uèir le %s',
 

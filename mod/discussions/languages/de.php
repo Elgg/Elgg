@@ -7,12 +7,13 @@
 
 return array(
 	'item:object:discussion' => "Diskussionen",
+	'collection:object:discussion' => 'Diskussionen',
 	
 	'add:object:discussion' => 'Diskussion hinzufügen',
 	'edit:object:discussion' => 'Diskussion bearbeiten',
-	'collection:object:discussion' => 'Diskussionen',
 	'collection:object:discussion:group' => 'Gruppen-Diskussionen',
 	'collection:object:discussion:my_groups' => 'Diskussionen in meinen Gruppen',
+	
 	'notification:object:discussion:create' => "Sende eine Benachrichtigung bei Start einer neuen Diskussion",
 	'notifications:mute:object:discussion' => "über die Diskussion '%s'",
 	
@@ -20,7 +21,7 @@ return array(
 	'discussion:settings:enable_global_discussions:help' => 'Erlaube Diskussionen ausserhalb von Gruppen.',
 
 	'discussion:latest' => 'Neueste Diskussionen',
-	'discussion:none' => 'Es gibt noch keine Diskussionen.',
+	'discussion:none' => 'Es gibt noch keine Diskussionen.', // @todo remove in Elgg 7.0
 	'discussion:updated' => "Letzte Antwort von %s %s",
 
 	'discussion:topic:created' => 'Die Diskussion wurde hinzugefügt.',

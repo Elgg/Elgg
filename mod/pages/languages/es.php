@@ -6,13 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => 'P&aacute;ginas',
 	'collection:object:page' => 'P&aacute;ginas',
+	
 	'collection:object:page:all' => "Todas las p&aacute;ginas",
 	'collection:object:page:owner' => "P&aacute;ginas de %s",
 	'collection:object:page:friends' => "P&aacute;ginas de amigos",
@@ -31,7 +30,7 @@ return array(
 	'pages:notify:subject' => "Una nueva página: %s",
 
 	'pages:more' => 'M&aacute;s p&aacute;ginas',
-	'pages:none' => 'No se han creado p&aacute;ginas a&uacute;n',
+	'pages:none' => 'No se han creado p&aacute;ginas a&uacute;n', // @todo remove in Elgg 7.0
 
 	/**
 	* River

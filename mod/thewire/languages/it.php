@@ -6,13 +6,13 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "Messaggi brevi",
 
 	'item:object:thewire' => "Messaggi",
+	
 	'collection:object:thewire:all' => "Tutti gli Aggiornamenti di stato",
 	'collection:object:thewire:owner' => "Aggiornamenti di stato di %s",
 	'collection:object:thewire:friends' => "Aggiornamenti di stato dei tuoi amici",
@@ -21,7 +21,7 @@ return array(
 	'thewire:thread' => "Argomento",
 	'thewire:charleft' => "caratteri rimanenti",
 	'thewire:tags' => "Messaggi con tag '%s'",
-	'thewire:noposts' => "Ancora nessun messaggio",
+	'thewire:noposts' => "Ancora nessun messaggio", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Messaggi da %s',
 	

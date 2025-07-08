@@ -6,13 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => 'Pagina\'s',
 	'collection:object:page' => 'Pagina\'s',
+	
 	'collection:object:page:all' => "Alle site pagina's",
 	'collection:object:page:owner' => "%s's pagina's",
 	'collection:object:page:friends' => "Pagina's van vrienden",
@@ -20,6 +19,7 @@ return array(
 	'add:object:page' => "Nieuwe pagina",
 	'edit:object:page' => "Bewerk deze pagina",
 	'menu:pages_nav:header' => "Subpagina's",
+	
 	'notification:object:page:create' => "Stuur een notificatie wanneer een pagina is gemaakt",
 	'notifications:mute:object:page' => "over de pagina '%s'",
 	
@@ -48,7 +48,7 @@ Om de pagina te bekijken en te reageren, klik hier:
 	'notification:mentions:object:page:subject' => '%s heeft je vermeld in een pagina',
 
 	'pages:more' => 'Meer pagina\'s',
-	'pages:none' => 'Nog geen pagina\'s aangemaakt',
+	'pages:none' => 'Nog geen pagina\'s aangemaakt', // @todo remove in Elgg 7.0
 
 	/**
 	* River

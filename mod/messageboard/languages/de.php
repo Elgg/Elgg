@@ -6,13 +6,12 @@
  */
 
 return array(
-
+	
 	/**
 	 * Menu items and titles
 	 */
-
 	'messageboard:board' => "Nachrichten-Pinnwand",
-	'messageboard:none' => "Es gibt noch keine Nachrichten auf dieser Pinnwand.",
+	'messageboard:none' => "Es gibt noch keine Nachrichten auf dieser Pinnwand.", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "Anzahl der anzuzeigenden Nachrichten",
 	'messageboard:owner' => 'Nachrichten-Pinnwand von %s',
 	'messageboard:owner_history' => 'Nachrichten von %s auf der Pinnwand von %s',

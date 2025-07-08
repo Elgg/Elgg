@@ -8,6 +8,7 @@
 return array(
 	'item:object:blog' => 'Blog',
 	'collection:object:blog' => 'Blogs',
+	
 	'collection:object:blog:all' => 'Todos los blogs',
 	'collection:object:blog:owner' => 'Blogs de %s',
 	'collection:object:blog:group' => 'Blogs de grupo',
@@ -32,7 +33,7 @@ return array(
 	'blog:error:cannot_save' => 'No se puede guardar la entrada.',
 	'blog:error:cannot_write_to_container' => 'Acceso insuficiente para guardar la entrada.',
 	'blog:edit_revision_notice' => '(Versi&oacute;n antigua)',
-	'blog:none' => 'No hay entradas',
+	'blog:none' => 'No hay entradas', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => '¡Por favor ingresa un t&iacute;tulo!',
 	'blog:error:missing:description' => '¡Por favor ingresa contenidos!',
 	'blog:error:post_not_found' => 'No se puede encontrar el blog especificado.',

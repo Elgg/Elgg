@@ -6,19 +6,19 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => 'Coop-Seiten',
 	'collection:object:page' => 'Coop-Seiten',
+	
 	'collection:object:page:all' => "Alle Coop-Seiten",
 	'collection:object:page:owner' => "Coop-Seiten von %s",
 	'collection:object:page:friends' => "Coop-Seiten von Freunden",
 	'collection:object:page:group' => "Gruppen-Coop-Seiten",
 	'add:object:page' => "Coop-Seite hinzufügen",
 	'edit:object:page' => "Coop-Seite bearbeiten",
+	
 	'notification:object:page:create' => "Sende eine Benachrichtigung bei Hinzufügen einer Coop-Seite",
 	'notifications:mute:object:page' => "über die Coop-Seite '%s'",
 
@@ -42,7 +42,7 @@ Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
 %s',
 
 	'pages:more' => 'Weitere Coop-Seiten',
-	'pages:none' => 'Es wurden noch keine Coop-Seiten erstellt.',
+	'pages:none' => 'Es wurden noch keine Coop-Seiten erstellt.', // @todo remove in Elgg 7.0
 
 	/**
 	* River

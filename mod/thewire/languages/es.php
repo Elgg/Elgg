@@ -6,13 +6,13 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "The Wire",
 
 	'item:object:thewire' => "Posts",
+	
 	'collection:object:thewire:all' => "Todos los post",
 	'collection:object:thewire:owner' => "los posts de %s",
 	'collection:object:thewire:friends' => "Los post de tus amigos",
@@ -21,7 +21,7 @@ return array(
 	'thewire:thread' => "Hilo",
 	'thewire:charleft' => "caracteres restantes",
 	'thewire:tags' => "Posts etiquetados con '%s'",
-	'thewire:noposts' => "No hay posts",
+	'thewire:noposts' => "No hay posts", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Post publicado por %s',
 	

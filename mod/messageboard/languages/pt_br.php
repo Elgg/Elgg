@@ -6,13 +6,12 @@
  */
 
 return array(
-
+	
 	/**
 	 * Menu items and titles
 	 */
-
 	'messageboard:board' => "Mural de Recados",
-	'messageboard:none' => "Ainda não há Mensagens neste Mural",
+	'messageboard:none' => "Ainda não há Mensagens neste Mural", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "Número de Mensagens a Exibir",
 	'messageboard:owner' => 'Mural de Recados de %s',
 	'messageboard:owner_history' => 'Publicações de %s no mural de %s',

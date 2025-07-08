@@ -6,13 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => '페이지',
 	'collection:object:page' => '페이지',
+	
 	'collection:object:page:all' => "모든 페이지",
 	'collection:object:page:owner' => "%s의 페이지",
 	'collection:object:page:friends' => "친구의 페이지",
@@ -31,7 +30,7 @@ return array(
 	'pages:notify:subject' => "새 페이지:%s",
 
 	'pages:more' => '페이지 더보기',
-	'pages:none' => '아직 페이지를 만들지 않았습니다.',
+	'pages:none' => '아직 페이지를 만들지 않았습니다.', // @todo remove in Elgg 7.0
 
 	/**
 	* River

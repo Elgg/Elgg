@@ -60,7 +60,7 @@ Om %s een bericht te sturen, klik hier:
 	*/
 
 	'messages:blank' => "Sorry, je moet wel tekst invullen voordat we je bericht kunnen versturen.",
-	'messages:nomessages' => "Er zijn geen berichten om weer te geven.",
+	'messages:nomessages' => "Er zijn geen berichten om weer te geven.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "We konden de geadresseerde niet in de gebruikerslijst vinden .",
 	'messages:user:blank' => "Je hebt niemand geselecteerd om dit naar te sturen.",
 	'messages:user:self' => "Je kunt geen berichten aan jezelf sturen!",

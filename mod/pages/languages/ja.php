@@ -6,19 +6,19 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => 'ページ',
 	'collection:object:page' => 'ページ',
+	
 	'collection:object:page:all' => "サイト内のページ",
 	'collection:object:page:owner' => "%sさんのページ",
 	'collection:object:page:friends' => "友達のページ",
 	'collection:object:page:group' => "グループページ",
 	'add:object:page' => "ページを追加",
 	'edit:object:page' => "このページを編集",
+	
 	'notification:object:page:create' => "ページが作成されたときに通知を送る",
 	'notifications:mute:object:page' => "ページ '%s' について",
 
@@ -40,6 +40,7 @@ return array(
 
 このページの表示とコメントは:
 %s',
+	'pages:none' => '', // @todo remove in Elgg 7.0
 
 	/**
 	* River

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-11 15:23+0200\n"
+"POT-Creation-Date: 2025-07-08 10:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -446,15 +446,15 @@ msgstr ""
 msgid "Another option is to use the `Profile Manager`_ plugin that lets you add fields to both user profiles and the registration form."
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:204
 #: ../../appendix/faqs/development.rst:37
+#: ../../appendix/faqs/general.rst:204
 #: ../../appendix/faqs/development.rst:37
 #: ../../appendix/faqs/general.rst:204
 msgid "Create the plugin skeleton"
 msgstr ""
 
-#: ../../appendix/faqs/general.rst:204
 #: ../../appendix/faqs/development.rst:39
+#: ../../appendix/faqs/general.rst:204
 #: ../../appendix/faqs/development.rst:39
 #: ../../appendix/faqs/general.rst:204
 msgid ":doc:`/guides/plugins/plugin-skeleton`"
@@ -856,8 +856,8 @@ msgid "In the ``settings.php`` file you can configure settings for ``$CONFIG->ht
 msgstr ""
 
 #: ../../appendix/faqs/security.rst:2
-#: ../../appendix/faqs/security.rst:2
 #: ../../appendix/upgrade-notes/4.1-to-4.2.rst:65
+#: ../../appendix/faqs/security.rst:2
 msgid "Security"
 msgstr ""
 
@@ -1588,7 +1588,6 @@ msgid "July 2015"
 msgstr ""
 
 #: ../../appendix/support.rst:53
-#: ../../appendix/support.rst:53
 #: ../../appendix/support.rst:63
 msgid "April 2019"
 msgstr ""
@@ -1708,7 +1707,6 @@ msgstr ""
 msgid "4.3"
 msgstr ""
 
-#: ../../appendix/support.rst:77
 #: ../../appendix/support.rst:77
 #: ../../appendix/support.rst:83
 msgid "June 2024"

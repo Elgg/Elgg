@@ -6,12 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => '책갈피',
 	'collection:object:bookmarks' => '책갈피',
+	
 	'collection:object:bookmarks:group' => '모둠 책갈피',
 	'collection:object:bookmarks:all' => "사이트 전체 책갈피",
 	'collection:object:bookmarks:owner' => "%s의 책갈피",
@@ -24,7 +24,7 @@ return array(
 	'bookmarks:bookmarklet' => "책갈피도구 얻기",
 	'bookmarks:bookmarklet:group' => "모둠 책갈피도구 얻기",
 	'bookmarks:address' => "책갈피 주소",
-	'bookmarks:none' => '책갈피 없슴',
+	'bookmarks:none' => '책갈피 없슴', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => '%s 라는 새 책갈피',
 	'bookmarks:notify:subject' => '새 책갈피: %s',

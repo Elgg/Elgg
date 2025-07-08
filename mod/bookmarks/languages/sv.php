@@ -6,12 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => 'Bokmärke',
 	'collection:object:bookmarks' => 'Bokmärken',
+	
 	'collection:object:bookmarks:group' => 'Gruppbokmärken',
 	'collection:object:bookmarks:all' => "Webbplatsens alla bokmärken",
 	'collection:object:bookmarks:owner' => "%ss bokmärken",
@@ -24,7 +24,7 @@ return array(
 	'bookmarks:bookmarklet' => "Hämta scriptbokmärket",
 	'bookmarks:bookmarklet:group' => "Hämta scriptbokmärket för grupp",
 	'bookmarks:address' => "Bokmärkets adress",
-	'bookmarks:none' => 'Inga bokmärken',
+	'bookmarks:none' => 'Inga bokmärken', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Nytt bokmärke med namnet %s',
 	'bookmarks:notify:subject' => 'Nytt bokmärke: %s',

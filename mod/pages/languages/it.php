@@ -6,13 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => 'Pagine',
 	'collection:object:page' => 'Pagine',
+	
 	'collection:object:page:all' => "Tutte le pagine",
 	'collection:object:page:owner' => "Pagine di %s",
 	'collection:object:page:friends' => "Pagine degli amici",
@@ -31,7 +30,7 @@ return array(
 	'pages:notify:subject' => "Una nuova pagina: %s",
 
 	'pages:more' => 'Più pagine',
-	'pages:none' => 'Ancora nessuna pagina creata',
+	'pages:none' => 'Ancora nessuna pagina creata', // @todo remove in Elgg 7.0
 
 	/**
 	* River

@@ -6,13 +6,13 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "Chíos",
 
 	'item:object:thewire' => "Chíos",
+	
 	'collection:object:thewire:all' => "Todos os chíos",
 	'collection:object:thewire:owner' => "Chíos de %s",
 	'collection:object:thewire:friends' => "Chíos dos contactos",
@@ -21,7 +21,7 @@ return array(
 	'thewire:thread' => "Fío",
 	'thewire:charleft' => "caracteres restantes",
 	'thewire:tags' => "Chíos coa etiqueta «%s»",
-	'thewire:noposts' => "Aínda non hai chíos.",
+	'thewire:noposts' => "Aínda non hai chíos.", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Chíos de %s',
 	
