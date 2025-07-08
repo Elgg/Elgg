@@ -1,3 +1,17 @@
+<a name="6.2.3"></a>
+### 6.2.3 (2025-07-08)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+* Jerôme Bakker (1)
+
+#### Bug fixes
+
+* **email:** css variables not working in mail templates [5d56ca3c6](https://github.com/Elgg/Elgg/commit/5d56ca3c694782308a436e422af93d2e0d6aee54)
+* **js:** colorbox negative tabindex interfering with focustrap logic [d7a39e0a5](https://github.com/Elgg/Elgg/commit/d7a39e0a5fa6ad5fbb1e53de26e0b2fcd9e8303b)
+
+
 <a name="6.2.2"></a>
 ### 6.2.2 (2025-06-11)
 
