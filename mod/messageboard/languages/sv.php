@@ -6,13 +6,12 @@
  */
 
 return array(
-
+	
 	/**
 	 * Menu items and titles
 	 */
-
 	'messageboard:board' => "Anslagstavla",
-	'messageboard:none' => "Det finns inget på den här anslagstavlan än.",
+	'messageboard:none' => "Det finns inget på den här anslagstavlan än.", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "Antal meddelanden att visa",
 	'messageboard:owner' => '%ss anslagstavla',
 	'messageboard:owner_history' => '%ss inlägg på %ss anslagstavla',

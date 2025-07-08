@@ -24,7 +24,7 @@ return array(
 	'site_notifications:settings:read_cleanup_interval' => 'Interval de curățare al notificărilor citite',
 	'site_notifications:settings:read_cleanup_interval:help' => 'Cât de des ca notificările citite să fie curățate. Pe site-uri cu o activitate intensă s-ar putea să vrei să mărești intervalul pentru a ține pasul cu numărul de noi notificări ale site-ului.',
 	
-	'site_notifications:empty' => 'Nu există notificări',
+	'site_notifications:empty' => 'Nu există notificări', // @todo remove in Elgg 7.0
 	'site_notifications:toggle_all' => 'Comută toate',
 	'site_notifications:mark_read' => 'Marchează ca citită',
 	'site_notifications:mark_read:confirm' => 'Sigur dorești să marchezi toate notificările selectate ca și citite?',

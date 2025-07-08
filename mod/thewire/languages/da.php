@@ -6,13 +6,13 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "The wire",
 
 	'item:object:thewire' => "Wire indlæg",
+	
 	'collection:object:thewire:all' => "Alle wire indlæg",
 	'collection:object:thewire:owner' => "%s's wire indlæg",
 	'collection:object:thewire:friends' => "Dine venner på the wire",
@@ -21,7 +21,7 @@ return array(
 	'thewire:thread' => "Tråd",
 	'thewire:charleft' => "tegn tilbage",
 	'thewire:tags' => "Wire indlæg tagged med '%s'",
-	'thewire:noposts' => "Ingen wire indlæg endnu",
+	'thewire:noposts' => "Ingen wire indlæg endnu", // @todo remove in Elgg 7.0
 	
 	/**
 	 * The wire river

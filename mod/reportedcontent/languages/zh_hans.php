@@ -7,12 +7,13 @@
 
 return array(
 	'item:object:reported_content' => '報告的項目',
+	
 	'admin:administer_utilities:reportedcontent' => '報告的內容',
 	
 	'reportedcontent' => '報告的內容',
 	'reportedcontent:this' => '報告這頁',
 	'reportedcontent:this:tooltip' => '報告這個頁面給管理者',
-	'reportedcontent:none' => '沒有任何報告的內容',
+	'reportedcontent:none' => '沒有任何報告的內容', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => '報告給管理者',
 	'reportedcontent:archive' => '封存報告',
 	'reportedcontent:archived' => '報告已封存',

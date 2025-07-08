@@ -6,13 +6,13 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "Жица",
 
 	'item:object:thewire' => "Објаве на жици",
+	
 	'collection:object:thewire:all' => "Све објаве",
 	'collection:object:thewire:owner' => "%s објаве",
 	'collection:object:thewire:friends' => "Објаве пријатеља",
@@ -21,7 +21,7 @@ return array(
 	'thewire:thread' => "Дискусија",
 	'thewire:charleft' => "знакова остало",
 	'thewire:tags' => "Објаве таговане са '%s'",
-	'thewire:noposts' => "Нема објава",
+	'thewire:noposts' => "Нема објава", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Објаве од %s',
 	

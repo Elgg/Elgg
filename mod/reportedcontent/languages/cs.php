@@ -7,12 +7,13 @@
 
 return array(
 	'item:object:reported_content' => 'Nahlášené položky',
+	
 	'admin:administer_utilities:reportedcontent' => 'Nahlášený obsah',
 	
 	'reportedcontent' => 'Nahlášený obsah',
 	'reportedcontent:this' => 'Nahlásit',
 	'reportedcontent:this:tooltip' => 'Nahlásit tuto stránky správci',
-	'reportedcontent:none' => 'Není žádný nahlášený obsah',
+	'reportedcontent:none' => 'Není žádný nahlášený obsah', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Nahlásit správci',
 	'reportedcontent:archive' => 'Archivovat hlášení',
 	'reportedcontent:archived' => 'Hlášení bylo archivováno',

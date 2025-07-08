@@ -6,13 +6,12 @@
  */
 
 return array(
-
+	
 	/**
 	 * Menu items and titles
 	 */
-
 	'messageboard:board' => "Tableau de messages",
-	'messageboard:none' => "Il n'y a encore rien dans ce tableau de messages",
+	'messageboard:none' => "Il n'y a encore rien dans ce tableau de messages", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "Nombre de messages à afficher",
 	'messageboard:owner' => 'tableau de messages de %s',
 	'messageboard:owner_history' => 'publications de %s sur le tableau de messages de %s',

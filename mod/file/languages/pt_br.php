@@ -6,7 +6,6 @@
  */
 
 return array(
-
 	'item:object:file' => 'Arquivos',
 	'item:object:file:application' => 'Aplicativo',
 	'item:object:file:archive' => 'Arquivo',
@@ -20,17 +19,18 @@ return array(
 	'item:object:file:vcard' => 'vCard',
 	'item:object:file:video' => 'Vídeo',
 	'item:object:file:word' => 'Word',
+	'collection:object:file' => 'Arquivos',
 	
 	'file:upgrade:2022092801:title' => 'Mover Arquivos',
 	'file:upgrade:2022092801:description' => 'Move os arquivos enviados usando o plugin de arquivos para a pasta da entidade do arquivo, em vez da pasta da entidade do proprietário.',
 	
-	'collection:object:file' => 'Arquivos',
 	'collection:object:file:all' => "Todos os Arquivos do Site",
 	'collection:object:file:owner' => "Arquivos de %s",
 	'collection:object:file:friends' => "Arquivos dos Amigos",
 	'collection:object:file:group' => "Arquivos do Grupo",
 	'add:object:file' => "Enviar um Arquivo",
 	'edit:object:file' => "Editar Arquivo",
+	
 	'notification:object:file:create' => "Enviar Notificação quando um Arquivo for criado",
 	'notifications:mute:object:file' => "sobre o Arquivo '%s'",
 	
@@ -99,7 +99,7 @@ Visualize e comente no Arquivo:
 	 * Error messages
 	 */
 
-	'file:none' => "Nenhum Arquivo.",
+	'file:none' => "Nenhum Arquivo.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Desculpe; não foi possível salvar o seu Arquivo.",
 	'file:noaccess' => "Você não tem permissão para alterar este Arquivo",
 	'file:cannotload' => "Ocorreu um erro ao enviar o Arquivo",

@@ -6,10 +6,9 @@
  */
 
 return array(
-
 	'item:object:file' => 'Archivo',
-	
 	'collection:object:file' => 'Archivos',
+	
 	'collection:object:file:all' => "Archivos de todo el sitio",
 	'collection:object:file:owner' => "Archivos de %s",
 	'collection:object:file:friends' => "Archivos de amigos",
@@ -65,7 +64,7 @@ return array(
 	 * Error messages
 	 */
 
-	'file:none' => "No hay archivos.",
+	'file:none' => "No hay archivos.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "No se pudo guardar el archivo.",
 	'file:noaccess' => "No tienes permisos para modficar este archivo",
 	'file:cannotload' => "Ha habido un error subiendo el archivo",

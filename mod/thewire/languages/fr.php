@@ -6,7 +6,6 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
@@ -14,10 +13,12 @@ return array(
 
 	'item:object:thewire' => "Messages du Fil",
 	'collection:object:thewire' => 'Messages du Fil',
+	
 	'collection:object:thewire:all' => "Tous les messages du Fil",
 	'collection:object:thewire:owner' => "Le Fil de %s",
 	'collection:object:thewire:friends' => "Messages du Fil des contacts",
 	'collection:object:thewire:mentions' => "Messages du Fil mentionnant @%s",
+	
 	'notification:object:thewire:create' => "Envoyer une notification lorsqu'un message est publié sur le Fil",
 	'notifications:mute:object:thewire' => "à propos du message du Fil \"%s\"",
 	
@@ -29,7 +30,7 @@ return array(
 	'thewire:thread' => "Conversation",
 	'thewire:charleft' => "caractères restant",
 	'thewire:tags' => "Messages du Fil taggués \"%s\"",
-	'thewire:noposts' => "Il n'y a pas encore de message sur le Fil",
+	'thewire:noposts' => "Il n'y a pas encore de message sur le Fil", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Message du Fil de %s',
 

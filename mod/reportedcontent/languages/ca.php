@@ -7,12 +7,13 @@
 
 return array(
 	'item:object:reported_content' => 'Elements denunciats',
+	
 	'admin:administer_utilities:reportedcontent' => 'Contingut denunciat',
 	
 	'reportedcontent' => 'Contingut denunciat',
 	'reportedcontent:this' => 'Denunciar',
 	'reportedcontent:this:tooltip' => 'Denunciar aquesta p&agrave;gina a l&acute;administrador',
-	'reportedcontent:none' => 'No hi ha contingut denunciat',
+	'reportedcontent:none' => 'No hi ha contingut denunciat', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Denunciar aix&ograve;',
 	'reportedcontent:archive' => 'Desar denúncia',
 	'reportedcontent:archived' => 'La denúncia ha quedat desada',

@@ -6,18 +6,19 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => 'ブックマーク',
 	'collection:object:bookmarks' => 'ブックマーク',
+	
 	'collection:object:bookmarks:group' => 'グループブックマーク',
 	'collection:object:bookmarks:all' => "サイト全体のブックマーク",
 	'collection:object:bookmarks:owner' => "%s さんのブックマーク",
 	'collection:object:bookmarks:friends' => "友達のブックマーク",
 	'add:object:bookmarks' => "新規ブックマーク登録",
 	'edit:object:bookmarks' => "ブックマークを編集",
+	
 	'notification:object:bookmarks:create' => "ブックマークが作成されたときに通知を送る",
 	'notifications:mute:object:bookmarks' => "ブックマーク '%s' について",
 
@@ -26,7 +27,7 @@ return array(
 	'bookmarks:bookmarklet' => "ブックマークレットの取得",
 	'bookmarks:bookmarklet:group' => "グループのブックマークレットの取得",
 	'bookmarks:address' => "ブックマークのアドレス",
-	'bookmarks:none' => 'ブックマークはひとつも登録されていません',
+	'bookmarks:none' => 'ブックマークはひとつも登録されていません', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => '新着ブックマーク「%s」があります。',
 	'bookmarks:notify:subject' => '新着ブックマーク: %s',

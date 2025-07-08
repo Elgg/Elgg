@@ -7,12 +7,13 @@
 
 return array(
 	'item:object:discussion' => "Discussies",
+	'collection:object:discussion' => 'Discussies',
 	
 	'add:object:discussion' => 'Discussie toevoegen',
 	'edit:object:discussion' => 'Bewerk discussie',
-	'collection:object:discussion' => 'Discussies',
 	'collection:object:discussion:group' => 'Groepsdiscussies',
 	'collection:object:discussion:my_groups' => 'Discussies in mijn groepen',
+	
 	'notification:object:discussion:create' => "Stuur een notificatie wanneer een discussie is gestart",
 	'notifications:mute:object:discussion' => "over de discussie '%s'",
 	
@@ -20,7 +21,7 @@ return array(
 	'discussion:settings:enable_global_discussions:help' => 'Discussies kunnen ook buiten groepen worden gestart',
 
 	'discussion:latest' => 'Laatste discussies',
-	'discussion:none' => 'Geen discussies',
+	'discussion:none' => 'Geen discussies', // @todo remove in Elgg 7.0
 	'discussion:updated' => "Laatste reactie door %s: '%s'",
 
 	'discussion:topic:created' => 'Het discussieonderwerp is aangemaakt.',

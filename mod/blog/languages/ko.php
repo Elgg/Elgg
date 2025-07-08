@@ -8,6 +8,7 @@
 return array(
 	'item:object:blog' => '블로그',
 	'collection:object:blog' => '블로그',
+	
 	'collection:object:blog:all' => '모든 사이트 블로그',
 	'collection:object:blog:owner' => '%s의 블로그',
 	'collection:object:blog:group' => '모둠 블로그',
@@ -32,7 +33,7 @@ return array(
 	'blog:error:cannot_save' => '블로그 글을 저장할 수 없습니다.',
 	'blog:error:cannot_write_to_container' => '모둠에 블로그를 저장할 권한이 부족합니다. ',
 	'blog:edit_revision_notice' => '(구 판)',
-	'blog:none' => '블로그 글이 없습니다. ',
+	'blog:none' => '블로그 글이 없습니다. ', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => '블로그의 제목을 입력하세요',
 	'blog:error:missing:description' => '블로그의 본문을 입력하세요',
 	'blog:error:post_not_found' => '해당 블로그 글을 찾을 수 없습니다. ',

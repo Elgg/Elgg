@@ -58,7 +58,7 @@ Pour envoyer un message à %s :
 	*/
 
 	'messages:blank' => "Désolé, vous devez écrire quelque chose dans votre message avant de pouvoir l'enregistrer.",
-	'messages:nomessages' => "Aucun message.",
+	'messages:nomessages' => "Aucun message.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "Le destinataire n'a pas pu être trouvé parmi les membres du site.",
 	'messages:user:blank' => "Vous n'avez sélectionné personne à qui envoyer ce message.",
 	'messages:user:self' => "Vous ne pouvez pas vous envoyer un message à vous-même.",

@@ -7,12 +7,13 @@
 
 return array(
 	'item:object:discussion' => "Tópico de Discussão",
+	'collection:object:discussion' => 'Tópicos de Discussão',
 	
 	'add:object:discussion' => 'Adicionar Tópico de Discussão',
 	'edit:object:discussion' => 'Editar Tópico ',
-	'collection:object:discussion' => 'Tópicos de Discussão',
 	'collection:object:discussion:group' => 'Discussões no Grupo',
 	'collection:object:discussion:my_groups' => 'Discussões em Meus Grupos',
+	
 	'notification:object:discussion:create' => "Enviar uma notificação quando uma discussão for criada",
 	'notifications:mute:object:discussion' => "sobre a discussão '%s'",
 	
@@ -20,7 +21,7 @@ return array(
 	'discussion:settings:enable_global_discussions:help' => 'Permitir que discussões sejam criadas fora dos grupos',
 
 	'discussion:latest' => 'Últimas discussões',
-	'discussion:none' => 'Sem discussões',
+	'discussion:none' => 'Sem discussões', // @todo remove in Elgg 7.0
 	'discussion:updated' => "Último comentário por %s %s",
 
 	'discussion:topic:created' => 'O tópico de discussão foi criado.',

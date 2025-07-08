@@ -6,13 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => 'Stranica',
 	'collection:object:page' => 'Stranice',
+	
 	'collection:object:page:all' => "Sve stranice",
 	'collection:object:page:owner' => "%s stranice",
 	'collection:object:page:friends' => "Stranica prijatelja",
@@ -31,7 +30,7 @@ return array(
 	'pages:notify:subject' => "Nova stranica: %s",
 
 	'pages:more' => 'Više stranica',
-	'pages:none' => 'Još nije izrađene niti jedna stranica',
+	'pages:none' => 'Još nije izrađene niti jedna stranica', // @todo remove in Elgg 7.0
 
 	/**
 	* River

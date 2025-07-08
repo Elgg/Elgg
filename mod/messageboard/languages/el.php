@@ -6,13 +6,12 @@
  */
 
 return array(
-
+	
 	/**
 	 * Menu items and titles
 	 */
-
 	'messageboard:board' => "Πίνακας μηνυμάτων",
-	'messageboard:none' => "Δεν υπάρχουν μηνύματα ακόμα",
+	'messageboard:none' => "Δεν υπάρχουν μηνύματα ακόμα", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "Αριθμός μηνυμάτων για εμφάνιση",
 	'messageboard:owner' => 'πίνακας μηνυμάτων του χρήστη %s',
 	'messageboard:owner_history' => 'οι αναρτήσεις του χρήστη %s στον πίνακα μηνυμάτων του χρήστη %s',

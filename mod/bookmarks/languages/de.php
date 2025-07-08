@@ -6,18 +6,19 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => 'Lesezeichen',
 	'collection:object:bookmarks' => 'Lesezeichen',
+	
 	'collection:object:bookmarks:group' => 'Gruppen-Lesezeichen',
 	'collection:object:bookmarks:all' => "Alle Lesezeichen der Community",
 	'collection:object:bookmarks:owner' => "Lesezeichen von %s",
 	'collection:object:bookmarks:friends' => "Lesezeichen Deiner Freunde",
 	'add:object:bookmarks' => "Lesezeichen hinzufügen",
 	'edit:object:bookmarks' => "Lesezeichen editieren",
+	
 	'notification:object:bookmarks:create' => "Sende eine Benachrichtigung bei Hinzufügen eines Lesezeichens",
 	'notifications:mute:object:bookmarks' => "über das Lesezeichen '%s'",
 
@@ -26,7 +27,7 @@ return array(
 	'bookmarks:bookmarklet' => "Bookmarklet zum Browser hinzufügen",
 	'bookmarks:bookmarklet:group' => "Gruppen-Bookmarklet zum Browser hinzufügen",
 	'bookmarks:address' => "Zieladresse des Lesezeichens",
-	'bookmarks:none' => 'Noch keine Lesezeichen vorhanden.',
+	'bookmarks:none' => 'Noch keine Lesezeichen vorhanden.', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Ein neues Lesezeichen %s wurde erstellt',
 	'bookmarks:notify:subject' => 'Neues Lesezeichen: %s',

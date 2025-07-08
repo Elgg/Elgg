@@ -6,18 +6,19 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => 'Comharra-lìn',
 	'collection:object:bookmarks' => 'Comharran-lìn',
+	
 	'collection:object:bookmarks:group' => 'Comharran-lìn a\' bhuidhinn',
 	'collection:object:bookmarks:all' => "Comharran-lìn na làraich gu lèir",
 	'collection:object:bookmarks:owner' => "Comharran-lìn aig %s",
 	'collection:object:bookmarks:friends' => "Comharran-lìn aig mo chàirdean",
 	'add:object:bookmarks' => "Cruthaich comharra-lìn",
 	'edit:object:bookmarks' => "Deasaich an comharra-lìn",
+	
 	'notification:object:bookmarks:create' => "Leig fios nuair a thèid comharral-lìn ùr a chruthachadh",
 	'notifications:mute:object:bookmarks' => "mu dheidhinn a' chomharra-lìn '%s'",
 
@@ -26,7 +27,7 @@ return array(
 	'bookmarks:bookmarklet' => "Faigh comharrag-lìn",
 	'bookmarks:bookmarklet:group' => "Faigh comharrag-lìn a' bhuidhinn",
 	'bookmarks:address' => "Seòladh na comharra-lìn",
-	'bookmarks:none' => 'Gun comharra-lìn',
+	'bookmarks:none' => 'Gun comharra-lìn', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Comharra-lìn ùr air a bheil an t-ainm \'%s\'',
 	'bookmarks:notify:subject' => 'Comharra-lìn ùr: %s',
