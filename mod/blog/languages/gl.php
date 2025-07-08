@@ -8,6 +8,7 @@
 return array(
 	'item:object:blog' => 'Bitácoras',
 	'collection:object:blog' => 'Bitácoras',
+	
 	'collection:object:blog:all' => 'Todas as bitácoras',
 	'collection:object:blog:owner' => 'Bitácoras de %s',
 	'collection:object:blog:friends' => 'Bitácoras dos contactos',
@@ -31,7 +32,7 @@ return array(
 	'blog:error:cannot_save' => 'Non foi posíbel gardar o artigo.',
 	'blog:error:cannot_write_to_container' => 'Non ten acceso dabondo para gardar a bitácora no grupo.',
 	'blog:edit_revision_notice' => '(versión vella)',
-	'blog:none' => 'Non hai artigos.',
+	'blog:none' => 'Non hai artigos.', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Escriba o nome da bitácora',
 	'blog:error:missing:description' => 'Escriba o corpo da bitácora.',
 	'blog:error:post_not_found' => 'Non foi posíbel atopar o artigo indicado',

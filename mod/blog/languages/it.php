@@ -8,6 +8,7 @@
 return array(
 	'item:object:blog' => 'Blog',
 	'collection:object:blog' => 'Blog',
+	
 	'collection:object:blog:all' => 'Tutti i blog',
 	'collection:object:blog:owner' => 'blog di %s',
 	'collection:object:blog:friends' => 'Blog degli amici',
@@ -31,7 +32,7 @@ return array(
 	'blog:error:cannot_save' => 'Impossibile salvare l\'articolo.',
 	'blog:error:cannot_write_to_container' => 'Privilegi insufficienti per salvare l\'articolo sul gruppo.',
 	'blog:edit_revision_notice' => '(Vecchia versione)',
-	'blog:none' => 'Nessun articolo.',
+	'blog:none' => 'Nessun articolo.', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Si prega di inserire un titolo per l\'articolo.',
 	'blog:error:missing:description' => 'Si prega di inserire i contenuti dell\'articolo.',
 	'blog:error:post_not_found' => 'Impossibile trovare l\'articolo specificato.',

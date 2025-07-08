@@ -6,7 +6,6 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
@@ -14,10 +13,12 @@ return array(
 
 	'item:object:thewire' => "Wire bericht",
 	'collection:object:thewire' => 'Wire berichten',
+	
 	'collection:object:thewire:all' => "Alle wire berichten",
 	'collection:object:thewire:owner' => "%s's wire berichten",
 	'collection:object:thewire:friends' => "Wire berichten van vrienden",
 	'collection:object:thewire:mentions' => "Wire berichten die @%s vermelden",
+	
 	'notification:object:thewire:create' => "Stuur een notificatie wanneer een wire bericht is gemaakt",
 	'notifications:mute:object:thewire' => "over het wire bericht '%s'",
 	
@@ -29,7 +30,7 @@ return array(
 	'thewire:thread' => "Conversatie",
 	'thewire:charleft' => "karakters resterend",
 	'thewire:tags' => "Wire berichten met de tag '%s'",
-	'thewire:noposts' => "Nog geen wire berichten",
+	'thewire:noposts' => "Nog geen wire berichten", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Wire bericht van %s',
 

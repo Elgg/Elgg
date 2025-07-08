@@ -8,12 +8,14 @@
 return array(
 	'item:object:blog' => 'ブログ',
 	'collection:object:blog' => 'ブログ',
+	
 	'collection:object:blog:all' => 'サイトの全ブログ',
 	'collection:object:blog:owner' => '%s さんのブログ',
 	'collection:object:blog:group' => 'グループブログ',
 	'collection:object:blog:friends' => '友達のブログ',
 	'add:object:blog' => 'ブログ記事を追加',
 	'edit:object:blog' => 'ブログ記事を編集',
+	
 	'notification:object:blog:publish' => "ブログが公開されたときに通知を送る",
 	'notifications:mute:object:blog' => "ブログ '%s' について",
 
@@ -34,7 +36,7 @@ return array(
 	'blog:error:cannot_save' => 'ブログ記事を保存できませんでした。',
 	'blog:error:cannot_write_to_container' => 'あなたの権限ではグループにブログを保存する事はできません。',
 	'blog:edit_revision_notice' => '(前の版)',
-	'blog:none' => 'ブログ記事は一件もありません',
+	'blog:none' => 'ブログ記事は一件もありません', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'ブログのタイトルを入力してください！',
 	'blog:error:missing:description' => 'ブログの本文を入力してください！',
 	'blog:error:post_not_found' => 'お探しのブログ記事を見つけることができません。',

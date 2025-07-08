@@ -6,7 +6,6 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
@@ -14,10 +13,12 @@ return array(
 
 	'item:object:thewire' => "Recados",
 	'collection:object:thewire' => 'Recados',
+	
 	'collection:object:thewire:all' => "Todos os Recados",
 	'collection:object:thewire:owner' => "Recados de %s",
 	'collection:object:thewire:friends' => "Recados dos Amigos",
 	'collection:object:thewire:mentions' => "Recados mencionando @%s",
+	
 	'notification:object:thewire:create' => "Enviar uma Notificação quando um Recado for Publicado",
 	'notifications:mute:object:thewire' => "sobre o recado '%s'",
 	
@@ -29,7 +30,7 @@ return array(
 	'thewire:thread' => "Conversas",
 	'thewire:charleft' => "caracteres restantes",
 	'thewire:tags' => "Recados marcados com '%s'",
-	'thewire:noposts' => "Nenhum Recado ainda...",
+	'thewire:noposts' => "Nenhum Recado ainda...", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Recado de %s',
 

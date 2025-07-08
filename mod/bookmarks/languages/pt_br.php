@@ -6,18 +6,19 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => 'Marcador',
 	'collection:object:bookmarks' => 'Marcadores',
+	
 	'collection:object:bookmarks:group' => 'Marcadores do Grupo',
 	'collection:object:bookmarks:all' => "Todos os Marcadores do Site",
 	'collection:object:bookmarks:owner' => "Marcadores de %s",
 	'collection:object:bookmarks:friends' => "Marcadores dos Amigos",
 	'add:object:bookmarks' => "Adicionar um Marcador",
 	'edit:object:bookmarks' => "Editar Marcadores",
+	
 	'notification:object:bookmarks:create' => "Enviar uma Notificação quando um Marcador for criado",
 	'notifications:mute:object:bookmarks' => "sobre o marcador '%s'",
 
@@ -26,7 +27,7 @@ return array(
 	'bookmarks:bookmarklet' => "Obter marcadores",
 	'bookmarks:bookmarklet:group' => "Obter marcadores do grupo",
 	'bookmarks:address' => "Endereço do Marcador",
-	'bookmarks:none' => 'Não há marcadores',
+	'bookmarks:none' => 'Não há marcadores', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Novo marcador chamado \'%s\'',
 	'bookmarks:notify:subject' => 'Novo marcador: \'%s\'',

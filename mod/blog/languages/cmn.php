@@ -8,6 +8,7 @@
 return array(
 	'item:object:blog' => '博客',
 	'collection:object:blog' => '博客',
+	
 	'collection:object:blog:all' => '所有博客',
 	'collection:object:blog:owner' => '%s的博客',
 	'collection:object:blog:group' => '圈子博客',
@@ -32,7 +33,7 @@ return array(
 	'blog:error:cannot_save' => '无法保存博客',
 	'blog:error:cannot_write_to_container' => '无权限保存圈子博客',
 	'blog:edit_revision_notice' => '（旧版）',
-	'blog:none' => '无博客',
+	'blog:none' => '无博客', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => '请输入博客标题',
 	'blog:error:missing:description' => '请输入博客内容',
 	'blog:error:post_not_found' => '无法找到指定的博客',

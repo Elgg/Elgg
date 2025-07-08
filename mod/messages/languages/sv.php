@@ -49,7 +49,7 @@ return array(
 	*/
 
 	'messages:blank' => "Du måste skriva något i meddelandet innan vi kan spara det.",
-	'messages:nomessages' => "Det finns inga meddelanden.",
+	'messages:nomessages' => "Det finns inga meddelanden.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "Vi kunde inte hitta mottagaren i databasen med användare.",
 	'messages:user:blank' => "Du valde inte någon att skicka det här till.",
 	'messages:user:self' => "Du kan inte skicka ett meddelande till dig själv.",

@@ -7,12 +7,13 @@
 
 return array(
 	'item:object:reported_content' => 'Ilmiannetut kohteet',
+	
 	'admin:administer_utilities:reportedcontent' => 'Asiaton sisältö',
 	
 	'reportedcontent' => 'Asiaton sisältö',
 	'reportedcontent:this' => 'Ilmoita asiattomasta sisällöstä',
 	'reportedcontent:this:tooltip' => 'Ilmoita sivun ylläpitäjälle asiattomasta sisällöstä',
-	'reportedcontent:none' => 'Ei ilmoituksia',
+	'reportedcontent:none' => 'Ei ilmoituksia', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Ilmoita ylläpitäjälle',
 	'reportedcontent:archive' => 'Arkistoi ilmoitus',
 	'reportedcontent:archived' => 'Ilmoitus arkistoitiin',

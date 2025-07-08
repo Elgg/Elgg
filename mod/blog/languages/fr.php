@@ -8,12 +8,14 @@
 return array(
 	'item:object:blog' => 'Article de blog',
 	'collection:object:blog' => 'Blogs',
+	
 	'collection:object:blog:all' => 'Tous les blogs du site',
 	'collection:object:blog:owner' => 'Blogs de %s',
 	'collection:object:blog:group' => 'Blogs du groupe',
 	'collection:object:blog:friends' => 'Blogs des contacts',
 	'add:object:blog' => 'Ajouter un article de blog',
 	'edit:object:blog' => 'Modifier l\'article de blog',
+	
 	'notification:object:blog:publish' => "Envoyer une notification quand un article est publié",
 	'notifications:mute:object:blog' => "à propos de l'article '%s'",
 	'menu:blog_archive:header' => "Archives des blogs",
@@ -38,7 +40,7 @@ return array(
 	'blog:error:cannot_save' => 'Impossible d\'enregistrer l\'article de blog.',
 	'blog:error:cannot_write_to_container' => 'Droits d\'accès insuffisants pour enregistrer l\'article dans ce groupe.',
 	'blog:edit_revision_notice' => '(Ancienne version)',
-	'blog:none' => 'Aucun article de blog',
+	'blog:none' => 'Aucun article de blog', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Vous devez donner un titre à votre article !',
 	'blog:error:missing:description' => 'Vous devez écrire le corps de votre article !',
 	'blog:error:post_not_found' => 'Impossible de trouver l\'article de blog spécifié.',

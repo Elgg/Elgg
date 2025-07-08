@@ -7,12 +7,13 @@
 
 return array(
 	'item:object:reported_content' => 'Zgłoszone elementy',
+	
 	'admin:administer_utilities:reportedcontent' => 'Zgłoszona treść',
 	
 	'reportedcontent' => 'Zgłoszona treść',
 	'reportedcontent:this' => 'Zgłoś to',
 	'reportedcontent:this:tooltip' => 'Zgłoś tą stronę administratorowi',
-	'reportedcontent:none' => 'Nie ma zgłoszonej treści',
+	'reportedcontent:none' => 'Nie ma zgłoszonej treści', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Zgłoś administratorowi',
 	'reportedcontent:archive' => 'Archiwizuj zgłoszenie',
 	'reportedcontent:archived' => 'Zgłoszenie zostało zarchiwizowane',

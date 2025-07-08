@@ -8,12 +8,14 @@
 return array(
 	'item:object:blog' => 'Blog',
 	'collection:object:blog' => 'Blogs',
+	
 	'collection:object:blog:all' => 'Alle blogs van de site',
 	'collection:object:blog:owner' => 'Blogs van %s',
 	'collection:object:blog:group' => 'Groepsblogs',
 	'collection:object:blog:friends' => 'Blogs van vrienden',
 	'add:object:blog' => 'Blog toevoegen',
 	'edit:object:blog' => 'Bewerk blog',
+	
 	'notification:object:blog:publish' => "Stuur een notificatie wanneer een blog is gepubliceerd",
 	'notifications:mute:object:blog' => "over de blog '%s'",
 	'menu:blog_archive:header' => "Blog archief",
@@ -38,7 +40,7 @@ return array(
 	'blog:error:cannot_save' => 'Blog kon niet worden opgeslagen.',
 	'blog:error:cannot_write_to_container' => 'Je hebt onvoldoende rechten om de blog in de groep op te slaan.',
 	'blog:edit_revision_notice' => '(Oude versie)',
-	'blog:none' => 'Geen blogs',
+	'blog:none' => 'Geen blogs', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Geef een titel aan de blog!',
 	'blog:error:missing:description' => 'Vertel iets in je blog!',
 	'blog:error:post_not_found' => 'Deze blog is verwijderd, ongeldig, of je hebt onvoldoende rechten om hem te mogen zien.',

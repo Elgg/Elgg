@@ -6,16 +6,16 @@
  */
 
 return array(
-
 	'item:object:file' => 'Fișier',
-	
 	'collection:object:file' => 'Fișiere',
+	
 	'collection:object:file:all' => "Toate fișierele site-ului",
 	'collection:object:file:owner' => "Fișierele membrului %s",
 	'collection:object:file:friends' => "Fișierele prietenilor",
 	'collection:object:file:group' => "Fișiere de grup",
 	'add:object:file' => "Încarcă un fișier",
 	'edit:object:file' => "Editează fișierul",
+	
 	'notification:object:file:create' => "Trimite o notificare atunci când un fișier este creat",
 	'notifications:mute:object:file' => "despre fișierul '%s'",
 	
@@ -79,7 +79,7 @@ Vezi și comentează fișierul:
 	 * Error messages
 	 */
 
-	'file:none' => "Nu sunt fișiere.",
+	'file:none' => "Nu sunt fișiere.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Scuze; nu ți-am putut salva fișierul.",
 	'file:noaccess' => "Nu ai permisiunea de a schimba acest fișier",
 	'file:cannotload' => "A apărut o eroare la încărcarea fișierului",

@@ -6,7 +6,6 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
@@ -14,9 +13,11 @@ return array(
 
 	'item:object:thewire' => "つぶやき",
 	'collection:object:thewire' => 'つぶやきの記事',
+	
 	'collection:object:thewire:all' => "みんなのつぶやき",
 	'collection:object:thewire:owner' => "%s さんのつぶやき",
 	'collection:object:thewire:friends' => "友達のつぶやき",
+	
 	'notification:object:thewire:create' => "つぶやき記事が投稿されたときに通知を送る",
 	'notifications:mute:object:thewire' => "つぶやき記事 '%s' について",
 	
@@ -24,7 +25,7 @@ return array(
 	'thewire:thread' => "スレッド",
 	'thewire:charleft' => "残りの文字数（半角文字で）",
 	'thewire:tags' => "「 %s 」でタグ付けされたつぶやき",
-	'thewire:noposts' => "つぶやきはありません",
+	'thewire:noposts' => "つぶやきはありません", // @todo remove in Elgg 7.0
 
 	'thewire:by' => '%s さんのつぶやき',
 

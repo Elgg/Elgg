@@ -6,16 +6,16 @@
  */
 
 return array(
-
 	'item:object:file' => 'Faidhle',
-	
 	'collection:object:file' => 'Faidhlichean',
+	
 	'collection:object:file:all' => "Faidhlichean gu lèir",
 	'collection:object:file:owner' => "Faidhlichean aig %s",
 	'collection:object:file:friends' => "Faidhlichean aig mo chàirdean",
 	'collection:object:file:group' => "Faidhlichean a' bhuidhinn",
 	'add:object:file' => "Luchdaich suas faidhle",
 	'edit:object:file' => "Deasaich am faidhle",
+	
 	'notification:object:file:create' => "Leig fios nuair a thèid faidhle a chruthachadh",
 	'notifications:mute:object:file' => "mu dheidhinn an fhaidhle '%s'",
 	
@@ -79,7 +79,7 @@ Seall agus fàg beachd ùr air an fhaidhle:
 	 * Error messages
 	 */
 
-	'file:none' => "Gun faidhle",
+	'file:none' => "Gun faidhle", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Tha sinn duilich. Cha b' urrainn dhuinn am faidhle agad a shàbhaladh.",
 	'file:noaccess' => "Chan eil cead agad am faidhle seo a dheasachadh.",
 	'file:cannotload' => "Thachair mearachd rè an luchdaidh suas.",

@@ -6,13 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => 'Sider',
 	'collection:object:page' => 'Sider',
+	
 	'collection:object:page:all' => "Alle sider",
 	'collection:object:page:owner' => "%s's sider",
 	'collection:object:page:friends' => "Venners sider",
@@ -29,7 +28,7 @@ return array(
 	'pages:notify:subject' => "En ny side: %s",
 
 	'pages:more' => 'Flere sider',
-	'pages:none' => 'Der er ikke oprettet sider endnu',
+	'pages:none' => 'Der er ikke oprettet sider endnu', // @todo remove in Elgg 7.0
 
 	/**
 	* River

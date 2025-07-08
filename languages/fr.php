@@ -2133,4 +2133,7 @@ Variables globales :
 
 	'core:upgrade:2024071001:title' => "Migre les préférences de notification de validation de l'administrateur",
 	'core:upgrade:2024071001:description' => "Déplace le stockage de la préférence de notification de l'administrateur vers les paramètres de notifications",
+
+	'core:upgrade:2025060201:title' => "Stocke la valeur correcte de la base de données pour les valeurs booléennes",
+	'core:upgrade:2025060201:description' => "Dans la table des annotations et des métadonnées, la valeur d'une valeur booléenne FAUX a été stockée de manière incorrecte",
 );

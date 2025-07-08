@@ -6,18 +6,19 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => 'Favorieten',
 	'collection:object:bookmarks' => 'Favorieten',
+	
 	'collection:object:bookmarks:group' => 'Groepsfavorieten',
 	'collection:object:bookmarks:all' => "Alle favorieten",
 	'collection:object:bookmarks:owner' => "Favorieten van %s",
 	'collection:object:bookmarks:friends' => "Favorieten van vrienden",
 	'add:object:bookmarks' => "Favoriet toevoegen",
 	'edit:object:bookmarks' => "Bewerk favoriet",
+	
 	'notification:object:bookmarks:create' => "Stuur een notificatie wanneer een favoriet is gemaakt",
 	'notifications:mute:object:bookmarks' => "over de favoriet '%s'",
 
@@ -26,7 +27,7 @@ return array(
 	'bookmarks:bookmarklet' => "Bookmarklet",
 	'bookmarks:bookmarklet:group' => "Verkrijg groeps-bookmarklet",
 	'bookmarks:address' => "Adres van de favoriet",
-	'bookmarks:none' => 'Geen favorieten',
+	'bookmarks:none' => 'Geen favorieten', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Nieuwe favoriet genaamd \'%s\'',
 	'bookmarks:notify:subject' => 'Nieuwe favoriet: %s',

@@ -6,13 +6,12 @@
  */
 
 return array(
-
+	
 	/**
 	 * Menu items and titles
 	 */
-
 	'messageboard:board' => "Pannello messaggi",
-	'messageboard:none' => "Ancora nulla in questo pannello messaggi",
+	'messageboard:none' => "Ancora nulla in questo pannello messaggi", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "Numero di messaggi da visualizzare",
 	'messageboard:owner' => 'Pannello messaggi di %s',
 	'messageboard:owner_history' => 'Messaggi di %s sul pannello messaggi di %s',

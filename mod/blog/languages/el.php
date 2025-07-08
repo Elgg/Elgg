@@ -8,6 +8,7 @@
 return array(
 	'item:object:blog' => 'Ιστολόγιο',
 	'collection:object:blog' => 'Ιστολόγια',
+	
 	'collection:object:blog:all' => 'Όλα τα ιστολόγια',
 	'collection:object:blog:owner' => 'Ιστολόγια χρήστη %s',
 	'collection:object:blog:group' => 'Ιστολόγια ομάδων',
@@ -32,7 +33,7 @@ return array(
 	'blog:error:cannot_save' => 'Αδύνατη η αποθήκευση της ανάρτησης',
 	'blog:error:cannot_write_to_container' => 'Μη έγκυρη πρόσβαση για αποθήκευση της ανάρτησης στην ομάδα',
 	'blog:edit_revision_notice' => '(Παλιά έκδοση)',
-	'blog:none' => 'Δεν υπάρχουν αναρτήσεις',
+	'blog:none' => 'Δεν υπάρχουν αναρτήσεις', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Παρακαλούμε εισάγετε τίτλο της ανάρτησης!',
 	'blog:error:missing:description' => 'Παρακαλούμε εισάγετε κείμενο της ανάρτησης!',
 	'blog:error:post_not_found' => 'Δεν είναι δυνατή η εύρεση της ανάρτησης',

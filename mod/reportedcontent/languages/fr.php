@@ -8,13 +8,14 @@
 return array(
 	'item:object:reported_content' => 'Elément signalé',
 	'collection:object:reported_content' => 'Éléments signalés',
+	
 	'admin:administer_utilities:reportedcontent' => 'Contenu signalé',
 	'admin:administer_utilities:reportedcontent:archive' => 'Contenu signalé - archive',
 	
 	'reportedcontent' => 'Contenu signalé',
 	'reportedcontent:this' => 'Signaler ceci',
 	'reportedcontent:this:tooltip' => 'Signaler cette page à un administrateur',
-	'reportedcontent:none' => 'Aucun signalement',
+	'reportedcontent:none' => 'Aucun signalement', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Signaler à l\'administrateur',
 	'reportedcontent:archive' => 'Archiver le signalement',
 	'reportedcontent:archived' => 'Le signalement a bien été archivé',

@@ -6,10 +6,9 @@
  */
 
 return array(
-
 	'item:object:file' => 'Ficheiros',
-	
 	'collection:object:file' => 'Ficheiros',
+	
 	'collection:object:file:all' => "Ficheiros do siti",
 	'collection:object:file:owner' => "Ficheiros de %s",
 	'collection:object:file:friends' => "Ficheiros dos contactos",
@@ -65,7 +64,7 @@ return array(
 	 * Error messages
 	 */
 
-	'file:none' => "Non hai ficheiros",
+	'file:none' => "Non hai ficheiros", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Non foi posíbel gardar o ficheiro",
 	'file:noaccess' => "Non ten permisos para cambiar o ficheiro.",
 );

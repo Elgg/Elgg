@@ -6,16 +6,16 @@
  */
 
 return array(
-
 	'item:object:file' => 'Dateien',
-	
 	'collection:object:file' => 'Dateien',
+	
 	'collection:object:file:all' => "Alle Dateien der Community",
 	'collection:object:file:owner' => "Dateien von %s",
 	'collection:object:file:friends' => "Dateien Deiner Freunde",
 	'collection:object:file:group' => "Gruppen-Dateien",
 	'add:object:file' => "Datei hochladen",
 	'edit:object:file' => "Datei-Eintrag bearbeiten",
+	
 	'notification:object:file:create' => "Sende eine Benachrichtigung beim Hochladen einer Datei",
 	'notifications:mute:object:file' => "über die Datei '%s'",
 	
@@ -79,7 +79,7 @@ Schau Dir die Datei an und schreibe einen Kommentar:
 	 * Error messages
 	 */
 
-	'file:none' => "Noch keine Dateien vorhanden.",
+	'file:none' => "Noch keine Dateien vorhanden.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Entschuldigung, wir konnten die Datei nicht speichern.",
 	'file:noaccess' => "Du hast keine Berechtigung, um diesen Datei-Eintrag zu ändern.",
 	'file:cannotload' => "Beim Hochladen dieser Datei ist ein Fehler aufgetreten.",

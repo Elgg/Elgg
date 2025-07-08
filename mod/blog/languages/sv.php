@@ -8,6 +8,7 @@
 return array(
 	'item:object:blog' => 'Blogg',
 	'collection:object:blog' => 'Bloggar',
+	
 	'collection:object:blog:all' => 'Alla bloggar på sajten',
 	'collection:object:blog:owner' => '%ss bloggar',
 	'collection:object:blog:group' => 'Gruppbloggar',
@@ -32,7 +33,7 @@ return array(
 	'blog:error:cannot_save' => 'Kan inte spara blogginlägg.',
 	'blog:error:cannot_write_to_container' => 'Otillräcklig åtkomst för att spara blogg till grupp.',
 	'blog:edit_revision_notice' => '(Gammal version)',
-	'blog:none' => 'Inga blogginlägg',
+	'blog:none' => 'Inga blogginlägg', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Vänligen ange en titel på bloggen!',
 	'blog:error:missing:description' => 'Vänligen ange innehåll av din blogg!',
 	'blog:error:post_not_found' => 'Kan inte hitta det angivna blogginlägget.',

@@ -78,7 +78,13 @@ var lightbox = {
 				returnFocusOnDeactivate: false,
 				clickOutsideDeactivates: false,
 				allowOutsideClick: true,
-				escapeDeactivates: false
+				escapeDeactivates: false,
+				onActivate: function() {
+					$('#colorbox').removeAttr('tabindex');
+				},
+				onDeactivate: function() {
+					$('#colorbox').attr('tabindex', '-1');
+				}
 			});
 			menuTrap.activate();
 		};

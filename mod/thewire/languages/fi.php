@@ -6,13 +6,13 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "Tila",
 
 	'item:object:thewire' => "Tilapäivitykset",
+	
 	'collection:object:thewire:all' => "Kaikki tilapäivitykset",
 	'collection:object:thewire:owner' => "Käyttäjän %s tilapäivitykset",
 	'collection:object:thewire:friends' => "Ystävien tilapäivitykset",
@@ -21,7 +21,7 @@ return array(
 	'thewire:thread' => "Aihe",
 	'thewire:charleft' => "merkkiä jäljellä",
 	'thewire:tags' => "Tilapäivitykset, jotka merkitty tägillä '%s'",
-	'thewire:noposts' => "Ei tilapäivityksiä",
+	'thewire:noposts' => "Ei tilapäivityksiä", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Käyttäjän %s tilapäivitys',
 	

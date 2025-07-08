@@ -6,13 +6,12 @@
  */
 
 return array(
-
+	
 	/**
 	 * Menu items and titles
 	 */
-
 	'messageboard:board' => "留言板",
-	'messageboard:none' => "這個留言板尚無任何東西",
+	'messageboard:none' => "這個留言板尚無任何東西", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "要顯示的留言數量",
 	'messageboard:owner' => '%s 的留言板',
 	'messageboard:owner_history' => '%s 貼文於 %s 的留言板',

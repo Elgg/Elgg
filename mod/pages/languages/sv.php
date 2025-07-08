@@ -6,13 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => 'Sida',
 	'collection:object:page' => 'Sidor',
+	
 	'collection:object:page:all' => "Alla sidor på webbplatsen",
 	'collection:object:page:owner' => "%ss sidor",
 	'collection:object:page:friends' => "Vänners sidor",
@@ -32,7 +31,7 @@ return array(
 	'pages:notify:subject' => "En ny sida: %s",
 
 	'pages:more' => 'Fler sidor',
-	'pages:none' => 'Inga sidor skapade än',
+	'pages:none' => 'Inga sidor skapade än', // @todo remove in Elgg 7.0
 
 	/**
 	* River

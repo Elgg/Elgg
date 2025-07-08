@@ -6,13 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => 'Páxinas',
 	'collection:object:page' => 'Páxinas',
+	
 	'collection:object:page:all' => "Páxinas do siti",
 	'collection:object:page:owner' => "Páxinas de %s",
 	'collection:object:page:friends' => "Páxinas dos contactos",
@@ -31,7 +30,7 @@ return array(
 	'pages:notify:subject' => "Nova páxina: «%s»",
 
 	'pages:more' => 'Máis páxinas',
-	'pages:none' => 'Aínda non hai ningunha páxina creada.',
+	'pages:none' => 'Aínda non hai ningunha páxina creada.', // @todo remove in Elgg 7.0
 
 	/**
 	* River

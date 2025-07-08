@@ -6,10 +6,9 @@
  */
 
 return array(
-
 	'item:object:file' => 'Tiedostot',
-	
 	'collection:object:file' => 'Tiedostot',
+	
 	'collection:object:file:all' => "Kaikki sivuston tiedostot",
 	'collection:object:file:owner' => "Käyttäjän %s tiedostot",
 	'collection:object:file:friends' => "Ystävien tiedostot",
@@ -65,7 +64,7 @@ return array(
 	 * Error messages
 	 */
 
-	'file:none' => "Ei tiedostoja.",
+	'file:none' => "Ei tiedostoja.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Tiedoston tallentaminen epäonnistui.",
 	'file:noaccess' => "Sinulla ei ole oikeuksia tämän tiedoston muuttamiseen",
 	'file:cannotload' => "Tiedoston lataamisessa tapahtui virhe",

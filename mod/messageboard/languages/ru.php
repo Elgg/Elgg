@@ -6,13 +6,12 @@
  */
 
 return array(
-
+	
 	/**
 	 * Menu items and titles
 	 */
-
 	'messageboard:board' => "Стена сообщений",
-	'messageboard:none' => "Пока никто не написал на стене.",
+	'messageboard:none' => "Пока никто не написал на стене.", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "Число отображаемых записей",
 	'messageboard:owner' => 'Стена сообщений пользователя %s',
 	'messageboard:owner_history' => 'Публикации пользователя %s на стене сообщений пользователя %s',
