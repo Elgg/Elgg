@@ -8,7 +8,7 @@ stringData:
   MYSQL_DATABASE: elggdb
   MYSQL_USER: admin
   MYSQL_PASSWORD: admin1234
-  DB_HOST: elgg-db
+  ELGG_DB_HOST: elgg-db
   DB_NAME: elggdb
   DB_USER: admin
   DB_PASSWORD: admin1234
