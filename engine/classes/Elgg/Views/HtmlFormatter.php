@@ -9,6 +9,7 @@ use Elgg\Traits\Loggable;
 use Elgg\ViewsService;
 use Pelago\Emogrifier\CssInliner;
 use Pelago\Emogrifier\HtmlProcessor\CssToAttributeConverter;
+use Pelago\Emogrifier\HtmlProcessor\CssVariableEvaluator;
 
 /**
  * Various helper method for formatting and sanitizing output
@@ -417,7 +418,8 @@ class HtmlFormatter {
 		}
 		
 		$html_with_inlined_css = CssInliner::fromHtml($html)->disableStyleBlocksParsing()->inlineCss($css)->render();
-		$inlined_attribute_converter = CssToAttributeConverter::fromHtml($html_with_inlined_css)->convertCssToVisualAttributes();
+		$html_with_css_variables = CssVariableEvaluator::fromHtml($html_with_inlined_css)->evaluateVariables()->render();
+		$inlined_attribute_converter = CssToAttributeConverter::fromHtml($html_with_css_variables)->convertCssToVisualAttributes();
 		
 		return $body_only ? $inlined_attribute_converter->renderBodyContent() : $inlined_attribute_converter->render();
 	}
