@@ -354,3 +354,17 @@ function elgg_strip_tags(string $string, ?string $allowable_tags = null): string
 function elgg_html_decode(string $string): string {
 	return _elgg_services()->html_formatter->decode($string);
 }
+
+/**
+ * Format a number with grouped thousands using language specific separators
+ *
+ * @param float $number   The number being formatted
+ * @param int   $decimals (optional) Sets the number of decimal points
+ *
+ * @return string
+ * @since 6.3
+ * @see number_format()
+ */
+function elgg_number_format(float $number, int $decimals = 0): string {
+	return \Elgg\Values::numberFormat($number, $decimals);
+}

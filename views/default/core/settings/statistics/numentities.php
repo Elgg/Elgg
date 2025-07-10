@@ -36,7 +36,7 @@ foreach ($entity_stats as $type => $subtypes) {
 		}
 		
 		$cells[] = elgg_format_element('td', [], elgg_format_element('b', [], "{$label}:"));
-		$cells[] = elgg_format_element('td', [], $count);
+		$cells[] = elgg_format_element('td', [], elgg_number_format($count));
 		
 		$rows[] = elgg_format_element('tr', [], implode(PHP_EOL, $cells));
 	}

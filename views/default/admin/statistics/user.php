@@ -1,4 +1,8 @@
 <?php
+/**
+ * Show user statistics
+ */
+
 // Banned user count
 $users_banned = elgg_count_entities([
 	'type' => 'user',
@@ -36,23 +40,23 @@ $users_disabled = $total_users - $users_enabled;
 
 $table = elgg_format_element('tr', [], implode(PHP_EOL, [
 	elgg_format_element('td', [], elgg_format_element('b', [], elgg_echo('active'))),
-	elgg_format_element('td', [], $users_active),
+	elgg_format_element('td', [], elgg_number_format($users_active)),
 ]));
 $table .= elgg_format_element('tr', [], implode(PHP_EOL, [
 	elgg_format_element('td', [], elgg_format_element('b', [], elgg_echo('status:disabled'))),
-	elgg_format_element('td', [], $users_disabled),
+	elgg_format_element('td', [], elgg_number_format($users_disabled)),
 ]));
 $table .= elgg_format_element('tr', [], implode(PHP_EOL, [
 	elgg_format_element('td', [], elgg_format_element('b', [], elgg_echo('unvalidated'))),
-	elgg_format_element('td', [], $users_unverified),
+	elgg_format_element('td', [], elgg_number_format($users_unverified)),
 ]));
 $table .= elgg_format_element('tr', [], implode(PHP_EOL, [
 	elgg_format_element('td', [], elgg_format_element('b', [], elgg_echo('banned'))),
-	elgg_format_element('td', [], $users_banned),
+	elgg_format_element('td', [], elgg_number_format($users_banned)),
 ]));
 $table .= elgg_format_element('tr', [], implode(PHP_EOL, [
 	elgg_format_element('td', [], elgg_format_element('b', [], elgg_echo('total'))),
-	elgg_format_element('td', [], $total_users),
+	elgg_format_element('td', [], elgg_number_format($total_users)),
 ]));
 $table = elgg_format_element('table', ['class' => 'elgg-table-alt'], $table);
 

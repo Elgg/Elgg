@@ -1,6 +1,6 @@
 <?php
 /**
- * User statitsics
+ * User statistics
  *
  * Blank view that can be extended
  *
