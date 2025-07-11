@@ -76,7 +76,7 @@ RUN chown -R www-data:www-data /var/www/html/elgg
 RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf && \
     sed -i 's/:80/:8080/' /etc/apache2/sites-enabled/*.conf
 
-EXPOSE 8080
+EXPOSE 80
 
 # Démarrer Apache en mode foreground
 CMD ["apache2-foreground"]
