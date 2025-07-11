@@ -163,12 +163,12 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: gke-elgg-cluster-default-pool-613e100a-jnqh
-      # securityContext:
-      #   fsGroup: 33
+      securityContext:
+        fsGroup: 33
       initContainers:
       - name: fix-permissions
         image: bitaouioussama/elgg-app:v6
-        command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data && chmod -R 775 /var/elgg_data"]
+        command: ["/bin/sh", "-c", "chown -R 33:33 /var/elgg_data && chmod -R 775 /var/elgg_data"]
         #fichiers de configuration
         # command: ["/bin/sh", "-c", "chown -R 33:33 /var/www/html/elgg/elgg-config && chmod -R 775 /var/www/html/elgg/elgg-config"]
         volumeMounts:
@@ -189,7 +189,7 @@ spec:
           - secretRef:
               name: elgg-env
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         resources:
           requests:
             cpu: "500m"
@@ -224,5 +224,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8080
   loadBalancerIP: 34.175.206.89
