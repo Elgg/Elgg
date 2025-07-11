@@ -14,12 +14,12 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: k8s01-mng-1008c2-k8s01-mng-worker-2
-      securityContext:
-        fsGroup: 33
+      # securityContext:
+      #   fsGroup: 33
       initContainers:
       - name: fix-permissions
         image: busybox
-        command: ["/bin/sh", "-c", "chown -R 33:33 /var/elgg_data && chmod -R 775 /var/elgg_data"]
+        command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data && chmod -R 775 /var/elgg_data"]
         #fichiers de configuration
         # command: ["/bin/sh", "-c", "chown -R 33:33 /var/www/html/elgg/elgg-config && chmod -R 775 /var/www/html/elgg/elgg-config"]
         volumeMounts:
@@ -33,14 +33,14 @@ spec:
       - name: elgg-app
         image: bitaouioussama/elgg-app:v6
         imagePullPolicy: Always
-        securityContext:
-          runAsUser: 33
-          runAsGroup: 33
+        # securityContext:
+        #   runAsUser: 33
+        #   runAsGroup: 33
         envFrom:
           - secretRef:
               name: elgg-env
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         resources:
           requests:
             cpu: "500m"
@@ -70,4 +70,4 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8080
