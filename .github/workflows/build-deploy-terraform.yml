@@ -56,7 +56,6 @@ jobs:
           tags: ${{ env.IMAGE_TAG }}
           no-cache: true
           # cache-from: type=registry,ref=${{ env.IMAGE_TAG }}
-          
           cache-to: type=inline
 
       - name: Set image tag output
