@@ -218,6 +218,7 @@ kind: Service
 metadata:
   name: elgg-app
 spec:
+  type: LoadBalancer
   selector:
     app: elgg-app
   ports:
