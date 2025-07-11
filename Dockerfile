@@ -48,6 +48,11 @@ COPY . /var/www/html/elgg
 RUN mkdir -p /var/elgg_data && chown -R www-data:www-data /var/elgg_data && chmod 775 /var/elgg_data
 
 #fichier de configuration
+
+#RUN mkdir -p /var/www/html/elgg/elgg-config && chown -R www-data:www-data /var/www/html/elgg/elgg-config && chmod 755 /var/www/html/elgg/elgg-config
+
+# Copier les fichiers de config initiaux
+#COPY elgg-config/* /var/www/html/elgg/elgg-config/
 # RUN mkdir -p /var/www/html/elgg/elgg-config && chown -R www-data:www-data /var/www/html/elgg/elgg-config && chmod 755 /var/www/html/elgg/elgg-config
 
 # Copier les fichiers de config initiaux

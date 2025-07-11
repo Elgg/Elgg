@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 # apiVersion: apps/v1
 # kind: Deployment
 # metadata:
@@ -147,6 +149,7 @@
 #         persistentVolumeClaim:
 #           claimName: elgg-pvc
 
+>>>>>>> 413930836491fa59c1d3c78d649f6cf633daf9dd
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -181,7 +184,10 @@ spec:
       containers:
       - name: elgg-app
         image: bitaouioussama/elgg-app:v6
+<<<<<<< HEAD
+=======
         imagePullPolicy: Always
+>>>>>>> 413930836491fa59c1d3c78d649f6cf633daf9dd
         # securityContext:
         #   runAsUser: 33
         #   runAsGroup: 33
