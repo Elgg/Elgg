@@ -95,7 +95,8 @@ class RouteRegistrationServiceIntegrationTest extends IntegrationTestCase {
 		
 		$session = _elgg_services()->session_manager;
 		$session->setLoggedInUser($user);
-		
+
+		// only request username
 		$route2 = $this->route_service->register('foo2', [
 			'path' => '/foo2/{username}',
 			'controller' => function($request) {
@@ -104,10 +105,21 @@ class RouteRegistrationServiceIntegrationTest extends IntegrationTestCase {
 		]);
 		
 		$this->assertEquals($user->username, $route2->getDefault('username'));
-		$this->assertEquals($user->guid, $route2->getDefault('guid'));
+		$this->assertEmpty($route2->getDefault('guid'));
+
+		// only request guid
+		$route3 = $this->route_service->register('foo2', [
+			'path' => '/foo2/{guid?}',
+			'controller' => function($request) {
+			},
+			'use_logged_in' => true,
+		]);
+
+		$this->assertEmpty($route3->getDefault('username'));
+		$this->assertEquals($user->guid, $route3->getDefault('guid'));
 		
 		// make sure existing defaults aren't overruled
-		$route2 = $this->route_service->register('foo2', [
+		$route4 = $this->route_service->register('foo2', [
 			'path' => '/foo2/{username}',
 			'controller' => function($request) {
 			},
@@ -118,7 +130,7 @@ class RouteRegistrationServiceIntegrationTest extends IntegrationTestCase {
 			'use_logged_in' => true,
 		]);
 		
-		$this->assertEquals("{$user->username}_foo", $route2->getDefault('username'));
-		$this->assertEquals(-1000, $route2->getDefault('guid'));
+		$this->assertEquals("{$user->username}_foo", $route4->getDefault('username'));
+		$this->assertEquals(-1000, $route4->getDefault('guid'));
 	}
 }
