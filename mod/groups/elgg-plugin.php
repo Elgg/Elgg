@@ -2,6 +2,9 @@
 
 use Elgg\Groups\Forms\PrepareFields;
 use Elgg\Groups\Middleware\LimitedGroupCreation;
+use Elgg\Groups\Notifications\AddMembershipEventHandler;
+use Elgg\Groups\Notifications\InviteMembershipEventHandler;
+use Elgg\Groups\Notifications\RequestMembershipEventHandler;
 
 require_once(__DIR__ . '/lib/functions.php');
 
@@ -276,6 +279,19 @@ return [
 		'update:after' => [
 			'group' => [
 				'Elgg\Groups\Group::updateGroup' => [],
+			],
+		],
+	],
+	'notifications' => [
+		'relationship' => [
+			'invited' => [
+				'create:after' => InviteMembershipEventHandler::class,
+			],
+			'member' => [
+				'add_membership' => AddMembershipEventHandler::class,
+			],
+			'membership_request' => [
+				'create:after' => RequestMembershipEventHandler::class,
 			],
 		],
 	],
