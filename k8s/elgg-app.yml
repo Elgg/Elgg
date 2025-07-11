@@ -189,7 +189,7 @@ spec:
           - secretRef:
               name: elgg-env
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         resources:
           requests:
             cpu: "500m"
@@ -224,5 +224,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8080
   loadBalancerIP: 34.175.206.89
