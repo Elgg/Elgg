@@ -1,4 +1,4 @@
-name: Build & Deploy To Rancher
+name: Deploy To Rancher
 
 on:
   workflow_dispatch:
