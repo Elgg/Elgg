@@ -303,6 +303,7 @@ jobs:
           kubectl rollout status deployment/elgg-phpmyadmin -n recette
           kubectl get all -n recette
 
+<<<<<<< HEAD
       - name: Wait for service to be ready
         run: |
           echo "Waiting for application to be ready..."
@@ -354,3 +355,17 @@ jobs:
       #               'Workflow: ${{ github.workflow }}'
       #       })
 
+=======
+      # - name: Wait for service to be ready
+      #   run: |
+      #     echo "Waiting for application to be ready..."
+      #     sleep 30
+      #     for i in {1..10}; do
+      #       if curl -f -s "http://${{ env.RECETTE_IP }}" > /dev/null; then
+      #         echo "Application is ready!"
+      #         break
+      #       fi
+      #       echo "Attempt $i: Application not ready yet, waiting..."
+      #       sleep 10
+      #     done
+>>>>>>> 04a5ff8c1f7b5485e90b7263bc6b3c2be868d03f

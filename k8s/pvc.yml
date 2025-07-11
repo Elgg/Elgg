@@ -5,7 +5,7 @@ metadata:
   name: db-pvc
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: "standard"
   resources:
     requests:
@@ -17,7 +17,7 @@ metadata:
   name: elgg-pvc
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: "standard"
   resources:
     requests:
