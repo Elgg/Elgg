@@ -111,6 +111,12 @@ jobs:
             --zone ${{ secrets.GKE_REGION }} \
             --project ${{ secrets.GKE_PROJECT }}
 
+      - name: Cleanup test namespace
+        run: |
+          echo "Cleaning up all resources in 'recette' namespace to avoid PVC conflicts..."
+          kubectl delete all --all -n recette || true
+          kubectl delete pvc --all -n recette || true
+
       - name: Deploy to test namespace
         run: |
           kubectl apply -f k8s/ -n test

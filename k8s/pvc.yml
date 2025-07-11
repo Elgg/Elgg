@@ -1,21 +1,10 @@
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: db-pvc
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   storageClassName: "standard"
-#   resources:
-#     requests:
-#       storage: 5Gi
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: db-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: "standard"
   resources:
     requests:
@@ -27,27 +16,8 @@ metadata:
   name: elgg-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: "standard"
   resources:
     requests:
       storage: 20Gi
-
-# ---
-
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: elgg-config-pvc
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   storageClassName: "standard"
-#   resources:
-#     requests:
-<<<<<<< HEAD
-#       storage: 10Gi
-
-=======
-#       storage: 10Gi
->>>>>>> 413930836491fa59c1d3c78d649f6cf633daf9dd

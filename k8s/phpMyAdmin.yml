@@ -36,8 +36,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-<<<<<<< HEAD
   loadBalancerIP: 34.175.63.179
-=======
-  loadBalancerIP: 34.175.63.179
->>>>>>> 413930836491fa59c1d3c78d649f6cf633daf9dd
