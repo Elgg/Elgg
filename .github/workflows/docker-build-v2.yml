@@ -303,7 +303,7 @@ jobs:
           kubectl rollout status deployment/elgg-phpmyadmin -n recette
           kubectl get all -n recette
 
-<<<<<<< HEAD
+
       - name: Wait for service to be ready
         run: |
           echo "Waiting for application to be ready..."
@@ -316,56 +316,3 @@ jobs:
             echo "Attempt $i: Application not ready yet, waiting..."
             sleep 10
           done
-
-  # deploy-to-rancher:
-  #   needs: [docker-build]
-  #   runs-on: [self-hosted, Linux, X64]
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-
-  #     - name: Setup Kubectl
-  #       uses: azure/setup-kubectl@v3
-
-  #     - name: Configure Rancher Access
-  #       run: |
-  #         echo "${{ secrets.RANCHER_KUBECONFIG_B64 }}" | base64 -d > kubeconfig.yaml
-  #         export KUBECONFIG=kubeconfig.yaml
-  #         kubectl config use-context "${{ secrets.RANCHER_CLUSTER_NAME }}"
-
-  #     - name: Deploy to Rancher
-  #       run: kubectl apply -f k8s/pvc.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-
-# kubectl rollout status deployment/elgg-app -n ${{ secrets.RANCHER_NAMESPACE }}
-
-      # - name: Deployment success notification
-      #   if: success()
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       github.rest.issues.createComment({
-      #         issue_number: context.issue.number,
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         body: 'Deployment to recette succeeded!\n\n' +
-      #               'Environment: recette\n' +
-      #               'Image: ${{ needs.docker-build.outputs.image-tag }}\n' +
-      #               'Access IP: ${{ env.RECETTE_IP }}\n' +
-      #               'Commit: ${{ github.sha }}\n' +
-      #               'Workflow: ${{ github.workflow }}'
-      #       })
-
-=======
-      # - name: Wait for service to be ready
-      #   run: |
-      #     echo "Waiting for application to be ready..."
-      #     sleep 30
-      #     for i in {1..10}; do
-      #       if curl -f -s "http://${{ env.RECETTE_IP }}" > /dev/null; then
-      #         echo "Application is ready!"
-      #         break
-      #       fi
-      #       echo "Attempt $i: Application not ready yet, waiting..."
-      #       sleep 10
-      #     done
->>>>>>> 04a5ff8c1f7b5485e90b7263bc6b3c2be868d03f
