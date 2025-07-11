@@ -128,6 +128,9 @@ class RelationshipsTable {
 				if (!$id) {
 					return false;
 				}
+				
+				$relationship->time_created = $this->getCurrentTime()->getTimestamp();
+				$relationship->id = $id;
 			} catch (DatabaseException $e) {
 				$prev = $e->getPrevious();
 				if ($prev instanceof UniqueConstraintViolationException) {
