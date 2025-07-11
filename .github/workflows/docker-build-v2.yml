@@ -52,7 +52,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+          no-cache: true
+          # cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
           cache-to: type=inline
 
       - name: Set image tag output
@@ -109,6 +110,12 @@ jobs:
           gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
             --zone ${{ secrets.GKE_REGION }} \
             --project ${{ secrets.GKE_PROJECT }}
+
+      - name: Cleanup test namespace
+        run: |
+          echo "Cleaning up all resources in 'recette' namespace to avoid PVC conflicts..."
+          kubectl delete all --all -n recette || true
+          kubectl delete pvc --all -n recette || true
 
       - name: Deploy to test namespace
         run: |
@@ -308,6 +315,27 @@ jobs:
             echo "Attempt $i: Application not ready yet, waiting..."
             sleep 10
           done
+
+  # deploy-to-rancher:
+  #   needs: [docker-build]
+  #   runs-on: [self-hosted, Linux, X64]
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+
+  #     - name: Setup Kubectl
+  #       uses: azure/setup-kubectl@v3
+
+  #     - name: Configure Rancher Access
+  #       run: |
+  #         echo "${{ secrets.RANCHER_KUBECONFIG_B64 }}" | base64 -d > kubeconfig.yaml
+  #         export KUBECONFIG=kubeconfig.yaml
+  #         kubectl config use-context "${{ secrets.RANCHER_CLUSTER_NAME }}"
+
+  #     - name: Deploy to Rancher
+  #       run: kubectl apply -f k8s/pvc.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+
+# kubectl rollout status deployment/elgg-app -n ${{ secrets.RANCHER_NAMESPACE }}
 
       # - name: Deployment success notification
       #   if: success()
