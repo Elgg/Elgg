@@ -40,13 +40,13 @@ class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 	
 	public static function setterDataProvider() {
 		return [
-			['id', 123, null],
+			['id', 123, 123],
 			['guid_one', 123, 123],
 			['guid_one', '123', 123],
 			['relationship', 'foo', 'foo'],
 			['guid_two', 123, 123],
 			['guid_two', '123', 123],
-			['time_created', time(), null],
+			['time_created', time(), time()],
 			['foo', 'bar', null],
 		];
 	}
@@ -132,26 +132,23 @@ class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 	/**
 	 * @dataProvider originalAttributesProvider
 	 */
-	public function testOriginalAttributesOnChange($name, $value, bool $should_change) {
+	public function testOriginalAttributesOnChange($name, $value) {
 		$relationship = $this->createRelationship();
 		
 		$relationship->$name = $value;
-		if ($should_change) {
-			$this->assertArrayHasKey($name, $relationship->getOriginalAttributes());
-		} else {
-			$this->assertEmpty($relationship->getOriginalAttributes());
-		}
+		
+		$this->assertArrayHasKey($name, $relationship->getOriginalAttributes());
 	}
 	
 	public static function originalAttributesProvider() {
 		return [
-			['id', 123, false],
-			['guid_one', 123, true],
-			['guid_one', '123', true],
-			['relationship', 'bar', true],
-			['guid_two', 123, true],
-			['guid_two', '123', true],
-			['time_created', time(), false],
+			['id', 123],
+			['guid_one', 123],
+			['guid_one', '123'],
+			['relationship', 'bar'],
+			['guid_two', 123],
+			['guid_two', '123'],
+			['time_created', time()],
 		];
 	}
 	

@@ -39,7 +39,10 @@ if ($group->isPublicMembership() || $group->canEdit($user->guid)) {
 }
 
 if ($join) {
-	if (!$group->join($user, ['create_river_item' => true])) {
+	if (!$group->join($user, [
+		'create_river_item' => true,
+		'notify_user_action' => 'join_membership',
+	])) {
 		return elgg_error_response(elgg_echo('groups:cantjoin'));
 	}
 	
@@ -53,30 +56,5 @@ if ($user->hasRelationship($group->guid, 'membership_request')) {
 if (!$user->addRelationship($group->guid, 'membership_request')) {
 	return elgg_error_response(elgg_echo('groups:joinrequestnotmade'));
 }
-
-// Notify group owner
-$owner = $group->getOwnerEntity();
-$url = elgg_generate_url('requests:group:group', [
-	'guid' => $group->guid,
-]);
-
-$subject = elgg_echo('groups:request:subject', [
-	$user->getDisplayName(),
-	$group->getDisplayName(),
-], (string) $owner->language);
-
-$body = elgg_echo('groups:request:body', [
-	$user->getDisplayName(),
-	$group->getDisplayName(),
-	$user->getURL(),
-	$url,
-], (string) $owner->language);
-
-$params = [
-	'action' => 'membership_request',
-	'object' => $group,
-	'url' => $url,
-];
-notify_user($owner->guid, $user->guid, $subject, $body, $params);
 
 return elgg_ok_response('', elgg_echo('groups:joinrequestmade'));
