@@ -84,10 +84,18 @@ class RouteRegistrationService {
 		$requirements = elgg_extract('requirements', $params, []);
 		$methods = elgg_extract('methods', $params, []);
 
+		$path = trim($path, '/');
+
+		// check if defaults should be populated with logged in user data
 		$user = $this->session_manager->getLoggedInUser();
 		if ($use_logged_in && $user instanceof \ElggUser) {
-			$defaults['username'] = $defaults['username'] ?? $user->username;
-			$defaults['guid'] = $defaults['guid'] ?? $user->guid;
+			if (preg_match('/\{username\??\}/i', $path)) {
+				$defaults['username'] = $defaults['username'] ?? $user->username;
+			}
+
+			if (preg_match('/\{guid\??\}/i', $path)) {
+				$defaults['guid'] = $defaults['guid'] ?? $user->guid;
+			}
 		}
 
 		$patterns = [
@@ -98,7 +106,6 @@ class RouteRegistrationService {
 			'username' => '[\p{L}\p{M}\p{Nd}._-]+',
 		];
 
-		$path = trim($path, '/');
 		$segments = explode('/', $path);
 		foreach ($segments as &$segment) {
 			// look for segments that are defined as optional with added ?

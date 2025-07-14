@@ -198,6 +198,7 @@ return [
 			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
 		'use_logged_in' => true,
+		'priority' => 1,
 	],
 	'settings:statistics' => [
 		'path' => '/settings/statistics/{username}',
