@@ -178,8 +178,7 @@ class AnnotationsTable extends DbAnnotations {
 		$qb = Select::fromTable(self::TABLE_NAME);
 		$qb->select('*');
 
-		$where = new AnnotationWhereClause();
-		$where->ids = $row->id;
+		$where = AnnotationWhereClause::factory(['ids' => $row->id]);
 		$qb->addClause($where);
 
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([

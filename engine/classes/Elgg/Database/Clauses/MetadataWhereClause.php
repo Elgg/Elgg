@@ -25,24 +25,9 @@ class MetadataWhereClause extends WhereClause {
 	public $names;
 
 	/**
-	 * @var string
-	 */
-	public $comparison = '=';
-
-	/**
 	 * @var mixed
 	 */
 	public $values;
-
-	/**
-	 * @var string
-	 */
-	public $value_type = ELGG_VALUE_STRING;
-
-	/**
-	 * @var bool
-	 */
-	public $case_sensitive = true;
 
 	/**
 	 * @var \DateTime|string|int
@@ -53,6 +38,12 @@ class MetadataWhereClause extends WhereClause {
 	 * @var \DateTime|string|int
 	 */
 	public $created_before;
+
+	public string $value_type = ELGG_VALUE_STRING;
+
+	public bool $case_sensitive = true;
+
+	public string $comparison = '=';
 
 	/**
 	 * {@inheritdoc}
@@ -72,5 +63,45 @@ class MetadataWhereClause extends WhereClause {
 		$wheres[] = $qb->between($alias('time_created'), $this->created_after, $this->created_before, ELGG_VALUE_TIMESTAMP);
 
 		return $qb->merge($wheres);
+	}
+
+	/**
+	 * Build a new MetadataWhereClause
+	 *
+	 * @param array $attributes parameters for clause
+	 *
+	 * @return static
+	 *
+	 * @since 6.3
+	 */
+	public static function factory(array $attributes): static {
+		$result = new static();
+
+		$array_attributes = [
+			'ids',
+			'entity_guids',
+			'names',
+			'values',
+		];
+		foreach ($array_attributes as $array_key) {
+			if (isset($attributes[$array_key])) {
+				$result->{$array_key} = (array) $attributes[$array_key];
+			}
+		}
+
+		$singular_attributes = [
+			'comparison',
+			'value_type',
+			'case_sensitive',
+			'created_after',
+			'created_before',
+		];
+		foreach ($singular_attributes as $array_key) {
+			if (isset($attributes[$array_key])) {
+				$result->{$array_key} = $attributes[$array_key];
+			}
+		}
+
+		return $result;
 	}
 }

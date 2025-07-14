@@ -288,15 +288,16 @@ class SearchService {
 			$where->values = $partial_match ? "%{$part}%" : $part;
 			$where->comparison = 'LIKE';
 			$where->value_type = ELGG_VALUE_STRING;
-			$where->case_sensitive = false;
+			if (!$where instanceof AttributeWhereClause) {
+				$where->case_sensitive = false;
+			}
 		};
 
 		if (!empty($attributes)) {
 			foreach ($attributes as $attribute) {
 				$attribute_ands = [];
 				foreach ($query_parts as $part) {
-					$where = new AttributeWhereClause();
-					$where->names = $attribute;
+					$where = AttributeWhereClause::factory(['names' => $attribute]);
 					$populate_where($where, $part);
 					$attribute_ands[] = $where->prepare($qb, $alias);
 				}

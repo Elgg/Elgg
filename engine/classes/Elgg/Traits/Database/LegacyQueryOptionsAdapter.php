@@ -242,42 +242,23 @@ trait LegacyQueryOptionsAdapter {
 
 		$options['metadata_name_value_pairs'] = $this->removeKeyPrefix('metadata_', $options['metadata_name_value_pairs']);
 
-		$defaults = [
-			'name' => null,
-			'value' => null,
-			'comparison' => '=',
-			'type' => ELGG_VALUE_STRING,
-			'case_sensitive' => true,
-			'entity_guids' => null,
-			'ids' => null,
-			'created_after' => null,
-			'created_before' => null,
-		];
-
 		foreach ($options['metadata_name_value_pairs'] as $key => $pair) {
 			if ($pair instanceof WhereClause) {
 				continue;
 			}
 
-			$pair = array_merge($defaults, $pair);
-
-			if (in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
-				$clause = new AttributeWhereClause();
-			} else {
-				$clause = new MetadataWhereClause();
-				$clause->ids = (array) $pair['ids'];
-				$clause->entity_guids = (array) $pair['entity_guids'];
-				$clause->created_after = $pair['created_after'];
-				$clause->created_before = $pair['created_before'];
+			$class = MetadataWhereClause::class;
+			if (isset($pair['name']) && in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
+				$class = AttributeWhereClause::class;
 			}
 
-			$clause->names = (array) $pair['name'];
-			$clause->values = (array) $pair['value'];
-			$clause->comparison = $pair['comparison'];
-			$clause->value_type = $pair['type'];
-			$clause->case_sensitive = $pair['case_sensitive'];
+			$pair = $this->normalizePluralOptions($pair, ['name', 'value']);
+			if (isset($pair['type'])) {
+				$pair['value_type'] = $pair['type'];
+				unset($pair['type']);
+			}
 
-			$options['metadata_name_value_pairs'][$key] = $clause;
+			$options['metadata_name_value_pairs'][$key] = $class::factory($pair);
 		}
 
 		return $options;
@@ -306,42 +287,23 @@ trait LegacyQueryOptionsAdapter {
 
 		$options['search_name_value_pairs'] = $this->removeKeyPrefix('metadata_', $options['search_name_value_pairs']);
 
-		$defaults = [
-			'name' => null,
-			'value' => null,
-			'comparison' => '=',
-			'type' => ELGG_VALUE_STRING,
-			'case_sensitive' => true,
-			'entity_guids' => null,
-			'ids' => null,
-			'created_after' => null,
-			'created_before' => null,
-		];
-
 		foreach ($options['search_name_value_pairs'] as $key => $pair) {
 			if ($pair instanceof WhereClause) {
 				continue;
 			}
 
-			$pair = array_merge($defaults, $pair);
-
-			if (in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
-				$clause = new AttributeWhereClause();
-			} else {
-				$clause = new MetadataWhereClause();
-				$clause->ids = (array) $pair['ids'];
-				$clause->entity_guids = (array) $pair['entity_guids'];
-				$clause->created_after = $pair['created_after'];
-				$clause->created_before = $pair['created_before'];
+			$class = MetadataWhereClause::class;
+			if (isset($pair['name']) && in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
+				$class = AttributeWhereClause::class;
 			}
 
-			$clause->names = (array) $pair['name'];
-			$clause->values = (array) $pair['value'];
-			$clause->comparison = $pair['comparison'];
-			$clause->value_type = $pair['type'];
-			$clause->case_sensitive = $pair['case_sensitive'];
+			$pair = $this->normalizePluralOptions($pair, ['name', 'value']);
+			if (isset($pair['type'])) {
+				$pair['value_type'] = $pair['type'];
+				unset($pair['type']);
+			}
 
-			$options['search_name_value_pairs'][$key] = $clause;
+			$options['search_name_value_pairs'][$key] = $class::factory($pair);
 		}
 
 		return $options;
@@ -396,48 +358,22 @@ trait LegacyQueryOptionsAdapter {
 
 		$options['annotation_name_value_pairs'] = $this->removeKeyPrefix('annotation_', $options['annotation_name_value_pairs']);
 
-		$defaults = [
-			'name' => null,
-			'value' => null,
-			'comparison' => '=',
-			'type' => ELGG_VALUE_STRING,
-			'case_sensitive' => true,
-			'entity_guids' => null,
-			'owner_guids' => null,
-			'ids' => null,
-			'enabled' => null,
-			'access_ids' => null,
-			'created_after' => null,
-			'created_before' => null,
-			'sort_by_calculation' => null,
-		];
-
 		foreach ($options['annotation_name_value_pairs'] as $key => $pair) {
 			if ($pair instanceof WhereClause) {
 				continue;
 			}
 
-			$pair = array_merge($defaults, $pair);
-
-			$clause = new AnnotationWhereClause();
-			$clause->ids = (array) $pair['ids'];
-			$clause->entity_guids = (array) $pair['entity_guids'];
-			$clause->owner_guids = (array) $pair['owner_guids'];
-			$clause->created_after = $pair['created_after'];
-			$clause->created_before = $pair['created_before'];
-			$clause->names = (array) $pair['name'];
-			$clause->values = (array) $pair['value'];
-			$clause->comparison = $pair['comparison'];
-			$clause->value_type = $pair['type'];
-			$clause->case_sensitive = $pair['case_sensitive'];
-			$clause->access_ids = (array) $pair['access_ids'];
-			$clause->sort_by_calculation = $pair['sort_by_calculation'];
-
-			if ($clause->sort_by_calculation && empty($options['order_by'])) {
-				$clause->sort_by_direction = 'desc';
+			$pair = $this->normalizePluralOptions($pair, ['name', 'value']);
+			if (isset($pair['type'])) {
+				$pair['value_type'] = $pair['type'];
+				unset($pair['type']);
 			}
 
-			$options['annotation_name_value_pairs'][$key] = $clause;
+			if (!empty($pair['sort_by_calculation']) && empty($options['order_by'])) {
+				$pair['sort_by_direction'] = 'desc';
+			}
+
+			$options['annotation_name_value_pairs'][$key] = AnnotationWhereClause::factory($pair);
 		}
 
 		return $options;
@@ -451,7 +387,7 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizePairedOptions($type = 'metadata', array $options = []): array {
+	protected function normalizePairedOptions(string $type = 'metadata', array $options = []): array {
 		if (!is_array($options["{$type}_name_value_pairs"])) {
 			$options["{$type}_name_value_pairs"] = [];
 		}
@@ -637,7 +573,6 @@ trait LegacyQueryOptionsAdapter {
 			
 			$clause->created_after = $pair['created_after'];
 			$clause->created_before = $pair['created_before'];
-
 
 			$options['relationship_pairs'][$key] = $clause;
 		}

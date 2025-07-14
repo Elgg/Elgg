@@ -139,9 +139,7 @@ class MetadataTable {
 		$qb = Select::fromTable(self::TABLE_NAME);
 		$qb->select('*');
 
-		$where = new MetadataWhereClause();
-		$where->ids = $id;
-		$qb->addClause($where);
+		$qb->addClause(MetadataWhereClause::factory(['ids' => $id]));
 
 		$row = $this->db->getDataRow($qb);
 		return $row ? new \ElggMetadata($row) : null;
