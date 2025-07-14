@@ -9,7 +9,7 @@ use Elgg\Database\QueryBuilder;
  *
  * @since 4.0
  */
-class MakeAdminUserEventHandler extends NotificationEventHandler {
+class MakeAdminUserEventHandler extends NonConfigurableNotificationEventHandler {
 	
 	/**
 	 * Tells if the recipient is the user being changed
@@ -113,12 +113,5 @@ class MakeAdminUserEventHandler extends NotificationEventHandler {
 		}
 		
 		return $result;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function isConfigurableByUser(): bool {
-		return false;
 	}
 }

@@ -506,7 +506,7 @@ class NotificationEventHandler {
 			return static::isConfigurableForGroup($entity);
 		}
 		
-		return true;
+		return false;
 	}
 	
 	/**
