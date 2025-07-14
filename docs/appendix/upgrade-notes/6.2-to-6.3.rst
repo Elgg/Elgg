@@ -9,6 +9,7 @@ Deprecated APIs
 ~~~~~~~~~~~~~~~
 
 * ``elgg_dump()`` use ``elgg_log()``
+* ``notify_user()`` use ``elgg_notify_user()`` or ``\ElggUser::notify()``
 
 Deprecated class functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

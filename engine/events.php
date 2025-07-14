@@ -27,11 +27,6 @@ return [
 			'\Elgg\Input\ValidateInputHandler::sanitizeStyles' => [],
 		],
 	],
-	'ban' => [
-		'user' => [
-			\Elgg\Users\BanUserNotificationHandler::class => [],
-		],
-	],
 	'cache:clear' => [
 		'system' => [
 			'\Elgg\Cache\EventHandlers::clear' => [],

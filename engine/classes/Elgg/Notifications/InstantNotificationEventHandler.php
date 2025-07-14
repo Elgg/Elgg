@@ -7,18 +7,49 @@ namespace Elgg\Notifications;
  *
  * @since 4.0
  */
-final class InstantNotificationEventHandler extends NotificationEventHandler {
-
+class InstantNotificationEventHandler extends NonConfigurableNotificationEventHandler {
+	
 	/**
-	 * {@inheritDoc}
+	 * @var \ElggUser[] recipients
+	 */
+	protected array $recipients = [];
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function __construct(NotificationEvent $event, NotificationsService $service, array $params = []) {
+		$recipients = elgg_extract('recipients', $params);
+		unset($params['recipients']);
+		
+		parent::__construct($event, $service, $params);
+		
+		if (!empty($recipients) && is_array($recipients)) {
+			$this->setRecipients($recipients);
+		}
+	}
+	
+	/**
+	 * Set the recipients of the notification
+	 *
+	 * @param \ElggUser[] $recipients array recipients
+	 *
+	 * @return void
+	 */
+	final public function setRecipients(array $recipients): void {
+		$this->recipients = array_filter($recipients, function($e) {
+			return ($e instanceof \ElggUser);
+		});
+	}
+	
+	/**
+	 * {@inheritdoc}
 	 */
 	public function getSubscriptions(): array {
 		$subscriptions = [];
 		
-		$methods_override = (array) elgg_extract('methods_override', $this->params, []);
-		$recipients = (array) elgg_extract('recipients', $this->params, []);
+		$methods_override = $this->getMethodsOverride() ?: $this->getNotificationMethods();
 		
-		foreach ($recipients as $user) {
+		foreach ($this->recipients as $user) {
 			if (!empty($methods_override)) {
 				$subscriptions[$user->guid] = $methods_override;
 				continue;
@@ -32,9 +63,16 @@ final class InstantNotificationEventHandler extends NotificationEventHandler {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
-	protected function addMuteLink(): bool {
+	final protected function filterMutedSubscriptions(): bool {
+		return false;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	final protected function addMuteLink(): bool {
 		return false;
 	}
 }

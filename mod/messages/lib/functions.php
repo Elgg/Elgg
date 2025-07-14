@@ -74,25 +74,7 @@ function messages_send(string $subject, string $body, int $recipient_guid, int $
 		$recipient = get_user($recipient_guid);
 		$sender = get_user($sender_guid);
 		if ($recipient instanceof \ElggUser && $sender instanceof \ElggUser) {
-			$subject = elgg_echo('messages:email:subject', [], $recipient->getLanguage());
-			$body = elgg_echo('messages:email:body', [
-				$sender->getDisplayName(),
-				$message_contents,
-				elgg_generate_url('collection:object:messages:owner', [
-					'username' => $recipient->username,
-				]),
-				$sender->getDisplayName(),
-				elgg_generate_url('add:object:messages', [
-					'send_to' => $sender_guid,
-				]),
-			], $recipient->getLanguage());
-			
-			$params = [
-				'object' => $message_to,
-				'action' => 'send',
-				'url' => $message_to->getURL(),
-			];
-			notify_user($recipient_guid, $sender_guid, $subject, $body, $params);
+			$recipient->notify('send', $message_to, [], $sender);
 		}
 	}
 	

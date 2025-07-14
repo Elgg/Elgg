@@ -3,18 +3,10 @@
 use Elgg\Project\Paths;
 
 $user = elgg_get_logged_in_user_entity();
-$site = elgg_get_site_entity();
 
-$subject = elgg_echo('useradd:subject');
-$plain_message = elgg_echo('useradd:body', [
-	$site->getDisplayName(),
-	$site->getURL(),
-	$user->username,
-	'test123',
-]);
-
-// Test sending attachments through notify_user()
-$params = [
+// Test sending attachments through \ElggUser::notify()
+$user->notify('useradd', $user, [
+	'password' => 'test123',
 	'attachments' => [
 		[
 			'filepath' => Paths::elgg() . 'README.md',
@@ -22,9 +14,6 @@ $params = [
 			'type' => 'text/markdown',
 		],
 	],
-	'apply_muting' => false,
-];
-
-notify_user($user->guid, $site->guid, $subject, $plain_message, $params, ['email']);
+]);
 
 return elgg_ok_response('', elgg_echo('theme_sandbox:test_email:success', [$user->email]));

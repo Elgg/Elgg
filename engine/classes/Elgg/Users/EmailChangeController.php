@@ -16,7 +16,7 @@ use Elgg\Request;
 class EmailChangeController {
 	
 	/**
-	 * Execute a email change
+	 * Execute an email change
 	 *
 	 * @param Request $request the HTTP request
 	 *
@@ -52,7 +52,6 @@ class EmailChangeController {
 		$notification_params = [
 			'object' => $user,
 			'action' => 'email_change',
-			'apply_muting' => false,
 		];
 		
 		$notification = Email::factory([
@@ -68,13 +67,7 @@ class EmailChangeController {
 		]);
 		elgg_send_email($notification);
 		
-		$subject = $translator->translate('email:confirm:email:new:subject', [], $user->getLanguage());
-		$body = $translator->translate('email:confirm:email:new:body', [
-			$site->getDisplayName(),
-			$site->getURL(),
-		], $user->getLanguage());
-		
-		notify_user($user->guid, $site->guid, $subject, $body, $notification_params, ['email']);
+		$user->notify('email_change', $user);
 		
 		return elgg_ok_response('', $translator->translate('email:save:success'), '');
 	}

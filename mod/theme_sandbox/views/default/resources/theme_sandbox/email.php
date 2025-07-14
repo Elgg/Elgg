@@ -33,7 +33,9 @@ elgg_register_event_handler('send', 'notification:email', function (\Elgg\Event 
 	return true;
 }, 1);
 
-notify_user($user->guid, $site->guid, $subject, $plain_message, ['apply_muting' => false], 'email');
+$user->notify('useradd', $user, [
+	'password' => 'test123',
+]);
 
 $options = [
 	'subject' => $subject,

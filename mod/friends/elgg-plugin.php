@@ -4,6 +4,10 @@ use Elgg\Friends\Actions\AddFriendController;
 use Elgg\Friends\Actions\RevokeFriendRequestController;
 use Elgg\Friends\Actions\DeclineFriendRequestController;
 use Elgg\Friends\Actions\AcceptFriendRequestController;
+use Elgg\Friends\Notifications\AcceptFriendRequestHandler;
+use Elgg\Friends\Notifications\AddFriendHandler;
+use Elgg\Friends\Notifications\DeclineFriendRequestHandler;
+use Elgg\Friends\Notifications\FriendRequestHandler;
 
 require_once(__DIR__ . '/lib/functions.php');
 
@@ -11,6 +15,9 @@ return [
 	'plugin' => [
 		'name' => 'Friends',
 		'activate_on_install' => true,
+	],
+	'settings' => [
+		'friend_request' => 0,
 	],
 	'actions' => [
 		'friends/add' => [
@@ -57,17 +64,6 @@ return [
 				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
-		],
-	],
-	'settings' => [
-		'friend_request' => 0,
-	],
-	'widgets' => [
-		'friends' => [
-			'context' => ['profile', 'dashboard'],
-		],
-		'friends_of' => [
-			'context' => ['profile', 'dashboard'],
 		],
 	],
 	'events' => [
@@ -119,9 +115,27 @@ return [
 			],
 		],
 	],
+	'notifications' => [
+		'user' => [
+			'user' => [
+				'add_friend' => AddFriendHandler::class,
+				'friendrequest' => FriendRequestHandler::class,
+				'friendrequest:accept' => AcceptFriendRequestHandler::class,
+				'friendrequest:decline' => DeclineFriendRequestHandler::class,
+			],
+		],
+	],
 	'view_extensions' => [
 		'notifications/settings/records' => [
 			'notifications/settings/friends' => [],
+		],
+	],
+	'widgets' => [
+		'friends' => [
+			'context' => ['profile', 'dashboard'],
+		],
+		'friends_of' => [
+			'context' => ['profile', 'dashboard'],
 		],
 	],
 ];

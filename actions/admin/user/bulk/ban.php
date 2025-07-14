@@ -30,6 +30,11 @@ foreach ($users as $user) {
 	}
 	
 	if ($user->ban('admin')) {
+		if (elgg_get_config('security_notify_user_ban')) {
+			// this can't be handled by the delayed notification system as it won't send notifications to banned users
+			$user->notify('ban', $user);
+		}
+		
 		$count++;
 	} else {
 		$users->reportFailure();

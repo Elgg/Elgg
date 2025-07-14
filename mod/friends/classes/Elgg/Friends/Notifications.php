@@ -11,61 +11,6 @@ namespace Elgg\Friends;
 class Notifications {
 
 	/**
-	 * Send a notification about an accepted friend request
-	 *
-	 * @param \ElggUser $recipient the original requester
-	 * @param \ElggUser $sender    the accepting user
-	 *
-	 * @return array
-	 */
-	public static function sendAcceptedFriendRequestNotification(\ElggUser $recipient, \ElggUser $sender) {
-		
-		$subject = elgg_echo('friends:notification:request:accept:subject', [$sender->getDisplayName()], $recipient->getLanguage());
-		$message = elgg_echo('friends:notification:request:accept:message', [
-			$sender->getDisplayName(),
-		], $recipient->getLanguage());
-		
-		$params = [
-			'action' => 'friendrequest:accept',
-			'object' => $recipient,
-			'friend' => $sender,
-		];
-		
-		return notify_user($recipient->guid, $sender->guid, $subject, $message, $params);
-	}
-	
-	/**
-	 * Send a notification about a new friend
-	 *
-	 * @param \ElggUser $recipient the new friend
-	 * @param \ElggUser $sender    the acting user
-	 *
-	 * @return array
-	 */
-	public static function sendAddFriendNotification(\ElggUser $recipient, \ElggUser $sender) {
-		// Notification subject
-		$subject = elgg_echo('friend:newfriend:subject', [
-			$sender->getDisplayName(),
-		], $recipient->getLanguage());
-		
-		// Notification body
-		$body = elgg_echo('friend:newfriend:body', [
-			$sender->getDisplayName(),
-			$sender->getURL()
-		], $recipient->getLanguage());
-		
-		// Notification params
-		$params = [
-			'action' => 'add_friend',
-			'object' => $sender,
-			'friend' => $recipient,
-			'url' => $recipient->getURL(),
-		];
-		
-		return notify_user($recipient->guid, $sender->guid, $subject, $body, $params);
-	}
-
-	/**
 	 * Notify user that someone has friended them
 	 *
 	 * @param \Elgg\Event $event 'create', 'relationship'
@@ -74,7 +19,6 @@ class Notifications {
 	 * @internal
 	 */
 	public static function sendFriendNotification(\Elgg\Event $event) {
-		
 		if ((bool) elgg_get_plugin_setting('friend_request', 'friends')) {
 			// no generic notification while friend request is active
 			// notifications are sent by actions
@@ -97,6 +41,6 @@ class Notifications {
 			return;
 		}
 	
-		self::sendAddFriendNotification($user_two, $user_one);
+		$user_two->notify('add_friend', $user_one, [], $user_one);
 	}
 }
