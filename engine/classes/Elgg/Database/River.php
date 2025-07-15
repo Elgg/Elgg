@@ -106,8 +106,7 @@ class River extends Repository {
 		if (!empty($this->options->annotation_name_value_pairs) && $this->options->annotation_name_value_pairs[0]->names != $property) {
 			$alias = $qb->getNextJoinAlias();
 
-			$annotation = new AnnotationWhereClause();
-			$annotation->names = $property;
+			$annotation = AnnotationWhereClause::factory(['names' => $property]);
 			$qb->addClause($annotation, $alias);
 		}
 

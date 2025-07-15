@@ -40,8 +40,7 @@ class AnnotationsTable {
 		$qb = Select::fromTable(self::TABLE_NAME);
 		$qb->select('*');
 
-		$where = new AnnotationWhereClause();
-		$where->ids = $id;
+		$where = AnnotationWhereClause::factory(['ids' => $id]);
 		$qb->addClause($where);
 
 		$row = $this->db->getDataRow($qb);

@@ -491,10 +491,11 @@ class SearchServiceTest extends UnitTestCase {
 
 		$alias = $select->joinMetadataTable($select->getTableAlias(), 'guid', ['foo1', 'foo2', 'foo3'], 'left');
 
-		$property = new MetadataWhereClause();
-		$property->values = 'query1 query2 query3';
-		$property->comparison = 'LIKE';
-		$property->case_sensitive = false;
+		$property = MetadataWhereClause::factory([
+			'values' => 'query1 query2 query3',
+			'comparison' => 'LIKE',
+			'case_sensitive' => false,
+		]);
 
 		$select->andWhere($property->prepare($select, $alias));
 
@@ -570,10 +571,11 @@ class SearchServiceTest extends UnitTestCase {
 		$q_wheres = [];
 
 		foreach ($query_parts as $part) {
-			$property = new MetadataWhereClause();
-			$property->values = $part;
-			$property->comparison = 'LIKE';
-			$property->case_sensitive = false;
+			$property = MetadataWhereClause::factory([
+				'values' => $part,
+				'comparison' => 'LIKE',
+				'case_sensitive' => false,
+			]);
 			$q_wheres[] = $property->prepare($select, $alias);
 		}
 
@@ -654,10 +656,11 @@ class SearchServiceTest extends UnitTestCase {
 		$q_wheres = [];
 
 		foreach ($query_parts as $part) {
-			$property = new MetadataWhereClause();
-			$property->values = "%{$part}%";
-			$property->comparison = 'LIKE';
-			$property->case_sensitive = false;
+			$property = MetadataWhereClause::factory([
+				'values' => "%{$part}%",
+				'comparison' => 'LIKE',
+				'case_sensitive' => false,
+			]);
 			$q_wheres[] = $property->prepare($select, $alias);
 		}
 
@@ -728,7 +731,6 @@ class SearchServiceTest extends UnitTestCase {
 				$attribute->names = $attr;
 				$attribute->values = "%{$part}%";
 				$attribute->comparison = 'LIKE';
-				$attribute->case_sensitive = false;
 				$wheres[] = $attribute->prepare($select, $select->getTableAlias());
 			}
 			$ors[] = $select->merge($wheres, 'AND');
@@ -737,10 +739,11 @@ class SearchServiceTest extends UnitTestCase {
 		$md_alias = $select->joinMetadataTable($select->getTableAlias(), 'guid', ['foo1'], 'left');
 		$wheres = [];
 		foreach ($query_parts as $part) {
-			$metadata = new MetadataWhereClause();
-			$metadata->values = "%{$part}%";
-			$metadata->comparison = 'LIKE';
-			$metadata->case_sensitive = false;
+			$metadata = MetadataWhereClause::factory([
+				'values' => "%{$part}%",
+				'comparison' => 'LIKE',
+				'case_sensitive' => false,
+			]);
 			$wheres[] = $metadata->prepare($select, $md_alias);
 		}
 		$ors[] = $select->merge($wheres, 'AND');

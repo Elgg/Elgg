@@ -214,8 +214,7 @@ class MetadataTable extends DbMetadataTabe {
 		$qb = Select::fromTable(self::TABLE_NAME);
 		$qb->select('*');
 
-		$where = new MetadataWhereClause();
-		$where->ids = $row->id;
+		$where = MetadataWhereClause::factory(['ids' => $row->id]);
 		$qb->addClause($where);
 
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([

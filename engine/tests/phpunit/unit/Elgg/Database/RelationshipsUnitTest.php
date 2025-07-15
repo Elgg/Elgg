@@ -355,8 +355,7 @@ class RelationshipsUnitTest extends UnitTestCase {
 
 		$select->joinMetadataTable($select->getTableAlias(), 'guid_one', null, 'inner', 'md');
 		
-		$metadata = new MetadataWhereClause();
-		$metadata->names = $metadata_names;
+		$metadata = MetadataWhereClause::factory(['names' => $metadata_names]);
 		$wheres[] = $metadata->prepare($select, 'md');
 		
 		$select->andWhere($select->merge($wheres));
@@ -595,15 +594,17 @@ class RelationshipsUnitTest extends UnitTestCase {
 		$md_wheres = [];
 		
 		$alias1 = $select->joinMetadataTable($select->getTableAlias(), 'guid_one', ['foo1']);
-		$metadata = new MetadataWhereClause();
-		$metadata->names = ['foo1'];
-		$metadata->values = ['bar1'];
+		$metadata = MetadataWhereClause::factory([
+			'names' => ['foo1'],
+			'values' => ['bar1'],
+		]);
 		$md_wheres[] = $metadata->prepare($select, $alias1);
 
 		$alias2 = $select->joinMetadataTable($select->getTableAlias(), 'guid_one', ['foo2']);
-		$metadata = new MetadataWhereClause();
-		$metadata->names = ['foo2'];
-		$metadata->values = ['bar2'];
+		$metadata = MetadataWhereClause::factory([
+			'names' => ['foo2'],
+			'values' => ['bar2'],
+		]);
 		$md_wheres[] = $metadata->prepare($select, $alias2);
 
 		$wheres[] = $select->merge($md_wheres);
@@ -653,14 +654,16 @@ class RelationshipsUnitTest extends UnitTestCase {
 		
 		$md_wheres = [];
 		
-		$metadata = new MetadataWhereClause();
-		$metadata->names = ['foo1'];
-		$metadata->values = ['bar1'];
+		$metadata = MetadataWhereClause::factory([
+			'names' => ['foo1'],
+			'values' => ['bar1'],
+		]);
 		$md_wheres[] = $metadata->prepare($select, $alias);
 
-		$metadata = new MetadataWhereClause();
-		$metadata->names = ['foo2'];
-		$metadata->values = ['bar2'];
+		$metadata = MetadataWhereClause::factory([
+			'names' => ['foo2'],
+			'values' => ['bar2'],
+		]);
 		$md_wheres[] = $metadata->prepare($select, $alias);
 
 		$wheres[] = $select->merge($md_wheres, 'OR');
@@ -711,12 +714,12 @@ class RelationshipsUnitTest extends UnitTestCase {
 		
 		$relationship = new RelationshipWhereClause();
 		$relationship->names = ['foo1'];
-		$relationship->subject_guids = [1, 2, 3];
+		$relationship->guid_one = [1, 2, 3];
 		$r_wheres[] = $relationship->prepare($select, $select->getTableAlias());
 
 		$relationship = new RelationshipWhereClause();
 		$relationship->names = ['foo2'];
-		$relationship->object_guids = [4, 5, 6];
+		$relationship->guid_two = [4, 5, 6];
 		$relationship->inverse = true;
 		$r_wheres[] = $relationship->prepare($select, $select->getTableAlias());
 
@@ -772,7 +775,7 @@ class RelationshipsUnitTest extends UnitTestCase {
 		
 		$relationship = new RelationshipWhereClause();
 		$relationship->names = ['foo1'];
-		$relationship->subject_guids = [1, 2, 3];
+		$relationship->guid_one = [1, 2, 3];
 		$wheres[] = $relationship->prepare($select, $select->getTableAlias());
 
 		$select->andWhere($select->merge($wheres));

@@ -577,15 +577,17 @@ class RiverUnitTest extends UnitTestCase {
 		$r_wheres = [];
 		
 		$alias1 = $select->joinRelationshipTable($select->getTableAlias(), 'subject_guid', ['foo1']);
-		$rel1 = new RelationshipWhereClause();
-		$rel1->names = ['foo1'];
-		$rel1->subject_guids = [1, 2, 3];
+		$rel1 = RelationshipWhereClause::factory([
+			'names' => ['foo1'],
+			'guid_one' => [1, 2, 3],
+		]);
 		$r_wheres[] = $rel1->prepare($select, $alias1);
 
 		$alias2 = $select->joinRelationshipTable($select->getTableAlias(), 'subject_guid', ['foo2'], true);
-		$rel2 = new RelationshipWhereClause();
-		$rel2->names = ['foo2'];
-		$rel2->object_guids = [4, 5, 6];
+		$rel2 = RelationshipWhereClause::factory([
+			'names' => ['foo2'],
+			'guid_two' => [4, 5, 6],
+		]);
 		$r_wheres[] = $rel2->prepare($select, $alias2);
 
 		$wheres[] = $select->merge($r_wheres);
@@ -630,9 +632,10 @@ class RiverUnitTest extends UnitTestCase {
 		
 		$select->joinRelationshipTable($select->getTableAlias(), 'subject_guid', null, false, 'inner', 'r');
 
-		$relationship = new RelationshipWhereClause();
-		$relationship->names = ['foo1'];
-		$relationship->subject_guids = [1, 2, 3];
+		$relationship = RelationshipWhereClause::factory([
+			'names' => ['foo1'],
+			'guid_one' => [1, 2, 3],
+		]);
 		$wheres[] = $relationship->prepare($select, 'r');
 
 		$select->andWhere($select->merge($wheres));

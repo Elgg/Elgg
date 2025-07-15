@@ -47,11 +47,8 @@ trait LegacyQueryOptionsAdapter {
 		$options = $this->normalizeAnnotationOptions($options);
 		$options = $this->normalizeMetadataOptions($options);
 		$options = $this->normalizeMetadataSearchOptions($options);
-		$options = $this->normalizeSelectClauses($options);
-		$options = $this->normalizeWhereClauses($options);
+		$options = $this->normalizeQueryClauses($options);
 		$options = $this->normalizeJoinClauses($options);
-		$options = $this->normalizeGroupByClauses($options);
-		$options = $this->normalizeHavingClauses($options);
 		$options = $this->normalizeOrderByClauses($options);
 		
 		return $options;
@@ -157,6 +154,10 @@ trait LegacyQueryOptionsAdapter {
 			'subtype',
 		]);
 
+		if (isset($options['type_subtype_pair'])) {
+			elgg_deprecated_notice("Using the singular option 'type_subtype_pair' is deprecated. Update your code to use the plural 'type_subtype_pairs' instead.", '6.3');
+		}
+
 		// can't use helper function with type_subtype_pair because
 		// it's already an array...just need to merge it
 		if (isset($options['type_subtype_pair']) && isset($options['type_subtype_pairs'])) {
@@ -242,42 +243,19 @@ trait LegacyQueryOptionsAdapter {
 
 		$options['metadata_name_value_pairs'] = $this->removeKeyPrefix('metadata_', $options['metadata_name_value_pairs']);
 
-		$defaults = [
-			'name' => null,
-			'value' => null,
-			'comparison' => '=',
-			'type' => ELGG_VALUE_STRING,
-			'case_sensitive' => true,
-			'entity_guids' => null,
-			'ids' => null,
-			'created_after' => null,
-			'created_before' => null,
-		];
-
 		foreach ($options['metadata_name_value_pairs'] as $key => $pair) {
 			if ($pair instanceof WhereClause) {
 				continue;
 			}
 
-			$pair = array_merge($defaults, $pair);
-
-			if (in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
-				$clause = new AttributeWhereClause();
-			} else {
-				$clause = new MetadataWhereClause();
-				$clause->ids = (array) $pair['ids'];
-				$clause->entity_guids = (array) $pair['entity_guids'];
-				$clause->created_after = $pair['created_after'];
-				$clause->created_before = $pair['created_before'];
+			$class = MetadataWhereClause::class;
+			if (isset($pair['name']) && in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
+				$class = AttributeWhereClause::class;
 			}
 
-			$clause->names = (array) $pair['name'];
-			$clause->values = (array) $pair['value'];
-			$clause->comparison = $pair['comparison'];
-			$clause->value_type = $pair['type'];
-			$clause->case_sensitive = $pair['case_sensitive'];
+			$pair = $this->normalizePluralOptions($pair, ['name', 'value']);
 
-			$options['metadata_name_value_pairs'][$key] = $clause;
+			$options['metadata_name_value_pairs'][$key] = $class::factory($pair);
 		}
 
 		return $options;
@@ -306,42 +284,19 @@ trait LegacyQueryOptionsAdapter {
 
 		$options['search_name_value_pairs'] = $this->removeKeyPrefix('metadata_', $options['search_name_value_pairs']);
 
-		$defaults = [
-			'name' => null,
-			'value' => null,
-			'comparison' => '=',
-			'type' => ELGG_VALUE_STRING,
-			'case_sensitive' => true,
-			'entity_guids' => null,
-			'ids' => null,
-			'created_after' => null,
-			'created_before' => null,
-		];
-
 		foreach ($options['search_name_value_pairs'] as $key => $pair) {
 			if ($pair instanceof WhereClause) {
 				continue;
 			}
 
-			$pair = array_merge($defaults, $pair);
-
-			if (in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
-				$clause = new AttributeWhereClause();
-			} else {
-				$clause = new MetadataWhereClause();
-				$clause->ids = (array) $pair['ids'];
-				$clause->entity_guids = (array) $pair['entity_guids'];
-				$clause->created_after = $pair['created_after'];
-				$clause->created_before = $pair['created_before'];
+			$class = MetadataWhereClause::class;
+			if (isset($pair['name']) && in_array($pair['name'], \ElggEntity::PRIMARY_ATTR_NAMES)) {
+				$class = AttributeWhereClause::class;
 			}
 
-			$clause->names = (array) $pair['name'];
-			$clause->values = (array) $pair['value'];
-			$clause->comparison = $pair['comparison'];
-			$clause->value_type = $pair['type'];
-			$clause->case_sensitive = $pair['case_sensitive'];
+			$pair = $this->normalizePluralOptions($pair, ['name', 'value']);
 
-			$options['search_name_value_pairs'][$key] = $clause;
+			$options['search_name_value_pairs'][$key] = $class::factory($pair);
 		}
 
 		return $options;
@@ -396,48 +351,18 @@ trait LegacyQueryOptionsAdapter {
 
 		$options['annotation_name_value_pairs'] = $this->removeKeyPrefix('annotation_', $options['annotation_name_value_pairs']);
 
-		$defaults = [
-			'name' => null,
-			'value' => null,
-			'comparison' => '=',
-			'type' => ELGG_VALUE_STRING,
-			'case_sensitive' => true,
-			'entity_guids' => null,
-			'owner_guids' => null,
-			'ids' => null,
-			'enabled' => null,
-			'access_ids' => null,
-			'created_after' => null,
-			'created_before' => null,
-			'sort_by_calculation' => null,
-		];
-
 		foreach ($options['annotation_name_value_pairs'] as $key => $pair) {
 			if ($pair instanceof WhereClause) {
 				continue;
 			}
 
-			$pair = array_merge($defaults, $pair);
+			$pair = $this->normalizePluralOptions($pair, ['name', 'value']);
 
-			$clause = new AnnotationWhereClause();
-			$clause->ids = (array) $pair['ids'];
-			$clause->entity_guids = (array) $pair['entity_guids'];
-			$clause->owner_guids = (array) $pair['owner_guids'];
-			$clause->created_after = $pair['created_after'];
-			$clause->created_before = $pair['created_before'];
-			$clause->names = (array) $pair['name'];
-			$clause->values = (array) $pair['value'];
-			$clause->comparison = $pair['comparison'];
-			$clause->value_type = $pair['type'];
-			$clause->case_sensitive = $pair['case_sensitive'];
-			$clause->access_ids = (array) $pair['access_ids'];
-			$clause->sort_by_calculation = $pair['sort_by_calculation'];
-
-			if ($clause->sort_by_calculation && empty($options['order_by'])) {
-				$clause->sort_by_direction = 'desc';
+			if (!empty($pair['sort_by_calculation']) && empty($options['order_by'])) {
+				$pair['sort_by_direction'] = 'desc';
 			}
 
-			$options['annotation_name_value_pairs'][$key] = $clause;
+			$options['annotation_name_value_pairs'][$key] = AnnotationWhereClause::factory($pair);
 		}
 
 		return $options;
@@ -451,7 +376,7 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @return array
 	 */
-	protected function normalizePairedOptions($type = 'metadata', array $options = []): array {
+	protected function normalizePairedOptions(string $type = 'metadata', array $options = []): array {
 		if (!is_array($options["{$type}_name_value_pairs"])) {
 			$options["{$type}_name_value_pairs"] = [];
 		}
@@ -545,16 +470,21 @@ trait LegacyQueryOptionsAdapter {
 			if (!isset($value['case_sensitive'])) {
 				$value['case_sensitive'] = $case_sensitive_default;
 			}
-			
-			if (!isset($value['type'])) {
+
+			if (isset($value['type'])) {
+				$value['value_type'] = $value['type'];
+				unset($value['type']);
+			}
+
+			if (!isset($value['value_type'])) {
 				if (isset($value['value']) && is_bool($value['value'])) {
 					$value['value'] = (int) $value['value'];
 				}
 				
 				if (isset($value['value']) && is_int($value['value'])) {
-					$value['type'] = ELGG_VALUE_INTEGER;
+					$value['value_type'] = ELGG_VALUE_INTEGER;
 				} else {
-					$value['type'] = ELGG_VALUE_STRING;
+					$value['value_type'] = ELGG_VALUE_STRING;
 				}
 			}
 			
@@ -623,23 +553,16 @@ trait LegacyQueryOptionsAdapter {
 				continue;
 			}
 
-			$clause = new RelationshipWhereClause();
-			$clause->ids = (array) $pair['ids'];
-			$clause->names = (array) $pair['relationship'];
-
-			$clause->join_on = $pair['join_on'];
-			$clause->inverse = $pair['inverse_relationship'];
-			if ($clause->inverse) {
-				$clause->object_guids = (array) $pair['guid'];
-			} else {
-				$clause->subject_guids = (array) $pair['guid'];
-			}
-			
-			$clause->created_after = $pair['created_after'];
-			$clause->created_before = $pair['created_before'];
-
-
-			$options['relationship_pairs'][$key] = $clause;
+			$options['relationship_pairs'][$key] = RelationshipWhereClause::factory([
+				'ids' => $pair['ids'],
+				'names' => $pair['relationship'],
+				'join_on' => $pair['join_on'],
+				'inverse' => $pair['inverse_relationship'],
+				'created_after' => $pair['created_after'],
+				'created_before' => $pair['created_before'],
+				'guid_two' => $pair['inverse_relationship'] ? $pair['guid'] : null,
+				'guid_one' => !$pair['inverse_relationship'] ? $pair['guid'] : null,
+			]);
 		}
 
 		return $options;
@@ -729,7 +652,6 @@ trait LegacyQueryOptionsAdapter {
 				}
 
 				if (!isset($options[$new_prop_name])) {
-					// elgg deprecated notice
 					elgg_deprecated_notice("Using the option '{$prop_name}' is deprecated. Update your code to use '{$new_prop_name}' instead.", '6.3');
 					$options[$new_prop_name] = elgg_extract($prop_name, $options);
 				}
@@ -774,78 +696,6 @@ trait LegacyQueryOptionsAdapter {
 	}
 
 	/**
-	 * Processes an array of 'select' clauses
-	 *
-	 * @param array $options Options
-	 *
-	 * @return array
-	 */
-	protected function normalizeSelectClauses(array $options = []): array {
-		$options = $this->normalizePluralOptions($options, ['select']);
-		
-		if (empty($options['selects'])) {
-			$options['selects'] = [];
-			
-			return $options;
-		}
-		
-		if (!is_array($options['selects'])) {
-			$options['selects'] = [$options['selects']];
-		}
-
-		foreach ($options['selects'] as $key => $clause) {
-			if (empty($clause)) {
-				unset($options['selects'][$key]);
-				continue;
-			}
-
-			if ($clause instanceof SelectClause) {
-				continue;
-			}
-
-			$options['selects'][$key] = new SelectClause($clause);
-		}
-
-		return $options;
-	}
-
-	/**
-	 * Processes an array of 'where' clauses
-	 *
-	 * @param array $options Options
-	 *
-	 * @return array
-	 */
-	protected function normalizeWhereClauses(array $options = []): array {
-		$options = $this->normalizePluralOptions($options, ['where']);
-
-		if (empty($options['wheres'])) {
-			$options['wheres'] = [];
-			
-			return $options;
-		}
-		
-		if (!is_array($options['wheres'])) {
-			$options['wheres'] = [$options['wheres']];
-		}
-		
-		foreach ($options['wheres'] as $key => $clause) {
-			if (empty($clause)) {
-				unset($options['wheres'][$key]);
-				continue;
-			}
-
-			if ($clause instanceof WhereClause) {
-				continue;
-			}
-
-			$options['wheres'][$key] = new WhereClause($clause);
-		}
-
-		return $options;
-	}
-
-	/**
 	 * Processes an array of 'joins' clauses
 	 *
 	 * @param array $options Options
@@ -857,7 +707,6 @@ trait LegacyQueryOptionsAdapter {
 		
 		if (empty($options['joins'])) {
 			$options['joins'] = [];
-			
 			return $options;
 		}
 		
@@ -897,7 +746,7 @@ trait LegacyQueryOptionsAdapter {
 	}
 
 	/**
-	 * Processes an array of 'joins' clauses
+	 * Processes an array of 'order_by' clauses
 	 *
 	 * @param array $options Options
 	 *
@@ -961,58 +810,46 @@ trait LegacyQueryOptionsAdapter {
 	}
 
 	/**
-	 * Normalize 'having' statements
+	 * Normalizes various query clauses statements
 	 *
 	 * @param array $options Options
 	 *
 	 * @return array
+	 *
+	 * @since 6.3
 	 */
-	protected function normalizeHavingClauses(array $options = []): array {
-		if (empty($options['having'])) {
-			$options['having'] = [];
-			
-			return $options;
-		}
-		
-		if (!is_array($options['having'])) {
-			$options['having'] = [$options['having']];
-		}
+	protected function normalizeQueryClauses(array $options = []): array {
+		$options = $this->normalizePluralOptions($options, ['select', 'where']);
 
-		foreach ($options['having'] as $key => $expr) {
-			if ($expr instanceof HavingClause) {
+		$clauses = [
+			'group_by' => GroupByClause::class,
+			'having' => HavingClause::class,
+			'selects' => SelectClause::class,
+			'wheres' => WhereClause::class,
+		];
+
+		foreach ($clauses as $clause_key => $class_name) {
+			if (empty($options[$clause_key])) {
+				$options[$clause_key] = [];
 				continue;
 			}
 
-			$options['having'][$key] = new HavingClause($expr);
-		}
-
-		return $options;
-	}
-	
-	/**
-	 * Normalize 'group_by' statements
-	 *
-	 * @param array $options Options
-	 *
-	 * @return array
-	 */
-	protected function normalizeGroupByClauses(array $options = []): array {
-		if (empty($options['group_by'])) {
-			$options['group_by'] = [];
-			
-			return $options;
-		}
-
-		if (!is_array($options['group_by'])) {
-			$options['group_by'] = [$options['group_by']];
-		}
-
-		foreach ($options['group_by'] as $key => $expr) {
-			if ($expr instanceof GroupByClause) {
-				continue;
+			if (!is_array($options[$clause_key])) {
+				$options[$clause_key] = [$options[$clause_key]];
 			}
-			
-			$options['group_by'][$key] = new GroupByClause($expr);
+
+			foreach ($options[$clause_key] as $index => $expr) {
+				if ($expr instanceof $class_name) {
+					continue;
+				}
+
+				if (empty($expr)) {
+					unset($options[$clause_key][$index]);
+					continue;
+				}
+
+				$options[$clause_key][$index] = new $class_name($expr);
+			}
 		}
 
 		return $options;
