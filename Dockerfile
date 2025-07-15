@@ -189,7 +189,7 @@ COPY . /var/www/html/elgg
 # COPY elgg-config/ /var/www/html/elgg/elgg-config/
 
 # Droits sur les dossiers nécessaires
-RUN mkdir -p /var/elgg_data && chown -R www-data:www-data /var/elgg_data 
+RUN mkdir -p /var/elgg_data && chown -R www-data:www-data /var/elgg_data && chmod 775 /var/elgg_data
 
 # Définir le dossier de travail
 WORKDIR /var/www/html/elgg
