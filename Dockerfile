@@ -203,6 +203,8 @@ RUN composer install --no-dev --no-scripts --no-progress --optimize-autoloader |
 # Donner les bons droits à Apache
 RUN chown -R www-data:www-data /var/www/html/elgg
 
+RUN sed -i 's/Listen 8080/Listen 80/' /etc/apache2/ports.conf || echo 'No 8080 to replace'
+
 # Exposer le port HTTP
 EXPOSE 80
 
