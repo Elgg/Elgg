@@ -85,6 +85,7 @@ class AdminHeader {
 			'Actions' => elgg_echo('developers:inspect:actions'),
 			'Events' => elgg_echo('developers:inspect:events'),
 			'Menus' => elgg_echo('developers:inspect:menus'),
+			'Notifications' => elgg_echo('developers:inspect:notifications'),
 			'Routes' => elgg_echo('developers:inspect:routes'),
 			'Seeders' => elgg_echo('developers:inspect:seeders'),
 			'Services' => elgg_echo('developers:inspect:services'),
