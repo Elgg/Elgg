@@ -98,28 +98,27 @@ return [
 		'resource' => 'manifest.json',
 		'walled' => false,
 	],
-	'admin:plugin_settings' => [
-		// needs to be registered before global admin route
-		'path' => '/admin/plugin_settings/{plugin_id}',
-		'resource' => 'admin/plugin_settings',
-		'middleware' => [
-			\Elgg\Router\Middleware\AdminGatekeeper::class,
-		],
-	],
-	'admin:online_users_count' => [
-		// needs to be registered before global admin route
-		'path' => '/admin/online_users_count',
-		'controller' => \Elgg\Controllers\OnlineUsersCount::class,
-		'middleware' => [
-			\Elgg\Router\Middleware\AdminGatekeeper::class,
-		],
-	],
 	'admin' => [
 		'path' => '/admin/{segments?}',
 		'resource' => 'admin',
 		'requirements' => [
 			'segments' => '.+',
 		],
+		'middleware' => [
+			\Elgg\Router\Middleware\AdminGatekeeper::class,
+		],
+		'priority' => -1, // use as a fallback for all admin pages
+	],
+	'admin:online_users_count' => [
+		'path' => '/admin/online_users_count',
+		'controller' => \Elgg\Controllers\OnlineUsersCount::class,
+		'middleware' => [
+			\Elgg\Router\Middleware\AdminGatekeeper::class,
+		],
+	],
+	'admin:plugin_settings' => [
+		'path' => '/admin/plugin_settings/{plugin_id?}', // optional plugin id so we also handle the route if plugin_id is missing in the path
+		'resource' => 'admin/plugin_settings',
 		'middleware' => [
 			\Elgg\Router\Middleware\AdminGatekeeper::class,
 		],
