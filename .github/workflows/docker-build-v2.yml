@@ -51,20 +51,20 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:latest
           no-cache: true
-          # cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+          # cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:latest
           cache-to: type=inline
 
       - name: Set image tag output
         id: set-output
         run: |
-          echo "image-tag=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6" >> $GITHUB_OUTPUT
+          echo "image-tag=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:latest" >> $GITHUB_OUTPUT
 
       - name: Scan Docker image with Trivy
         uses: aquasecurity/trivy-action@0.20.0
         with:
-          image-ref: '${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6'
+          image-ref: '${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:latest'
           format: 'sarif'
           output: 'trivy-results.sarif'
 
@@ -126,7 +126,7 @@ jobs:
 
       # - name: Notify on success
       #   if: success()
-      #   uses: actions/github-script@v6
+      #   uses: actions/github-script@latest
       #   with:
       #     script: |
       #       github.rest.issues.createComment({
@@ -145,7 +145,7 @@ jobs:
 
       - name: Update deployment status
         if: success()
-        uses: actions/github-script@v6
+        uses: actions/github-script@latest
         with:
           script: |
             try {
