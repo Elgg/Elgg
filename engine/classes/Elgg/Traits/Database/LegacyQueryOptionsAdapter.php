@@ -154,6 +154,10 @@ trait LegacyQueryOptionsAdapter {
 			'subtype',
 		]);
 
+		if (isset($options['type_subtype_pair'])) {
+			elgg_deprecated_notice("Using the singular option 'type_subtype_pair' is deprecated. Update your code to use the plural 'type_subtype_pairs' instead.", '6.3');
+		}
+
 		// can't use helper function with type_subtype_pair because
 		// it's already an array...just need to merge it
 		if (isset($options['type_subtype_pair']) && isset($options['type_subtype_pairs'])) {
@@ -661,7 +665,6 @@ trait LegacyQueryOptionsAdapter {
 				}
 
 				if (!isset($options[$new_prop_name])) {
-					// elgg deprecated notice
 					elgg_deprecated_notice("Using the option '{$prop_name}' is deprecated. Update your code to use '{$new_prop_name}' instead.", '6.3');
 					$options[$new_prop_name] = elgg_extract($prop_name, $options);
 				}

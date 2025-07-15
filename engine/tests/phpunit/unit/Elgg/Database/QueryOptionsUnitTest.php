@@ -107,6 +107,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 	}
 
 	public function testNormalizesTypeSubtypeOptionsFromPairSingulars() {
+		_elgg_services()->logger->disable();
+
 		$options = $this->options->normalizeOptions([
 			'type_subtype_pair' => ['object' => ['blog']],
 		]);
@@ -117,6 +119,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 	}
 
 	public function testNormalizesTypeSubtypeOptionsFromPairAndNonPairSingulars() {
+		_elgg_services()->logger->disable();
+
 		$options = $this->options->normalizeOptions([
 			'type' => 'group',
 			'subtype' => 'community',
@@ -146,6 +150,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 	}
 
 	public function testNormalizesTypeSubtypeOptionsFromPairSingularAndPairPlural() {
+		_elgg_services()->logger->disable();
+
 		$options = $this->options->normalizeOptions([
 			'type_subtype_pair' => ['group' => 'community'],
 			'type_subtype_pairs' => ['object' => 'blog'],
