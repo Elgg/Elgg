@@ -167,7 +167,7 @@ spec:
       #   fsGroup: 33
       initContainers:
       - name: fix-permissions
-        image: bitaouioussama/elgg-app:v6
+        image: bitaouioussama/elgg-app:latest
         command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data && chmod -R 775 /var/elgg_data"]
         #fichiers de configuration
         # command: ["/bin/sh", "-c", "chown -R 33:33 /var/www/html/elgg/elgg-config && chmod -R 775 /var/www/html/elgg/elgg-config"]
@@ -180,7 +180,7 @@ spec:
 
       containers:
       - name: elgg-app
-        image: bitaouioussama/elgg-app:v6
+        image: bitaouioussama/elgg-app:latest
         imagePullPolicy: Always
         # securityContext:
         #   runAsUser: 33
