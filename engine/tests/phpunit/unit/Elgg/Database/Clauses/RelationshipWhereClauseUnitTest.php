@@ -87,8 +87,8 @@ class RelationshipWhereClauseUnitTest extends UnitTestCase {
 		$expected = $this->qb->merge($parts);
 
 		$query = new RelationshipWhereClause();
-		$query->subject_guids = [2, 3, 4];
-		$query->object_guids = [5, 6, 7];
+		$query->guid_one = [2, 3, 4];
+		$query->guid_two = [5, 6, 7];
 
 		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
 		$actual = $query->prepare($qb, $qb->getTableAlias());

@@ -714,12 +714,12 @@ class RelationshipsUnitTest extends UnitTestCase {
 		
 		$relationship = new RelationshipWhereClause();
 		$relationship->names = ['foo1'];
-		$relationship->subject_guids = [1, 2, 3];
+		$relationship->guid_one = [1, 2, 3];
 		$r_wheres[] = $relationship->prepare($select, $select->getTableAlias());
 
 		$relationship = new RelationshipWhereClause();
 		$relationship->names = ['foo2'];
-		$relationship->object_guids = [4, 5, 6];
+		$relationship->guid_two = [4, 5, 6];
 		$relationship->inverse = true;
 		$r_wheres[] = $relationship->prepare($select, $select->getTableAlias());
 
@@ -775,7 +775,7 @@ class RelationshipsUnitTest extends UnitTestCase {
 		
 		$relationship = new RelationshipWhereClause();
 		$relationship->names = ['foo1'];
-		$relationship->subject_guids = [1, 2, 3];
+		$relationship->guid_one = [1, 2, 3];
 		$wheres[] = $relationship->prepare($select, $select->getTableAlias());
 
 		$select->andWhere($select->merge($wheres));

@@ -553,22 +553,16 @@ trait LegacyQueryOptionsAdapter {
 				continue;
 			}
 
-			$clause = new RelationshipWhereClause();
-			$clause->ids = (array) $pair['ids'];
-			$clause->names = (array) $pair['relationship'];
-
-			$clause->join_on = $pair['join_on'];
-			$clause->inverse = $pair['inverse_relationship'];
-			if ($clause->inverse) {
-				$clause->object_guids = (array) $pair['guid'];
-			} else {
-				$clause->subject_guids = (array) $pair['guid'];
-			}
-			
-			$clause->created_after = $pair['created_after'];
-			$clause->created_before = $pair['created_before'];
-
-			$options['relationship_pairs'][$key] = $clause;
+			$options['relationship_pairs'][$key] = RelationshipWhereClause::factory([
+				'ids' => $pair['ids'],
+				'names' => $pair['relationship'],
+				'join_on' => $pair['join_on'],
+				'inverse' => $pair['inverse_relationship'],
+				'created_after' => $pair['created_after'],
+				'created_before' => $pair['created_before'],
+				'guid_two' => $pair['inverse_relationship'] ? $pair['guid'] : null,
+				'guid_one' => !$pair['inverse_relationship'] ? $pair['guid'] : null,
+			]);
 		}
 
 		return $options;

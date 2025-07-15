@@ -988,7 +988,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertInstanceOf(RelationshipWhereClause::class, $pair);
 		$this->assertEquals([1, 2, 3], $pair->ids);
 		$this->assertEquals(['friend', 'enemy'], $pair->names);
-		$this->assertEquals([15, 20, 21], $pair->subject_guids);
+		$this->assertEquals([15, 20, 21], $pair->guid_one);
 		$this->assertEquals(false, $pair->inverse);
 		$this->assertEquals('owner_guid', $pair->join_on);
 		$this->assertEquals($after, $pair->created_after);
@@ -1017,7 +1017,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertInstanceOf(RelationshipWhereClause::class, $pair);
 		$this->assertEquals([1, 2, 3], $pair->ids);
 		$this->assertEquals(['friend', 'enemy'], $pair->names);
-		$this->assertEquals([15, 20, 21], $pair->object_guids);
+		$this->assertEquals([15, 20, 21], $pair->guid_two);
 		$this->assertEquals(true, $pair->inverse);
 		$this->assertEquals('owner_guid', $pair->join_on);
 		$this->assertEquals($after, $pair->created_after);
