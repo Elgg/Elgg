@@ -254,10 +254,6 @@ trait LegacyQueryOptionsAdapter {
 			}
 
 			$pair = $this->normalizePluralOptions($pair, ['name', 'value']);
-			if (isset($pair['type'])) {
-				$pair['value_type'] = $pair['type'];
-				unset($pair['type']);
-			}
 
 			$options['metadata_name_value_pairs'][$key] = $class::factory($pair);
 		}
@@ -299,10 +295,6 @@ trait LegacyQueryOptionsAdapter {
 			}
 
 			$pair = $this->normalizePluralOptions($pair, ['name', 'value']);
-			if (isset($pair['type'])) {
-				$pair['value_type'] = $pair['type'];
-				unset($pair['type']);
-			}
 
 			$options['search_name_value_pairs'][$key] = $class::factory($pair);
 		}
@@ -365,10 +357,6 @@ trait LegacyQueryOptionsAdapter {
 			}
 
 			$pair = $this->normalizePluralOptions($pair, ['name', 'value']);
-			if (isset($pair['type'])) {
-				$pair['value_type'] = $pair['type'];
-				unset($pair['type']);
-			}
 
 			if (!empty($pair['sort_by_calculation']) && empty($options['order_by'])) {
 				$pair['sort_by_direction'] = 'desc';
@@ -482,16 +470,21 @@ trait LegacyQueryOptionsAdapter {
 			if (!isset($value['case_sensitive'])) {
 				$value['case_sensitive'] = $case_sensitive_default;
 			}
-			
-			if (!isset($value['type'])) {
+
+			if (isset($value['type'])) {
+				$value['value_type'] = $value['type'];
+				unset($value['type']);
+			}
+
+			if (!isset($value['value_type'])) {
 				if (isset($value['value']) && is_bool($value['value'])) {
 					$value['value'] = (int) $value['value'];
 				}
 				
 				if (isset($value['value']) && is_int($value['value'])) {
-					$value['type'] = ELGG_VALUE_INTEGER;
+					$value['value_type'] = ELGG_VALUE_INTEGER;
 				} else {
-					$value['type'] = ELGG_VALUE_STRING;
+					$value['value_type'] = ELGG_VALUE_STRING;
 				}
 			}
 			
