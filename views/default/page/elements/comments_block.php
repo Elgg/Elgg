@@ -16,6 +16,7 @@ $options = [
 	'limit' => elgg_extract('limit', $vars, 4),
 	'wheres' => [],
 	'preload_owners' => true,
+	'preload_containers' => true,
 	'distinct' => false,
 	'metadata_name_value_pairs' => ['level' => 1],
 ];

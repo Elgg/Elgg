@@ -205,6 +205,13 @@ class RouteRegistrationService {
 				if (!empty($deprecated)) {
 					elgg_deprecated_notice("The route \"{$name}\" has been deprecated.", $deprecated);
 				}
+
+				foreach ($parameters as $param_key => $value) {
+					if ($value !== null && $route->getDefault($param_key) !== null) {
+						// remove from defaults to force existence in url generation in case the param matches the default
+						$route->setDefault($param_key, null);
+					}
+				}
 			}
 			
 			$url = $this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_URL);

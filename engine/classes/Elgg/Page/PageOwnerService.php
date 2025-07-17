@@ -18,30 +18,7 @@ use Elgg\Router\Route;
  */
 class PageOwnerService {
 
-	/**
-	 * @var Request
-	 */
-	protected $request;
-
-	/**
-	 * @var EntityTable
-	 */
-	protected $entity_table;
-
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
-
-	/**
-	 * @var Invoker
-	 */
-	protected $invoker;
-
-	/**
-	 * @var int
-	 */
-	protected $page_owner_guid = 0;
+	protected int $page_owner_guid = 0;
 	
 	/**
 	 * Constructor
@@ -52,16 +29,11 @@ class PageOwnerService {
 	 * @param Invoker       $invoker      Invoker
 	 */
 	public function __construct(
-		Request $request,
-		EntityTable $entity_table,
-		EventsService $events,
-		Invoker $invoker
+		protected Request $request,
+		protected EntityTable $entity_table,
+		protected EventsService $events,
+		protected Invoker $invoker
 	) {
-		$this->request = $request;
-		$this->entity_table = $entity_table;
-		$this->events = $events;
-		$this->invoker = $invoker;
-		
 		$this->page_owner_guid = $this->detectPageOwnerFromRoute();
 	}
 	
@@ -77,11 +49,7 @@ class PageOwnerService {
 		}
 		
 		$page_owner = $route->resolvePageOwner();
-		if (!$page_owner instanceof \ElggEntity) {
-			return 0;
-		}
-		
-		return $page_owner->guid;
+		return $page_owner instanceof \ElggEntity ? $page_owner->guid : 0;
 	}
 	
 	/**
@@ -92,7 +60,7 @@ class PageOwnerService {
 	 * @return void
 	 * @throws RangeException
 	 */
-	public function setPageOwnerGuid(int $guid = 0) {
+	public function setPageOwnerGuid(int $guid = 0): void {
 		if ($guid < 0) {
 			throw new RangeException(__METHOD__ . ' requires a positive integer.');
 		}
@@ -105,16 +73,20 @@ class PageOwnerService {
 	 *
 	 * @return int
 	 */
-	public function getPageOwnerGuid() {
+	public function getPageOwnerGuid(): int {
 		return $this->page_owner_guid;
 	}
 	
 	/**
 	 * Returns the page owner entity
 	 *
-	 * @return \ElggEntity the current page owner or null if none.
+	 * @return null|\ElggEntity the current page owner or null if none.
 	 */
 	public function getPageOwnerEntity(): ?\ElggEntity {
+		if ($this->getPageOwnerGuid() < 1) {
+			return null;
+		}
+
 		return $this->entity_table->get($this->getPageOwnerGuid());
 	}
 }
