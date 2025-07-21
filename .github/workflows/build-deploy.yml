@@ -20,6 +20,7 @@ env:
   CACHE_KEY: ${{ github.sha }}
   IMAGE_TAG: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
   KUBECONFIG_PATH: ${{ github.workspace }}/kubeconfig.yaml
+  NODE_IP: ${{ secrets.NODE_IP }}
 
 jobs:
 
@@ -123,59 +124,56 @@ jobs:
         env:
           KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
           
-      - name: Deploy OpenVAS 
-        run: kubectl apply -f k8s-rancher/openvas-scan.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-        env:
-          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+      # - name: Deploy OpenVAS 
+      #   run: kubectl apply -f k8s-rancher/openvas-scan.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+      #   env:
+      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
   scan-with-openvas:
     needs: deploy-to-rancher
     runs-on: [self-hosted, Linux, X64]
   
+    env:
+      NODE_IP: ${{ secrets.NODE_IP }}
+      OPENVAS_PASSWORD: ${{ secrets.OPENVAS_PASSWORD }}
+  
     steps:
-      - name: Setup kubectl
-        uses: azure/setup-kubectl@v3
-  
-      - name: Decode kubeconfig
-        run: |
-          echo "${{ secrets.RANCHER_KUBECONFIG_B64 }}" | base64 -d > kubeconfig.yaml
-        env:
-          KUBECONFIG: ${{ github.workspace }}/kubeconfig.yaml
-  
-      - name: Wait for OpenVAS pod to be ready
-        run: |
-          kubectl wait --for=condition=ready pod -l app=openvas -n ${{ secrets.RANCHER_NAMESPACE }} --timeout=600s
-        env:
-          KUBECONFIG: ${{ github.workspace }}/kubeconfig.yaml
-  
-      - name: Extract Node IP and NodePort for Elgg
+      - name: Get NodePort of Elgg app
         id: elgg-access
         run: |
           export KUBECONFIG=${{ github.workspace }}/kubeconfig.yaml
-  
-          NODE_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[?(@.type=='InternalIP')].address}")
           NODE_PORT=$(kubectl get svc elgg-app -n ${{ secrets.RANCHER_NAMESPACE }} -o jsonpath="{.spec.ports[0].nodePort}")
-  
-          echo "NODE_IP=$NODE_IP" >> $GITHUB_ENV
           echo "NODE_PORT=$NODE_PORT" >> $GITHUB_ENV
           echo "ELGG_URL=http://$NODE_IP:$NODE_PORT" >> $GITHUB_ENV
   
-      - name: Run GVM scan via gvm-cli
+      - name: Start OpenVAS container securely
         run: |
-          export KUBECONFIG=${{ github.workspace }}/kubeconfig.yaml
-          OPENVAS_POD=$(kubectl get pods -n ${{ secrets.RANCHER_NAMESPACE }} -l app=openvas -o jsonpath="{.items[0].metadata.name}")
+          docker run -d --name openvas \
+            -e PASSWORD=$OPENVAS_PASSWORD \
+            -p 9390:9390 \
+            mikesplain/openvas
   
-          echo "📡 Target URL: $ELGG_URL"
-          echo "Node IP: $NODE_IP"
-          echo "Node Port: $NODE_PORT"
+      - name: Wait for OpenVAS to initialize
+        run: |
+          echo "⏳ Waiting for OpenVAS to initialize..."
+          sleep 180
   
-          # Use NODE_IP directly as target host for OpenVAS scan
-          kubectl exec -n ${{ secrets.RANCHER_NAMESPACE }} $OPENVAS_POD -- \
-            gvm-cli --gmp-username=admin --gmp-password="${{ secrets.OPENVAS_PASSWORD }}" socket --xml "
+      - name: Run GVM scan using gvm-cli
+        run: |
+          echo "🔎 Target: $ELGG_URL"
+          ELGG_HOST=$(echo $ELGG_URL | cut -d/ -f3 | cut -d: -f1)
+  
+          docker exec openvas gvm-cli \
+            --gmp-username=admin \
+            --gmp-password="$OPENVAS_PASSWORD" \
+            socket --xml "
               <create_target>
                 <name>elgg-target</name>
-                <hosts>$NODE_IP</hosts>
+                <hosts>$ELGG_HOST</hosts>
                 <port_list id='33d0cd82-57c6-11e1-8ed1-406186ea4fc5'/>
               </create_target>"
   
-          echo "✅ Scan target created in OpenVAS (you can extend with task creation and start later)"
+      - name: Stop and clean up OpenVAS container
+        if: always()
+        run: docker rm -f openvas || true
+  
