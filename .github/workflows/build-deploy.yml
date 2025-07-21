@@ -173,4 +173,3 @@ jobs:
       - name: Stop and clean up OpenVAS container
         if: always()
         run: docker rm -f openvas || true
-  
