@@ -135,6 +135,9 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
  
     steps:
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+        
       - name: Get NodePort of Elgg app
         id: elgg-access
         run: |
