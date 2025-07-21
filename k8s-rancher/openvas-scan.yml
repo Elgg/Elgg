@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openvas
+  namespace: elgg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openvas
+  template:
+    metadata:
+      labels:
+        app: openvas
+    spec:
+      containers:
+        - name: openvas
+          image: mikesplain/openvas
+          ports:
+            - containerPort: 9390
+          env:
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: openvas-secret
+                  key: password
+          volumeMounts:
+            - name: openvas-data
+              mountPath: /data
+      volumes:
+        - name: openvas-data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openvas
+  namespace: elgg
+spec:
+  selector:
+    app: openvas
+  ports:
+    - protocol: TCP
+      port: 9390
+      targetPort: 9390
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: openvas-secret
+  namespace: elgg
+type: Opaque
+stringData:
+  password: admin
