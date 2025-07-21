@@ -21,6 +21,7 @@ env:
   IMAGE_TAG: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
   KUBECONFIG_PATH: ${{ github.workspace }}/kubeconfig.yaml
   NODE_IP: ${{ secrets.NODE_IP }}
+  OPENVAS_PASSWORD: ${{ secrets.OPENVAS_PASSWORD }}
 
 jobs:
 
@@ -132,11 +133,7 @@ jobs:
   scan-with-openvas:
     needs: deploy-to-rancher
     runs-on: [self-hosted, Linux, X64]
-  
-    env:
-      NODE_IP: ${{ secrets.NODE_IP }}
-      OPENVAS_PASSWORD: ${{ secrets.OPENVAS_PASSWORD }}
-  
+ 
     steps:
       - name: Get NodePort of Elgg app
         id: elgg-access
