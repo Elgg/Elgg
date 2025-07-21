@@ -18,16 +18,11 @@ spec:
       #   fsGroup: 33
       initContainers:
       - name: fix-permissions
-        image: busybox
+        image: bitaouioussama/elgg-app:v6
         command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data && chmod -R 775 /var/elgg_data"]
-        #fichiers de configuration
-        # command: ["/bin/sh", "-c", "chown -R 33:33 /var/www/html/elgg/elgg-config && chmod -R 775 /var/www/html/elgg/elgg-config"]
         volumeMounts:
         - mountPath: /var/elgg_data
           name: elgg-data
-
-        # - mountPath: /var/www/html/elgg/elgg-config
-        #   name: elgg-config-volume
 
       containers:
       - name: elgg-app
@@ -40,7 +35,7 @@ spec:
           - secretRef:
               name: elgg-env
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         resources:
           requests:
             cpu: "500m"
@@ -51,11 +46,11 @@ spec:
         volumeMounts:
         - mountPath: /var/elgg_data
           name: elgg-data
+
       volumes:
       - name: elgg-data
         persistentVolumeClaim:
           claimName: elgg-pvc
-
 ---
 
 
