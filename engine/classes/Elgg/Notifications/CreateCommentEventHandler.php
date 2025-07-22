@@ -7,7 +7,7 @@ namespace Elgg\Notifications;
  *
  * @since 4.0
  */
-class CreateCommentEventHandler extends NotificationEventHandler {
+class CreateCommentEventHandler extends NonConfigurableNotificationEventHandler {
 	
 	/**
 	 * Tells if the recipient is the owner of the entity commented on
@@ -50,15 +50,6 @@ class CreateCommentEventHandler extends NotificationEventHandler {
 			elgg_get_excerpt((string) $entity?->description, 1000),
 			$entity?->getURL(),
 		]);
-	}
-	
-	/**
-	 * Is this event configurable by the user on the notification settings page
-	 *
-	 * @return bool
-	 */
-	public static function isConfigurableByUser(): bool {
-		return false;
 	}
 	
 	/**

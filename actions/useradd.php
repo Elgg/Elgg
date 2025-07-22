@@ -51,20 +51,9 @@ try {
 	$new_user->admin_created = true;
 	$new_user->created_by_guid = elgg_get_logged_in_user_guid();
 
-	$subject = elgg_echo('useradd:subject', [], $new_user->getLanguage());
-	$body = elgg_echo('useradd:body', [
-		elgg_get_site_entity()->getDisplayName(),
-		elgg_get_site_entity()->getURL(),
-		$username,
-		$password,
-	], $new_user->getLanguage());
-
-	notify_user($new_user->guid, elgg_get_site_entity()->guid, $subject, $body, [
-		'action' => 'useradd',
-		'object' => $new_user,
+	$new_user->notify('useradd', $new_user, [
 		'password' => $password,
-		'apply_muting' => false,
-	], ['email']);
+	]);
 
 	return elgg_ok_response('', elgg_echo('adduser:ok', [elgg_get_site_entity()->getDisplayName()]));
 } catch (RegistrationException $r) {

@@ -2,14 +2,14 @@
 
 namespace Elgg\Groups\Notifications;
 
-use Elgg\Notifications\NotificationEventHandler;
+use Elgg\Notifications\NonConfigurableNotificationEventHandler;
 
 /**
  * Send a notification for the 'relationship', 'member', 'add_membership' event
  *
  * @since 6.3
  */
-class AddMembershipEventHandler extends NotificationEventHandler {
+class AddMembershipEventHandler extends NonConfigurableNotificationEventHandler {
 	
 	/**
 	 * {@inheritdoc}
@@ -74,13 +74,6 @@ class AddMembershipEventHandler extends NotificationEventHandler {
 		}
 		
 		return $group->getURL();
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function isConfigurableByUser(): bool {
-		return false;
 	}
 	
 	/**

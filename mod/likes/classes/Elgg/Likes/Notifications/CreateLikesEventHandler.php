@@ -2,14 +2,14 @@
 
 namespace Elgg\Likes\Notifications;
 
-use Elgg\Notifications\NotificationEventHandler;
+use Elgg\Notifications\NonConfigurableNotificationEventHandler;
 
 /**
  * Send a notification to the Entity owner when a Likes annotation is created
  *
  * @since 6.1
  */
-class CreateLikesEventHandler extends NotificationEventHandler {
+class CreateLikesEventHandler extends NonConfigurableNotificationEventHandler {
 	
 	/**
 	 * Get the Likes annotation
@@ -115,12 +115,5 @@ class CreateLikesEventHandler extends NotificationEventHandler {
 	 */
 	protected function getNotificationURL(\ElggUser $recipient, string $method): string {
 		return (string) $this->getLikedEntity()?->getURL();
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function isConfigurableByUser(): bool {
-		return false;
 	}
 }

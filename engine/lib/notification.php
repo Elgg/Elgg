@@ -175,60 +175,6 @@ function elgg_get_subscriptions_for_container(int $container_guid): array {
 }
 
 /**
- * Notify a user via their preferences.
- *
- * @param mixed  $to               Either a guid or an array of guid's to notify.
- * @param int    $from             GUID of the sender, which may be a user, site or object.
- * @param string $subject          Message subject.
- * @param string $message          Message body.
- * @param array  $params           Misc additional parameters specific to various methods.
- *
- *                                 By default Elgg core supports three parameters, which give
- *                                 notification plugins more control over the notifications:
- *
- *                                 object => null|\ElggEntity|\ElggAnnotation The object that is triggering the notification.
- *
- *                                 action => null|string Word that describes the action that is triggering the notification (e.g. "create" or "update").
- *
- *                                 summary => null|string Summary that notification plugins can use alongside the notification title and body.
- *
- * @param mixed  $methods_override A string, or an array of strings specifying the delivery
- *                                 methods to use - or leave blank for delivery using the
- *                                 user's chosen delivery methods.
- *
- * @return array Compound array of each delivery user/delivery method's success or failure.
- */
-function notify_user(int|array $to, int $from = 0, string $subject = '', string $message = '', array $params = [], $methods_override = null): array {
-
-	$params['subject'] = $subject;
-	$params['body'] = $message;
-	$params['methods_override'] = $methods_override;
-
-	if (!empty($from)) {
-		$sender = get_entity($from);
-	} else {
-		$sender = elgg_get_site_entity();
-	}
-	
-	if (!$sender instanceof \ElggEntity) {
-		return [];
-	}
-
-	$recipients = [];
-	$to = (array) $to;
-	foreach ($to as $guid) {
-		$recipient = get_entity($guid);
-		if (!$recipient instanceof \ElggEntity) {
-			continue;
-		}
-		
-		$recipients[] = $recipient;
-	}
-
-	return _elgg_services()->notifications->sendInstantNotifications($sender, $recipients, $params);
-}
-
-/**
  * Send an email to any email address
  *
  * @param \Elgg\Email $email Email
@@ -255,4 +201,21 @@ function elgg_send_email(\Elgg\Email $email): bool {
  */
 function elgg_enqueue_notification_event(string $action, \ElggData $object, ?\ElggEntity $actor = null): void {
 	_elgg_services()->notifications->enqueueEvent($action, $object, $actor);
+}
+
+/**
+ * Notify a user about a given action on a subject
+ *
+ * @param \ElggUser        $recipient The recipient user
+ * @param string           $action    The action on $subject
+ * @param \ElggData        $subject   The notification subject
+ * @param array            $params    Additional params
+ *                                    use $params['methods_override'] to override the recipient notification methods (eg 'email' or 'site')
+ * @param null|\ElggEntity $from      Sender of the message
+ *
+ * @return array Compound array of each delivery user/delivery method's success or failure.
+ * @since 6.3
+ */
+function elgg_notify_user(\ElggUser $recipient, string $action, \ElggData $subject, array $params = [], ?\ElggEntity $from = null): array {
+	return $recipient->notify($action, $subject, $params, $from);
 }

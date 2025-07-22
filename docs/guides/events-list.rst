@@ -635,7 +635,7 @@ Note that not all events apply to instant notifications.
 	Filters subscribers of the notification event.
 	Applies to **subscriptions** and **instant** notifications.
 	In case of a subscription event, by default, the subscribers list consists of the users subscribed to the container entity of the event object.
-	In case of an instant notification event, the subscribers list consists of the users passed as recipients to ``notify_user()``
+	In case of an instant notification event, the subscribers list consists of the user passed as recipient to ``elgg_notify_user()``
 
    **IMPORTANT** Always validate the notification event, object and/or action types before adding any new recipients to ensure that you do not accidentally dispatch notifications to unintended recipients.
    Consider a situation, where a mentions plugin sends out an instant notification to a mentioned user - any event acting on a subject or an object without validating an event or action type (e.g. including an owner of the original wire thread) might end up sending notifications to wrong users.

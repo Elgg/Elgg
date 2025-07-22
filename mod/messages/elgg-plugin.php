@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Messages\Forms\PrepareFields;
+use Elgg\Messages\Notifications\SendMessageHandler;
 
 require_once(__DIR__ . '/lib/functions.php');
 
@@ -8,6 +9,9 @@ return [
 	'plugin' => [
 		'name' => 'Messages',
 		'activate_on_install' => true,
+	],
+	'settings' => [
+		'friends_only' => false,
 	],
 	'entities' => [
 		[
@@ -57,11 +61,6 @@ return [
 			],
 		],
 	],
-	'view_extensions' => [
-		'elgg.css' => [
-			'messages/css' => [],
-		],
-	],
 	'events' => [
 		'delete:after' => [
 			'user' => [
@@ -88,7 +87,16 @@ return [
 			],
 		],
 	],
-	'settings' => [
-		'friends_only' => false,
+	'notifications' => [
+		'object' => [
+			'messages' => [
+				'send' => SendMessageHandler::class,
+			],
+		],
+	],
+	'view_extensions' => [
+		'elgg.css' => [
+			'messages/css' => [],
+		],
 	],
 ];

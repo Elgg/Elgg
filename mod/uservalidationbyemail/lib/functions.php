@@ -11,9 +11,8 @@
  * @return array|bool
  */
 function uservalidationbyemail_request_validation(int $user_guid): array|bool {
-
 	$user = get_user($user_guid);
-	if (!$user instanceof ElggUser) {
+	if (!$user instanceof \ElggUser) {
 		return false;
 	}
 	
@@ -23,34 +22,8 @@ function uservalidationbyemail_request_validation(int $user_guid): array|bool {
 		return true;
 	}
 	
-	$site = elgg_get_site_entity();
-	
-	// Work out validate link
-	$link = elgg_generate_url('account:validation:email:confirm', [
-		'u' => $user->guid,
-	]);
-	$link = elgg_http_get_signed_url($link);
-	
 	// Get email to show in the next page
 	elgg_get_session()->set('emailsent', $user->email);
-
-	$subject = elgg_echo('email:validate:subject', [
-		$user->getDisplayName(),
-		$site->getDisplayName(),
-	], $user->language);
-
-	$body = elgg_echo('email:validate:body', [
-		$site->getDisplayName(),
-		$link,
-	], $user->language);
-
-	$params = [
-		'action' => 'uservalidationbyemail',
-		'object' => $user,
-		'link' => $link,
-		'apply_muting' => false,
-	];
 	
-	// Send validation email
-	return notify_user($user->guid, $site->guid, $subject, $body, $params, 'email');
+	return $user->notify('uservalidationbyemail', $user);
 }

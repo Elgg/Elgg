@@ -7,7 +7,7 @@ namespace Elgg\Notifications;
  *
  * @since 4.0
  */
-class UnbanUserEventHandler extends NotificationEventHandler {
+class UnbanUserEventHandler extends NonConfigurableNotificationEventHandler {
 	
 	/**
 	 * Tells if the recipient is the user being unbanned
@@ -67,12 +67,5 @@ class UnbanUserEventHandler extends NotificationEventHandler {
 		}
 		
 		return $result;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function isConfigurableByUser(): bool {
-		return false;
 	}
 }

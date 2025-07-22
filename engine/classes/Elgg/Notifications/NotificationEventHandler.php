@@ -15,15 +15,16 @@ class NotificationEventHandler {
 
 	use Loggable;
 	
-	/** @var NotificationEvent */
-	protected $event;
-
-	/** @var NotificationsService */
-	protected $service;
-
-	/** @var array */
-	protected $params = [];
-
+	/**
+	 * @var array additional params
+	 */
+	protected array $params = [];
+	
+	/**
+	 * @var string[] delivery methods override
+	 */
+	protected array $methods_override = [];
+	
 	/**
 	 * Constructor
 	 *
@@ -32,13 +33,49 @@ class NotificationEventHandler {
 	 * @param array                $params  additional params for event handling
 	 */
 	public function __construct(
-			NotificationEvent $event,
-			NotificationsService $service,
+			protected NotificationEvent $event,
+			protected NotificationsService $service,
 			array $params = []
 	) {
-		$this->event = $event;
-		$this->service = $service;
+		$methods_override = elgg_extract('methods_override', $params);
+		unset($params['methods_override']);
+		if (!empty($methods_override) && is_array($methods_override)) {
+			$this->setMethodsOverride($methods_override);
+		}
+		
 		$this->params = $params;
+	}
+	
+	/**
+	 * Override the default user preferred delivery methods with the given methods
+	 *
+	 * @param string[] $methods delivery methods
+	 *
+	 * @return void
+	 * @since 6.3
+	 */
+	final protected function setMethodsOverride(array $methods): void {
+		$this->methods_override = $methods;
+	}
+	
+	/**
+	 * Get the delivery methods override
+	 *
+	 * @return string[]
+	 * @since 6.3
+	 */
+	final protected function getMethodsOverride(): array {
+		return $this->methods_override;
+	}
+	
+	/**
+	 * Get the notification methods to use
+	 *
+	 * @return array
+	 * @since 6.3
+	 */
+	protected function getNotificationMethods(): array {
+		return [];
 	}
 	
 	/**
@@ -76,7 +113,7 @@ class NotificationEventHandler {
 		$params = [
 			'event' => $this->event,
 			'methods' => $this->getMethods(),
-			'methods_override' => (array) elgg_extract('methods_override', $this->params, []),
+			'methods_override' => $this->getMethodsOverride(),
 		];
 		$subscriptions = _elgg_services()->events->triggerResults('get', 'subscriptions', $params, $subscriptions);
 		
@@ -90,7 +127,7 @@ class NotificationEventHandler {
 	 * @since 4.1
 	 */
 	protected function filterMutedSubscriptions(): bool {
-		return (bool) elgg_extract('apply_muting', $this->params, true);
+		return (bool) $this->getParam('apply_muting', true);
 	}
 	
 	/**
@@ -198,6 +235,10 @@ class NotificationEventHandler {
 		$result = [];
 		foreach ($subscriptions as $guid => $methods) {
 			$recipient = _elgg_services()->entityTable->get($guid);
+			if (!$recipient instanceof \ElggEntity) {
+				continue;
+			}
+			
 			if ($recipient instanceof \ElggUser) {
 				$translator->setCurrentLanguage($recipient->getLanguage());
 			}
@@ -207,7 +248,7 @@ class NotificationEventHandler {
 					$result[$guid][$method] = false;
 					
 					if ($this->service->isRegisteredMethod($method)) {
-						$result[$guid][$method] = $this->sendNotification($guid, $method, $params);
+						$result[$guid][$method] = $this->sendNotification($recipient, $method, $params);
 					}
 				}
 			} catch (\Throwable $t) {
@@ -225,13 +266,13 @@ class NotificationEventHandler {
 	/**
 	 * Send a notification to a subscriber
 	 *
-	 * @param int    $guid   The guid of the subscriber
-	 * @param string $method The notification method
-	 * @param array  $params Default notification params
+	 * @param \ElggEntity $recipient The recipient entity
+	 * @param string      $method    The notification method
+	 * @param array       $params    Default notification params
 	 *
 	 * @return bool
 	 */
-	final protected function sendNotification(int $guid, string $method, array $params = []): bool {
+	final protected function sendNotification(\ElggEntity $recipient, string $method, array $params = []): bool {
 		if (!_elgg_services()->events->hasHandler('send', "notification:{$method}")) {
 			// no way to deliver given the current method, so quitting early
 			return false;
@@ -240,15 +281,7 @@ class NotificationEventHandler {
 		$actor = $this->event->getActor();
 		$object = $this->event->getObject();
 
-		if ($this->event instanceof InstantNotificationEvent) {
-			/* @var \ElggEntity $recipient */
-			$recipient = _elgg_services()->entityTable->get($guid);
-			
-			$subject = elgg_extract('subject', $params, '');
-			$body = elgg_extract('body', $params, '');
-			$summary = elgg_extract('summary', $params, '');
-		} else {
-			$recipient = _elgg_services()->entityTable->get($guid, 'user');
+		if (!$this->event instanceof InstantNotificationEvent) {
 			if (!$recipient instanceof \ElggUser || $recipient->isBanned()) {
 				return false;
 			}
@@ -262,19 +295,17 @@ class NotificationEventHandler {
 				// The access level may have changed since the event was enqueued
 				return false;
 			}
-
-			$subject = $this->getNotificationSubject($recipient, $method);
-			$body = $this->getNotificationBody($recipient, $method);
-			$summary = $this->getNotificationSummary($recipient, $method);
-			
-			if (!isset($params['url'])) {
-				$params['url'] = $this->getNotificationURL($recipient, $method) ?: null;
-			}
 		}
 		
-		$params['subject'] = $subject;
-		$params['body'] = $body;
-		$params['summary'] = $summary;
+		$subject = ($recipient instanceof \ElggUser) ? $this->getNotificationSubject($recipient, $method) : '';
+		$body = ($recipient instanceof \ElggUser) ? $this->getNotificationBody($recipient, $method) : '';
+		$summary = ($recipient instanceof \ElggUser) ? $this->getNotificationSummary($recipient, $method) : '';
+		$url = ($recipient instanceof \ElggUser) ? $this->getNotificationURL($recipient, $method) : null;
+		
+		$params['subject'] = $params['subject'] ?? $subject;
+		$params['body'] = $params['body'] ?? $body;
+		$params['summary'] = $params['summary'] ?? $summary;
+		$params['url'] = $params['url'] ?? $url;
 		$params['event'] = $this->event;
 		$params['method'] = $method;
 		$params['sender'] = $actor;
@@ -506,7 +537,7 @@ class NotificationEventHandler {
 			return static::isConfigurableForGroup($entity);
 		}
 		
-		return true;
+		return false;
 	}
 	
 	/**
@@ -542,5 +573,17 @@ class NotificationEventHandler {
 	 */
 	protected function addMuteLink(): bool {
 		return true;
+	}
+	
+	/**
+	 * Get a parameter from the notification parameters
+	 *
+	 * @param string $param   name of the parameter
+	 * @param mixed  $default default value is not found
+	 *
+	 * @return mixed
+	 */
+	final protected function getParam(string $param, mixed $default = null): mixed {
+		return elgg_extract($param, $this->params, $default);
 	}
 }

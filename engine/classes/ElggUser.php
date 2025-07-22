@@ -125,7 +125,6 @@ class ElggUser extends \ElggEntity {
 	 * @return bool
 	 */
 	public function ban(string $reason = ''): bool {
-
 		if (!$this->canEdit()) {
 			return false;
 		}
@@ -477,5 +476,21 @@ class ElggUser extends \ElggEntity {
 		$default = elgg_extract($name, $static_defaults, $default);
 		
 		return $this->psGetPluginSetting($plugin_id, $name, $default);
+	}
+	
+	/**
+	 * Notify the user about a given action on a subject
+	 *
+	 * @param string           $action  The action on $subject
+	 * @param \ElggData        $subject The notification subject
+	 * @param array            $params  Additional params
+	 *                                  use $params['methods_override'] to override the recipient notification methods (eg 'email' or 'site')
+	 * @param null|\ElggEntity $from    Sender of the message
+	 *
+	 * @return array Compound array of each delivery user/delivery method's success or failure.
+	 * @since 6.3
+	 */
+	public function notify(string $action, \ElggData $subject, array $params = [], ?\ElggEntity $from = null): array {
+		return _elgg_services()->notifications->sendInstantNotification($this, $action, $subject, $params, $from);
 	}
 }

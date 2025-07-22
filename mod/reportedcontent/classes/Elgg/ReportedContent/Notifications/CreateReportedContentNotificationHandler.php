@@ -3,14 +3,14 @@
 namespace Elgg\ReportedContent\Notifications;
 
 use Elgg\Database\QueryBuilder;
-use Elgg\Notifications\NotificationEventHandler;
+use Elgg\Notifications\NonConfigurableNotificationEventHandler;
 
 /**
  * Handle the notification to site admins about new reported content
  *
  * @since 4.2
  */
-class CreateReportedContentNotificationHandler extends NotificationEventHandler {
+class CreateReportedContentNotificationHandler extends NonConfigurableNotificationEventHandler {
 	
 	/**
 	 * {@inheritdoc}
@@ -47,13 +47,6 @@ class CreateReportedContentNotificationHandler extends NotificationEventHandler 
 		}
 		
 		return $subscriptions;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function isConfigurableByUser(): bool {
-		return false;
 	}
 	
 	/**

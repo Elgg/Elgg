@@ -9,7 +9,7 @@ use Elgg\Views\HtmlFormatter;
  *
  * @since 5.0
  */
-class MentionsEventHandler extends NotificationEventHandler {
+class MentionsEventHandler extends NonConfigurableNotificationEventHandler {
 	
 	/**
 	 * {@inheritdoc}
@@ -88,20 +88,6 @@ class MentionsEventHandler extends NotificationEventHandler {
 			$entity?->getDisplayName(),
 			$entity?->getURL(),
 		]);
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected static function isConfigurableForUser(\ElggUser $user): bool {
-		return false;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected static function isConfigurableForGroup(\ElggGroup $group): bool {
-		return false;
 	}
 	
 	/**
