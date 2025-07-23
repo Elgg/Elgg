@@ -40,7 +40,7 @@ class AddFileHelpTextHandler {
 			$max_size = min($upload_max_filesize, $post_max_size);
 		}
 		
-		$help .= ' ' . elgg_echo('input:file:upload_limit', [elgg_format_bytes((int) $max_size)]);
+		$help .= ' ' . elgg_format_element('span', ['class' => 'elgg-input-file-size-helper'], elgg_echo('input:file:upload_limit', [elgg_format_bytes((int) $max_size)]));
 		
 		$return['help'] = trim($help);
 		
