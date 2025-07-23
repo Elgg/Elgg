@@ -4,7 +4,7 @@ import system_messages from 'elgg/system_messages';
 $(document).on('change', 'input[type="file"][data-max-size]', function (e) {
 	var data = $(this).data();
 	
-	if (this.files[0].size >= data.maxSize) {
+	if (this.files.length > 0 && this.files[0].size >= data.maxSize) {
 		system_messages.error(data.maxSizeMessage, 5000);
 		
 		if (data.files_backup) {
