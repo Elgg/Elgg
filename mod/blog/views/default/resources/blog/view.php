@@ -17,6 +17,4 @@ echo elgg_view_page($entity->getDisplayName(), [
 	'sidebar' => elgg_view('object/blog/elements/sidebar', [
 		'entity' => $entity,
 	]),
-], 'default', [
-	'entity' => $entity,
 ]);
