@@ -1,0 +1,278 @@
+name: Build, Deploy, Scan with OpenVas
+
+on:
+  workflow_dispatch:
+  # pull_request:
+  #   branches:
+  #     - recette
+  #   types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  actions: write
+  pull-requests: write
+  issues: write
+  id-token: write
+  security-events: write
+  packages: write
+
+env:
+  CACHE_KEY: ${{ github.sha }}
+  IMAGE_TAG: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+  KUBECONFIG_PATH: ${{ github.workspace }}/kubeconfig.yaml
+  NODE_IP: ${{ secrets.NODE_IP }}
+  OPENVAS_HOST: "10.10.206.180"
+  OPENVAS_PORT: "9390"  # GMP port for API access
+  OPENVAS_USERNAME: ${{ secrets.OPENVAS_USERNAME }}
+  OPENVAS_PASSWORD: ${{ secrets.OPENVAS_PASSWORD }}
+
+jobs:
+  deploy-to-rancher:
+    runs-on: [self-hosted, Linux, X64]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Decode Rancher kubeconfig
+        run: |
+          echo "${{ secrets.RANCHER_KUBECONFIG_B64 }}" | base64 -d > ${{ env.KUBECONFIG_PATH }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+      - name: Deploy PVC to Rancher
+        run: kubectl apply -f k8s-rancher/pvc.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+      - name: Deploy Secret
+        run: kubectl apply -f k8s-rancher/elgg-env.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+      - name: Deploy MariaDB 
+        run: kubectl apply -f k8s-rancher/mariadb.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+      - name: Deploy PhpMyAdmin 
+        run: kubectl apply -f k8s-rancher/phpMyAdmin.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+      - name: Deploy Elgg Deployment
+        run: kubectl apply -f k8s-rancher/elgg-app.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+  scan-with-openvas:
+    needs: deploy-to-rancher
+    runs-on: [self-hosted, Linux, X64]
+ 
+    steps:
+      - name: Verify dependencies
+        run: |
+          # Verify gvm-tools is available
+          if ! command -v gvm-cli &> /dev/null; then
+            echo "❌ gvm-tools not found. Please run the runner setup script."
+            exit 1
+          fi
+          echo "✅ gvm-tools is available"
+          gvm-cli --version
+          
+      - name: Get NodePort of Elgg app
+        id: elgg-access
+        run: |
+          export KUBECONFIG=${{ github.workspace }}/kubeconfig.yaml
+          NODE_PORT=$(kubectl get svc elgg-app -n ${{ secrets.RANCHER_NAMESPACE }} -o jsonpath="{.spec.ports[0].nodePort}")
+          echo "NODE_PORT=$NODE_PORT" >> $GITHUB_ENV
+          echo "ELGG_URL=http://$NODE_IP:$NODE_PORT" >> $GITHUB_ENV
+          echo "🎯 Elgg app accessible at: http://$NODE_IP:$NODE_PORT"
+
+      - name: Test OpenVAS connectivity
+        run: |
+          echo "🔍 Testing OpenVAS connectivity..."
+          timeout 10 bash -c "</dev/tcp/$OPENVAS_HOST/$OPENVAS_PORT" && echo "✅ OpenVAS is reachable" || echo "❌ OpenVAS connection failed"
+
+      - name: Create OpenVAS target and start scan
+        run: |
+          echo "🎯 Creating target and initiating scan for: $ELGG_URL"
+          ELGG_HOST=$(echo $ELGG_URL | cut -d/ -f3 | cut -d: -f1)
+          
+          # Create target
+          TARGET_ID=$(gvm-cli --gmp-username="$OPENVAS_USERNAME" \
+            --gmp-password="$OPENVAS_PASSWORD" \
+            --hostname="$OPENVAS_HOST" \
+            --port="$OPENVAS_PORT" \
+            socket --xml "
+            <create_target>
+              <name>elgg-app-$(date +%Y%m%d-%H%M%S)</name>
+              <hosts>$ELGG_HOST</hosts>
+              <port_list id='33d0cd82-57c6-11e1-8ed1-406186ea4fc5'/>
+              <comment>Automated scan of Elgg application</comment>
+            </create_target>" | grep -oP '(?<=id=")[^"]*')
+          
+          echo "✅ Target created with ID: $TARGET_ID"
+          echo "TARGET_ID=$TARGET_ID" >> $GITHUB_ENV
+
+      - name: Start vulnerability scan
+        run: |
+          echo "🚀 Starting vulnerability scan..."
+          
+          # Create and start task
+          TASK_ID=$(gvm-cli --gmp-username="$OPENVAS_USERNAME" \
+            --gmp-password="$OPENVAS_PASSWORD" \
+            --hostname="$OPENVAS_HOST" \
+            --port="$OPENVAS_PORT" \
+            socket --xml "
+            <create_task>
+              <name>elgg-scan-$(date +%Y%m%d-%H%M%S)</name>
+              <target id='$TARGET_ID'/>
+              <config id='daba56c8-73ec-11df-a475-002264764cea'/>
+              <comment>Automated security scan of Elgg application</comment>
+            </create_task>" | grep -oP '(?<=id=")[^"]*')
+          
+          echo "✅ Task created with ID: $TASK_ID"
+          echo "TASK_ID=$TASK_ID" >> $GITHUB_ENV
+          
+          # Start the scan
+          gvm-cli --gmp-username="$OPENVAS_USERNAME" \
+            --gmp-password="$OPENVAS_PASSWORD" \
+            --hostname="$OPENVAS_HOST" \
+            --port="$OPENVAS_PORT" \
+            socket --xml "<start_task task_id='$TASK_ID'/>"
+          
+          echo "🔥 Scan started! Task ID: $TASK_ID"
+
+      - name: Monitor scan progress
+        run: |
+          echo "📊 Monitoring scan progress..."
+          
+          while true; do
+            STATUS=$(gvm-cli --gmp-username="$OPENVAS_USERNAME" \
+              --gmp-password="$OPENVAS_PASSWORD" \
+              --hostname="$OPENVAS_HOST" \
+              --port="$OPENVAS_PORT" \
+              socket --xml "<get_tasks task_id='$TASK_ID'/>" | \
+              grep -oP '(?<=<status>)[^<]*')
+            
+            PROGRESS=$(gvm-cli --gmp-username="$OPENVAS_USERNAME" \
+              --gmp-password="$OPENVAS_PASSWORD" \
+              --hostname="$OPENVAS_HOST" \
+              --port="$OPENVAS_PORT" \
+              socket --xml "<get_tasks task_id='$TASK_ID'/>" | \
+              grep -oP '(?<=<progress>)[^<]*' || echo "0")
+            
+            echo "📈 Scan Status: $STATUS - Progress: $PROGRESS%"
+            
+            if [ "$STATUS" = "Done" ]; then
+              echo "✅ Scan completed successfully!"
+              break
+            elif [ "$STATUS" = "Stopped" ] || [ "$STATUS" = "Error" ]; then
+              echo "❌ Scan failed with status: $STATUS"
+              exit 1
+            fi
+            
+            sleep 30
+          done
+
+      - name: Generate and download scan report
+        run: |
+          echo "📄 Generating scan report..."
+          
+          # Get the report ID from the completed task
+          REPORT_ID=$(gvm-cli --gmp-username="$OPENVAS_USERNAME" \
+            --gmp-password="$OPENVAS_PASSWORD" \
+            --hostname="$OPENVAS_HOST" \
+            --port="$OPENVAS_PORT" \
+            socket --xml "<get_tasks task_id='$TASK_ID'/>" | \
+            grep -oP '(?<=<report id=")[^"]*')
+          
+          echo "📋 Report ID: $REPORT_ID"
+          
+          # Generate PDF report
+          gvm-cli --gmp-username="$OPENVAS_USERNAME" \
+            --gmp-password="$OPENVAS_PASSWORD" \
+            --hostname="$OPENVAS_HOST" \
+            --port="$OPENVAS_PORT" \
+            socket --xml "
+            <get_reports report_id='$REPORT_ID' format_id='c402cc3e-b531-11e1-9163-406186ea4fc5'/>" | \
+            grep -oP '(?<=<report>)[^<]*' | base64 -d > elgg-security-report.pdf
+          
+          # Generate XML report for parsing
+          gvm-cli --gmp-username="$OPENVAS_USERNAME" \
+            --gmp-password="$OPENVAS_PASSWORD" \
+            --hostname="$OPENVAS_HOST" \
+            --port="$OPENVAS_PORT" \
+            socket --xml "<get_reports report_id='$REPORT_ID'/>" > elgg-security-report.xml
+          
+          echo "✅ Reports generated: elgg-security-report.pdf and elgg-security-report.xml"
+
+      - name: Parse and display scan results
+        run: |
+          echo "📊 Scan Results Summary:"
+          echo "======================="
+          
+          # Extract vulnerability counts
+          HIGH=$(grep -c 'threat="High"' elgg-security-report.xml || echo "0")
+          MEDIUM=$(grep -c 'threat="Medium"' elgg-security-report.xml || echo "0")
+          LOW=$(grep -c 'threat="Low"' elgg-security-report.xml || echo "0")
+          INFO=$(grep -c 'threat="Log"' elgg-security-report.xml || echo "0")
+          
+          echo "🔴 High severity vulnerabilities: $HIGH"
+          echo "🟡 Medium severity vulnerabilities: $MEDIUM"
+          echo "🟢 Low severity vulnerabilities: $LOW"
+          echo "ℹ️  Informational findings: $INFO"
+          echo ""
+          echo "🌐 View detailed results in OpenVAS dashboard:"
+          echo "   https://$OPENVAS_HOST:9392/dashboards"
+          echo "   Task ID: $TASK_ID"
+          echo "   Report ID: $REPORT_ID"
+
+      - name: Upload scan reports as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: openvas-security-reports
+          path: |
+            elgg-security-report.pdf
+            elgg-security-report.xml
+
+      - name: Comment scan results on PR (if applicable)
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Parse XML for vulnerability counts
+            const xmlContent = fs.readFileSync('elgg-security-report.xml', 'utf8');
+            const high = (xmlContent.match(/threat="High"/g) || []).length;
+            const medium = (xmlContent.match(/threat="Medium"/g) || []).length;
+            const low = (xmlContent.match(/threat="Low"/g) || []).length;
+            
+            const comment = `## 🔒 Security Scan Results
+            
+            **Target:** ${{ env.ELGG_URL }}
+            
+            ### Vulnerability Summary:
+            - 🔴 **High:** ${high}
+            - 🟡 **Medium:** ${medium}
+            - 🟢 **Low:** ${low}
+            
+            ### 📊 Detailed Report:
+            - [View in OpenVAS Dashboard](https://${{ env.OPENVAS_HOST }}:9392/dashboards)
+            - Task ID: ${{ env.TASK_ID }}
+            - Download artifacts from this workflow run for detailed PDF/XML reports
+            
+            ${high > 0 ? '⚠️ **Action Required:** High severity vulnerabilities detected!' : '✅ No high severity vulnerabilities found.'}
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
