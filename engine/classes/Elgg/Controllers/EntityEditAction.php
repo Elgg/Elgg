@@ -98,7 +98,7 @@ class EntityEditAction extends GenericAction {
 				}
 			}
 			
-			if ($field_type === 'url' && !filter_var($value, FILTER_VALIDATE_URL)) {
+			if ($field_type === 'url' && !elgg_is_empty($value) && !filter_var($value, FILTER_VALIDATE_URL)) {
 				throw new ValidationException(elgg_echo('ValidationException:field:url', [$name]));
 			}
 			
