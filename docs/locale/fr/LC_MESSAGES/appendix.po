@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-11 15:23+0200\n"
+"POT-Creation-Date: 2025-07-08 10:24+0200\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -698,12 +698,12 @@ msgstr ""
 " d'ajouter des champs à la fois aux profils des utilisateurs et au "
 "formulaire d'inscription."
 
-#: ../../appendix/faqs/general.rst:204 ../../appendix/faqs/development.rst:37
+#: ../../appendix/faqs/development.rst:37 ../../appendix/faqs/general.rst:204
 #: ../../appendix/faqs/development.rst:37 ../../appendix/faqs/general.rst:204
 msgid "Create the plugin skeleton"
 msgstr "Créez le squelette du plugin"
 
-#: ../../appendix/faqs/general.rst:204 ../../appendix/faqs/development.rst:39
+#: ../../appendix/faqs/development.rst:39 ../../appendix/faqs/general.rst:204
 #: ../../appendix/faqs/development.rst:39 ../../appendix/faqs/general.rst:204
 msgid ":doc:`/guides/plugins/plugin-skeleton`"
 msgstr ":doc:`/guides/plugins/plugin-skeleton`"
@@ -1334,8 +1334,9 @@ msgstr ""
 "``$CONFIG->http_request_trusted_proxy_headers``. Regardez dans le fichier "
 "``settings.php`` pour plus d'information."
 
-#: ../../appendix/faqs/security.rst:2 ../../appendix/faqs/security.rst:2
+#: ../../appendix/faqs/security.rst:2
 #: ../../appendix/upgrade-notes/4.1-to-4.2.rst:65
+#: ../../appendix/faqs/security.rst:2
 msgid "Security"
 msgstr "Sécurité"
 
@@ -2613,8 +2614,7 @@ msgstr "1.12"
 msgid "July 2015"
 msgstr "Juillet 2015"
 
-#: ../../appendix/support.rst:53 ../../appendix/support.rst:53
-#: ../../appendix/support.rst:63
+#: ../../appendix/support.rst:53 ../../appendix/support.rst:63
 msgid "April 2019"
 msgstr "Avril 2019"
 
@@ -2722,8 +2722,7 @@ msgstr "Juillet 2022"
 msgid "4.3"
 msgstr "4.3"
 
-#: ../../appendix/support.rst:77 ../../appendix/support.rst:77
-#: ../../appendix/support.rst:83
+#: ../../appendix/support.rst:77 ../../appendix/support.rst:83
 msgid "June 2024"
 msgstr "Juin 2024"
 
