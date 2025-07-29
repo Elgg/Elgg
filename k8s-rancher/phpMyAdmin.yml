@@ -13,7 +13,7 @@ spec:
         app: elgg-phpmyadmin
     spec:
       nodeSelector:
-        kubernetes.io/hostname: k8s01-mng-1008c2-k8s01-mng-worker-2
+        kubernetes.io/hostname: test-workernode #k8s01-mng-1008c2-k8s01-mng-worker-2
       containers:
       - name: phpmyadmin
         image: phpmyadmin/phpmyadmin
