@@ -1,4 +1,4 @@
-name: Deploy To Rancher
+name: Deploy To Self Managed Cluster
 
 on:
   workflow_dispatch:
