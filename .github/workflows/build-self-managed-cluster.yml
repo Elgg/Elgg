@@ -99,9 +99,9 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
             cd ~/elgg-deploy
-            kubectl apply -f pvc.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-            kubectl apply -f elgg-env.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-            kubectl apply -f mariadb.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-            kubectl apply -f phpMyAdmin.yml -n ${{ secrets.RANCHER_NAMESPACE }}
-            kubectl apply -f elgg-app.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+            kubectl apply -f pvc.yml
+            kubectl apply -f elgg-env.yml
+            kubectl apply -f mariadb.yml
+            kubectl apply -f phpMyAdmin.yml
+            kubectl apply -f elgg-app.yml
           EOF
