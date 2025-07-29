@@ -13,7 +13,7 @@ spec:
         app: elgg-app
     spec:
       nodeSelector:
-        kubernetes.io/hostname: k8s01-mng-1008c2-k8s01-mng-worker-2
+        kubernetes.io/hostname: test-workernode
       # securityContext:
       #   fsGroup: 33
       initContainers:
@@ -38,10 +38,10 @@ spec:
         - containerPort: 80
         resources:
           requests:
-            cpu: "500m"
+            cpu: "300m"
             memory: "500Mi"
           limits:
-            cpu: "800m"
+            cpu: "400m"
             memory: "700Mi"
         volumeMounts:
         - mountPath: /var/elgg_data
