@@ -25,65 +25,65 @@ env:
 
 jobs:
 
-  # docker-build:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: read
-  #     packages: write
-  #     security-events: write
+  docker-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
 
-  #   outputs:
-  #     image-tag: ${{ steps.set-tag.outputs.image-tag }}
+    outputs:
+      image-tag: ${{ steps.set-tag.outputs.image-tag }}
 
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  #     - name: Set up Docker Buildx
-  #       uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-  #     - name: Log in to DockerHub
-  #       uses: docker/login-action@v3
-  #       with:
-  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Log in to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  #     - name: Build and push Docker image
-  #       id: build
-  #       uses: docker/build-push-action@v5
-  #       with:
-  #         context: .
-  #         file: ./Dockerfile
-  #         push: true
-  #         tags: ${{ env.IMAGE_TAG }}
-  #         no-cache: true
-  #         # cache-from: type=registry,ref=${{ env.IMAGE_TAG }}
-  #         cache-to: type=inline
+      - name: Build and push Docker image
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ env.IMAGE_TAG }}
+          no-cache: true
+          # cache-from: type=registry,ref=${{ env.IMAGE_TAG }}
+          cache-to: type=inline
 
-  #     - name: Set image tag output
-  #       id: set-tag
-  #       run: echo "image-tag=${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
+      - name: Set image tag output
+        id: set-tag
+        run: echo "image-tag=${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
 
-  #     - name: Scan Docker image with Trivy
-  #       uses: aquasecurity/trivy-action@0.20.0
-  #       with:
-  #         image-ref: ${{ env.IMAGE_TAG }}
-  #         format: 'sarif'
-  #         output: 'trivy-results.sarif'
+      - name: Scan Docker image with Trivy
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: ${{ env.IMAGE_TAG }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
 
-  #     - name: Upload Trivy SARIF Report
-  #       uses: github/codeql-action/upload-sarif@v3
-  #       with:
-  #         sarif_file: 'trivy-results.sarif'
+      - name: Upload Trivy SARIF Report
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
 
-  #     - name: Upload SARIF file as artifact (optional)
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: trivy-sarif-report
-  #         path: trivy-results.sarif
+      - name: Upload SARIF file as artifact (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-sarif-report
+          path: trivy-results.sarif
 
   deploy-to-rancher:
-    # needs: [docker-build]
+    needs: [docker-build]
     runs-on: [self-hosted, Linux, X64]
 
     steps:
