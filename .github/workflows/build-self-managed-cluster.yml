@@ -113,7 +113,7 @@ jobs:
           
   extract-url:
     needs: deploy-to-recette
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
     outputs:
       elgg-url: ${{ steps.get-url.outputs.elgg-url }}
   
@@ -155,7 +155,7 @@ jobs:
       - name: Set elgg-url output
         id: set-url
         run: |
-          echo "elgg-url=$(echo '${{ steps.get-url.outputs.stdout }}' | grep elgg-url | cut -d '=' -f2)" >> $GITHUB_OUTPUT
+          echo "elgg-url=$(echo '${{ steps.get-url.outputs.result }}' | grep elgg-url | cut -d '=' -f2)" >> $GITHUB_OUTPUT
 
   security-scan:
     needs: extract-url
@@ -169,7 +169,7 @@ jobs:
       - name: Run Quick Security Scan (ZAP)
         uses: zaproxy/action-baseline@v0.14.0
         with:
-          target: '${{ needs.extract-url.outputs.elgg-url }}'
+          target: "${{ needs.extract-url.outputs.elgg-url }}"
           cmd_options: '-T 5 -z "-config api.disablekey=true"'
           fail_action: false
           allow_issue_writing: false
