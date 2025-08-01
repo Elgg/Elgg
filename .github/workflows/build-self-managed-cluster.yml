@@ -118,11 +118,28 @@ jobs:
       elgg-url: ${{ steps.get-url.outputs.elgg-url }}
 
     steps:
-      - name: Extract NodePort of elgg-app service
+      - name: Extract NodePort of elgg-app service from masternode
         id: get-url
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.MASTERNODE_IP }}
+          username: ${{ secrets.MASTERNODE_USER }}
+          password: ${{ secrets.MASTERNODE_PASSWORD }}
+          script: |
+            PORT=$(kubectl get svc elgg-app -n recette -o jsonpath='{.spec.ports[0].nodePort}')
+            echo "elgg-url=http://74.234.50.122:$PORT" >> elgg-output.txt
+            cat elgg-output.txt
+  
+      - name: Read elgg-url from output
+        id: read-url
         run: |
-          PORT=$(kubectl get svc elgg-app -n recette -o jsonpath='{.spec.ports[0].nodePort}')
-          echo "elgg-url=http://74.234.50.122:$PORT" >> $GITHUB_OUTPUT
+          echo "elgg-url=$(cat elgg-output.txt | grep elgg-url | cut -d '=' -f2)" >> $GITHUB_ENV
+
+      # - name: Extract NodePort of elgg-app service
+      #   id: get-url
+      #   run: |
+      #     PORT=$(kubectl get svc elgg-app -n recette -o jsonpath='{.spec.ports[0].nodePort}')
+      #     echo "elgg-url=http://74.234.50.122:$PORT" >> $GITHUB_OUTPUT
 
   security-scan:
     needs: extract-url
