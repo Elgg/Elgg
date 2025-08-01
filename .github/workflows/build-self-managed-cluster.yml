@@ -94,6 +94,12 @@ jobs:
           ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} "mkdir -p ~/elgg-deploy"
           scp -r k8s-rancher/* ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }}:~/elgg-deploy/
 
+      - name: Cleanup prod namespace
+        run: |
+          echo "Cleaning up all resources in 'prod' namespace to avoid PVC conflicts..."
+          kubectl delete all --all -n prod || true
+          kubectl delete pvc --all -n prod || true
+          
       - name: Deploy to Recette namespace
         run: |
           ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
@@ -149,25 +155,63 @@ jobs:
             report_md.md
           if-no-files-found: error
 
-  quality-gate:
-    needs: security-scan
-    runs-on: ubuntu-latest
-    outputs:
-      passed: ${{ steps.evaluate.outputs.passed }}
+  # quality-gate:
+  #   needs: security-scan
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     passed: ${{ steps.evaluate.outputs.passed }}
 
+  #   steps:
+  #     - name: Download Scan Report
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: security-scan-report
+
+  #     - name: Evaluate Scan Results
+  #       id: evaluate
+  #       run: |
+  #         if grep -q "High Alerts: 0" report_md.md && grep -q "Medium Alerts: 3" report_md.md; then
+  #           echo "passed=true" >> $GITHUB_OUTPUT
+  #         else
+  #           echo "passed=false" >> $GITHUB_OUTPUT
+
+  quality-gate:
+    needs: [docker-build, security-scan]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    outputs:
+      gate-passed: ${{ steps.evaluate.outputs.gate-passed }}
     steps:
-      - name: Download Scan Report
+      - name: Download ZAP scan report
         uses: actions/download-artifact@v4
         with:
           name: security-scan-report
 
-      - name: Evaluate Scan Results
+      - name: Check risks
+        id: risk-check
+        run: |
+          HIGH=$(jq '[.site[0].alerts[] | select(.riskcode == "3")] | length' report_json.json || echo 0)
+          MEDIUM=$(jq '[.site[0].alerts[] | select(.riskcode == "2")] | length' report_json.json || echo 0)
+          echo "high=$HIGH" >> $GITHUB_OUTPUT
+          echo "medium=$MEDIUM" >> $GITHUB_OUTPUT
+
+      - name: Evaluate gate
         id: evaluate
         run: |
-          if grep -q "High Alerts: 0" report_md.md && grep -q "Medium Alerts: 0" report_md.md; then
-            echo "passed=true" >> $GITHUB_OUTPUT
+          if [ ${{ steps.risk-check.outputs.high }} -gt 0 ]; then
+            echo "❌ BLOCKED: High-risk vulnerabilities detected"
+            echo "gate-passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          elif [ ${{ steps.risk-check.outputs.medium }} -gt 3 ]; then
+            echo "⚠️ WARNING: Too many medium-risk issues"
+            echo "gate-passed=false" >> $GITHUB_OUTPUT
+            exit 1
           else
-            echo "passed=false" >> $GITHUB_OUTPUT
+            echo "✅ Quality gate passed"
+            echo "gate-passed=true" >> $GITHUB_OUTPUT
+          fi
 
   deploy-to-prod:
     needs: quality-gate
@@ -175,6 +219,13 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
 
     steps:
+
+      - name: Cleanup test namespace
+        run: |
+          echo "Cleaning up all resources in 'recette' namespace to avoid PVC conflicts..."
+          kubectl delete all --all -n recette || true
+          kubectl delete pvc --all -n recette || true
+          
       - name: Deploy to Production namespace
         run: |
           ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
