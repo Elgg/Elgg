@@ -18,101 +18,101 @@ env:
   OPENVAS_PASSWORD: ${{ secrets.OPENVAS_PASSWORD }}
 
 jobs:
-  docker-build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      security-events: write
+  # docker-build:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     packages: write
+  #     security-events: write
 
-    outputs:
-      image-tag: ${{ steps.set-tag.outputs.image-tag }}
+  #   outputs:
+  #     image-tag: ${{ steps.set-tag.outputs.image-tag }}
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v3
 
-      - name: Log in to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #     - name: Log in to DockerHub
+  #       uses: docker/login-action@v3
+  #       with:
+  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push Docker image
-        id: build
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ env.IMAGE_TAG }}
-          no-cache: true
-          cache-to: type=inline
+  #     - name: Build and push Docker image
+  #       id: build
+  #       uses: docker/build-push-action@v5
+  #       with:
+  #         context: .
+  #         file: ./Dockerfile
+  #         push: true
+  #         tags: ${{ env.IMAGE_TAG }}
+  #         no-cache: true
+  #         cache-to: type=inline
 
-      - name: Set image tag output
-        id: set-tag
-        run: echo "image-tag=${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
+  #     - name: Set image tag output
+  #       id: set-tag
+  #       run: echo "image-tag=${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
 
-      - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@0.20.0
-        with:
-          image-ref: ${{ env.IMAGE_TAG }}
-          format: 'sarif'
-          output: 'trivy-results.sarif'
+  #     - name: Scan Docker image with Trivy
+  #       uses: aquasecurity/trivy-action@0.20.0
+  #       with:
+  #         image-ref: ${{ env.IMAGE_TAG }}
+  #         format: 'sarif'
+  #         output: 'trivy-results.sarif'
 
-      - name: Upload Trivy SARIF Report
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
+  #     - name: Upload Trivy SARIF Report
+  #       uses: github/codeql-action/upload-sarif@v3
+  #       with:
+  #         sarif_file: 'trivy-results.sarif'
 
-      - name: Upload SARIF file as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: trivy-sarif-report
-          path: trivy-results.sarif
+  #     - name: Upload SARIF file as artifact
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: trivy-sarif-report
+  #         path: trivy-results.sarif
 
-  deploy-to-recette:
-    needs: [docker-build]
-    runs-on: [self-hosted, Linux, X64]
+  # deploy-to-recette:
+  #   # needs: [docker-build]
+  #   runs-on: [self-hosted, Linux, X64]
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Set up SSH key for deployment
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.MASTER_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.MASTER_SSH_IP }} >> ~/.ssh/known_hosts
+  #     - name: Set up SSH key for deployment
+  #       run: |
+  #         mkdir -p ~/.ssh
+  #         echo "${{ secrets.MASTER_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+  #         chmod 600 ~/.ssh/id_rsa
+  #         ssh-keyscan -H ${{ secrets.MASTER_SSH_IP }} >> ~/.ssh/known_hosts
 
-      - name: Copy deployment files to master node
-        run: |
-          ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} "mkdir -p ~/elgg-deploy"
-          scp -r k8s-rancher/* ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }}:~/elgg-deploy/
+  #     - name: Copy deployment files to master node
+  #       run: |
+  #         ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} "mkdir -p ~/elgg-deploy"
+  #         scp -r k8s-rancher/* ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }}:~/elgg-deploy/
 
-      - name: Cleanup prod namespace
-        run: |
-          echo "Cleaning up all resources in 'prod' namespace to avoid PVC conflicts..."
-          kubectl delete all --all -n prod || true
-          kubectl delete pvc --all -n prod || true
+  #     - name: Cleanup prod namespace
+  #       run: |
+  #         echo "Cleaning up all resources in 'prod' namespace to avoid PVC conflicts..."
+  #         kubectl delete all --all -n prod || true
+  #         kubectl delete pvc --all -n prod || true
           
-      - name: Deploy to Recette namespace
-        run: |
-          ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
-            cd ~/elgg-deploy
-            kubectl apply -f pvc.yml -n recette
-            kubectl apply -f elgg-env.yml -n recette
-            kubectl apply -f mariadb.yml -n recette
-            kubectl apply -f phpMyAdmin.yml -n recette
-            kubectl apply -f elgg-app.yml -n recette
-          EOF
+  #     - name: Deploy to Recette namespace
+  #       run: |
+  #         ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
+  #           cd ~/elgg-deploy
+  #           kubectl apply -f pvc.yml -n recette
+  #           kubectl apply -f elgg-env.yml -n recette
+  #           kubectl apply -f mariadb.yml -n recette
+  #           kubectl apply -f phpMyAdmin.yml -n recette
+  #           kubectl apply -f elgg-app.yml -n recette
+  #         EOF
           
   extract-url:
-    needs: deploy-to-recette
+    # needs: deploy-to-recette
     runs-on: [self-hosted, Linux, X64]
     outputs:
       elgg-url: ${{ steps.get-url.outputs.elgg-url }}
@@ -159,7 +159,7 @@ jobs:
 
   security-scan:
     needs: extract-url
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
     permissions:
       contents: read
       actions: write
@@ -190,7 +190,7 @@ jobs:
 
 
   quality-gate:
-    needs: [docker-build, security-scan]
+    needs: security-scan
     runs-on: ubuntu-latest
     permissions:
       contents: read
