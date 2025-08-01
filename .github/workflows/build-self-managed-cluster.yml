@@ -68,13 +68,13 @@ jobs:
         with:
           sarif_file: 'trivy-results.sarif'
 
-      - name: Upload SARIF file as artifact (optional)
+      - name: Upload SARIF file as artifact
         uses: actions/upload-artifact@v4
         with:
           name: trivy-sarif-report
           path: trivy-results.sarif
 
-  deploy-to-rancher:
+  deploy-to-recette:
     needs: [docker-build]
     runs-on: [self-hosted, Linux, X64]
 
@@ -94,7 +94,7 @@ jobs:
           ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} "mkdir -p ~/elgg-deploy"
           scp -r k8s-rancher/* ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }}:~/elgg-deploy/
 
-      - name: Deploy from master node
+      - name: Deploy to Recette namespace
         run: |
           ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
             cd ~/elgg-deploy
@@ -103,4 +103,85 @@ jobs:
             kubectl apply -f mariadb.yml -n recette
             kubectl apply -f phpMyAdmin.yml -n recette
             kubectl apply -f elgg-app.yml -n recette
+          EOF
+
+  extract-url:
+    needs: deploy-to-recette
+    runs-on: [self-hosted, Linux, X64]
+    outputs:
+      elgg-url: ${{ steps.get-url.outputs.elgg-url }}
+
+    steps:
+      - name: Extract NodePort of elgg-app service
+        id: get-url
+        run: |
+          PORT=$(kubectl get svc elgg-app -n recette -o jsonpath='{.spec.ports[0].nodePort}')
+          echo "elgg-url=http://74.234.50.122:$PORT" >> $GITHUB_OUTPUT
+
+  security-scan:
+    needs: extract-url
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+      security-events: write
+
+    steps:
+      - name: Run Quick Security Scan (ZAP)
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: '${{ needs.extract-url.outputs.elgg-url }}'
+          cmd_options: '-T 5 -z "-config api.disablekey=true"'
+          fail_action: false
+          allow_issue_writing: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ZAP_LOG_LEVEL: DEBUG
+
+      - name: Upload ZAP Scan Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-scan-report
+          path: |
+            report_html.html
+            report_json.json
+            report_md.md
+          if-no-files-found: error
+
+  quality-gate:
+    needs: security-scan
+    runs-on: ubuntu-latest
+    outputs:
+      passed: ${{ steps.evaluate.outputs.passed }}
+
+    steps:
+      - name: Download Scan Report
+        uses: actions/download-artifact@v4
+        with:
+          name: security-scan-report
+
+      - name: Evaluate Scan Results
+        id: evaluate
+        run: |
+          if grep -q "High Alerts: 0" report_md.md && grep -q "Medium Alerts: 0" report_md.md; then
+            echo "passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "passed=false" >> $GITHUB_OUTPUT
+
+  deploy-to-prod:
+    needs: quality-gate
+    if: needs.quality-gate.outputs.passed == 'true'
+    runs-on: [self-hosted, Linux, X64]
+
+    steps:
+      - name: Deploy to Production namespace
+        run: |
+          ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
+            cd ~/elgg-deploy
+            kubectl apply -f pvc.yml -n prod
+            kubectl apply -f elgg-env.yml -n prod
+            kubectl apply -f mariadb.yml -n prod
+            kubectl apply -f phpMyAdmin.yml -n prod
+            kubectl apply -f elgg-app.yml -n prod
           EOF
