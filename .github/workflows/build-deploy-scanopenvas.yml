@@ -90,12 +90,23 @@ jobs:
           NODE_PORT=$(kubectl get svc elgg-app -n ${{ secrets.RANCHER_NAMESPACE }} -o jsonpath="{.spec.ports[0].nodePort}")
           echo "NODE_PORT=$NODE_PORT" >> $GITHUB_ENV
           echo "ELGG_URL=http://$NODE_IP:$NODE_PORT" >> $GITHUB_ENV
-          echo "🎯 Elgg app accessible at: http://$NODE_IP:$NODE_PORT"
+          echo "Elgg app accessible at: http://$NODE_IP:$NODE_PORT"
 
       - name: Test OpenVAS connectivity
         run: |
-          echo "🔍 Testing OpenVAS connectivity..."
-          timeout 10 bash -c "</dev/tcp/$OPENVAS_HOST/$OPENVAS_PORT" && echo "✅ OpenVAS is reachable" || echo "❌ OpenVAS connection failed"
+          echo "Testing OpenVAS connectivity..."
+          if nc -zv $OPENVAS_HOST $OPENVAS_PORT; then
+            echo "OpenVAS is reachable"
+          else
+            echo "OpenVAS connection failed"
+            exit 1
+          fi
+    
+
+      # - name: Test OpenVAS connectivity
+      #   run: |
+      #     echo "🔍 Testing OpenVAS connectivity..."
+      #     timeout 10 bash -c "</dev/tcp/$OPENVAS_HOST/$OPENVAS_PORT" && echo "✅ OpenVAS is reachable" || echo "❌ OpenVAS connection failed"
 
       - name: Create OpenVAS target and start scan
         run: |
@@ -145,11 +156,11 @@ jobs:
             --port="$OPENVAS_PORT" \
             socket --xml "<start_task task_id='$TASK_ID'/>"
           
-          echo "🔥 Scan started! Task ID: $TASK_ID"
+          echo "Scan started! Task ID: $TASK_ID"
 
       - name: Monitor scan progress
         run: |
-          echo "📊 Monitoring scan progress..."
+          echo "Monitoring scan progress..."
           
           while true; do
             STATUS=$(gvm-cli --gmp-username="$OPENVAS_USERNAME" \
