@@ -169,7 +169,7 @@ jobs:
       - name: Run Quick Security Scan (ZAP)
         uses: zaproxy/action-baseline@v0.14.0
         with:
-          target: "${{ needs.extract-url.outputs.elgg-url }}"
+          target: 'http://${{ needs.extract-url.outputs.elgg-url }}'
           cmd_options: '-T 5 -z "-config api.disablekey=true"'
           fail_action: false
           allow_issue_writing: false
