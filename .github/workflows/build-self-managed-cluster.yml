@@ -235,9 +235,10 @@ jobs:
 
       - name: Cleanup test namespace
         run: |
-          echo "Cleaning up all resources in 'recette' namespace to avoid PVC conflicts..."
-          kubectl delete all --all -n recette || true
-          kubectl delete pvc --all -n recette || true
+          ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
+            kubectl delete all --all -n recette || true
+            kubectl delete pvc --all -n recette || true
+          EOF
           
       - name: Deploy to Production namespace
         run: |
