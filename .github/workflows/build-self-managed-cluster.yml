@@ -188,39 +188,6 @@ jobs:
             report_md.md
           if-no-files-found: error
 
-  # security-scan:
-  #   needs: extract-url
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: read
-  #     actions: write
-  #     security-events: write
-
-  #   steps:
-  #     - name: Run Quick Security Scan (ZAP)
-  #       uses: zaproxy/action-baseline@v0.14.0
-  #       with:
-  #         # target: 'http://${{ needs.extract-url.outputs.elgg-url }}'
-  #         target: ${{ needs.extract-url.outputs.elgg-url }}
-  #         cmd_options: '-T 5 -z "-config api.disablekey=true"'
-  #         fail_action: false
-  #         allow_issue_writing: false
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         ZAP_LOG_LEVEL: DEBUG
-
-  #     - name: Upload ZAP Scan Report
-  #       uses: actions/upload-artifact@v4
-  #       if: always()
-  #       with:
-  #         name: security-scan-report
-  #         path: |
-  #           report_html.html
-  #           report_json.json
-  #           report_md.md
-  #         if-no-files-found: error
-
-
   quality-gate:
     needs: security-scan
     runs-on: ubuntu-latest
@@ -261,7 +228,7 @@ jobs:
 
   deploy-to-prod:
     needs: quality-gate
-    if: needs.quality-gate.outputs.passed == 'true'
+    if: needs.quality-gate.outputs.gate-passed == 'true'
     runs-on: [self-hosted, Linux, X64]
 
     steps:
