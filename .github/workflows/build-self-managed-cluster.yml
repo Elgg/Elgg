@@ -114,8 +114,6 @@ jobs:
   extract-url:
     needs: deploy-to-recette
     runs-on: [self-hosted, Linux, X64]
-    outputs:
-      elgg-url: ${{ steps.get-url.outputs.elgg-url }}
   
     steps:
       - name: Wait for elgg-app to be ready on masternode
@@ -139,33 +137,16 @@ jobs:
             echo "Service did not become ready in time."
             exit 1
   
-      # - name: Extract NodePort of elgg-app service from masternode
-      #   id: get-url
-      #   uses: appleboy/ssh-action@v1
-      #   with:
-      #     host: ${{ secrets.MASTER_SSH_IP }}
-      #     username: ${{ secrets.MASTER_SSH_USER }}
-      #     key: ${{ secrets.MASTER_SSH_PRIVATE_KEY }}
-      #     script: |
-      #       PORT=$(kubectl get svc elgg-app -n recette -o jsonpath='{.spec.ports[0].nodePort}')
-      #       echo "elgg-url=http://74.234.50.122:$PORT"
-      #   env:
-      #     KUBECONFIG:  ~/.kube/config
-
       - name: Extract NodePort and write to file
         run: |
           PORT=$(ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} "kubectl get svc elgg-app -n recette -o jsonpath='{.spec.ports[0].nodePort}'")
           echo "http://74.234.50.122:$PORT" > elgg-url.txt
-
-      - name: Set elgg-url as output
-        id: get-url
-        run: |
-          echo "elgg-url=$(cat elgg-url.txt)" >> $GITHUB_OUTPUT
-    
-      # - name: Set elgg-url output
-      #   id: set-url
-      #   run: |
-      #     echo "elgg-url=$(echo '${{ steps.get-url.outputs.result }}' | grep elgg-url | cut -d '=' -f2)" >> $GITHUB_OUTPUT
+  
+      - name: Upload elgg-url artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: elgg-url-artifact
+          path: elgg-url.txt
 
   security-scan:
     needs: extract-url
@@ -174,20 +155,28 @@ jobs:
       contents: read
       actions: write
       security-events: write
-
+  
     steps:
+      - name: Download elgg-url artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: elgg-url-artifact
+  
+      - name: Load elgg-url into environment
+        run: |
+          echo "elgg-url=$(cat elgg-url.txt)" >> $GITHUB_ENV
+  
       - name: Run Quick Security Scan (ZAP)
         uses: zaproxy/action-baseline@v0.14.0
         with:
-          # target: 'http://${{ needs.extract-url.outputs.elgg-url }}'
-          target: ${{ needs.extract-url.outputs.elgg-url }}
+          target: ${{ env.elgg-url }}
           cmd_options: '-T 5 -z "-config api.disablekey=true"'
           fail_action: false
           allow_issue_writing: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ZAP_LOG_LEVEL: DEBUG
-
+  
       - name: Upload ZAP Scan Report
         uses: actions/upload-artifact@v4
         if: always()
@@ -198,6 +187,38 @@ jobs:
             report_json.json
             report_md.md
           if-no-files-found: error
+
+  # security-scan:
+  #   needs: extract-url
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     actions: write
+  #     security-events: write
+
+  #   steps:
+  #     - name: Run Quick Security Scan (ZAP)
+  #       uses: zaproxy/action-baseline@v0.14.0
+  #       with:
+  #         # target: 'http://${{ needs.extract-url.outputs.elgg-url }}'
+  #         target: ${{ needs.extract-url.outputs.elgg-url }}
+  #         cmd_options: '-T 5 -z "-config api.disablekey=true"'
+  #         fail_action: false
+  #         allow_issue_writing: false
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         ZAP_LOG_LEVEL: DEBUG
+
+  #     - name: Upload ZAP Scan Report
+  #       uses: actions/upload-artifact@v4
+  #       if: always()
+  #       with:
+  #         name: security-scan-report
+  #         path: |
+  #           report_html.html
+  #           report_json.json
+  #           report_md.md
+  #         if-no-files-found: error
 
 
   quality-gate:
