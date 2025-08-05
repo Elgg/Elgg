@@ -112,7 +112,7 @@ jobs:
           EOF
           
   extract-url:
-    # needs: deploy-to-recette
+    needs: deploy-to-recette
     runs-on: [self-hosted, Linux, X64]
     outputs:
       elgg-url: ${{ steps.get-url.outputs.elgg-url }}
