@@ -189,7 +189,7 @@ jobs:
           if-no-files-found: error
 
   quality-gate:
-    needs: [security-scan,dockdocker-build]
+    needs: [docker-build, security-scan]
     runs-on: ubuntu-latest
     permissions:
       contents: read
