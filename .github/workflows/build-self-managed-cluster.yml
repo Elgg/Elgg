@@ -159,7 +159,7 @@ jobs:
 
   security-scan:
     needs: extract-url
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       actions: write
