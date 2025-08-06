@@ -262,8 +262,8 @@ jobs:
   
           echo "📄 Report ID: $REPORT_ID"
   
-          echo "⏳ Waiting 20s to ensure PDF is ready..."
-          sleep 20
+          echo "⏳ Waiting 60s to ensure PDF is ready..."
+          sleep 60
   
           # Téléchargement du XML complet (toujours dispo même si pas de findings)
           gvm-cli --gmp-username "$OPENVAS_USERNAME" \
