@@ -201,7 +201,7 @@ jobs:
                                      <name>worker-node-full-scan-$(date +%Y%m%d-%H%M%S)</name>
                                      <target id='$TARGET_ID'/>
                                      <config id='$CONFIG_ID'/>
-                                     <scanner_id="08b69003-5fc2-4037-a479-93b440211c73"/>  # OpenVAS Default
+                                     <scanner_id='08b69003-5fc2-4037-a479-93b440211c73'/>  # OpenVAS Default
                                      <comment>Automated full port scan</comment>
                                    </create_task>" \
                      | sed -n 's/.*id="\([^"]*\)".*/\1/p')
