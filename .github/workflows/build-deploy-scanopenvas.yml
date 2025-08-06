@@ -143,9 +143,10 @@ jobs:
       - name: Verify dependencies
         run: |
           if ! command -v gvm-cli &> /dev/null; then
-            echo "gvm-tools not found. Please run the runner setup script."
+            echo "gvm-tools not found. Please install it."
             exit 1
           fi
+          echo "gvm-tools is installed"
           gvm-cli --version
   
       - name: Get NodePort of Elgg app
@@ -155,152 +156,123 @@ jobs:
           NODE_PORT=$(kubectl get svc elgg-app -n ${{ secrets.RANCHER_NAMESPACE }} -o jsonpath="{.spec.ports[0].nodePort}")
           echo "NODE_PORT=$NODE_PORT" >> $GITHUB_ENV
           echo "ELGG_URL=http://$NODE_IP:$NODE_PORT" >> $GITHUB_ENV
-          echo "Elgg app accessible at: http://$NODE_IP:$NODE_PORT"
+          echo "Elgg app: http://$NODE_IP:$NODE_PORT"
   
       - name: Test OpenVAS connectivity
         run: |
           if nc -zv $OPENVAS_HOST $OPENVAS_PORT; then
             echo "OpenVAS reachable"
           else
-            echo "OpenVAS connection failed"
+            echo "Cannot reach OpenVAS"
             exit 1
           fi
-  
-      - name: Authenticate with OpenVAS and save session
-        id: auth
-        run: |
-          SESSION_XML=$(gvm-cli tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" --xml "
-          <authenticate>
-            <credentials>
-              <username>$OPENVAS_USERNAME</username>
-              <password>$OPENVAS_PASSWORD</password>
-            </credentials>
-          </authenticate>")
-          echo "$SESSION_XML" > session.xml
-          SESSION_ID=$(echo "$SESSION_XML" | grep -oP '(?<=<token>)[^<]+')
-          echo "SESSION_ID=$SESSION_ID" >> $GITHUB_ENV
-          echo "Authenticated with session ID: $SESSION_ID"
   
       - name: Create OpenVAS target
         id: create-target
         run: |
           ELGG_HOST=$(echo $ELGG_URL | cut -d/ -f3 | cut -d: -f1)
-          TARGET_XML=$(gvm-cli tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" --xml "
-          <create_target>
-            <name>elgg-app-$(date +%Y%m%d-%H%M%S)</name>
-            <hosts>$ELGG_HOST</hosts>
-            <port_list id='33d0cd82-57c6-11e1-8ed1-406186ea4fc5'/>
-            <comment>Automated scan of Elgg application</comment>
-          </create_target>" --session $SESSION_ID)
-          TARGET_ID=$(echo "$TARGET_XML" | grep -oP '(?<=id=")[^"]+')
+          TARGET_ID=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                              --gmp-password "$OPENVAS_PASSWORD" \
+                              tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                              --xml "<create_target>
+                                       <name>elgg-app-$(date +%Y%m%d-%H%M%S)</name>
+                                       <hosts>$ELGG_HOST</hosts>
+                                       <port_list id='33d0cd82-57c6-11e1-8ed1-406186ea4fc5'/>
+                                       <comment>Automated scan of Elgg application</comment>
+                                     </create_target>" \
+                       | grep -oP '(?<=id=")[^"]+')
           echo "TARGET_ID=$TARGET_ID" >> $GITHUB_ENV
-          echo "✅ Target created: $TARGET_ID"
+          echo "Target created: $TARGET_ID"
   
       - name: Create and start scan task
         id: create-task
         run: |
-          TASK_XML=$(gvm-cli tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" --xml "
-          <create_task>
-            <name>elgg-scan-$(date +%Y%m%d-%H%M%S)</name>
-            <target id='$TARGET_ID'/>
-            <config id='daba56c8-73ec-11df-a475-002264764cea'/>
-            <comment>Automated security scan of Elgg application</comment>
-          </create_task>" --session $SESSION_ID)
-          TASK_ID=$(echo "$TASK_XML" | grep -oP '(?<=id=")[^"]+')
+          TASK_ID=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                            --gmp-password "$OPENVAS_PASSWORD" \
+                            tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                            --xml "<create_task>
+                                     <name>elgg-scan-$(date +%Y%m%d-%H%M%S)</name>
+                                     <target id='$TARGET_ID'/>
+                                     <config id='daba56c8-73ec-11df-a475-002264764cea'/>
+                                     <comment>Automated security scan</comment>
+                                   </create_task>" \
+                   | grep -oP '(?<=id=")[^"]+')
           echo "TASK_ID=$TASK_ID" >> $GITHUB_ENV
-          echo "✅ Task created: $TASK_ID"
+          echo "Task created: $TASK_ID"
   
-          # Start the scan
-          gvm-cli tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" --xml "<start_task task_id='$TASK_ID'/>" --session $SESSION_ID
-          echo "Scan started! Task ID: $TASK_ID"
+          echo "Starting scan..."
+          gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                  --gmp-password "$OPENVAS_PASSWORD" \
+                  tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                  --xml "<start_task task_id='$TASK_ID'/>"
   
       - name: Monitor scan progress
         run: |
-          echo "Monitoring scan progress..."
+          echo "Monitoring scan..."
           while true; do
-            STATUS=$(gvm-cli tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" --xml "<get_tasks task_id='$TASK_ID'/>" --session $SESSION_ID | grep -oP '(?<=<status>)[^<]*')
-            PROGRESS=$(gvm-cli tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" --xml "<get_tasks task_id='$TASK_ID'/>" --session $SESSION_ID | grep -oP '(?<=<progress>)[^<]*' || echo "0")
-            echo "📈 Scan Status: $STATUS - Progress: $PROGRESS%"
+            STATUS=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                             --gmp-password "$OPENVAS_PASSWORD" \
+                             tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                             --xml "<get_tasks task_id='$TASK_ID'/>" \
+                       | grep -oP '(?<=<status>)[^<]*')
+  
+            PROGRESS=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                               --gmp-password "$OPENVAS_PASSWORD" \
+                               tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                               --xml "<get_tasks task_id='$TASK_ID'/>" \
+                         | grep -oP '(?<=<progress>)[^<]*' || echo "0")
+  
+            echo "Status: $STATUS - $PROGRESS%"
+  
             if [ "$STATUS" = "Done" ]; then
-              echo "✅ Scan completed successfully!"
+              echo "Scan completed!"
               break
             elif [ "$STATUS" = "Stopped" ] || [ "$STATUS" = "Error" ]; then
-              echo "❌ Scan failed with status: $STATUS"
+              echo "Scan failed!"
               exit 1
             fi
             sleep 30
           done
   
-      - name: Generate and download scan report
+      - name: Download scan report
         run: |
-          REPORT_ID=$(gvm-cli tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" --xml "<get_tasks task_id='$TASK_ID'/>" --session $SESSION_ID | grep -oP '(?<=<report id=")[^"]*')
+          REPORT_ID=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                              --gmp-password "$OPENVAS_PASSWORD" \
+                              tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                              --xml "<get_tasks task_id='$TASK_ID'/>" \
+                        | grep -oP '(?<=<report id=")[^"]*')
           echo "REPORT_ID=$REPORT_ID" >> $GITHUB_ENV
-          echo "📋 Report ID: $REPORT_ID"
+          echo "Report ID: $REPORT_ID"
   
-          # Generate PDF report
-          gvm-cli tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" --xml "
-          <get_reports report_id='$REPORT_ID' format_id='c402cc3e-b531-11e1-9163-406186ea4fc5'/>" --session $SESSION_ID | grep -oP '(?<=<report>)[^<]*' | base64 -d > elgg-security-report.pdf
+          # PDF
+          gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                  --gmp-password "$OPENVAS_PASSWORD" \
+                  tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                  --xml "<get_reports report_id='$REPORT_ID' format_id='c402cc3e-b531-11e1-9163-406186ea4fc5'/>" \
+            | grep -oP '(?<=<report>)[^<]*' | base64 -d > elgg-security-report.pdf
   
-          # Generate XML report
-          gvm-cli tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" --xml "<get_reports report_id='$REPORT_ID'/>" --session $SESSION_ID > elgg-security-report.xml
-          echo "✅ Reports generated: elgg-security-report.pdf and elgg-security-report.xml"
+          # XML
+          gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                  --gmp-password "$OPENVAS_PASSWORD" \
+                  tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                  --xml "<get_reports report_id='$REPORT_ID'/>" > elgg-security-report.xml
   
-      - name: Parse and display scan results
+      - name: Parse and display results
         run: |
-          echo "📊 Scan Results Summary:"
+          echo "Summary:"
           HIGH=$(grep -c 'threat="High"' elgg-security-report.xml || echo "0")
           MEDIUM=$(grep -c 'threat="Medium"' elgg-security-report.xml || echo "0")
           LOW=$(grep -c 'threat="Low"' elgg-security-report.xml || echo "0")
           INFO=$(grep -c 'threat="Log"' elgg-security-report.xml || echo "0")
-          echo "🔴 High severity vulnerabilities: $HIGH"
-          echo "🟡 Medium severity vulnerabilities: $MEDIUM"
-          echo "🟢 Low severity vulnerabilities: $LOW"
-          echo "ℹ️  Informational findings: $INFO"
-          echo ""
-          echo "🌐 View detailed results in OpenVAS dashboard:"
-          echo "   https://$OPENVAS_HOST:9392/dashboards"
-          echo "   Task ID: $TASK_ID"
-          echo "   Report ID: $REPORT_ID"
+          echo "🔴 High: $HIGH"
+          echo "🟡 Medium: $MEDIUM"
+          echo "🟢 Low: $LOW"
+          echo "ℹ️  Info: $INFO"
   
-      - name: Upload scan reports as artifacts
+      - name: Upload reports
         uses: actions/upload-artifact@v4
         with:
           name: openvas-security-reports
           path: |
             elgg-security-report.pdf
             elgg-security-report.xml
-  
-      - name: Comment scan results on PR (if applicable)
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const xmlContent = fs.readFileSync('elgg-security-report.xml', 'utf8');
-            const high = (xmlContent.match(/threat="High"/g) || []).length;
-            const medium = (xmlContent.match(/threat="Medium"/g) || []).length;
-            const low = (xmlContent.match(/threat="Low"/g) || []).length;
-  
-            const comment = `## 🔒 Security Scan Results
-  
-            **Target:** ${{ env.ELGG_URL }}
-  
-            ### Vulnerability Summary:
-            - 🔴 **High:** ${high}
-            - 🟡 **Medium:** ${medium}
-            - 🟢 **Low:** ${low}
-  
-            ### 📊 Detailed Report:
-            - [View in OpenVAS Dashboard](https://${{ env.OPENVAS_HOST }}:9392/dashboards)
-            - Task ID: ${{ env.TASK_ID }}
-            - Download artifacts from this workflow run for detailed PDF/XML reports
-  
-            ${high > 0 ? '⚠️ **Action Required:** High severity vulnerabilities detected!' : '✅ No high severity vulnerabilities found.'}
-            `;
-  
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            });
