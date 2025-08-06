@@ -68,11 +68,21 @@ jobs:
         env:
           KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
+      - name: Rollout deployments
+        run: |
+           kubectl rollout status deployment/elgg-app -n ${{ secrets.RANCHER_NAMESPACE }}
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
   scan-with-openvas:
     needs: deploy-to-rancher
     runs-on: [self-hosted, Linux, X64]
  
     steps:
+      - name: Wait for service to be ready
+        run: |
+          echo "Waiting for application to be ready..."
+          sleep 30
       - name: Verify dependencies
         run: |
           # Verify gvm-tools is available
