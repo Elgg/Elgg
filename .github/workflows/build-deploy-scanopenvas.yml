@@ -192,7 +192,7 @@ jobs:
       - name: Create and start scan task
         id: create-task
         run: |
-          CONFIG_ID="698f691e-7489-11df-9d8c-002264764cea"  # "Full and very deep"
+          CONFIG_ID="daba56c8-73ec-11df-a475-002264764cea"
 
           TASK_ID=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
                             --gmp-password "$OPENVAS_PASSWORD" \
