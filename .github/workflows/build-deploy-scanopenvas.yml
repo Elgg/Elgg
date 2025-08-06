@@ -133,7 +133,6 @@ jobs:
 
   scan-with-openvas:
     runs-on: [self-hosted, Linux, X64]
-  
     steps:
       - name: Wait for service to be ready
         run: |
@@ -149,63 +148,73 @@ jobs:
           echo "gvm-tools is installed"
           gvm-cli --version
   
-      # - name: Get NodePort of Elgg app
-      #   id: elgg-access
-      #   run: |
-      #     export KUBECONFIG=${{ github.workspace }}/kubeconfig.yaml
-      #     NODE_PORT=$(kubectl get svc elgg-app -n ${{ secrets.RANCHER_NAMESPACE }} -o jsonpath="{.spec.ports[0].nodePort}")
-      #     echo "NODE_PORT=$NODE_PORT" >> $GITHUB_ENV
-      #     echo "ELGG_URL=http://$NODE_IP:$NODE_PORT" >> $GITHUB_ENV
-      #     echo "Elgg app: http://$NODE_IP:$NODE_PORT"
-  
       - name: Test OpenVAS connectivity
         run: |
           if nc -zv $OPENVAS_HOST $OPENVAS_PORT; then
-            echo "OpenVAS reachable"
+            echo "✅ OpenVAS reachable"
           else
-            echo "Cannot reach OpenVAS"
+            echo "❌ Cannot reach OpenVAS"
             exit 1
           fi
   
       - name: Create OpenVAS target
         id: create-target
         run: |
-          # ELGG_HOST=$(echo $ELGG_URL | cut -d/ -f3 | cut -d: -f1)
           TARGET_ID=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
                               --gmp-password "$OPENVAS_PASSWORD" \
                               tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
                               --xml "<create_target>
                                        <name>elgg-app-$(date +%Y%m%d-%H%M%S)</name>
-                                       <hosts>"$NODE_IP"</hosts>
+                                       <hosts>$NODE_IP</hosts>
                                        <port_list id='33d0cd82-57c6-11e1-8ed1-406186ea4fc5'/>
                                        <comment>Automated scan of Elgg application</comment>
                                      </create_target>" \
-                       | grep -oP '(?<=id=")[^"]+')
+                      | sed -n 's/.*id="\([^"]*\)".*/\1/p')
+  
+          if [ -z "$TARGET_ID" ]; then
+            echo "❌ Failed to create target"
+            exit 1
+          fi
+  
           echo "TARGET_ID=$TARGET_ID" >> $GITHUB_ENV
-          echo "Target created: $TARGET_ID"
+          echo "✅ Target created: $TARGET_ID"
   
       - name: Create and start scan task
         id: create-task
         run: |
+          CONFIG_ID="8715c877-47a0-438d-98a3-27c7a6ab2196" 
+  
           TASK_ID=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
                             --gmp-password "$OPENVAS_PASSWORD" \
                             tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
                             --xml "<create_task>
                                      <name>elgg-scan-$(date +%Y%m%d-%H%M%S)</name>
                                      <target id='$TARGET_ID'/>
-                                     <config id='daba56c8-73ec-11df-a475-002264764cea'/>
+                                     <config id='$CONFIG_ID'/>
                                      <comment>Automated security scan</comment>
                                    </create_task>" \
-                   | grep -oP '(?<=id=")[^"]+')
-          echo "TASK_ID=$TASK_ID" >> $GITHUB_ENV
-          echo "Task created: $TASK_ID"
+                    | sed -n 's/.*id="\([^"]*\)".*/\1/p')
   
-          echo "Starting scan..."
-          gvm-cli --gmp-username "$OPENVAS_USERNAME" \
-                  --gmp-password "$OPENVAS_PASSWORD" \
-                  tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
-                  --xml "<start_task task_id='$TASK_ID'/>"
-
+          if [ -z "$TASK_ID" ]; then
+            echo "❌ Failed to create task"
+            exit 1
+          fi
+  
+          echo "TASK_ID=$TASK_ID" >> $GITHUB_ENV
+          echo "✅ Task created: $TASK_ID"
+  
+          echo "📌 Starting scan..."
+          START_OUTPUT=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                                 --gmp-password "$OPENVAS_PASSWORD" \
+                                 tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                                 --xml "<start_task task_id='$TASK_ID'/>")
+  
+          if [[ $START_OUTPUT != *status=\"202\"* ]]; then
+            echo "❌ Failed to start scan"
+            echo "$START_OUTPUT"
+            exit 1
+          fi
+  
       - name: Monitor scan progress
         run: |
           echo "Monitoring scan..."
@@ -215,59 +224,61 @@ jobs:
                              tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
                              --xml "<get_tasks task_id='$TASK_ID'/>" \
                        | grep -oP '(?<=<status>)[^<]*')
-
+  
             PROGRESS=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
                                --gmp-password "$OPENVAS_PASSWORD" \
                                tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
                                --xml "<get_tasks task_id='$TASK_ID'/>" \
                          | grep -oP '(?<=<progress>)[^<]*' || echo "0")
-
-            echo "Status: $STATUS - $PROGRESS%"
-
+  
+            echo "⏳ Status: $STATUS - $PROGRESS%"
+  
             if [ "$STATUS" = "Done" ]; then
-              echo "Scan completed!"
-              echo "Waiting 40 seconds to ensure report is processed..."
+              echo "✅ Scan completed! Waiting 40s for report to be ready..."
               sleep 40
               break
             elif [ "$STATUS" = "Stopped" ] || [ "$STATUS" = "Error" ]; then
-              echo "Scan failed!"
+              echo "❌ Scan failed!"
               exit 1
             fi
             sleep 30
           done
-
+  
       - name: Download scan report
         run: |
-          # Fetch the most recent report for this task only
           REPORT_ID=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
                               --gmp-password "$OPENVAS_PASSWORD" \
                               tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
                               --xml "<get_reports task_id='$TASK_ID'/>" \
-                        | grep -oP '(?<=<report id=")[^"]*' | head -n 1)
-
-          echo "REPORT_ID=$REPORT_ID" >> $GITHUB_ENV
-          echo "Report ID: $REPORT_ID"
-
-          # Get base64 PDF content
-          BASE64_REPORT=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
-                                  --gmp-password "$OPENVAS_PASSWORD" \
-                                  tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
-                                  --xml "<get_reports report_id='$REPORT_ID' format_id='c402cc3e-b531-11e1-9163-406186ea4fc5'/>" \
-                           | grep -oP '(?<=<report>)[^<]*')
-
-          if [ -z "$BASE64_REPORT" ]; then
-              echo "⚠️ Report content is empty! Scan might have no results or failed."
-              exit 1
+                    | sed -n 's/.*<report id="\([^"]*\)".*/\1/p' | head -n 1)
+  
+          if [ -z "$REPORT_ID" ]; then
+            echo "❌ Failed to get report ID"
+            exit 1
           fi
-
-          echo "$BASE64_REPORT" | base64 -d > elgg-security-report.pdf
-
-          # Save XML report
+  
+          echo "REPORT_ID=$REPORT_ID" >> $GITHUB_ENV
+          echo "📄 Report ID: $REPORT_ID"
+  
+          # Download PDF report
+          echo "📥 Downloading PDF report..."
+          gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                  --gmp-password "$OPENVAS_PASSWORD" \
+                  tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                  --xml "<get_reports report_id='$REPORT_ID' format_id='c402cc3e-b531-11e1-9163-406186ea4fc5'/>" \
+            | awk 'BEGIN{RS="</report>";ORS=""} NR==2{sub(/.*<report>/,"");print}' \
+            | base64 -d > elgg-security-report.pdf
+  
+          # Download XML report
+          echo "📥 Downloading XML report..."
           gvm-cli --gmp-username "$OPENVAS_USERNAME" \
                   --gmp-password "$OPENVAS_PASSWORD" \
                   tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
                   --xml "<get_reports report_id='$REPORT_ID'/>" > elgg-security-report.xml
   
+          echo "✅ Reports saved: elgg-security-report.pdf, elgg-security-report.xml"
+
+
   
       # - name: Monitor scan progress
       #   run: |
