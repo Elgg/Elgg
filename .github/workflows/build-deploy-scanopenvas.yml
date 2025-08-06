@@ -262,7 +262,25 @@ jobs:
   
           echo "📄 Report ID: $REPORT_ID"
   
-          # Récupération du PDF (extraction du second <report>)
+          echo "⏳ Waiting 20s to ensure PDF is ready..."
+          sleep 20
+  
+          # Téléchargement du XML complet (toujours dispo même si pas de findings)
+          gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                  --gmp-password "$OPENVAS_PASSWORD" \
+                  tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                  --xml "<get_reports report_id='$REPORT_ID'/>" > elgg-security-report.xml
+          echo "✅ XML report saved: elgg-security-report.xml"
+  
+          # Vérification s'il y a au moins 1 résultat
+          FINDINGS_COUNT=$(grep -c "<result id=" elgg-security-report.xml || true)
+  
+          if [ "$FINDINGS_COUNT" -eq 0 ]; then
+            echo "⚠️ No findings in report — skipping PDF generation."
+            exit 0
+          fi
+  
+          # Extraction PDF si findings présents
           RAW_XML=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
                             --gmp-password "$OPENVAS_PASSWORD" \
                             tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
@@ -271,20 +289,13 @@ jobs:
           BASE64_REPORT=$(echo "$RAW_XML" | awk 'BEGIN{found=0} /<report>/{if(found==0){found=1;next}else{inreport=1;next}} /<\/report>/{if(inreport){exit}} inreport {print}')
   
           if [ -z "$BASE64_REPORT" ]; then
-            echo "⚠️ PDF report content is empty!"
+            echo "⚠️ PDF content still empty after wait — skipping."
             echo "$RAW_XML" > debug-openvas-report.xml
-            exit 1
+            exit 0
           fi
   
           echo "$BASE64_REPORT" | base64 -d > elgg-security-report.pdf
           echo "✅ PDF report saved: elgg-security-report.pdf"
-  
-          # Récupération du XML complet
-          gvm-cli --gmp-username "$OPENVAS_USERNAME" \
-                  --gmp-password "$OPENVAS_PASSWORD" \
-                  tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
-                  --xml "<get_reports report_id='$REPORT_ID'/>" > elgg-security-report.xml
-          echo "✅ XML report saved: elgg-security-report.xml"
 
 
   
