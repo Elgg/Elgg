@@ -193,7 +193,7 @@ jobs:
                             --xml "<create_task>
                                      <name>elgg-scan-$(date +%Y%m%d-%H%M%S)</name>
                                      <target id='$TARGET_ID'/>
-                                     <config id='daba56c8-73ec-11df-a475-002264764cea'/>
+                                     <config id='daba56c8–73ec-11df-a475–002264764cea'/>
                                      <comment>Automated security scan</comment>
                                    </create_task>" \
                    | grep -oP '(?<=id=")[^"]+')
@@ -226,8 +226,8 @@ jobs:
 
             if [ "$STATUS" = "Done" ]; then
               echo "Scan completed!"
-              echo "Waiting 20 seconds to ensure report is processed..."
-              sleep 20
+              echo "Waiting 40 seconds to ensure report is processed..."
+              sleep 40
               break
             elif [ "$STATUS" = "Stopped" ] || [ "$STATUS" = "Error" ]; then
               echo "Scan failed!"
