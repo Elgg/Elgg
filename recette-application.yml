@@ -12,7 +12,7 @@ spec:
     path: k8s-rancher
   destination: 
     server: https://kubernetes.default.svc
-    namespace: prod
+    namespace: recette
 
   syncPolicy:
     syncOptions:
