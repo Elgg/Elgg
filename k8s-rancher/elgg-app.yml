@@ -16,7 +16,7 @@ spec:
         kubernetes.io/hostname: test-workernode
       initContainers:
       - name: fix-permissions
-        image: bitaouioussama/elgg-app:v6
+        image: bitaouioussama/elgg-app:v7
         command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data /var/www/html/elgg/elgg-config && chmod -R 775 /var/elgg_data /var/www/html/elgg/elgg-config"]
         volumeMounts:
         - mountPath: /var/elgg_data
@@ -26,7 +26,7 @@ spec:
 
       containers:
       - name: elgg-app
-        image: bitaouioussama/elgg-app:v6
+        image: bitaouioussama/elgg-app:v7
         imagePullPolicy: Always
         envFrom:
           - secretRef:
