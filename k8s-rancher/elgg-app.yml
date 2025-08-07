@@ -13,7 +13,7 @@ spec:
         app: elgg-app
     spec:
       nodeSelector:
-        kubernetes.io/hostname: k8s01-mng-1008c2-k8s01-mng-worker-2
+        kubernetes.io/hostname: test-workernode
       initContainers:
       - name: fix-permissions
         image: bitaouioussama/elgg-app:v6
