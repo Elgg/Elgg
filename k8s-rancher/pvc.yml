@@ -5,10 +5,10 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: "default-storageclass"
+  storageClassName: "local-path"
   resources:
     requests:
-      storage: 20Gi
+      storage: 5Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -17,11 +17,11 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: "default-storageclass"
+  storageClassName: "local-path"
   #local-path
   resources:
     requests:
-      storage: 20Gi
+      storage: 5Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -30,7 +30,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: "default-storageclass"
+  storageClassName: "local-path"
   resources:
     requests:
-      storage: 20Gi
+      storage: 5Gi
