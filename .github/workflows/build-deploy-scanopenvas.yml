@@ -228,7 +228,7 @@ jobs:
           echo "✅ Scan started"
 
       - name: Monitor scan progress
-        timeout-minutes: 60
+        timeout-minutes: 120
         run: |
           echo "⏳ Monitoring scan progress..."
           while true; do
