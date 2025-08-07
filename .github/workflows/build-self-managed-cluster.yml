@@ -16,237 +16,284 @@ env:
   CACHE_KEY: ${{ github.sha }}
   IMAGE_TAG: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v7
   OPENVAS_PASSWORD: ${{ secrets.OPENVAS_PASSWORD }}
+  KUBECONFIG_PATH: ${{ github.workspace }}/kubeconfig_self_managed.yaml
 
 jobs:
-  docker-build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      security-events: write
+  # docker-build:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     packages: write
+  #     security-events: write
 
-    outputs:
-      image-tag: ${{ steps.set-tag.outputs.image-tag }}
+  #   outputs:
+  #     image-tag: ${{ steps.set-tag.outputs.image-tag }}
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v3
 
-      - name: Log in to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #     - name: Log in to DockerHub
+  #       uses: docker/login-action@v3
+  #       with:
+  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push Docker image
-        id: build
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ env.IMAGE_TAG }}
-          no-cache: true
-          cache-to: type=inline
+  #     - name: Build and push Docker image
+  #       id: build
+  #       uses: docker/build-push-action@v5
+  #       with:
+  #         context: .
+  #         file: ./Dockerfile
+  #         push: true
+  #         tags: ${{ env.IMAGE_TAG }}
+  #         no-cache: true
+  #         cache-to: type=inline
 
-      - name: Set image tag output
-        id: set-tag
-        run: echo "image-tag=${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
+  #     - name: Set image tag output
+  #       id: set-tag
+  #       run: echo "image-tag=${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
 
-      - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@0.20.0
-        with:
-          image-ref: ${{ env.IMAGE_TAG }}
-          format: 'sarif'
-          output: 'trivy-results.sarif'
+  #     - name: Scan Docker image with Trivy
+  #       uses: aquasecurity/trivy-action@0.20.0
+  #       with:
+  #         image-ref: ${{ env.IMAGE_TAG }}
+  #         format: 'sarif'
+  #         output: 'trivy-results.sarif'
 
-      - name: Upload Trivy SARIF Report
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
+  #     - name: Upload Trivy SARIF Report
+  #       uses: github/codeql-action/upload-sarif@v3
+  #       with:
+  #         sarif_file: 'trivy-results.sarif'
 
-      - name: Upload SARIF file as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: trivy-sarif-report
-          path: trivy-results.sarif
+  #     - name: Upload SARIF file as artifact
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: trivy-sarif-report
+  #         path: trivy-results.sarif
 
   deploy-to-recette:
-    needs: [docker-build]
+    # needs: [docker-build]
     runs-on: [self-hosted, Linux, X64]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up SSH key for deployment
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.MASTER_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.MASTER_SSH_IP }} >> ~/.ssh/known_hosts
+      - name: Setup Kubectl
+        uses: azure/setup-kubectl@v3
 
-      - name: Copy deployment files to master node
+      - name: Decode Rancher kubeconfig
         run: |
-          ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} "mkdir -p ~/elgg-deploy"
-          scp -r k8s-rancher/* ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }}:~/elgg-deploy/
-
-      - name: Cleanup prod namespace
-        run: |
-          echo "Cleaning up all resources in 'prod' namespace to avoid PVC conflicts..."
-          kubectl delete all --all -n prod || true
-          kubectl delete pvc --all -n prod || true
-          
-      - name: Deploy to Recette namespace
-        run: |
-          ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
-            cd ~/elgg-deploy
-            kubectl apply -f pvc.yml -n recette
-            kubectl apply -f elgg-env.yml -n recette
-            kubectl apply -f mariadb.yml -n recette
-            kubectl apply -f phpMyAdmin.yml -n recette
-            kubectl apply -f elgg-app.yml -n recette
-          EOF
-          
-  extract-url:
-    needs: deploy-to-recette
-    runs-on: [self-hosted, Linux, X64]
-  
-    steps:
-      - name: Wait for elgg-app to be ready on masternode
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.MASTER_SSH_IP }}
-          username: ${{ secrets.MASTER_SSH_USER }}
-          key: ${{ secrets.MASTER_SSH_PRIVATE_KEY }}
-          script: |
-            PORT=$(kubectl get svc elgg-app -n recette -o jsonpath='{.spec.ports[0].nodePort}')
-            URL="http://74.234.50.122:$PORT"
-            echo "Waiting for $URL to be ready..."
-            for i in $(seq 1 15); do
-              if curl -sf $URL > /dev/null; then
-                echo "Service is ready!"
-                exit 0
-              fi
-              echo "Attempt $i: Service not ready yet, waiting 10s..."
-              sleep 10
-            done
-            echo "Service did not become ready in time."
-            exit 1
-  
-      - name: Extract NodePort and write to file
-        run: |
-          PORT=$(ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} "kubectl get svc elgg-app -n recette -o jsonpath='{.spec.ports[0].nodePort}'")
-          echo "http://74.234.50.122:$PORT" > elgg-url.txt
-  
-      - name: Upload elgg-url artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: elgg-url-artifact
-          path: elgg-url.txt
-
-  security-scan:
-    needs: extract-url
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: write
-      security-events: write
-  
-    steps:
-      - name: Download elgg-url artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: elgg-url-artifact
-  
-      - name: Load elgg-url into environment
-        run: |
-          echo "elgg-url=$(cat elgg-url.txt)" >> $GITHUB_ENV
-  
-      - name: Run Quick Security Scan (ZAP)
-        uses: zaproxy/action-baseline@v0.14.0
-        with:
-          target: ${{ env.elgg-url }}
-          cmd_options: '-T 5 -z "-config api.disablekey=true"'
-          fail_action: false
-          allow_issue_writing: false
+          echo "${{ secrets.KUBECONFIG_B64_SELF_MANAGED }}" | base64 -d > ${{ env.KUBECONFIG_PATH }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ZAP_LOG_LEVEL: DEBUG
-  
-      - name: Upload ZAP Scan Report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: security-scan-report
-          path: |
-            report_html.html
-            report_json.json
-            report_md.md
-          if-no-files-found: error
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
-  quality-gate:
-    needs: [docker-build, security-scan]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    outputs:
-      gate-passed: ${{ steps.evaluate.outputs.gate-passed }}
-    steps:
-      - name: Download ZAP scan report
-        uses: actions/download-artifact@v4
-        with:
-          name: security-scan-report
+      - name: Deploy ArgoCD application recette to k8s cluster
+        run: kubectl apply -f recette-application.yml -n argocd
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
 
-      - name: Check risks
-        id: risk-check
-        run: |
-          HIGH=$(jq '[.site[0].alerts[] | select(.riskcode == "3")] | length' report_json.json || echo 0)
-          MEDIUM=$(jq '[.site[0].alerts[] | select(.riskcode == "2")] | length' report_json.json || echo 0)
-          echo "high=$HIGH" >> $GITHUB_OUTPUT
-          echo "medium=$MEDIUM" >> $GITHUB_OUTPUT
+      - name: Deploy ArgoCD application prod to k8s cluster
+        run: kubectl apply -f prod-application.yml -n argocd
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+      
 
-      - name: Evaluate gate
-        id: evaluate
-        run: |
-          if [ ${{ steps.risk-check.outputs.high }} -gt 0 ]; then
-            echo "❌ BLOCKED: High-risk vulnerabilities detected"
-            echo "gate-passed=false" >> $GITHUB_OUTPUT
-            exit 1
-          elif [ ${{ steps.risk-check.outputs.medium }} -gt 3 ]; then
-            echo "⚠️ WARNING: Too many medium-risk issues"
-            echo "gate-passed=false" >> $GITHUB_OUTPUT
-            exit 1
-          else
-            echo "✅ Quality gate passed"
-            echo "gate-passed=true" >> $GITHUB_OUTPUT
-          fi
+      # - name: Set up SSH key for deployment
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "${{ secrets.MASTER_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #     ssh-keyscan -H ${{ secrets.MASTER_SSH_IP }} >> ~/.ssh/known_hosts
 
-  deploy-to-prod:
-    needs: quality-gate
-    if: needs.quality-gate.outputs.gate-passed == 'true'
-    runs-on: [self-hosted, Linux, X64]
+      # - name: Copy deployment files to master node
+      #   run: |
+      #     ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} "mkdir -p ~/elgg-deploy"
+      #     scp -r k8s-rancher/* ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }}:~/elgg-deploy/
 
-    steps:
+      # - name: Cleanup prod namespace
+      #   run: |
+      #     echo "Cleaning up all resources in 'prod' namespace to avoid PVC conflicts..."
+      #     kubectl delete all --all -n prod || true
+      #     kubectl delete pvc --all -n prod || true
 
-      - name: Cleanup test namespace
-        run: |
-          ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
-            kubectl delete all --all -n recette || true
-            kubectl delete pvc --all -n recette || true
-          EOF
+      # - name: Deploy PVC to Rancher
+      #   run: kubectl apply -f k8s-rancher/pvc.yml -n recette
+      #   env:
+      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+      # - name: Deploy Secret
+      #   run: kubectl apply -f k8s-rancher/elgg-env.yml -n recette
+      #   env:
+      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+      # - name: Deploy MariaDB 
+      #   run: kubectl apply -f k8s-rancher/mariadb.yml -n recette
+      #   env:
+      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+      # - name: Deploy PhpMyAdmin 
+      #   run: kubectl apply -f k8s-rancher/phpMyAdmin.yml -n recette
+      #   env:
+      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+
+      # - name: Deploy Elgg Deployment
+      #   run: kubectl apply -f k8s-rancher/elgg-app.yml -n recette
+      #   env:
+      #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
           
-      - name: Deploy to Production namespace
-        run: |
-          ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
-            cd ~/elgg-deploy
-            kubectl apply -f pvc.yml -n prod
-            kubectl apply -f elgg-env.yml -n prod
-            kubectl apply -f mariadb.yml -n prod
-            kubectl apply -f phpMyAdmin.yml -n prod
-            kubectl apply -f elgg-app.yml -n prod
-          EOF
+      # - name: Deploy to Recette namespace
+      #   run: |
+      #     ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
+      #       cd ~/elgg-deploy
+      #       kubectl apply -f pvc.yml -n recette
+      #       kubectl apply -f elgg-env.yml -n recette
+      #       kubectl apply -f mariadb.yml -n recette
+      #       kubectl apply -f phpMyAdmin.yml -n recette
+      #       kubectl apply -f elgg-app.yml -n recette
+      #     EOF
+          
+  # extract-url:
+  #   needs: deploy-to-recette
+  #   runs-on: [self-hosted, Linux, X64]
+  
+  #   steps:
+  #     - name: Wait for elgg-app to be ready on masternode
+  #       uses: appleboy/ssh-action@v1
+  #       with:
+  #         host: ${{ secrets.MASTER_SSH_IP }}
+  #         username: ${{ secrets.MASTER_SSH_USER }}
+  #         key: ${{ secrets.MASTER_SSH_PRIVATE_KEY }}
+  #         script: |
+  #           PORT=$(kubectl get svc elgg-app -n recette -o jsonpath='{.spec.ports[0].nodePort}')
+  #           URL="http://74.234.50.122:$PORT"
+  #           echo "Waiting for $URL to be ready..."
+  #           for i in $(seq 1 15); do
+  #             if curl -sf $URL > /dev/null; then
+  #               echo "Service is ready!"
+  #               exit 0
+  #             fi
+  #             echo "Attempt $i: Service not ready yet, waiting 10s..."
+  #             sleep 10
+  #           done
+  #           echo "Service did not become ready in time."
+  #           exit 1
+  
+  #     - name: Extract NodePort and write to file
+  #       run: |
+  #         PORT=$(ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} "kubectl get svc elgg-app -n recette -o jsonpath='{.spec.ports[0].nodePort}'")
+  #         echo "http://74.234.50.122:$PORT" > elgg-url.txt
+  
+  #     - name: Upload elgg-url artifact
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: elgg-url-artifact
+  #         path: elgg-url.txt
+
+  # security-scan:
+  #   needs: extract-url
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     actions: write
+  #     security-events: write
+  
+  #   steps:
+  #     - name: Download elgg-url artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: elgg-url-artifact
+  
+  #     - name: Load elgg-url into environment
+  #       run: |
+  #         echo "elgg-url=$(cat elgg-url.txt)" >> $GITHUB_ENV
+  
+  #     - name: Run Quick Security Scan (ZAP)
+  #       uses: zaproxy/action-baseline@v0.14.0
+  #       with:
+  #         target: ${{ env.elgg-url }}
+  #         cmd_options: '-T 5 -z "-config api.disablekey=true"'
+  #         fail_action: false
+  #         allow_issue_writing: false
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         ZAP_LOG_LEVEL: DEBUG
+  
+  #     - name: Upload ZAP Scan Report
+  #       uses: actions/upload-artifact@v4
+  #       if: always()
+  #       with:
+  #         name: security-scan-report
+  #         path: |
+  #           report_html.html
+  #           report_json.json
+  #           report_md.md
+  #         if-no-files-found: error
+
+  # quality-gate:
+  #   needs: [docker-build, security-scan]
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     pull-requests: write
+  #   outputs:
+  #     gate-passed: ${{ steps.evaluate.outputs.gate-passed }}
+  #   steps:
+  #     - name: Download ZAP scan report
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: security-scan-report
+
+  #     - name: Check risks
+  #       id: risk-check
+  #       run: |
+  #         HIGH=$(jq '[.site[0].alerts[] | select(.riskcode == "3")] | length' report_json.json || echo 0)
+  #         MEDIUM=$(jq '[.site[0].alerts[] | select(.riskcode == "2")] | length' report_json.json || echo 0)
+  #         echo "high=$HIGH" >> $GITHUB_OUTPUT
+  #         echo "medium=$MEDIUM" >> $GITHUB_OUTPUT
+
+  #     - name: Evaluate gate
+  #       id: evaluate
+  #       run: |
+  #         if [ ${{ steps.risk-check.outputs.high }} -gt 0 ]; then
+  #           echo "❌ BLOCKED: High-risk vulnerabilities detected"
+  #           echo "gate-passed=false" >> $GITHUB_OUTPUT
+  #           exit 1
+  #         elif [ ${{ steps.risk-check.outputs.medium }} -gt 3 ]; then
+  #           echo "⚠️ WARNING: Too many medium-risk issues"
+  #           echo "gate-passed=false" >> $GITHUB_OUTPUT
+  #           exit 1
+  #         else
+  #           echo "✅ Quality gate passed"
+  #           echo "gate-passed=true" >> $GITHUB_OUTPUT
+  #         fi
+
+  # deploy-to-prod:
+  #   needs: quality-gate
+  #   if: needs.quality-gate.outputs.gate-passed == 'true'
+  #   runs-on: [self-hosted, Linux, X64]
+
+  #   steps:
+
+  #     - name: Cleanup test namespace
+  #       run: |
+  #         ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
+  #           kubectl delete all --all -n recette || true
+  #           kubectl delete pvc --all -n recette || true
+  #         EOF
+          
+  #     - name: Deploy to Production namespace
+  #       run: |
+  #         ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
+  #           cd ~/elgg-deploy
+  #           kubectl apply -f pvc.yml -n prod
+  #           kubectl apply -f elgg-env.yml -n prod
+  #           kubectl apply -f mariadb.yml -n prod
+  #           kubectl apply -f phpMyAdmin.yml -n prod
+  #           kubectl apply -f elgg-app.yml -n prod
+  #         EOF
