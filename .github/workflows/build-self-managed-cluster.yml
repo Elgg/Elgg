@@ -14,7 +14,7 @@ permissions:
 
 env:
   CACHE_KEY: ${{ github.sha }}
-  IMAGE_TAG: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+  IMAGE_TAG: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v7
   OPENVAS_PASSWORD: ${{ secrets.OPENVAS_PASSWORD }}
 
 jobs:
