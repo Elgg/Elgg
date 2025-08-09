@@ -232,7 +232,7 @@ spec:
             name: elgg-env
       containers:
       - name: elgg-app
-        image: bitaouioussama/elgg-app:v9
+        image: bitaouioussama/elgg-app:v8
         envFrom:
         - secretRef:
             name: elgg-env
