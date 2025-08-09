@@ -1,3 +1,75 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: elgg-app
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: elgg-app
+#   template:
+#     metadata:
+#       labels:
+#         app: elgg-app
+#     spec:
+#       nodeSelector:
+#         kubernetes.io/hostname: test-workernode
+#       initContainers:
+#       - name: fix-permissions
+#         image: bitaouioussama/elgg-app:v6
+#         command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data  && chmod -R 775 /var/elgg_data "]
+#         volumeMounts:
+#         - mountPath: /var/elgg_data
+#           name: elgg-data
+#         # - mountPath: /var/www/html/elgg/elgg-config
+#         #   name: elgg-config
+
+#       containers:
+#       - name: elgg-app
+#         image: bitaouioussama/elgg-app:v6
+#         imagePullPolicy: Always
+#         envFrom:
+#           - secretRef:
+#               name: elgg-env
+#         ports:
+#         - containerPort: 80
+#         resources:
+#           requests:
+#             cpu: "300m"
+#             memory: "500Mi"
+#           limits:
+#             cpu: "400m"
+#             memory: "700Mi"
+#         volumeMounts:
+#         - mountPath: /var/elgg_data
+#           name: elgg-data
+#         # - mountPath: /var/www/html/elgg/elgg-config
+#         #   name: elgg-config
+
+#       volumes:
+#       - name: elgg-data
+#         persistentVolumeClaim:
+#           claimName: elgg-pvc
+#       # - name: elgg-config
+#       #   persistentVolumeClaim:
+#       #     claimName: elgg-config-pvc
+# ---
+
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: elgg-app
+# spec:
+#   type: NodePort
+#   selector:
+#     app: elgg-app
+#   ports:
+#     - protocol: TCP
+#       port: 80
+#       targetPort: 80
+
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,19 +86,21 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: test-workernode
+
+      # Fix permissions before the main container starts
       initContainers:
       - name: fix-permissions
-        image: bitaouioussama/elgg-app:v6
-        command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/elgg_data  && chmod -R 775 /var/elgg_data "]
+        image: bitaouioussama/elgg-app:v8
+        command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/www/html/data /var/www/html/elgg/elgg-config && chmod -R 775 /var/www/html/data /var/www/html/elgg/elgg-config"]
         volumeMounts:
-        - mountPath: /var/elgg_data
+        - mountPath: /var/www/html/data
           name: elgg-data
-        # - mountPath: /var/www/html/elgg/elgg-config
-        #   name: elgg-config
+        - mountPath: /var/www/html/elgg/elgg-config
+          name: elgg-config
 
       containers:
       - name: elgg-app
-        image: bitaouioussama/elgg-app:v6
+        image: bitaouioussama/elgg-app:v8
         imagePullPolicy: Always
         envFrom:
           - secretRef:
@@ -41,21 +115,19 @@ spec:
             cpu: "400m"
             memory: "700Mi"
         volumeMounts:
-        - mountPath: /var/elgg_data
+        - mountPath: /var/www/html/data
           name: elgg-data
-        # - mountPath: /var/www/html/elgg/elgg-config
-        #   name: elgg-config
+        - mountPath: /var/www/html/elgg/elgg-config
+          name: elgg-config
 
       volumes:
       - name: elgg-data
         persistentVolumeClaim:
           claimName: elgg-pvc
-      # - name: elgg-config
-      #   persistentVolumeClaim:
-      #     claimName: elgg-config-pvc
+      - name: elgg-config
+        persistentVolumeClaim:
+          claimName: elgg-config-pvc
 ---
-
-
 apiVersion: v1
 kind: Service
 metadata:
