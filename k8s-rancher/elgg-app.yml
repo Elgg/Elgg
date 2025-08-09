@@ -161,23 +161,20 @@ spec:
         kubernetes.io/hostname: test-workernode
 
       initContainers:
-      # First initContainer to populate files
-      - name: populate-elgg-files
+      - name: prepare-install
         image: bitaouioussama/elgg-app:v8
-        command: ["sh", "-c", "cp -a /var/www/html/elgg/. /mnt/elgg/ && cp -a /var/www/html/elgg/elgg-config/. /mnt/elgg/elgg-config/"]
+        command: ["/bin/sh", "-c", "
+          cp -a /var/www/html/elgg/. /mnt/elgg/;
+          chown -R www-data:www-data /mnt/elgg;
+          chmod -R 755 /mnt/elgg;
+          chmod -R 775 /mnt/elgg/elgg-config /mnt/elgg-data;
+          touch /mnt/elgg/elgg-config/settings.php;
+        "]
         volumeMounts:
         - mountPath: /mnt/elgg
           name: elgg-root
-
-      # Second initContainer to set permissions
-      - name: fix-permissions
-        image: bitaouioussama/elgg-app:v8
-        command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/www/html && find /var/www/html -type d -exec chmod 755 {} \\; && find /var/www/html -type f -exec chmod 644 {} \\; && chmod -R 775 /var/www/html/data /var/www/html/elgg/elgg-config"]
-        volumeMounts:
-        - mountPath: /var/www/html/data
+        - mountPath: /mnt/elgg-data
           name: elgg-data
-        - mountPath: /var/www/html/elgg
-          name: elgg-root
 
       containers:
       - name: elgg-app
@@ -188,18 +185,17 @@ spec:
               name: elgg-env
         ports:
         - containerPort: 80
-        resources:
-          requests:
-            cpu: "300m"
-            memory: "500Mi"
-          limits:
-            cpu: "400m"
-            memory: "700Mi"
         volumeMounts:
-        - mountPath: /var/www/html/data
-          name: elgg-data
         - mountPath: /var/www/html/elgg
           name: elgg-root
+        - mountPath: /var/www/html/data
+          name: elgg-data
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
 
       volumes:
       - name: elgg-data
