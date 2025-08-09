@@ -163,7 +163,7 @@ spec:
       initContainers:
       # First initContainer to populate files
       - name: populate-elgg-files
-        image: bitaouioussama/elgg-app:v9  # Updated to v9
+        image: bitaouioussama/elgg-app:v8
         command: ["sh", "-c", "cp -a /var/www/html/elgg/. /mnt/elgg/ && cp -a /var/www/html/elgg/elgg-config/. /mnt/elgg/elgg-config/"]
         volumeMounts:
         - mountPath: /mnt/elgg
@@ -171,7 +171,7 @@ spec:
 
       # Second initContainer to set permissions
       - name: fix-permissions
-        image: bitaouioussama/elgg-app:v9  # Updated to v9
+        image: bitaouioussama/elgg-app:v8
         command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/www/html && find /var/www/html -type d -exec chmod 755 {} \\; && find /var/www/html -type f -exec chmod 644 {} \\; && chmod -R 775 /var/www/html/data /var/www/html/elgg/elgg-config"]
         volumeMounts:
         - mountPath: /var/www/html/data
@@ -181,7 +181,7 @@ spec:
 
       containers:
       - name: elgg-app
-        image: bitaouioussama/elgg-app:v9  # Updated to v9
+        image: bitaouioussama/elgg-app:v8
         imagePullPolicy: Always
         envFrom:
           - secretRef:
