@@ -37,3 +37,18 @@ spec:
   resources:
     requests:
       storage: 5Gi
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: elgg-root-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: "local-path"
+  volumeName: elgg-root-pv
+  resources:
+    requests:
+      storage: 5Gi
