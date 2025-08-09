@@ -18,7 +18,7 @@ metadata:
   name: elgg-config-pv
 spec:
   capacity:
-    storage: 1Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path
