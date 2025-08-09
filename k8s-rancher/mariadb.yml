@@ -1,3 +1,44 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: elgg-db
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: elgg-db
+#   template:
+#     metadata:
+#       labels:
+#         app: elgg-db
+#     spec:
+#       nodeSelector:
+#         kubernetes.io/hostname: test-workernode
+#       containers:
+#       - name: mariadb
+#         image: mariadb:10.6
+#         envFrom:
+#           - secretRef:
+#               name: elgg-env
+#         ports:
+#         - containerPort: 3306
+#         resources:
+#           requests:
+#             cpu: "400m"
+#             memory: "256Mi"
+#           limits:
+#             cpu: "500m"
+#             memory: "300Mi"
+#         volumeMounts:
+#         - mountPath: /var/lib/mysql
+#           name: db-data
+#       volumes:
+#       - name: db-data
+#         persistentVolumeClaim:
+#           claimName: db-pvc
+
+################################################################################
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,18 +58,31 @@ spec:
       containers:
       - name: mariadb
         image: mariadb:10.6
-        envFrom:
-          - secretRef:
+        env:
+        - name: MARIADB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
               name: elgg-env
+              key: MYSQL_ROOT_PASSWORD
+        - name: MARIADB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: elgg-env
+              key: MYSQL_DATABASE
+        - name: MARIADB_USER
+          valueFrom:
+            secretKeyRef:
+              name: elgg-env
+              key: MYSQL_USER
+        - name: MARIADB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: elgg-env
+              key: MYSQL_PASSWORD
+        - name: MARIADB_HOST
+          value: "elgg-db"  # Explicit host setting
         ports:
         - containerPort: 3306
-        resources:
-          requests:
-            cpu: "400m"
-            memory: "256Mi"
-          limits:
-            cpu: "500m"
-            memory: "300Mi"
         volumeMounts:
         - mountPath: /var/lib/mysql
           name: db-data
