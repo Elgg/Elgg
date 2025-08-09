@@ -172,7 +172,7 @@ spec:
 
       containers:
       - name: elgg-app
-        image: bitaouioussama/elgg-app:v9  # Updated image version
+        image: bitaouioussama/elgg-app:v8
         imagePullPolicy: Always
         envFrom:
           - secretRef:
