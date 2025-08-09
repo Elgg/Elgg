@@ -160,20 +160,19 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: test-workernode
 
-      # Fix permissions before the main container starts
       initContainers:
       - name: fix-permissions
-        image: bitaouioussama/elgg-app:v8
-        command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/www/html/data /var/www/html/elgg/elgg-config && chmod -R 775 /var/www/html/data /var/www/html/elgg/elgg-config"]
+        image: bitaouioussama/elgg-app:v9  # Updated image version
+        command: ["/bin/sh", "-c", "chown -R www-data:www-data /var/www/html && find /var/www/html -type d -exec chmod 755 {} \\; && find /var/www/html -type f -exec chmod 644 {} \\; && chmod -R 775 /var/www/html/data /var/www/html/elgg/elgg-config"]
         volumeMounts:
         - mountPath: /var/www/html/data
           name: elgg-data
-        - mountPath: /var/www/html/elgg/elgg-config
-          name: elgg-config
+        - mountPath: /var/www/html/elgg
+          name: elgg-root  # Changed to mount entire elgg directory
 
       containers:
       - name: elgg-app
-        image: bitaouioussama/elgg-app:v8
+        image: bitaouioussama/elgg-app:v9  # Updated image version
         imagePullPolicy: Always
         envFrom:
           - secretRef:
@@ -190,16 +189,16 @@ spec:
         volumeMounts:
         - mountPath: /var/www/html/data
           name: elgg-data
-        - mountPath: /var/www/html/elgg/elgg-config
-          name: elgg-config
+        - mountPath: /var/www/html/elgg
+          name: elgg-root  # Changed to mount entire elgg directory
 
       volumes:
       - name: elgg-data
         persistentVolumeClaim:
           claimName: elgg-pvc
-      - name: elgg-config
+      - name: elgg-root  # Changed from elgg-config
         persistentVolumeClaim:
-          claimName: elgg-config-pvc
+          claimName: elgg-root-pvc 
 ---
 apiVersion: v1
 kind: Service
@@ -213,3 +212,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
+      nodePort: 30080
