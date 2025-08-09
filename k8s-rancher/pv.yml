@@ -41,3 +41,18 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: /mnt/data/elgg-db
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: elgg-root-pv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /mnt/data/elgg-root
