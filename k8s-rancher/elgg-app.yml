@@ -143,6 +143,70 @@
 #       targetPort: 80
 ################################################################################################################
 
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: elgg-app
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: elgg-app
+#   template:
+#     metadata:
+#       labels:
+#         app: elgg-app
+#     spec:
+#       nodeSelector:
+#         kubernetes.io/hostname: test-workernode
+
+#       initContainers:
+#       - name: prepare-install
+#         image: bitaouioussama/elgg-app:v8
+#         command: ["/bin/sh", "-c", "
+#           cp -a /var/www/html/elgg/. /mnt/elgg/;
+#           chown -R www-data:www-data /mnt/elgg;
+#           chmod -R 755 /mnt/elgg;
+#           chmod -R 775 /mnt/elgg/elgg-config /mnt/elgg-data;
+#           touch /mnt/elgg/elgg-config/settings.php;
+#         "]
+#         volumeMounts:
+#         - mountPath: /mnt/elgg
+#           name: elgg-root
+#         - mountPath: /mnt/elgg-data
+#           name: elgg-data
+
+#       containers:
+#       - name: elgg-app
+#         image: bitaouioussama/elgg-app:v8
+#         imagePullPolicy: Always
+#         envFrom:
+#           - secretRef:
+#               name: elgg-env
+#         ports:
+#         - containerPort: 80
+#         volumeMounts:
+#         - mountPath: /var/www/html/elgg
+#           name: elgg-root
+#         - mountPath: /var/www/html/data
+#           name: elgg-data
+#         livenessProbe:
+#           httpGet:
+#             path: /
+#             port: 80
+#           initialDelaySeconds: 30
+#           periodSeconds: 10
+
+#       volumes:
+#       - name: elgg-data
+#         persistentVolumeClaim:
+#           claimName: elgg-pvc
+#       - name: elgg-root
+#         persistentVolumeClaim:
+#           claimName: elgg-root-pvc
+
+###############################################################################################################
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -159,30 +223,24 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: test-workernode
-
       initContainers:
-      - name: prepare-install
-        image: bitaouioussama/elgg-app:v8
-        command: ["/bin/sh", "-c", "
-          cp -a /var/www/html/elgg/. /mnt/elgg/;
-          chown -R www-data:www-data /mnt/elgg;
-          chmod -R 755 /mnt/elgg;
-          chmod -R 775 /mnt/elgg/elgg-config /mnt/elgg-data;
-          touch /mnt/elgg/elgg-config/settings.php;
-        "]
-        volumeMounts:
-        - mountPath: /mnt/elgg
-          name: elgg-root
-        - mountPath: /mnt/elgg-data
-          name: elgg-data
-
+      - name: wait-for-db
+        image: bitnami/kubectl
+        command: ["sh", "-c", "until kubectl exec -n default elgg-db-<pod-id> -- mysql -u$DB_USER -p$DB_PASSWORD -e 'SELECT 1'; do sleep 5; done"]
+        envFrom:
+        - secretRef:
+            name: elgg-env
       containers:
       - name: elgg-app
-        image: bitaouioussama/elgg-app:v8
-        imagePullPolicy: Always
+        image: bitaouioussama/elgg-app:v9
         envFrom:
-          - secretRef:
-              name: elgg-env
+        - secretRef:
+            name: elgg-env
+        env:
+        - name: ELGG_DB_HOST
+          value: "elgg-db"
+        - name: DB_HOST
+          value: "elgg-db"
         ports:
         - containerPort: 80
         volumeMounts:
@@ -190,20 +248,14 @@ spec:
           name: elgg-root
         - mountPath: /var/www/html/data
           name: elgg-data
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 30
-          periodSeconds: 10
-
       volumes:
-      - name: elgg-data
-        persistentVolumeClaim:
-          claimName: elgg-pvc
       - name: elgg-root
         persistentVolumeClaim:
           claimName: elgg-root-pvc
+      - name: elgg-data
+        persistentVolumeClaim:
+          claimName: elgg-pvc
+
 ---
 apiVersion: v1
 kind: Service
