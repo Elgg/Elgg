@@ -225,8 +225,8 @@ spec:
         kubernetes.io/hostname: test-workernode
       initContainers:
       - name: wait-for-db
-        image: bitnami/kubectl
-        command: ["sh", "-c", "until kubectl exec -n default elgg-db-<pod-id> -- mysql -u$DB_USER -p$DB_PASSWORD -e 'SELECT 1'; do sleep 5; done"]
+        image: busybox:1.28
+        command: ['sh', '-c', 'until nc -z elgg-db 3306; do sleep 2; done']
         envFrom:
         - secretRef:
             name: elgg-env
