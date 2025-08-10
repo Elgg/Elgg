@@ -240,7 +240,7 @@ spec:
 
       containers:
       - name: elgg-app
-        image: bitaouioussama/elgg-app:v9  # New image built with Dockerfile + entrypoint
+        image: bitaouioussama/elgg-app:v9
         imagePullPolicy: Always
         envFrom:
           - secretRef:
