@@ -224,6 +224,11 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: test-workernode
 
+      initContainers:
+      - name: wait-for-db
+        image: busybox:1.36
+        command: ['sh', '-c', 'until nc -z elgg-db 3306; do echo waiting for db; sleep 2; done']
+
       containers:
       - name: elgg-app
         image: bitaouioussama/elgg-app:v9  # New image built with Dockerfile + entrypoint
