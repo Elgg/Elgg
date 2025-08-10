@@ -90,16 +90,16 @@ spec:
 #       - name: db-data
 #         persistentVolumeClaim:
 #           claimName: db-pvc
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: elgg-db
-# spec:
-#   selector:
-#     app: elgg-db
-#   ports:
-#     - protocol: TCP
-#       port: 3306
-#       targetPort: 3306
-#   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elgg-db
+spec:
+  selector:
+    app: elgg-db
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+  type: ClusterIP
