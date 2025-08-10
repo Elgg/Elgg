@@ -229,6 +229,16 @@ spec:
         image: busybox:1.36
         command: ['sh', '-c', 'until nc -z elgg-db 3306; do echo waiting for db; sleep 2; done']
 
+      initContainers:
+      - name: fix-permissions
+        image: busybox
+        command: ['sh', '-c', 'chown -R www-data:www-data /var/www/html/data /var/www/html/elgg/elgg-config']
+        volumeMounts:
+        - mountPath: /var/www/html/data
+          name: elgg-data
+        - mountPath: /var/www/html/elgg/elgg-config
+          name: elgg-config
+
       containers:
       - name: elgg-app
         image: bitaouioussama/elgg-app:v9  # New image built with Dockerfile + entrypoint
