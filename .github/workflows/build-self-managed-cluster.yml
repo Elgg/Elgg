@@ -14,10 +14,13 @@ permissions:
 
 env:
   CACHE_KEY: ${{ github.sha }}
-  IMAGE_TAG: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v7
+  IMAGE_TAG: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v9
   OPENVAS_PASSWORD: ${{ secrets.OPENVAS_PASSWORD }}
   KUBECONFIG_PATH: ${{ github.workspace }}/kubeconfig_self_managed.yaml
-
+  ARGOCD_APP:  myapp-argo-application
+  ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+  ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
+  ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
 jobs:
   docker-build:
     runs-on: ubuntu-latest
@@ -157,6 +160,40 @@ jobs:
       #       kubectl apply -f phpMyAdmin.yml -n recette
       #       kubectl apply -f elgg-app.yml -n recette
       #     EOF
+
+  argo-sync:
+    needs: docker-build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Install ArgoCD CLI
+        run: |
+          curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          chmod +x /usr/local/bin/argocd
+
+      - name: ArgoCD login
+        run: |
+          argocd login ${{ env.ARGOCD_SERVER }} --username ${{ env.ARGOCD_USERNAME }} --password ${{ env.ARGOCD_PASSWORD }} --insecure
+
+      - name: Sync ArgoCD app recette
+        run: argocd app sync ${{ env.ARGOCD_APP }}
+
+      - name: Wait for ArgoCD sync completion
+        run: |
+          for i in {1..20}; do
+            status=$(argocd app get ${{ env.ARGOCD_APP }} -o json | jq -r '.status.sync.status')
+            if [[ "$status" == "Synced" ]]; then
+              echo "Application synced!"
+              exit 0
+            fi
+            echo "Waiting for sync... ($i/20)"
+            sleep 15
+          done
+          echo "Sync timed out"
+          exit 1
           
   extract-url:
     # needs: deploy-to-recette
