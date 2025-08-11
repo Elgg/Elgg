@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-11 15:23+0200\n"
+"POT-Creation-Date: 2025-07-08 10:24+0200\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -2877,6 +2877,10 @@ msgid ""
 msgstr ""
 "Les soutiens ont l'autorisation d'ajouter ce logo officiel sur leur site "
 "s'ils le souhaitent :"
+
+#: ../../contribute/money.rst-1
+msgid "Proud supporter of Elgg"
+msgstr ""
 
 #: ../../contribute/money.rst:25
 msgid "Disclaimer"

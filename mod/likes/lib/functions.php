@@ -58,6 +58,7 @@ function _likes_count_menu_item(\ElggEntity $entity, int $priority = 500): \Elgg
 		'data-likes-guid' => $entity->guid,
 		'data-colorbox-opts' => json_encode([
 			'maxHeight' => '85%',
+			'innerWidth' => '345px',
 			'href' => elgg_normalize_url("ajax/view/likes/popup?guid={$entity->guid}")
 		]),
 		'link_class' => 'elgg-lightbox',

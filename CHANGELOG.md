@@ -1,3 +1,20 @@
+<a name="6.2.4"></a>
+### 6.2.4 (2025-07-25)
+
+#### Contributors
+
+* Jeroen Dalsem (4)
+* Jerôme Bakker (3)
+
+#### Bug fixes
+
+* **forms:**
+  * correctly validate url input in generic entity edit handler [5f5388696](https://github.com/Elgg/Elgg/commit/5f5388696afd8152de8dd2562fcab8a559fb4cb1)
+  * check for files existence before checking file size [84b7e6264](https://github.com/Elgg/Elgg/commit/84b7e6264110da3a22a17a3e67559d3915c91477)
+  * show correct help text value for input/file [e80e96d8b](https://github.com/Elgg/Elgg/commit/e80e96d8ba0dfd66aaf5439a8b631811fb863477)
+* **users:** prevent duplicate key errors when saving user sessions [ab424aea5](https://github.com/Elgg/Elgg/commit/ab424aea50f7e25db32c49e5ba21809bc4cf9bc0)
+
+
 <a name="6.2.3"></a>
 ### 6.2.3 (2025-07-08)
 
