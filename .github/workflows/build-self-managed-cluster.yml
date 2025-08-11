@@ -8,6 +8,8 @@ on:
   pull_request:
     branches:
       - recette
+      - master
+
 
 permissions:
   contents: read
@@ -286,7 +288,7 @@ jobs:
           if-no-files-found: error
 
   quality-gate:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && github.event.pull_request.base.ref == 'master'
     needs: security-scan
     runs-on: ubuntu-latest
     permissions:
@@ -323,6 +325,17 @@ jobs:
             echo "✅ Quality gate passed"
             echo "gate-passed=true" >> $GITHUB_OUTPUT
           fi
+
+      - name: Cleanup test namespace
+        run: |
+          ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
+            kubectl delete all --all -n recette || true
+            kubectl delete pvc --all -n recette || true
+            kubectl delete secrets --all -n recette || true
+          EOF
+      - name: Wait for cleanup
+        run: |
+          sleep 20
 
   # deploy-to-prod:
   #   needs: quality-gate
