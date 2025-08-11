@@ -13,7 +13,7 @@ spec:
         app: elgg-db
     spec:
       nodeSelector:
-        kubernetes.io/hostname: k8s01-mng-1008c2-k8s01-mng-worker-2
+        kubernetes.io/hostname: test-workernode
       containers:
       - name: mariadb
         image: mariadb:10.6
@@ -36,6 +36,60 @@ spec:
       - name: db-data
         persistentVolumeClaim:
           claimName: db-pvc
+
+################################################################################
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: elgg-db
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: elgg-db
+#   template:
+#     metadata:
+#       labels:
+#         app: elgg-db
+#     spec:
+#       nodeSelector:
+#         kubernetes.io/hostname: test-workernode
+#       containers:
+#       - name: mariadb
+#         image: mariadb:10.6
+#         env:
+#         - name: MARIADB_ROOT_PASSWORD
+#           valueFrom:
+#             secretKeyRef:
+#               name: elgg-env
+#               key: MYSQL_ROOT_PASSWORD
+#         - name: MARIADB_DATABASE
+#           valueFrom:
+#             secretKeyRef:
+#               name: elgg-env
+#               key: MYSQL_DATABASE
+#         - name: MARIADB_USER
+#           valueFrom:
+#             secretKeyRef:
+#               name: elgg-env
+#               key: MYSQL_USER
+#         - name: MARIADB_PASSWORD
+#           valueFrom:
+#             secretKeyRef:
+#               name: elgg-env
+#               key: MYSQL_PASSWORD
+#         - name: MARIADB_HOST
+#           value: "elgg-db"  # Explicit host setting
+#         ports:
+#         - containerPort: 3306
+#         volumeMounts:
+#         - mountPath: /var/lib/mysql
+#           name: db-data
+#       volumes:
+#       - name: db-data
+#         persistentVolumeClaim:
+#           claimName: db-pvc
 ---
 apiVersion: v1
 kind: Service

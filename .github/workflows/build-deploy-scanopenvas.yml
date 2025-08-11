@@ -1,0 +1,396 @@
+name: Build, Deploy, Scan with OpenVas
+
+on:
+  workflow_dispatch:
+  # pull_request:
+  #   branches:
+  #     - recette
+  #   types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  actions: write
+  pull-requests: write
+  issues: write
+  id-token: write
+  security-events: write
+  packages: write
+
+env:
+  CACHE_KEY: ${{ github.sha }}
+  IMAGE_TAG: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+  KUBECONFIG_PATH: ${{ github.workspace }}/kubeconfig.yaml
+  NODE_IP: "10.10.204.186"
+  OPENVAS_HOST: "10.10.206.180"
+  OPENVAS_PORT: "9390"  # GMP port for API access
+  OPENVAS_USERNAME: ${{ secrets.OPENVAS_USERNAME }}
+  OPENVAS_PASSWORD: ${{ secrets.OPENVAS_PASSWORD }}
+
+jobs:
+  # docker-build:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     packages: write
+  #     security-events: write
+  #   outputs:
+  #     image-tag: ${{ steps.set-output.outputs.image-tag }}
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v3
+
+  #     - name: Log in to DockerHub
+  #       uses: docker/login-action@v3
+  #       with:
+  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  #     - name: Build and push Docker image
+  #       id: build
+  #       uses: docker/build-push-action@v5
+  #       with:
+  #         context: .
+  #         file: ./Dockerfile
+  #         push: true
+  #         tags: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+  #         no-cache: true
+  #         # cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
+  #         cache-to: type=inline
+
+  #     - name: Set image tag output
+  #       id: set-output
+  #       run: |
+  #         echo "image-tag=${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6" >> $GITHUB_OUTPUT
+
+  #     - name: Scan Docker image with Trivy
+  #       uses: aquasecurity/trivy-action@0.20.0
+  #       with:
+  #         image-ref: '${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6'
+  #         format: 'sarif'
+  #         output: 'trivy-results.sarif'
+
+  #     - name: Upload Trivy SARIF Report
+  #       uses: github/codeql-action/upload-sarif@v3
+  #       with:
+  #         sarif_file: 'trivy-results.sarif'
+
+  #     - name: Upload SARIF file as artifact (optional)
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: trivy-sarif-report
+  #         path: trivy-results.sarif
+
+  # deploy-to-rancher:
+  #   needs: docker-build
+  #   runs-on: [self-hosted, Linux, X64]
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+
+  #     - name: Setup Kubectl
+  #       uses: azure/setup-kubectl@v3
+
+  #     - name: Decode Rancher kubeconfig
+  #       run: |
+  #         echo "${{ secrets.RANCHER_KUBECONFIG_B64 }}" | base64 -d > ${{ env.KUBECONFIG_PATH }}
+  #       env:
+  #         KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+  #     - name: Deploy PVC to Rancher
+  #       run: kubectl apply -f k8s-rancher/pvc.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+  #       env:
+  #         KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+  #     - name: Deploy Secret
+  #       run: kubectl apply -f k8s-rancher/elgg-env.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+  #       env:
+  #         KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+  #     - name: Deploy MariaDB 
+  #       run: kubectl apply -f k8s-rancher/mariadb.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+  #       env:
+  #         KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+  #     - name: Deploy PhpMyAdmin 
+  #       run: kubectl apply -f k8s-rancher/phpMyAdmin.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+  #       env:
+  #         KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+  #     - name: Deploy Elgg Deployment
+  #       run: kubectl apply -f k8s-rancher/elgg-app.yml -n ${{ secrets.RANCHER_NAMESPACE }}
+  #       env:
+  #         KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+  #     - name: Rollout deployments
+  #       run: |
+  #          kubectl rollout status deployment/elgg-app -n ${{ secrets.RANCHER_NAMESPACE }}
+  #       env:
+  #         KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+  scan-with-openvas:
+    runs-on: [self-hosted, Linux, X64]
+    
+    steps:
+      # - name: Install PDF generation dependencies
+      #   run: |
+      #     sudo apt-get update -y
+      #     sudo apt-get install -y --no-install-recommends \
+      #       texlive-latex-extra \
+      #       texlive-fonts-recommended \
+      #       xmlstarlet \
+      #       netcat-openbsd
+
+      - name: Wait for service to be ready
+        run: |
+          echo "Waiting for application to be ready..."
+          sleep 30
+
+      - name: Verify dependencies
+        run: |
+          if ! command -v gvm-cli &> /dev/null; then
+            echo "gvm-tools not found. Please install it."
+            exit 1
+          fi
+          echo "gvm-tools is installed"
+          gvm-cli --version
+
+      - name: Test OpenVAS connectivity
+        run: |
+          if nc -zv $OPENVAS_HOST $OPENVAS_PORT; then
+            echo "✅ OpenVAS reachable"
+          else
+            echo "❌ Cannot reach OpenVAS"
+            exit 1
+          fi
+
+      - name: Create OpenVAS target (scan all ports)
+        id: create-target
+        run: |
+          TARGET_ID=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                              --gmp-password "$OPENVAS_PASSWORD" \
+                              tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                              --xml "<create_target>
+                                       <name>worker-node-scan-$(date +%Y%m%d-%H%M%S)</name>
+                                       <hosts>$NODE_IP</hosts>
+                                       <port_range>1-65535</port_range>
+                                       <comment>Full port scan of worker node</comment>
+                                     </create_target>" \
+                       | sed -n 's/.*id="\([^"]*\)".*/\1/p')
+
+          if [ -z "$TARGET_ID" ]; then
+            echo "❌ Failed to create target"
+            exit 1
+          fi
+
+          echo "TARGET_ID=$TARGET_ID" >> $GITHUB_ENV
+          echo "✅ Target created: $TARGET_ID"
+
+      - name: Create and start scan task
+        id: create-task
+        run: |
+          CONFIG_ID="daba56c8-73ec-11df-a475-002264764cea"
+
+          TASK_ID=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                            --gmp-password "$OPENVAS_PASSWORD" \
+                            tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                            --xml "<create_task>
+                                     <name>worker-node-full-scan-$(date +%Y%m%d-%H%M%S)</name>
+                                     <target id='$TARGET_ID'/>
+                                     <config id='$CONFIG_ID'/>
+                                     <scanner id='08b69003-5fc2-4037-a479-93b440211c73'/>
+                                     <comment>Automated full port scan</comment>
+                                   </create_task>" \
+                     | sed -n 's/.*id="\([^"]*\)".*/\1/p')
+
+          if [ -z "$TASK_ID" ]; then
+            echo "❌ Failed to create task"
+            exit 1
+          fi
+
+          echo "TASK_ID=$TASK_ID" >> $GITHUB_ENV
+          echo "✅ Task created: $TASK_ID"
+
+          echo "📌 Starting scan..."
+          START_OUTPUT=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                                 --gmp-password "$OPENVAS_PASSWORD" \
+                                 tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                                 --xml "<start_task task_id='$TASK_ID'/>")
+
+          if [[ $START_OUTPUT != *status=\"202\"* ]]; then
+            echo "❌ Failed to start scan"
+            echo "$START_OUTPUT"
+            exit 1
+          fi
+          echo "✅ Scan started"
+
+      - name: Monitor scan progress
+        timeout-minutes: 120
+        run: |
+          echo "⏳ Monitoring scan progress..."
+          while true; do
+            STATUS=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                             --gmp-password "$OPENVAS_PASSWORD" \
+                             tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                             --xml "<get_tasks task_id='$TASK_ID'/>" \
+                       | grep -oP '(?<=<status>)[^<]*')
+
+            PROGRESS=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                               --gmp-password "$OPENVAS_PASSWORD" \
+                               tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                               --xml "<get_tasks task_id='$TASK_ID'/>" \
+                         | grep -oP '(?<=<progress>)[^<]*' || echo "0")
+
+            echo "[$(date +'%H:%M:%S')] Status: $STATUS - $PROGRESS%"
+
+            if [ "$STATUS" = "Done" ]; then
+              echo "✅ Scan completed"
+              sleep 30  # Allow report generation
+              break
+            elif [ "$STATUS" = "Stopped" ] || [ "$STATUS" = "Error" ]; then
+              echo "❌ Scan failed with status: $STATUS"
+              exit 1
+            fi
+
+            sleep 60  # Check every minute
+          done
+
+      - name: Download and process reports
+        run: |
+          # Get the report ID
+          REPORT_ID=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                              --gmp-password "$OPENVAS_PASSWORD" \
+                              tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                              --xml "<get_reports task_id='$TASK_ID'/>" \
+                     | xmlstarlet sel -t -v "//report/@id" -n | head -1)
+
+          if [ -z "$REPORT_ID" ]; then
+            echo "❌ Failed to get report ID"
+            exit 1
+          fi
+
+          echo "📄 Report ID: $REPORT_ID"
+
+          # Download XML report
+          gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                  --gmp-password "$OPENVAS_PASSWORD" \
+                  tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                  --xml "<get_reports report_id='$REPORT_ID'/>" > openvas-report.xml
+
+          # Generate PDF (force attempt regardless of findings)
+          PDF_XML=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                            --gmp-password "$OPENVAS_PASSWORD" \
+                            tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                            --xml "<get_reports report_id='$REPORT_ID' format_id='c402cc3e-b531-11e1-9163-406186ea4fc5'/>")
+
+          # Extract Base64 content
+          BASE64_REPORT=$(echo "$PDF_XML" | awk 'BEGIN{RS="<report>|</report>"} NR==2 {print}' | tr -d '\n')
+
+          if [ -n "$BASE64_REPORT" ]; then
+            echo "$BASE64_REPORT" | base64 -d > openvas-report.pdf
+            echo "✅ PDF report generated"
+          else
+            echo "⚠️ PDF generation failed (empty content)"
+            echo "$PDF_XML" > pdf-debug.xml
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: openvas-scan-results
+          path: |
+            openvas-report.xml
+            openvas-report.pdf
+            pdf-debug.xml
+
+      - name: Cleanup OpenVAS resources
+        if: always()
+        run: |
+          if [ -n "$TASK_ID" ]; then
+            gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                    --gmp-password "$OPENVAS_PASSWORD" \
+                    tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                    --xml "<delete_task task_id='$TASK_ID'/>"
+          fi
+          if [ -n "$TARGET_ID" ]; then
+            gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+                    --gmp-password "$OPENVAS_PASSWORD" \
+                    tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+                    --xml "<delete_target target_id='$TARGET_ID'/>"
+          fi
+
+
+#################################################################################################
+      # - name: Monitor scan progress
+      #   run: |
+      #     echo "Monitoring scan..."
+      #     while true; do
+      #       STATUS=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+      #                        --gmp-password "$OPENVAS_PASSWORD" \
+      #                        tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+      #                        --xml "<get_tasks task_id='$TASK_ID'/>" \
+      #                  | grep -oP '(?<=<status>)[^<]*')
+  
+      #       PROGRESS=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+      #                          --gmp-password "$OPENVAS_PASSWORD" \
+      #                          tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+      #                          --xml "<get_tasks task_id='$TASK_ID'/>" \
+      #                    | grep -oP '(?<=<progress>)[^<]*' || echo "0")
+  
+      #       echo "Status: $STATUS - $PROGRESS%"
+  
+      #       if [ "$STATUS" = "Done" ]; then
+      #         echo "Scan completed!"
+      #         break
+      #       elif [ "$STATUS" = "Stopped" ] || [ "$STATUS" = "Error" ]; then
+      #         echo "Scan failed!"
+      #         exit 1
+      #       fi
+      #       sleep 30
+      #     done
+  
+      # - name: Download scan report
+      #   run: |
+      #     REPORT_ID=$(gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+      #                         --gmp-password "$OPENVAS_PASSWORD" \
+      #                         tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+      #                         --xml "<get_tasks task_id='$TASK_ID'/>" \
+      #                   | grep -oP '(?<=<report id=")[^"]*')
+      #     echo "REPORT_ID=$REPORT_ID" >> $GITHUB_ENV
+      #     echo "Report ID: $REPORT_ID"
+  
+      #     # PDF
+      #     gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+      #             --gmp-password "$OPENVAS_PASSWORD" \
+      #             tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+      #             --xml "<get_reports report_id='$REPORT_ID' format_id='c402cc3e-b531-11e1-9163-406186ea4fc5'/>" \
+      #       | grep -oP '(?<=<report>)[^<]*' | base64 -d > elgg-security-report.pdf
+  
+      #     # XML
+      #     gvm-cli --gmp-username "$OPENVAS_USERNAME" \
+      #             --gmp-password "$OPENVAS_PASSWORD" \
+      #             tls --hostname "$OPENVAS_HOST" --port "$OPENVAS_PORT" \
+      #             --xml "<get_reports report_id='$REPORT_ID'/>" > elgg-security-report.xml
+  
+      # - name: Parse and display results
+      #   run: |
+      #     echo "Summary:"
+      #     HIGH=$(grep -c 'threat="High"' elgg-security-report.xml || echo "0")
+      #     MEDIUM=$(grep -c 'threat="Medium"' elgg-security-report.xml || echo "0")
+      #     LOW=$(grep -c 'threat="Low"' elgg-security-report.xml || echo "0")
+      #     INFO=$(grep -c 'threat="Log"' elgg-security-report.xml || echo "0")
+      #     echo "🔴 High: $HIGH"
+      #     echo "🟡 Medium: $MEDIUM"
+      #     echo "🟢 Low: $LOW"
+      #     echo "ℹ️  Info: $INFO"
+  
+      # - name: Upload reports
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: openvas-security-reports
+      #     path: |
+      #       elgg-security-report.pdf
+      #       elgg-security-report.xml

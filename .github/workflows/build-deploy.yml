@@ -1,4 +1,4 @@
-name: Build & Deploy To Rancher
+name: Deploy To Rancher
 
 on:
   workflow_dispatch:
@@ -20,6 +20,8 @@ env:
   CACHE_KEY: ${{ github.sha }}
   IMAGE_TAG: ${{ secrets.DOCKERHUB_USERNAME }}/elgg-app:v6
   KUBECONFIG_PATH: ${{ github.workspace }}/kubeconfig.yaml
+  NODE_IP: ${{ secrets.NODE_IP }}
+  OPENVAS_PASSWORD: ${{ secrets.OPENVAS_PASSWORD }}
 
 jobs:
 
@@ -122,9 +124,55 @@ jobs:
         run: kubectl apply -f k8s-rancher/elgg-app.yml -n ${{ secrets.RANCHER_NAMESPACE }}
         env:
           KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
-
-
-      # - name: Verify Deployment rollout
-      #   run: kubectl rollout status deployment/elgg-app -n ${{ secrets.RANCHER_NAMESPACE }}
+          
+      # - name: Deploy OpenVAS 
+      #   run: kubectl apply -f k8s-rancher/openvas-scan.yml -n ${{ secrets.RANCHER_NAMESPACE }}
       #   env:
       #     KUBECONFIG: ${{ env.KUBECONFIG_PATH }}
+
+  scan-with-openvas:
+    needs: deploy-to-rancher
+    runs-on: [self-hosted, Linux, X64]
+ 
+    steps:
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+        
+      - name: Get NodePort of Elgg app
+        id: elgg-access
+        run: |
+          export KUBECONFIG=${{ github.workspace }}/kubeconfig.yaml
+          NODE_PORT=$(kubectl get svc elgg-app -n ${{ secrets.RANCHER_NAMESPACE }} -o jsonpath="{.spec.ports[0].nodePort}")
+          echo "NODE_PORT=$NODE_PORT" >> $GITHUB_ENV
+          echo "ELGG_URL=http://$NODE_IP:$NODE_PORT" >> $GITHUB_ENV
+  
+      - name: Start OpenVAS container securely
+        run: |
+          docker run -d --name openvas \
+            -e PASSWORD=$OPENVAS_PASSWORD \
+            -p 9390:9390 \
+            mikesplain/openvas
+  
+      - name: Wait for OpenVAS to initialize
+        run: |
+          echo "⏳ Waiting for OpenVAS to initialize..."
+          sleep 180
+  
+      - name: Run GVM scan using gvm-cli
+        run: |
+          echo "🔎 Target: $ELGG_URL"
+          ELGG_HOST=$(echo $ELGG_URL | cut -d/ -f3 | cut -d: -f1)
+  
+          docker exec openvas gvm-cli \
+            --gmp-username=admin \
+            --gmp-password="$OPENVAS_PASSWORD" \
+            socket --xml "
+              <create_target>
+                <name>elgg-target</name>
+                <hosts>$ELGG_HOST</hosts>
+                <port_list id='33d0cd82-57c6-11e1-8ed1-406186ea4fc5'/>
+              </create_target>"
+  
+      - name: Stop and clean up OpenVAS container
+        if: always()
+        run: docker rm -f openvas || true
