@@ -10,7 +10,6 @@ on:
       - recette
       - master
 
-
 permissions:
   contents: read
   actions: write
@@ -288,7 +287,11 @@ jobs:
           if-no-files-found: error
 
   quality-gate:
+<<<<<<< dev
     if: github.event_name == 'push' && github.event.pull_request.base.ref == 'master'
+=======
+    if: github.event_name == 'push'
+>>>>>>> recette
     needs: security-scan
     runs-on: ubuntu-latest
     permissions:
@@ -325,6 +328,7 @@ jobs:
             echo "✅ Quality gate passed"
             echo "gate-passed=true" >> $GITHUB_OUTPUT
           fi
+
 
       - name: Cleanup test namespace
         run: |
