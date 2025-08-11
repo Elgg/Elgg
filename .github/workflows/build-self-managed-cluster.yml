@@ -10,6 +10,7 @@ on:
       - recette
       - master
 
+
 permissions:
   contents: read
   actions: write
@@ -287,7 +288,6 @@ jobs:
           if-no-files-found: error
 
   quality-gate:
-
     if: github.event_name == 'push' && github.event.pull_request.base.ref == 'master'
     needs: security-scan
     runs-on: ubuntu-latest
@@ -326,7 +326,6 @@ jobs:
             echo "gate-passed=true" >> $GITHUB_OUTPUT
           fi
 
-
       - name: Cleanup test namespace
         run: |
           ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
@@ -337,3 +336,28 @@ jobs:
       - name: Wait for cleanup
         run: |
           sleep 20
+
+  # deploy-to-prod:
+  #   needs: quality-gate
+  #   if: needs.quality-gate.outputs.gate-passed == 'true'
+  #   runs-on: [self-hosted, Linux, X64]
+
+  #   steps:
+
+  #     - name: Cleanup test namespace
+  #       run: |
+  #         ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
+  #           kubectl delete all --all -n recette || true
+  #           kubectl delete pvc --all -n recette || true
+  #         EOF
+          
+  #     - name: Deploy to Production namespace
+  #       run: |
+  #         ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
+  #           cd ~/elgg-deploy
+  #           kubectl apply -f pvc.yml -n prod
+  #           kubectl apply -f elgg-env.yml -n prod
+  #           kubectl apply -f mariadb.yml -n prod
+  #           kubectl apply -f phpMyAdmin.yml -n prod
+  #           kubectl apply -f elgg-app.yml -n prod
+  #         EOF
