@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-argo-application
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/Elgg6/Elgg6.git
+    targetRevision: HEAD
+    path: k8s-rancher
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: prod
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
