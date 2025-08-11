@@ -287,6 +287,16 @@ jobs:
             report_md.md
           if-no-files-found: error
 
+      - name: Cleanup test namespace
+        run: |
+          ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
+            kubectl delete all --all -n recette || true
+            kubectl delete pvc --all -n recette || true
+            kubectl delete secrets --all -n recette || true
+          EOF
+          sleep 20
+          
+
   quality-gate:
     if: github.event_name == 'push' && github.event.pull_request.base.ref == 'master'
     needs: security-scan
@@ -326,16 +336,7 @@ jobs:
             echo "gate-passed=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Cleanup test namespace
-        run: |
-          ssh ${{ secrets.MASTER_SSH_USER }}@${{ secrets.MASTER_SSH_IP }} << 'EOF'
-            kubectl delete all --all -n recette || true
-            kubectl delete pvc --all -n recette || true
-            kubectl delete secrets --all -n recette || true
-          EOF
-      - name: Wait for cleanup
-        run: |
-          sleep 20
+
 
   # deploy-to-prod:
   #   needs: quality-gate
