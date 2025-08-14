@@ -1,3 +1,15 @@
+<a name="6.2.5"></a>
+### 6.2.5 (2025-08-14)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+
+#### Bug fixes
+
+* **css:** scroll issues with width calculation of likes colorbox popup [72d37f815](https://github.com/Elgg/Elgg/commit/72d37f815aaf29e2de8f38d9c7a50f1a29b1e775)
+
+
 <a name="6.2.4"></a>
 ### 6.2.4 (2025-07-25)
 
