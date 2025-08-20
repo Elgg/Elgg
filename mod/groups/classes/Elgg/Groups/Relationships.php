@@ -51,18 +51,11 @@ class Relationships {
 			return;
 		}
 		
-		$group_preferences = $user->getNotificationSettings('group_join');
-		$enabled_methods = array_keys(array_filter($group_preferences));
-		
-		// loop through all notification types
-		$methods = elgg_get_notification_methods();
-		foreach ($enabled_methods as $method) {
-			// only enable supported methods
-			if (!in_array($method, $methods)) {
-				continue;
-			}
-			
-			$group->addSubscription($user->guid, $method);
+		$enabled_methods = $user->getNotificationSettings('group_join', true);
+		if (empty($enabled_methods)) {
+			return;
 		}
+		
+		$group->addSubscription($user->guid, $enabled_methods);
 	}
 }

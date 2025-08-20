@@ -42,9 +42,6 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals(0, $this->user->getGUID());
 		$this->assertTrue($this->user->save());
 		$this->assertGreaterThan(0, $this->user->guid);
-
-		// clean up
-		$this->user->delete();
 	}
 
 	public function testElggUserDelete() {
@@ -54,7 +51,8 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 
 		// delete object
 		$this->assertTrue($this->user->delete());
-
+		unset($this->user);
+		
 		// check GUID not in database
 		$this->assertEmpty($this->fetchUser($guid));
 	}
@@ -74,13 +72,13 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$user = elgg_get_user_by_username($name);
 
 		$this->assertTrue($user->delete());
+		unset($this->user);
 
 		$user = elgg_get_user_by_username($name);
 		$this->assertNull($user);
 	}
 
 	public function testGetUserByUsernameAcceptsUrlEncoded() {
-
 		$username = $this->getRandomUsername();
 		$this->user->username = $username;
 		$this->assertTrue($this->user->save());
@@ -93,12 +91,9 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$user = elgg_get_user_by_username($username);
 		$this->assertTrue((bool) $user);
 		$this->assertEquals($user->guid, $this->user->guid);
-
-		$this->user->delete();
 	}
 	
 	public function testGetUserByUsernameCaseInsensitivity() {
-
 		$username = $this->getRandomUsername();
 		$this->user->username = $username;
 		$this->assertTrue($this->user->save());
@@ -108,12 +103,9 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$user = elgg_get_user_by_username($uc_username);
 		$this->assertTrue((bool) $user);
 		$this->assertEquals($user->guid, $this->user->guid);
-
-		$this->user->delete();
 	}
 	
 	public function testGetUserByEmailCaseInsensitivity() {
-
 		$email = 'Example.User@elgg.org';
 		$this->user->email = $email;
 		$this->assertTrue($this->user->save());
@@ -135,8 +127,6 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		
 		$this->assertInstanceOf(\ElggUser::class, $user);
 		$this->assertEquals($user->guid, $this->user->guid);
-
-		$this->user->delete();
 	}
 
 	public function testElggUserMakeAdmin() {
@@ -146,8 +136,6 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($this->user->makeAdmin());
 
 		$this->assertTrue($this->user->isAdmin());
-
-		$this->user->delete();
 	}
 
 	public function testElggUserRemoveAdmin() {
@@ -159,8 +147,6 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($this->user->removeAdmin());
 
 		$this->assertFalse($this->user->isAdmin());
-
-		$this->user->delete();
 	}
 
 	public function testElggUserIsAdmin() {
@@ -172,8 +158,6 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		// this is testing the function, not the SQL.
 		// that's been tested above.
 		$this->assertTrue($this->user->isAdmin());
-
-		$this->user->delete();
 	}
 
 	public function testElggUserIsNotAdmin() {
@@ -185,12 +169,9 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		// this is testing the function, not the SQL.
 		// that's been tested above.
 		$this->assertFalse($this->user->isAdmin());
-
-		$this->user->delete();
 	}
 
 	public function testElggUserNotificationSettings() {
-
 		elgg_register_notification_method('method1');
 		elgg_register_notification_method('method2');
 
@@ -201,9 +182,12 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$settings = $this->user->getNotificationSettings();
 		$this->assertTrue($settings['method1']);
 		$this->assertFalse($settings['method2']);
-		$this->assertTrue(!isset($settings['method3']));
+		$this->assertArrayNotHasKey('method3', $settings);
 
-		$this->user->delete();
+		$enabled_methods = $this->user->getNotificationSettings('default', true);
+		$this->assertContains('method1', $enabled_methods);
+		$this->assertNotContains('methods2', $enabled_methods);
+		$this->assertNotContains('methods3', $enabled_methods);
 	}
 	
 	/**

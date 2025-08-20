@@ -73,7 +73,7 @@ class CreateLikesEventHandler extends NonConfigurableNotificationEventHandler {
 		}
 		
 		return [
-			$owner->guid => array_keys(array_filter($owner->getNotificationSettings())),
+			$owner->guid => $owner->getNotificationSettings('default', true),
 		];
 	}
 	

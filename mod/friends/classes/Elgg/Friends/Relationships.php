@@ -53,19 +53,12 @@ class Relationships {
 			return;
 		}
 		
-		$friend_preferences = $user->getNotificationSettings('friends');
-		$enabled_methods = array_keys(array_filter($friend_preferences));
-		
-		// loop through all notification types
-		$methods = elgg_get_notification_methods();
-		foreach ($enabled_methods as $method) {
-			// only enable supported methods
-			if (!in_array($method, $methods)) {
-				continue;
-			}
-			
-			$friend->addSubscription($user->guid, $method);
+		$enabled_methods = $user->getNotificationSettings('friends', true);
+		if (empty($enabled_methods)) {
+			return;
 		}
+		
+		$friend->addSubscription($user->guid, $enabled_methods);
 	}
 	
 	/**

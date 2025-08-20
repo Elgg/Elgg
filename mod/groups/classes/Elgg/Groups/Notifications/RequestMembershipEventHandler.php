@@ -19,7 +19,7 @@ class RequestMembershipEventHandler extends NonConfigurableNotificationEventHand
 		
 		$owner = $this->getMembershipGroup()?->getOwnerEntity();
 		if ($owner instanceof \ElggUser) {
-			$result[$owner->guid] = array_keys(array_filter($owner->getNotificationSettings()));
+			$result[$owner->guid] = $owner->getNotificationSettings('default', true);
 		}
 		
 		return $result;

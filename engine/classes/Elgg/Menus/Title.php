@@ -160,7 +160,7 @@ class Title {
 		];
 		
 		// check if it makes sense to enable the subscribe button
-		$has_preferences = !empty(array_keys(array_filter($user->getNotificationSettings())));
+		$has_preferences = !empty($user->getNotificationSettings('default', true));
 		if ($has_preferences) {
 			$subscribe_options['href'] = elgg_generate_action_url('entity/subscribe', [
 				'guid' => $entity->guid,
