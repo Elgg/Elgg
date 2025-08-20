@@ -28,7 +28,9 @@ class CreateContentEventHandler {
 			return;
 		}
 		
-		if ($entity instanceof \ElggObject) {
+		// If an object is subscribable we should subscribe the owner
+		if ($entity instanceof \ElggObject && !$entity->hasCapability('subscribable')) {
+			// not subscribable, so check if there are notification events for this object
 			$notification_events = _elgg_services()->notifications->getEvents();
 			if (!isset($notification_events[$entity->getType()]) || !isset($notification_events[$entity->getType()][$entity->getSubtype()])) {
 				// no notification events registered for this entity type/subtype

@@ -10,6 +10,7 @@ use Elgg\Menu\MenuItems;
  * This should be registered to or call from a event handler 'register', 'menu:<menu name>'
  *
  * @since 4.0
+ * @deprecated 6.3 use the 'subscribable' entity capability
  */
 class RegisterSubscriptionMenuItemsHandler {
 	
@@ -43,6 +44,8 @@ class RegisterSubscriptionMenuItemsHandler {
 				'elgg-button-action',
 			];
 		}
+		
+		elgg_deprecated_notice(__CLASS__ . ' has been deprecated, use the "subscribable" capability', '6.3');
 		
 		$can_subscribe = !$entity->hasSubscriptions() || $entity->hasMutedNotifications();
 		

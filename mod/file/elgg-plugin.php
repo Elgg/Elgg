@@ -19,6 +19,7 @@ return [
 			'capabilities' => [
 				'commentable' => true,
 				'searchable' => true,
+				'subscribable' => true,
 				'likable' => true,
 				'restorable' => true,
 			],
@@ -125,9 +126,6 @@ return [
 			],
 			'menu:site' => [
 				'Elgg\File\Menus\Site::register' => [],
-			],
-			'menu:title:object:file' => [
-				\Elgg\Notifications\RegisterSubscriptionMenuItemsHandler::class => [],
 			],
 		],
 		'seeds' => [
