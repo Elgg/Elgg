@@ -81,6 +81,10 @@ return [
 	'button-delete-background-color-hover' => '#d33f49',
 	'button-delete-font-color-hover' => '#ffffff',
 
+	'input-switch-checked-background-color' => '#397f2e',
+	'input-switch-unchecked-background-color' => '#b94a48',
+	'input-switch-disabled-background-color' => '#cfcfd2',
+
 	// topbar
 	'topbar-background-color' => '#0078ac',
 	'topbar-indicator' => '#faa51a',
