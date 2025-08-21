@@ -4,77 +4,53 @@ namespace Elgg\Cli;
 
 use Elgg\Exceptions\Exception;
 use Elgg\Helpers\Cli\TestingCommand;
-use Elgg\Logger;
-use Elgg\UnitTestCase;
-use Symfony\Component\Console\Output\NullOutput;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Tester\CommandTester;
 
-class CommandUnitTest extends UnitTestCase {
+class CommandUnitTest extends ExecuteCommandUnitTestCase {
 
-	public function executeCommand(\Closure $handler) {
+	protected function prepareCommand(\Closure $handler): TestingCommand {
 		$command = new TestingCommand();
 		$command->setHandler($handler);
-
-		$logger = new Logger('PHPUNIT');
-
-		$output = new NullOutput();
-		$output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
-
-		$handler = new ErrorHandler($output);
-		$logger->pushHandler($handler);
-
-		$command->setLogger($logger);
-
-		$application = new Application();
-		$application->add($command);
-
-		$command = $application->find('testing');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute(['command' => $command->getName()]);
-
-		$output = $commandTester->getDisplay();
-
-		return $output;
+		
+		return $command;
 	}
-
+	
 	public function testCanHandleExceptions() {
-		$handler = function(){
+		$command = $this->prepareCommand(function(){
 			throw new Exception('Exception thrown');
-		};
+		});
 
-		$this->assertMatchesRegularExpression('/Exception thrown/im', $this->executeCommand($handler));
+		$this->assertMatchesRegularExpression('/Exception thrown/im', $this->executeCommand($command));
 	}
 
 	public function testCanLogError() {
-		$handler = function(Command $instance) {
+		$command = $this->prepareCommand(function(Command $instance) {
 			$instance->error('History repeating');
-		};
+		});
 
-		$this->assertMatchesRegularExpression('/History repeating/im', $this->executeCommand($handler));
+		$this->assertMatchesRegularExpression('/History repeating/im', $this->executeCommand($command));
 	}
 
 	public function testCanLogNotice() {
-		$handler = function(Command $instance) {
+		$command = $this->prepareCommand(function(Command $instance) {
 			$instance->notice('Alexander the Great');
-		};
+		});
 
-		$this->assertMatchesRegularExpression('/Alexander the Great/im', $this->executeCommand($handler));
+		$this->assertMatchesRegularExpression('/Alexander the Great/im', $this->executeCommand($command));
 	}
 
 	public function testCanRegisterSystemError() {
-		$handler = function(Command $instance) {
+		$command = $this->prepareCommand(function(Command $instance) {
 			elgg_register_error_message('Life is unfair');
-		};
+		});
 
-		$this->assertMatchesRegularExpression('/Life is unfair/im', $this->executeCommand($handler));
+		$this->assertMatchesRegularExpression('/Life is unfair/im', $this->executeCommand($command));
 	}
 
 	public function testCanRegisterSystemMessage() {
-		$handler = function(Command $instance) {
+		$command = $this->prepareCommand(function(Command $instance) {
 			elgg_register_success_message('Akuna matata');
-		};
+		});
 
-		$this->assertMatchesRegularExpression('/Akuna matata/im', $this->executeCommand($handler));
+		$this->assertMatchesRegularExpression('/Akuna matata/im', $this->executeCommand($command));
 	}
 }

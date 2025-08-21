@@ -3,6 +3,7 @@
 namespace Elgg\Cli;
 
 use Elgg\Exceptions\RuntimeException;
+use Psr\Log\LogLevel;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -24,6 +25,10 @@ abstract class Command extends BaseCommand {
 		$this->setLanguage();
 		$this->login();
 
+		if ($this->option('quiet')) {
+			ob_start();
+		}
+		
 		try {
 			$result = $this->command();
 
@@ -31,9 +36,13 @@ abstract class Command extends BaseCommand {
 				$result = call_user_func($result, $this);
 			}
 		} catch (\Exception $ex) {
-			$this->error($ex);
+			elgg_log($ex, LogLevel::ERROR);
 
-			$result = $ex->getCode() ?: 1;
+			$result = $ex->getCode() ?: self::FAILURE;
+		}
+		
+		if ($this->option('quiet')) {
+			ob_end_clean();
 		}
 
 		$this->dumpRegisters();
@@ -46,7 +55,7 @@ abstract class Command extends BaseCommand {
 	/**
 	 * Command to be executed
 	 *
-	 * This method method should return an integer code of the error (or 0 for success).
+	 * This method should return an integer code of the error (or 0 for success).
 	 * Optionally, the method can return a callable that will receive the instance of this command as an argument
 	 *
 	 * @return mixed

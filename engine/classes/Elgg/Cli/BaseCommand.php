@@ -77,8 +77,11 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 	 * @param mixed $data Data to dump
 	 *
 	 * @return void
+	 * @deprecated 6.3
 	 */
 	final public function dump($data) {
+		elgg_deprecated_notice(__METHOD__ . ' is deprecated and will be removed', '6.3');
+		
 		VarDumper::dump($data);
 	}
 
@@ -86,28 +89,32 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 	 * Write messages to output buffer
 	 *
 	 * @param string|array $messages Data or messages
-	 * @param string       $level    Logging level/servity
+	 * @param string       $style    Output style
 	 *
 	 * @return void
 	 */
-	final public function write($messages, $level = LogLevel::INFO) {
+	final public function write($messages, $style = 'info'): void {
 		$formatter = new FormatterHelper();
 
-		switch ($level) {
-			case LogLevel::EMERGENCY:
-			case LogLevel::CRITICAL:
-			case LogLevel::ALERT:
-			case LogLevel::ERROR:
-				$style = 'error';
-				break;
-
-			case LogLevel::WARNING:
-				$style = 'comment';
-				break;
-
-			default:
-				$style = 'info';
-				break;
+		if (!$this->output->getFormatter()->hasStyle($style)) {
+			elgg_deprecated_notice(__METHOD__ . " using '{$style}' needs to be a supported style, use [info, error, comment or question]", '6.3');
+			
+			switch ($style) {
+				case LogLevel::EMERGENCY:
+				case LogLevel::CRITICAL:
+				case LogLevel::ALERT:
+				case LogLevel::ERROR:
+					$style = 'error';
+					break;
+				
+				case LogLevel::WARNING:
+					$style = 'comment';
+					break;
+				
+				default:
+					$style = 'info';
+					break;
+			}
 		}
 
 		$message = $formatter->formatBlock($messages, $style);
@@ -120,20 +127,26 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 	 * @param string $message Error message
 	 *
 	 * @return void
+	 * @deprecated 6.3 use elgg_log($message, LogLevel::ERROR)
 	 */
 	public function error($message) {
-		$this->write($message, LogLevel::ERROR);
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated, use elgg_log()', '6.3');
+		
+		elgg_log($message, LogLevel::ERROR);
 	}
 
 	/**
-	 * Print a notce
+	 * Print a notice
 	 *
 	 * @param string $message Error message
 	 *
 	 * @return void
+	 * @deprecated 6.3 use elgg_log($message, LogLevel::NOTICE)
 	 */
 	public function notice($message) {
-		$this->write($message, LogLevel::NOTICE);
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated, use elgg_log()', '6.3');
+		
+		elgg_log($message, LogLevel::NOTICE);
 	}
 
 	/**
@@ -184,7 +197,7 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 		foreach ($registers as $prop => $values) {
 			if (!empty($values)) {
 				foreach ($values as $msg) {
-					$prop == 'error' ? $this->error($msg) : $this->notice($msg);
+					$prop === 'error' ? $this->write($msg, 'error') : $this->write($msg);
 				}
 			}
 		}

@@ -4,6 +4,7 @@ namespace Elgg\Cli;
 
 use Elgg\Application as ElggApplication;
 use Elgg\Application\BootHandler;
+use Psr\Log\LogLevel;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -52,13 +53,13 @@ class UpgradeCommand extends BaseCommand {
 		// check if upgrade is locked
 		$is_locked = _elgg_services()->mutex->isLocked('upgrade');
 		if ($is_locked && !$force) {
-			$this->error(elgg_echo('upgrade:locked'));
+			elgg_log(elgg_echo('upgrade:locked'), LogLevel::ERROR);
 			
-			return 1;
+			return self::FAILURE;
 		} elseif ($is_locked && $force) {
 			_elgg_services()->mutex->unlock('upgrade');
 			
-			$this->notice(elgg_echo('upgrade:unlock:success'));
+			$this->write(elgg_echo('upgrade:unlock:success'));
 		}
 
 		// run system upgrades
@@ -67,17 +68,17 @@ class UpgradeCommand extends BaseCommand {
 
 		$job->then(
 			function () {
-				$this->notice(elgg_echo('cli:upgrade:system:upgraded'));
+				$this->write(elgg_echo('cli:upgrade:system:upgraded'));
 			},
 			function ($errors) use (&$return) {
-				$this->error(elgg_echo('cli:upgrade:system:failed'));
+				$this->write(elgg_echo('cli:upgrade:system:failed'), 'error');
 
 				if (!is_array($errors)) {
 					$errors = [$errors];
 				}
 
 				foreach ($errors as $error) {
-					$this->error($error);
+					$this->write($error, 'error');
 				}
 				
 				$return = self::FAILURE;
@@ -101,17 +102,17 @@ class UpgradeCommand extends BaseCommand {
 
 		$job->then(
 			function () {
-				$this->notice(elgg_echo('cli:upgrade:async:upgraded'));
+				$this->write(elgg_echo('cli:upgrade:async:upgraded'));
 			},
 			function ($errors) use (&$return) {
-				$this->error(elgg_echo('cli:upgrade:aysnc:failed'));
+				$this->write(elgg_echo('cli:upgrade:aysnc:failed'), 'error');
 
 				if (!is_array($errors)) {
 					$errors = [$errors];
 				}
 
 				foreach ($errors as $error) {
-					$this->error($error);
+					$this->write($error, 'error');
 				}
 				
 				$return = self::FAILURE;

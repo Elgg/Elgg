@@ -12,7 +12,7 @@ class InvokerIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testSystemLogIntegrationForceDisable() {
-		$plugin = elgg_get_plugin_from_id('system_log');
+		$plugin = \ElggPlugin::fromId('system_log');
 		
 		if (!$plugin->isActive()) {
 			$plugin->activate();
@@ -41,7 +41,7 @@ class InvokerIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testSystemLogIntegrationForceEnable() {
-		$plugin = elgg_get_plugin_from_id('system_log');
+		$plugin = \ElggPlugin::fromId('system_log');
 		
 		if (!$plugin->isActive()) {
 			$plugin->activate();

@@ -2,40 +2,15 @@
 
 namespace Elgg\Cli;
 
-use Elgg\IntegrationTestCase;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
-
-class CacheClearCommandIntegrationTest extends IntegrationTestCase {
-
-	public function up() {
-		self::createApplication([
-			'isolate'=> true,
-		]);
-	}
+class CacheClearCommandIntegrationTest extends ExecuteCommandIntegrationTestCase {
 
 	public function testExecuteWithoutOptions() {
-		$application = new Application();
-		$application->add(new CacheClearCommand());
-
-		$command = $application->find('cache:clear');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute(['command' => $command->getName()]);
-
-		$this->assertMatchesRegularExpression('/' . elgg_echo('admin:cache:cleared') . '/im', $commandTester->getDisplay());
+		$this->assertMatchesRegularExpression('/' . elgg_echo('admin:cache:cleared') . '/im', $this->executeCommand(new CacheClearCommand()));
 	}
 
 	public function testExecuteWithQuietOutput() {
-		$application = new Application();
-		$application->add(new CacheClearCommand());
-
-		$command = $application->find('cache:clear');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
+		$this->assertEmpty($this->executeCommand(new CacheClearCommand(), [
 			'--quiet' => true,
-		]);
-		
-		$this->assertEmpty($commandTester->getDisplay());
+		]));
 	}
 }

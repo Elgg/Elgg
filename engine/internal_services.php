@@ -1,6 +1,9 @@
 <?php
 
+use Elgg\Application;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LogLevel;
+use Symfony\Component\Console\Output\OutputInterface;
 
 return [
 	'autoloadCache' => DI\autowire(\Elgg\Cache\AutoloadCache::class),
@@ -24,10 +27,10 @@ return [
 	'cli' => DI\autowire(\Elgg\Cli::class)->constructorParameter('input', DI\get('cli_input'))->constructorParameter('output', DI\get('cli_output')),
 	'cli_input' => DI\factory(function (ContainerInterface $c) {
 		return \Elgg\Application::getStdIn();
-    }),
+	}),
 	'cli_output' => DI\factory(function (ContainerInterface $c) {
 		return \Elgg\Application::getStdOut();
-    }),
+	}),
 	'cli_progress' => DI\autowire(\Elgg\Cli\Progress::class)->constructorParameter('output', DI\get('cli_output')),
 	// the 'config' service is available but is set as part of the construction of the application
 	'configTable' => DI\autowire(\Elgg\Database\ConfigTable::class),
@@ -49,7 +52,7 @@ return [
 	'forms' => DI\autowire(\Elgg\FormsService::class),
 	'filestore' => DI\factory(function (ContainerInterface $c) {
 		return new \Elgg\Filesystem\Filestore\DiskFilestore($c->config->dataroot);
-    }),
+	}),
 	'gatekeeper' => DI\autowire(\Elgg\Gatekeeper::class),
 	'group_tools' => DI\autowire(\Elgg\Groups\Tools::class),
 	'handlers' => DI\autowire(\Elgg\HandlersService::class),
@@ -59,15 +62,36 @@ return [
 	'iconService' => DI\autowire(\Elgg\EntityIconService::class),
 	'imageFetcher' => DI\autowire(\Elgg\Assets\ImageFetcherService::class),
 	'imageService' => DI\autowire(\Elgg\ImageService::class),
-	'invoker' => DI\autowire(\Elgg\Invoker::class)->constructorParameter('dic', function() { return elgg(); }),
+	'invoker' => DI\autowire(\Elgg\Invoker::class)->constructorParameter('dic', function() {
+		return elgg();
+	}),
 	'locale' => DI\autowire(\Elgg\I18n\LocaleService::class),
 	'logger' => DI\factory(function (ContainerInterface $c) {
 		$logger = \Elgg\Logger::factory($c->cli_input, $c->cli_output);
 
-		$logger->setLevel($c->config->debug);
+		if (Application::isCli()) {
+			switch ($c->cli_output->getVerbosity()) {
+				case OutputInterface::VERBOSITY_VERBOSE:
+					$logger->setLevel(LogLevel::WARNING);
+					break;
+				case OutputInterface::VERBOSITY_VERY_VERBOSE:
+					$logger->setLevel(LogLevel::NOTICE);
+					break;
+				case OutputInterface::VERBOSITY_DEBUG:
+					$logger->setLevel(LogLevel::DEBUG);
+					break;
+				case OutputInterface::VERBOSITY_QUIET:
+				case OutputInterface::VERBOSITY_NORMAL:
+				default:
+					$logger->setLevel(LogLevel::ERROR);
+					break;
+			}
+		} else {
+			$logger->setLevel($c->config->debug);
+		}
 
 		return $logger;
-    }),
+	}),
 	'mailer' => DI\factory(function (ContainerInterface $c) {
 		switch ($c->config->emailer_transport) {
 			case 'smtp':
@@ -80,7 +104,7 @@ return [
 			default:
 				return new \Laminas\Mail\Transport\Sendmail($c->config->emailer_sendmail_settings);
 		}
-    }),
+	}),
 	'menus' => DI\autowire(\Elgg\Menu\Service::class),
 	'metadataCache' => DI\autowire(\Elgg\Cache\MetadataCache::class),
 	'metadataTable' => DI\autowire(\Elgg\Database\MetadataTable::class),
@@ -110,11 +134,11 @@ return [
 		}
 		
 		return $request;
-    }),
+	}),
 	'requestContext' => DI\factory(function (ContainerInterface $c) {
 		$context = new \Elgg\Router\RequestContext();
 		return $context->fromRequest($c->request);
-    }),
+	}),
 	'responseFactory' => DI\autowire(\Elgg\Http\ResponseFactory::class),
 	'riverTable' => DI\autowire(\Elgg\Database\RiverTable::class),
 	'routeCollection' => DI\autowire(\Elgg\Router\RouteCollection::class),
@@ -125,8 +149,8 @@ return [
 	'serveFileHandler' => DI\autowire(\Elgg\Application\ServeFileHandler::class),
 	'serverCache' => DI\autowire(\Elgg\Cache\ServerCache::class),
 	'session' => DI\factory(function (ContainerInterface $c) {
-        return \ElggSession::fromDatabase($c->config, $c->db);
-    }),
+		return \ElggSession::fromDatabase($c->config, $c->db);
+	}),
 	'session_manager' => DI\autowire(\Elgg\SessionManagerService::class),
 	'simpleCache' => DI\autowire(\Elgg\Cache\SimpleCache::class),
 	'siteSecret' => DI\autowire(\Elgg\Security\SiteSecret::class),

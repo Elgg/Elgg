@@ -2,74 +2,42 @@
 
 namespace Elgg\Cli;
 
-use Elgg\IntegrationTestCase;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
-class UpgradeCommandIntegrationTest extends IntegrationTestCase {
+class UpgradeCommandIntegrationTest extends ExecuteCommandIntegrationTestCase {
 
 	public function down() {
 		if (_elgg_services()->mutex->isLocked('upgrade')) {
 			_elgg_services()->mutex->unlock('upgrade');
 		}
+		
+		parent::down();
 	}
 
 	public function testExecute() {
-		$application = new Application();
-		$application->add(new UpgradeCommand());
-
-		$command = $application->find('upgrade');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute(['command' => $command->getName()]);
-
-		$this->assertStringContainsStringIgnoringCase(elgg_echo('cli:upgrade:system:upgraded'), $commandTester->getDisplay());
-		$this->assertEmpty($commandTester->getStatusCode());
+		$this->assertStringContainsStringIgnoringCase(elgg_echo('cli:upgrade:system:upgraded'), $this->executeCommand(new UpgradeCommand()));
 	}
 	
 	public function testExecuteFailsWhenLocked() {
 		_elgg_services()->mutex->lock('upgrade');
 		
-		$application = new Application();
-		$application->add(new UpgradeCommand());
-		
-		$command = $application->find('upgrade');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute(['command' => $command->getName()]);
-		
-		$this->assertNotEmpty($commandTester->getStatusCode());
+		$this->assertEquals(SymfonyCommand::FAILURE, $this->executeCommand(new UpgradeCommand(), [], [], true));
 	}
 	
 	public function testExecuteForceWhenLocked() {
 		_elgg_services()->mutex->lock('upgrade');
 		
-		$application = new Application();
-		$application->add(new UpgradeCommand());
-		
-		$command = $application->find('upgrade');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
+		$this->assertStringContainsStringIgnoringCase(elgg_echo('cli:upgrade:system:upgraded'), $this->executeCommand(new UpgradeCommand(), [
 			'--force' => true,
-		]);
-		
-		$this->assertStringContainsStringIgnoringCase(elgg_echo('cli:upgrade:system:upgraded'), $commandTester->getDisplay());
-		$this->assertEmpty($commandTester->getStatusCode());
+		]));
 	}
 
 	public function testExecuteAsyncUpgrades() {
-		$application = new Application();
-		$application->add(new UpgradeCommand());
-
-		$command = $application->find('upgrade');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
+		$output = $this->executeCommand(new UpgradeCommand(), [
 			'async' => ['async'],
-			'--quiet' => true,
 		]);
 
-		$this->assertStringContainsStringIgnoringCase(elgg_echo('cli:upgrade:system:upgraded'), $commandTester->getDisplay());
-		$this->assertStringContainsStringIgnoringCase(elgg_echo('cli:upgrade:async:upgraded'), $commandTester->getDisplay());
-		$this->assertEmpty($commandTester->getStatusCode());
+		$this->assertStringContainsStringIgnoringCase(elgg_echo('cli:upgrade:system:upgraded'), $output);
+		$this->assertStringContainsStringIgnoringCase(elgg_echo('cli:upgrade:async:upgraded'), $output);
 	}
 }
