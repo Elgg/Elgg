@@ -650,6 +650,22 @@ $ipsum = elgg_view('theme_sandbox/demo/ipsum');
 				],
 				[
 					'#type' => 'fieldset',
+					'#label' => 'Input and button field - stretched first field',
+					'align' => 'horizontal',
+					'fields' => [
+						[
+							'#type' => 'text',
+							'#class' => ['elgg-field-stretch'],
+						],
+						[
+							'#type' => 'button',
+							'class' => 'elgg-button-submit',
+							'text' => 'Do nothing',
+						],
+					],
+				],
+				[
+					'#type' => 'fieldset',
 					'#label' => 'Nested fieldset',
 					'#help' => 'Fieldset with horizontal alignment of fields',
 					'align' => 'horizontal',
