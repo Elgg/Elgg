@@ -120,4 +120,75 @@ class Title {
 		
 		return $return;
 	}
+	
+	/**
+	 * Register (un)subscribe menu items to the title menu
+	 *
+	 * @param \Elgg\Event $event 'register', 'menu:title'
+	 *
+	 * @return null|MenuItems
+	 */
+	public static function registerSubscribable(\Elgg\Event $event): ?MenuItems {
+		$user = elgg_get_logged_in_user_entity();
+		if (!$user instanceof \ElggUser) {
+			return null;
+		}
+		
+		$entity = $event->getEntityParam();
+		if (!$entity instanceof \ElggEntity || !$entity->hasCapability('subscribable')) {
+			return null;
+		}
+		
+		$result = $event->getValue();
+		if (!$result instanceof MenuItems) {
+			return null;
+		}
+		
+		$can_subscribe = !$entity->hasSubscriptions() || $entity->hasMutedNotifications();
+		
+		// subscribe
+		$subscribe_options = [
+			'name' => 'entity_subscribe',
+			'icon' => 'bell',
+			'text' => elgg_echo('entity:subscribe'),
+			'href' => false,
+			'item_class' => $can_subscribe ? '' : 'hidden',
+			'link_class' => [
+				'elgg-button',
+				'elgg-button-action',
+			],
+		];
+		
+		// check if it makes sense to enable the subscribe button
+		$has_preferences = !empty($user->getNotificationSettings('default', true));
+		if ($has_preferences) {
+			$subscribe_options['href'] = elgg_generate_action_url('entity/subscribe', [
+				'guid' => $entity->guid,
+			]);
+			$subscribe_options['data-toggle'] = 'entity_mute';
+		} else {
+			$subscribe_options['link_class'][] = 'elgg-state-disabled';
+			$subscribe_options['title'] = elgg_echo('entity:subscribe:disabled');
+		}
+		
+		$result[] = \ElggMenuItem::factory($subscribe_options);
+		
+		// mute
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'entity_mute',
+			'icon' => 'bell-slash',
+			'text' => elgg_echo('entity:mute'),
+			'href' => elgg_generate_action_url('entity/mute', [
+				'guid' => $entity->guid,
+			]),
+			'item_class' => $can_subscribe ? 'hidden' : '',
+			'link_class' => [
+				'elgg-button',
+				'elgg-button-action',
+			],
+			'data-toggle' => 'entity_subscribe',
+		]);
+		
+		return $result;
+	}
 }

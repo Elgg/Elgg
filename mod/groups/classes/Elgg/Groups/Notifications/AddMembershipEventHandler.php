@@ -19,7 +19,7 @@ class AddMembershipEventHandler extends NonConfigurableNotificationEventHandler 
 		
 		$user = $this->getMembershipUser();
 		if ($user instanceof \ElggUser) {
-			$result[$user->guid] = array_keys(array_filter($user->getNotificationSettings()));
+			$result[$user->guid] = $user->getNotificationSettings('default', true);
 		}
 		
 		return $result;

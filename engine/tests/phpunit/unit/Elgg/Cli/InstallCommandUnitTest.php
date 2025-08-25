@@ -2,26 +2,13 @@
 
 namespace Elgg\Cli;
 
-use Elgg\UnitTestCase;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
-
-class InstallCommandUnitTest extends UnitTestCase {
+class InstallCommandUnitTest extends ExecuteCommandUnitTestCase {
 
 	public function testExecute() {
-
 		$this->markTestSkipped('Can\'t test the installer yet');
 
-		$application = new Application();
-		$application->add(new InstallCommand());
+		$output = $this->executeCommand(new InstallCommand());
 
-		$command = $application->find('install');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
-			//'--quiet' => true,
-		]);
-
-		dump($commandTester->getDisplay());
+		dump($output);
 	}
 }

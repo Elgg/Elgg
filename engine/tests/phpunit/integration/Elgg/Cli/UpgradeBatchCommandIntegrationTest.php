@@ -2,54 +2,18 @@
 
 namespace Elgg\Cli;
 
-use Elgg\IntegrationTestCase;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
-
-class UpgradeBatchCommandIntegrationTest extends IntegrationTestCase {
-
-	public function up() {
-		self::createApplication([
-			'isolate'=> true,
-		]);
-	}
+class UpgradeBatchCommandIntegrationTest extends ExecuteCommandIntegrationTestCase {
 
 	public function testExecuteWithoutOptions() {
-		$application = new Application();
-		$application->add(new UpgradeBatchCommand());
-
-		$command = $application->find('upgrade:batch');
-		$commandTester = new CommandTester($command);
-		
-		_elgg_services()->logger->disable();
-		
-		$commandTester->execute([
-			'command' => $command->getName(),
+		$this->assertStringContainsString(elgg_echo('cli:upgrade:batch:finished'), $this->executeCommand(new UpgradeBatchCommand(), [
 			'upgrades' => ['RandomNonExistingClass'],
-		]);
-
-		_elgg_services()->logger->enable();
-		
-		$this->assertStringContainsString(elgg_echo('cli:upgrade:batch:finished'), $commandTester->getDisplay());
+		]));
 	}
 
 	public function testExecuteWithQuietOutput() {
-		$application = new Application();
-		$application->add(new UpgradeBatchCommand());
-
-		$command = $application->find('upgrade:batch');
-		$commandTester = new CommandTester($command);
-		
-		_elgg_services()->logger->disable();
-		
-		$commandTester->execute([
-			'command' => $command->getName(),
+		$this->assertEmpty($this->executeCommand(new UpgradeBatchCommand(), [
 			'upgrades' => ['RandomNonExistingClass'],
 			'--quiet' => true,
-		]);
-		
-		_elgg_services()->logger->enable();
-		
-		$this->assertEmpty($commandTester->getDisplay());
+		]));
 	}
 }

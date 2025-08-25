@@ -56,7 +56,7 @@ class InstantNotificationEventHandler extends NonConfigurableNotificationEventHa
 			}
 			
 			// get user default preferences
-			$subscriptions[$user->guid] = array_keys(array_filter($user->getNotificationSettings()));
+			$subscriptions[$user->guid] = $user->getNotificationSettings('default', true);
 		}
 
 		return $subscriptions;

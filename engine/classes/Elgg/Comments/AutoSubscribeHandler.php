@@ -35,8 +35,7 @@ class AutoSubscribeHandler {
 			return;
 		}
 		
-		$comment_preferences = $owner->getNotificationSettings('create_comment');
-		$enabled_methods = array_keys(array_filter($comment_preferences));
+		$enabled_methods = $owner->getNotificationSettings('create_comment', true);
 		if (empty($enabled_methods)) {
 			return;
 		}

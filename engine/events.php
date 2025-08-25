@@ -329,6 +329,7 @@ return [
 			'Elgg\Menus\Title::registerEntityToTitle' => [
 				'priority' => 600,
 			],
+			'Elgg\Menus\Title::registerSubscribable' => [],
 		],
 		'menu:topbar' => [
 			'Elgg\Menus\Topbar::registerUserLinks' => [],

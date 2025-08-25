@@ -301,11 +301,13 @@ class NotificationEventHandler {
 		$body = ($recipient instanceof \ElggUser) ? $this->getNotificationBody($recipient, $method) : '';
 		$summary = ($recipient instanceof \ElggUser) ? $this->getNotificationSummary($recipient, $method) : '';
 		$url = ($recipient instanceof \ElggUser) ? $this->getNotificationURL($recipient, $method) : null;
+		$attachments = ($recipient instanceof \ElggUser) ? $this->getNotificationAttachments($recipient, $method) : null;
 		
 		$params['subject'] = $params['subject'] ?? $subject;
 		$params['body'] = $params['body'] ?? $body;
 		$params['summary'] = $params['summary'] ?? $summary;
 		$params['url'] = $params['url'] ?? $url;
+		$params['attachments'] = $params['attachments'] ?? $attachments;
 		$params['event'] = $this->event;
 		$params['method'] = $method;
 		$params['sender'] = $actor;
@@ -485,6 +487,18 @@ class NotificationEventHandler {
 		$object = $this->event->getObject() ?: null;
 		
 		return (string) $object?->getURL();
+	}
+	
+	/**
+	 * Get the attachments for this notification
+	 *
+	 * @param \ElggUser $recipient Notification recipient
+	 * @param string    $method    Method
+	 *
+	 * @return array
+	 */
+	protected function getNotificationAttachments(\ElggUser $recipient, string $method): array {
+		return [];
 	}
 	
 	/**

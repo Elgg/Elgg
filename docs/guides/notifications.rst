@@ -467,7 +467,5 @@ When a user has no setting yet for a non default purpose the system will fallbac
 Notification management
 =======================
 
-A generic menu event handler is provided to manage notification subscription and muting. If you wish to make it easy for users to subscribe to 
-your entities register a menu event on ``register`` ``menu:<menu name>:<entity type>:<entity subtype>`` with the callback 
-``Elgg\Notifications\RegisterSubscriptionMenuItemsHandler`` make sure an ``\ElggEntity`` in ``$params['entity']`` is provided. 
-This will work for most ``elgg_view_menu()`` calls.
+When an entity has the ``subscribable`` capability menu items will automatically be added to the ``title`` menu in order
+to manage the subscription. This requires that the entity is provided to the page so it's passed to ``title`` menu.

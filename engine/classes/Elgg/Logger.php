@@ -99,7 +99,9 @@ class Logger extends \Monolog\Logger {
 
 			$handler->setFormatter($formatter);
 
-			$handler->pushProcessor(new BacktraceProcessor(Level::Error));
+			if ($output->isVeryVerbose()) {
+				$handler->pushProcessor(new BacktraceProcessor(Level::Error));
+			}
 		} else {
 			$handler = new ErrorLogHandler();
 

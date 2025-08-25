@@ -28,7 +28,9 @@ class CreateContentEventHandler {
 			return;
 		}
 		
-		if ($entity instanceof \ElggObject) {
+		// If an object is subscribable we should subscribe the owner
+		if ($entity instanceof \ElggObject && !$entity->hasCapability('subscribable')) {
+			// not subscribable, so check if there are notification events for this object
 			$notification_events = _elgg_services()->notifications->getEvents();
 			if (!isset($notification_events[$entity->getType()]) || !isset($notification_events[$entity->getType()][$entity->getSubtype()])) {
 				// no notification events registered for this entity type/subtype
@@ -38,18 +40,11 @@ class CreateContentEventHandler {
 			}
 		}
 		
-		$content_preferences = $owner->getNotificationSettings('content_create');
-		$enabled_methods = array_keys(array_filter($content_preferences));
-		
-		// loop through all notification types
-		$methods = elgg_get_notification_methods();
-		foreach ($enabled_methods as $method) {
-			// only enable supported methods
-			if (!in_array($method, $methods)) {
-				continue;
-			}
-			
-			$entity->addSubscription($owner->guid, $method);
+		$enabled_methods = $owner->getNotificationSettings('content_create', true);
+		if (empty($enabled_methods)) {
+			return;
 		}
+		
+		$entity->addSubscription($owner->guid, $enabled_methods);
 	}
 }

@@ -10,6 +10,7 @@ use Elgg\Menu\MenuItems;
  * This should be registered to or call from a event handler 'register', 'menu:<menu name>'
  *
  * @since 4.0
+ * @deprecated 6.3 use the 'subscribable' entity capability
  */
 class RegisterSubscriptionMenuItemsHandler {
 	
@@ -25,14 +26,14 @@ class RegisterSubscriptionMenuItemsHandler {
 	 * @return void|MenuItems
 	 */
 	public function __invoke(\Elgg\Event $event) {
-		
 		$result = $event->getValue();
 		$entity = $event->getEntityParam();
 		if (!$result instanceof MenuItems || !$entity instanceof \ElggEntity) {
 			return;
 		}
 		
-		if (!elgg_is_logged_in()) {
+		$user = elgg_get_logged_in_user_entity();
+		if (!$user instanceof \ElggUser) {
 			return;
 		}
 		
@@ -43,6 +44,8 @@ class RegisterSubscriptionMenuItemsHandler {
 				'elgg-button-action',
 			];
 		}
+		
+		elgg_deprecated_notice(__CLASS__ . ' has been deprecated, use the "subscribable" capability', '6.3');
 		
 		$can_subscribe = !$entity->hasSubscriptions() || $entity->hasMutedNotifications();
 		
@@ -57,7 +60,7 @@ class RegisterSubscriptionMenuItemsHandler {
 		];
 		
 		// check if it makes sense to enable the subscribe button
-		$has_preferences = !empty(array_keys(array_filter(elgg_get_logged_in_user_entity()->getNotificationSettings())));
+		$has_preferences = !empty($user->getNotificationSettings('default', true));
 		if ($has_preferences) {
 			$subscribe_options['href'] = elgg_generate_action_url('entity/subscribe', [
 				'guid' => $entity->guid,

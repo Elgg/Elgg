@@ -35,13 +35,12 @@ foreach ($methods as $method) {
 		<?= $description; ?>
 	</div>
 	<?php
-	$value = array_keys(array_filter($user->getNotificationSettings($purpose)));
 	echo elgg_view_field([
 		'#type' => 'checkboxes',
 		'name' => "notification_setting[{$purpose}]",
 		'options' => $method_options,
 		'default' => 0,
-		'value' => $value,
+		'value' => $user->getNotificationSettings($purpose, true),
 		'align' => 'horizontal',
 	]);
 	?>

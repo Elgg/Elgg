@@ -408,20 +408,24 @@ class ElggUser extends \ElggEntity {
 	}
 
 	/**
-	 * Returns users's notification settings
+	 * Return the user notification settings
 	 * <code>
 	 *    [
 	 *       'email' => true, // enabled
 	 *       'ajax' => false, // disabled
 	 *    ]
+	 *
+	 *    // or when $only_active_methods === true
+	 *    ['email']
 	 * </code>
 	 *
-	 * @param string $purpose For what purpose to get the notification settings (default: 'default')
+	 * @param string $purpose             For what purpose to get the notification settings (default: 'default')
+	 * @param bool   $only_active_methods Only return the active methods (useful for notifications)
 	 *
 	 * @return array
 	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
-	public function getNotificationSettings(string $purpose = 'default'): array {
+	public function getNotificationSettings(string $purpose = 'default', bool $only_active_methods = false): array {
 		if (empty($purpose)) {
 			throw new ElggInvalidArgumentException(__METHOD__ . ' requires $purpose to be set to a non-empty string');
 		}
@@ -438,7 +442,7 @@ class ElggUser extends \ElggEntity {
 			}
 		}
 
-		return $settings;
+		return $only_active_methods ? array_keys(array_filter($settings)) : $settings;
 	}
 	
 	/**

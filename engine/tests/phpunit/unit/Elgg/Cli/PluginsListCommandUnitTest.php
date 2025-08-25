@@ -2,33 +2,15 @@
 
 namespace Elgg\Cli;
 
-use Elgg\UnitTestCase;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
-
-class PluginsListCommandUnitTest extends UnitTestCase {
-
-	public function up() {
-		_elgg_services()->logger->disable();
-	}
+class PluginsListCommandUnitTest extends ExecuteCommandUnitTestCase {
 
 	/**
 	 * @dataProvider statusProvider
 	 */
 	public function testCanExecuteCommand($status, $exit_code) {
-		$application = new Application();
-
-		$command = new PluginsListCommand();
-		$application->add($command);
-
-		$command = $application->find('plugins:list');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
+		$this->assertEquals($exit_code, $this->executeCommand(new PluginsListCommand(), [
 			'--status' => $status,
-		]);
-
-		$this->assertEquals($exit_code, $commandTester->getStatusCode());
+		], [], true));
 	}
 
 	public static function statusProvider() {
@@ -47,43 +29,23 @@ class PluginsListCommandUnitTest extends UnitTestCase {
 
 		_elgg_services()->plugins->addTestingPlugin($plugin);
 
-		$application = new Application();
+		$output = $this->executeCommand(new PluginsListCommand());
 
-		$command = new PluginsListCommand();
-		$application->add($command);
-
-		$command = $application->find('plugins:list');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
-		]);
-
-		$this->assertMatchesRegularExpression('/test_plugin/im', $commandTester->getDisplay());
-		$this->assertMatchesRegularExpression('/1.9/im', $commandTester->getDisplay());
-		$this->assertMatchesRegularExpression('/active/im', $commandTester->getDisplay());
+		$this->assertMatchesRegularExpression('/test_plugin/im', $output);
+		$this->assertMatchesRegularExpression('/1.9/im', $output);
+		$this->assertMatchesRegularExpression('/active/im', $output);
 	}
 
 	public function testRefreshOption() {
-		$application = new Application();
+		$output = $this->executeCommand(new PluginsListCommand());
 
-		$command = new PluginsListCommand();
-		$application->add($command);
+		$this->assertDoesNotMatchRegularExpression('/test_plugin/im', $output);
 
-		$command = $application->find('plugins:list');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
-		]);
-
-		$this->assertDoesNotMatchRegularExpression('/test_plugin/im', $commandTester->getDisplay());
-
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
+		$output = $this->executeCommand(new PluginsListCommand(), [
 			'--refresh' => true,
 		]);
 
-		$this->assertMatchesRegularExpression('/test_plugin/im', $commandTester->getDisplay());
+		$this->assertMatchesRegularExpression('/test_plugin/im', $output);
 	}
 
 }

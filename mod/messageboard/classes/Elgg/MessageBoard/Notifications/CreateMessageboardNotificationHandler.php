@@ -19,7 +19,7 @@ class CreateMessageboardNotificationHandler extends NonConfigurableNotificationE
 		
 		$user = $this->getAnnotation()?->getEntity();
 		if ($user instanceof \ElggUser) {
-			$result[$user->guid] = array_keys(array_filter($user->getNotificationSettings()));
+			$result[$user->guid] = $user->getNotificationSettings('default', true);
 		}
 		
 		return $result;
