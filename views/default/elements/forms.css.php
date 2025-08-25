@@ -195,21 +195,21 @@ select:not([multiple]) {
 
 @media $(media-phone-up) {
 	.elgg-field {
+		&.elgg-field-stretch {
+			flex-basis: 1%;
+			flex-grow: 1;
+
+			> .elgg-field-input {
+				width: 100%;
+			}
+		}
+
 		&.elgg-field-horizontal {
 			display: flex;
 			flex-direction: row;
 			align-items: baseline;
 			column-gap: 1rem;
-			
-			&.elgg-field-stretch {
-				flex-basis: 1%;
-				flex-grow: 1;
-				
-				> .elgg-field-input {
-					width: 100%;
-				}
-			}
-			
+
 			> .elgg-field-label {
 				align-items: center;
 				display: flex;
