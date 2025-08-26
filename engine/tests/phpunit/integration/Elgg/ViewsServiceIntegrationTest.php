@@ -2,8 +2,14 @@
 
 namespace Elgg;
 
+use Elgg\Cache\ServerCache;
+
 class ViewsServiceIntegrationTest extends IntegrationTestCase {
-	
+
+	protected ?ServerCache $cache;
+
+	protected ?ViewsService $views;
+
 	public function up() {
 		$this->createApplication([
 			'isolate' => true,

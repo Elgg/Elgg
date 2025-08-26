@@ -107,9 +107,8 @@ class EntityTable {
 				$class_name = $map[$type];
 			}
 		}
-		
-		$parents = class_parents($class_name);
-		if ($parents === false || !isset($parents[\ElggEntity::class])) {
+
+		if (!is_a($class_name, \ElggEntity::class, true)) {
 			$this->getLogger()->error("{$class_name} must extend " . \ElggEntity::class);
 			return '';
 		}

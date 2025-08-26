@@ -103,15 +103,15 @@ final class PasswordService {
 	/**
 	 * Validate and change password for a user.
 	 *
-	 * @param \ElggUser $user      The user
-	 * @param string    $conf_code Confirmation code as sent in the request email.
-	 * @param string    $password  Optional new password, if not randomly generated.
+	 * @param \ElggUser   $user      The user
+	 * @param string      $conf_code Confirmation code as sent in the request email.
+	 * @param string|null $password  Optional new password, if not randomly generated.
 	 *
 	 * @return bool
 	 *
 	 * @since 4.3
 	 */
-	public function saveNewPassword(\ElggUser $user, string $conf_code, string $password = null): bool {
+	public function saveNewPassword(\ElggUser $user, string $conf_code, ?string $password = null): bool {
 		if ($password === null) {
 			$password = elgg_generate_password();
 			$reset = true;
