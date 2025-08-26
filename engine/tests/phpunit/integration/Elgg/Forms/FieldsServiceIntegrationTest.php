@@ -81,18 +81,18 @@ class FieldsServiceIntegrationTest extends IntegrationTestCase {
 				'#type' => 'text',
 			],
 		];
-		
-		$event = $this->registerTestingEvent('fields', 'foo:bar2', function() use ($fields) {
+
+		$event = $this->registerTestingEvent('fields', 'object:foo_bar2', function() use ($fields) {
 			return $fields;
 		});
-		
+
 		$event->assertNumberOfCalls(0);
-		
-		$this->assertEquals($fields, elgg()->fields->get('foo', 'bar2'));
+
+		$this->assertEquals($fields, elgg()->fields->get('object', 'foo_bar2'));
 		$event->assertNumberOfCalls(1);
-		
-		$this->assertEquals($fields, elgg()->fields->get('foo', 'bar2'));
-		$this->assertEquals($fields, elgg()->fields->get('foo', 'bar2'));
+
+		$this->assertEquals($fields, elgg()->fields->get('object', 'foo_bar2'));
+		$this->assertEquals($fields, elgg()->fields->get('object', 'foo_bar2'));
 		$event->assertNumberOfCalls(1);
 	}
 }

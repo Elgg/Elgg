@@ -34,9 +34,7 @@ abstract class Repository {
 			return;
 		}
 
-		$val = &$this->options->$name;
-
-		return $val;
+		return $this->options->$name;
 	}
 
 	/**

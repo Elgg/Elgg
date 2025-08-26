@@ -10,7 +10,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 	/**
 	 * @var \ElggUser
 	 */
-	private $user;
+	protected $user;
 
 	public function up() {
 		_elgg_services()->session_manager->setLoggedInUser($this->getAdmin());
@@ -23,9 +23,10 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function down() {
-		if ($this->user) {
+		if (isset($this->user)) {
 			$this->user->delete();
 		}
+
 		unset($this->user);
 	}
 
