@@ -34,11 +34,11 @@ class InstantNotificationEvent implements NotificationEvent {
 	/**
 	 * Constructor
 	 *
-	 * @param \ElggData   $object The object of the event (ElggEntity)
-	 * @param string      $action The name of the action (default: create)
-	 * @param \ElggEntity $actor  The entity that caused the event (default: logged in user)
+	 * @param \ElggData|null   $object The object of the event (ElggEntity)
+	 * @param string|null      $action The name of the action (default: create)
+	 * @param \ElggEntity|null $actor  The entity that caused the event (default: logged in user)
 	 */
-	public function __construct(\ElggData $object = null, string $action = null, \ElggEntity $actor = null) {
+	public function __construct(?\ElggData $object = null, ?string $action = null, ?\ElggEntity $actor = null) {
 
 		$this->object = $object;
 
