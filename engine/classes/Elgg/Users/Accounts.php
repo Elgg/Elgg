@@ -426,13 +426,13 @@ class Accounts {
 	 * Checks if the authentication failure limit has been reached
 	 *
 	 * @param \ElggUser $user     User to check the limit for
-	 * @param int       $limit    (optional) number of allowed failures
-	 * @param int       $lifetime (optional) number of seconds before a failure is considered expired
+	 * @param int|null  $limit    (optional) number of allowed failures
+	 * @param int|null  $lifetime (optional) number of seconds before a failure is considered expired
 	 *
 	 * @return bool
 	 * @since 4.3
 	 */
-	public function isAuthenticationFailureLimitReached(\ElggUser $user, int $limit = null, int $lifetime = null): bool {
+	public function isAuthenticationFailureLimitReached(\ElggUser $user, ?int $limit = null, ?int $lifetime = null): bool {
 		$limit = $limit ?? $this->config->authentication_failures_limit;
 		$lifetime = $lifetime ?? $this->config->authentication_failures_lifetime;
 		

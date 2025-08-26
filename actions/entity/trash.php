@@ -35,7 +35,7 @@ if (empty($forward_url)) {
 	$referrer_url = elgg_extract('HTTP_REFERER', $_SERVER, '');
 	$site_url = elgg_get_site_url();
 	
-	$find_forward_url = function (\ElggEntity $container = null) use ($type, $subtype) {
+	$find_forward_url = function (?\ElggEntity $container = null) use ($type, $subtype) {
 		$routes = _elgg_services()->routes;
 		
 		// check if there is a collection route (eg. blog/owner/username)

@@ -600,17 +600,17 @@ class EntityIconService {
 	/**
 	 * Returns a configuration array of icon sizes
 	 *
-	 * @param string $entity_type    Entity type
-	 * @param string $entity_subtype Entity subtype
-	 * @param string $type           The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @param string|null $entity_type    Entity type
+	 * @param string|null $entity_subtype Entity subtype
+	 * @param string      $type           The name of the icon. e.g., 'icon', 'cover_photo'
 	 *
 	 * @return array
 	 * @throws InvalidArgumentException
 	 */
-	public function getSizes(string $entity_type = null, string $entity_subtype = null, $type = 'icon'): array {
+	public function getSizes(?string $entity_type = null, ?string $entity_subtype = null, string $type = 'icon'): array {
 		$sizes = [];
 		$type = $type ?: 'icon';
-		if ($type == 'icon') {
+		if ($type === 'icon') {
 			$sizes = $this->config->icon_sizes;
 		}
 		

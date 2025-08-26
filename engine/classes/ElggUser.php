@@ -58,12 +58,12 @@ class ElggUser extends \ElggEntity {
 	/**
 	 * Get user language or default to site language
 	 *
-	 * @param string $fallback If this is provided, it will be returned if the user doesn't have a language set.
-	 *                         If null, the site language will be returned.
+	 * @param string|null $fallback If this is provided, it will be returned if the user doesn't have a language set.
+	 *                              If null, the site language will be returned.
 	 *
 	 * @return string
 	 */
-	public function getLanguage(string $fallback = null): string {
+	public function getLanguage(?string $fallback = null): string {
 		if (!empty($this->language)) {
 			return $this->language;
 		}
