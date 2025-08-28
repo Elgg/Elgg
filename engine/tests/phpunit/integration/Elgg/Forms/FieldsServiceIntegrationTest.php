@@ -24,7 +24,8 @@ class FieldsServiceIntegrationTest extends IntegrationTestCase {
 		// adding to English as checks for language keys defaults to English
 		// this prevents this test from failing when the default language isn't English
 		_elgg_services()->translator->addTranslation('en', ['fields:foo:bar:field_1' => 'Label 1']);
-		
+		_elgg_services()->translator->addTranslation('en', ['fields:foo:bar:field_1:help' => 'Help 1']);
+
 		_elgg_services()->events->registerHandler('fields', 'foo:bar', function() {
 			return [
 				[
@@ -60,6 +61,7 @@ class FieldsServiceIntegrationTest extends IntegrationTestCase {
 				'#type' => 'text',
 				'name' => 'field_1',
 				'#label' => 'Label 1',
+				'#help' => 'Help 1',
 			],
 			[
 				'#type' => 'text',
