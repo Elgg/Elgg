@@ -95,4 +95,44 @@ class FieldsServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($fields, elgg()->fields->get('object', 'foo_bar2'));
 		$event->assertNumberOfCalls(1);
 	}
+
+	public function testFieldPriority()	{
+		$fields = [
+			[
+				'name' => 'field_1',
+				'#type' => 'text',
+				'priority' => 500,
+			],
+			[
+				'name' => 'field_2',
+				'#type' => 'text',
+			],
+			[
+				'name' => 'field_3',
+				'#type' => 'text',
+				'priority' => 10,
+			],
+		];
+
+		$expected = [
+			[
+				'name' => 'field_3',
+				'#type' => 'text',
+			],
+			[
+				'name' => 'field_2',
+				'#type' => 'text',
+			],
+			[
+				'name' => 'field_1',
+				'#type' => 'text',
+			],
+		];
+
+		$this->registerTestingEvent('fields', 'object:foo_bar3', function () use ($fields) {
+			return $fields;
+		});
+
+		$this->assertEquals($expected, elgg()->fields->get('object', 'foo_bar3'));
+	}
 }
