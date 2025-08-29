@@ -84,16 +84,10 @@ class ElggApiClientIntegrationTest extends IntegrationTestCase {
 	public function testSetApiKeys() {
 		$client = new ElggApiClient('http://localhost');
 		
-		$reflection_public = new \ReflectionProperty(ElggApiClient::class, 'public_api_key');
-		$reflection_public->setAccessible(true);
-		
-		$reflection_private = new \ReflectionProperty(ElggApiClient::class, 'private_api_key');
-		$reflection_private->setAccessible(true);
-		
 		$client->setApiKeys('foo', 'bar');
 		
-		$this->assertEquals('foo', $reflection_public->getValue($client));
-		$this->assertEquals('bar', $reflection_private->getValue($client));
+		$this->assertEquals('foo', $this->getInaccessableProperty($client, 'public_api_key'));
+		$this->assertEquals('bar', $this->getInaccessableProperty($client, 'private_api_key'));
 	}
 	
 	public function testExecuteRequest() {
@@ -112,10 +106,7 @@ class ElggApiClientIntegrationTest extends IntegrationTestCase {
 		$client = new ElggApiClient('http://localhost?api=foo&var1=bar');
 		$this->assertEquals([], $client->getParams());
 		
-		$reflection = new \ReflectionMethod(ElggApiClient::class, 'prepareRequest');
-		$reflection->setAccessible(true);
-		
-		$reflection->invoke($client);
+		$this->invokeInaccessableMethod($client, 'prepareRequest');
 		
 		$this->assertEquals([
 			'api' => 'foo',
@@ -127,10 +118,7 @@ class ElggApiClientIntegrationTest extends IntegrationTestCase {
 		$client = new ElggApiClient('http://localhost?api=foo&var1=bar', ['method' => 'system.api.list'], 'POST');
 		$this->assertEquals(['method' => 'system.api.list'], $client->getParams());
 		
-		$reflection = new \ReflectionMethod(ElggApiClient::class, 'prepareRequest');
-		$reflection->setAccessible(true);
-		
-		$reflection->invoke($client);
+		$this->invokeInaccessableMethod($client, 'prepareRequest');
 		
 		$this->assertEquals([
 			'api' => 'foo',
