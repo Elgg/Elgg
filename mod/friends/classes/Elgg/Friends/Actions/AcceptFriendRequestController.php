@@ -6,7 +6,6 @@ use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Exceptions\Http\EntityPermissionsException;
 use Elgg\Exceptions\Http\ValidationException;
 use Elgg\Http\OkResponse;
-use Elgg\Friends\Notifications;
 
 /**
  * Action controller to accept a friend request

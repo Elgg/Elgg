@@ -3,7 +3,6 @@
 namespace Elgg;
 
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\Exceptions\LogicException;
 use Elgg\Exceptions\RangeException;
 use Elgg\Filesystem\MimeTypeService;
 use Elgg\Traits\Loggable;

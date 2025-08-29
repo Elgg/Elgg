@@ -2,9 +2,8 @@
 
 namespace Elgg\Di;
 
-use Laminas\Mail\Transport\InMemory;
-use phpDocumentor\Reflection\DocBlock\Tag;
 use Elgg\IntegrationTestCase;
+use phpDocumentor\Reflection\DocBlock\Tag;
 
 class InternalContainerIntegrationTest extends IntegrationTestCase {
 

@@ -7,7 +7,6 @@ use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Seeds\Providers\LocalImage;
 use Elgg\Exceptions\Configuration\RegistrationException;
-use Elgg\Exceptions\Exception;
 use Elgg\Exceptions\Seeding\MaxAttemptsException;
 use Elgg\Groups\Tool;
 use Elgg\Traits\Seeding\GroupHelpers;

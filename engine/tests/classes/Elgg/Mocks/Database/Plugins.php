@@ -2,7 +2,6 @@
 
 namespace Elgg\Mocks\Database;
 
-use Elgg\BaseTestCase;
 use Elgg\Database\Plugins as DbPlugins;
 use Elgg\Testing;
 

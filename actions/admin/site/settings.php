@@ -7,8 +7,6 @@
  * the config table.
  */
 
-use Elgg\Exceptions\Configuration\InstallationException;
-
 $site = elgg_get_site_entity();
 
 $site->description = get_input('sitedescription');

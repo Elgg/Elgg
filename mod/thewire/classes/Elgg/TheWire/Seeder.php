@@ -2,9 +2,7 @@
 
 namespace Elgg\TheWire;
 
-use Elgg\Database\RiverTable;
 use Elgg\Database\Seeds\Seed;
-use Elgg\Database\Update;
 
 /**
  * Add the wire seed

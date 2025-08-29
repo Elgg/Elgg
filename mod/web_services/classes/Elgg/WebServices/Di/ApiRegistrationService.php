@@ -2,7 +2,6 @@
 
 namespace Elgg\WebServices\Di;
 
-use Elgg\Collections\CollectionInterface;
 use Elgg\EventsService;
 use Elgg\Exceptions\ExceptionInterface;
 use Elgg\Exceptions\InvalidArgumentException;

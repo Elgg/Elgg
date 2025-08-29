@@ -3,7 +3,6 @@
 namespace Elgg\Menus;
 
 use Elgg\Menu\MenuItems;
-use Elgg\Menu\UnpreparedMenu;
 
 /**
  * Register menu items to the title menu

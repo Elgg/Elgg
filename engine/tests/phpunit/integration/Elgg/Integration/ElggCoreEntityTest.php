@@ -2,7 +2,6 @@
 
 namespace Elgg\Integration;
 
-use Elgg\Database\AnnotationsTable;
 use Elgg\Database\EntityTable;
 use Elgg\Database\Select;
 

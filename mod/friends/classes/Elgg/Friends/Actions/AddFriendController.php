@@ -5,7 +5,6 @@ namespace Elgg\Friends\Actions;
 use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Exceptions\Http\InternalServerErrorException;
 use Elgg\Exceptions\Http\ValidationException;
-use Elgg\Friends\Notifications;
 use Elgg\Http\OkResponse;
 
 /**
