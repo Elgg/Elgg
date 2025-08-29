@@ -19,6 +19,10 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 	public function up() {
 		$this->user = $this->createUser();
 	}
+	
+	public function down() {
+		_elgg_services()->relationshipsTable->resetCurrentTime();
+	}
 
 	public function testCanGetData() {
 		
@@ -89,6 +93,8 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testCanUpdate() {
+		_elgg_services()->relationshipsTable->setCurrentTime();
+		
 		$relationship = new \ElggRelationship();
 		$relationship->guid_one = $this->user->guid;
 		$relationship->relationship = 'test_self1';
