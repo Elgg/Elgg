@@ -71,6 +71,13 @@ class FieldsService {
 				}
 			}
 
+			if (!isset($field['#help'])) {
+				$label_key = "fields:{$type}:{$subtype}:{$field['name']}:help";
+				if ($this->translator->languageKeyExists($label_key)) {
+					$field['#help'] = $this->translator->translate($label_key);
+				}
+			}
+
 			if (!isset($field['priority'])) {
 				$field['priority'] = $priority;
 				$priority += 100;
