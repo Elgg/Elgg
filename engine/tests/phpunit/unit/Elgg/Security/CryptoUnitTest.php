@@ -1,9 +1,13 @@
 <?php
 
+namespace Elgg\Security;
+
+use PHPUnit\Framework\MockObject\MockObject;
+
 class CryptoUnitTest extends \Elgg\UnitTestCase {
 
 	/**
-	 * @var PHPUnit_Framework_MockObject_MockObject
+	 * @var MockObject
 	 */
 	protected $stub;
 
@@ -18,11 +22,11 @@ class CryptoUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	protected function getCrypto() {
-		return new \Elgg\Security\Crypto();
+		return new Crypto();
 	}
 
 	protected function getHmac() {
-		return new \Elgg\Security\HmacFactory(_elgg_services()->siteSecret, $this->getCrypto());
+		return new HmacFactory(_elgg_services()->siteSecret, $this->getCrypto());
 	}
 
 	function mock_getRandomBytes($length) {
