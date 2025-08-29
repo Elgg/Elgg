@@ -10,6 +10,7 @@ trait TestSeeding {
 		createObject as createSeededObject;
 		createGroup as createSeededGroup;
 		createUser as createSeededUser;
+		getRandomSubtype as getSeededSubtype;
 	}
 
 	/**
@@ -134,5 +135,18 @@ trait TestSeeding {
 		$this->_seeds[] = $entity;
 		
 		return $entity;
+	}
+	
+	/**
+	 * Returns random unique subtype
+	 *
+	 * @return string
+	 */
+	final public function getRandomSubtype(): string {
+		$subtype = $this->getSeededSubtype();
+		
+		_elgg_services()->entityTable->setEntityClass('object', $subtype, \Elgg\Helpers\SeededElggObject::class);
+		
+		return $subtype;
 	}
 }

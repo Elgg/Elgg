@@ -10,14 +10,10 @@ class SystemLogApiTest extends IntegrationTestCase {
 	public function up() {
 		self::createApplication(['isolate' => true]);
 
-		$log = elgg()->system_log;
-		/* @var $log SystemLog */
-
-		$log->setCurrentTime();
+		elgg()->system_log->setCurrentTime();
 	}
 
 	public function testLogsObjectEvent() {
-
 		$object = $this->createObject();
 
 		$event = 'SystemLogApiTest' . rand();
@@ -46,8 +42,8 @@ class SystemLogApiTest extends IntegrationTestCase {
 		$this->assertInstanceOf(SystemLogEntry::class, $entry);
 
 		$this->assertEquals($object->guid, $entry->object_id);
-		$this->assertEquals(\ElggObject::class, $entry->object_class);
-		$this->assertEquals('object', $entry->object_type);
+		$this->assertEquals($object::class, $entry->object_class);
+		$this->assertEquals($object->getType(), $entry->object_type);
 		$this->assertEquals($object->getSubtype(), $entry->object_subtype);
 		$this->assertEquals($event, $entry->event);
 		$this->assertEquals($object->owner_guid, $entry->owner_guid);
@@ -64,7 +60,6 @@ class SystemLogApiTest extends IntegrationTestCase {
 	}
 
 	public function testCanDeleteArchivedLog() {
-
 		$object = $this->createObject();
 
 		$event = 'SystemLogApiTest' . rand();
@@ -86,16 +81,10 @@ class SystemLogApiTest extends IntegrationTestCase {
 		}
 
 		$cron_class = new \Elgg\SystemLog\Cron();
-		$reflector = new \ReflectionClass(\Elgg\SystemLog\Cron::class);
-		$method = $reflector->getMethod('archiveLog');
-		$method->setAccessible(true);
 		
-		$this->assertTrue($method->invokeArgs($cron_class, [-1])); // using -1 to make sure all entries are archived
+		$this->assertTrue($this->invokeInaccessableMethod($cron_class, 'archiveLog', -1)); // using -1 to make sure all entries are archived
 
-		$method = $reflector->getMethod('deleteLog');
-		$method->setAccessible(true);
-		
-		$this->assertTrue($method->invokeArgs($cron_class, [0]));
+		$this->assertTrue($this->invokeInaccessableMethod($cron_class, 'deleteLog', 0));
 		
 		$entries = SystemLog::instance()->getAll();
 
@@ -103,7 +92,6 @@ class SystemLogApiTest extends IntegrationTestCase {
 	}
 	
 	public function testCanDisableEnableSystemLogLogging() {
-		
 		$service = SystemLog::instance();
 		
 		$this->assertTrue($service->isLoggingEnabled());

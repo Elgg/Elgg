@@ -171,6 +171,12 @@ Beyond the standard ``ElggEntity`` properties, ``ElggObject`` also supports:
 
 Most other data about the object is generally stored via metadata.
 
+.. note::
+
+    It's recommended to register a custom extension of an ``ElggObject`` for your subtype (eg. blog, file, etc.).
+    There you can set the subtype to always be your subtype, you can configure default form fields if needed and other
+    helper function can easily be created.
+
 ElggUser
 ========
 
