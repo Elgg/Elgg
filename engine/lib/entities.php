@@ -4,9 +4,7 @@
  */
 
 use Elgg\Database\Clauses\OrderByClause;
-use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
-use Elgg\Database\Select;
 
 /**
  * Return the class name registered as a constructor for an entity of a given type and subtype

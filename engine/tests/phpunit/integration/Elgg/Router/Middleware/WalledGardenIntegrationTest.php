@@ -55,12 +55,9 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 	 * @dataProvider publicPagesProvider
 	 */
 	public function testCanDetectPublicPage($path, $expected) {
-		$class = new \ReflectionClass(WalledGarden::class);
-		$method = $class->getMethod('isPublicPage');
-		
 		$instance = new WalledGarden();
 		
-		$this->assertEquals($expected, $method->invokeArgs($instance, [elgg_normalize_url($path)]));
+		$this->assertEquals($expected, $this->invokeInaccessableMethod($instance, 'isPublicPage', elgg_normalize_url($path)));
 	}
 	
 	public static function publicPagesProvider() {
@@ -84,16 +81,12 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 			return $return;
 		});
 		
-		$class = new \ReflectionClass(WalledGarden::class);
-		$method = $class->getMethod('isPublicPage');
-		
 		$instance = new WalledGarden();
 		
-		$this->assertTrue($method->invokeArgs($instance, [elgg_normalize_url('allowed/foo/bar')]));
+		$this->assertTrue($this->invokeInaccessableMethod($instance, 'isPublicPage', elgg_normalize_url('allowed/foo/bar')));
 	}
 	
 	public function testCanRoutePublicPageInWalledGardenMode() {
-		
 		$request = $this->prepareHttpRequest('foo/bar');
 		$this->createService($request);
 		

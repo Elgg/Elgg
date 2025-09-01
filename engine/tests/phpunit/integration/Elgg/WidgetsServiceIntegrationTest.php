@@ -2,8 +2,6 @@
 
 namespace Elgg;
 
-use Elgg\IntegrationTestCase;
-
 /**
  * Elgg Test \ElggWidget
  */

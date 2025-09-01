@@ -11,6 +11,11 @@ Deprecated APIs
 * ``elgg_dump()`` use ``elgg_log()``
 * ``notify_user()`` use ``elgg_notify_user()`` or ``\ElggUser::notify()``
 
+Deprectated classes
+~~~~~~~~~~~~~~~~~~~
+
+* using ``\ElggObject`` directly has been deprecated. Use your own extension of an ``ElggObject`` for your subtype.
+
 Deprecated class functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 

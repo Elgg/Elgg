@@ -20,12 +20,11 @@ if ($guid) {
 	}
 } else {
 	// create
-	$expages = new \ElggObject();
+	$expages = new \ElggExternalPage();
 	$expages->setSubtype($subtype);
 }
 
 $expages->owner_guid = elgg_get_logged_in_user_guid();
-$expages->access_id = ACCESS_PUBLIC;
 $expages->title = $subtype;
 $expages->description = $contents;
 

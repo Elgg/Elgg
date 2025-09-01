@@ -12,7 +12,6 @@ use Elgg\Database\EntityTable;
 use Elgg\Database\MetadataTable;
 use Elgg\Database\RelationshipsTable;
 use Elgg\I18n\Translator;
-use Elgg\Queue\DatabaseQueue;
 use Elgg\Traits\Di\ServiceFacade;
 use Elgg\Traits\Loggable;
 

@@ -8,7 +8,6 @@ use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\Database\Clauses\WhereClause;
-use Elgg\Exceptions\DataFormatException;
 
 /**
  * Abstract methods for interfacing with the database

@@ -6,10 +6,10 @@ use Elgg\Database\Seeds\Seedable;
 use Elgg\Di\InternalContainer;
 use Elgg\Plugins\PluginTesting;
 use Elgg\Project\Paths;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LogLevel;
 use Phpfastcache\CacheManager;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use Psr\Log\LogLevel;
 
 /**
  * Base test case abstraction
@@ -285,7 +285,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	}
 	
 	/**
-	 * Invokes an inaccessable method
+	 * Invokes an inaccessible method
 	 *
 	 * @param mixed  $argument object or class to invoke on
 	 * @param string $method   method to invoke
@@ -300,7 +300,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	}
 	
 	/**
-	 * Retrieves an inaccessable property
+	 * Retrieves an inaccessible property
 	 *
 	 * @param mixed  $argument object or class to get the property from
 	 * @param string $property name of the property
@@ -310,6 +310,19 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	protected static function getInaccessableProperty($argument, string $property) {
 		$reflector = new \ReflectionClass($argument);
 		
-		return $reflector->getProperty($property)->getValue($argument);
+		if ($reflector->hasProperty($property)) {
+			return $reflector->getProperty($property)->getValue($argument);
+		}
+		
+		$parent = $reflector->getParentClass();
+		while($parent) {
+			if ($parent->hasProperty($property)) {
+				break;
+			}
+			
+			$parent = $parent->getParentClass();
+		}
+		
+		return $parent ? $parent->getProperty($property)->getValue($argument) : null;
 	}
 }

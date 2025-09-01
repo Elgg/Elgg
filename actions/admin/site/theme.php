@@ -1,7 +1,5 @@
 <?php
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 $vars = (array) get_input('vars', [], false);
 $vars = array_filter($vars);
 
