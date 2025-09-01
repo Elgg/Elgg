@@ -129,6 +129,8 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testCanDelete() {
+		_elgg_services()->relationshipsTable->setCurrentTime();
+		
 		$relationship = new \ElggRelationship();
 		$relationship->guid_one = $this->user->guid;
 		$relationship->relationship = 'test_self1';
