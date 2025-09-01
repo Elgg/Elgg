@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2bb694e3d80fe0e44b48b1372798e5d5",
+    "content-hash": "c7b3efa61c2fa0ca649f7de8d4d90aca",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -1451,6 +1451,68 @@
                 "source": "https://github.com/hackzilla/password-generator/tree/1.7.0"
             },
             "time": "2024-08-23T17:13:49+00:00"
+        },
+        {
+            "name": "htmlawed/htmlawed",
+            "version": "1.2.15.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kesar/HTMLawed.git",
+                "reference": "76cfddd6877f4afd395cb0a70ca246d525d2837a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kesar/HTMLawed/zipball/76cfddd6877f4afd395cb0a70ca246d525d2837a",
+                "reference": "76cfddd6877f4afd395cb0a70ca246d525d2837a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=4.4"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "htmLawed.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later",
+                "LGPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Santosh Patnaik",
+                    "email": "drpatnaikREMOVECAPS@yahoo.com",
+                    "role": "Creator and developer"
+                }
+            ],
+            "description": "Official htmLawed PHP library for HTML filtering",
+            "homepage": "https://bioinformatics.org/phplabware/internal_utilities/htmLawed",
+            "keywords": [
+                "clean",
+                "compliance",
+                "filter",
+                "filtering",
+                "htm",
+                "html",
+                "input",
+                "purify",
+                "safe",
+                "safety",
+                "sanitize",
+                "sanitizer",
+                "standards",
+                "text",
+                "xss"
+            ],
+            "support": {
+                "docs": "https://bioinformatics.org/phplabware/internal_utilities/htmLawed",
+                "forum": "https://bioinformatics.org/phplabware/internal_utilities/htmLawed",
+                "issues": "https://github.com/kesar/HTMLawed/issues",
+                "source": "https://bioinformatics.org/phplabware/internal_utilities/htmLawed"
+            },
+            "time": "2024-06-24T16:20:15+00:00"
         },
         {
             "name": "imagine/imagine",
@@ -6075,50 +6137,6 @@
                 }
             ],
             "time": "2025-08-13T09:41:44+00:00"
-        },
-        {
-            "name": "vanilla/htmlawed",
-            "version": "v2.2.15",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vanilla/htmlawed.git",
-                "reference": "e9bbc21d22a6c13afa1cc9a4b3be9805acc10049"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vanilla/htmlawed/zipball/e9bbc21d22a6c13afa1cc9a4b3be9805acc10049",
-                "reference": "e9bbc21d22a6c13afa1cc9a4b3be9805acc10049",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.0",
-                "tburry/pquery": "~1.0.1"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/Htmlawed.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Todd Burry",
-                    "email": "todd@vanillaforums.com"
-                }
-            ],
-            "description": "A composer wrapper for the htmLawed library to purify & filter HTML. Tested with PHPUnit and PhantomJS!",
-            "support": {
-                "issues": "https://github.com/vanilla/htmlawed/issues",
-                "source": "https://github.com/vanilla/htmlawed/tree/v2.2.15"
-            },
-            "time": "2023-09-29T18:41:55+00:00"
         },
         {
             "name": "webmozart/assert",

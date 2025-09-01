@@ -58,7 +58,7 @@ class ValidateInputHandler {
 		$spec = elgg_trigger_event_results('spec', 'htmlawed', [], '');
 	
 		if (!is_array($var)) {
-			return \Htmlawed::filter($var, $config, $spec);
+			return $this->htmlawed($var, $config, $spec);
 		}
 		
 		$callback = function (&$v, $k, $config_spec) {
@@ -67,12 +67,56 @@ class ValidateInputHandler {
 			}
 			
 			list ($config, $spec) = $config_spec;
-			$v = \Htmlawed::filter($v, $config, $spec);
+			$v = $this->htmlawed($v, $config, $spec);
 		};
 		
 		array_walk_recursive($var, $callback, [$config, $spec]);
 		
 		return $var;
+	}
+
+	/**
+	 * Filters the HTML
+	 *
+	 * @param string     $value  HTML
+	 * @param array|null $config configuration option.
+	 * @param mixed      $spec   specification option.
+	 *
+	 * @return string
+	 *
+	 * @see htmLawed()
+	 */
+	protected function htmlawed(string $value, ?array $config = null, $spec = null): string {
+		if ($config === null) {
+			$config = [
+				'anti_link_spam' => ['`.`', ''],
+				'balance' => 1,
+				'cdata' => 3,
+				'safe' => 1,
+				'comment' => 1,
+				'css_expression' => 0,
+				'deny_attribute' => 'on*,style',
+				'direct_list_nest' => 1,
+				'elements' => '*-applet-button-form-input-textarea-iframe-script-style-embed-object',
+				'keep_bad' => 0,
+				'schemes' => 'classid:clsid; href: aim, feed, file, ftp, gopher, http, https, irc, mailto, news, nntp, sftp, ssh, telnet; style: nil; *:file, http, https', // clsid allowed in class
+				'unique_ids' => 0,
+				'valid_xhtml' => 0,
+			];
+		}
+
+		if (isset($config['spec']) && !$spec) {
+			$spec = $config['spec'];
+		}
+
+		if ($spec === null) {
+			$spec = [
+				'object=-classid-type, -codebase',
+				'embed=type(oneof=application/x-shockwave-flash)'
+			];
+		}
+
+		return htmLawed($value, $config, $spec);
 	}
 	
 	/**

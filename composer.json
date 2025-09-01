@@ -22,6 +22,7 @@
         "fortawesome/font-awesome": "~5.14",
         "guzzlehttp/guzzle": "~7.10.0",
         "hackzilla/password-generator": "~1.7.0",
+        "htmlawed/htmlawed": "~1.2.15",
         "imagine/imagine": "~1.5.0",
         "laminas/laminas-mail": "~2.4",
         "laminas/laminas-mime": "2.12.0",
@@ -52,8 +53,8 @@
         "symfony/http-foundation": "~6.4",
         "symfony/mime": "~6.4",
         "symfony/routing": "~6.4",
-        "symfony/var-dumper": "~6.4",
-        "vanilla/htmlawed": "~2.2.15"
+        "symfony/var-dumper": "~6.4"
+
     },
     "config": {
         "process-timeout": 0,
