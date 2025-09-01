@@ -75,7 +75,7 @@ class InstallCommand extends BaseCommand {
 			$installer->batchInstall($params, $htaccess);
 		} catch (InstallationException $ex) {
 			$this->dumpRegisters();
-			$this->error($ex);
+			$this->write($ex->getMessage(), 'error');
 
 			return self::FAILURE;
 		}
@@ -84,11 +84,11 @@ class InstallCommand extends BaseCommand {
 
 		$release = elgg_get_release();
 
-		$this->notice("Elgg {$release} install successful");
-		$this->notice('wwwroot: ' . elgg_get_site_url());
-		$this->notice('dataroot: ' . elgg_get_data_path());
-		$this->notice('cacheroot: ' . elgg_get_cache_path());
-		$this->notice('assetroot: ' . elgg_get_asset_path());
+		$this->write("Elgg {$release} install successful");
+		$this->write('wwwroot: ' . elgg_get_site_url());
+		$this->write('dataroot: ' . elgg_get_data_path());
+		$this->write('cacheroot: ' . elgg_get_cache_path());
+		$this->write('assetroot: ' . elgg_get_asset_path());
 
 		return self::SUCCESS;
 	}
