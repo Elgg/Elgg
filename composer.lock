@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bfc1f8f75ffde29399aefeed3bfbc96b",
+    "content-hash": "2bb694e3d80fe0e44b48b1372798e5d5",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -555,26 +555,28 @@
         },
         {
             "name": "css-crush/css-crush",
-            "version": "v4.1.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/peteboere/css-crush.git",
-                "reference": "19956cbf25263204db5b832b784deebad5236c0e"
+                "reference": "7d055b59071d1908cd1bb4d190f2c480508c8047"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/peteboere/css-crush/zipball/19956cbf25263204db5b832b784deebad5236c0e",
-                "reference": "19956cbf25263204db5b832b784deebad5236c0e",
+                "url": "https://api.github.com/repos/peteboere/css-crush/zipball/7d055b59071d1908cd1bb4d190f2c480508c8047",
+                "reference": "7d055b59071d1908cd1bb4d190f2c480508c8047",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "php": ">=8.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "8.*",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "9.6.23",
                 "psr/log": "1.0.*@dev",
-                "twig/twig": "1.*"
+                "twig/twig": "3.11.3"
             },
+            "default-branch": true,
             "bin": [
                 "bin/csscrush"
             ],
@@ -609,9 +611,9 @@
             ],
             "support": {
                 "issues": "https://github.com/peteboere/css-crush/issues",
-                "source": "https://github.com/peteboere/css-crush/tree/v4.1.3"
+                "source": "https://github.com/peteboere/css-crush/tree/master"
             },
-            "time": "2022-09-05T10:24:14+00:00"
+            "time": "2025-05-09T20:38:11+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -2821,16 +2823,16 @@
         },
         {
             "name": "php-di/php-di",
-            "version": "7.0.11",
+            "version": "7.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-DI/PHP-DI.git",
-                "reference": "32f111a6d214564520a57831d397263e8946c1d2"
+                "reference": "f88054cc052e40dbe7b383c8817c19442d480352"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-DI/PHP-DI/zipball/32f111a6d214564520a57831d397263e8946c1d2",
-                "reference": "32f111a6d214564520a57831d397263e8946c1d2",
+                "url": "https://api.github.com/repos/PHP-DI/PHP-DI/zipball/f88054cc052e40dbe7b383c8817c19442d480352",
+                "reference": "f88054cc052e40dbe7b383c8817c19442d480352",
                 "shasum": ""
             },
             "require": {
@@ -2878,7 +2880,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-DI/PHP-DI/issues",
-                "source": "https://github.com/PHP-DI/PHP-DI/tree/7.0.11"
+                "source": "https://github.com/PHP-DI/PHP-DI/tree/7.1.1"
             },
             "funding": [
                 {
@@ -2890,7 +2892,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-03T07:45:57+00:00"
+            "time": "2025-08-16T11:10:48+00:00"
         },
         {
             "name": "phpfastcache/phpfastcache",
@@ -8666,6 +8668,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "css-crush/css-crush": 20,
         "elgg/sniffs": 20,
         "roave/security-advisories": 20
     },
