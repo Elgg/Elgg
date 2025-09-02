@@ -1,3 +1,12 @@
+<a name="6.2.6"></a>
+### 6.2.6 (2025-09-02)
+
+#### Contributors
+
+* Jeroen Dalsem (4)
+* Jerôme Bakker (2)
+
+
 <a name="6.2.5"></a>
 ### 6.2.5 (2025-08-14)
 
