@@ -245,7 +245,7 @@ that have registered on your site since a certain timestamp.
     function count_new_users(int $since) {
         return elgg_count_entities([
             'type' => 'user',
-            'created_since' => $since,
+            'created_after' => $since,
         ]);
     }
 

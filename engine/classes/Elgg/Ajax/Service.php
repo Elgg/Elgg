@@ -2,6 +2,7 @@
 
 namespace Elgg\Ajax;
 
+use Elgg\Assets\ExternalFiles;
 use Elgg\EventsService;
 use Elgg\Exceptions\RuntimeException;
 use Elgg\Http\Request;
@@ -25,16 +26,18 @@ class Service {
 	/**
 	 * Constructor
 	 *
-	 * @param EventsService         $events  Events service
-	 * @param SystemMessagesService $msgs    System messages service
-	 * @param Request               $request Http Request
-	 * @param ESMService            $esm     ESM service
+	 * @param EventsService         $events        Events service
+	 * @param SystemMessagesService $msgs          System messages service
+	 * @param Request               $request       Http Request
+	 * @param ESMService            $esm           ESM service
+	 * @param ExternalFiles         $externalFiles External files service
 	 */
 	public function __construct(
 		protected EventsService $events,
 		protected SystemMessagesService $msgs,
 		protected Request $request,
-		protected ESMService $esm
+		protected ESMService $esm,
+		protected ExternalFiles $externalFiles
 	) {
 		$message_filter = [$this, 'prepareResponse'];
 		$this->events->registerHandler(AjaxResponse::RESPONSE_EVENT, 'all', $message_filter, 999);
@@ -221,7 +224,25 @@ class Service {
 		}
 
 		if ($this->request->getParam('elgg_fetch_deps', true)) {
-			$response->getData()->_elgg_deps = $this->esm->getImports();
+			$deps = [
+				'js' => $this->esm->getImports(),
+				'css' => [],
+			];
+			
+			foreach ($this->externalFiles->getLoadedResources('css', 'head') as $name => $resource) {
+				if ($name === 'elgg') {
+					// prevent loading of elgg.css in admin context
+					continue;
+				}
+				
+				$deps['css'][] = [
+					'name' => $name,
+					'href' => $resource->url,
+					'integrity' => $resource->integrity,
+				];
+			}
+			
+			$response->getData()->_elgg_deps = $deps;
 		}
 
 		return $response;

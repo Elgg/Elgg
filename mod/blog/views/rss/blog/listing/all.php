@@ -13,7 +13,6 @@
 $defaults = [
 	'type' => 'object',
 	'subtype' => 'blog',
-	'full_view' => false,
 	'distinct' => false,
 	'pagination' => false,
 ];

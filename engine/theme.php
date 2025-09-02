@@ -8,6 +8,7 @@ return [
 	// layout and shell
 	'body-background-color' => '#f3f3f3',
 	'page-section-max-width' => '90rem',
+	'maintenance-background-image' => 'graphics/maintenance.jpg',
 	'walled-garden-background-image' => 'graphics/walled_garden.jpg',
 	
 	// Typography
@@ -79,6 +80,10 @@ return [
 	'button-delete-font-color' => '#2d3047',
 	'button-delete-background-color-hover' => '#d33f49',
 	'button-delete-font-color-hover' => '#ffffff',
+
+	'input-switch-checked-background-color' => '#397f2e',
+	'input-switch-unchecked-background-color' => '#b94a48',
+	'input-switch-disabled-background-color' => '#cfcfd2',
 
 	// topbar
 	'topbar-background-color' => '#0078ac',

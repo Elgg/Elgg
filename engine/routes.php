@@ -98,28 +98,27 @@ return [
 		'resource' => 'manifest.json',
 		'walled' => false,
 	],
-	'admin:plugin_settings' => [
-		// needs to be registered before global admin route
-		'path' => '/admin/plugin_settings/{plugin_id}',
-		'resource' => 'admin/plugin_settings',
-		'middleware' => [
-			\Elgg\Router\Middleware\AdminGatekeeper::class,
-		],
-	],
-	'admin:online_users_count' => [
-		// needs to be registered before global admin route
-		'path' => '/admin/online_users_count',
-		'controller' => \Elgg\Controllers\OnlineUsersCount::class,
-		'middleware' => [
-			\Elgg\Router\Middleware\AdminGatekeeper::class,
-		],
-	],
 	'admin' => [
 		'path' => '/admin/{segments?}',
 		'resource' => 'admin',
 		'requirements' => [
 			'segments' => '.+',
 		],
+		'middleware' => [
+			\Elgg\Router\Middleware\AdminGatekeeper::class,
+		],
+		'priority' => -1, // use as a fallback for all admin pages
+	],
+	'admin:online_users_count' => [
+		'path' => '/admin/online_users_count',
+		'controller' => \Elgg\Controllers\OnlineUsersCount::class,
+		'middleware' => [
+			\Elgg\Router\Middleware\AdminGatekeeper::class,
+		],
+	],
+	'admin:plugin_settings' => [
+		'path' => '/admin/plugin_settings/{plugin_id?}', // optional plugin id so we also handle the route if plugin_id is missing in the path
+		'resource' => 'admin/plugin_settings',
 		'middleware' => [
 			\Elgg\Router\Middleware\AdminGatekeeper::class,
 		],
@@ -168,47 +167,55 @@ return [
 		'resource' => 'settings/account',
 		'middleware' => [
 			\Elgg\Router\Middleware\Gatekeeper::class,
+			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
+		'use_logged_in' => true,
 	],
 	'settings:account' => [
-		'path' => '/settings/user/{username?}',
+		'path' => '/settings/user/{username}',
 		'resource' => 'settings/account',
 		'middleware' => [
 			\Elgg\Router\Middleware\Gatekeeper::class,
+			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
-		'detect_page_owner' => true,
+		'use_logged_in' => true,
 	],
 	'settings:notifications' => [
 		'path' => '/settings/notifications/{username}',
 		'resource' => 'settings/notifications',
 		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
 			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
-		'detect_page_owner' => true,
+		'use_logged_in' => true,
 	],
 	'settings:notifications:users' => [
 		'path' => '/settings/notifications/users/{username}',
 		'resource' => 'settings/notifications/users',
 		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
 			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
-		'detect_page_owner' => true,
+		'use_logged_in' => true,
+		'priority' => 1,
 	],
 	'settings:statistics' => [
-		'path' => '/settings/statistics/{username?}',
+		'path' => '/settings/statistics/{username}',
 		'resource' => 'settings/statistics',
 		'middleware' => [
 			\Elgg\Router\Middleware\Gatekeeper::class,
+			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
-		'detect_page_owner' => true,
+		'use_logged_in' => true,
 	],
 	'settings:tools' => [
 		'path' => '/settings/plugins/{username}/{plugin_id}',
 		'resource' => 'settings/tools',
 		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
 			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
-		'detect_page_owner' => true,
+		'use_logged_in' => true,
 	],
 	'widgets:add_panel' => [
 		// @todo this route could also be a ajax view or have some parameters (context/container) in the route definition
@@ -225,18 +232,24 @@ return [
 	'view:user' => [
 		'path' => '/user/{guid}',
 		'resource' => 'user/view',
+		'middleware' => [
+			\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+		],
+		'use_logged_in' => true,
 	],
 	'delete:user' => [
 		'path' => '/user/delete/{guid}',
 		'resource' => 'user/delete',
 		'middleware' => [
 			\Elgg\Router\Middleware\AdminGatekeeper::class,
+			\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 		],
 	],
 	'edit:user:avatar' => [
 		'path' => '/avatar/edit/{username}',
 		'resource' => 'avatar/edit',
 		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
 			\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 		],
 	],

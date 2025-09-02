@@ -56,7 +56,11 @@ trait ProfileData {
 	 * @return null|mixed null if no profile data was found
 	 */
 	public function getProfileData(string $profile_field_name) {
-		
+		if (_elgg_services()->userCapabilities->canBypassPermissionsCheck()) {
+			// can use metadata for performance benefits if access is ignored
+			return $this->{$profile_field_name};
+		}
+
 		if (empty($this->guid)) {
 			// no way to return all temp annotations for an unsaved entity
 			$annotations = $this->getAnnotations([

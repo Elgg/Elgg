@@ -6,12 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => 'Kirjanmerkit',
 	'collection:object:bookmarks' => 'Kirjanmerkit',
+	
 	'collection:object:bookmarks:group' => 'Ryhmän kirjanmerkit',
 	'collection:object:bookmarks:all' => "Kaikki sivuston kirjanmerkit",
 	'collection:object:bookmarks:owner' => "Käyttäjän %s kirjanmerkit",
@@ -24,7 +24,7 @@ return array(
 	'bookmarks:bookmarklet' => "Hanki sovelluskirjanmerkki",
 	'bookmarks:bookmarklet:group' => "Hanki ryhmän sovelluskirjanmerkki",
 	'bookmarks:address' => "Kirjanmerkin osoite",
-	'bookmarks:none' => 'Ei kirjanmerkkejä',
+	'bookmarks:none' => 'Ei kirjanmerkkejä', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Uusi kirjanmerkki: %s',
 	'bookmarks:notify:subject' => 'Uusi kirjanmerkki: %s',

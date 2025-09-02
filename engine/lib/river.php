@@ -51,8 +51,8 @@ function elgg_create_river_item(array $options = []): ?\ElggRiverItem {
  *   object_guids         => INT|ARR Object guid(s)
  *   target_guids         => INT|ARR Target guid(s)
  *   action_types         => STR|ARR The river action type(s) identifier
- *   posted_time_lower    => INT     The lower bound on the time posted
- *   posted_time_upper    => INT     The upper bound on the time posted
+ *   created_after        => INT     The lower bound on the time created
+ *   created_before       => INT     The upper bound on the time created
  *
  *   annotation_ids       => INT|ARR The identifier of the annotation(s)
  *

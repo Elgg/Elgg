@@ -1,11 +1,13 @@
 <?php
 
 use Elgg\Friends\Actions\AddFriendController;
-use Elgg\Router\Middleware\UserPageOwnerGatekeeper;
-use Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper;
 use Elgg\Friends\Actions\RevokeFriendRequestController;
 use Elgg\Friends\Actions\DeclineFriendRequestController;
 use Elgg\Friends\Actions\AcceptFriendRequestController;
+use Elgg\Friends\Notifications\AcceptFriendRequestHandler;
+use Elgg\Friends\Notifications\AddFriendHandler;
+use Elgg\Friends\Notifications\DeclineFriendRequestHandler;
+use Elgg\Friends\Notifications\FriendRequestHandler;
 
 require_once(__DIR__ . '/lib/functions.php');
 
@@ -13,6 +15,9 @@ return [
 	'plugin' => [
 		'name' => 'Friends',
 		'activate_on_install' => true,
+	],
+	'settings' => [
+		'friend_request' => 0,
 	],
 	'actions' => [
 		'friends/add' => [
@@ -34,40 +39,31 @@ return [
 			'path' => '/friends/{username}',
 			'resource' => 'friends/index',
 			'middleware' => [
-				UserPageOwnerGatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:friends_of:owner' => [
 			'path' => '/friendsof/{username}',
 			'resource' => 'friends/of',
 			'middleware' => [
-				UserPageOwnerGatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:relationship:friendrequest:pending' => [
 			'path' => '/friends/{username}/pending',
 			'resource' => 'friends/pending',
 			'middleware' => [
-				UserPageOwnerCanEditGatekeeper::class,
+				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
 		'collection:relationship:friendrequest:sent' => [
 			'path' => '/friends/{username}/sent',
 			'resource' => 'friends/sent',
 			'middleware' => [
-				UserPageOwnerCanEditGatekeeper::class,
+				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
-		],
-	],
-	'settings' => [
-		'friend_request' => 0,
-	],
-	'widgets' => [
-		'friends' => [
-			'context' => ['profile', 'dashboard'],
-		],
-		'friends_of' => [
-			'context' => ['profile', 'dashboard'],
 		],
 	],
 	'events' => [
@@ -119,9 +115,27 @@ return [
 			],
 		],
 	],
+	'notifications' => [
+		'user' => [
+			'user' => [
+				'add_friend' => AddFriendHandler::class,
+				'friendrequest' => FriendRequestHandler::class,
+				'friendrequest:accept' => AcceptFriendRequestHandler::class,
+				'friendrequest:decline' => DeclineFriendRequestHandler::class,
+			],
+		],
+	],
 	'view_extensions' => [
 		'notifications/settings/records' => [
 			'notifications/settings/friends' => [],
+		],
+	],
+	'widgets' => [
+		'friends' => [
+			'context' => ['profile', 'dashboard'],
+		],
+		'friends_of' => [
+			'context' => ['profile', 'dashboard'],
 		],
 	],
 ];

@@ -20,7 +20,6 @@ $options = [
 		'value' => $page_owner->guid,
 	],
 	'owner_guid' => $page_owner->guid,
-	'full_view' => false,
 	'bulk_actions' => true,
 	'pagination' => true,
 	'pagination_behaviour' => 'ajax-replace',
@@ -28,10 +27,9 @@ $options = [
 
 $list = elgg_list_entities($options);
 if (empty($list)) {
-	$options['no_results'] = elgg_echo('messages:nomessages');
 	$options['count'] = elgg_count_entities($options);
 	
-	$content = elgg_view('page/components/no_results', $options);
+	$content = elgg_view_no_results(elgg_echo('list:object:messages:no_results'));
 	$content .= elgg_view('page/components/list/out_of_bounds', $options);
 } else {
 	$content = elgg_view_form('messages/process', [

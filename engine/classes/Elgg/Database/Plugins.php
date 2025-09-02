@@ -11,7 +11,6 @@ use Elgg\Exceptions\PluginException;
 use Elgg\Http\Request;
 use Elgg\I18n\Translator;
 use Elgg\Invoker;
-use Elgg\Project\Paths;
 use Elgg\SessionManagerService;
 use Elgg\SystemMessagesService;
 use Elgg\Traits\Debug\Profilable;

@@ -21,7 +21,6 @@ $content = elgg_list_entities([
 		'property' => 'name',
 		'direction' => 'ASC',
 	],
-	'full_view' => false,
 	'no_results' => elgg_echo('groups:none'),
 ]);
 

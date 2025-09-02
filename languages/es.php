@@ -722,8 +722,6 @@ tres secciones:
 	'plugins:disabled' => 'Plugins are not being loaded because a file named "disabled" is in the mod directory.',
 	'plugins:settings:save:ok' => "Configuraci&oacute;n para el plugin %s guardada correctamente",
 	'plugins:settings:save:fail' => "Ocurri&oacute; un error al intentar guardar la configuraci&oacute;n para el plugin %s",
-	'plugins:usersettings:save:ok' => "Configuraci&oacute;n del usuario para el plugin %s guardada",
-	'plugins:usersettings:save:fail' => "Ocurri&oacute; un error al intentar guardar la configuraci&oacute;n del usuario para el plugin %s",
 	
 	'item:object:plugin' => 'Plugins',
 	'collection:object:plugin' => 'Plugins',

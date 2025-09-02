@@ -43,7 +43,14 @@ class FieldsService {
 		
 		$entity_class = $this->entityTable->getEntityClass($type, $subtype);
 		$defaults = !empty($entity_class) ? $entity_class::getDefaultFields() : [];
-		
+		$priority = 100;
+		foreach ($defaults as &$default_field) {
+			if (!isset($default_field['priority'])) {
+				$default_field['priority'] = $priority;
+				$priority += 100;
+			}
+		}
+
 		$result = (array) $this->events->triggerResults('fields', "{$type}:{$subtype}", [
 			'type' => $type,
 			'subtype' => $subtype,
@@ -63,8 +70,30 @@ class FieldsService {
 					$field['#label'] = $this->translator->translate($label_key);
 				}
 			}
-			
+
+			if (!isset($field['#help'])) {
+				$label_key = "fields:{$type}:{$subtype}:{$field['name']}:help";
+				if ($this->translator->languageKeyExists($label_key)) {
+					$field['#help'] = $this->translator->translate($label_key);
+				}
+			}
+
+			if (!isset($field['priority'])) {
+				$field['priority'] = $priority;
+				$priority += 100;
+			}
+
 			$fields[] = $field;
+		}
+
+		// sort fields by priority
+		usort($fields, function ($a, $b) {
+			return (int) $a['priority'] - (int) $b['priority'];
+		});
+
+		foreach ($fields as &$field) {
+			// remove priority as we do not want it leaking to field vars
+			unset($field['priority']);
 		}
 		
 		$this->fields[$type][$subtype] = $fields;

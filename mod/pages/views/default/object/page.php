@@ -51,7 +51,6 @@ if (elgg_extract('full_view', $vars)) {
 		'body' => elgg_view('output/longtext', [
 			'value' => $description,
 		]),
-		'show_responses' => elgg_extract('show_responses', $vars, false),
 	];
 	
 	$params = $params + $vars;

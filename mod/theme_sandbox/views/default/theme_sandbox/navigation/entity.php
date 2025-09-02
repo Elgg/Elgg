@@ -1,6 +1,6 @@
 <?php
 
-$entity = new ElggObject();
+$entity = new \ThemeSandboxObject();
 $entity->setSubtype('custom');
 $entity->title = 'Hello, world!';
 

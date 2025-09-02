@@ -487,7 +487,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 					'success',
 				],
 			],
-			'_elgg_deps' => []
+			'_elgg_deps' => ['js' => [], 'css' => []]
 		]);
 
 		$this->assertEquals($output, $response->getContent());
@@ -536,7 +536,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 					'success',
 				],
 			],
-			'_elgg_deps' => []
+			'_elgg_deps' => ['js' => [], 'css' => []]
 		]);
 
 		$this->assertEquals($output, $response->getContent());
@@ -666,7 +666,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 			'_elgg_msgs' => [
 				'error' => ['error']
 			],
-			'_elgg_deps' => [],
+			'_elgg_deps' => ['js' => [], 'css' => []],
 		]);
 
 		$this->assertEquals($output, $response->getContent());
@@ -850,7 +850,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 			'_elgg_msgs' => [
 				'success' => ['success']
 			],
-			'_elgg_deps' => []
+			'_elgg_deps' => ['js' => [], 'css' => []]
 		]);
 
 		$this->assertEquals($output, $response->getContent());
@@ -883,7 +883,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 			'_elgg_msgs' => [
 				'error' => ['error'],
 			],
-			'_elgg_deps' => [],
+			'_elgg_deps' => ['js' => [], 'css' => []],
 		]);
 
 		$this->assertEquals($output, $response->getContent());
@@ -939,7 +939,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 			'current_url' => elgg_normalize_url('action/output4'),
 			'forward_url' => elgg_normalize_url('index'),
 			'_elgg_msgs' => (object) [],
-			'_elgg_deps' => [],
+			'_elgg_deps' => ['js' => [], 'css' => []],
 		]);
 
 		$this->assertEquals($output, $response->getContent());
@@ -1012,7 +1012,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 			'current_url' => elgg_normalize_url('action/output5'),
 			'forward_url' => elgg_normalize_url('phpunit'),
 			'_elgg_msgs' => (object) [],
-			'_elgg_deps' => []
+			'_elgg_deps' => ['js' => [], 'css' => []]
 		]);
 
 		$this->assertEquals($output, $response->getContent());

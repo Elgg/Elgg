@@ -7,7 +7,7 @@ use Doctrine\DBAL\Driver\Result as DriverResult;
 
 class Result extends \Doctrine\DBAL\Result {
 	
-	public function __construct(DriverResult $result = null, Connection $connection = null, protected array $results, protected int $row_count) {
+	public function __construct(?DriverResult $result = null, ?Connection $connection = null, protected array $results = [], protected int $row_count = 0) {
 	
 	}
 	

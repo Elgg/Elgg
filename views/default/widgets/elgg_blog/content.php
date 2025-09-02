@@ -15,7 +15,7 @@ try {
 }
 
 if (empty($blogs) || !is_array($blogs)) {
-	echo elgg_view('page/components/no_results', ['no_results' => elgg_echo('admin:widget:elgg_blog:no_results')]);
+	echo elgg_view_no_results(elgg_echo('admin:widget:elgg_blog:no_results'));
 	return;
 }
 

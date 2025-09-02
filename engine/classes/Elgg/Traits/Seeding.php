@@ -7,7 +7,6 @@ use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Seeds\Providers\LocalImage;
 use Elgg\Exceptions\Configuration\RegistrationException;
-use Elgg\Exceptions\Exception;
 use Elgg\Exceptions\Seeding\MaxAttemptsException;
 use Elgg\Groups\Tool;
 use Elgg\Traits\Seeding\GroupHelpers;
@@ -87,9 +86,9 @@ trait Seeding {
 	/**
 	 * Returns random unique subtype
 	 *
-	 * @return bool|string
+	 * @return string
 	 */
-	public function getRandomSubtype(): bool|string {
+	public function getRandomSubtype(): string {
 		return substr(sha1(microtime() . rand()), 0, 25);
 	}
 

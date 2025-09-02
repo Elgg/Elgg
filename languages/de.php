@@ -748,8 +748,6 @@ Siehe die vollständige Liste dieser Benutzer hier:
 	'plugins:settings:save:fail' => "Beim Speichern der Einstellungungen für das Plugin %s ist ein Problem aufgetreten.",
 	'plugins:settings:remove:ok' => "Alle Einstellungen des Plugins %s wurden aus der Datenbank entfernt.",
 	'plugins:settings:remove:fail' => "Beim Löschen der Einstellungen des Plugins %s aus der Datenbank ist ein Fehler aufgetreten.",
-	'plugins:usersettings:save:ok' => "Die Benutzereinstellungen für das Plugin %s wurden gespeichert.",
-	'plugins:usersettings:save:fail' => "Beim Speichern der Benutzereinstellungungen für das Plugin %s ist ein Problem aufgetreten.",
 	
 	'item:object:plugin' => 'Plugins',
 	'collection:object:plugin' => 'Plugins',

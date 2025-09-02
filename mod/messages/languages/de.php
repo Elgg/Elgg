@@ -61,7 +61,7 @@ und um %s eine Nachricht zu schicken, folge dem Link:
 	*/
 
 	'messages:blank' => "Entschuldigung, Du mußt erst etwas im Nachrichtenteil schreiben, bevor die Nachricht versendet werden kann.",
-	'messages:nomessages' => "Es gibt keine Nachrichten.",
+	'messages:nomessages' => "Es gibt keine Nachrichten.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "Wir konnten den Empfänger der Nachricht nicht in der Datenbank der Community-Seite finden.",
 	'messages:user:blank' => "Du hast keinen Empfänger für Deine Nachricht ausgewählt.",
 	'messages:user:self' => "Du kannst keine Nachricht an Dich selbst senden.",

@@ -10,7 +10,6 @@
 $defaults = [
 	'type' => 'object',
 	'subtype' => 'bookmarks',
-	'full_view' => false,
 	'distinct' => false,
 	'pagination' => false,
 ];

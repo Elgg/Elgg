@@ -23,24 +23,27 @@ class AddFileHelpTextHandler {
 		if (elgg_extract('input_type', $return) !== 'file') {
 			return;
 		}
-	
-		if (!elgg_extract('show_upload_limit', $return, true)) {
+		
+		$max_size = elgg_extract('max_size', $return, true);
+		if (!elgg_extract('show_upload_limit', $return, true) || $max_size === false) {
 			return;
 		}
-	
+		
 		$help = elgg_extract('help', $return, '');
-	
+		
 		// Get post_max_size and upload_max_filesize
-		$post_max_size = elgg_get_ini_setting_in_bytes('post_max_size');
-		$upload_max_filesize = elgg_get_ini_setting_in_bytes('upload_max_filesize');
-	
-		// Determine the correct value
-		$max_upload = min($upload_max_filesize, $post_max_size);
-	
-		$help .= ' ' . elgg_echo('input:file:upload_limit', [elgg_format_bytes($max_upload)]);
-	
+		if ($max_size === true) {
+			// Determine the correct value
+			$post_max_size = elgg_get_ini_setting_in_bytes('post_max_size');
+			$upload_max_filesize = elgg_get_ini_setting_in_bytes('upload_max_filesize');
+			
+			$max_size = min($upload_max_filesize, $post_max_size);
+		}
+		
+		$help .= ' ' . elgg_format_element('span', ['class' => 'elgg-input-file-size-helper'], elgg_echo('input:file:upload_limit', [elgg_format_bytes((int) $max_size)]));
+		
 		$return['help'] = trim($help);
-	
+		
 		return $return;
 	}
 }

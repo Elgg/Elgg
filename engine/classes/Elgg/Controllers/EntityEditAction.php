@@ -85,7 +85,9 @@ class EntityEditAction extends GenericAction {
 			$field_type = (string) elgg_extract('#type', $field);
 			$value = $this->request->getParam($name);
 			
-			if ($field_type === 'tags') {
+			if ($field_type === 'switch') {
+				$value = (bool) $value;
+			} elseif ($field_type === 'tags') {
 				$value = elgg_string_to_array((string) $value);
 			} elseif ($name === 'title') {
 				$value = elgg_get_title_input();
@@ -98,7 +100,7 @@ class EntityEditAction extends GenericAction {
 				}
 			}
 			
-			if ($field_type === 'url' && !filter_var($value, FILTER_VALIDATE_URL)) {
+			if ($field_type === 'url' && !elgg_is_empty($value) && !filter_var($value, FILTER_VALIDATE_URL)) {
 				throw new ValidationException(elgg_echo('ValidationException:field:url', [$name]));
 			}
 			

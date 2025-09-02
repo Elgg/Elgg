@@ -195,9 +195,9 @@ class ExternalFiles {
 	 *
 	 * @param string $type     type of resource
 	 * @param string $resource name of resource
-	 * @return string|NULL
+	 * @return string|null
 	 */
-	protected function getSubResourceIntegrity(string $type, string $resource): ?string {
+	public function getSubResourceIntegrity(string $type, string $resource): ?string {
 		if (!$this->config->subresource_integrity_enabled) {
 			return null;
 		}

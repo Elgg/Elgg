@@ -28,6 +28,9 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($user_settings['registered1']);
 		$this->assertFalse($user_settings['registered2']);
 		$this->assertArrayNotHasKey('unregistered', $user_settings);
+		
+		$enabled_methods = $obj->getNotificationSettings('default', true);
+		$this->assertEquals(['registered1'], $enabled_methods);
 	}
 	
 	public function testCanSetNotificationSettingsWithPurpose() {
@@ -51,6 +54,9 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($user_settings['registered1']);
 		$this->assertTrue($user_settings['registered2']);
 		$this->assertArrayNotHasKey('unregistered', $user_settings);
+		
+		$enabled_methods = $obj->getNotificationSettings('my_purpose', true);
+		$this->assertEquals(['registered1', 'registered2'], $enabled_methods);
 	}
 
 	public function testCanExport() {

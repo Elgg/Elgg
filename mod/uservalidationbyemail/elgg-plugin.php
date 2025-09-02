@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\UserValidationByEmail\Notifications\ValidateEmailHandler;
+
 require_once(__DIR__ . '/lib/functions.php');
 
 return [
@@ -62,6 +64,13 @@ return [
 		'response' => [
 			'action:register' => [
 				'Elgg\UserValidationByEmail\Response::redirectToEmailSent' => [],
+			],
+		],
+	],
+	'notifications' => [
+		'user' => [
+			'user' => [
+				'uservalidationbyemail' => ValidateEmailHandler::class,
 			],
 		],
 	],

@@ -19,10 +19,8 @@ variables or properties. The built-in properties are:
 
 -  **``guid``** The entity's GUID; set automatically
 -  **``owner_guid``** The owning user's GUID
--  **``subtype``** A single-word arbitrary string that defines what kind
-   of object it is, for example ``blog``
--  **``access_id``** An integer representing the access level of the
-   object
+-  **``subtype``** A single-word arbitrary string that defines what kind of object it is, for example ``blog``
+-  **``access_id``** An integer representing the access level of the object
 -  **``title``** The title of the object
 -  **``description``** The description of the object
 
@@ -33,10 +31,44 @@ make this unique, so that other plugins don't accidentally try and use
 the same subtype. For the purposes of this document, let's assume we're
 building a simple forum. Therefore, the subtype will be *forum*:
 
+.. note::
+
+    It's recommened to register a custom extension of an ``\ElggObject`` for your subtype. This will make it easy
+    to set default values (like the subtype), add custom helper functions, register default form fields, etc.
+
 .. code-block:: php
 
-    $object = new ElggObject();
-    $object->setSubtype('forum');
+    // register a custum class in your plugin Bootstrap
+    function init() {
+        elgg_set_entity_class('object', 'forum', \MyForumObject::class);
+    }
+
+    // in your elgg-plugin.php entity definition
+    'entities' => [
+        [
+            'type' => 'object',
+            'subtype' => 'forum',
+            'class' => \MyForumObject::class,
+        ],
+    ],
+
+    // your custom class should be placed in /mod/<your_plugin>/classes
+    // in this example MyForumObject.php
+    class MyForumObject extends \ElggObject {
+
+        /**
+          * {@inheritdoc}
+          */
+        protected function initializeAttributes() {
+            parent::initializeAttributes();
+
+            $this->attributes['subtype'] = 'forum';
+        }
+    }
+
+.. code-block:: php
+
+    $object = new \MyForumObject();
     $object->access_id = 2;
     $object->save();
     
@@ -44,9 +76,9 @@ building a simple forum. Therefore, the subtype will be *forum*:
 object will be private, and only the creator user will be able to see
 it. Elgg defines constants for the special values of ``access_id``:
 
--  **ACCESS_PRIVATE** Only the owner can see it
--  **ACCESS_LOGGED_IN** Any logged in user can see it
--  **ACCESS_PUBLIC** Even visitors not logged in can see it
+-  ``ACCESS_PRIVATE`` Only the owner can see it
+-  ``ACCESS_LOGGED_IN`` Any logged in user can see it
+-  ``ACCESS_PUBLIC`` Even visitors not logged in can see it
 
 Saving the object will automatically populate the ``$object->guid``
 property if successful. If you change any more base properties, you can
@@ -63,7 +95,7 @@ If you assign an array, all the values will be set for that metadata.
 This is how, for example, you set tags.
 
 Metadata cannot be persisted to the database until the entity has been
-saved, but for convenience, ElggEntity can cache it internally and save
+saved, but for convenience, ``ElggEntity`` can cache it internally and save
 it when saving the entity.
 
 Loading an object
@@ -85,15 +117,15 @@ By user, subtype or site
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you know the user ID you want to get objects for, or the subtype, you have several options.
-The easiest is probably to call the procedural function ``elgg_get_entities``:
+The easiest is probably to call the procedural function ``elgg_get_entities()``:
 
 .. code-block:: php
 
-    $entities = elgg_get_entities(array(
+    $entities = elgg_get_entities([
         'type' => $entity_type,
         'subtype' => $subtype,
         'owner_guid' => $owner_guid,
-    ));
+    ]);
 
 This will return an array of ``ElggEntity`` objects that you can iterate
 through. ``elgg_get_entities`` paginates by default, with a limit of 10;
@@ -102,7 +134,7 @@ and offset 0.
 You can leave out ``owner_guid`` to get all objects and leave out subtype
 or type to get objects of all types/subtypes.
 
-If you already have an ``ElggUser`` – e.g. ``elgg_get_logged_in_user_entity``,
+If you already have an ``ElggUser`` – e.g. ``elgg_get_logged_in_user_entity()``,
 which always has the current user's object when you're logged in – you can
 simply use:
 
@@ -115,9 +147,8 @@ But what about getting objects with a particular piece of metadata?
 By properties
 ~~~~~~~~~~~~~
 
-You can fetch entities by their properties using ``elgg_get_entities``. Using specific parameters passed to ``$options``
+You can fetch entities by their properties using ``elgg_get_entities()``. Using specific parameters passed to ``$options``
 array, you can retrieve entities by their attributes, metadata, annotations and relationships.
-
 
 Displaying entities
 -------------------
@@ -128,10 +159,10 @@ to provide a view for the entity in the views system.
 To display an entity, create a view EntityType/subtype where EntityType
 is one of the following:
 
-object: for entities derived from ElggObject
-user: for entities derived from ElggUser
-site: for entities derived from ElggSite
-group: for entities derived from ElggGroup
+object: for entities derived from ``ElggObject``
+user: for entities derived from ``ElggUser``
+site: for entities derived from ``ElggSite``
+group: for entities derived from ``ElggGroup``
 
 A default view for all entities has already been created, this is called
 EntityType/default.
@@ -142,7 +173,8 @@ Entity Icons
 ~~~~~~~~~~~~
 
 Entity icons can be saved from uploaded files, existing local files, or existing ElggFile 
-objects. These methods save the `master` size of the icon defined in the system. The other defined sizes will be generated when requested.
+objects. These methods save the `master` size of the icon defined in the system. The other
+defined sizes will be generated when requested.
 
 .. code-block:: php
 
@@ -321,25 +353,28 @@ display handler for any given object.
 
 For example, a profile page in the case of users.
 
-The url is set using the ``elgg\_register\_entity\_url\_handler()``
+The url is set using the ``elgg_register_entity_url_handler()``
 function. The function you register must return the appropriate url for
 the given type - this itself can be an address set up by a page handler.
-
-.. _getURL(): http://reference.elgg.org/classElggEntity.html#778536251179055d877d3ddb15deeffd
-.. _elgg\_register\_entity\_url\_handler(): http://reference.elgg.org/entities_8php.html#f28d3b403f90c91a715b81334eb59893
 
 The default handler is to use the default export interface.
 
 Entity loading performance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``elgg_get_entities`` has a couple options that can sometimes be useful to improve performance.
+``elgg_get_entities()`` has a couple options that can sometimes be useful to improve performance.
 
-- **preload_owners**: If the entities fetched will be displayed in a list with the owner information, you can set this option to ``true`` to efficiently load the owner users of the fetched entities.
-- **preload_containers**: If the entities fetched will be displayed in a list using info from their containers, you can set this option to ``true`` to efficiently load them.
-- **distinct**: When Elgg fetches entities using an SQL query, Elgg must be sure that each entity row appears only once in the result set. By default it includes a ``DISTINCT`` modifier on the GUID column to enforce this, but some queries naturally return unique entities. Setting the ``distinct`` option to false will remove this modifier, and rely on the query to enforce its own uniqueness.
+- **preload_owners**: If the entities fetched will be displayed in a list with the owner information, you can set
+  this option to ``true`` to efficiently load the owner users of the fetched entities.
+- **preload_containers**: If the entities fetched will be displayed in a list using info from their containers, you
+  can set this option to ``true`` to efficiently load them.
+- **distinct**: When Elgg fetches entities using an SQL query, Elgg must be sure that each entity row appears only
+  once in the result set. By default it includes a ``DISTINCT`` modifier on the GUID column to enforce this, but some
+  queries naturally return unique entities. Setting the ``distinct`` option to false will remove this modifier, and
+  rely on the query to enforce its own uniqueness.
 
-The internals of Elgg entity queries is a complex subject and it's recommended to seek help on the Elgg Community site before using the ``distinct`` option.
+The internals of Elgg entity queries is a complex subject and it's recommended to seek help on the Elgg Community
+site before using the ``distinct`` option.
 
 Custom database functionality
 =============================
@@ -353,12 +388,15 @@ Systemlog
 
    This section need some attention and will contain outdated information
 
-The default Elgg system log is a simple way of recording what happens within an Elgg system. It's viewable and searchable directly from the administration panel.
+The default Elgg system log is a simple way of recording what happens within an Elgg system. It's viewable and
+searchable directly from the administration panel.
 
 System log storage
 ------------------
 
-A system log row is stored whenever an event concerning an object whose class implements the :doc:`/design/loggable` interface is triggered. ``ElggEntity`` and ``ElggExtender`` implement :doc:`/design/loggable`, so a system log row is created whenever an event is performed on all objects, users, groups, sites, metadata and annotations.
+A system log row is stored whenever an event concerning an object whose class implements the :doc:`/design/loggable`
+interface is triggered. ``ElggEntity`` and ``ElggExtender`` implement :doc:`/design/loggable`, so a system log row
+is created whenever an event is performed on all objects, users, groups, sites, metadata and annotations.
 
 Common events include:
 
@@ -370,7 +408,9 @@ Common events include:
 Creating your own system log
 ----------------------------
 
-There are some reasons why you might want to create your own system log. For example, you might need to store a full copy of entities when they are updated or deleted, for auditing purposes. You might also need to notify an administrator when certain types of events occur.
+There are some reasons why you might want to create your own system log. For example, you might need to store a
+full copy of entities when they are updated or deleted, for auditing purposes. You might also need to notify an
+administrator when certain types of events occur.
 
 To do this, you can create a function that listens to all events for all types of object:
 

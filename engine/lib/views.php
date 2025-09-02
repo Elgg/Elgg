@@ -498,7 +498,7 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = []): string {
 
 	$vars = array_merge($defaults, $vars);
 	
-	if (elgg_extract('register_rss_link', $vars, elgg_extract('full_view', $vars))) {
+	if (elgg_extract('register_rss_link', $vars, $vars['full_view'])) {
 		elgg_register_rss_link();
 	}
 
@@ -507,8 +507,11 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = []): string {
 	$entity_type = $entity->getType();
 	$entity_subtype = $entity->getSubtype();
 
+	$subview = $vars['full_view'] ? 'full' : 'summary';
+
 	$entity_views = [
 		(string) elgg_extract('item_view', $vars, ''),
+		"{$entity_type}/{$entity_subtype}/{$subview}",
 		"{$entity_type}/{$entity_subtype}",
 		"{$entity_type}/default",
 	];
@@ -1459,4 +1462,22 @@ function elgg_view_entity_url(\ElggEntity $entity, array $options = []): string 
  */
 function elgg_view_deprecated(string $view, array $vars, string $suggestion, string $version): string {
 	return _elgg_services()->views->renderDeprecatedView($view, $vars, $suggestion, $version);
+}
+
+/**
+ * Helper function to display a no results view
+ *
+ * @param string $text text to display in the no results (empty string will result in a default 'not found' text)
+ *
+ * @return string
+ * @since 6.3
+ */
+function elgg_view_no_results(string $text = ''): string {
+	if (elgg_is_empty($text)) {
+		$text = true;
+	}
+	
+	return elgg_view('page/components/no_results', [
+		'no_results' => $text,
+	]);
 }

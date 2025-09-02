@@ -34,17 +34,11 @@ class AnnotationWhereClause extends WhereClause {
 	 * @var string|string[]
 	 */
 	public $names;
-	
-	public string $comparison = '=';
 
 	/**
 	 * @var string|string[]
 	 */
 	public $values;
-
-	public string $value_type = ELGG_VALUE_STRING;
-
-	public bool $case_sensitive = true;
 
 	/**
 	 * @var int|string|\DateTime
@@ -55,6 +49,12 @@ class AnnotationWhereClause extends WhereClause {
 	 * @var int|string|\DateTime
 	 */
 	public $created_before;
+
+	public string $comparison = '=';
+
+	public string $value_type = ELGG_VALUE_STRING;
+
+	public bool $case_sensitive = true;
 
 	public ?string $sort_by_direction = null;
 
@@ -113,5 +113,51 @@ class AnnotationWhereClause extends WhereClause {
 		}
 
 		return $qb->merge($wheres);
+	}
+
+	/**
+	 * Build a new AnnotationWhereClause
+	 *
+	 * @param array $attributes parameters for clause
+	 *
+	 * @return static
+	 *
+	 * @since 6.3
+	 */
+	public static function factory(array $attributes): static {
+		$result = new static();
+
+		$array_attributes = [
+			'ids',
+			'entity_guids',
+			'owner_guids',
+			'access_ids',
+			'names',
+			'values',
+		];
+		foreach ($array_attributes as $array_key) {
+			if (isset($attributes[$array_key])) {
+				$result->{$array_key} = (array) $attributes[$array_key];
+			}
+		}
+
+		$singular_attributes = [
+			'comparison',
+			'value_type',
+			'case_sensitive',
+			'created_after',
+			'created_before',
+			'sort_by_direction',
+			'sort_by_calculation',
+			'ignore_access',
+			'viewer_guid',
+		];
+		foreach ($singular_attributes as $array_key) {
+			if (isset($attributes[$array_key])) {
+				$result->{$array_key} = $attributes[$array_key];
+			}
+		}
+
+		return $result;
 	}
 }

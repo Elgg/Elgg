@@ -99,7 +99,9 @@ class Logger extends \Monolog\Logger {
 
 			$handler->setFormatter($formatter);
 
-			$handler->pushProcessor(new BacktraceProcessor(Level::Error));
+			if ($output->isVeryVerbose()) {
+				$handler->pushProcessor(new BacktraceProcessor(Level::Error));
+			}
 		} else {
 			$handler = new ErrorLogHandler();
 
@@ -316,8 +318,11 @@ class Logger extends \Monolog\Logger {
 	 * @param mixed $data The data to log
 	 *
 	 * @return void
+	 * @deprecated 6.3 Use self::error()
 	 */
 	public function dump($data) {
+		$this->warning('Deprecated in 6.3: ' . __METHOD__ . ' has been deprecated use ->error()');
+		
 		$this->log(LogLevel::ERROR, $data);
 	}
 

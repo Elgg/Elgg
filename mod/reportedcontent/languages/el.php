@@ -7,12 +7,13 @@
 
 return array(
 	'item:object:reported_content' => 'Τα στοιχεία που αναφέρθηκαν',
+	
 	'admin:administer_utilities:reportedcontent' => 'Περιεχόμενο που έχει αναφερθεί',
 	
 	'reportedcontent' => 'Περιεχόμενο που έχει αναφερθεί',
 	'reportedcontent:this' => 'Αναφέρατε αυτό',
 	'reportedcontent:this:tooltip' => 'Αναφέρατε αυτή τη σελίδα στο διαχειριστή',
-	'reportedcontent:none' => 'Δεν υπάρχει περιεχόμενο που να έχει αναφερθεί',
+	'reportedcontent:none' => 'Δεν υπάρχει περιεχόμενο που να έχει αναφερθεί', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Αναφέρατε αυτό',
 	'reportedcontent:archive' => 'Αρχειοθέτηση αναφοράς',
 	'reportedcontent:archived' => 'Η αναφορά μπήκε στο αρχείο',

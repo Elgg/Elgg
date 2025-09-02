@@ -4,8 +4,8 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Jerôme Bakker, 2024
 # Emmanuel Simond, 2025
+# Jerôme Bakker, 2025
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025
 # 
 #, fuzzy
@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-20 11:40+0100\n"
+"POT-Creation-Date: 2025-07-25 09:07+0200\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -53,6 +53,7 @@ msgstr "Ci-dessous quelques questions fréquemment posées à propos de Elgg."
 #: ../../appendix/upgrade-notes/5.0-to-5.1.rst:6
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:6
 #: ../../appendix/upgrade-notes/6.0-to-6.1.rst:6
+#: ../../appendix/upgrade-notes/6.1-to-6.2.rst:6
 msgid "Contents"
 msgstr "Contenu"
 
@@ -697,13 +698,13 @@ msgstr ""
 " d'ajouter des champs à la fois aux profils des utilisateurs et au "
 "formulaire d'inscription."
 
-#: ../../appendix/faqs/general.rst:204 ../../appendix/faqs/development.rst:36
-#: ../../appendix/faqs/development.rst:36 ../../appendix/faqs/general.rst:204
+#: ../../appendix/faqs/development.rst:37 ../../appendix/faqs/general.rst:204
+#: ../../appendix/faqs/development.rst:37 ../../appendix/faqs/general.rst:204
 msgid "Create the plugin skeleton"
 msgstr "Créez le squelette du plugin"
 
-#: ../../appendix/faqs/general.rst:204 ../../appendix/faqs/development.rst:38
-#: ../../appendix/faqs/development.rst:38 ../../appendix/faqs/general.rst:204
+#: ../../appendix/faqs/development.rst:39 ../../appendix/faqs/general.rst:204
+#: ../../appendix/faqs/development.rst:39 ../../appendix/faqs/general.rst:204
 msgid ":doc:`/guides/plugins/plugin-skeleton`"
 msgstr ":doc:`/guides/plugins/plugin-skeleton`"
 
@@ -1333,8 +1334,9 @@ msgstr ""
 "``$CONFIG->http_request_trusted_proxy_headers``. Regardez dans le fichier "
 "``settings.php`` pour plus d'information."
 
-#: ../../appendix/faqs/security.rst:2 ../../appendix/faqs/security.rst:2
+#: ../../appendix/faqs/security.rst:2
 #: ../../appendix/upgrade-notes/4.1-to-4.2.rst:65
+#: ../../appendix/faqs/security.rst:2
 msgid "Security"
 msgstr "Sécurité"
 
@@ -1492,32 +1494,32 @@ msgstr ""
 #: ../../appendix/faqs/development.rst:19
 #: ../../appendix/faqs/development.rst:19
 msgid ""
-"The two most popular free IDEs for PHP developers are Eclipse_ and "
-"NetBeans_. Eclipse has two different plugins for working with PHP code: PDT_"
-" and PHPEclipse_."
+"The three most popular free IDEs for PHP developers are Eclipse_ , NetBeans_"
+" and Codelobster_ . Eclipse has two different plugins for working with PHP "
+"code: PDT_ and PHPEclipse_."
 msgstr ""
-"Les deux IDE gratuits les plus populaires pour les développeurs PHP sont "
-"Eclipse_ et NetBeans_. Eclipse dispose de deux plugins différents pour "
-"travailler avec le code PHP : PDT_ et PHPEclipse_."
+"Les trois IDE gratuits les plus populaires pour les développeurs PHP sont "
+"Eclipse_ et NetBeans_ et Codelobster_. Eclipse dispose de deux plugins "
+"différents pour travailler avec le code PHP : PDT_ et PHPEclipse_."
 
-#: ../../appendix/faqs/development.rst:31
-#: ../../appendix/faqs/development.rst:31
+#: ../../appendix/faqs/development.rst:32
+#: ../../appendix/faqs/development.rst:32
 msgid "I don't like the wording of something in Elgg. How do I change it?"
 msgstr ""
 "Je n’aime pas certaines traductions dans Elgg. Comment puis-je les changer ?"
 
-#: ../../appendix/faqs/development.rst:33
-#: ../../appendix/faqs/development.rst:33
+#: ../../appendix/faqs/development.rst:34
+#: ../../appendix/faqs/development.rst:34
 msgid "The best way to do this is with a plugin."
 msgstr "La meilleure façon de faire ceci est avec un plugin."
 
-#: ../../appendix/faqs/development.rst:41
-#: ../../appendix/faqs/development.rst:41
+#: ../../appendix/faqs/development.rst:42
+#: ../../appendix/faqs/development.rst:42
 msgid "Locate the string that you want to change"
 msgstr "Localisez la chaîne que vous voulez modifier"
 
-#: ../../appendix/faqs/development.rst:43
-#: ../../appendix/faqs/development.rst:43
+#: ../../appendix/faqs/development.rst:44
+#: ../../appendix/faqs/development.rst:44
 msgid ""
 "All the strings that a user sees should be in the ``/languages`` directory "
 "or in a plugin's languages directory (``/mod/<plugin name>/languages``). "
@@ -1530,8 +1532,8 @@ msgstr ""
 " de changer la langue utilisée par Elgg. Pour plus d’informations à ce "
 "sujet, consultez la documentation développeur sur :doc:`/guides/i18n` ."
 
-#: ../../appendix/faqs/development.rst:45
-#: ../../appendix/faqs/development.rst:45
+#: ../../appendix/faqs/development.rst:46
+#: ../../appendix/faqs/development.rst:46
 msgid ""
 "To find the string use ``grep`` or a text editor that provides searching "
 "through files to locate the string. (A good text editor for Windows is "
@@ -1554,8 +1556,8 @@ msgstr ""
 " Elgg, et vous assurez qu’il recherche dans tous les sous-répertoires. Vous "
 "voudrez peut-être aussi définir que la recherche soit sensible à la casse."
 
-#: ../../appendix/faqs/development.rst:47
-#: ../../appendix/faqs/development.rst:47
+#: ../../appendix/faqs/development.rst:48
+#: ../../appendix/faqs/development.rst:48
 msgid ""
 "You should locate the string \"Add friend\" in ``/languages/en.php``. You "
 "should see something like this in the file:"
@@ -1564,8 +1566,8 @@ msgstr ""
 "``/languages/fr.php``. Vous devriez voir quelque chose comme ceci dans le "
 "fichier :"
 
-#: ../../appendix/faqs/development.rst:53
-#: ../../appendix/faqs/development.rst:53
+#: ../../appendix/faqs/development.rst:54
+#: ../../appendix/faqs/development.rst:54
 msgid ""
 "This means every time Elgg sees ``friend:add`` it replaces it with \"Add "
 "friend\". We want to change the definition of ``friend:add``."
@@ -1574,13 +1576,13 @@ msgstr ""
 "par ``Ajouter un contact``. Nous voulons changer la définition de "
 "``friend:add``."
 
-#: ../../appendix/faqs/development.rst:56
-#: ../../appendix/faqs/development.rst:56
+#: ../../appendix/faqs/development.rst:57
+#: ../../appendix/faqs/development.rst:57
 msgid "Override the string"
 msgstr "Remplacement de la chaîne"
 
-#: ../../appendix/faqs/development.rst:58
-#: ../../appendix/faqs/development.rst:58
+#: ../../appendix/faqs/development.rst:59
+#: ../../appendix/faqs/development.rst:59
 msgid ""
 "To override this definition, we will add a languages file to the plugin that"
 " we built in the first step."
@@ -1588,31 +1590,31 @@ msgstr ""
 "Pour remplacer cette définition, nous ajouterons un fichier linguistique "
 "langues au plugin que nous avons construit dans la première étape."
 
-#: ../../appendix/faqs/development.rst:60
-#: ../../appendix/faqs/development.rst:60
+#: ../../appendix/faqs/development.rst:61
+#: ../../appendix/faqs/development.rst:61
 msgid "Create a new directory: ``/mod/<your plugin name>/languages``"
 msgstr "Créez un nouveau répertoire : ``/mod/<your plugin name>/languages``"
 
-#: ../../appendix/faqs/development.rst:61
-#: ../../appendix/faqs/development.rst:61
+#: ../../appendix/faqs/development.rst:62
+#: ../../appendix/faqs/development.rst:62
 msgid "Create a file in that directory called ``en.php``"
 msgstr "Créer un fichier dans ce répertoire appelé ``fr.php``"
 
-#: ../../appendix/faqs/development.rst:62
-#: ../../appendix/faqs/development.rst:62
+#: ../../appendix/faqs/development.rst:63
+#: ../../appendix/faqs/development.rst:63
 msgid "Add these lines to that file"
 msgstr "Ajoutez ces lignes à ce fichier"
 
-#: ../../appendix/faqs/development.rst:72
-#: ../../appendix/faqs/development.rst:72
+#: ../../appendix/faqs/development.rst:73
+#: ../../appendix/faqs/development.rst:73
 msgid ""
 "Make sure that you do not have any spaces or newlines before the ``<?php``."
 msgstr ""
 "Assurez-vous que vous n’avez pas d’espace ou de retour à la ligne avant "
 "``<?php``."
 
-#: ../../appendix/faqs/development.rst:74
-#: ../../appendix/faqs/development.rst:74
+#: ../../appendix/faqs/development.rst:75
+#: ../../appendix/faqs/development.rst:75
 msgid ""
 "You're done now and should be able to enable the plugin and see the change. "
 "If you are override the language of a plugin, make sure your plugin is "
@@ -1628,13 +1630,13 @@ msgstr ""
 "de la section Administrateur. Au fur et à mesure que vous trouverez d'autres"
 " choses à changer, vous pouvez continuer à les ajouter à ce plugin."
 
-#: ../../appendix/faqs/development.rst:77
-#: ../../appendix/faqs/development.rst:77
+#: ../../appendix/faqs/development.rst:78
+#: ../../appendix/faqs/development.rst:78
 msgid "How do I find the code that does x?"
 msgstr "Comment puis-je trouver le code qui fait X ?"
 
-#: ../../appendix/faqs/development.rst:79
-#: ../../appendix/faqs/development.rst:79
+#: ../../appendix/faqs/development.rst:80
+#: ../../appendix/faqs/development.rst:80
 msgid ""
 "The best way to find the code that does something that you would like to "
 "change is to use ``grep`` or a similar search tool. If you do not have "
@@ -1651,13 +1653,13 @@ msgstr ""
 "choix pour les utilisateurs de Windows. `Eclipse`_ avec PHP et `NetBeans`_ "
 "sont de bons choix pour n’importe quelle plateforme."
 
-#: ../../appendix/faqs/development.rst:82
-#: ../../appendix/faqs/development.rst:82
+#: ../../appendix/faqs/development.rst:83
+#: ../../appendix/faqs/development.rst:83
 msgid "String Example"
 msgstr "Exemple de chaîne - String"
 
-#: ../../appendix/faqs/development.rst:84
-#: ../../appendix/faqs/development.rst:84
+#: ../../appendix/faqs/development.rst:85
+#: ../../appendix/faqs/development.rst:85
 msgid ""
 "Let's say that you want to find where the *Log In* box code is located. A "
 "string from the *Log In* box that should be fairly unique is ``Remember "
@@ -1679,13 +1681,13 @@ msgstr ""
 "linguistique ``fr.php`` et dans ``/views/default/forms/login.php``. Ce "
 "dernier emplacement définit le code html qui constitue la boîte *Connexion*."
 
-#: ../../appendix/faqs/development.rst:87
-#: ../../appendix/faqs/development.rst:87
+#: ../../appendix/faqs/development.rst:88
+#: ../../appendix/faqs/development.rst:88
 msgid "Action Example"
 msgstr "Exemple d'Action"
 
-#: ../../appendix/faqs/development.rst:89
-#: ../../appendix/faqs/development.rst:89
+#: ../../appendix/faqs/development.rst:90
+#: ../../appendix/faqs/development.rst:90
 msgid ""
 "Let's say that you want to find the code that is run when a user clicks on "
 "the *Save* button when arranging widgets on a profile page. View the Profile"
@@ -1700,8 +1702,8 @@ msgstr ""
 "vous trouviez l’action du formulaire de widgets de modification. Vous verrez"
 " que l’URL depuis la racine est ``action/widgets/move``."
 
-#: ../../appendix/faqs/development.rst:91
-#: ../../appendix/faqs/development.rst:91
+#: ../../appendix/faqs/development.rst:92
+#: ../../appendix/faqs/development.rst:92
 msgid ""
 "``Grep`` on ``widgets/move`` and two files are returned. One is the "
 "JavaScript code for the widgets : ``/js/lib/ui.widgets.js``. The other one, "
@@ -1725,13 +1727,13 @@ msgstr ""
 "actions est ``/actions`` de sorte que vous trouverez le fichier dans "
 "``/actions/widgets/move.php``."
 
-#: ../../appendix/faqs/development.rst:94
-#: ../../appendix/faqs/development.rst:94
+#: ../../appendix/faqs/development.rst:95
+#: ../../appendix/faqs/development.rst:95
 msgid "Debug mode"
 msgstr "Mode de débogage"
 
-#: ../../appendix/faqs/development.rst:96
-#: ../../appendix/faqs/development.rst:96
+#: ../../appendix/faqs/development.rst:97
+#: ../../appendix/faqs/development.rst:97
 msgid ""
 "During the installation process you might have noticed a checkbox that "
 "controlled whether debug mode was turned on or off. This setting can also be"
@@ -1754,8 +1756,8 @@ msgstr ""
 "expérimenter avec ce mode pour comprendre ce qu’il fait, mais assurez-vous "
 "d’exécuter Elgg en mode normal sur un serveur de production."
 
-#: ../../appendix/faqs/development.rst:100
-#: ../../appendix/faqs/development.rst:100
+#: ../../appendix/faqs/development.rst:101
+#: ../../appendix/faqs/development.rst:101
 msgid ""
 "Because of the amount of data being logged, don't enable this on a "
 "production server as it can fill up the log files really quick."
@@ -1764,38 +1766,38 @@ msgstr ""
 "pas l'activer sur un serveur de production car cela peut remplir les "
 "fichiers journaux très rapidement."
 
-#: ../../appendix/faqs/development.rst:103
-#: ../../appendix/faqs/development.rst:103
+#: ../../appendix/faqs/development.rst:104
+#: ../../appendix/faqs/development.rst:104
 msgid "What goes into the log in debug mode?"
 msgstr "Que contient le journal en mode débogage ?"
 
-#: ../../appendix/faqs/development.rst:105
-#: ../../appendix/faqs/development.rst:105
+#: ../../appendix/faqs/development.rst:106
+#: ../../appendix/faqs/development.rst:106
 msgid "All database queries"
 msgstr "Toutes les requêtes de base de données"
 
-#: ../../appendix/faqs/development.rst:106
-#: ../../appendix/faqs/development.rst:106
+#: ../../appendix/faqs/development.rst:107
+#: ../../appendix/faqs/development.rst:107
 msgid "Database query profiling"
 msgstr "Profilage des requêtes de base de données"
 
-#: ../../appendix/faqs/development.rst:107
-#: ../../appendix/faqs/development.rst:107
+#: ../../appendix/faqs/development.rst:108
+#: ../../appendix/faqs/development.rst:108
 msgid "Page generation time"
 msgstr "Durée de génération de page"
 
-#: ../../appendix/faqs/development.rst:108
-#: ../../appendix/faqs/development.rst:108
+#: ../../appendix/faqs/development.rst:109
+#: ../../appendix/faqs/development.rst:109
 msgid "Number of queries per page"
 msgstr "Nombre de requêtes par page"
 
-#: ../../appendix/faqs/development.rst:109
-#: ../../appendix/faqs/development.rst:109
+#: ../../appendix/faqs/development.rst:110
+#: ../../appendix/faqs/development.rst:110
 msgid "List of plugin language files"
 msgstr "Liste des fichiers linguistiques du plugin"
 
-#: ../../appendix/faqs/development.rst:110
-#: ../../appendix/faqs/development.rst:110
+#: ../../appendix/faqs/development.rst:111
+#: ../../appendix/faqs/development.rst:111
 msgid ""
 "Additional errors/warnings compared to normal mode (it's very rare for these"
 " types of errors to be related to any problem that you might be having)"
@@ -1804,18 +1806,18 @@ msgstr ""
 "est très rare que ces types d’erreurs soient liées à un problème que vous "
 "pourriez avoir)"
 
-#: ../../appendix/faqs/development.rst:113
-#: ../../appendix/faqs/development.rst:113
+#: ../../appendix/faqs/development.rst:114
+#: ../../appendix/faqs/development.rst:114
 msgid "What does the data look like?"
 msgstr "À quoi ressemblent les données ?"
 
-#: ../../appendix/faqs/development.rst:144
-#: ../../appendix/faqs/development.rst:144
+#: ../../appendix/faqs/development.rst:145
+#: ../../appendix/faqs/development.rst:145
 msgid "What events are triggered on every page load?"
 msgstr "Quels événements sont déclenchés sur chaque chargement de page ?"
 
-#: ../../appendix/faqs/development.rst:146
-#: ../../appendix/faqs/development.rst:146
+#: ../../appendix/faqs/development.rst:147
+#: ../../appendix/faqs/development.rst:147
 msgid ""
 "There are 4 :doc:`Elgg events </design/events>` that are triggered on every "
 "page load:"
@@ -1823,28 +1825,28 @@ msgstr ""
 "Il y a 4 :doc:`événements Elgg </design/events>` qui sont déclenchés sur "
 "chaque chargement de page :"
 
-#: ../../appendix/faqs/development.rst:148
-#: ../../appendix/faqs/development.rst:148
+#: ../../appendix/faqs/development.rst:149
+#: ../../appendix/faqs/development.rst:149
 msgid "plugins_boot, system"
 msgstr "plugins_boot, system"
 
-#: ../../appendix/faqs/development.rst:149
-#: ../../appendix/faqs/development.rst:149
+#: ../../appendix/faqs/development.rst:150
+#: ../../appendix/faqs/development.rst:150
 msgid "init, system"
 msgstr "init, system"
 
-#: ../../appendix/faqs/development.rst:150
-#: ../../appendix/faqs/development.rst:150
+#: ../../appendix/faqs/development.rst:151
+#: ../../appendix/faqs/development.rst:151
 msgid "ready, system"
 msgstr "ready, system"
 
-#: ../../appendix/faqs/development.rst:151
-#: ../../appendix/faqs/development.rst:151
+#: ../../appendix/faqs/development.rst:152
+#: ../../appendix/faqs/development.rst:152
 msgid "shutdown, system"
 msgstr "shutdown, system"
 
-#: ../../appendix/faqs/development.rst:153
-#: ../../appendix/faqs/development.rst:153
+#: ../../appendix/faqs/development.rst:154
+#: ../../appendix/faqs/development.rst:154
 msgid ""
 "The first three are triggered in ``Elgg\\Application::bootCore``. "
 "**shutdown, system** is triggered in "
@@ -1856,8 +1858,8 @@ msgstr ""
 "``\\Elgg\\Application\\ShutdownHandler`` après que la réponse a été envoyée "
 "au client. Ils sont tous :doc:`documentés </guides/events-list>`."
 
-#: ../../appendix/faqs/development.rst:156
-#: ../../appendix/faqs/development.rst:156
+#: ../../appendix/faqs/development.rst:157
+#: ../../appendix/faqs/development.rst:157
 msgid ""
 "There are other events triggered by Elgg occasionally (such as when a user "
 "logs in)."
@@ -1865,13 +1867,13 @@ msgstr ""
 "Il existe d’autres événements déclenchés par Elgg occasionnellement (par "
 "exemple lorsqu’un utilisateur se connecte)."
 
-#: ../../appendix/faqs/development.rst:159
-#: ../../appendix/faqs/development.rst:159
+#: ../../appendix/faqs/development.rst:160
+#: ../../appendix/faqs/development.rst:160
 msgid "Copy a plugin"
 msgstr "Copie d'un plugin"
 
-#: ../../appendix/faqs/development.rst:161
-#: ../../appendix/faqs/development.rst:161
+#: ../../appendix/faqs/development.rst:162
+#: ../../appendix/faqs/development.rst:162
 msgid ""
 "There are many questions asked about how to copy a plugin. Let's say you "
 "want to copy the ``blog`` plugin in order to run one plugin called ``blog`` "
@@ -1883,13 +1885,13 @@ msgstr ""
 "``blog`` et un autre appelé ``poetry``. Ce n’est pas difficile, mais cela "
 "demande beaucoup de travail. Vous auriez besoin de"
 
-#: ../../appendix/faqs/development.rst:163
-#: ../../appendix/faqs/development.rst:163
+#: ../../appendix/faqs/development.rst:164
+#: ../../appendix/faqs/development.rst:164
 msgid "change the directory name"
 msgstr "changer le nom du répertoire"
 
-#: ../../appendix/faqs/development.rst:164
-#: ../../appendix/faqs/development.rst:164
+#: ../../appendix/faqs/development.rst:165
+#: ../../appendix/faqs/development.rst:165
 msgid ""
 "change the names of every function (having two functions causes PHP to "
 "crash)"
@@ -1897,8 +1899,8 @@ msgstr ""
 "changer les noms de toutes les fonctions (avoir deux fonctions avec le même "
 "nom provoque un plantage de PHP)"
 
-#: ../../appendix/faqs/development.rst:165
-#: ../../appendix/faqs/development.rst:165
+#: ../../appendix/faqs/development.rst:166
+#: ../../appendix/faqs/development.rst:166
 msgid ""
 "change the name of every view (so as not to override the views on the "
 "original plugin)"
@@ -1906,23 +1908,23 @@ msgstr ""
 "modifier le nom de chaque vue (afin de ne pas remplacer les vues du plugin "
 "d’origine)"
 
-#: ../../appendix/faqs/development.rst:166
-#: ../../appendix/faqs/development.rst:166
+#: ../../appendix/faqs/development.rst:167
+#: ../../appendix/faqs/development.rst:167
 msgid "change any data model subtypes"
 msgstr "modifier tous les sous-types du modèle de données"
 
-#: ../../appendix/faqs/development.rst:167
-#: ../../appendix/faqs/development.rst:167
+#: ../../appendix/faqs/development.rst:168
+#: ../../appendix/faqs/development.rst:168
 msgid "change the language file"
 msgstr "modifier le fichier linguistique"
 
-#: ../../appendix/faqs/development.rst:168
-#: ../../appendix/faqs/development.rst:168
+#: ../../appendix/faqs/development.rst:169
+#: ../../appendix/faqs/development.rst:169
 msgid "change anything else that was specific to the original plugin"
 msgstr "changer tout le reste de ce qui était spécifique au plugin d’origine"
 
-#: ../../appendix/faqs/development.rst:172
-#: ../../appendix/faqs/development.rst:172
+#: ../../appendix/faqs/development.rst:173
+#: ../../appendix/faqs/development.rst:173
 msgid ""
 "If you are trying to clone the ``groups`` plugin, you will have the "
 "additional difficulty that the group plugin does not set a subtype."
@@ -2612,8 +2614,7 @@ msgstr "1.12"
 msgid "July 2015"
 msgstr "Juillet 2015"
 
-#: ../../appendix/support.rst:53 ../../appendix/support.rst:53
-#: ../../appendix/support.rst:63
+#: ../../appendix/support.rst:53 ../../appendix/support.rst:63
 msgid "April 2019"
 msgstr "Avril 2019"
 
@@ -2721,8 +2722,7 @@ msgstr "Juillet 2022"
 msgid "4.3"
 msgstr "4.3"
 
-#: ../../appendix/support.rst:77 ../../appendix/support.rst:77
-#: ../../appendix/support.rst:83
+#: ../../appendix/support.rst:77 ../../appendix/support.rst:83
 msgid "June 2024"
 msgstr "Juin 2024"
 
@@ -2758,11 +2758,23 @@ msgstr "Novembre 2024"
 msgid "6.1"
 msgstr "6.1"
 
+#: ../../appendix/support.rst:85
+msgid "April 2025"
+msgstr "Avril 2025"
+
 #: ../../appendix/support.rst:87
+msgid "6.2"
+msgstr "6.2"
+
+#: ../../appendix/support.rst:87
+msgid "April 2024"
+msgstr "Avril 2024"
+
+#: ../../appendix/support.rst:89
 msgid "7.0"
 msgstr "7.0"
 
-#: ../../appendix/support.rst:87
+#: ../../appendix/support.rst:89
 msgid "TBD"
 msgstr "A FAIRE"
 
@@ -5152,6 +5164,7 @@ msgstr "De 2.0 à 2.1"
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:24
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:439
 #: ../../appendix/upgrade-notes/6.0-to-6.1.rst:18
+#: ../../appendix/upgrade-notes/6.1-to-6.2.rst:9
 msgid "Deprecated APIs"
 msgstr "APIs dépréciées"
 
@@ -18905,3 +18918,19 @@ msgstr "``elgg_plugin_exists`` use ``elgg_get_plugin_from_id()``"
 #: ../../appendix/upgrade-notes/6.0-to-6.1.rst:28
 msgid "``elgg_reset_system_cache``"
 msgstr "``elgg_reset_system_cache``"
+
+#: ../../appendix/upgrade-notes/6.1-to-6.2.rst:2
+msgid "From 6.1 to 6.2"
+msgstr "De 6.1 à 6.2"
+
+#: ../../appendix/upgrade-notes/6.1-to-6.2.rst:11
+msgid "``thewire_save_post()``"
+msgstr "``thewire_save_post()``"
+
+#: ../../appendix/upgrade-notes/6.1-to-6.2.rst:12
+msgid "``thewire_get_hashtags()``"
+msgstr "``thewire_get_hashtags()``"
+
+#: ../../appendix/upgrade-notes/6.1-to-6.2.rst:13
+msgid "``thewire_filter()`` use ``elgg_format_html()``"
+msgstr "``thewire_filter()`` utilisez ``elgg_format_html()``"

@@ -6,7 +6,6 @@ use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Exceptions\Http\EntityPermissionsException;
 use Elgg\Exceptions\Http\ValidationException;
 use Elgg\Http\OkResponse;
-use Elgg\Friends\Notifications;
 
 /**
  * Action controller to accept a friend request
@@ -64,7 +63,7 @@ class AcceptFriendRequestController extends \Elgg\Controllers\GenericAction {
 	 */
 	protected function success(): OkResponse {
 		// notify requesting user about acceptance
-		Notifications::sendAcceptedFriendRequestNotification($this->requesting_user, $this->receiving_user);
+		$this->requesting_user->notify('friendrequest:accept', $this->receiving_user, [], $this->receiving_user);
 		
 		return elgg_ok_response('', elgg_echo('friends:action:friendrequest:accept:success'));
 	}

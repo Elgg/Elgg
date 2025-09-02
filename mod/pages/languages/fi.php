@@ -6,13 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
-
 	'item:object:page' => 'Wikisivut',
 	'collection:object:page' => 'Wikit',
+	
 	'collection:object:page:all' => "Kaikki sivuston wikit",
 	'collection:object:page:owner' => "Käyttäjän %s wikit",
 	'collection:object:page:friends' => "Ystävien wikit",
@@ -31,7 +30,7 @@ return array(
 	'pages:notify:subject' => "Uusi wikisivu: %s",
 
 	'pages:more' => 'Lisää wikisivuja',
-	'pages:none' => 'Wikejä ei vielä ole luotu',
+	'pages:none' => 'Wikejä ei vielä ole luotu', // @todo remove in Elgg 7.0
 
 	/**
 	* River

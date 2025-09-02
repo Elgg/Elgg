@@ -36,27 +36,12 @@ foreach ($user_guid as $u_guid) {
 		continue;
 	}
 	
-	if (!$group->join($user, ['create_river_item' => true])) {
+	if (!$group->join($user, [
+		'create_river_item' => true,
+		'notify_user_action' => 'add_membership',
+	])) {
 		elgg_register_error_message(elgg_echo('groups:error:addedtogroup', [$user->getDisplayName()]));
-		
-		continue;
 	}
-	
-	$subject = elgg_echo('groups:welcome:subject', [$group->getDisplayName()], $user->getLanguage());
-
-	$body = elgg_echo('groups:welcome:body', [
-		$group->getDisplayName(),
-		$group->getURL(),
-	], $user->getLanguage());
-	
-	$params = [
-		'action' => 'add_membership',
-		'object' => $group,
-		'url' => $group->getURL(),
-	];
-
-	// Send welcome notification to user
-	notify_user($user->getGUID(), $group->owner_guid, $subject, $body, $params);
 }
 
 return elgg_ok_response('', elgg_echo('groups:addedtogroup'));

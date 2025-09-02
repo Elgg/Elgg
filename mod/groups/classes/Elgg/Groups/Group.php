@@ -104,6 +104,14 @@ class Group {
 			]);
 		}
 		
+		$notify_user_action = (string) elgg_extract('notify_user_action', $params);
+		if (!empty($notify_user_action)) {
+			$rel = $user->getRelationship($group->guid, 'member');
+			if ($rel instanceof \ElggRelationship) {
+				elgg_enqueue_notification_event($notify_user_action, $rel);
+			}
+		}
+		
 		// add a user to the group's access control
 		$collection = $group->getOwnedAccessCollection('group_acl');
 		if ($collection instanceof \ElggAccessCollection) {

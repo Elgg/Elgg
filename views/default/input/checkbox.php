@@ -46,13 +46,9 @@ unset($vars['label_class']);
 $switch = elgg_extract('switch', $vars, false);
 unset($vars['switch']);
 
-if ($switch) {
-	$vars['class'][] = 'hidden';
-}
-
 $input = elgg_format_element('input', $vars);
 if ($switch) {
-	$input .= elgg_format_element('span', ['class' => 'elgg-input-checkbox-switch']);
+	$input = elgg_format_element('span', ['class' => 'elgg-input-checkbox-switch'], $input . elgg_format_element('span'));
 	
 	if (empty($label)) {
 		$label = '&nbsp;';

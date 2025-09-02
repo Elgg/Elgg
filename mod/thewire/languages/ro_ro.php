@@ -6,7 +6,6 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
@@ -14,9 +13,11 @@ return array(
 
 	'item:object:thewire' => "Postare de fir",
 	'collection:object:thewire' => 'Postări de fir',
+	
 	'collection:object:thewire:all' => "Toate postările de fir",
 	'collection:object:thewire:owner' => "Postările de fir ale utilizatorului %s",
 	'collection:object:thewire:friends' => "Postările de fir ale prietenilor",
+	
 	'notification:object:thewire:create' => "Trimite o notificare atunci când o postare de fir este creată",
 	'notifications:mute:object:thewire' => "despre postarea de fir '%s'",
 	
@@ -24,7 +25,7 @@ return array(
 	'thewire:thread' => "Fir",
 	'thewire:charleft' => "caractere rămase",
 	'thewire:tags' => "Postări de fir etichetate cu '%s'",
-	'thewire:noposts' => "Încă nu sunt postări de fir",
+	'thewire:noposts' => "Încă nu sunt postări de fir", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Postări de fir de către %s',
 

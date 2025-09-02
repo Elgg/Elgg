@@ -1,11 +1,7 @@
 <?php
 
-use Elgg\Exceptions\Http\EntityNotFoundException;
-
-$user = get_user((int) elgg_extract('guid', $vars));
-if (!$user instanceof \ElggUser) {
-	throw new EntityNotFoundException();
-}
+/* @var $user \ElggUser */
+$user = elgg_get_page_owner_entity();
 
 $content = elgg_view_image_block(elgg_view_entity_icon($user, 'medium'), elgg_view('output/longtext', [
 	'value' => elgg_echo('user:delete:description', [elgg_format_element('strong', [], $user->getDisplayName())]),

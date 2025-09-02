@@ -8,12 +8,13 @@
 return array(
 	'item:object:reported_content' => 'Rud aithriste',
 	'collection:object:reported_content' => 'Rudan aithriste',
+	
 	'admin:administer_utilities:reportedcontent' => 'Susbaint aithriste',
 	
 	'reportedcontent' => 'Susbaint aithriste',
 	'reportedcontent:this' => 'Dèan aithris air seo',
 	'reportedcontent:this:tooltip' => 'Dèan aithris air an duilleag seo don rianaire',
-	'reportedcontent:none' => 'Chan eil susbaint aithriste ann',
+	'reportedcontent:none' => 'Chan eil susbaint aithriste ann', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Dèan aithris don rianaire',
 	'reportedcontent:archive' => 'Cuir san tasg-lann an aithris',
 	'reportedcontent:archived' => 'Chaidh an aithris a chur san tasg-lann',

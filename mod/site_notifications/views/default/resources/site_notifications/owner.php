@@ -9,7 +9,6 @@ $options = [
 	'type' => 'object',
 	'subtype' => 'site_notification',
 	'owner_guid' => $page_owner->guid,
-	'full_view' => false,
 	'metadata_name_value_pairs' => [
 		'read' => false,
 	],
@@ -19,10 +18,9 @@ $options = [
 
 $list = elgg_list_entities($options);
 if (empty($list)) {
-	$options['no_results'] = elgg_echo('site_notifications:empty');
 	$options['count'] = elgg_count_entities($options);
 	
-	$content = elgg_view('page/components/no_results', $options);
+	$content = elgg_view_no_results(elgg_echo('list:object:site_notification:no_results'));
 	$content .= elgg_view('page/components/list/out_of_bounds', $options);
 } else {
 	$content = elgg_view_form('site_notifications/process', [], [

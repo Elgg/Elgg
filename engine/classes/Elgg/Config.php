@@ -45,6 +45,7 @@ use Elgg\Traits\Loggable;
  * @property string        $dbpass
  * @property string        $dbprefix
  * @property bool          $db_disable_query_cache
+ * @property bool          $db_enable_query_logging                 Enable the logging of DB queries
  * @property int           $db_query_cache_limit                    Limit for the query cache
  * @property string        $debug                                   Holds the \Psr\Log\LogLevel
  * @property int           $default_access							Default access
@@ -203,6 +204,7 @@ class Config {
 		'comments_latest_first' => true,
 		'comments_max_depth' => 0,
 		'comments_per_page' => 25,
+		'db_enable_query_logging' => false,
 		'db_query_cache_limit' => 50,
 		'default_limit' => 10,
 		'elgg_maintenance_mode' => false,

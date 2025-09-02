@@ -6,13 +6,12 @@
  */
 
 return array(
-
+	
 	/**
 	 * Menu items and titles
 	 */
-
 	'messageboard:board' => "Ilmoitustaulu",
-	'messageboard:none' => "Tällä ilmoitustaululla ei ole vielä sisältöä",
+	'messageboard:none' => "Tällä ilmoitustaululla ei ole vielä sisältöä", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "Näytettävien kohteiden määrä",
 	'messageboard:owner' => 'Käyttäjän %s ilmoitustaulu',
 	'messageboard:owner_history' => 'Käyttäjän %s viestit käyttäjän %s ilmoitustaululla',

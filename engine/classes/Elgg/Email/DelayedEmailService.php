@@ -4,7 +4,6 @@ namespace Elgg\Email;
 
 use Elgg\Database\DelayedEmailQueueTable;
 use Elgg\Email;
-use Elgg\Email\DelayedQueue\DatabaseRecord;
 use Elgg\EmailService;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\I18n\Translator;

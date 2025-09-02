@@ -2,52 +2,37 @@
 
 namespace Elgg\Cli;
 
-use Elgg\UnitTestCase;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
+class CronCommandUnitTest extends ExecuteCommandUnitTestCase {
 
-class CronCommandUnitTest extends UnitTestCase {
-
+	public function up() {
+		parent::up();
+		
+		// need to disable testing mode otherwise there is no cron log output
+		_elgg_services()->config->testing_mode = false;
+	}
+	
 	public function testExecuteWithoutOptions() {
-		$application = new Application();
-		$application->add(new CronCommand());
-
-		$command = $application->find('cron');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute(['command' => $command->getName()]);
-
-		$this->assertMatchesRegularExpression('/Cron jobs for .* started/im', $commandTester->getDisplay());
-		$this->assertMatchesRegularExpression('/Cron jobs for .* completed/im', $commandTester->getDisplay());
+		$output = $this->executeCommand(new CronCommand());
+		
+		$this->assertMatchesRegularExpression('/Cron jobs for .* started/im', $output);
+		$this->assertMatchesRegularExpression('/Cron jobs for .* completed/im', $output);
 	}
 
 	public function testExecuteWithPeriod() {
-		$application = new Application();
-		$application->add(new CronCommand());
-
-		$command = $application->find('cron');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
+		$output = $this->executeCommand(new CronCommand(), [
 			'--interval' => "hourly",
 			'--time' => '2017-12-31 0:00:00',
 		]);
 
-		$this->assertMatchesRegularExpression('/Cron jobs for \"hourly\" started/im', $commandTester->getDisplay());
-		$this->assertMatchesRegularExpression('/Cron jobs for \"hourly\" completed/im', $commandTester->getDisplay());
+		$this->assertMatchesRegularExpression('/Cron jobs for \"hourly\" started/im', $output);
+		$this->assertMatchesRegularExpression('/Cron jobs for \"hourly\" completed/im', $output);
 	}
 
 	public function testExecuteWithQuietOutput() {
-		$application = new Application();
-		$application->add(new CronCommand());
-
-		$command = $application->find('cron');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
+		$output = $this->executeCommand(new CronCommand(), [
 			'--quiet' => true,
 		]);
 
-		$this->assertEmpty($commandTester->getDisplay());
+		$this->assertEmpty($output);
 	}
-
 }

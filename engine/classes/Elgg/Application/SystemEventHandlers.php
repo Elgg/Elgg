@@ -3,6 +3,15 @@
 namespace Elgg\Application;
 
 use Elgg\Notifications\CreateCommentEventHandler;
+use Elgg\Notifications\Handlers\AddUser;
+use Elgg\Notifications\Handlers\AdminValidation;
+use Elgg\Notifications\Handlers\BanUser;
+use Elgg\Notifications\Handlers\ChangeUserPassword;
+use Elgg\Notifications\Handlers\ConfirmEmailChange;
+use Elgg\Notifications\Handlers\ConfirmPasswordChange;
+use Elgg\Notifications\Handlers\RequestUserPassword;
+use Elgg\Notifications\Handlers\ResetUserPassword;
+use Elgg\Notifications\Handlers\ValidateUser;
 use Elgg\Notifications\MentionsEventHandler;
 use Elgg\Notifications\UnbanUserEventHandler;
 use Elgg\Notifications\MakeAdminUserEventHandler;
@@ -21,7 +30,6 @@ class SystemEventHandlers {
 	 * @return void
 	 */
 	public static function init() {
-	
 		// searchable
 		elgg_entity_enable_capability('object', 'comment', 'searchable');
 		elgg_entity_enable_capability('user', 'user', 'searchable');
@@ -38,9 +46,18 @@ class SystemEventHandlers {
 		
 		elgg_register_notification_event('object', 'comment', ['create'], CreateCommentEventHandler::class);
 		elgg_register_notification_event('object', 'comment', ['mentions'], MentionsEventHandler::class);
+		elgg_register_notification_event('user', 'user', ['admin_validation'], AdminValidation::class);
+		elgg_register_notification_event('user', 'user', ['ban'], BanUser::class);
+		elgg_register_notification_event('user', 'user', ['changepassword'], ChangeUserPassword::class);
+		elgg_register_notification_event('user', 'user', ['email_change'], ConfirmEmailChange::class);
 		elgg_register_notification_event('user', 'user', ['make_admin'], MakeAdminUserEventHandler::class);
+		elgg_register_notification_event('user', 'user', ['password_change'], ConfirmPasswordChange::class);
 		elgg_register_notification_event('user', 'user', ['remove_admin'], RemoveAdminUserEventHandler::class);
+		elgg_register_notification_event('user', 'user', ['requestnewpassword'], RequestUserPassword::class);
+		elgg_register_notification_event('user', 'user', ['resetpassword'], ResetUserPassword::class);
 		elgg_register_notification_event('user', 'user', ['unban'], UnbanUserEventHandler::class);
+		elgg_register_notification_event('user', 'user', ['useradd'], AddUser::class);
+		elgg_register_notification_event('user', 'user', ['validate'], ValidateUser::class);
 		
 		// if mb functions are available, set internal encoding to UTF8
 		if (is_callable('mb_internal_encoding')) {

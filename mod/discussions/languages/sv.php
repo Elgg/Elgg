@@ -7,10 +7,10 @@
 
 return array(
 	'item:object:discussion' => "Diskussionsämne",
+	'collection:object:discussion' => 'Diskussionsämnen',
 	
 	'add:object:discussion' => 'Lägg till diskussionsämne',
 	'edit:object:discussion' => 'Redigera ämne',
-	'collection:object:discussion' => 'Diskussionsämnen',
 	'collection:object:discussion:group' => 'Gruppdiskussioner',
 	'collection:object:discussion:my_groups' => 'Diskussioner i min grupp',
 	
@@ -18,7 +18,7 @@ return array(
 	'discussion:settings:enable_global_discussions:help' => 'Tillåt diskussioner att skapas utanför grupper',
 
 	'discussion:latest' => 'Senaste diskussioner',
-	'discussion:none' => 'Inga diskussioner',
+	'discussion:none' => 'Inga diskussioner', // @todo remove in Elgg 7.0
 	'discussion:updated' => "Senaste kommentar av %s %s",
 
 	'discussion:topic:created' => 'Diskussionsämnet skapades.',

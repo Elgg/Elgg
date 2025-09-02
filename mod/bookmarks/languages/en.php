@@ -6,18 +6,20 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => 'Bookmark',
 	'collection:object:bookmarks' => 'Bookmarks',
+	'list:object:bookmarks:no_results' => 'No bookmarks found',
+	
 	'collection:object:bookmarks:group' => 'Group bookmarks',
 	'collection:object:bookmarks:all' => "All site bookmarks",
 	'collection:object:bookmarks:owner' => "%s's bookmarks",
 	'collection:object:bookmarks:friends' => "Friends' bookmarks",
 	'add:object:bookmarks' => "Add a bookmark",
 	'edit:object:bookmarks' => "Edit bookmark",
+	
 	'notification:object:bookmarks:create' => "Send a notification when a bookmark is created",
 	'notifications:mute:object:bookmarks' => "about the bookmark '%s'",
 
@@ -26,7 +28,7 @@ return array(
 	'bookmarks:bookmarklet' => "Get bookmarklet",
 	'bookmarks:bookmarklet:group' => "Get group bookmarklet",
 	'bookmarks:address' => "Address of the bookmark",
-	'bookmarks:none' => 'No bookmarks',
+	'bookmarks:none' => 'No bookmarks', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'New bookmark called %s',
 	'bookmarks:notify:subject' => 'New bookmark: %s',

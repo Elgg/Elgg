@@ -8,13 +8,15 @@
 return array(
 	'item:object:reported_content' => 'Reported item',
 	'collection:object:reported_content' => 'Reported items',
+	'list:object:reported_content:no_results' => 'No reported content found',
+	
 	'admin:administer_utilities:reportedcontent' => 'Reported content',
 	'admin:administer_utilities:reportedcontent:archive' => 'Reported content - archive',
 	
 	'reportedcontent' => 'Reported content',
 	'reportedcontent:this' => 'Report this',
 	'reportedcontent:this:tooltip' => 'Report this page to an administrator',
-	'reportedcontent:none' => 'There is no reported content',
+	'reportedcontent:none' => 'There is no reported content', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Report to admin',
 	'reportedcontent:archive' => 'Archive report',
 	'reportedcontent:archived' => 'The report has been archived',

@@ -23,13 +23,18 @@ return [
 	],
 	'routes' => [
 		'view:user' => [
-			'path' => '/profile/{username?}',
+			'path' => '/profile/{username}',
 			'resource' => 'profile/view',
+			'middleware' => [
+				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+			],
+			'use_logged_in' => true,
 		],
 		'edit:user' => [
 			'path' => '/profile/{username}/edit',
 			'resource' => 'profile/edit',
 			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
@@ -37,6 +42,7 @@ return [
 			'path' => '/profile/{username}/edit_header',
 			'resource' => 'profile/edit_header',
 			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],

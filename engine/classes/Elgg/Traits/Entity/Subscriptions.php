@@ -31,9 +31,7 @@ trait Subscriptions {
 		if (!empty($user_guid) && is_array($methods) && empty($methods)) {
 			$user = get_user($user_guid);
 			if ($user instanceof \ElggUser) {
-				$prefered = $user->getNotificationSettings();
-				$methods = array_keys(array_filter($prefered));
-				
+				$methods = $user->getNotificationSettings('default', true);
 				if (empty($methods)) {
 					return true;
 				}

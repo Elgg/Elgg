@@ -27,11 +27,6 @@ return [
 			'\Elgg\Input\ValidateInputHandler::sanitizeStyles' => [],
 		],
 	],
-	'ban' => [
-		'user' => [
-			\Elgg\Users\BanUserNotificationHandler::class => [],
-		],
-	],
 	'cache:clear' => [
 		'system' => [
 			'\Elgg\Cache\EventHandlers::clear' => [],
@@ -334,6 +329,7 @@ return [
 			'Elgg\Menus\Title::registerEntityToTitle' => [
 				'priority' => 600,
 			],
+			'Elgg\Menus\Title::registerSubscribable' => [],
 		],
 		'menu:topbar' => [
 			'Elgg\Menus\Topbar::registerUserLinks' => [],

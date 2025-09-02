@@ -171,6 +171,12 @@ Beyond the standard ``ElggEntity`` properties, ``ElggObject`` also supports:
 
 Most other data about the object is generally stored via metadata.
 
+.. note::
+
+    It's recommended to register a custom extension of an ``ElggObject`` for your subtype (eg. blog, file, etc.).
+    There you can set the subtype to always be your subtype, you can configure default form fields if needed and other
+    helper function can easily be created.
+
 ElggUser
 ========
 
@@ -633,8 +639,8 @@ E.g. retrieving users who joined your group in January 2014.
         'relationship_guid' => $group->guid,
         'inverse_relationship' => true,
 
-        'relationship_created_time_lower' => 1388534400, // January 1st 2014
-        'relationship_created_time_upper' => 1391212800, // February 1st 2014
+        'relationship_created_after' => 1388534400, // January 1st 2014
+        'relationship_created_before' => 1391212800, // February 1st 2014
     ));
 
 .. _database-access-control:

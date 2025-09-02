@@ -8,12 +8,15 @@
 return array(
 	'item:object:blog' => 'Blog',
 	'collection:object:blog' => 'Blogs',
+	'list:object:blog:no_results' => 'No blogs found',
+	
 	'collection:object:blog:all' => 'All site blogs',
 	'collection:object:blog:owner' => '%s\'s blogs',
 	'collection:object:blog:group' => 'Group blogs',
 	'collection:object:blog:friends' => 'Friends\' blogs',
 	'add:object:blog' => 'Add blog post',
 	'edit:object:blog' => 'Edit blog post',
+	
 	'notification:object:blog:publish' => "Send a notification when a blog is published",
 	'notifications:mute:object:blog' => "about the blog '%s'",
 	'menu:blog_archive:header' => "Blog archive",
@@ -38,7 +41,7 @@ return array(
 	'blog:error:cannot_save' => 'Cannot save blog post.',
 	'blog:error:cannot_write_to_container' => 'Insufficient access to save blog to group.',
 	'blog:edit_revision_notice' => '(Old version)',
-	'blog:none' => 'No blog posts',
+	'blog:none' => 'No blog posts', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Please enter a blog title!',
 	'blog:error:missing:description' => 'Please enter the body of your blog!',
 	'blog:error:post_not_found' => 'Cannot find specified blog post.',

@@ -2,7 +2,7 @@ Email
 #####
 
 Elgg has the ability to send out emails. 
-This can be done directly using functions like ``elgg_send_email()`` and ``notify_user()`` or indirectly through the notifications system. 
+This can be done directly using functions like ``elgg_send_email()`` and ``elgg_notify_user()`` or indirectly through the notifications system.
 Below an overview of the feature of the email system.
 
 .. contents:: Contents
@@ -46,7 +46,7 @@ If you do not want to inline CSS you will need to set the ``convert_css`` param 
 Attachments
 ===========
 
-``notify_user()`` or enqueued notifications support attachments for e-mail notifications if provided in ``$params``. To add one or more attachments
+``elgg_notify_user()`` or enqueued notifications support attachments for e-mail notifications if provided in ``$params``. To add one or more attachments
 add a key ``attachments`` in ``$params`` which is an array of the attachments. An attachment should be in one of the following formats:
 
 - An ``ElggFile`` which points to an existing file
@@ -55,7 +55,7 @@ add a key ``attachments`` in ``$params`` which is an array of the attachments. A
 
 .. code-block:: php
 
-	// this example is for notify_user()
+	// this example is for elgg_notify_user()
 	$params['attachments'] = [];
 
 	// Example of an ElggFile attachment
@@ -79,7 +79,9 @@ add a key ``attachments`` in ``$params`` which is an array of the attachments. A
 		'filepath' => '<path to a valid file>',
 	];
 
-	notify_user($to_guid, $from_guid, $subject, $body, $params);
+    $recipient->notify('some_action', $on_some_object, $params);
+    // or
+    elgg_notify_user($recipient, 'some_action', $on_some_object, $params);
 
 
 E-mail address formatting

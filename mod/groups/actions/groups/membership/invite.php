@@ -50,30 +50,6 @@ foreach ($user_guids as $guid) {
 			continue;
 		}
 	}
-
-	$url = elgg_generate_url('collection:group:group:invitations', [
-		'username' => $user->username,
-	]);
-	
-	$subject = elgg_echo('groups:invite:subject', [
-		$user->getDisplayName(),
-		$group->getDisplayName()
-	], $user->getLanguage());
-
-	$body = elgg_echo('groups:invite:body', [
-		$logged_in_user->getDisplayName(),
-		$group->getDisplayName(),
-		$url,
-	], $user->getLanguage());
-	
-	$params = [
-		'action' => 'invite',
-		'object' => $group,
-		'url' => $url,
-	];
-
-	// Send notification
-	notify_user($user->guid, $group->owner_guid, $subject, $body, $params);
 	
 	elgg_register_success_message(elgg_echo('groups:userinvited'));
 }

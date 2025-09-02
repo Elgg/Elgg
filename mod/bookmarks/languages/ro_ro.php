@@ -6,18 +6,19 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => 'Marcaj',
 	'collection:object:bookmarks' => 'Marcaje',
+	
 	'collection:object:bookmarks:group' => 'Marcaje de grup',
 	'collection:object:bookmarks:all' => "Toate marcajele site-ului",
 	'collection:object:bookmarks:owner' => "Marcaje %s",
 	'collection:object:bookmarks:friends' => "Marcajele prietenilor",
 	'add:object:bookmarks' => "Adaugă un marcaj",
 	'edit:object:bookmarks' => "Editează marcajul",
+	
 	'notification:object:bookmarks:create' => "Trimite o notificare atunci când un marcaj este creat",
 	'notifications:mute:object:bookmarks' => "despre marcajul '%s'",
 
@@ -26,7 +27,7 @@ return array(
 	'bookmarks:bookmarklet' => "Preia marcatorul",
 	'bookmarks:bookmarklet:group' => "Preia marcatorul de grup",
 	'bookmarks:address' => "Adresa marcajului",
-	'bookmarks:none' => 'Nu sunt marcaje',
+	'bookmarks:none' => 'Nu sunt marcaje', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Marcaj nou numit %s',
 	'bookmarks:notify:subject' => 'Marcaj nou: %s',

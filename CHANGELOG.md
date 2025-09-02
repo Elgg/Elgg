@@ -1,3 +1,146 @@
+<a name="6.3.0"></a>
+## 6.3.0 (2025-09-02)
+
+#### Contributors
+
+* Jeroen Dalsem (35)
+* Jerôme Bakker (31)
+
+#### Features
+
+* **forms:**
+  * fieldsservice adds field help text if in translations [7a309e390](https://github.com/Elgg/Elgg/commit/7a309e3902f009a2dfb3dccce3f76b6060ad7d64)
+  * added ability to prioritize fields in fieldsservice [b18700f67](https://github.com/Elgg/Elgg/commit/b18700f67248bc3e1c64f1a10f5f771d98da6d0c)
+* **notifications:**
+  * only get enabled notification preferences [9e4d0e437](https://github.com/Elgg/Elgg/commit/9e4d0e437a2dd31ca5988c48da765b2ee51db46a) closes [#14879](https://github.com/Elgg/Elgg/issues/14879)
+  * manage attachments through notification handler [feb26bf7d](https://github.com/Elgg/Elgg/commit/feb26bf7dd6ecc926e0a336e5e7cf0c3f42d1fb4)
+  * add elgg_notify_user() function [e39641556](https://github.com/Elgg/Elgg/commit/e39641556d81c4ccd4a0e49db24ca86230a3b5ed)
+  * added non-configurable notification handler [2076ffab6](https://github.com/Elgg/Elgg/commit/2076ffab69a459559dec62e79387d590a63ef45f)
+* **entity:** added subscribable capability [1130e5acd](https://github.com/Elgg/Elgg/commit/1130e5acd703f18b8efe594f37234225c0e307d3)
+* **input:** checkbox switch restyled to be more accessible [c16991485](https://github.com/Elgg/Elgg/commit/c1699148507d27350ef64dbcc788ba64b22c6795) closes [#14853](https://github.com/Elgg/Elgg/issues/14853)
+* **developers:**
+  * added inspection view for notification handlers [7eb9e759c](https://github.com/Elgg/Elgg/commit/7eb9e759cdfb1ac7b7b67971c5c18e2605674946)
+  * added config flag to log database queries [3670771d3](https://github.com/Elgg/Elgg/commit/3670771d30cc05eae709a0465b4267d5a0b58947) closes [#14804](https://github.com/Elgg/Elgg/issues/14804)
+* **messageboard:** moved notification to event handlers [2dde700b1](https://github.com/Elgg/Elgg/commit/2dde700b1e51c3e2ac3bd0c1f00a920ddce44086)
+* **group:** moved notifications to event handlers [a353fb119](https://github.com/Elgg/Elgg/commit/a353fb11915b0fbb38a09ff3df5e0a72ae1972d5)
+* **output:** added elgg_number_format function to format numbers [f6a06437b](https://github.com/Elgg/Elgg/commit/f6a06437bd50fb5764605981756f922a3e2fffc1)
+* **views:**
+  * added default no_results language key support [bf019474e](https://github.com/Elgg/Elgg/commit/bf019474e6190692f04e56f5d706ffbbd8caf535)
+  * added helper function for page/components/no_results [73ca1c26f](https://github.com/Elgg/Elgg/commit/73ca1c26f3825f9ca5bf102994bc630ad641cd5a)
+  * support full and summary subviews for entities [54f8205a9](https://github.com/Elgg/Elgg/commit/54f8205a963a5471cd5139929bd4fa34a9701b51) closes [#14803](https://github.com/Elgg/Elgg/issues/14803)
+* **admin:** show the registration ip address on user info if available [a7aaca410](https://github.com/Elgg/Elgg/commit/a7aaca4103a3005cc24f94a33ef8dd21d53b3bc4) closes [#14531](https://github.com/Elgg/Elgg/issues/14531)
+* **events:** allow events to continue on an exception [48a77dea5](https://github.com/Elgg/Elgg/commit/48a77dea5ed325d82bba092ede6afd19ffc498ae) closes [#14801](https://github.com/Elgg/Elgg/issues/14801)
+* **css:**
+  * maintenance mode css is now similar to walled garden [d11ade1a4](https://github.com/Elgg/Elgg/commit/d11ade1a477f3b12e87dee3edbf3103cbeb27018) closes [#14452](https://github.com/Elgg/Elgg/issues/14452)
+  * elgg_require_css is also applied when loading ajax content [6659eb162](https://github.com/Elgg/Elgg/commit/6659eb162f66bfc39d8f6ad1a3794811ee27d323)
+* **routing:** set default route parameters based on logged-in user [d507e05d7](https://github.com/Elgg/Elgg/commit/d507e05d7959348b7edfa5e32dd51359279c0b67) closes [#14579](https://github.com/Elgg/Elgg/issues/14579)
+* **db:** allow datetime filters for entities deleted column [871681f20](https://github.com/Elgg/Elgg/commit/871681f20e482ee000dca046eff940023b5595e9)
+* **core:** cast switch field type value to boolean in generic action [00541f23c](https://github.com/Elgg/Elgg/commit/00541f23c262c4dc210128003050aac7e704b6a9)
+* **js:** added integrity information to importmap for ES Modules [6776f2c6b](https://github.com/Elgg/Elgg/commit/6776f2c6b7657e6bbc59e8a38193c7157f9a684c)
+
+
+#### Performance
+
+* **views:** try to preload containers in sidebar comments block [383e9ea0d](https://github.com/Elgg/Elgg/commit/383e9ea0d84f3eff66e05dc1dc16671422dc4738)
+
+
+#### Bug fixes
+
+* **cli:** improved cli logging [9a50cc795](https://github.com/Elgg/Elgg/commit/9a50cc7956886810b379f918db3ed0dd96f8419b) closes [#14758](https://github.com/Elgg/Elgg/issues/14758)
+* **relationship:** set relationship ID during event sequence [7b30e0198](https://github.com/Elgg/Elgg/commit/7b30e01980bb42f2426c544373058e0996ed7f36)
+* **output:** improved elgg_strip_tags to prevent 'gluing' content [a53277e6f](https://github.com/Elgg/Elgg/commit/a53277e6ff3cee36fe7c02f40cf7410fb3c63e01) closes [#14848](https://github.com/Elgg/Elgg/issues/14848)
+* **css:** horizontal field labels work in all fieldset alignments [f073af5d4](https://github.com/Elgg/Elgg/commit/f073af5d4ffe8754376d7c5471f6b6dcdf9a5ef3) closes [#14802](https://github.com/Elgg/Elgg/issues/14802)
+
+
+#### Deprecations
+
+* **core:** directly using ElggObject has been deprecated [066569f9e](https://github.com/Elgg/Elgg/commit/066569f9e44bcf897d4141205a9ff5b98aa5268f)
+* **db:**
+  * do not use the singular query option 'type_subtype_pair' [6f576fb05](https://github.com/Elgg/Elgg/commit/6f576fb05ca9afdb99be20c6ee6f8ab76e5eeb3b)
+  * using legacy date filter keys in elgg_get_* logs notice [ff45c8dd7](https://github.com/Elgg/Elgg/commit/ff45c8dd7417750c22ddafec0e1bd0269d5be54a)
+* **lib:** elgg_dump() has been deprecated use elgg_log() [c86f9a2f0](https://github.com/Elgg/Elgg/commit/c86f9a2f0472f85ecb8acb4ee7825bf9fa355f40)
+
+
+<a name="6.2.6"></a>
+### 6.2.6 (2025-09-02)
+
+#### Contributors
+
+* Jeroen Dalsem (4)
+* Jerôme Bakker (2)
+
+
+<a name="6.2.5"></a>
+### 6.2.5 (2025-08-14)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+
+#### Bug fixes
+
+* **css:** scroll issues with width calculation of likes colorbox popup [72d37f815](https://github.com/Elgg/Elgg/commit/72d37f815aaf29e2de8f38d9c7a50f1a29b1e775)
+
+
+<a name="6.2.4"></a>
+### 6.2.4 (2025-07-25)
+
+#### Contributors
+
+* Jeroen Dalsem (4)
+* Jerôme Bakker (3)
+
+#### Bug fixes
+
+* **forms:**
+  * correctly validate url input in generic entity edit handler [5f5388696](https://github.com/Elgg/Elgg/commit/5f5388696afd8152de8dd2562fcab8a559fb4cb1)
+  * check for files existence before checking file size [84b7e6264](https://github.com/Elgg/Elgg/commit/84b7e6264110da3a22a17a3e67559d3915c91477)
+  * show correct help text value for input/file [e80e96d8b](https://github.com/Elgg/Elgg/commit/e80e96d8ba0dfd66aaf5439a8b631811fb863477)
+* **users:** prevent duplicate key errors when saving user sessions [ab424aea5](https://github.com/Elgg/Elgg/commit/ab424aea50f7e25db32c49e5ba21809bc4cf9bc0)
+
+
+<a name="6.2.3"></a>
+### 6.2.3 (2025-07-08)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+* Jerôme Bakker (1)
+
+#### Bug fixes
+
+* **email:** css variables not working in mail templates [5d56ca3c6](https://github.com/Elgg/Elgg/commit/5d56ca3c694782308a436e422af93d2e0d6aee54)
+* **js:** colorbox negative tabindex interfering with focustrap logic [d7a39e0a5](https://github.com/Elgg/Elgg/commit/d7a39e0a5fa6ad5fbb1e53de26e0b2fcd9e8303b)
+
+
+<a name="6.2.2"></a>
+### 6.2.2 (2025-06-11)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+
+#### Bug fixes
+
+* **db:** use correct database connection fallback when using split DB [79bbe1a14](https://github.com/Elgg/Elgg/commit/79bbe1a146ae25a259008f173edc8c05f2967d18) closes [#14843](https://github.com/Elgg/Elgg/issues/14843)
+* **users:** correctly validate duplicate email address [cd684853b](https://github.com/Elgg/Elgg/commit/cd684853bd10fe98f48530c939f471deb505e8ed) closes [#14842](https://github.com/Elgg/Elgg/issues/14842)
+* **database:** correctly store falsy boolean values [aac8d3848](https://github.com/Elgg/Elgg/commit/aac8d38486993210dd1cbc4df93e55ddb65cd974)
+
+
+<a name="6.2.1"></a>
+### 6.2.1 (2025-05-07)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+
+#### Bug fixes
+
+* **discussions:** correctly edit a discussion [657a4fb62](https://github.com/Elgg/Elgg/commit/657a4fb62ca255c52e33ab34c9e1781ed41caca1)
+* **pages:** show all children in the sidebar menu [9153e227c](https://github.com/Elgg/Elgg/commit/9153e227c267010440c53d4968efb2d449dccf5e)
+* **settings:** use correct plugin name in user settings save action [f4b84a304](https://github.com/Elgg/Elgg/commit/f4b84a3040ebcce8f16f845ca29d36b1d3ce5027)
+
+
 <a name="6.2.0"></a>
 ## 6.2.0 (2025-04-14)
 

@@ -8,7 +8,6 @@ use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Exceptions\DomainException;
-use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\LogicException;
 
 /**

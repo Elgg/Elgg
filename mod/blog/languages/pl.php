@@ -8,6 +8,7 @@
 return array(
 	'item:object:blog' => 'Blogi',
 	'collection:object:blog' => 'Blogi',
+	
 	'collection:object:blog:all' => 'Wszystkie blogi',
 	'collection:object:blog:owner' => 'Blogi użytkownika %s',
 	'collection:object:blog:friends' => 'Blogi znajomych',
@@ -31,7 +32,7 @@ return array(
 	'blog:error:cannot_save' => 'Zapis posta się nie powiódł.',
 	'blog:error:cannot_write_to_container' => 'Masz niedostateczne uprawnienia, aby dodawać wpisy na blogu w tej grupie.',
 	'blog:edit_revision_notice' => '(Stara wersja)',
-	'blog:none' => 'Brak wpisów na blogu',
+	'blog:none' => 'Brak wpisów na blogu', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Proszę podać tytuł wpisu!',
 	'blog:error:missing:description' => 'Proszę podać treść wpisu!',
 	'blog:error:post_not_found' => 'Nie można znaleźć wskazanego wpisu na blogu.',

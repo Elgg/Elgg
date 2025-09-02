@@ -3,7 +3,6 @@
 namespace Elgg\Menus;
 
 use Elgg\Menu\MenuItems;
-use Elgg\Menu\PreparedMenu;
 
 /**
  * Register menu items for the page menu

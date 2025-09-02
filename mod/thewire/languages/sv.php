@@ -6,7 +6,6 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
@@ -14,6 +13,7 @@ return array(
 
 	'item:object:thewire' => "Nyhetsinlägg",
 	'collection:object:thewire' => 'Nyhetsinlägg',
+	
 	'collection:object:thewire:all' => "Alla nyhetsinlägg",
 	'collection:object:thewire:owner' => "%ss nyhetsinlägg",
 	'collection:object:thewire:friends' => "Vänners nyhetsinlägg",
@@ -22,7 +22,7 @@ return array(
 	'thewire:thread' => "Tråd",
 	'thewire:charleft' => "Tecken kvar",
 	'thewire:tags' => "Nyhetsinlägg taggad med '%s'",
-	'thewire:noposts' => "Inga nyhetsinlägg än",
+	'thewire:noposts' => "Inga nyhetsinlägg än", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Nyhetsinlägg av %s',
 

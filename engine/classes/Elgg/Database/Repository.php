@@ -8,7 +8,6 @@ use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\Database\Clauses\WhereClause;
-use Elgg\Exceptions\DataFormatException;
 
 /**
  * Abstract methods for interfacing with the database
@@ -23,7 +22,7 @@ abstract class Repository {
 	 * @param array $options ege* options
 	 */
 	public function __construct(array $options = []) {
-		$this->options = new QueryOptions($options, \ArrayObject::ARRAY_AS_PROPS);
+		$this->options = new QueryOptions($options, \ArrayObject::STD_PROP_LIST);
 	}
 
 	/**
@@ -34,9 +33,7 @@ abstract class Repository {
 			return;
 		}
 
-		$val = &$this->options->$name;
-
-		return $val;
+		return $this->options->$name;
 	}
 
 	/**

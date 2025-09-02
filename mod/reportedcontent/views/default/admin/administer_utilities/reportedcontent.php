@@ -22,5 +22,5 @@ echo elgg_list_entities([
 	'metadata_name_value_pairs' => [
 		'state' => 'active',
 	],
-	'no_results' => elgg_echo('reportedcontent:none'),
+	'no_results' => true,
 ]);

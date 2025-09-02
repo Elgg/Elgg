@@ -13,8 +13,7 @@
 $defaults = [
 	'type' => 'object',
 	'subtype' => 'blog',
-	'full_view' => false,
-	'no_results' => elgg_echo('blog:none'),
+	'no_results' => true,
 	'distinct' => false,
 ];
 

@@ -43,8 +43,8 @@ class River extends Repository {
 			'annotation_ids' => null,
 			'views' => null,
 			'action_types' => null,
-			'posted_time_lower' => null,
-			'posted_time_upper' => null,
+			'created_after' => null,
+			'created_before' => null,
 			'limit' => 20,
 			'offset' => 0,
 		];
@@ -106,8 +106,7 @@ class River extends Repository {
 		if (!empty($this->options->annotation_name_value_pairs) && $this->options->annotation_name_value_pairs[0]->names != $property) {
 			$alias = $qb->getNextJoinAlias();
 
-			$annotation = new AnnotationWhereClause();
-			$annotation->names = $property;
+			$annotation = AnnotationWhereClause::factory(['names' => $property]);
 			$qb->addClause($annotation, $alias);
 		}
 

@@ -53,7 +53,6 @@ if (!isset($content) && $can_default) {
 		'subtype' => $entity_subtype,
 		'container_guid' => $group->guid,
 		'limit' => 6,
-		'full_view' => false,
 		'pagination' => false,
 		'preload_containers' => false,
 		'no_results' => elgg_extract('no_results', $vars, true),

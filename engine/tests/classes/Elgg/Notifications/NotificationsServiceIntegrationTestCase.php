@@ -782,6 +782,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 	}
 
 	public function testCanNotifyUser() {
+		_elgg_services()->logger->disable();
 
 		$object = $this->getTestObject();
 
@@ -873,6 +874,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 	}
 
 	public function testCanNotifyUserWithoutAnObject() {
+		_elgg_services()->logger->disable();
 
 		$from = $this->createUser();
 		$to1 = $this->createUser();
@@ -956,6 +958,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 	}
 
 	public function testCanUseEventsBeforeAndAfterInstantNotificationsQueue() {
+		_elgg_services()->logger->disable();
 
 		$object = $this->getTestObject();
 
@@ -1012,6 +1015,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 	}
 
 	public function testCanNotifyUserViaCustomMethods() {
+		_elgg_services()->logger->disable();
 		
 		$from = $this->createUser();
 		$to1 = $this->createUser();
@@ -1050,5 +1054,86 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 			$to2->guid,
 			0
 		], $from->guid, $subject, $body, [], 'test_method2'));
+	}
+	
+	public function testCanElggNotifyUser() {
+		$object = $this->getTestObject();
+		
+		$from = $this->createUser();
+		$to1 = $this->createUser();
+		$to1->setNotificationSetting('test_method', true);
+		
+		$subject = 'Test message';
+		$body = 'Lorem ipsum';
+		
+		$event = new InstantNotificationEvent($object, 'elgg_notify_user', $from);
+		
+		$this->events->registerHandler('prepare', 'notification', function (\Elgg\Event $event) {
+			$notification = $event->getValue();
+			$notification->prepare_hook = true;
+			
+			return $notification;
+		});
+		
+		$this->events->registerHandler('prepare', "notification:{$event->getDescription()}", function (\Elgg\Event $event) {
+			$notification = $event->getValue();
+			$notification->granular_prepare_hook = true;
+			
+			return $notification;
+		});
+		
+		$this->events->registerHandler('format', 'notification:test_method', function (\Elgg\Event $event) {
+			$notification = $event->getValue();
+			$notification->format_hook = true;
+			
+			return $notification;
+		});
+		
+		$sent = 0;
+		$this->events->registerHandler('send', 'notification:test_method', function (\Elgg\Event $elgg_event) use (&$sent, $subject, $body, $event) {
+			$sent++;
+			$notification = $elgg_event->getParam('notification');
+			
+			$this->assertInstanceOf(Notification::class, $notification);
+			$this->assertEquals($notification->subject, $subject);
+			$this->assertStringContainsString($body, $notification->body);
+			$this->assertEquals($notification->summary, $subject);
+			$this->assertEquals($event->toObject(), $elgg_event->getParam('event')->toObject());
+			
+			$this->assertTrue($notification->prepare_hook);
+			$this->assertTrue($notification->granular_prepare_hook);
+			$this->assertTrue($notification->format_hook);
+			
+			return true;
+		});
+		
+		$this->setupServices();
+		
+		$this->notifications->registerMethod('test_method');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['elgg_notify_user'], InstantNotificationEventHandler::class);
+		
+		$expected = [
+			$to1->guid => [
+				'test_method' => true,
+			]
+		];
+		
+		$this->assertEquals($expected, elgg_notify_user($to1, 'elgg_notify_user', $object, [
+			'subject' => $subject,
+			'summary' => $subject,
+			'body' => $body,
+		], $from));
+		
+		$this->assertEquals(1, $sent);
+		
+		$sent = 0;
+		
+		$this->assertEquals($expected, $to1->notify('elgg_notify_user', $object, [
+			'subject' => $subject,
+			'summary' => $subject,
+			'body' => $body,
+		], $from));
+		
+		$this->assertEquals(1, $sent);
 	}
 }

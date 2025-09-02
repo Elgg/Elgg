@@ -12,13 +12,11 @@ There are two ways to send notifications in Elgg:
 Instant notifications
 =====================
 
-The generic method to send a notification to a user is via the function `notify_user()`__.
+The generic method to send a notification to a user is via the function ``elgg_notify_user()``.
 It is normally used when we want to notify only a single user. Notification like
 this might for example inform that someone has liked or commented the user's post.
 
 The function usually gets called in an :doc:`action <actions>` file.
-
-__ http://reference.elgg.org/notification_8php.html#a9d8de7faa63baf2dcd5d42eb8f76eaa1
 
 Example:
 --------
@@ -30,39 +28,39 @@ rating to the owner.
 
 .. code-block:: php
 
-	// Subject of the notification
-	$subject = elgg_echo('ratings:notification:subject', array(), $owner->getLanguage());
+    // register a notification handler
+    elgg_register_notification_event('annotation', 'rating', 'rate', MyNotificationHandler::class);
 
-	// Summary of the notification
-	$summary = elgg_echo('ratings:notification:summary', array($user->getDisplayName()), $owner->getLanguage());
+    // The notification handler
+    class MyNotificationHandler extends \Elgg\Notifications\InstantNotificationEventHandler {
 
-	// Body of the notification message
-	$body = elgg_echo('ratings:notification:body', array(
-		$user->getDisplayName(),
-		$owner->getDisplayName(),
-		$rating->getValue() // A value between 1-5
-	), $owner->getLanguage());
+        protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
+            return elgg_echo('ratings:notification:subject');
+        }
 
-	$params = array(
-		'object' => $rating,
-		'action' => 'create',
-		'summary' => $summary
-	);
+        protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
+            return elgg_echo('ratings:notification:summary', [
+                $this->getEventActor()->getDisplayName(),
+            ]);
+        }
 
-	// Send the notification
-	notify_user($owner->guid, $user->guid, $subject, $body, $params);
+        protected function getNotificationBody(\ElggUser $recipient, string $method): string {
+            $object = $this->event->getObject();
+
+            return elgg_echo('ratings:notification:body', [
+                $this->getEventActor()->getDisplayName(),
+                $object->getEntity()->getOwnerEntity()->getDisplayName(),
+                $rating->getValue() // A value between 1-5
+            ]);
+        }
+    }
+
+    // now notify the owner
+    $owner->notify('rate', $rating, [], $user);
 
 .. note::
 
-	The language used by the recipient isn't necessarily the same as the language of the person
-	who triggers the notification. Therefore you must always remember to pass the recipient's
-	language as the third parameter to ``elgg_echo()``.
-
-.. note::
-
-	The ``'summary'`` parameter is meant for notification plugins that only want to display
-	a short message instead of both the subject and the body. Therefore the summary should
-	be terse but still contain all necessary information.
+	During the notification handling the language is automatically switched to the language of the recipient.
 
 Enqueued notifications
 ======================
@@ -70,7 +68,7 @@ Enqueued notifications
 On large sites there may be many users who have subscribed to receive notifications
 about a particular event. Sending notifications immediately when a user triggers
 such an event might remarkably slow down page loading speed. This is why sending
-of such notifications shoud be left for Elgg's notification queue.
+of such notifications should be left for Elgg's notification queue.
 
 New notification events can be registered with the ``elgg_register_notification_event()``
 function or in the :doc:`elgg-plugin </guides/plugins>` configuration. Notifications about registered events will be sent automatically to all
@@ -203,8 +201,7 @@ Tell Elgg to send notifications when a new object of the subtype "album" is crea
 
 .. note::
 
-	Make sure the notification will be in the correct language by passing
-	the reciepient's language into the ``elgg_echo()`` function.
+	During the notification handling the language is automatically switched to the language of the recipient.
 
 Custom notification content example
 -----------------------------------
@@ -269,7 +266,7 @@ Notification salutation and sign-off
 Elgg will by default prepend a salutation to all outgoing notification body text. Also a sign-off will be appended.
 This means you will not need to add text like ``Hi Admin,`` or ``Kind regards, your friendly site administrator`` to your notifications body.
 If for some reason you do not need this magic to happen, you can prevent it by setting the notification parameter ``add_salutation`` to ``false``.
-You can do this as part of the parameters in ``notify_user()`` or in the ``prepare, notifications`` event. 
+You can do this as part of the parameters in ``elgg_notify_user()`` or in the ``prepare, notifications`` event.
 You can change the salutation and sign-off texts in the translations.
 
 You can also customize the salutation by overruling the view ``notifications/elements/salutation`` the sign-off can be customized by overruling the view
@@ -470,7 +467,5 @@ When a user has no setting yet for a non default purpose the system will fallbac
 Notification management
 =======================
 
-A generic menu event handler is provided to manage notification subscription and muting. If you wish to make it easy for users to subscribe to 
-your entities register a menu event on ``register`` ``menu:<menu name>:<entity type>:<entity subtype>`` with the callback 
-``Elgg\Notifications\RegisterSubscriptionMenuItemsHandler`` make sure an ``\ElggEntity`` in ``$params['entity']`` is provided. 
-This will work for most ``elgg_view_menu()`` calls.
+When an entity has the ``subscribable`` capability menu items will automatically be added to the ``title`` menu in order
+to manage the subscription. This requires that the entity is provided to the page so it's passed to ``title`` menu.

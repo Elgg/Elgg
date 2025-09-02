@@ -76,8 +76,7 @@ class ContentOwnerSubscriptions extends AsynchronousUpgrade {
 			}
 			
 			// get user preferences
-			$content_preferences = $owner->getNotificationSettings('content_create');
-			$enabled_methods = array_keys(array_filter($content_preferences));
+			$enabled_methods = $owner->getNotificationSettings('content_create', true);
 			if (empty($enabled_methods)) {
 				$process_entity($entity);
 				continue;

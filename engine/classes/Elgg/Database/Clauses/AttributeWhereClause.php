@@ -5,7 +5,7 @@ namespace Elgg\Database\Clauses;
 use Elgg\Database\QueryBuilder;
 
 /**
- * Builds quereis for matching entities by their attributes
+ * Builds queries for matching entities by their attributes
  */
 class AttributeWhereClause extends WhereClause {
 
@@ -15,24 +15,13 @@ class AttributeWhereClause extends WhereClause {
 	public $names;
 
 	/**
-	 * @var string
-	 */
-	public $comparison = '=';
-
-	/**
 	 * @var mixed
 	 */
 	public $values;
 
-	/**
-	 * @var string
-	 */
-	public $value_type = ELGG_VALUE_STRING;
+	public string $comparison = '=';
 
-	/**
-	 * @var bool
-	 */
-	public $case_sensitive;
+	public string $value_type = ELGG_VALUE_STRING;
 
 	/**
 	 * {@inheritdoc}
@@ -46,9 +35,44 @@ class AttributeWhereClause extends WhereClause {
 		$wheres[] = parent::prepare($qb, $table_alias);
 
 		foreach ((array) $this->names as $name) {
-			$wheres[] = $qb->compare($alias($name), $this->comparison, $this->values, $this->value_type, $this->case_sensitive);
+			$wheres[] = $qb->compare($alias($name), $this->comparison, $this->values, $this->value_type);
 		}
 
 		return $qb->merge($wheres);
+	}
+
+	/**
+	 * Build a new AttributeWhereClause
+	 *
+	 * @param array $attributes parameters for clause
+	 *
+	 * @return static
+	 *
+	 * @since 6.3
+	 */
+	public static function factory(array $attributes): static {
+		$result = new static();
+
+		$array_attributes = [
+			'names',
+			'values',
+		];
+		foreach ($array_attributes as $array_key) {
+			if (isset($attributes[$array_key])) {
+				$result->{$array_key} = (array) $attributes[$array_key];
+			}
+		}
+
+		$singular_attributes = [
+			'comparison',
+			'value_type',
+		];
+		foreach ($singular_attributes as $array_key) {
+			if (isset($attributes[$array_key])) {
+				$result->{$array_key} = $attributes[$array_key];
+			}
+		}
+
+		return $result;
 	}
 }

@@ -23,10 +23,7 @@ if ($file->canDownload()) {
 }
 
 echo elgg_view_page($file->getDisplayName(), [
-	'content' => elgg_view_entity($file, [
-		'full_view' => true,
-		'show_responses' => true,
-	]),
+	'content' => elgg_view_entity($file),
 	'entity' => $file,
 	'filter_id' => 'file/view',
 ]);

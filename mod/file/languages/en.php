@@ -6,7 +6,6 @@
  */
 
 return array(
-
 	'item:object:file' => 'File',
 	'item:object:file:application' => 'Application',
 	'item:object:file:archive' => 'Archive',
@@ -20,17 +19,19 @@ return array(
 	'item:object:file:vcard' => 'vCard',
 	'item:object:file:video' => 'Video',
 	'item:object:file:word' => 'Word',
+	'collection:object:file' => 'Files',
+	'list:object:file:no_results' => 'No files found',
 	
 	'file:upgrade:2022092801:title' => 'Move Files',
 	'file:upgrade:2022092801:description' => 'Moves files uploaded using the file plugin to the file entity folder instead of the owner entity folder.',
 	
-	'collection:object:file' => 'Files',
 	'collection:object:file:all' => "All site files",
 	'collection:object:file:owner' => "%s's files",
 	'collection:object:file:friends' => "Friends' files",
 	'collection:object:file:group' => "Group files",
 	'add:object:file' => "Upload a file",
 	'edit:object:file' => "Edit file",
+	
 	'notification:object:file:create' => "Send a notification when a file is created",
 	'notifications:mute:object:file' => "about the file '%s'",
 	
@@ -99,7 +100,7 @@ View and comment on the file:
 	 * Error messages
 	 */
 
-	'file:none' => "No files.",
+	'file:none' => "No files.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Sorry; we could not save your file.",
 	'file:noaccess' => "You do not have permissions to change this file",
 	'file:cannotload' => "There was an error uploading the file",

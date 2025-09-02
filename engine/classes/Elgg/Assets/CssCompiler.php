@@ -47,7 +47,8 @@ class CssCompiler {
 		$options['vars'] = $this->getCssVars($options);
 	
 		Crush::$process = new CssCrushProcess($options, ['type' => 'filter', 'data' => $css]);
-		return Crush::$process->compile()->__toString();
+
+		return (string) Crush::$process->compile();
 	}
 	
 	/**

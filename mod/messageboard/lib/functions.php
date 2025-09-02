@@ -12,8 +12,10 @@
  * @param int       $access_id Access level (see defines in constants.php)
  *
  * @return false|int
+ * @deprecated 6.3
  */
 function messageboard_add(\ElggUser $poster, \ElggUser $owner, string $message, int $access_id = ACCESS_PUBLIC): int|false {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated and will be removed', '6.3');
 	
 	if (empty($message)) {
 		return false;
@@ -32,29 +34,6 @@ function messageboard_add(\ElggUser $poster, \ElggUser $owner, string $message, 
 		'access_id' => $access_id,
 		'annotation_id' => $result_id,
 	]);
-
-	// Send notification only if poster isn't the owner
-	if ($poster->guid != $owner->guid) {
-		$subject = elgg_echo('messageboard:email:subject', [], $owner->getLanguage());
-		$url = elgg_generate_url('collection:annotation:messageboard:owner', [
-			'username' => $owner->username,
-		]);
-
-		$body = elgg_echo('messageboard:email:body', [
-			$poster->getDisplayName(),
-			$message,
-			$url,
-			$poster->getDisplayName(),
-			$poster->getURL(),
-		], $owner->getLanguage());
-
-		$params = [
-			'action' => 'create',
-			'object' => elgg_get_annotation_from_id($result_id),
-			'url' => $url,
-		];
-		notify_user($owner->guid, $poster->guid, $subject, $body, $params);
-	}
 
 	return $result_id;
 }

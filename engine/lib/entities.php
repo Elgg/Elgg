@@ -4,9 +4,7 @@
  */
 
 use Elgg\Database\Clauses\OrderByClause;
-use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
-use Elgg\Database\Select;
 
 /**
  * Return the class name registered as a constructor for an entity of a given type and subtype
@@ -149,6 +147,8 @@ function elgg_get_site_entity(): \ElggSite {
  * @option DateTime|string|int $updated_before
  * @option DateTime|string|int $last_action_after
  * @option DateTime|string|int $last_action_before
+ * @option DateTime|string|int $deleted_after
+ * @option DateTime|string|int $deleted_before
  *
  * <code>
  * $options['created_after'] = '-1 year';
@@ -345,7 +345,7 @@ function elgg_get_site_entity(): \ElggSite {
  *     $fallback,
  * ];
  *
- * // @see \Elgg\Database\Clauses\EntitySortByClause
+ * @see \Elgg\Database\Clauses\EntitySortByClause
  *
  * // single sort_by option
  * $options['sort_by'] = [
@@ -385,7 +385,7 @@ function elgg_get_site_entity(): \ElggSite {
  * COUNT/CALCULATION
  * -----------------
  *
- * Performs a calculation on a set of entities that match all of the criteria
+ * Performs a calculation on a set of entities that match all the criteria
  * If any of these are specific, the return of this function will be int or float
  *
  * Return total number of entities
@@ -396,7 +396,7 @@ function elgg_get_site_entity(): \ElggSite {
  * operator
  * @option string $annotation_calculation e.g. avg, max, min, sum
  *
- * Perform a calculation on a set of entity's metadat using a numeric sql function
+ * Perform a calculation on a set of entity's metadata using a numeric sql function
  * If specified, the number of metadata name value pairs can not be more than 1, or they must be merged using OR
  * operator
  * @option string $metadata_calculation e.g. avg, max, min, sum
@@ -409,7 +409,7 @@ function elgg_get_site_entity(): \ElggSite {
  * <code>
  * $options['selects'] = [
  *    'e.last_action AS last_action',
- *    function(QueryBulder $qb, $main_alias) {
+ *    function(QueryBuilder $qb, $main_alias) {
  *        $joined_alias = $qb->joinMetadataTable($main_alias, 'guid', 'status');
  *        return "$joined_alias.value AS status";
  *    }

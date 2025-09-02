@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-14 10:07+0200\n"
+"POT-Creation-Date: 2025-09-02 11:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -936,7 +936,7 @@ msgstr ""
 msgid "URLs a signed with an unguessable SHA-256 HMAC key. See `Security Tokens`_ for more details."
 msgstr ""
 
-#: ../../guides/actions.rst:815
+#: ../../guides/actions.rst:819
 msgid "Signed URLs do not offer CSRF protection and should not be used instead of action tokens."
 msgstr ""
 
@@ -1523,424 +1523,428 @@ msgstr ""
 msgid "**``subtype``** A single-word arbitrary string that defines what kind of object it is, for example ``blog``"
 msgstr ""
 
-#: ../../guides/database.rst:24
+#: ../../guides/database.rst:23
 msgid "**``access_id``** An integer representing the access level of the object"
 msgstr ""
 
-#: ../../guides/database.rst:26
+#: ../../guides/database.rst:24
 msgid "**``title``** The title of the object"
 msgstr ""
 
-#: ../../guides/database.rst:27
+#: ../../guides/database.rst:25
 msgid "**``description``** The description of the object"
 msgstr ""
 
-#: ../../guides/database.rst:29
+#: ../../guides/database.rst:27
 msgid "The object subtype is a special property. This is an arbitrary string that describes what the object is. For example, if you were writing a blog plugin, your subtype string might be *blog*. It's a good idea to make this unique, so that other plugins don't accidentally try and use the same subtype. For the purposes of this document, let's assume we're building a simple forum. Therefore, the subtype will be *forum*:"
 msgstr ""
 
-#: ../../guides/database.rst:43
+#: ../../guides/database.rst:36
+msgid "It's recommened to register a custom extension of an ``\\ElggObject`` for your subtype. This will make it easy to set default values (like the subtype), add custom helper functions, register default form fields, etc."
+msgstr ""
+
+#: ../../guides/database.rst:75
 msgid "``access_id`` is another important property. If you don't set this, your object will be private, and only the creator user will be able to see it. Elgg defines constants for the special values of ``access_id``:"
 msgstr ""
 
-#: ../../guides/database.rst:47
-msgid "**ACCESS_PRIVATE** Only the owner can see it"
+#: ../../guides/database.rst:79
+msgid "``ACCESS_PRIVATE`` Only the owner can see it"
 msgstr ""
 
-#: ../../guides/database.rst:48
-msgid "**ACCESS_LOGGED_IN** Any logged in user can see it"
+#: ../../guides/database.rst:80
+msgid "``ACCESS_LOGGED_IN`` Any logged in user can see it"
 msgstr ""
 
-#: ../../guides/database.rst:49
-msgid "**ACCESS_PUBLIC** Even visitors not logged in can see it"
+#: ../../guides/database.rst:81
+msgid "``ACCESS_PUBLIC`` Even visitors not logged in can see it"
 msgstr ""
 
-#: ../../guides/database.rst:51
+#: ../../guides/database.rst:83
 msgid "Saving the object will automatically populate the ``$object->guid`` property if successful. If you change any more base properties, you can call ``$object->save()`` again, and it will update the database for you."
 msgstr ""
 
-#: ../../guides/database.rst:55
+#: ../../guides/database.rst:87
 msgid "You can set metadata on an object just like a standard property. Let's say we want to set the SKU of a product:"
 msgstr ""
 
-#: ../../guides/database.rst:62
+#: ../../guides/database.rst:94
 msgid "If you assign an array, all the values will be set for that metadata. This is how, for example, you set tags."
 msgstr ""
 
-#: ../../guides/database.rst:65
-msgid "Metadata cannot be persisted to the database until the entity has been saved, but for convenience, ElggEntity can cache it internally and save it when saving the entity."
-msgstr ""
-
-#: ../../guides/database.rst:70
-msgid "Loading an object"
-msgstr ""
-
-#: ../../guides/database.rst:73
-msgid "By GUID"
-msgstr ""
-
-#: ../../guides/database.rst:82
-msgid "But what if you don't know the GUID? There are several options."
-msgstr ""
-
-#: ../../guides/database.rst:85
-msgid "By user, subtype or site"
-msgstr ""
-
-#: ../../guides/database.rst:87
-msgid "If you know the user ID you want to get objects for, or the subtype, you have several options. The easiest is probably to call the procedural function ``elgg_get_entities``:"
-msgstr ""
-
-#: ../../guides/database.rst:98
-msgid "This will return an array of ``ElggEntity`` objects that you can iterate through. ``elgg_get_entities`` paginates by default, with a limit of 10; and offset 0."
+#: ../../guides/database.rst:97
+msgid "Metadata cannot be persisted to the database until the entity has been saved, but for convenience, ``ElggEntity`` can cache it internally and save it when saving the entity."
 msgstr ""
 
 #: ../../guides/database.rst:102
-msgid "You can leave out ``owner_guid`` to get all objects and leave out subtype or type to get objects of all types/subtypes."
+msgid "Loading an object"
 msgstr ""
 
 #: ../../guides/database.rst:105
-msgid "If you already have an ``ElggUser`` – e.g. ``elgg_get_logged_in_user_entity``, which always has the current user's object when you're logged in – you can simply use:"
+msgid "By GUID"
 msgstr ""
 
-#: ../../guides/database.rst:113
+#: ../../guides/database.rst:114
+msgid "But what if you don't know the GUID? There are several options."
+msgstr ""
+
+#: ../../guides/database.rst:117
+msgid "By user, subtype or site"
+msgstr ""
+
+#: ../../guides/database.rst:119
+msgid "If you know the user ID you want to get objects for, or the subtype, you have several options. The easiest is probably to call the procedural function ``elgg_get_entities()``:"
+msgstr ""
+
+#: ../../guides/database.rst:130
+msgid "This will return an array of ``ElggEntity`` objects that you can iterate through. ``elgg_get_entities`` paginates by default, with a limit of 10; and offset 0."
+msgstr ""
+
+#: ../../guides/database.rst:134
+msgid "You can leave out ``owner_guid`` to get all objects and leave out subtype or type to get objects of all types/subtypes."
+msgstr ""
+
+#: ../../guides/database.rst:137
+msgid "If you already have an ``ElggUser`` – e.g. ``elgg_get_logged_in_user_entity()``, which always has the current user's object when you're logged in – you can simply use:"
+msgstr ""
+
+#: ../../guides/database.rst:145
 msgid "But what about getting objects with a particular piece of metadata?"
 msgstr ""
 
-#: ../../guides/database.rst:116
+#: ../../guides/database.rst:148
 msgid "By properties"
 msgstr ""
 
-#: ../../guides/database.rst:118
-msgid "You can fetch entities by their properties using ``elgg_get_entities``. Using specific parameters passed to ``$options`` array, you can retrieve entities by their attributes, metadata, annotations and relationships."
+#: ../../guides/database.rst:150
+msgid "You can fetch entities by their properties using ``elgg_get_entities()``. Using specific parameters passed to ``$options`` array, you can retrieve entities by their attributes, metadata, annotations and relationships."
 msgstr ""
 
-#: ../../guides/database.rst:123
+#: ../../guides/database.rst:154
 #: ../../guides/views.rst:433
 msgid "Displaying entities"
 msgstr ""
 
-#: ../../guides/database.rst:125
+#: ../../guides/database.rst:156
 msgid "In order for entities to be displayed in listing functions you need to provide a view for the entity in the views system."
 msgstr ""
 
-#: ../../guides/database.rst:128
+#: ../../guides/database.rst:159
 msgid "To display an entity, create a view EntityType/subtype where EntityType is one of the following:"
 msgstr ""
 
-#: ../../guides/database.rst:131
-msgid "object: for entities derived from ElggObject user: for entities derived from ElggUser site: for entities derived from ElggSite group: for entities derived from ElggGroup"
+#: ../../guides/database.rst:162
+msgid "object: for entities derived from ``ElggObject`` user: for entities derived from ``ElggUser`` site: for entities derived from ``ElggSite`` group: for entities derived from ``ElggGroup``"
 msgstr ""
 
-#: ../../guides/database.rst:136
+#: ../../guides/database.rst:167
 msgid "A default view for all entities has already been created, this is called EntityType/default."
 msgstr ""
 
-#: ../../guides/database.rst:142
+#: ../../guides/database.rst:173
 msgid "Entity Icons"
 msgstr ""
 
-#: ../../guides/database.rst:144
+#: ../../guides/database.rst:175
 msgid "Entity icons can be saved from uploaded files, existing local files, or existing ElggFile objects. These methods save the `master` size of the icon defined in the system. The other defined sizes will be generated when requested."
 msgstr ""
 
-#: ../../guides/database.rst:173
+#: ../../guides/database.rst:205
 msgid "The following sizes exist by default:"
 msgstr ""
 
-#: ../../guides/database.rst:168
+#: ../../guides/database.rst:200
 msgid "``master`` - 10240px at longer edge (not upscaled)"
 msgstr ""
 
-#: ../../guides/database.rst:169
+#: ../../guides/database.rst:201
 msgid "``large`` - 200px at longer edge (not upscaled)"
 msgstr ""
 
-#: ../../guides/database.rst:170
+#: ../../guides/database.rst:202
 msgid "``medium`` - 100px square"
 msgstr ""
 
-#: ../../guides/database.rst:171
+#: ../../guides/database.rst:203
 msgid "``small`` - 40px square"
 msgstr ""
 
-#: ../../guides/database.rst:172
+#: ../../guides/database.rst:204
 msgid "``tiny`` - 25px square"
 msgstr ""
 
-#: ../../guides/database.rst:173
+#: ../../guides/database.rst:205
 msgid "``topbar`` - 16px square"
 msgstr ""
 
-#: ../../guides/database.rst:175
+#: ../../guides/database.rst:207
 msgid "Use ``elgg_get_icon_sizes()`` to get all possible icon sizes for a specific entity type and subtype. The function triggers the ``entity:icon:sizes`` :ref:`event <guides/events-list#other>`."
 msgstr ""
 
-#: ../../guides/database.rst:178
+#: ../../guides/database.rst:210
 msgid "To check if an icon is set, use ``$object->hasIcon($size)``."
 msgstr ""
 
-#: ../../guides/database.rst:180
+#: ../../guides/database.rst:212
 msgid "You can retrieve the URL of the generated icon with ``ElggEntity::getIconURL($params)`` method. This method accepts a ``$params`` argument as an array that specifies the size, type, and provide additional context for the event to determine the icon to serve. The method triggers the ``entity:icon:url`` :ref:`event <guides/events-list#other>`."
 msgstr ""
 
-#: ../../guides/database.rst:185
+#: ../../guides/database.rst:217
 msgid "Use ``elgg_view_entity_icon($entity, $size, $vars)`` to render an icon. This will scan the following locations for a view and include the first match to ."
 msgstr ""
 
-#: ../../guides/database.rst:188
+#: ../../guides/database.rst:220
 msgid "views/$viewtype/icon/$type/$subtype.php"
 msgstr ""
 
-#: ../../guides/database.rst:189
+#: ../../guides/database.rst:221
 msgid "views/$viewtype/icon/$type/default.php"
 msgstr ""
 
-#: ../../guides/database.rst:190
+#: ../../guides/database.rst:222
 msgid "views/$viewtype/icon/default.php"
 msgstr ""
 
-#: ../../guides/database.rst:192
-#: ../../guides/database.rst:209
+#: ../../guides/database.rst:224
+#: ../../guides/database.rst:241
 msgid "Where"
 msgstr ""
 
-#: ../../guides/database.rst:194
-#: ../../guides/database.rst:211
+#: ../../guides/database.rst:226
+#: ../../guides/database.rst:243
 msgid "$viewtype"
 msgstr ""
 
-#: ../../guides/database.rst:195
-#: ../../guides/database.rst:212
+#: ../../guides/database.rst:227
+#: ../../guides/database.rst:244
 msgid "Type of view, e.g. ``'default'`` or ``'json'``."
 msgstr ""
 
-#: ../../guides/database.rst:196
+#: ../../guides/database.rst:228
 msgid "$type"
 msgstr ""
 
-#: ../../guides/database.rst:197
-#: ../../guides/database.rst:216
+#: ../../guides/database.rst:229
+#: ../../guides/database.rst:248
 msgid "Type of entity, e.g. ``'group'`` or ``'user'``."
 msgstr ""
 
-#: ../../guides/database.rst:199
+#: ../../guides/database.rst:231
 msgid "$subtype"
 msgstr ""
 
-#: ../../guides/database.rst:199
+#: ../../guides/database.rst:231
 msgid "Entity subtype, e.g. ``'blog'`` or ``'page'``."
 msgstr ""
 
-#: ../../guides/database.rst:201
+#: ../../guides/database.rst:233
 msgid "You do not have to return a fallback icon from the event handler. If no uploaded icon is found, the view system will scan the views (in this specific order):"
 msgstr ""
 
-#: ../../guides/database.rst:204
+#: ../../guides/database.rst:236
 msgid "views/$viewtype/$icon_type/$entity_type/$entity_subtype.svg"
 msgstr ""
 
-#: ../../guides/database.rst:205
+#: ../../guides/database.rst:237
 msgid "views/$viewtype/$icon_type/$entity_type/$entity_subtype/$size.gif"
 msgstr ""
 
-#: ../../guides/database.rst:206
+#: ../../guides/database.rst:238
 msgid "views/$viewtype/$icon_type/$entity_type/$entity_subtype/$size.png"
 msgstr ""
 
-#: ../../guides/database.rst:207
+#: ../../guides/database.rst:239
 msgid "views/$viewtype/$icon_type/$entity_type/$entity_subtype/$size.jpg"
 msgstr ""
 
-#: ../../guides/database.rst:213
+#: ../../guides/database.rst:245
 msgid "$icon_type"
 msgstr ""
 
-#: ../../guides/database.rst:214
+#: ../../guides/database.rst:246
 msgid "Icon type, e.g. ``'icon'`` or ``'cover_image'``."
 msgstr ""
 
-#: ../../guides/database.rst:215
+#: ../../guides/database.rst:247
 msgid "$entity_type"
 msgstr ""
 
-#: ../../guides/database.rst:217
+#: ../../guides/database.rst:249
 msgid "$entity_subtype"
 msgstr ""
 
-#: ../../guides/database.rst:218
+#: ../../guides/database.rst:250
 msgid "Entity subtype, e.g. ``'blog'`` or ``'page'`` (or ``'default'`` if entity has not subtype)."
 msgstr ""
 
-#: ../../guides/database.rst:220
+#: ../../guides/database.rst:252
 msgid "$size"
 msgstr ""
 
-#: ../../guides/database.rst:220
+#: ../../guides/database.rst:252
 msgid "Icon size (note that we do not use the size with svg icons)"
 msgstr ""
 
-#: ../../guides/database.rst:222
+#: ../../guides/database.rst:254
 msgid "Icon methods support passing an icon type if an entity has more than one icon. For example, a user might have an avatar and a cover photo icon. You would pass ``'cover_photo'`` as the icon type:"
 msgstr ""
 
-#: ../../guides/database.rst:237
+#: ../../guides/database.rst:269
 msgid "Custom icon types (e.g. cover photos) only have a preset for `master` size, to add custom sizes use ``entity:<icon_type>:url`` :ref:`event <guides/events-list#other>` to configure them."
 msgstr ""
 
-#: ../../guides/database.rst:240
+#: ../../guides/database.rst:272
 msgid "By default icons will be stored in ``/icons/<icon_type>/<size>.jpg`` relative to entity's directory on filestore. To provide an alternative location, use the ``entity:<icon_type>:file`` :ref:`event <guides/events-list#other>`."
 msgstr ""
 
-#: ../../guides/database.rst:244
+#: ../../guides/database.rst:276
 msgid "Adding, reading and deleting annotations"
 msgstr ""
 
-#: ../../guides/database.rst:246
+#: ../../guides/database.rst:278
 msgid "Annotations could be used, for example, to track ratings. To annotate an entity you can use the object's ``annotate()`` method. For example, to give a blog post a rating of 5, you could use:"
 msgstr ""
 
-#: ../../guides/database.rst:256
+#: ../../guides/database.rst:288
 msgid "To retrieve the ratings on the blog post, use ``$blogpost->getAnnotations('rating')`` and if you want to delete an annotation, you can operate on the ``ElggAnnotation`` class, eg ``$annotation->delete()``."
 msgstr ""
 
-#: ../../guides/database.rst:261
+#: ../../guides/database.rst:293
 msgid "Retrieving a single annotation can be done with ``get_annotation()`` if you have the annotation's ID. If you delete an ElggEntity of any kind, all its metadata, annotations, and relationships will be automatically deleted as well."
 msgstr ""
 
-#: ../../guides/database.rst:267
+#: ../../guides/database.rst:299
 msgid "Extending ElggEntity"
 msgstr ""
 
-#: ../../guides/database.rst:269
+#: ../../guides/database.rst:301
 msgid "If you derive from one of the Elgg core classes, you'll need to tell Elgg how to properly instantiate the new type of object so that get\\_entity() et al. will return the appropriate PHP class. For example, if I customize ElggGroup in a class called \"Committee\", I need to make Elgg aware of the new mapping. Following is an example class extension:"
 msgstr ""
 
-#: ../../guides/database.rst:288
+#: ../../guides/database.rst:320
 msgid "In your plugins ``elgg-plugin.php`` file add the ``entities`` section."
 msgstr ""
 
-#: ../../guides/database.rst:307
+#: ../../guides/database.rst:339
 msgid "The entities will be registered upon activation of the plugin."
 msgstr ""
 
-#: ../../guides/database.rst:309
+#: ../../guides/database.rst:341
 msgid "Now if you invoke ``get_entity()`` with the GUID of a committee object, you'll get back an object of type Committee."
 msgstr ""
 
-#: ../../guides/database.rst:313
+#: ../../guides/database.rst:345
 msgid "Advanced features"
 msgstr ""
 
-#: ../../guides/database.rst:316
+#: ../../guides/database.rst:348
 msgid "Entity URLs"
 msgstr ""
 
-#: ../../guides/database.rst:318
+#: ../../guides/database.rst:350
 msgid "Entity urls are provided by the ``getURL()`` interface and provide the Elgg framework with a common way of directing users to the appropriate display handler for any given object."
 msgstr ""
 
-#: ../../guides/database.rst:322
+#: ../../guides/database.rst:354
 msgid "For example, a profile page in the case of users."
 msgstr ""
 
-#: ../../guides/database.rst:324
-msgid "The url is set using the ``elgg\\_register\\_entity\\_url\\_handler()`` function. The function you register must return the appropriate url for the given type - this itself can be an address set up by a page handler."
+#: ../../guides/database.rst:356
+msgid "The url is set using the ``elgg_register_entity_url_handler()`` function. The function you register must return the appropriate url for the given type - this itself can be an address set up by a page handler."
 msgstr ""
 
-#: ../../guides/database.rst:331
+#: ../../guides/database.rst:360
 msgid "The default handler is to use the default export interface."
 msgstr ""
 
-#: ../../guides/database.rst:334
+#: ../../guides/database.rst:363
 msgid "Entity loading performance"
 msgstr ""
 
-#: ../../guides/database.rst:336
-msgid "``elgg_get_entities`` has a couple options that can sometimes be useful to improve performance."
-msgstr ""
-
-#: ../../guides/database.rst:338
-msgid "**preload_owners**: If the entities fetched will be displayed in a list with the owner information, you can set this option to ``true`` to efficiently load the owner users of the fetched entities."
-msgstr ""
-
-#: ../../guides/database.rst:339
-msgid "**preload_containers**: If the entities fetched will be displayed in a list using info from their containers, you can set this option to ``true`` to efficiently load them."
-msgstr ""
-
-#: ../../guides/database.rst:340
-msgid "**distinct**: When Elgg fetches entities using an SQL query, Elgg must be sure that each entity row appears only once in the result set. By default it includes a ``DISTINCT`` modifier on the GUID column to enforce this, but some queries naturally return unique entities. Setting the ``distinct`` option to false will remove this modifier, and rely on the query to enforce its own uniqueness."
-msgstr ""
-
-#: ../../guides/database.rst:342
-msgid "The internals of Elgg entity queries is a complex subject and it's recommended to seek help on the Elgg Community site before using the ``distinct`` option."
-msgstr ""
-
-#: ../../guides/database.rst:345
-msgid "Custom database functionality"
-msgstr ""
-
-#: ../../guides/database.rst:347
-msgid "It is strongly recommended to use entities wherever possible. However, Elgg supports custom SQL queries using the database API."
-msgstr ""
-
-#: ../../guides/database.rst:350
-msgid "Systemlog"
-msgstr ""
-
-#: ../../guides/database.rst:354
-msgid "This section need some attention and will contain outdated information"
-msgstr ""
-
-#: ../../guides/database.rst:356
-msgid "The default Elgg system log is a simple way of recording what happens within an Elgg system. It's viewable and searchable directly from the administration panel."
-msgstr ""
-
-#: ../../guides/database.rst:359
-msgid "System log storage"
-msgstr ""
-
-#: ../../guides/database.rst:361
-msgid "A system log row is stored whenever an event concerning an object whose class implements the :doc:`/design/loggable` interface is triggered. ``ElggEntity`` and ``ElggExtender`` implement :doc:`/design/loggable`, so a system log row is created whenever an event is performed on all objects, users, groups, sites, metadata and annotations."
-msgstr ""
-
-#: ../../guides/database.rst:363
-msgid "Common events include:"
-msgstr ""
-
 #: ../../guides/database.rst:365
-msgid "create"
-msgstr ""
-
-#: ../../guides/database.rst:366
-msgid "update"
+msgid "``elgg_get_entities()`` has a couple options that can sometimes be useful to improve performance."
 msgstr ""
 
 #: ../../guides/database.rst:367
-msgid "delete"
+msgid "**preload_owners**: If the entities fetched will be displayed in a list with the owner information, you can set this option to ``true`` to efficiently load the owner users of the fetched entities."
 msgstr ""
 
-#: ../../guides/database.rst:368
-msgid "login"
+#: ../../guides/database.rst:369
+msgid "**preload_containers**: If the entities fetched will be displayed in a list using info from their containers, you can set this option to ``true`` to efficiently load them."
 msgstr ""
 
 #: ../../guides/database.rst:371
-msgid "Creating your own system log"
+msgid "**distinct**: When Elgg fetches entities using an SQL query, Elgg must be sure that each entity row appears only once in the result set. By default it includes a ``DISTINCT`` modifier on the GUID column to enforce this, but some queries naturally return unique entities. Setting the ``distinct`` option to false will remove this modifier, and rely on the query to enforce its own uniqueness."
 msgstr ""
 
-#: ../../guides/database.rst:373
-msgid "There are some reasons why you might want to create your own system log. For example, you might need to store a full copy of entities when they are updated or deleted, for auditing purposes. You might also need to notify an administrator when certain types of events occur."
+#: ../../guides/database.rst:376
+msgid "The internals of Elgg entity queries is a complex subject and it's recommended to seek help on the Elgg Community site before using the ``distinct`` option."
 msgstr ""
 
-#: ../../guides/database.rst:375
-msgid "To do this, you can create a function that listens to all events for all types of object:"
+#: ../../guides/database.rst:380
+msgid "Custom database functionality"
 msgstr ""
 
-#: ../../guides/database.rst:381
-msgid "Your function can then be defined as:"
+#: ../../guides/database.rst:382
+msgid "It is strongly recommended to use entities wherever possible. However, Elgg supports custom SQL queries using the database API."
+msgstr ""
+
+#: ../../guides/database.rst:385
+msgid "Systemlog"
+msgstr ""
+
+#: ../../guides/database.rst:389
+msgid "This section need some attention and will contain outdated information"
 msgstr ""
 
 #: ../../guides/database.rst:391
+msgid "The default Elgg system log is a simple way of recording what happens within an Elgg system. It's viewable and searchable directly from the administration panel."
+msgstr ""
+
+#: ../../guides/database.rst:395
+msgid "System log storage"
+msgstr ""
+
+#: ../../guides/database.rst:397
+msgid "A system log row is stored whenever an event concerning an object whose class implements the :doc:`/design/loggable` interface is triggered. ``ElggEntity`` and ``ElggExtender`` implement :doc:`/design/loggable`, so a system log row is created whenever an event is performed on all objects, users, groups, sites, metadata and annotations."
+msgstr ""
+
+#: ../../guides/database.rst:401
+msgid "Common events include:"
+msgstr ""
+
+#: ../../guides/database.rst:403
+msgid "create"
+msgstr ""
+
+#: ../../guides/database.rst:404
+msgid "update"
+msgstr ""
+
+#: ../../guides/database.rst:405
+msgid "delete"
+msgstr ""
+
+#: ../../guides/database.rst:406
+msgid "login"
+msgstr ""
+
+#: ../../guides/database.rst:409
+msgid "Creating your own system log"
+msgstr ""
+
+#: ../../guides/database.rst:411
+msgid "There are some reasons why you might want to create your own system log. For example, you might need to store a full copy of entities when they are updated or deleted, for auditing purposes. You might also need to notify an administrator when certain types of events occur."
+msgstr ""
+
+#: ../../guides/database.rst:415
+msgid "To do this, you can create a function that listens to all events for all types of object:"
+msgstr ""
+
+#: ../../guides/database.rst:421
+msgid "Your function can then be defined as:"
+msgstr ""
+
+#: ../../guides/database.rst:431
 msgid "You can then use the extra methods defined by :doc:`/design/loggable` to extract the information you need."
 msgstr ""
 
@@ -2038,12 +2042,12 @@ msgid "If you can avoid it, don't modify third party plugins either, for the sam
 msgstr ""
 
 #: ../../guides/email.rst:2
-#: ../../guides/notifications.rst:284
+#: ../../guides/notifications.rst:281
 msgid "Email"
 msgstr ""
 
 #: ../../guides/email.rst:4
-msgid "Elgg has the ability to send out emails. This can be done directly using functions like ``elgg_send_email()`` and ``notify_user()`` or indirectly through the notifications system. Below an overview of the feature of the email system."
+msgid "Elgg has the ability to send out emails. This can be done directly using functions like ``elgg_send_email()`` and ``elgg_notify_user()`` or indirectly through the notifications system. Below an overview of the feature of the email system."
 msgstr ""
 
 #: ../../guides/email.rst:13
@@ -2071,7 +2075,7 @@ msgid "Attachments"
 msgstr ""
 
 #: ../../guides/email.rst:49
-msgid "``notify_user()`` or enqueued notifications support attachments for e-mail notifications if provided in ``$params``. To add one or more attachments add a key ``attachments`` in ``$params`` which is an array of the attachments. An attachment should be in one of the following formats:"
+msgid "``elgg_notify_user()`` or enqueued notifications support attachments for e-mail notifications if provided in ``$params``. To add one or more attachments add a key ``attachments`` in ``$params`` which is an array of the attachments. An attachment should be in one of the following formats:"
 msgstr ""
 
 #: ../../guides/email.rst:52
@@ -2086,27 +2090,27 @@ msgstr ""
 msgid "An array with a filepath"
 msgstr ""
 
-#: ../../guides/email.rst:86
+#: ../../guides/email.rst:88
 msgid "E-mail address formatting"
 msgstr ""
 
-#: ../../guides/email.rst:88
+#: ../../guides/email.rst:90
 msgid "Elgg has a helper class to aid in getting formatted e-mail addresses: ``\\Elgg\\Email\\Address``."
 msgstr ""
 
-#: ../../guides/email.rst:106
+#: ../../guides/email.rst:108
 msgid "There are some helper functions available"
 msgstr ""
 
-#: ../../guides/email.rst:108
+#: ../../guides/email.rst:110
 msgid "``\\Elgg\\Email\\Address::fromString($string)`` Will return an ``\\Elgg\\Email\\Address`` class with e-mail and name set, provided a formatted string (eg. ``Example <example@elgg.org>``)"
 msgstr ""
 
-#: ../../guides/email.rst:110
+#: ../../guides/email.rst:112
 msgid "``\\Elgg\\Email\\Address::fromEntity($entity)`` Will return an ``\\Elgg\\Email\\Address`` class with e-mail and name set based on the entity"
 msgstr ""
 
-#: ../../guides/email.rst:111
+#: ../../guides/email.rst:113
 msgid "``\\Elgg\\Email\\Address::getFormattedEmailAddress($email, $name)`` Will return a formatted string provided an e-mail address and optionaly a name"
 msgstr ""
 
@@ -2138,8 +2142,16 @@ msgstr ""
 msgid "Some events are marked with |sequence| this means those events also have a ``:before`` and ``:after`` event Also see :ref:`Event sequence <event-sequence>`"
 msgstr ""
 
+#: ../../guides/events-list.rst:1332
+msgid "sequence"
+msgstr ""
+
 #: ../../guides/events-list.rst:15
 msgid "Some events are marked with |results| this means those events allow altering the output of an event"
+msgstr ""
+
+#: ../../guides/events-list.rst:1333
+msgid "results"
 msgstr ""
 
 #: ../../guides/events-list.rst:18
@@ -3410,7 +3422,7 @@ msgid "**get, subscriptions** |results|"
 msgstr ""
 
 #: ../../guides/events-list.rst:635
-msgid "Filters subscribers of the notification event. Applies to **subscriptions** and **instant** notifications. In case of a subscription event, by default, the subscribers list consists of the users subscribed to the container entity of the event object. In case of an instant notification event, the subscribers list consists of the users passed as recipients to ``notify_user()``"
+msgid "Filters subscribers of the notification event. Applies to **subscriptions** and **instant** notifications. In case of a subscription event, by default, the subscribers list consists of the users subscribed to the container entity of the event object. In case of an instant notification event, the subscribers list consists of the user passed as recipient to ``elgg_notify_user()``"
 msgstr ""
 
 #: ../../guides/events-list.rst:640
@@ -4133,10 +4145,10 @@ msgstr ""
 
 #: ../../guides/events-list.rst:1090
 #: ../../guides/i18n.rst:51
-#: ../../guides/notifications.rst:24
-#: ../../guides/notifications.rst:309
-#: ../../guides/notifications.rst:333
-#: ../../guides/notifications.rst:381
+#: ../../guides/notifications.rst:22
+#: ../../guides/notifications.rst:306
+#: ../../guides/notifications.rst:330
+#: ../../guides/notifications.rst:378
 msgid "Example:"
 msgstr ""
 
@@ -5820,303 +5832,296 @@ msgid "Event-based notifications send using a notifications queue"
 msgstr ""
 
 #: ../../guides/notifications.rst:15
-msgid "The generic method to send a notification to a user is via the function `notify_user()`__. It is normally used when we want to notify only a single user. Notification like this might for example inform that someone has liked or commented the user's post."
+msgid "The generic method to send a notification to a user is via the function ``elgg_notify_user()``. It is normally used when we want to notify only a single user. Notification like this might for example inform that someone has liked or commented the user's post."
 msgstr ""
 
 #: ../../guides/notifications.rst:19
 msgid "The function usually gets called in an :doc:`action <actions>` file."
 msgstr ""
 
-#: ../../guides/notifications.rst:26
+#: ../../guides/notifications.rst:24
 msgid "In this example a user (``$user``) is triggering an action to rate a post created by another user (``$owner``). After saving the rating (``ElggAnnotation $rating``) to database, we could use the following code to send a notification about the new rating to the owner."
 msgstr ""
 
-#: ../../guides/notifications.rst:57
-msgid "The language used by the recipient isn't necessarily the same as the language of the person who triggers the notification. Therefore you must always remember to pass the recipient's language as the third parameter to ``elgg_echo()``."
-msgstr ""
-
 #: ../../guides/notifications.rst:63
-msgid "The ``'summary'`` parameter is meant for notification plugins that only want to display a short message instead of both the subject and the body. Therefore the summary should be terse but still contain all necessary information."
+#: ../../guides/notifications.rst:204
+msgid "During the notification handling the language is automatically switched to the language of the recipient."
 msgstr ""
 
-#: ../../guides/notifications.rst:68
+#: ../../guides/notifications.rst:66
 msgid "Enqueued notifications"
 msgstr ""
 
-#: ../../guides/notifications.rst:70
-msgid "On large sites there may be many users who have subscribed to receive notifications about a particular event. Sending notifications immediately when a user triggers such an event might remarkably slow down page loading speed. This is why sending of such notifications shoud be left for Elgg's notification queue."
+#: ../../guides/notifications.rst:68
+msgid "On large sites there may be many users who have subscribed to receive notifications about a particular event. Sending notifications immediately when a user triggers such an event might remarkably slow down page loading speed. This is why sending of such notifications should be left for Elgg's notification queue."
 msgstr ""
 
-#: ../../guides/notifications.rst:75
+#: ../../guides/notifications.rst:73
 msgid "New notification events can be registered with the ``elgg_register_notification_event()`` function or in the :doc:`elgg-plugin </guides/plugins>` configuration. Notifications about registered events will be sent automatically to all subscribed users."
 msgstr ""
 
-#: ../../guides/notifications.rst:79
+#: ../../guides/notifications.rst:77
 msgid "This is the workflow of the notifications system:"
 msgstr ""
 
-#: ../../guides/notifications.rst:82
+#: ../../guides/notifications.rst:80
 msgid "Someone does an action that triggers an event within Elgg"
 msgstr ""
 
-#: ../../guides/notifications.rst:82
+#: ../../guides/notifications.rst:80
 msgid "The action can be ``create``, ``update`` or ``delete``"
 msgstr ""
 
-#: ../../guides/notifications.rst:83
+#: ../../guides/notifications.rst:81
 msgid "The target of the action can be any instance of the ``ElggEntity`` class (e.g. a Blog post)"
 msgstr ""
 
-#: ../../guides/notifications.rst:84
+#: ../../guides/notifications.rst:82
 msgid "The notifications system saves this event into a notifications queue in the database"
 msgstr ""
 
-#: ../../guides/notifications.rst:85
+#: ../../guides/notifications.rst:83
 msgid "When the event handler for the one-minute interval gets triggered, the event is taken from the queue and it gets processed"
 msgstr ""
 
-#: ../../guides/notifications.rst:87
+#: ../../guides/notifications.rst:85
 msgid "Subscriptions are fetched for the user who triggered the event"
 msgstr ""
 
-#: ../../guides/notifications.rst:87
+#: ../../guides/notifications.rst:85
 msgid "By default this includes all the users who have enabled any notification method for the user at ``www.site.com/notifications/personal/<username>``"
 msgstr ""
 
-#: ../../guides/notifications.rst:89
+#: ../../guides/notifications.rst:87
 msgid "Plugins are allowed to alter the subscriptions using the ``[get, subscriptions]`` event"
 msgstr ""
 
-#: ../../guides/notifications.rst:90
+#: ../../guides/notifications.rst:88
 msgid "Plugins are allowed to terminate notifications queue processing with the ``[send:before, notifications]`` event"
 msgstr ""
 
-#: ../../guides/notifications.rst:91
+#: ../../guides/notifications.rst:89
 msgid "Plugins are allowed to alter the notification parameters with the ``[prepare, notification]`` event"
 msgstr ""
 
-#: ../../guides/notifications.rst:92
+#: ../../guides/notifications.rst:90
 msgid "Plugins are allowed to alter the notification subject/message/summary with the ``[prepare, notification:<action>:<type>:<subtype>]`` event"
 msgstr ""
 
-#: ../../guides/notifications.rst:93
+#: ../../guides/notifications.rst:91
 msgid "Plugins are allowed to format notification subject/message/summary for individual delivery methods with ``[format, notification:<method>]`` event"
 msgstr ""
 
-#: ../../guides/notifications.rst:94
+#: ../../guides/notifications.rst:92
 msgid "Notifications are sent to each subscriber using the methods they have chosen"
 msgstr ""
 
-#: ../../guides/notifications.rst:95
+#: ../../guides/notifications.rst:93
 msgid "Plugins can take over or prevent sending of each individual notification with the ``[send, notification:<method>]`` event"
 msgstr ""
 
-#: ../../guides/notifications.rst:96
+#: ../../guides/notifications.rst:94
 msgid "The ``[send:after, notifications]`` event is triggered for the event after all notifications have been sent"
 msgstr ""
 
-#: ../../guides/notifications.rst:99
+#: ../../guides/notifications.rst:97
 msgid "Notification event registration example"
 msgstr ""
 
-#: ../../guides/notifications.rst:101
+#: ../../guides/notifications.rst:99
 msgid "Tell Elgg to send notifications when a new object of subtype \"photo\" is created:"
 msgstr ""
 
-#: ../../guides/notifications.rst:112
+#: ../../guides/notifications.rst:110
 msgid "Or in the ``elgg-plugin.php``:"
 msgstr ""
 
-#: ../../guides/notifications.rst:126
+#: ../../guides/notifications.rst:124
 msgid "In order to send the event-based notifications you must have the one-minute :doc:`CRON </admin/cron>` interval configured."
 msgstr ""
 
-#: ../../guides/notifications.rst:129
+#: ../../guides/notifications.rst:127
 msgid "Contents of the notification message can be defined with the ``'prepare', 'notification:[action]:[type]:[subtype]'`` event."
 msgstr ""
 
-#: ../../guides/notifications.rst:134
+#: ../../guides/notifications.rst:132
 msgid "Custom notification event registration example"
 msgstr ""
 
-#: ../../guides/notifications.rst:136
+#: ../../guides/notifications.rst:134
 msgid "Tell Elgg to send notifications when a new object of the subtype \"album\" is created:"
 msgstr ""
 
-#: ../../guides/notifications.rst:206
-msgid "Make sure the notification will be in the correct language by passing the reciepient's language into the ``elgg_echo()`` function."
-msgstr ""
-
-#: ../../guides/notifications.rst:210
+#: ../../guides/notifications.rst:207
 msgid "Custom notification content example"
 msgstr ""
 
-#: ../../guides/notifications.rst:212
+#: ../../guides/notifications.rst:209
 msgid "Tell Elgg to use the function ``photos_prepare_notification()`` to format the contents of the notification when a new objects of subtype 'photo' is created:"
 msgstr ""
 
-#: ../../guides/notifications.rst:263
+#: ../../guides/notifications.rst:260
 msgid "Make sure the notification will be in the correct language by passing the recipient's language into the ``elgg_echo()`` function."
 msgstr ""
 
-#: ../../guides/notifications.rst:267
+#: ../../guides/notifications.rst:264
 msgid "Notification salutation and sign-off"
 msgstr ""
 
-#: ../../guides/notifications.rst:269
-msgid "Elgg will by default prepend a salutation to all outgoing notification body text. Also a sign-off will be appended. This means you will not need to add text like ``Hi Admin,`` or ``Kind regards, your friendly site administrator`` to your notifications body. If for some reason you do not need this magic to happen, you can prevent it by setting the notification parameter ``add_salutation`` to ``false``. You can do this as part of the parameters in ``notify_user()`` or in the ``prepare, notifications`` event. You can change the salutation and sign-off texts in the translations."
+#: ../../guides/notifications.rst:266
+msgid "Elgg will by default prepend a salutation to all outgoing notification body text. Also a sign-off will be appended. This means you will not need to add text like ``Hi Admin,`` or ``Kind regards, your friendly site administrator`` to your notifications body. If for some reason you do not need this magic to happen, you can prevent it by setting the notification parameter ``add_salutation`` to ``false``. You can do this as part of the parameters in ``elgg_notify_user()`` or in the ``prepare, notifications`` event. You can change the salutation and sign-off texts in the translations."
 msgstr ""
 
-#: ../../guides/notifications.rst:275
+#: ../../guides/notifications.rst:272
 msgid "You can also customize the salutation by overruling the view ``notifications/elements/salutation`` the sign-off can be customized by overruling the view ``notifications/elements/sign-off``."
 msgstr ""
 
-#: ../../guides/notifications.rst:279
+#: ../../guides/notifications.rst:276
 msgid "Notification methods"
 msgstr ""
 
-#: ../../guides/notifications.rst:281
+#: ../../guides/notifications.rst:278
 msgid "By default Elgg has three notification methods: email, delayed_email and the bundled site_notifications plugin."
 msgstr ""
 
-#: ../../guides/notifications.rst:286
+#: ../../guides/notifications.rst:283
 msgid "Will send an email notification to to the recipient."
 msgstr ""
 
-#: ../../guides/notifications.rst:289
+#: ../../guides/notifications.rst:286
 msgid "Delayed email"
 msgstr ""
 
-#: ../../guides/notifications.rst:291
+#: ../../guides/notifications.rst:288
 msgid "Will save the notifications and deliver them in one bundled email at the interval the recipient has configured (daily or weekly)."
 msgstr ""
 
-#: ../../guides/notifications.rst:293
+#: ../../guides/notifications.rst:290
 msgid "The availability of this delivery method can be configured by the site administrator in the Site settings section."
 msgstr ""
 
-#: ../../guides/notifications.rst:295
+#: ../../guides/notifications.rst:292
 msgid "The layout of the bundled email can be customized by overruling the view ``email/delayed_email/plain_text`` for the plain text part of the email and ``email/delayed_email/html`` for the HTML part of the email."
 msgstr ""
 
-#: ../../guides/notifications.rst:299
+#: ../../guides/notifications.rst:296
 msgid "Site notification"
 msgstr ""
 
-#: ../../guides/notifications.rst:301
+#: ../../guides/notifications.rst:298
 msgid "Will show the notification on the site."
 msgstr ""
 
-#: ../../guides/notifications.rst:304
+#: ../../guides/notifications.rst:301
 msgid "Registering a new notification method"
 msgstr ""
 
-#: ../../guides/notifications.rst:306
+#: ../../guides/notifications.rst:303
 msgid "You can register a new notification method with the ``elgg_register_notification_method()`` function."
 msgstr ""
 
-#: ../../guides/notifications.rst:311
+#: ../../guides/notifications.rst:308
 msgid "Register a handler that will send the notifications via SMS."
 msgstr ""
 
-#: ../../guides/notifications.rst:322
+#: ../../guides/notifications.rst:319
 msgid "After registering the new method, it will appear on the notification settings page at ``www.example.com/notifications/personal/[username]``."
 msgstr ""
 
-#: ../../guides/notifications.rst:326
+#: ../../guides/notifications.rst:323
 msgid "Sending the notifications using your own method"
 msgstr ""
 
-#: ../../guides/notifications.rst:328
+#: ../../guides/notifications.rst:325
 msgid "Besides registering the notification method, you also need to register a handler that takes care of actually sending the SMS notifications. This happens with the ``'send', 'notification:[method]'`` event."
 msgstr ""
 
-#: ../../guides/notifications.rst:370
+#: ../../guides/notifications.rst:367
 msgid "Subscriptions"
 msgstr ""
 
-#: ../../guides/notifications.rst:372
+#: ../../guides/notifications.rst:369
 msgid "In most cases Elgg core takes care of handling the subscriptions, so notification plugins don't usually have to alter them."
 msgstr ""
 
-#: ../../guides/notifications.rst:376
+#: ../../guides/notifications.rst:373
 msgid "Subscriptions can however be:"
 msgstr ""
 
-#: ../../guides/notifications.rst:375
+#: ../../guides/notifications.rst:372
 msgid "Added using the ``\\ElggEntity::addSubscription()`` function"
 msgstr ""
 
-#: ../../guides/notifications.rst:376
+#: ../../guides/notifications.rst:373
 msgid "Removed using the ``\\ElggEntity::removeSubscription()`` function"
 msgstr ""
 
-#: ../../guides/notifications.rst:378
+#: ../../guides/notifications.rst:375
 msgid "It's possible to modify the recipients of a notification dynamically with the ``'get', 'subscriptions'`` event."
 msgstr ""
 
-#: ../../guides/notifications.rst:415
+#: ../../guides/notifications.rst:412
 msgid "Muted notifications"
 msgstr ""
 
-#: ../../guides/notifications.rst:417
+#: ../../guides/notifications.rst:414
 msgid "Notifications can be muted in order to no longer receive notifications, for example no longer receive notifications about new comments on a discussion."
 msgstr ""
 
-#: ../../guides/notifications.rst:419
+#: ../../guides/notifications.rst:416
 msgid "In order to mute notifications call ``\\ElggEntity::muteNotifications($user_guid)`` the ``$user_guid`` is defaulted to the current logged in user. This will cause all subscriptions on the entity to be removed and a special flag will be set to know that notifications are muted."
 msgstr ""
 
-#: ../../guides/notifications.rst:422
+#: ../../guides/notifications.rst:419
 msgid "The muting rules are applied after the subscribers of a notification event are requested and are applied for the following entities of the notification event: - the event actor ``\\Elgg\\Notifications\\NotificationEvent::getActor()`` - the event object entity ``\\Elgg\\Notifications\\NotificationEvent::getObject()`` - the event object container entity ``\\Elgg\\Notifications\\NotificationEvent::getObject()::getContainerEntity()`` - the event object owner entity ``\\Elgg\\Notifications\\NotificationEvent::getObject()::getOwnerEntity()``"
 msgstr ""
 
-#: ../../guides/notifications.rst:428
+#: ../../guides/notifications.rst:425
 msgid "To unmute the notifications call ``\\ElggEntity::unmuteNotifications($user_guid)`` the ``$user_guid`` is defaulted to the current logged in user."
 msgstr ""
 
-#: ../../guides/notifications.rst:430
+#: ../../guides/notifications.rst:427
 msgid "To check if a user has the notifications muted call ``\\ElggEntity::hasMutedNotifications($user_guid)`` the ``$user_guid`` is defaulted to the current logged in user."
 msgstr ""
 
-#: ../../guides/notifications.rst:433
+#: ../../guides/notifications.rst:430
 msgid "Helper page"
 msgstr ""
 
-#: ../../guides/notifications.rst:435
+#: ../../guides/notifications.rst:432
 msgid "A helper page has been added which can be linked (for example in an email footer) to manage muting based on a notification."
 msgstr ""
 
-#: ../../guides/notifications.rst:437
+#: ../../guides/notifications.rst:434
 msgid "The page is required to be signed and use the route ``notifications:mute`` which needs: - ``entity_guid`` the entity the notification is about - ``recipient_guid`` the recipient of the notification"
 msgstr ""
 
-#: ../../guides/notifications.rst:442
+#: ../../guides/notifications.rst:439
 msgid "Temporarily disable notifications"
 msgstr ""
 
-#: ../../guides/notifications.rst:444
+#: ../../guides/notifications.rst:441
 msgid "Users can temporarily disable all notifications by going to the Notification settings and set a start and end date for the period they don't wish to receive any notifications."
 msgstr ""
 
-#: ../../guides/notifications.rst:447
+#: ../../guides/notifications.rst:444
 msgid "Notification settings"
 msgstr ""
 
-#: ../../guides/notifications.rst:449
+#: ../../guides/notifications.rst:446
 msgid "You can store and retreive notification settings of users with ``\\ElggUser::setNotificationSetting()`` and ``\\ElggUser::getNotificationSettings()``."
 msgstr ""
 
-#: ../../guides/notifications.rst:468
+#: ../../guides/notifications.rst:465
 msgid "When a user has no setting yet for a non default purpose the system will fallback to the 'default' notification setting."
 msgstr ""
 
-#: ../../guides/notifications.rst:471
+#: ../../guides/notifications.rst:468
 msgid "Notification management"
 msgstr ""
 
-#: ../../guides/notifications.rst:473
-msgid "A generic menu event handler is provided to manage notification subscription and muting. If you wish to make it easy for users to subscribe to your entities register a menu event on ``register`` ``menu:<menu name>:<entity type>:<entity subtype>`` with the callback ``Elgg\\Notifications\\RegisterSubscriptionMenuItemsHandler`` make sure an ``\\ElggEntity`` in ``$params['entity']`` is provided. This will work for most ``elgg_view_menu()`` calls."
+#: ../../guides/notifications.rst:470
+msgid "When an entity has the ``subscribable`` capability menu items will automatically be added to the ``title`` menu in order to manage the subscription. This requires that the entity is provided to the page so it's passed to ``title`` menu."
 msgstr ""
 
 #: ../../guides/page-owner.rst:2
@@ -7222,219 +7227,223 @@ msgstr ""
 msgid "By default, Elgg will set the following requirements for named URL segments:"
 msgstr ""
 
-#: ../../guides/routing.rst:166
+#: ../../guides/routing.rst:167
+msgid "You can have the route params ``username`` and/or ``guid`` filled with the values of the logged in user by default if you add the flag ``use_logged_in`` and set it to ``true``."
+msgstr ""
+
+#: ../../guides/routing.rst:171
 msgid "Plugin dependent routes"
 msgstr ""
 
-#: ../../guides/routing.rst:168
+#: ../../guides/routing.rst:173
 msgid "If a route requires a specific plugin to be active this can be configured in the route configuration."
 msgstr ""
 
-#: ../../guides/routing.rst:186
+#: ../../guides/routing.rst:191
 msgid "Route middleware"
 msgstr ""
 
-#: ../../guides/routing.rst:188
+#: ../../guides/routing.rst:193
 msgid "Route middleware can be used to prevent access to a certain route, or to perform some business logic before the route is rendered. Middleware can be used, e.g. to implement a paywall, or to log analytics, or to set open graph metatags."
 msgstr ""
 
-#: ../../guides/routing.rst:192
+#: ../../guides/routing.rst:197
 msgid "Elgg core implements several middleware handlers. The following middleware can be found in the namespace ``\\Elgg\\Router\\Middleware``:"
 msgstr ""
 
-#: ../../guides/routing.rst:195
+#: ../../guides/routing.rst:200
 msgid "Gatekeeper"
 msgstr ""
 
-#: ../../guides/routing.rst:197
+#: ../../guides/routing.rst:202
 msgid "This gatekeeper will prevent access by non-authenticated users."
 msgstr ""
 
-#: ../../guides/routing.rst:200
+#: ../../guides/routing.rst:205
 msgid "AdminGatekeeper"
 msgstr ""
 
-#: ../../guides/routing.rst:202
+#: ../../guides/routing.rst:207
 msgid "This gatekeeper will prevent access by non-admin users."
 msgstr ""
 
-#: ../../guides/routing.rst:205
+#: ../../guides/routing.rst:210
 msgid "LoggedOutGatekeeper"
 msgstr ""
 
-#: ../../guides/routing.rst:207
+#: ../../guides/routing.rst:212
 msgid "This gatekeeper will prevent access by authenticated users."
 msgstr ""
 
-#: ../../guides/routing.rst:210
+#: ../../guides/routing.rst:215
 msgid "AjaxGatekeeper"
 msgstr ""
 
-#: ../../guides/routing.rst:212
+#: ../../guides/routing.rst:217
 msgid "This gatekeeper will prevent access with non-xhr requests."
 msgstr ""
 
-#: ../../guides/routing.rst:215
+#: ../../guides/routing.rst:220
 msgid "PageOwnerGatekeeper"
 msgstr ""
 
-#: ../../guides/routing.rst:217
+#: ../../guides/routing.rst:222
 msgid "This gatekeeper will prevent access if there is no pageowner entity."
 msgstr ""
 
-#: ../../guides/routing.rst:220
+#: ../../guides/routing.rst:225
 msgid "GroupPageOwnerGatekeeper"
 msgstr ""
 
-#: ../../guides/routing.rst:222
+#: ../../guides/routing.rst:227
 msgid "This gatekeeper extends the ``PageOwnerGatekeeper`` but also requires the pageowner to be a ``ElggGroup`` entity."
 msgstr ""
 
-#: ../../guides/routing.rst:225
+#: ../../guides/routing.rst:230
 msgid "UserPageOwnerGatekeeper"
 msgstr ""
 
-#: ../../guides/routing.rst:227
+#: ../../guides/routing.rst:232
 msgid "This gatekeeper extends the ``PageOwnerGatekeeper`` but also requires the pageowner to be an ``ElggUser`` entity."
 msgstr ""
 
-#: ../../guides/routing.rst:230
+#: ../../guides/routing.rst:235
 msgid "PageOwnerCanEditGatekeeper"
 msgstr ""
 
-#: ../../guides/routing.rst:232
+#: ../../guides/routing.rst:237
 msgid "This gatekeeper will prevent access if there is no pageowner detected and the pageowner can't be editted."
 msgstr ""
 
-#: ../../guides/routing.rst:235
+#: ../../guides/routing.rst:240
 msgid "GroupPageOwnerCanEditGatekeeper"
 msgstr ""
 
-#: ../../guides/routing.rst:237
+#: ../../guides/routing.rst:242
 msgid "This gatekeeper extends the ``PageOwnerCanEditGatekeeper`` but also requires the pageowner to be a ``ElggGroup`` entity."
 msgstr ""
 
-#: ../../guides/routing.rst:240
+#: ../../guides/routing.rst:245
 msgid "UserPageOwnerCanEditGatekeeper"
 msgstr ""
 
-#: ../../guides/routing.rst:242
+#: ../../guides/routing.rst:247
 msgid "This gatekeeper extends the ``PageOwnerCanEditGatekeeper`` but also requires the pageowner to be an ``ElggUser`` entity."
 msgstr ""
 
-#: ../../guides/routing.rst:245
+#: ../../guides/routing.rst:250
 msgid "CsrfFirewall"
 msgstr ""
 
-#: ../../guides/routing.rst:247
+#: ../../guides/routing.rst:252
 msgid "This middleware will prevent access without the correct CSRF tokens. This middleware will automatically be applied to actions."
 msgstr ""
 
-#: ../../guides/routing.rst:250
+#: ../../guides/routing.rst:255
 msgid "ActionMiddleware"
 msgstr ""
 
-#: ../../guides/routing.rst:252
+#: ../../guides/routing.rst:257
 msgid "This middleware will provide action related logic. This middleware will automatically be applied to actions."
 msgstr ""
 
-#: ../../guides/routing.rst:255
+#: ../../guides/routing.rst:260
 msgid "SignedRequestGatekeeper"
 msgstr ""
 
-#: ../../guides/routing.rst:257
+#: ../../guides/routing.rst:262
 msgid "This gatekeeper will prevent access if the url has been tampered with. A secure URL can be generated using the ``elgg_http_get_signed_url`` function."
 msgstr ""
 
-#: ../../guides/routing.rst:261
+#: ../../guides/routing.rst:266
 msgid "UpgradeGatekeeper"
 msgstr ""
 
-#: ../../guides/routing.rst:263
+#: ../../guides/routing.rst:268
 msgid "This gatekeeper will prevent access if the upgrade URL is secured and the URL is invalid."
 msgstr ""
 
-#: ../../guides/routing.rst:266
+#: ../../guides/routing.rst:271
 msgid "WalledGarden"
 msgstr ""
 
-#: ../../guides/routing.rst:268
+#: ../../guides/routing.rst:273
 msgid "This middleware will prevent access to a route if the site is configured for authenticated users only and there is no authenticated user logged in. This middleware is automatically enabled for all routes. You can disable the walled garden gatekeeper with a :ref:`route config <guides/walled-garden#expose>` option."
 msgstr ""
 
-#: ../../guides/routing.rst:272
+#: ../../guides/routing.rst:277
 msgid "Custom Middleware"
 msgstr ""
 
-#: ../../guides/routing.rst:274
+#: ../../guides/routing.rst:279
 msgid "Middleware handlers can be set to any callable that receives an instance of ``\\Elgg\\Request``: The handler should throw an instance of ``\\Elgg\\Exceptions\\HttpException`` to prevent route access. The handler can return an instance of ``\\Elgg\\Http\\ResponseBuilder`` to prevent further implementation of the routing sequence (a redirect response can be returned to re-route the request)."
 msgstr ""
 
-#: ../../guides/routing.rst:303
+#: ../../guides/routing.rst:308
 msgid "Route controllers"
 msgstr ""
 
-#: ../../guides/routing.rst:305
+#: ../../guides/routing.rst:310
 msgid "In certain cases, using resource views is not appropriate. In these cases you can use a controller - any callable that receives an instance of ``\\Elgg\\Request``:"
 msgstr ""
 
-#: ../../guides/routing.rst:329
+#: ../../guides/routing.rst:334
 msgid "The ``route:rewrite`` event"
 msgstr ""
 
-#: ../../guides/routing.rst:331
+#: ../../guides/routing.rst:336
 msgid "For URL rewriting, the ``route:rewrite`` event (with similar arguments as ``route``) is triggered very early, and allows modifying the request URL path (relative to the Elgg site)."
 msgstr ""
 
-#: ../../guides/routing.rst:334
+#: ../../guides/routing.rst:339
 msgid "Here we rewrite requests for ``news/*`` to ``blog/*``:"
 msgstr ""
 
-#: ../../guides/routing.rst:350
+#: ../../guides/routing.rst:355
 msgid "The event must be registered directly in your plugin Bootstrap ``boot`` function. The ``init`` function is too late."
 msgstr ""
 
-#: ../../guides/routing.rst:353
+#: ../../guides/routing.rst:358
 msgid "Routing overview"
 msgstr ""
 
-#: ../../guides/routing.rst:355
+#: ../../guides/routing.rst:360
 msgid "For regular pages, Elgg's program flow is something like this:"
 msgstr ""
 
-#: ../../guides/routing.rst:357
+#: ../../guides/routing.rst:362
 msgid "A user requests ``http://example.com/news/owner/jane``."
 msgstr ""
 
-#: ../../guides/routing.rst:358
+#: ../../guides/routing.rst:363
 msgid "Plugins are initialized."
 msgstr ""
 
-#: ../../guides/routing.rst:359
+#: ../../guides/routing.rst:364
 msgid "Elgg parses the URL to identifier ``news`` and segments ``['owner', 'jane']``."
 msgstr ""
 
-#: ../../guides/routing.rst:360
+#: ../../guides/routing.rst:365
 msgid "Elgg triggers the event ``route:rewrite, news`` (see above)."
 msgstr ""
 
-#: ../../guides/routing.rst:361
+#: ../../guides/routing.rst:366
 msgid "Elgg finds a registered route that matches the final route path, and renders a resource view associated with it. It calls ``elgg_view_resource('blog/owner', $vars)`` where ``$vars`` contains the username."
 msgstr ""
 
-#: ../../guides/routing.rst:363
+#: ../../guides/routing.rst:368
 msgid "The ``resources/blog/owner`` view gets the username via ``$vars['username']``, and uses many other views and formatting functions like ``elgg_view_layout()`` and ``elgg_view_page()`` to create the entire HTML page."
 msgstr ""
 
-#: ../../guides/routing.rst:365
+#: ../../guides/routing.rst:370
 msgid "PHP invokes Elgg's shutdown sequence."
 msgstr ""
 
-#: ../../guides/routing.rst:366
+#: ../../guides/routing.rst:371
 msgid "The user receives a fully rendered page."
 msgstr ""
 
-#: ../../guides/routing.rst:368
+#: ../../guides/routing.rst:373
 msgid "Elgg's coding standards suggest a particular URL layout, but there is no syntax enforced."
 msgstr ""
 

@@ -8,10 +8,7 @@ $topic = get_entity($guid);
 
 elgg_push_entity_breadcrumbs($topic);
 
-$content = elgg_view_entity($topic, [
-	'full_view' => true,
-	'show_responses' => true,
-]);
+$content = elgg_view_entity($topic);
 
 echo elgg_view_page($topic->getDisplayName(), [
 	'content' => $content,

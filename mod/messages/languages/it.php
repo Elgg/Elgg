@@ -49,7 +49,7 @@ return array(
 	*/
 
 	'messages:blank' => "Devi scrivere qualcosa nel messaggio per poterlo salvare.",
-	'messages:nomessages' => "Non ci sono messaggi.",
+	'messages:nomessages' => "Non ci sono messaggi.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "Impossibile trovare il destinatario nel database degli utenti.",
 	'messages:user:blank' => "Non hai specificato a chi inviare il messaggio.",
 	'messages:user:self' => "Non puoi inviare un messaggio a te stesso/a.",

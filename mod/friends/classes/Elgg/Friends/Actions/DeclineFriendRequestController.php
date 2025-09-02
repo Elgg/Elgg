@@ -53,18 +53,7 @@ class DeclineFriendRequestController extends \Elgg\Controllers\GenericAction {
 		// notify requesting user about decline
 		$requesting_user = get_user($relationship->guid_one);
 		if ($requesting_user instanceof \ElggUser) {
-			$subject = elgg_echo('friends:notification:request:decline:subject', [$receiving_user->getDisplayName()], $requesting_user->getLanguage());
-			$message = elgg_echo('friends:notification:request:decline:message', [
-				$receiving_user->getDisplayName(),
-			], $requesting_user->getLanguage());
-			
-			$params = [
-				'action' => 'friendrequest:decline',
-				'object' => $requesting_user,
-				'friend' => $receiving_user,
-			];
-			
-			notify_user($requesting_user->guid, $receiving_user->guid, $subject, $message, $params);
+			$requesting_user->notify('friendrequest:decline', $receiving_user, [], $receiving_user);
 		}
 	}
 	

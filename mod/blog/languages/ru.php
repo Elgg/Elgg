@@ -8,12 +8,14 @@
 return array(
 	'item:object:blog' => 'Блог',
 	'collection:object:blog' => 'Блоги',
+	
 	'collection:object:blog:all' => 'Все блоги',
 	'collection:object:blog:owner' => 'Блоги %s',
 	'collection:object:blog:group' => 'Блоги группы',
 	'collection:object:blog:friends' => 'Блоги друзей',
 	'add:object:blog' => 'Создать публикацию',
 	'edit:object:blog' => 'Изменить публикацию',
+	
 	'notification:object:blog:publish' => "Отправить уведомление при публикации блога",
 	'notifications:mute:object:blog' => "о блоге '%s'",
 	'menu:blog_archive:header' => "Архив блога",
@@ -38,7 +40,7 @@ return array(
 	'blog:error:cannot_save' => 'Не удается сохранить публикацию.',
 	'blog:error:cannot_write_to_container' => 'Недостаточно прав для сохранения блога в группе.',
 	'blog:edit_revision_notice' => '(Старая версия)',
-	'blog:none' => 'Нет публикаций в блоге',
+	'blog:none' => 'Нет публикаций в блоге', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Введите название!',
 	'blog:error:missing:description' => 'Заполните сообщение публикации!',
 	'blog:error:post_not_found' => 'Не удается найти указанную запись в блоге.',

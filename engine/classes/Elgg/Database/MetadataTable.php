@@ -139,9 +139,7 @@ class MetadataTable {
 		$qb = Select::fromTable(self::TABLE_NAME);
 		$qb->select('*');
 
-		$where = new MetadataWhereClause();
-		$where->ids = $id;
-		$qb->addClause($where);
+		$qb->addClause(MetadataWhereClause::factory(['ids' => $id]));
 
 		$row = $this->db->getDataRow($qb);
 		return $row ? new \ElggMetadata($row) : null;
@@ -284,7 +282,7 @@ class MetadataTable {
 
 		$qb = Update::table(self::TABLE_NAME);
 		$qb->set('name', $qb->param($metadata->name, ELGG_VALUE_STRING))
-			->set('value', $qb->param($metadata->value, $metadata->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING))
+			->set('value', $qb->param($metadata->value, $metadata->value_type === 'text' ? ELGG_VALUE_STRING : ELGG_VALUE_INTEGER))
 			->set('value_type', $qb->param($metadata->value_type, ELGG_VALUE_STRING))
 			->where($qb->compare('id', '=', $metadata->id, ELGG_VALUE_INTEGER));
 
@@ -314,9 +312,6 @@ class MetadataTable {
 	 * @return \ElggMetadata[]|mixed
 	 */
 	public function getAll(array $options = []) {
-		$options['metastring_type'] = 'metadata';
-		$options = QueryOptions::normalizeMetastringOptions($options);
-
 		return Metadata::find($options);
 	}
 

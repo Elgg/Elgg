@@ -49,19 +49,9 @@ class CreateTheWireEventHandler extends NotificationEventHandler {
 		
 		/* @var $parent_owner \ElggUser */
 		$parent_owner = $parent->getOwnerEntity();
-		$personal_methods = $parent_owner->getNotificationSettings();
-		$methods = [];
-		foreach ($personal_methods as $method => $state) {
-			if ($state) {
-				$methods[] = $method;
-			}
-		}
 		
-		if (empty($methods)) {
-			return $subscriptions;
-		}
+		$subscriptions[$parent_owner->guid] = $parent_owner->getNotificationSettings('default', true);
 		
-		$subscriptions[$parent->owner_guid] = $methods;
 		return $subscriptions;
 	}
 	

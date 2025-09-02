@@ -8,6 +8,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'about',
+			'class' => 'ElggExternalPage',
 			'capabilities' => [
 				'commentable' => false,
 			],
@@ -15,6 +16,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'terms',
+			'class' => 'ElggExternalPage',
 			'capabilities' => [
 				'commentable' => false,
 			],
@@ -22,6 +24,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'privacy',
+			'class' => 'ElggExternalPage',
 			'capabilities' => [
 				'commentable' => false,
 			],

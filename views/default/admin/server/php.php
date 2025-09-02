@@ -32,14 +32,14 @@ if ($upload_max_filesize > $post_max_size) {
 	</tr>
 	<tr>
 		<td><b><?= elgg_echo('admin:server:label:mem_avail'); ?></b></td>
-		<td><?= number_format(elgg_get_ini_setting_in_bytes('memory_limit')); ?></td>
+		<td><?= elgg_number_format(elgg_get_ini_setting_in_bytes('memory_limit')); ?></td>
 	</tr>
 	<tr>
 		<td><b><?= elgg_echo('admin:server:label:post_max_size'); ?></b></td>
-		<td><?= number_format($post_max_size); ?></td>
+		<td><?= elgg_number_format($post_max_size); ?></td>
 	</tr>
 	<tr>
 		<td><b><?= elgg_echo('admin:server:label:upload_max_filesize'); ?></b></td>
-		<td><?= number_format($upload_max_filesize) . '&nbsp; ' . $post_max_size_warning; ?></td>
+		<td><?= elgg_number_format($upload_max_filesize) . '&nbsp; ' . $post_max_size_warning; ?></td>
 	</tr>
 </table>

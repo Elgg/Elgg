@@ -4,7 +4,6 @@ namespace Elgg;
 
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Helpers\TestEventResultsHandler;
-use Psr\Log\LogLevel;
 
 class EventsServiceResultsUnitTest extends \Elgg\UnitTestCase {
 

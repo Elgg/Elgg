@@ -6,10 +6,9 @@
  */
 
 return array(
-
 	'item:object:file' => 'Pliki',
-	
 	'collection:object:file' => 'Pliki',
+	
 	'collection:object:file:all' => "Wszystkie pliki",
 	'collection:object:file:owner' => "Pliki użytkownika %s",
 	'collection:object:file:friends' => "Pliki znajomych",
@@ -65,7 +64,7 @@ return array(
 	 * Error messages
 	 */
 
-	'file:none' => "Brak plików.",
+	'file:none' => "Brak plików.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Przykro nam, nie można było zapisać pliku.",
 	'file:noaccess' => "Nie masz uprawnień do modyfikacji tego pliku",
 );

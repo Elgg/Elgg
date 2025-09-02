@@ -1,7 +1,6 @@
 name: "Bug Report"
 description: "Found a bug in Elgg? Please report it so we can fix it."
-title: "[Bug]: "
-labels: "bug"
+type: "Bug"
 body:
   - type: input
     attributes: 

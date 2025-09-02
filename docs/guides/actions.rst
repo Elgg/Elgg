@@ -802,13 +802,17 @@ URLs a signed with an unguessable SHA-256 HMAC key. See `Security Tokens`_ for m
 
 .. code-block:: php
 
-    $url = elgg_http_add_url_query_element(elgg_normalize_url('confirm'), [
-       'user_guid' => $user_guid,
-    ]);
+    // inside a \Elgg\Notifications\NotificationEventHandler class
 
-    $url = elgg_http_get_signed_url($url);
+    protected function getNotificationBody(\ElggUser $recipient, string $method): string {
+        $url = elgg_http_add_url_query_element(elgg_normalize_url('confirm'), [
+           'user_guid' => $recipient->guid,
+        ]);
 
-    notify_user($user_guid, $site->guid, 'Confirm', "Please confirm by clicking this link: $url");
+        $url = elgg_http_get_signed_url($url);
+
+        return "Please confirm by clicking this link: $url";
+    }
 
 .. warning::
 

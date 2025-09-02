@@ -3,6 +3,8 @@
  * View a wire post
  *
  * @uses $vars['entity'] ElggWire to show
+ *
+ * @deprecated 6.3 use "object/thewire/full" or "object/thewire/summary"
  */
 
 $entity = elgg_extract('entity', $vars);
@@ -10,30 +12,10 @@ if (!$entity instanceof \ElggWire) {
 	return;
 }
 
-$params = [
-	'title' => false,
-	'tags' => false,
-	'access' => false,
-	'icon_entity' => $entity->getOwnerEntity(),
-];
+elgg_deprecated_notice('The view "object/thewire" has been deprecated, use "object/thewire/full" or "object/thewire/summary"', '6.3');
 
 if (elgg_extract('full_view', $vars)) {
-	$params['body'] = elgg_format_html((string) $entity->description, [
-		'sanitize' => false,
-		'autop' => false,
-		'parse_thewire_hashtags' => true,
-	]);
-	$params['show_summary'] = true;
-	
-	$params = $params + $vars;
-	echo elgg_view('object/elements/full', $params);
+	echo elgg_view('object/thewire/full', $vars);
 } else {
-	$params['content'] = elgg_format_html((string) $entity->description, [
-		'sanitize' => false,
-		'autop' => false,
-		'parse_thewire_hashtags' => true,
-	]);
-	
-	$params = $params + $vars;
-	echo elgg_view('object/elements/summary', $params);
+	echo elgg_view('object/thewire/summary', $vars);
 }

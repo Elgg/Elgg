@@ -107,6 +107,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 	}
 
 	public function testNormalizesTypeSubtypeOptionsFromPairSingulars() {
+		_elgg_services()->logger->disable();
+
 		$options = $this->options->normalizeOptions([
 			'type_subtype_pair' => ['object' => ['blog']],
 		]);
@@ -117,6 +119,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 	}
 
 	public function testNormalizesTypeSubtypeOptionsFromPairAndNonPairSingulars() {
+		_elgg_services()->logger->disable();
+
 		$options = $this->options->normalizeOptions([
 			'type' => 'group',
 			'subtype' => 'community',
@@ -146,6 +150,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 	}
 
 	public function testNormalizesTypeSubtypeOptionsFromPairSingularAndPairPlural() {
+		_elgg_services()->logger->disable();
+
 		$options = $this->options->normalizeOptions([
 			'type_subtype_pair' => ['group' => 'community'],
 			'type_subtype_pairs' => ['object' => 'blog'],
@@ -220,7 +226,32 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals(['status'], $pair->names);
 		$this->assertEquals(['draft'], $pair->values);
 	}
-
+	
+	public function testNormalizesDeprecatedTimeOptions() {
+		_elgg_services()->logger->disable();
+		
+		$options = $this->options->normalizeOptions([
+			'created_time_upper' => '-1 min',
+			'created_time_lower' => '-10 min',
+		]);
+		
+		$this->assertArrayHasKey('created_before', $options);
+		$this->assertArrayHasKey('created_after', $options);
+		$this->assertArrayNotHasKey('created_time_upper', $options);
+		$this->assertArrayNotHasKey('created_time_lower', $options);
+		
+		
+		$options = $this->options->normalizeOptions([
+			'modified_before' => '-1 min',
+			'posted_after' => '-10 min',
+		]);
+		
+		$this->assertArrayHasKey('updated_before', $options);
+		$this->assertArrayHasKey('created_after', $options);
+		$this->assertArrayNotHasKey('modified_before', $options);
+		$this->assertArrayNotHasKey('posted_after', $options);
+	}
+	
 	public function testNormalizesMetadataOptionsFromTimeOptions() {
 
 		$after = (new \DateTime())->modify('-1 day');
@@ -229,8 +260,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$options = $this->options->normalizeOptions([
 			'metadata_id' => 5,
 			'metadata_name_value_pair' => ['status' => 'draft'],
-			'metadata_created_time_lower' => $after,
-			'metadata_created_time_upper' => $before,
+			'metadata_created_after' => $after,
+			'metadata_created_before' => $before,
 		]);
 
 		$this->assertEquals(1, count($options['metadata_name_value_pairs']));
@@ -255,8 +286,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 			'metadata_name_value_pair' => [
 				['status' => 'draft']
 			],
-			'metadata_created_time_lower' => $after,
-			'metadata_created_time_upper' => $before,
+			'metadata_created_after' => $after,
+			'metadata_created_before' => $before,
 		]);
 
 		$this->assertEquals(1, count($options['metadata_name_value_pairs']));
@@ -282,8 +313,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 				'status' => 'draft',
 				'category' => ['foo', 'bar'],
 			],
-			'metadata_created_time_lower' => $after,
-			'metadata_created_time_upper' => $before,
+			'metadata_created_after' => $after,
+			'metadata_created_before' => $before,
 		]);
 
 		$this->assertEquals(2, count($options['metadata_name_value_pairs']));
@@ -326,8 +357,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 					'case_sensitive' => true,
 				],
 			],
-			'metadata_created_time_lower' => $after,
-			'metadata_created_time_upper' => $before,
+			'metadata_created_after' => $after,
+			'metadata_created_before' => $before,
 			'metadata_case_sensitive' => false,
 		]);
 
@@ -382,8 +413,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 				new MetadataWhereClause(),
 				'owner_guid' => 1,
 			],
-			'metadata_created_time_lower' => $after,
-			'metadata_created_time_upper' => $before,
+			'metadata_created_after' => $after,
+			'metadata_created_before' => $before,
 			'metadata_case_sensitive' => false,
 		]);
 
@@ -486,8 +517,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 				'status' => 'draft',
 				'category' => ['foo', 'bar'],
 			],
-			'metadata_created_time_lower' => $after,
-			'metadata_created_time_upper' => $before,
+			'metadata_created_after' => $after,
+			'metadata_created_before' => $before,
 		]);
 
 		$this->assertEquals($options, $this->options->normalizeOptions($options));
@@ -658,8 +689,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 				'status' => 'draft',
 				'category' => ['foo', 'bar'],
 			],
-			'metadata_created_time_lower' => $after,
-			'metadata_created_time_upper' => $before,
+			'metadata_created_after' => $after,
+			'metadata_created_before' => $before,
 		]);
 
 		$this->assertEquals($options, $this->options->normalizeOptions($options));
@@ -712,8 +743,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$options = $this->options->normalizeOptions([
 			'annotation_id' => 5,
 			'annotation_name_value_pair' => ['status' => 'draft'],
-			'annotation_created_time_lower' => $after,
-			'annotation_created_time_upper' => $before,
+			'annotation_created_after' => $after,
+			'annotation_created_before' => $before,
 		]);
 
 		$this->assertEquals(1, count($options['annotation_name_value_pairs']));
@@ -739,8 +770,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 				'status' => 'draft',
 				'category' => ['foo', 'bar'],
 			],
-			'annotation_created_time_lower' => $after,
-			'annotation_created_time_upper' => $before,
+			'annotation_created_after' => $after,
+			'annotation_created_before' => $before,
 		]);
 
 		$this->assertEquals(2, count($options['annotation_name_value_pairs']));
@@ -783,8 +814,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 					'case_sensitive' => true,
 				],
 			],
-			'annotation_created_time_lower' => $after,
-			'annotation_created_time_upper' => $before,
+			'annotation_created_after' => $after,
+			'annotation_created_before' => $before,
 			'annotation_case_sensitive' => false,
 			'annotation_owner_guid' => 15,
 		]);
@@ -843,8 +874,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 				'status' => 'draft',
 				new AnnotationWhereClause(),
 			],
-			'annotation_created_time_lower' => $after,
-			'annotation_created_time_upper' => $before,
+			'annotation_created_after' => $after,
+			'annotation_created_before' => $before,
 			'annotation_case_sensitive' => false,
 		]);
 
@@ -882,8 +913,8 @@ class QueryOptionsUnitTest extends UnitTestCase {
 				'status' => 'draft',
 				new AnnotationWhereClause(),
 			],
-			'annotation_created_time_lower' => $after,
-			'annotation_created_time_upper' => $before,
+			'annotation_created_after' => $after,
+			'annotation_created_before' => $before,
 			'annotation_case_sensitive' => false,
 		]);
 
@@ -957,7 +988,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertInstanceOf(RelationshipWhereClause::class, $pair);
 		$this->assertEquals([1, 2, 3], $pair->ids);
 		$this->assertEquals(['friend', 'enemy'], $pair->names);
-		$this->assertEquals([15, 20, 21], $pair->subject_guids);
+		$this->assertEquals([15, 20, 21], $pair->guid_one);
 		$this->assertEquals(false, $pair->inverse);
 		$this->assertEquals('owner_guid', $pair->join_on);
 		$this->assertEquals($after, $pair->created_after);
@@ -986,7 +1017,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertInstanceOf(RelationshipWhereClause::class, $pair);
 		$this->assertEquals([1, 2, 3], $pair->ids);
 		$this->assertEquals(['friend', 'enemy'], $pair->names);
-		$this->assertEquals([15, 20, 21], $pair->object_guids);
+		$this->assertEquals([15, 20, 21], $pair->guid_two);
 		$this->assertEquals(true, $pair->inverse);
 		$this->assertEquals('owner_guid', $pair->join_on);
 		$this->assertEquals($after, $pair->created_after);

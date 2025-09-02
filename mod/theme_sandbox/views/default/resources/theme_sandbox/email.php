@@ -33,7 +33,9 @@ elgg_register_event_handler('send', 'notification:email', function (\Elgg\Event 
 	return true;
 }, 1);
 
-notify_user($user->guid, $site->guid, $subject, $plain_message, ['apply_muting' => false], 'email');
+$user->notify('useradd', $user, [
+	'password' => 'test123',
+]);
 
 $options = [
 	'subject' => $subject,
@@ -47,7 +49,10 @@ $options['body'] = $formatter->formatBlock($options['body']);
 // generate HTML mail body
 $options['body'] = elgg_view('email/elements/body', $options);
 
-$minifier = new \MatthiasMullie\Minify\CSS(_elgg_services()->cssCompiler->compile(elgg_view('email/email.css', $options)));
+$css_views = elgg_view('elements/variables.css', $options);
+$css_views .= elgg_view('email/email.css', $options);
+
+$minifier = new \MatthiasMullie\Minify\CSS(_elgg_services()->cssCompiler->compile($css_views));
 $css = $minifier->minify();
 
 $options['css'] = $css;

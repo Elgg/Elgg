@@ -15,12 +15,6 @@ elgg_import_esm('elgg/comments');
 
 /* @var \ElggEntity $entity */
 $entity = elgg_extract('entity', $vars);
-
-/* @var \ElggComment $comment */
-$comment = elgg_extract('comment', $vars);
-
-$inline = (bool) elgg_extract('inline', $vars, false);
-
 if ($entity instanceof \ElggEntity) {
 	echo elgg_view('input/hidden', [
 		'name' => 'entity_guid',
@@ -28,46 +22,63 @@ if ($entity instanceof \ElggEntity) {
 	]);
 }
 
-$comment_text = '';
-$footer = '';
-if ($comment instanceof \ElggComment && $comment->canEdit()) {
+/* @var \ElggComment $comment */
+$comment = elgg_extract('comment', $vars);
+
+$is_edit = $comment instanceof \ElggComment && $comment->canEdit();
+if ($is_edit) {
 	echo elgg_view('input/hidden', [
 		'name' => 'comment_guid',
 		'value' => $comment->guid,
 	]);
-	$comment_label  = elgg_echo('generic_comments:edit');
-	$footer .= elgg_view('input/submit', ['text' => elgg_echo('save')]);
-	$comment_text = $comment->description;
-} else {
-	$comment_label  = elgg_echo('generic_comments:add');
-	$footer .= elgg_view('input/submit', ['text' => elgg_echo('comment')]);
 }
 
-if ($inline) {
-	$form = elgg_view('input/text', [
-		'name' => 'generic_comment',
-		'value' => $comment_text,
-		'required' => true,
-	]);
-	
-	echo elgg_format_element('div', ['class' => 'elgg-fieldset-horizontal'], $form . $footer);
-} else {
+if (elgg_extract('inline', $vars, false)) {
 	echo elgg_view_field([
-		'#type' => 'longtext',
-		'#label' => $comment_label,
-		'name' => 'generic_comment',
-		'value' => $comment_text,
-		'required' => true,
-		'editor_type' => 'simple',
+		'#type' => 'fieldset',
+		'align' => 'horizontal',
+		'fields' => [
+			[
+				'#type' => 'text',
+				'#class' => 'elgg-field-stretch',
+				'name' => 'generic_comment',
+				'value' => $is_edit ? $comment->description : '',
+				'required' => true,
+			],
+			[
+				'#type' => 'submit',
+				'text' => $is_edit ? elgg_echo('save') : elgg_echo('comment'),
+			],
+		],
 	]);
-	
-	if ($comment) {
-		$footer .= elgg_view('input/button', [
-			'text' => elgg_echo('cancel'),
-			'class' => 'elgg-button-cancel mlm',
-			'href' => $entity ? $entity->getURL() : '#',
-		]);
-	}
-	
-	elgg_set_form_footer($footer);
+	return;
 }
+
+echo elgg_view_field([
+	'#type' => 'longtext',
+	'#label' => $is_edit ? elgg_echo('generic_comments:edit') : elgg_echo('generic_comments:add'),
+	'name' => 'generic_comment',
+	'value' => $is_edit ? $comment->description : '',
+	'required' => true,
+	'editor_type' => 'simple',
+]);
+
+$footer_fields = [[
+	'#type' => 'submit',
+	'text' => $is_edit ? elgg_echo('save') : elgg_echo('comment'),
+]];
+
+if ($is_edit) {
+	$footer_fields[] = [
+		'#type' => 'button',
+		'text' => elgg_echo('cancel'),
+		'class' => 'elgg-button-cancel',
+		'href' => $entity ? $entity->getURL() : '#',
+	];
+}
+
+elgg_set_form_footer(elgg_view_field([
+	'#type' => 'fieldset',
+	'align' => 'horizontal',
+	'fields' => $footer_fields,
+]));

@@ -5,9 +5,7 @@
 
 $dir = elgg_get_data_path() . 'logs/html/';
 if (!is_dir($dir)) {
-	echo elgg_view('page/components/no_results', [
-		'no_results' => elgg_echo('developers:logs:empty'),
-	]);
+	echo elgg_view_no_results(elgg_echo('developers:logs:empty'));
 	return;
 }
 

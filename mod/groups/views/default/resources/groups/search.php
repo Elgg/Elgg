@@ -7,7 +7,6 @@ $tag = (string) get_input('tag');
 $content = elgg_list_entities([
 	'query' => $tag,
 	'type' => 'group',
-	'full_view' => false,
 	'no_results' => elgg_echo('groups:search:none'),
 ], 'elgg_search');
 

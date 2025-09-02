@@ -6,18 +6,19 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => 'Signet',
 	'collection:object:bookmarks' => 'Signets',
+	
 	'collection:object:bookmarks:group' => 'Signets du groupe',
 	'collection:object:bookmarks:all' => "Tous les signets du site",
 	'collection:object:bookmarks:owner' => "Signets de %s",
 	'collection:object:bookmarks:friends' => "Signets des contacts",
 	'add:object:bookmarks' => "Ajouter un signet",
 	'edit:object:bookmarks' => "Modifier le signet",
+	
 	'notification:object:bookmarks:create' => "Envoyer une notification quand un signet est créé",
 	'notifications:mute:object:bookmarks' => "à propos du signet \"%s\"",
 
@@ -26,7 +27,7 @@ return array(
 	'bookmarks:bookmarklet' => "Installer le bookmarklet",
 	'bookmarks:bookmarklet:group' => "Installer le bookmarklet du groupe",
 	'bookmarks:address' => "Adresse web de la ressource à ajouter à vos signets",
-	'bookmarks:none' => 'Aucun signet',
+	'bookmarks:none' => 'Aucun signet', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Nouveau signet intitulé %s',
 	'bookmarks:notify:subject' => 'Nouveau signet : %s',

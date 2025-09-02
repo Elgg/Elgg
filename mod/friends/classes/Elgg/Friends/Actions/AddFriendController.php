@@ -5,7 +5,6 @@ namespace Elgg\Friends\Actions;
 use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Exceptions\Http\InternalServerErrorException;
 use Elgg\Exceptions\Http\ValidationException;
-use Elgg\Friends\Notifications;
 use Elgg\Http\OkResponse;
 
 /**
@@ -53,7 +52,6 @@ class AddFriendController extends \Elgg\Controllers\GenericAction {
 	 * @throws InternalServerErrorException
 	 */
 	protected function execute(): void {
-		
 		$request_needed = (bool) elgg_get_plugin_setting('friend_request', 'friends');
 		if (!$request_needed) {
 			// directly add a friend
@@ -70,7 +68,7 @@ class AddFriendController extends \Elgg\Controllers\GenericAction {
 				throw new InternalServerErrorException(elgg_echo('friends:add:failure', [$this->friend->getDisplayName()]));
 			}
 			
-			Notifications::sendAddFriendNotification($this->friend, $this->user);
+			$this->friend->notify('add_friend', $this->user, [], $this->user);
 			
 			return;
 		}
@@ -80,7 +78,7 @@ class AddFriendController extends \Elgg\Controllers\GenericAction {
 				throw new InternalServerErrorException(elgg_echo('friends:add:failure', [$this->friend->getDisplayName()]));
 			}
 			
-			Notifications::sendAcceptedFriendRequestNotification($this->friend, $this->user);
+			$this->friend->notify('friendrequest:accept', $this->user, [], $this->user);
 			
 			return;
 		}
@@ -102,21 +100,7 @@ class AddFriendController extends \Elgg\Controllers\GenericAction {
 		}
 		
 		// friend request made, notify potential friend
-		$subject = elgg_echo('friends:notification:request:subject', [$this->user->getDisplayName()], $this->friend->getLanguage());
-		$message = elgg_echo('friends:notification:request:message', [
-			$this->user->getDisplayName(),
-			elgg_get_site_entity()->getDisplayName(),
-			elgg_generate_url('collection:relationship:friendrequest:pending', [
-				'username' => $this->friend->username,
-			]),
-		], $this->friend->getLanguage());
-		
-		$params = [
-			'action' => 'friendrequest',
-			'object' => $this->user,
-			'friend' => $this->friend,
-		];
-		notify_user($this->friend->guid, $this->user->guid, $subject, $message, $params);
+		$this->friend->notify('friendrequest', $this->user, [], $this->user);
 		
 		return elgg_ok_response('', elgg_echo('friends:request:successful', [$this->friend->getDisplayName()]));
 	}

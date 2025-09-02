@@ -13,8 +13,7 @@ $defaults = [
 	'metadata_name_value_pairs' => [
 		'parent_guid' => 0,
 	],
-	'no_results' => elgg_echo('pages:none'),
-	'full_view' => false,
+	'no_results' => true,
 	'distinct' => false,
 ];
 

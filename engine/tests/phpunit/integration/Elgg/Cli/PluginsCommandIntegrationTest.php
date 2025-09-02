@@ -2,19 +2,16 @@
 
 namespace Elgg\Cli;
 
-use Elgg\IntegrationTestCase;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
-class PluginsCommandIntegrationTest extends IntegrationTestCase {
+class PluginsCommandIntegrationTest extends ExecuteCommandIntegrationTestCase {
 
 	public function up() {
-		$this->createApplication([
-			'isolate' => true,
+		parent::up();
+		
+		$this->setupApplication([
 			'plugins_path' => $this->normalizeTestFilePath('mod/'),
 		]);
-
-		_elgg_services()->logger->disable();
 
 		$ids = [
 			'parent_plugin',
@@ -43,34 +40,24 @@ class PluginsCommandIntegrationTest extends IntegrationTestCase {
 				elgg_get_plugin_from_id($id)->delete();
 			});
 		}
+		
+		parent::down();
 	}
 
 	public function testActivatesPluginsWithDependencies() {
-		$application = new Application();
-
 		$this->assertFalse(elgg_is_active_plugin('parent_plugin'));
 		$this->assertFalse(elgg_is_active_plugin('dependent_plugin'));
 		
-		$command = new PluginsActivateCommand();
-		$application->add($command);
-
-		$command = $application->find('plugins:activate');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
+		$this->assertEquals(SymfonyCommand::SUCCESS, $this->executeCommand(new PluginsActivateCommand(), [
 			'--force' => true,
 			'plugins' => ['dependent_plugin'],
-		]);
-
-		$this->assertEquals(0, $commandTester->getStatusCode());
+		], [], true));
 
 		$this->assertTrue(elgg_is_active_plugin('parent_plugin'));
 		$this->assertTrue(elgg_is_active_plugin('dependent_plugin'));
 	}
 
 	public function testActivatesPluginsWithOrder() {
-		$application = new Application();
-		
 		$static = elgg_get_plugin_from_id('static_config');
 		
 		$static->deactivate();
@@ -84,18 +71,10 @@ class PluginsCommandIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse(elgg_is_active_plugin('parent_plugin'));
 		$this->assertFalse(elgg_is_active_plugin('static_config'));
 		
-		$command = new PluginsActivateCommand();
-		$application->add($command);
-		
-		$command = $application->find('plugins:activate');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
+		$this->assertEquals(SymfonyCommand::SUCCESS, $this->executeCommand(new PluginsActivateCommand(), [
 			'--force' => true,
 			'plugins' => ['static_config:last', 'parent_plugin'],
-		]);
-		
-		$this->assertEquals(0, $commandTester->getStatusCode());
+		], [], true));
 		
 		$this->assertTrue(elgg_is_active_plugin('parent_plugin'));
 		$this->assertTrue(elgg_is_active_plugin('static_config'));
@@ -110,23 +89,13 @@ class PluginsCommandIntegrationTest extends IntegrationTestCase {
 	public function testDeactivatesConflictingPlugins() {
 		elgg_get_plugin_from_id('parent_plugin')->activate();
 
-		$application = new Application();
-		
 		$this->assertTrue(elgg_is_active_plugin('parent_plugin'));
 		$this->assertFalse(elgg_is_active_plugin('conflicting_plugin'));
 
-		$command = new PluginsActivateCommand();
-		$application->add($command);
-
-		$command = $application->find('plugins:activate');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
+		$this->assertEquals(SymfonyCommand::SUCCESS, $this->executeCommand(new PluginsActivateCommand(), [
 			'--force' => true,
 			'plugins' => ['conflicting_plugin'],
-		]);
-
-		$this->assertEquals(0, $commandTester->getStatusCode());
+		], [], true));
 
 		$this->assertFalse(elgg_is_active_plugin('parent_plugin'));
 		$this->assertTrue(elgg_is_active_plugin('conflicting_plugin'));
@@ -136,20 +105,10 @@ class PluginsCommandIntegrationTest extends IntegrationTestCase {
 		elgg_get_plugin_from_id('parent_plugin')->activate();
 		elgg_get_plugin_from_id('dependent_plugin')->activate();
 
-		$application = new Application();
-
-		$command = new PluginsDeactivateCommand();
-		$application->add($command);
-
-		$command = $application->find('plugins:deactivate');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
+		$this->assertEquals(SymfonyCommand::SUCCESS, $this->executeCommand(new PluginsDeactivateCommand(), [
 			'--force' => true,
 			'plugins' => ['parent_plugin'],
-		]);
-
-		$this->assertEquals(0, $commandTester->getStatusCode());
+		], [], true));
 
 		$this->assertFalse(elgg_is_active_plugin('parent_plugin'));
 		$this->assertFalse(elgg_is_active_plugin('dependent_plugin'));

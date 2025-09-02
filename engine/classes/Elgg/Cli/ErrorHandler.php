@@ -29,11 +29,6 @@ class ErrorHandler extends AbstractProcessingHandler {
 	/**
 	 * @var OutputInterface
 	 */
-	protected $stdout;
-
-	/**
-	 * @var OutputInterface
-	 */
 	protected $stderr;
 
 	/**
@@ -44,12 +39,11 @@ class ErrorHandler extends AbstractProcessingHandler {
 	 * @param bool                 $bubble Bubble severity
 	 */
 	public function __construct(
-		OutputInterface $stdout,
+		protected OutputInterface $stdout,
 		?OutputInterface $stderr = null,
-		$bubble = true
+		bool $bubble = true
 	) {
-		$this->stdout = $stdout;
-		$this->stderr = $stderr ?: $stdout;
+		$this->stderr = $stderr ?? $this->stdout;
 
 		$verbosity = $this->stdout->getVerbosity() ?: OutputInterface::VERBOSITY_NORMAL;
 
@@ -62,7 +56,7 @@ class ErrorHandler extends AbstractProcessingHandler {
 	 * {@inheritdoc}
 	 */
 	public function write(LogRecord $record): void {
-		$stream = $record->level->value >= Level::Error ? $this->stderr : $this->stdout;
+		$stream = Level::Error->includes($record->level) ? $this->stderr : $this->stdout;
 
 		$stream->write($record->formatted, true);
 

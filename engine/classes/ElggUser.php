@@ -58,12 +58,12 @@ class ElggUser extends \ElggEntity {
 	/**
 	 * Get user language or default to site language
 	 *
-	 * @param string $fallback If this is provided, it will be returned if the user doesn't have a language set.
-	 *                         If null, the site language will be returned.
+	 * @param string|null $fallback If this is provided, it will be returned if the user doesn't have a language set.
+	 *                              If null, the site language will be returned.
 	 *
 	 * @return string
 	 */
-	public function getLanguage(string $fallback = null): string {
+	public function getLanguage(?string $fallback = null): string {
 		if (!empty($this->language)) {
 			return $this->language;
 		}
@@ -125,7 +125,6 @@ class ElggUser extends \ElggEntity {
 	 * @return bool
 	 */
 	public function ban(string $reason = ''): bool {
-
 		if (!$this->canEdit()) {
 			return false;
 		}
@@ -409,20 +408,24 @@ class ElggUser extends \ElggEntity {
 	}
 
 	/**
-	 * Returns users's notification settings
+	 * Return the user notification settings
 	 * <code>
 	 *    [
 	 *       'email' => true, // enabled
 	 *       'ajax' => false, // disabled
 	 *    ]
+	 *
+	 *    // or when $only_active_methods === true
+	 *    ['email']
 	 * </code>
 	 *
-	 * @param string $purpose For what purpose to get the notification settings (default: 'default')
+	 * @param string $purpose             For what purpose to get the notification settings (default: 'default')
+	 * @param bool   $only_active_methods Only return the active methods (useful for notifications)
 	 *
 	 * @return array
 	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
-	public function getNotificationSettings(string $purpose = 'default'): array {
+	public function getNotificationSettings(string $purpose = 'default', bool $only_active_methods = false): array {
 		if (empty($purpose)) {
 			throw new ElggInvalidArgumentException(__METHOD__ . ' requires $purpose to be set to a non-empty string');
 		}
@@ -439,7 +442,7 @@ class ElggUser extends \ElggEntity {
 			}
 		}
 
-		return $settings;
+		return $only_active_methods ? array_keys(array_filter($settings)) : $settings;
 	}
 	
 	/**
@@ -477,5 +480,21 @@ class ElggUser extends \ElggEntity {
 		$default = elgg_extract($name, $static_defaults, $default);
 		
 		return $this->psGetPluginSetting($plugin_id, $name, $default);
+	}
+	
+	/**
+	 * Notify the user about a given action on a subject
+	 *
+	 * @param string           $action  The action on $subject
+	 * @param \ElggData        $subject The notification subject
+	 * @param array            $params  Additional params
+	 *                                  use $params['methods_override'] to override the recipient notification methods (eg 'email' or 'site')
+	 * @param null|\ElggEntity $from    Sender of the message
+	 *
+	 * @return array Compound array of each delivery user/delivery method's success or failure.
+	 * @since 6.3
+	 */
+	public function notify(string $action, \ElggData $subject, array $params = [], ?\ElggEntity $from = null): array {
+		return _elgg_services()->notifications->sendInstantNotification($this, $action, $subject, $params, $from);
 	}
 }

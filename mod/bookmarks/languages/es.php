@@ -6,12 +6,12 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => 'Marcadores',
 	'collection:object:bookmarks' => 'Marcadores',
+	
 	'collection:object:bookmarks:group' => 'Marcadores de grupo',
 	'collection:object:bookmarks:all' => "Todos los marcadores",
 	'collection:object:bookmarks:owner' => "Marcadores de %s",
@@ -24,7 +24,7 @@ return array(
 	'bookmarks:bookmarklet' => "Obtener marcadores",
 	'bookmarks:bookmarklet:group' => "Obtener widget de marcadores del grupo",
 	'bookmarks:address' => "Direcciones del marcador",
-	'bookmarks:none' => 'No hay marcadores',
+	'bookmarks:none' => 'No hay marcadores', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Nuevo marcador llamado %s',
 	'bookmarks:notify:subject' => 'Nuevo marcador: %s',

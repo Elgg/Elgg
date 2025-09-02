@@ -194,38 +194,35 @@ select:not([multiple]) {
 }
 
 @media $(media-phone-up) {
-	.elgg-fieldset-horizontal {
-		flex-direction: row;
-		
-		> .elgg-field {
-			vertical-align: top;
-			
+	.elgg-field {
+		&.elgg-field-stretch {
+			flex-basis: 1%;
+			flex-grow: 1;
+
+			> .elgg-field-input {
+				width: 100%;
+			}
+		}
+
+		&.elgg-field-horizontal {
 			display: flex;
-			flex-direction: column;
-			
-			&.elgg-field-stretch {
-				flex-basis: 1%;
-				flex-grow: 1;
-				
-				> .elgg-field-input {
-					width: 100%;
-				}
-			}
-			
-			&.elgg-field-horizontal {
-				flex-direction: row;
-				align-items: baseline;
-				
-				> *:not(:first-child) {
-					padding-left: 1rem;
-				}
-			}
-			
+			flex-direction: row;
+			align-items: baseline;
+			column-gap: 1rem;
+
 			> .elgg-field-label {
 				align-items: center;
 				display: flex;
 				flex-shrink: 0;
 			}
+		}
+	}
+
+	.elgg-fieldset-horizontal {
+		flex-direction: row;
+		
+		> .elgg-field {
+			vertical-align: top;
 		}
 		
 		&.elgg-fieldset-wrap {

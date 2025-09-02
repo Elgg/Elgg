@@ -6,18 +6,19 @@
  */
 
 return array(
-
 	/**
 	 * Menu items and titles
 	 */
 	'item:object:bookmarks' => 'Закладки',
 	'collection:object:bookmarks' => 'Закладки',
+	
 	'collection:object:bookmarks:group' => 'Закладки группы',
 	'collection:object:bookmarks:all' => "Все закладки",
 	'collection:object:bookmarks:owner' => "Закладки %s",
 	'collection:object:bookmarks:friends' => "Закладки друзей",
 	'add:object:bookmarks' => "Добавить в закладки",
 	'edit:object:bookmarks' => "Изменить закладку",
+	
 	'notification:object:bookmarks:create' => "Отправить уведомление при создании закладки",
 	'notifications:mute:object:bookmarks' => "о закладке '%s'",
 
@@ -26,7 +27,7 @@ return array(
 	'bookmarks:bookmarklet' => "Закладки",
 	'bookmarks:bookmarklet:group' => "Закладки группы",
 	'bookmarks:address' => "Адрес сайта",
-	'bookmarks:none' => 'Нет закладок',
+	'bookmarks:none' => 'Нет закладок', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Новая закладка %s',
 	'bookmarks:notify:subject' => 'Новая закладка: %s',

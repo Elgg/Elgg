@@ -2,7 +2,9 @@
 
 namespace Elgg\Javascript;
 
+use Elgg\Assets\ExternalFiles;
 use Elgg\Cache\SimpleCache;
+use Elgg\Config;
 use Elgg\ViewsService;
 
 /**
@@ -20,12 +22,16 @@ class ESMService {
 	/**
 	 * Constructor
 	 *
-	 * @param ViewsService $views Views service
-	 * @param SimpleCache  $cache Simple cache
+	 * @param ViewsService  $views         Views service
+	 * @param SimpleCache   $cache         Simple cache
+	 * @param ExternalFiles $externalFiles External files
+	 * @param Config        $config        Config
 	 */
 	public function __construct(
 		protected ViewsService $views,
-		protected SimpleCache $cache
+		protected SimpleCache $cache,
+		protected ExternalFiles $externalFiles,
+		protected Config $config
 	) {
 	}
 	
@@ -37,16 +43,30 @@ class ESMService {
 	public function getImportMapData(): array {
 		$modules = $this->views->getESModules();
 		$imports = [];
-		if (!empty($modules)) {
-			foreach ($modules as $name) {
-				$short_name = str_replace('.mjs', '', $name);
-				$imports[$short_name] = $this->cache->getUrl($name);
+		$result = [];
+		
+		foreach ($modules as $name) {
+			$short_name = str_replace('.mjs', '', $name);
+			$imports[$short_name] = $this->cache->getUrl($name);
+		}
+		
+		$result['imports'] = array_merge($imports, $this->runtime_modules);
+		
+		if (!$this->config->subresource_integrity_enabled) {
+			return $result;
+		}
+		
+		foreach ($result['imports'] as $name => $import) {
+			$integrity = $this->externalFiles->getSubResourceIntegrity('js', "{$name}.mjs");
+			// fallback for runtime modules
+			$integrity = $integrity ?? $this->externalFiles->getSubResourceIntegrity('js', $name);
+			
+			if (!empty($integrity)) {
+				$result['integrity'][$import] = $integrity;
 			}
 		}
 		
-		$imports = array_merge($imports, $this->runtime_modules);
-				
-		return ['imports' => $imports];
+		return $result;
 	}
 	
 	/**

@@ -2,28 +2,9 @@
 
 namespace Elgg\Cli;
 
-use Elgg\IntegrationTestCase;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
-
-class UpgradeListCommandIntegrationTest extends IntegrationTestCase {
-
-	public function up() {
-		self::createApplication([
-			'isolate'=> true,
-		]);
-	}
+class UpgradeListCommandIntegrationTest extends ExecuteCommandIntegrationTestCase {
 
 	public function testExecuteWithoutOptions() {
-		$application = new Application();
-		$application->add(new UpgradeListCommand());
-
-		$command = $application->find('upgrade:list');
-		$commandTester = new CommandTester($command);
-		$commandTester->execute([
-			'command' => $command->getName(),
-		]);
-
-		$this->assertNotEmpty($commandTester->getDisplay());
+		$this->assertStringContainsStringIgnoringCase(elgg_echo('cli:upgrade:list:completed'), $this->executeCommand(new UpgradeListCommand()));
 	}
 }

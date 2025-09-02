@@ -233,7 +233,7 @@ class ElggFile extends ElggObject {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function delete(bool $recursive = true, bool $persistent = null): bool {
+	public function delete(bool $recursive = true, ?bool $persistent = null): bool {
 		if (!$this->guid) {
 			return $this->persistentDelete($recursive);
 		}

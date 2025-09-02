@@ -24,6 +24,7 @@ return [
 			'path' => '/friends/collections/add/{username}',
 			'resource' => 'friends/collections/add',
 			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
@@ -51,6 +52,7 @@ return [
 			'path' => '/friends/collections/owner/{username}',
 			'resource' => 'friends/collections/owner',
 			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],

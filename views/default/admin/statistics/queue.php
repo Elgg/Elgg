@@ -1,8 +1,10 @@
 <?php
+/**
+ * Show queue database statistics
+ */
+
 use Elgg\Database\Select;
 use Elgg\Queue\DatabaseQueue;
-
-// show queue database statistics
 
 $header = '<tr><th>' . elgg_echo('admin:statistics:queue:name') . '</th>';
 $header .= '<th>' . elgg_echo('admin:statistics:queue:row_count') . '</th>';
@@ -24,7 +26,7 @@ foreach ($queue_names as $queue) {
 	$qb->where($qb->compare('name', '=', $queue->name, ELGG_VALUE_STRING, true));
 
 	$row_count = _elgg_services()->db->getDataRow($qb);
-	$row_count = empty($row_count) ? 0 : (int) $row_count->total;
+	$row_count = empty($row_count) ? 0 : elgg_number_format($row_count->total);
 	
 	$qb = Select::fromTable(DatabaseQueue::TABLE_NAME);
 	$qb->select('MIN(timestamp) AS min');

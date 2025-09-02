@@ -1,5 +1,8 @@
 <?php
-// Get entity statistics
+/**
+ * Get entity statistics
+ */
+
 use Elgg\Database\QueryBuilder;
 
 $entity_stats = elgg_call(ELGG_SHOW_DELETED_ENTITIES, function() {
@@ -55,7 +58,10 @@ foreach ($searchable as $name => $value) {
 	$cells = [];
 	$cells[] = elgg_format_element('td', [], $name);
 	
-	$number = $value[0] . ($value[1] ? elgg_format_element('span', ['class' => ['elgg-quiet', 'mls']], elgg_echo('status:trashed') . ': ' . $value[1]) : null);
+	$entity_total = elgg_number_format($value[0]);
+	$entity_trashed = elgg_number_format($value[1] ?? 0);
+	
+	$number = $entity_total . ($entity_trashed ? elgg_format_element('span', ['class' => ['elgg-quiet', 'mls']], elgg_echo('status:trashed') . ': ' . $entity_trashed) : null);
 	$cells[] = elgg_format_element('td', [], $number);
 	
 	$rows[] = elgg_format_element('tr', [], implode('', $cells));
@@ -72,7 +78,10 @@ foreach ($other as $name => $value) {
 	$cells = [];
 	$cells[] = elgg_format_element('td', [], $name);
 	
-	$number = $value[0] . ($value[1] ? elgg_format_element('span', ['class' => ['elgg-quiet', 'mls']], elgg_echo('status:trashed') . ': ' . $value[1]) : null);
+	$entity_total = elgg_number_format($value[0]);
+	$entity_trashed = elgg_number_format($value[1] ?? 0);
+	
+	$number = $entity_total . ($entity_trashed ? elgg_format_element('span', ['class' => ['elgg-quiet', 'mls']], elgg_echo('status:trashed') . ': ' . $entity_trashed) : null);
 	$cells[] = elgg_format_element('td', [], $number);
 	
 	$rows[] = elgg_format_element('tr', [], implode('', $cells));

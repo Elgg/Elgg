@@ -98,11 +98,6 @@ class ElggRelationship extends \ElggData {
 			return;
 		}
 		
-		if (in_array($name, ['id', 'time_created'])) {
-			// these attributes can't be changed by the user
-			return;
-		}
-		
 		if ($this->id > 0 && !array_key_exists($name, $this->orig_attributes)) {
 			// store original attribute
 			$this->orig_attributes[$name] = $this->attributes[$name];
@@ -139,15 +134,7 @@ class ElggRelationship extends \ElggData {
 			_elgg_services()->relationshipsTable->delete($this->id);
 		}
 
-		$id = _elgg_services()->relationshipsTable->add($this, true);
-		if ($id === false) {
-			return false;
-		}
-		
-		$this->attributes['id'] = $id;
-		$this->attributes['time_created'] = _elgg_services()->relationshipsTable->getCurrentTime()->getTimestamp();
-
-		return true;
+		return _elgg_services()->relationshipsTable->add($this);
 	}
 
 	/**

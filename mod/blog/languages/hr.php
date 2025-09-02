@@ -8,6 +8,7 @@
 return array(
 	'item:object:blog' => 'Blog',
 	'collection:object:blog' => 'Blogovi',
+	
 	'collection:object:blog:all' => 'Svi blogovi',
 	'collection:object:blog:owner' => '%sblog',
 	'collection:object:blog:group' => 'Skupni blogovi',
@@ -32,7 +33,7 @@ return array(
 	'blog:error:cannot_save' => 'Nije moguće sačuvati objavu na blogu. ',
 	'blog:error:cannot_write_to_container' => 'Nije dozvoljeno spremanje bloga u grupi. ',
 	'blog:edit_revision_notice' => '(Prethodna inačica)',
-	'blog:none' => 'Ne postoji objava na blogu. ',
+	'blog:none' => 'Ne postoji objava na blogu. ', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Molimo upišite naslov bloga!',
 	'blog:error:missing:description' => 'Molimo upišite sadržaj bloga!',
 	'blog:error:post_not_found' => 'Nije moguće pronaći navedenu objavu na blogu. ',

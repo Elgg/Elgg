@@ -147,7 +147,7 @@ trait Icons {
 	 *
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
 	 *
-	 * @return null|array
+	 * @return array
 	 * @since 6.0
 	 */
 	public function getIconCoordinates(string $type = 'icon'): array {

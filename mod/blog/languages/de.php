@@ -8,12 +8,14 @@
 return array(
 	'item:object:blog' => 'Blogs',
 	'collection:object:blog' => 'Blogs',
+	
 	'collection:object:blog:all' => 'Alle Blogs der Community',
 	'collection:object:blog:owner' => 'Blogs von %s',
 	'collection:object:blog:group' => 'Gruppen-Blogs',
 	'collection:object:blog:friends' => 'Blogs Deiner Freunde',
 	'add:object:blog' => 'Blog-Eintrag verfassen',
 	'edit:object:blog' => 'Blog-Eintrag editieren',
+	
 	'notification:object:blog:publish' => "Sende eine Benachrichtigung bei Veröffentlichung eines Blog-Eintrags",
 	'notifications:mute:object:blog' => "über den Blog-Eintrag '%s'",
 
@@ -34,7 +36,7 @@ return array(
 	'blog:error:cannot_save' => 'Dein Blog-Eintrag konnte nicht gespeichert werden.',
 	'blog:error:cannot_write_to_container' => 'Keine ausreichenden Zugriffsrechte zum Speichern des Blog-Eintrags im Gruppenblog vorhanden.',
 	'blog:edit_revision_notice' => '(Alte Revision)',
-	'blog:none' => 'Keine Blog-Einträge vorhanden.',
+	'blog:none' => 'Keine Blog-Einträge vorhanden.', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Bitte einen Titel für Deinen Blog-Eintrag angeben!',
 	'blog:error:missing:description' => 'Bitte gebe den Text Deines Blog-Eintrags ein!',
 	'blog:error:post_not_found' => 'Der ausgewählte Blog-Eintrag ist nicht auffindbar.',

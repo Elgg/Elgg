@@ -13,9 +13,7 @@ if (!$entity instanceof \ElggUser) {
 
 $fields = elgg()->fields->get('user', 'user');
 if (empty($fields)) {
-	echo elgg_view('page/components/no_results', [
-		'no_results' => elgg_echo('admin:users:details:profile:no_fields'),
-	]);
+	echo elgg_view_no_results(elgg_echo('admin:users:details:profile:no_fields'));
 	return;
 }
 
@@ -54,9 +52,7 @@ foreach ($fields as $field) {
 }
 
 if (empty($output)) {
-	echo elgg_view('page/components/no_results', [
-		'no_results' => elgg_echo('admin:users:details:profile:no_information'),
-	]);
+	echo elgg_view_no_results(elgg_echo('admin:users:details:profile:no_information'));
 	return;
 }
 

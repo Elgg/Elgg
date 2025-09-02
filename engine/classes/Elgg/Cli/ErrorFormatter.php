@@ -22,7 +22,7 @@ class ErrorFormatter extends ElggLogFormatter {
 
 		$formatter = new FormatterHelper();
 
-		switch ($record->level->value) {
+		switch ($record->level) {
 			case Level::Emergency:
 			case Level::Critical:
 			case Level::Alert:

@@ -296,8 +296,7 @@ class EntitiesUnitTest extends UnitTestCase {
 		$wheres = [];
 		$wheres[] = (new AccessWhereClause())->prepare($select, EntityTable::DEFAULT_JOIN_ALIAS);
 
-		$metadata = new MetadataWhereClause();
-		$metadata->names = $metadata_names;
+		$metadata = MetadataWhereClause::factory(['names' => $metadata_names]);
 		$wheres[] = $metadata->prepare($select, 'n_table');
 
 		$select->andWhere($select->merge($wheres));
@@ -497,15 +496,17 @@ class EntitiesUnitTest extends UnitTestCase {
 		$md_wheres = [];
 		
 		$alias1 = $select->joinMetadataTable($select->getTableAlias(), 'guid', ['foo1']);
-		$metadata = new MetadataWhereClause();
-		$metadata->names = ['foo1'];
-		$metadata->values = ['bar1'];
+		$metadata = MetadataWhereClause::factory([
+			'names' => ['foo1'],
+			'values' => ['bar1'],
+		]);
 		$md_wheres[] = $metadata->prepare($select, $alias1);
 
 		$alias2 = $select->joinMetadataTable($select->getTableAlias(), 'guid', ['foo2']);
-		$metadata = new MetadataWhereClause();
-		$metadata->names = ['foo2'];
-		$metadata->values = ['bar2'];
+		$metadata = MetadataWhereClause::factory([
+			'names' => ['foo2'],
+			'values' => ['bar2'],
+		]);
 		$md_wheres[] = $metadata->prepare($select, $alias2);
 		
 		$wheres[] = $select->merge($md_wheres);
@@ -554,14 +555,16 @@ class EntitiesUnitTest extends UnitTestCase {
 		
 		$md_wheres = [];
 		
-		$metadata = new MetadataWhereClause();
-		$metadata->names = ['foo1'];
-		$metadata->values = ['bar1'];
+		$metadata = MetadataWhereClause::factory([
+			'names' => ['foo1'],
+			'values' => ['bar1'],
+		]);
 		$md_wheres[] = $metadata->prepare($select, 'n_table');
 
-		$metadata = new MetadataWhereClause();
-		$metadata->names = ['foo2'];
-		$metadata->values = ['bar2'];
+		$metadata = MetadataWhereClause::factory([
+			'names' => ['foo2'],
+			'values' => ['bar2'],
+		]);
 		$md_wheres[] = $metadata->prepare($select, 'n_table');
 
 		$wheres[] = $select->merge($md_wheres, 'OR');
@@ -723,15 +726,17 @@ class EntitiesUnitTest extends UnitTestCase {
 		$r_wheres = [];
 
 		$alias1 = $select->joinRelationshipTable($select->getTableAlias(), 'guid', ['foo1']);
-		$rel1 = new RelationshipWhereClause();
-		$rel1->names = ['foo1'];
-		$rel1->subject_guids = [1, 2, 3];
+		$rel1 = RelationshipWhereClause::factory([
+			'names' => ['foo1'],
+			'guid_one' => [1, 2, 3],
+		]);
 		$r_wheres[] = $rel1->prepare($select, $alias1);
 
 		$alias2 = $select->joinRelationshipTable($select->getTableAlias(), 'guid', ['foo2'], true);
-		$rel2 = new RelationshipWhereClause();
-		$rel2->names = ['foo2'];
-		$rel2->object_guids = [4, 5, 6];
+		$rel2 = RelationshipWhereClause::factory([
+			'names' => ['foo2'],
+			'guid_two' => [4, 5, 6],
+		]);
 		$r_wheres[] = $rel2->prepare($select, $alias2);
 		
 		$wheres[] = $select->merge($r_wheres);
@@ -785,9 +790,10 @@ class EntitiesUnitTest extends UnitTestCase {
 		
 		$select->joinRelationshipTable($select->getTableAlias(), 'guid', null, false, 'inner','r');
 
-		$rel = new RelationshipWhereClause();
-		$rel->names = ['foo1'];
-		$rel->subject_guids = [1, 2, 3];
+		$rel = RelationshipWhereClause::factory([
+			'names' => ['foo1'],
+			'guid_one' => [1, 2, 3],
+		]);
 		$wheres[] = $rel->prepare($select, 'r');
 
 		$select->andWhere($select->merge($wheres));
