@@ -2,7 +2,7 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Application;
+use Elgg\Application as ElggApplication;
 use Elgg\Exceptions\Exception;
 use Elgg\Logger\ElggLogFormatter;
 use Monolog\Formatter\FormatterInterface;
@@ -27,7 +27,7 @@ class CronLogHandler extends AbstractProcessingHandler {
 	 * {@inheritdoc}
 	 */
 	public function __construct(bool $bubble = true) {
-		if (!Application::isCli()) {
+		if (!ElggApplication::isCli()) {
 			throw new Exception(__CLASS__ . ' can only be used during CLI');
 		}
 		
@@ -45,7 +45,7 @@ class CronLogHandler extends AbstractProcessingHandler {
 	 * {@inheritdoc}
 	 */
 	protected function write(LogRecord $record): void {
-		$this->stdout->write($record->formatted);
+		$this->stdout?->write($record->formatted);
 	}
 	
 	/**

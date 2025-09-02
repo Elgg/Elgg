@@ -33,7 +33,7 @@ class PluginsListCommand extends Command {
 
 		$status = $this->option('status');
 		if (!in_array($status, ['all', 'active', 'inactive'])) {
-			$this->error(elgg_echo('cli:plugins:list:error:status', [$status, 'all | active | inactive']));
+			$this->write(elgg_echo('cli:plugins:list:error:status', [$status, 'all | active | inactive']), 'error');
 			return self::FAILURE;
 		}
 
