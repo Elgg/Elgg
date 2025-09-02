@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 09:07+0200\n"
+"POT-Creation-Date: 2025-09-02 11:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,6 +48,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:6
 #: ../../appendix/upgrade-notes/6.0-to-6.1.rst:6
 #: ../../appendix/upgrade-notes/6.1-to-6.2.rst:6
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:6
 msgid "Contents"
 msgstr ""
 
@@ -3417,6 +3418,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:439
 #: ../../appendix/upgrade-notes/6.0-to-6.1.rst:18
 #: ../../appendix/upgrade-notes/6.1-to-6.2.rst:9
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:9
 msgid "Deprecated APIs"
 msgstr ""
 
@@ -11869,4 +11871,32 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/6.1-to-6.2.rst:13
 msgid "``thewire_filter()`` use ``elgg_format_html()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:2
+msgid "From 6.2 to 6.3"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:11
+msgid "``elgg_dump()`` use ``elgg_log()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:12
+msgid "``notify_user()`` use ``elgg_notify_user()`` or ``\\ElggUser::notify()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:15
+msgid "Deprectated classes"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:17
+msgid "using ``\\ElggObject`` directly has been deprecated. Use your own extension of an ``ElggObject`` for your subtype."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:20
+msgid "Deprecated class functions"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:22
+msgid "``\\Elgg\\Logger::dump()`` use ``\\Elgg\\Logger::error()``"
 msgstr ""
