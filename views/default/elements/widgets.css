@@ -72,7 +72,7 @@
 			flex-grow: 1;
 		}
 	}
-		
+	
 	> .elgg-head {
 		background-color: var(--elgg-background-color-mild);
 		padding: 0.5rem 1rem;
@@ -109,5 +109,5 @@
 
 .elgg-widget-placeholder {
 	border: 1px dashed #a1a1a3;
-	margin-bottom: 1rem;
+	margin-bottom: 2rem;
 }
