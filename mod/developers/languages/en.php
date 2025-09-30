@@ -97,7 +97,7 @@ return array(
 	'developers:inspect:handler' => 'Handler',
 	'developers:inspect:controller' => 'Controller',
 	'developers:inspect:file' => 'File',
-	'developers:inspect:middleware' => 'File',
+	'developers:inspect:middleware' => 'Middleware',
 	'developers:inspect:handler_type' => 'Handled by',
 	'developers:inspect:services' => 'Services',
 	'developers:inspect:service:name' => 'Name',
