@@ -161,11 +161,7 @@ echo elgg_view('core.css');
 			margin: 0;
 		}
 	}
-	
-	.ui-sortable-handle {
-		cursor: move;
-	}
-	
+
 	.elgg-state-error {
 		background: var(--elgg-state-danger-background-color);
 		color: var(--elgg-state-danger-font-color);

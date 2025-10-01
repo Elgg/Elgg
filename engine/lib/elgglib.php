@@ -183,7 +183,7 @@ function elgg_http_add_url_query_elements(string $url, array $elements): string 
  * @since 1.8.0
  */
 function elgg_http_url_is_identical(string $url1, string $url2, array $ignore_params = ['offset', 'limit']): bool {
-	return _elgg_services()->urls->isUrlIdentical($url1, $url2, (array) $ignore_params);
+	return _elgg_services()->urls->isUrlIdentical($url1, $url2, $ignore_params);
 }
 
 /**

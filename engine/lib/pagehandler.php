@@ -22,9 +22,9 @@
  *                       - requirements : regex patterns for wildcard segment requirements
  *                       - methods : HTTP methods
  *
- * @return \Elgg\Router\Route
+ * @return \Elgg\Router\Route|null
  */
-function elgg_register_route(string $name, array $params = []): \Elgg\Router\Route {
+function elgg_register_route(string $name, array $params = []): ?\Elgg\Router\Route {
 	return _elgg_services()->routes->register($name, $params);
 }
 

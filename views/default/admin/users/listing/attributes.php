@@ -29,12 +29,15 @@ $data = [
 	],
 	function() use ($entity) {
 		try {
-			$log = elgg_extract(0, \Elgg\SystemLog\SystemLog::instance()->getAll([
-				'object_id' => $entity->guid,
-				'event' => 'create:user',
-				'object_type' => 'user',
-				'limit' => 1,
-			]));
+			$log = null;
+			if (elgg_is_active_plugin('system_log')) {
+				$log = elgg_extract(0, \Elgg\SystemLog\SystemLog::instance()->getAll([
+					'object_id' => $entity->guid,
+					'event' => 'create:user',
+					'object_type' => 'user',
+					'limit' => 1,
+				]));
+			}
 
 			if ($log && !empty($log->ip_address)) {
 				return [' - ' . elgg_echo('usersettings:statistics:login_history:ip'), $log->ip_address];

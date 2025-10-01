@@ -2,7 +2,6 @@
 
 namespace Elgg;
 
-use Elgg\Database\Plugins;
 use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Exceptions\RuntimeException;
@@ -35,15 +34,13 @@ class Router {
 	 * @param UrlMatcher      $matcher  URL Matcher
 	 * @param HandlersService $handlers Handlers service
 	 * @param ResponseFactory $response Response
-	 * @param Plugins         $plugins  Plugins
 	 */
 	public function __construct(
 		protected EventsService $events,
 		protected RouteCollection $routes,
 		protected UrlMatcher $matcher,
 		protected HandlersService $handlers,
-		protected ResponseFactory $response,
-		protected Plugins $plugins
+		protected ResponseFactory $response
 	) {
 	}
 
@@ -131,18 +128,9 @@ class Router {
 			
 			$middleware = elgg_extract('_middleware', $parameters, []);
 			unset($parameters['_middleware']);
-
-			$required_plugins = (array) elgg_extract('_required_plugins', $parameters, []);
-			unset($parameters['_required_plugins']);
 			
 			unset($parameters['_detect_page_owner']);
 			unset($parameters['_use_logged_in']);
-			
-			foreach ($required_plugins as $plugin_id) {
-				if (!$this->plugins->isActive($plugin_id)) {
-					throw new PageNotFoundException();
-				}
-			}
 
 			$route = $this->routes->get($parameters['_route']);
 			$route->setMatchedParameters($parameters);
