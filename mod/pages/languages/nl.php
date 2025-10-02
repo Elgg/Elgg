@@ -11,6 +11,7 @@ return array(
 	 */
 	'item:object:page' => 'Pagina\'s',
 	'collection:object:page' => 'Pagina\'s',
+	'list:object:page:no_results' => 'Geen pagina\'s gevonden',
 	
 	'collection:object:page:all' => "Alle site pagina's",
 	'collection:object:page:owner' => "%s's pagina's",

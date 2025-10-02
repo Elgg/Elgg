@@ -6,6 +6,7 @@
  */
 
 return array(
+	'list:annotation:messageboard:no_results' => 'Geen berichten gevonden',
 	
 	/**
 	 * Menu items and titles

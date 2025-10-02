@@ -11,6 +11,7 @@ return array(
 	'site_notifications:topbar' => 'Notifications',
 	'item:object:site_notification' => 'Notification du site',
 	'collection:object:site_notification' => 'Notifications du site',
+	'list:object:site_notification:no_results' => 'Aucune notification du site trouvée',
 
 	'site_notifications:unread' => 'Non lu',
 	'site_notifications:read' => 'Lu',

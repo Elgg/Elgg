@@ -20,6 +20,7 @@ return array(
 	'item:object:file:video' => 'Video',
 	'item:object:file:word' => 'Word',
 	'collection:object:file' => 'Bestanden',
+	'list:object:file:no_results' => 'Geen bestanden gevonden',
 	
 	'file:upgrade:2022092801:title' => 'Verplaats bestanden',
 	'file:upgrade:2022092801:description' => 'Verplaatst bestand die middels de file plugin zijn geüpload bij de eigenaar van de content naar de bestandslocatie van de entiteit zelf.',

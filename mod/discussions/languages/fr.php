@@ -8,6 +8,7 @@
 return array(
 	'item:object:discussion' => "Sujets de discussion",
 	'collection:object:discussion' => 'Sujets de discussion',
+	'list:object:discussion:no_results' => 'Aucune discussion trouvée',
 	
 	'add:object:discussion' => 'Ajouter un sujet de discussion',
 	'edit:object:discussion' => 'Modifier le sujet de discussion',

@@ -13,6 +13,7 @@ return array(
 
 	'item:object:thewire' => "Messages du Fil",
 	'collection:object:thewire' => 'Messages du Fil',
+	'list:object:thewire:no_results' => 'Aucun message du Fil trouvé',
 	
 	'collection:object:thewire:all' => "Tous les messages du Fil",
 	'collection:object:thewire:owner' => "Le Fil de %s",
