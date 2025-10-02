@@ -28,6 +28,7 @@ return array(
 
 	'item:object:messages' => 'Message',
 	'collection:object:messages' => 'Messages',
+	'list:object:messages:no_results' => 'Aucun message trouvé',
 
 	/**
 	* Status messages

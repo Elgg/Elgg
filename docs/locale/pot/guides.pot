@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 11:51+0200\n"
+"POT-Creation-Date: 2025-10-02 12:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6832,7 +6832,7 @@ msgid "There are 3 functions in an ``ElggEntity`` related to the deletion of tha
 msgstr ""
 
 #: ../../guides/restore.rst:105
-msgid "``public function delete(bool $recursive = true, bool $persistent = null): bool``"
+msgid "``public function delete(bool $recursive = true, ?bool $persistent = null): bool``"
 msgstr ""
 
 #: ../../guides/restore.rst:106

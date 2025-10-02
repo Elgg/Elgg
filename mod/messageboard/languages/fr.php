@@ -6,6 +6,7 @@
  */
 
 return array(
+	'list:annotation:messageboard:no_results' => 'Aucun message trouvé',
 	
 	/**
 	 * Menu items and titles

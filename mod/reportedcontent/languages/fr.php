@@ -8,6 +8,7 @@
 return array(
 	'item:object:reported_content' => 'Elément signalé',
 	'collection:object:reported_content' => 'Éléments signalés',
+	'list:object:reported_content:no_results' => 'Aucun contenu signalé trouvé',
 	
 	'admin:administer_utilities:reportedcontent' => 'Contenu signalé',
 	'admin:administer_utilities:reportedcontent:archive' => 'Contenu signalé - archive',

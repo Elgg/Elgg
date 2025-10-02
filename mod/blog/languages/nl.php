@@ -8,6 +8,7 @@
 return array(
 	'item:object:blog' => 'Blog',
 	'collection:object:blog' => 'Blogs',
+	'list:object:blog:no_results' => 'Geen blogs gevonden',
 	
 	'collection:object:blog:all' => 'Alle blogs van de site',
 	'collection:object:blog:owner' => 'Blogs van %s',
