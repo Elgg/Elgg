@@ -61,7 +61,7 @@ jobs:
         run: composer install
       
       - name: Install Elgg
-        run: php ./elgg-cli install --config ./install/cli/testing_app.php --verbose --no-ansi
+        run: php ./elgg-cli install --config ./install/cli/testing_app.php --no-ansi
       
       - name: Enable Elgg plugins
         run: |

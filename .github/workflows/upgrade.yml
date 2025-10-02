@@ -101,7 +101,7 @@ jobs:
         run: composer update --prefer-dist
       
       - name: Elgg CLI upgrade
-        run: php ./elgg-cli upgrade async --verbose --no-ansi
+        run: php ./elgg-cli upgrade async --no-ansi
 
       - name: Activate current plugins
         run: |

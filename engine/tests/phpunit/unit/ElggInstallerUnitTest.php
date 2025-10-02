@@ -51,6 +51,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$config->simplecache_enabled = false;
 		$config->lastcache = time();
 		$config->wwwroot = getenv('ELGG_WWWROOT') ?: 'http://localhost/';
+		$config->testing_mode = true;
 
 		$services = InternalContainer::factory(['config' => $config]);
 
