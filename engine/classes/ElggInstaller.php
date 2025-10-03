@@ -4,9 +4,9 @@ use Elgg\Application;
 use Elgg\Config;
 use Elgg\Database;
 use Elgg\Database\DbConfig;
-use Elgg\Exceptions\ConfigurationException;
 use Elgg\Exceptions\Configuration\InstallationException;
 use Elgg\Exceptions\Configuration\RegistrationException;
+use Elgg\Exceptions\ConfigurationException;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\LoginException;
 use Elgg\Exceptions\PluginException;
@@ -18,7 +18,7 @@ use Elgg\Router\RewriteTester;
  * Elgg Installer.
  * Controller for installing Elgg. Supports both web-based on CLI installation.
  *
- * This controller steps the user through the install process. The method for
+ * This controller steps the user through the installation process. The method for
  * each step handles both the GET and POST requests. There is no XSS/CSRF protection
  * on the POST processing since the installer is only run once by the administrator.
  *
@@ -29,7 +29,7 @@ use Elgg\Router\RewriteTester;
  * the core libraries. To do this, we selectively load a subset of the core libraries
  * for the first few steps and then load the entire engine once the database and
  * site settings are configured. In addition, this controller does its own session
- * handling until the database is setup.
+ * handling until the database is set up.
  *
  * There is an aborted attempt in the code at creating the data directory for
  * users as a subdirectory of Elgg's root. The idea was to protect this directory
@@ -86,7 +86,7 @@ class ElggInstaller {
 			return $response;
 		}
 
-		// check if this is an install being resumed
+		// check if this is an installation being resumed
 		$response = $this->resumeInstall($step);
 		if ($response) {
 			return $response;
@@ -799,7 +799,7 @@ class ElggInstaller {
 	}
 
 	/**
-	 * Check if this is a case of a install being resumed and figure
+	 * Check if this is a case of an installation being resumed and figure
 	 * out where to continue from. Returns the best guess on the step.
 	 *
 	 * @param string $step Installation step to resume from
@@ -835,8 +835,8 @@ class ElggInstaller {
 	/**
 	 * Load remaining engine libraries and complete bootstrapping
 	 *
-	 * @param string $step Which step to boot strap for. Required because
-	 *                     boot strapping is different until the DB is populated.
+	 * @param string $step Which step to bootstrap for. Required because
+	 *                     bootstrapping is different until the DB is populated.
 	 *
 	 * @return void
 	 */
@@ -868,6 +868,10 @@ class ElggInstaller {
 			$app = $this->getApp();
 
 			$config = Config::factory();
+			
+			// make sure PHPUnit testing mode persists
+			$config->testing_mode = $app->internal_services->config->testing_mode;
+			
 			$app->internal_services->set('config', $app->internal_services->initConfig($config));
 
 			// in case the DB instance is already captured in services, we re-inject its settings.
@@ -882,9 +886,9 @@ class ElggInstaller {
 	 */
 
 	/**
-	 * If form is reshown, remember previously submitted variables
+	 * If form is reloaded, remember previously submitted variables
 	 *
-	 * @param array $formVars       Vars int he form
+	 * @param array $formVars       Vars in the form
 	 * @param array $submissionVars Submitted vars
 	 *
 	 * @return array

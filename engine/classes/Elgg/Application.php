@@ -9,11 +9,11 @@ use Elgg\Application\ShutdownHandler;
 use Elgg\Database\DbConfig;
 use Elgg\Di\InternalContainer;
 use Elgg\Di\PublicContainer;
-use Elgg\Exceptions\ConfigurationException;
 use Elgg\Exceptions\Configuration\InstallationException;
-use Elgg\Exceptions\HttpException;
+use Elgg\Exceptions\ConfigurationException;
 use Elgg\Exceptions\Http\GatekeeperException;
 use Elgg\Exceptions\Http\PageNotFoundException;
+use Elgg\Exceptions\HttpException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
@@ -24,6 +24,7 @@ use Elgg\Http\ResponseTransport;
 use Elgg\Project\Paths;
 use Elgg\Security\UrlSigner;
 use Elgg\Traits\Loggable;
+use Elgg\Upgrade\PhinxWrapper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -564,16 +565,12 @@ class Application {
 		set_time_limit(0);
 
 		$app = new \Phinx\Console\PhinxApplication();
-		$wrapper = new \Phinx\Wrapper\TextWrapper($app, [
+		$wrapper = new PhinxWrapper($app, [
 			'configuration' => $conf,
 		]);
-		$log = $wrapper->getMigrate();
+		$wrapper->getMigrate();
 
-		if (!empty($_SERVER['argv']) && in_array('--verbose', $_SERVER['argv'])) {
-			error_log($log);
-		}
-
-		return true;
+		return empty($wrapper->getExitCode());
 	}
 
 	/**
