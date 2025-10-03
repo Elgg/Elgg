@@ -1,3 +1,23 @@
+<a name="6.3.1"></a>
+### 6.3.1 (2025-10-03)
+
+#### Contributors
+
+* Jeroen Dalsem (7)
+* Jerôme Bakker (7)
+
+#### Bug fixes
+
+* **database:** improved Phinx upgrade logging [2e5e9e859](https://github.com/Elgg/Elgg/commit/2e5e9e859eeb6a919f2f72094d9255221f8ccfd0)
+* **log:** correctly show error logging backtraces [be61933d6](https://github.com/Elgg/Elgg/commit/be61933d6295f66c18535e526d5d8f81ed43144e)
+* **admin:** prevent user details from crashing if system log disabled [a7ead02fc](https://github.com/Elgg/Elgg/commit/a7ead02fc7c20c94afecc52a6e6484fd80a085a9)
+* **routes:** prevent route registration with required plugins [4a36c91d9](https://github.com/Elgg/Elgg/commit/4a36c91d9e7f08940497ee94f35bf838502a0a73)
+* **developers:** incorrect translation when inspecting routes [171e25f60](https://github.com/Elgg/Elgg/commit/171e25f60ebcd1aa1dc1280bc98cbc811a003b83)
+* **widgets:** css fix to correct incorrect offset calculation [4b345d3f6](https://github.com/Elgg/Elgg/commit/4b345d3f6c0fcf0291eff5100229a7376c6e8619)
+* **notifications:** allow instant notifications without custom handler [477c4e70c](https://github.com/Elgg/Elgg/commit/477c4e70c8a635a7b5a744577a74d110c2452cd9)
+* **db:** increased column limit for system_log object_class and event [7e7d13ed6](https://github.com/Elgg/Elgg/commit/7e7d13ed67a0c66e3699e28300580fc78253e56b)
+
+
 <a name="6.3.0"></a>
 ## 6.3.0 (2025-09-02)
 
