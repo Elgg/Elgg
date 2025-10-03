@@ -2128,4 +2128,7 @@ Global variables:
 
 	'core:upgrade:2024071001:title' => "Migreer de beheerder notificatie instellingen ten behoeve van validatie",
 	'core:upgrade:2024071001:description' => "Verhuis de opslag van de beheerder notificatie instellingen naar de notificatie instellingen",
+
+	'core:upgrade:2025060201:title' => "Correcte database waardes voor booleans opslaan",
+	'core:upgrade:2025060201:description' => "In de annotations en de metadata tabel werden falsy boolean waardes onjuist opgeslagen",
 );

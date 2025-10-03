@@ -2,12 +2,12 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\Http\Gatekeeper\AjaxGatekeeperException;
 use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Http\OkResponse;
 use Elgg\Http\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Elgg\Exceptions\Http\Gatekeeper\AjaxGatekeeperException;
 
 class RouterUnitTest extends \Elgg\UnitTestCase {
 
@@ -1212,6 +1212,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'handler' => 'hello_page_handler',
 			'required_plugins' => ['foo'],
 		]);
+
+		$this->assertFalse(elgg_route_exists('hello'));
+		$this->assertNull(elgg_generate_url('hello'));
 
 		$this->expectException(PageNotFoundException::class);
 		_elgg_services()->router->route($request);

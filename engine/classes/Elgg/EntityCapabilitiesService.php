@@ -15,7 +15,7 @@ class EntityCapabilitiesService {
 	 *
 	 * @var array
 	 */
-	protected $entities = [];
+	protected array $entities = [];
 	
 	/**
 	 * Checks if a capability is enabled for a specified type/subtype

@@ -8,6 +8,7 @@
 return array(
 	'item:object:discussion' => "Discussies",
 	'collection:object:discussion' => 'Discussies',
+	'list:object:discussion:no_results' => 'Geen discussies gevonden',
 	
 	'add:object:discussion' => 'Discussie toevoegen',
 	'edit:object:discussion' => 'Bewerk discussie',

@@ -2,6 +2,7 @@
 
 namespace Elgg\Router;
 
+use Elgg\Database\Plugins;
 use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Router\Middleware\MaintenanceGatekeeper;
@@ -25,12 +26,14 @@ class RouteRegistrationService {
 	 * @param RouteCollection       $routes          Route collection
 	 * @param UrlGenerator          $generator       URL Generator
 	 * @param SessionManagerService $session_manager Session manager service
+	 * @param Plugins               $plugins         Plugins
 	 */
 	public function __construct(
 		protected EventsService $events,
 		protected RouteCollection $routes,
 		protected UrlGenerator $generator,
-		protected SessionManagerService $session_manager
+		protected SessionManagerService $session_manager,
+		protected Plugins $plugins
 	) {
 	}
 
@@ -54,10 +57,10 @@ class RouteRegistrationService {
 	 *                       - methods : HTTP methods
 	 *                       - options : additional route options
 	 *
-	 * @return Route
+	 * @return Route|null
 	 * @throws InvalidArgumentException
 	 */
-	public function register(string $name, array $params = []): Route {
+	public function register(string $name, array $params = []): ?Route {
 
 		$params = $this->events->triggerResults('route:config', $name, $params, $params);
 
@@ -69,7 +72,7 @@ class RouteRegistrationService {
 		$middleware = elgg_extract('middleware', $params, []);
 		$walled = elgg_extract('walled', $params, true);
 		$deprecated = elgg_extract('deprecated', $params, '');
-		$required_plugins = elgg_extract('required_plugins', $params, []);
+		$required_plugins = (array) elgg_extract('required_plugins', $params, []);
 		$use_logged_in = (bool) elgg_extract('use_logged_in', $params, false);
 		$detect_page_owner = (bool) elgg_extract('detect_page_owner', $params, $use_logged_in);
 		$priority = (int) elgg_extract('priority', $params);
@@ -78,6 +81,12 @@ class RouteRegistrationService {
 			throw new InvalidArgumentException(
 				__METHOD__ . ' requires "path" and one of controller parameters ("resource", "controller", "file" or "handler") to be set'
 			);
+		}
+
+		foreach ($required_plugins as $plugin_id) {
+			if (!$this->plugins->isActive($plugin_id)) {
+				return null;
+			}
 		}
 
 		$defaults = elgg_extract('defaults', $params, []);
@@ -146,7 +155,6 @@ class RouteRegistrationService {
 		$defaults['_handler'] = $handler;
 		$defaults['_deprecated'] = $deprecated;
 		$defaults['_middleware'] = $middleware;
-		$defaults['_required_plugins'] = $required_plugins;
 		$defaults['_detect_page_owner'] = $detect_page_owner;
 		$defaults['_use_logged_in'] = $use_logged_in;
 

@@ -11,6 +11,7 @@ return array(
 	 */
 	'item:object:page' => 'Page',
 	'collection:object:page' => 'Pages',
+	'list:object:page:no_results' => 'Aucune page trouvée',
 	
 	'collection:object:page:all' => "Toutes les pages du site",
 	'collection:object:page:owner' => "Pages de %s",

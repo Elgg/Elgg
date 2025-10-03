@@ -13,6 +13,7 @@ return array(
 
 	'item:object:thewire' => "Wire bericht",
 	'collection:object:thewire' => 'Wire berichten',
+	'list:object:thewire:no_results' => 'Geen wire berichten gevonden',
 	
 	'collection:object:thewire:all' => "Alle wire berichten",
 	'collection:object:thewire:owner' => "%s's wire berichten",

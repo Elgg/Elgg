@@ -5,6 +5,7 @@ namespace Elgg\Logger;
 use Elgg\Application;
 use Elgg\Cli\CronLogHandler;
 use Elgg\Exceptions\InvalidArgumentException;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Processor\MemoryPeakUsageProcessor;
 use Monolog\Processor\MemoryUsageProcessor;
@@ -46,7 +47,7 @@ class Cron extends \Monolog\Logger {
 		// default file output handler
 		$handler = new StreamHandler($filename);
 		
-		$formatter = new ElggLogFormatter();
+		$formatter = new LineFormatter();
 		$formatter->allowInlineLineBreaks();
 		$formatter->ignoreEmptyContextAndExtra();
 		

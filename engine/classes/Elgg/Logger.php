@@ -6,7 +6,7 @@ use Elgg\Cli\Application as CliApplication;
 use Elgg\Cli\ErrorFormatter;
 use Elgg\Cli\ErrorHandler;
 use Elgg\Logger\BacktraceProcessor;
-use Elgg\Logger\ElggLogFormatter;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Level;
 use Monolog\Processor\MemoryPeakUsageProcessor;
@@ -107,7 +107,7 @@ class Logger extends \Monolog\Logger {
 
 			$handler->pushProcessor(new WebProcessor());
 
-			$formatter = new ElggLogFormatter();
+			$formatter = new LineFormatter();
 			$formatter->allowInlineLineBreaks();
 			$formatter->ignoreEmptyContextAndExtra();
 
@@ -234,6 +234,13 @@ class Logger extends \Monolog\Logger {
 	 * {@inheritdoc}
 	 */
 	public function log($level, $message, array $context = []): void {
+		if ($message instanceof \Throwable) {
+			if (!isset($context['throwable']) && $this->isLoggable(LogLevel::NOTICE)) {
+				$context['throwable'] = $message;
+			}
+
+			$message = $message->getMessage();
+		}
 
 		$level = $this->normalizeLevel($level);
 

@@ -28,6 +28,7 @@ return array(
 
 	'item:object:messages' => 'Bericht',
 	'collection:object:messages' => 'Berichten',
+	'list:object:messages:no_results' => 'Geen berichten gevonden',
 
 	/**
 	* Status messages

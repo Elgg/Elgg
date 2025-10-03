@@ -11,6 +11,7 @@ return array(
 	 */
 	'item:object:bookmarks' => 'Signet',
 	'collection:object:bookmarks' => 'Signets',
+	'list:object:bookmarks:no_results' => 'Aucun signet trouvé',
 	
 	'collection:object:bookmarks:group' => 'Signets du groupe',
 	'collection:object:bookmarks:all' => "Tous les signets du site",
