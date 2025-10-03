@@ -87,7 +87,9 @@ return [
 					break;
 			}
 		} else {
-			$logger->setLevel($c->config->debug);
+			// use value in settings.php if available
+			$level = $c->config->getInitialValue('debug') ?? ($c->config->debug ?: LogLevel::CRITICAL);
+			$logger->setLevel($level);
 		}
 
 		return $logger;
