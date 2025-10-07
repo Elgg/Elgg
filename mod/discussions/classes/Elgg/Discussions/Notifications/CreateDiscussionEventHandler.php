@@ -34,7 +34,7 @@ class CreateDiscussionEventHandler extends NotificationEventHandler {
 			$entity?->getDisplayName(),
 			$entity?->description,
 			$entity?->getURL(),
-		], $recipient->getLanguage());
+		]);
 	}
 	
 	/**
