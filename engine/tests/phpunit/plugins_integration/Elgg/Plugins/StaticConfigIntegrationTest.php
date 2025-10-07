@@ -94,9 +94,24 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 				$view = "resources/{$conf['resource']}";
 				$this->assertTrue(elgg_view_exists($view), "Resource $view for route $name does not exist");
 			}
-			
+
+			$required_plugins = (array) elgg_extract('required_plugins', $conf);
+			$validate_route = true;
+			foreach ($required_plugins as $plugin) {
+				if (!elgg_is_active_plugin($plugin)) {
+					$validate_route = false;
+					break;
+				}
+			}
+
 			elgg_register_route($name, $conf);
-			$this->assertInstanceOf(Route::class, _elgg_services()->routeCollection->get($name));
+
+			if ($validate_route) {
+				$this->assertInstanceOf(Route::class, _elgg_services()->routeCollection->get($name));
+			} else {
+				$this->assertNull(_elgg_services()->routeCollection->get($name));
+			}
+
 			elgg_unregister_route($name);
 		}
 	}
