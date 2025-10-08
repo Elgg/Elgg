@@ -4,8 +4,8 @@ namespace Elgg\Notifications;
 
 use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
-use Elgg\Traits\Loggable;
 use Elgg\Queue\Queue;
+use Elgg\Traits\Loggable;
 
 /**
  * Notifications service
@@ -242,7 +242,7 @@ class NotificationsService {
 	 */
 	protected function getNotificationHandler(NotificationEvent $event, array $params = []): NotificationEventHandler {
 		$object = $event->getObject();
-		$handler = NotificationEventHandler::class;
+		$handler = ($event instanceof InstantNotificationEvent) ? InstantNotificationEventHandler::class : NotificationEventHandler::class;
 		
 		if (isset($this->events[$object->getType()][$object->getSubtype()][$event->getAction()])) {
 			$handler = $this->events[$object->getType()][$object->getSubtype()][$event->getAction()];

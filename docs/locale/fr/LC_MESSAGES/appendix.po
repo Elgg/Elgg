@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 09:07+0200\n"
+"POT-Creation-Date: 2025-09-02 11:58+0200\n"
 "PO-Revision-Date: 2024-04-15 12:07+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -54,6 +54,7 @@ msgstr "Ci-dessous quelques questions fréquemment posées à propos de Elgg."
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:6
 #: ../../appendix/upgrade-notes/6.0-to-6.1.rst:6
 #: ../../appendix/upgrade-notes/6.1-to-6.2.rst:6
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:6
 msgid "Contents"
 msgstr "Contenu"
 
@@ -2758,7 +2759,7 @@ msgstr "Novembre 2024"
 msgid "6.1"
 msgstr "6.1"
 
-#: ../../appendix/support.rst:85
+#: ../../appendix/support.rst:85 ../../appendix/support.rst:87
 msgid "April 2025"
 msgstr "Avril 2025"
 
@@ -2766,15 +2767,19 @@ msgstr "Avril 2025"
 msgid "6.2"
 msgstr "6.2"
 
-#: ../../appendix/support.rst:87
-msgid "April 2024"
-msgstr "Avril 2024"
+#: ../../appendix/support.rst:87 ../../appendix/support.rst:89
+msgid "September 2025"
+msgstr "Septembre 2025"
 
 #: ../../appendix/support.rst:89
+msgid "6.3"
+msgstr "6.3"
+
+#: ../../appendix/support.rst:91
 msgid "7.0"
 msgstr "7.0"
 
-#: ../../appendix/support.rst:89
+#: ../../appendix/support.rst:91
 msgid "TBD"
 msgstr "A FAIRE"
 
@@ -5165,6 +5170,7 @@ msgstr "De 2.0 à 2.1"
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:439
 #: ../../appendix/upgrade-notes/6.0-to-6.1.rst:18
 #: ../../appendix/upgrade-notes/6.1-to-6.2.rst:9
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:9
 msgid "Deprecated APIs"
 msgstr "APIs dépréciées"
 
@@ -18856,7 +18862,7 @@ msgid ""
 "The constant ``ELGG_CACHE_RUNTIME`` is deprecated. Use "
 "``\\Elgg\\Cache\\CompositeCache::CACHE_RUNTIME``."
 msgstr ""
-"La constante ``ELGG_CACHE_RUNTIME`` est déprciée. Utilsiez "
+"La constante ``ELGG_CACHE_RUNTIME`` est dépréciée. Utilisez "
 "``\\Elgg\\Cache\\CompositeCache::CACHE_RUNTIME``."
 
 #: ../../appendix/upgrade-notes/6.0-to-6.1.rst:13
@@ -18913,7 +18919,7 @@ msgstr "``elgg_is_system_cache_enabled``"
 
 #: ../../appendix/upgrade-notes/6.0-to-6.1.rst:27
 msgid "``elgg_plugin_exists`` use ``elgg_get_plugin_from_id()``"
-msgstr "``elgg_plugin_exists`` use ``elgg_get_plugin_from_id()``"
+msgstr "``elgg_plugin_exists`` utilisez ``elgg_get_plugin_from_id()``"
 
 #: ../../appendix/upgrade-notes/6.0-to-6.1.rst:28
 msgid "``elgg_reset_system_cache``"
@@ -18934,3 +18940,37 @@ msgstr "``thewire_get_hashtags()``"
 #: ../../appendix/upgrade-notes/6.1-to-6.2.rst:13
 msgid "``thewire_filter()`` use ``elgg_format_html()``"
 msgstr "``thewire_filter()`` utilisez ``elgg_format_html()``"
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:2
+msgid "From 6.2 to 6.3"
+msgstr "De 6.2 à 6.3"
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:11
+msgid "``elgg_dump()`` use ``elgg_log()``"
+msgstr "``elgg_dump()`` utilisez ``elgg_log()``"
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:12
+msgid "``notify_user()`` use ``elgg_notify_user()`` or ``\\ElggUser::notify()``"
+msgstr ""
+"``notify_user()`` utilisez ``elgg_notify_user()`` ou "
+"``\\ElggUser::notify()``"
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:15
+msgid "Deprectated classes"
+msgstr "Classes dépréciées"
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:17
+msgid ""
+"using ``\\ElggObject`` directly has been deprecated. Use your own extension "
+"of an ``ElggObject`` for your subtype."
+msgstr ""
+"l'utilisation directe de ``\\ElggObject`` est dépréciée. Utilisez votre "
+"propre extension d'un ``ElggObject`` pour votre sous-type."
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:20
+msgid "Deprecated class functions"
+msgstr "Fonctions de classe dépréciées"
+
+#: ../../appendix/upgrade-notes/6.2-to-6.3.rst:22
+msgid "``\\Elgg\\Logger::dump()`` use ``\\Elgg\\Logger::error()``"
+msgstr "``\\Elgg\\Logger::dump()`` utilisez ``\\Elgg\\Logger::error()``"

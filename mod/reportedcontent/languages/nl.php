@@ -8,6 +8,7 @@
 return array(
 	'item:object:reported_content' => 'Gemeld item',
 	'collection:object:reported_content' => 'Gemelde items',
+	'list:object:reported_content:no_results' => 'Geen gemelde inhoud gevonden',
 	
 	'admin:administer_utilities:reportedcontent' => 'Gemelde inhoud',
 	'admin:administer_utilities:reportedcontent:archive' => 'Gemelde inhoud - archief',

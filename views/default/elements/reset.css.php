@@ -273,3 +273,11 @@ fieldset {
 	border: none;
 	min-width: 0; /* override -webkit-min-content */
 }
+
+.ui-sortable {
+	overflow: auto; /* fixes positioning if a parent container has position:relative */
+
+	.ui-sortable-handle {
+		cursor: move;
+	}
+}

@@ -102,7 +102,7 @@ ElggEntity functions
 
 There are 3 functions in an ``ElggEntity`` related to the deletion of that entity:
 
-- ``public function delete(bool $recursive = true, bool $persistent = null): bool``
+- ``public function delete(bool $recursive = true, ?bool $persistent = null): bool``
 - ``protected function persistentDelete(bool $recursive = true): bool``
 - ``protected function trash(bool $recursive = true): bool``
 - ``public function isDeleted(): bool``

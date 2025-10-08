@@ -4,8 +4,8 @@ namespace Elgg\Cli;
 
 use Elgg\Application as ElggApplication;
 use Elgg\Exceptions\Exception;
-use Elgg\Logger\ElggLogFormatter;
 use Monolog\Formatter\FormatterInterface;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Level;
 use Monolog\LogRecord;
@@ -52,7 +52,7 @@ class CronLogHandler extends AbstractProcessingHandler {
 	 * {@inheritdoc}
 	 */
 	public function getDefaultFormatter(): FormatterInterface {
-		$formatter = new ElggLogFormatter();
+		$formatter = new LineFormatter();
 		$formatter->allowInlineLineBreaks();
 		$formatter->ignoreEmptyContextAndExtra();
 		

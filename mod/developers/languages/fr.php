@@ -78,6 +78,7 @@ return array(
 	'developers:inspect:notifications:subtype' => 'Sous-type - subtype',
 	'developers:inspect:notifications:action' => 'Action',
 	'developers:inspect:notifications:handler' => 'Gestionnaire',
+	'developers:inspect:notifications:instant' => 'Notification instantanée',
 	'developers:inspect:priority' => 'Priorité',
 	'developers:inspect:seeders' => 'Semeurs',
 	'developers:inspect:simplecache' => 'Cache simple',

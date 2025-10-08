@@ -11,6 +11,7 @@ return array(
 	 */
 	'item:object:bookmarks' => 'Favorieten',
 	'collection:object:bookmarks' => 'Favorieten',
+	'list:object:bookmarks:no_results' => 'Geen favorieten gevonden',
 	
 	'collection:object:bookmarks:group' => 'Groepsfavorieten',
 	'collection:object:bookmarks:all' => "Alle favorieten",

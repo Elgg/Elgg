@@ -11,19 +11,16 @@ use Monolog\LogRecord;
  */
 class BacktraceProcessor {
 	
-	private $level;
-
-	private $backtrace_level;
+	protected Level $level;
 
 	/**
 	 * Constructor
 	 *
 	 * @param int $level           Logging level
-	 * @param int $backtrace_level Backtrance level (-1 for all)
+	 * @param int $backtrace_level Backtrace level (-1 for all)
 	 */
-	public function __construct($level = Level::Warning, $backtrace_level = -1) {
+	public function __construct($level = Level::Warning, protected int $backtrace_level = -1) {
 		$this->level = Logger::toMonologLevel($level);
-		$this->backtrace_level = $backtrace_level;
 	}
 
 	/**
@@ -39,15 +36,38 @@ class BacktraceProcessor {
 			return $record;
 		}
 
+		if (isset($record->context['throwable'])) {
+			// rely on default output
+			return $record;
+		}
+
+		$backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+		foreach ($backtrace as $index => $trace) {
+			if (isset($trace['file'])) {
+				// strip the monolog stack
+				if (str_contains($trace['file'], '\Monolog\\')) {
+					unset($backtrace[$index]);
+					continue;
+				}
+
+				if (str_contains($trace['file'], '\Elgg\Logger.php')) {
+					unset($backtrace[$index]);
+					continue;
+				}
+
+				if (str_contains($trace['file'], '\lib\elgglib.php')) {
+					unset($backtrace[$index]);
+					continue;
+				}
+
+				break;
+			}
+		}
+
+		$i = count($backtrace);
 		$backtrace_level = $this->backtrace_level;
 
 		$stack = [];
-		$backtrace = debug_backtrace();
-		// never show this call.
-		$backtrace = array_slice($backtrace,  9); // ignore the monolog stack
-
-		$i = count($backtrace);
-
 		foreach ($backtrace as $trace) {
 			if (empty($trace['file'])) {
 				// file/line not set for Closures

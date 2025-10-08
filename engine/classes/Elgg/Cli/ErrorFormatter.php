@@ -2,7 +2,7 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Logger\ElggLogFormatter;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Level;
 use Monolog\LogRecord;
 use Symfony\Component\Console\Helper\FormatterHelper;
@@ -10,7 +10,7 @@ use Symfony\Component\Console\Helper\FormatterHelper;
 /**
  * Format errors for console output
  */
-class ErrorFormatter extends ElggLogFormatter {
+class ErrorFormatter extends LineFormatter {
 
 	const SIMPLE_FORMAT = '%level_name%: %message%';
 

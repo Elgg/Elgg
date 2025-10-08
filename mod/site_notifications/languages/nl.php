@@ -11,6 +11,7 @@ return array(
 	'site_notifications:topbar' => 'Notificaties',
 	'item:object:site_notification' => 'Site notificatie',
 	'collection:object:site_notification' => 'Site notificaties',
+	'list:object:site_notification:no_results' => 'Geen site notificaties gevonden',
 
 	'site_notifications:unread' => 'Ongelezen',
 	'site_notifications:read' => 'Gelezen',
