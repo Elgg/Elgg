@@ -46,7 +46,6 @@ return array(
 	'notification:mentions:object:page:subject' => '%s упомянул вас на странице',
 
 	'pages:more' => 'Больше страниц',
-	'pages:none' => 'Страниц пока нет', // @todo remove in Elgg 7.0
 
 	/**
 	* River

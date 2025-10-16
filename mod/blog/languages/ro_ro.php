@@ -36,7 +36,6 @@ return array(
 	'blog:error:cannot_save' => 'Nu am putut salva postarea de blog.',
 	'blog:error:cannot_write_to_container' => 'Acces insuficient pentru a salva blogul către grup.',
 	'blog:edit_revision_notice' => '(Versiune veche)',
-	'blog:none' => 'Nu există postări de blog.', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Te rugăm să introduci un titlu de blog!',
 	'blog:error:missing:description' => 'Te rugăm să introduci conținutul blogului tău!',
 	'blog:error:post_not_found' => 'Nu am putit găsi postarea de blog specificată.',

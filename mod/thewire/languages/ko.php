@@ -22,7 +22,6 @@ return array(
 	'thewire:thread' => "글모음",
 	'thewire:charleft' => "글자 남음",
 	'thewire:tags' => " '%s' 꼬리표달린 쪽글",
-	'thewire:noposts' => "쪽글이 없습니다", // @todo remove in Elgg 7.0
 
 	'thewire:by' => '%s의 쪽글',
 

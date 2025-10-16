@@ -5,6 +5,7 @@ namespace Elgg;
 use Elgg\Cli\Application as CliApplication;
 use Elgg\Cli\ErrorFormatter;
 use Elgg\Cli\ErrorHandler;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Logger\BacktraceProcessor;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\ErrorLogHandler;
@@ -33,8 +34,7 @@ class Logger extends \Monolog\Logger {
 	 * Severity levels
 	 * @var array
 	 */
-	protected static $elgg_levels = [
-		0 => false,
+	protected static array $elgg_levels = [
 		100 => LogLevel::DEBUG,
 		200 => LogLevel::INFO,
 		250 => LogLevel::NOTICE,
@@ -45,27 +45,9 @@ class Logger extends \Monolog\Logger {
 		600 => LogLevel::EMERGENCY,
 	];
 
-	/**
-	 * A map of legacy string levels
-	 * @var array
-	 */
-	protected static $legacy_levels = [
-		'OFF' => false,
-		'INFO' => LogLevel::INFO,
-		'NOTICE' => LogLevel::NOTICE,
-		'WARNING' => LogLevel::WARNING,
-		'ERROR' => LogLevel::ERROR,
-	];
+	protected string $level = LogLevel::EMERGENCY;
 
-	/**
-	 * @var false|string The logging level
-	 */
-	protected $level;
-
-	/**
-	 * @var array
-	 */
-	protected $disabled_stack = [];
+	protected array $disabled_stack = [];
 
 	/**
 	 * Build a new logger
@@ -123,77 +105,51 @@ class Logger extends \Monolog\Logger {
 
 		$logger->pushHandler($handler);
 
-		$logger->setLevel();
+		// determine default log level
+		$php_error_level = error_reporting();
+
+		$level = LogLevel::CRITICAL;
+
+		if (($php_error_level & E_NOTICE) == E_NOTICE) {
+			$level = LogLevel::NOTICE;
+		} else if (($php_error_level & E_WARNING) == E_WARNING) {
+			$level = LogLevel::WARNING;
+		} else if (($php_error_level & E_ERROR) == E_ERROR) {
+			$level = LogLevel::ERROR;
+		}
+
+		$logger->setLevel($level);
 
 		return $logger;
 	}
 
 	/**
-	 * Normalizes legacy string or numeric representation of the level to LogLevel strings
+	 * Assert the given level
 	 *
-	 * @param mixed $level Level
+	 * @param string $level the level to assert
 	 *
-	 * @return string|false
+	 * @return void
+	 * @throws InvalidArgumentException
 	 */
-	protected function normalizeLevel($level = null) {
-		if (!is_string($level) || !in_array($level, self::$elgg_levels)) {
-			$level_value = $level;
-			if ($level === false) {
-				$level_value = 'false';
-			}
-			
-			$this->warning("Deprecated in 6.1: Using the log level '{$level_value}' has been deprecated. Use the \Psr\Log\LogLevel constants.");
-		}
-		
-		if (!$level) {
-			return false;
-		}
-
-		if (array_key_exists($level, self::$legacy_levels)) {
-			$level = self::$legacy_levels[$level];
-			if ($level === false) {
-				// can't array_key_exists for false
-				return 0;
-			}
-		}
-
-		if (array_key_exists($level, self::$elgg_levels)) {
-			$level = self::$elgg_levels[$level];
-		}
-
+	protected function assertLevel(string $level): void {
 		if (!in_array($level, self::$elgg_levels)) {
-			$level = false;
+			throw new InvalidArgumentException("Using the log level '{$level}' is not allowed. Use one of the \Psr\Log\LogLevel constants.");
 		}
-
-		return $level;
 	}
 
 	/**
 	 * Set the logging level
 	 *
-	 * @param mixed $level Level
+	 * @param string $level Level
 	 *
 	 * @return void
+	 * @throws InvalidArgumentException
 	 * @internal
 	 */
-	public function setLevel($level = null) {
-		// TODO: In Elgg 7 we should throw exceptions if level is not a Psr/Log/LogLevel
-		
-		if (!isset($level)) {
-			$php_error_level = error_reporting();
+	public function setLevel(string $level = LogLevel::EMERGENCY): void {
+		$this->assertLevel($level);
 
-			$level = LogLevel::CRITICAL;
-
-			if (($php_error_level & E_NOTICE) == E_NOTICE) {
-				$level = LogLevel::NOTICE;
-			} else if (($php_error_level & E_WARNING) == E_WARNING) {
-				$level = LogLevel::WARNING;
-			} else if (($php_error_level & E_ERROR) == E_ERROR) {
-				$level = LogLevel::ERROR;
-			}
-		}
-
-		$this->level = $this->normalizeLevel($level);
+		$this->level = $level;
 	}
 
 	/**
@@ -201,39 +157,36 @@ class Logger extends \Monolog\Logger {
 	 *
 	 * @param bool $severity If true, will return numeric representation of the logging level
 	 *
-	 * @return int|string|false
+	 * @return int|string
 	 * @internal
 	 */
-	public function getLevel($severity = true) {
-		if ($severity) {
-			return array_search($this->level, self::$elgg_levels);
-		}
-
-		return $this->level;
+	public function getLevel(bool $severity = true): int|string {
+		return $severity ? array_search($this->level, self::$elgg_levels) : $this->level;
 	}
 
 	/**
 	 * Check if a level is loggable under current logging level
 	 *
-	 * @param mixed $level Level name or severity code
+	 * @param string $level Level name
 	 *
 	 * @return bool
+	 * @throws InvalidArgumentException
 	 */
-	public function isLoggable($level) {
-		$level = $this->normalizeLevel($level);
+	public function isLoggable(string $level): bool {
+		$this->assertLevel($level);
 
-		$severity = array_search($level, self::$elgg_levels);
-		if (!$this->getLevel() || $severity < $this->getLevel()) {
-			return false;
-		}
-
-		return true;
+		$severity = (int) array_search($level, self::$elgg_levels);
+		return $severity >= $this->getLevel();
 	}
 
 	/**
 	 * {@inheritdoc}
+	 * @throws InvalidArgumentException
 	 */
 	public function log($level, $message, array $context = []): void {
+		$level = (string) $level;
+		$this->assertLevel($level);
+
 		if ($message instanceof \Throwable) {
 			if (!isset($context['throwable']) && $this->isLoggable(LogLevel::NOTICE)) {
 				$context['throwable'] = $message;
@@ -241,8 +194,6 @@ class Logger extends \Monolog\Logger {
 
 			$message = $message->getMessage();
 		}
-
-		$level = $this->normalizeLevel($level);
 
 		if (!empty($this->disabled_stack)) {
 			// capture to top of stack
@@ -317,20 +268,6 @@ class Logger extends \Monolog\Logger {
 	 */
 	public function debug($message, array $context = []): void {
 		$this->log(LogLevel::DEBUG, $message, $context);
-	}
-
-	/**
-	 * Dump data to log
-	 *
-	 * @param mixed $data The data to log
-	 *
-	 * @return void
-	 * @deprecated 6.3 Use self::error()
-	 */
-	public function dump($data) {
-		$this->warning('Deprecated in 6.3: ' . __METHOD__ . ' has been deprecated use ->error()');
-		
-		$this->log(LogLevel::ERROR, $data);
 	}
 
 	/**

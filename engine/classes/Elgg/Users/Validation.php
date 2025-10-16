@@ -2,7 +2,7 @@
 
 namespace Elgg\Users;
 
-use Elgg\Exceptions\LoginException;
+use Elgg\Exceptions\Http\LoginException;
 use Elgg\Http\ResponseBuilder;
 
 /**

@@ -5,7 +5,7 @@
  * Sets a flag in the session to let us know who the originally logged in user is.
  */
 
-use Elgg\Exceptions\LoginException;
+use Elgg\Exceptions\Http\LoginException;
 
 $user_guid = (int) get_input('user_guid');
 

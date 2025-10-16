@@ -13,7 +13,6 @@ return array(
 	'reportedcontent' => 'Anmäl innehåll',
 	'reportedcontent:this' => 'Anmäl detta',
 	'reportedcontent:this:tooltip' => 'Anmäl den här sidan till en administratör',
-	'reportedcontent:none' => 'Det finns inget anmält innehåll', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Anmäl till admin',
 	'reportedcontent:archive' => 'Arkivera anmälan',
 	'reportedcontent:archived' => 'Anmälan har arkiverats',

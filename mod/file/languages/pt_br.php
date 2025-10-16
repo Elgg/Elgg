@@ -99,7 +99,6 @@ Visualize e comente no Arquivo:
 	 * Error messages
 	 */
 
-	'file:none' => "Nenhum Arquivo.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Desculpe; não foi possível salvar o seu Arquivo.",
 	'file:noaccess' => "Você não tem permissão para alterar este Arquivo",
 	'file:cannotload' => "Ocorreu um erro ao enviar o Arquivo",

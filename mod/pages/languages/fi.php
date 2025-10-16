@@ -30,7 +30,6 @@ return array(
 	'pages:notify:subject' => "Uusi wikisivu: %s",
 
 	'pages:more' => 'Lisää wikisivuja',
-	'pages:none' => 'Wikejä ei vielä ole luotu', // @todo remove in Elgg 7.0
 
 	/**
 	* River

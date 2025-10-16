@@ -79,7 +79,6 @@ Seall agus fàg beachd ùr air an fhaidhle:
 	 * Error messages
 	 */
 
-	'file:none' => "Gun faidhle", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Tha sinn duilich. Cha b' urrainn dhuinn am faidhle agad a shàbhaladh.",
 	'file:noaccess' => "Chan eil cead agad am faidhle seo a dheasachadh.",
 	'file:cannotload' => "Thachair mearachd rè an luchdaidh suas.",

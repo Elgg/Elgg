@@ -27,7 +27,6 @@ return array(
 	'bookmarks:bookmarklet' => "ブックマークレットの取得",
 	'bookmarks:bookmarklet:group' => "グループのブックマークレットの取得",
 	'bookmarks:address' => "ブックマークのアドレス",
-	'bookmarks:none' => 'ブックマークはひとつも登録されていません', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => '新着ブックマーク「%s」があります。',
 	'bookmarks:notify:subject' => '新着ブックマーク: %s',

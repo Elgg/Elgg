@@ -4,7 +4,7 @@
  */
 
 use Elgg\Exceptions\Configuration\RegistrationException;
-use Elgg\Exceptions\LoginException;
+use Elgg\Exceptions\Http\LoginException;
 
 /* @var $request \Elgg\Request */
 

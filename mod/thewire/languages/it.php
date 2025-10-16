@@ -21,7 +21,6 @@ return array(
 	'thewire:thread' => "Argomento",
 	'thewire:charleft' => "caratteri rimanenti",
 	'thewire:tags' => "Messaggi con tag '%s'",
-	'thewire:noposts' => "Ancora nessun messaggio", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Messaggi da %s',
 	

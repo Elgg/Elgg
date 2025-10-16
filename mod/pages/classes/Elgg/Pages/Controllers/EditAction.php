@@ -8,16 +8,7 @@ namespace Elgg\Pages\Controllers;
  * @since 6.2
  */
 class EditAction extends \Elgg\Controllers\EntityEditAction {
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function sanitize(): void {
-		parent::sanitize();
-		
-		$this->request->setParam('guid', $this->request->getParam('guid', $this->request->getParam('page_guid'))); // @todo remove in Elgg 7.0
-	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */

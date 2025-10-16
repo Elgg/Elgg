@@ -11,13 +11,6 @@
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-button');
 
-if (!isset($vars['text']) && isset($vars['value'])) {
-	// Keeping this to ease the transition to 3.0
-	$vars['text'] = elgg_extract('value', $vars);
-	
-	elgg_deprecated_notice('Only providing a value to a button is deprecated, please also provide a text: ' . $vars['value'], '5.0');
-}
-
 if (!empty($vars['confirm'])) {
 	$vars['data-confirm'] = elgg_extract('confirm', $vars);
 	

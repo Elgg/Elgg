@@ -30,7 +30,6 @@ return array(
 	'pages:notify:subject' => "Nowa strona: %s",
 
 	'pages:more' => 'Więcej stron',
-	'pages:none' => 'Nie utworzono jeszcze stron', // @todo remove in Elgg 7.0
 
 	/**
 	* River

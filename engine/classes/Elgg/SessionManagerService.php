@@ -4,7 +4,7 @@ namespace Elgg;
 
 use Elgg\Cache\AccessCache;
 use Elgg\Cache\EntityCache;
-use Elgg\Exceptions\LoginException;
+use Elgg\Exceptions\Http\LoginException;
 use Elgg\Exceptions\SecurityException;
 use Elgg\I18n\Translator;
 

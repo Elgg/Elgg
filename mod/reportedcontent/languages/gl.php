@@ -13,7 +13,6 @@ return array(
 	'reportedcontent' => 'Contido denunciado',
 	'reportedcontent:this' => 'Denunciar',
 	'reportedcontent:this:tooltip' => 'Denunciar a páxina ante un administrador',
-	'reportedcontent:none' => 'Non hai contido denunciado', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Denunciar ante un administrador',
 	'reportedcontent:archive' => 'Arquivar a denuncia',
 	'reportedcontent:archived' => 'Arquivouse a denuncia.',

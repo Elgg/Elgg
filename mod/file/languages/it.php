@@ -67,7 +67,6 @@ return array(
 	 * Error messages
 	 */
 
-	'file:none' => "Nessun file caricato.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Impossibile salvare il file.",
 	'file:noaccess' => "Permessi insufficienti per modificare questo file",
 	'file:cannotload' => "Si è verificato un errore durante il caricamento del file",

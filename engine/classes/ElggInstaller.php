@@ -8,7 +8,7 @@ use Elgg\Exceptions\Configuration\InstallationException;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\ConfigurationException;
 use Elgg\Exceptions\DatabaseException;
-use Elgg\Exceptions\LoginException;
+use Elgg\Exceptions\Http\LoginException;
 use Elgg\Exceptions\PluginException;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;

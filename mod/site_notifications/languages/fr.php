@@ -25,7 +25,6 @@ return array(
 	'site_notifications:settings:read_cleanup_interval' => 'Intervalle de nettoyage des notifications lues',
 	'site_notifications:settings:read_cleanup_interval:help' => 'Fréquence à laquelle les notifications lues doivent être nettoyées. Sur les sites à plus forte activité, vous souhaiterez peut-être augmenter l\'intervalle afin de suivre le nombre de nouvelles notifications du site.',
 	
-	'site_notifications:empty' => 'Pas de notification', // @todo remove in Elgg 7.0
 	'site_notifications:toggle_all' => 'Inverser la sélection',
 	'site_notifications:mark_read' => 'Marquer comme lu',
 	'site_notifications:mark_read:confirm' => 'Confirmez-vous vouloir marquer toutes les notifications sélectionnées comme lues ?',

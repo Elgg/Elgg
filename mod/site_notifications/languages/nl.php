@@ -25,7 +25,6 @@ return array(
 	'site_notifications:settings:read_cleanup_interval' => 'Interval voor het opschonen van gelezen notificaties',
 	'site_notifications:settings:read_cleanup_interval:help' => 'Hoe vaak moeten de gelezen notificaties worden opgeschoond. Bij websites met een hoge activiteit kan het verhogen van de interval ervoor zorgen dat het opschonen de toestroom van de nieuwe site notificaties kan bijhouden.',
 	
-	'site_notifications:empty' => 'Geen notificaties', // @todo remove in Elgg 7.0
 	'site_notifications:toggle_all' => 'Selecteer alles',
 	'site_notifications:mark_read' => 'Markeer als gelezen',
 	'site_notifications:mark_read:confirm' => 'Weet je zeker dat je alle geselecteerde notificaties als gelezen wilt markeren?',

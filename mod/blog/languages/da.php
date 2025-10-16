@@ -32,7 +32,6 @@ return array(
 	'blog:error:cannot_save' => 'Kan ikke gemme blogindlæg.',
 	'blog:error:cannot_write_to_container' => 'Utilstrækkelig adgang til at gemme bloggen til gruppe.',
 	'blog:edit_revision_notice' => '(Gammel version)',
-	'blog:none' => 'Ingen blogindlæg', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Angiv en blog titel!',
 	'blog:error:missing:description' => 'Indtast venligst brødteksten til ​​din blog!',
 	'blog:error:post_not_found' => 'Kan ikke finde det specifikke blog indlæg',

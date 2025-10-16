@@ -60,7 +60,6 @@ Pentru a-i trimite un mesaj utilizatorului %s, apasă aici:
 	*/
 
 	'messages:blank' => "Scuze; trebuie să adaugi ceva în corpul mesajului înainte să îl putem salva.",
-	'messages:nomessages' => "Nu există mesaje.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "Nu am putut găsi destinatarul în baza de date.",
 	'messages:user:blank' => "Nu ai selectat pe cineva pentru a trimite.",
 	'messages:user:self' => "Nu-ți poți trimite un mesaj ție.",

@@ -24,7 +24,6 @@ return array(
 	'site_notifications:settings:read_cleanup_interval' => 'Lösch-Interval für gelesene Seiten-Benachrichtigungen',
 	'site_notifications:settings:read_cleanup_interval:help' => 'Lege fest, wie oft gelesene Seiten-Benachrichtigungen gelöscht werden sollen. Auf Community-Seiten mit einer hohen Aktivität kann es sinnvoll sein, das Interval zu vergrößern, damit die möglicherweise höhere Anzahl an Benachrichtigungen berücksichtigt werden kann.',
 	
-	'site_notifications:empty' => 'Es sind keine Seiten-Benachrichtigungen vorhanden.', // @todo remove in Elgg 7.0
 	'site_notifications:toggle_all' => 'Alle auswählen',
 	'site_notifications:mark_read' => 'Als gelesen markieren',
 	'site_notifications:mark_read:confirm' => 'Bist Du sicher, daß Du alle ausgewählten Seiten-Benachrichtigungen als gelesen markieren willst?',

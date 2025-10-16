@@ -80,8 +80,8 @@ class BootService {
 			// CLI log level is determined by CLI verbosity
 			// use value in settings.php if available
 			// database needs to be loaded into config to determine log level correctly
-			$debug = $config->getInitialValue('debug') ?? ($config->debug ?: LogLevel::CRITICAL);
-			$services->logger->setLevel($debug);
+			$debug = $config->getInitialValue('debug') ?: ($config->debug ?: LogLevel::CRITICAL);
+			$services->logger->setLevel((string) $debug);
 		}
 
 		$services->views->configureFromCache();

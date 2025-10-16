@@ -47,7 +47,6 @@ return array(
 	*/
 
 	'messages:blank' => "Beklager, du skal skrive noget i beskedfeltet, før den kan gemmes.",
-	'messages:nomessages' => "Der er ingen beskeder at vise.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "Modtageren kunne ikke findes i databasen.",
 	'messages:user:blank' => "Du har ikke valgt nogen at sende til.",
 	'messages:user:self' => "Du kan ikke sende en besked til dig selv.",

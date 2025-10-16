@@ -31,7 +31,6 @@ return array(
 	'thewire:thread' => "Conversation",
 	'thewire:charleft' => "caractères restant",
 	'thewire:tags' => "Messages du Fil taggués \"%s\"",
-	'thewire:noposts' => "Il n'y a pas encore de message sur le Fil", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Message du Fil de %s',
 

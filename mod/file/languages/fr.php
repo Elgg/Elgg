@@ -100,7 +100,6 @@ Afficher et commenter le fichier :
 	 * Error messages
 	 */
 
-	'file:none' => "Aucun fichier.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Désolé, votre fichier n'a pas pu être enregistré.",
 	'file:noaccess' => "Vous n'avez pas la permission de modifier ce fichier",
 	'file:cannotload' => "Une erreur s'est produite lors de l'envoi du fichier",

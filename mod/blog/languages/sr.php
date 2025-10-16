@@ -32,7 +32,6 @@ return array(
 	'blog:error:cannot_save' => 'Није успело чување чланка.',
 	'blog:error:cannot_write_to_container' => 'Недовољне привилегије да би чланак био сачуван.',
 	'blog:edit_revision_notice' => '(Стара верзија)',
-	'blog:none' => 'Нема чланака.', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Унесите наслов чланка.',
 	'blog:error:missing:description' => 'Унесите текст вашег блога.',
 	'blog:error:post_not_found' => 'Не могу да нађем тражени чланак.',

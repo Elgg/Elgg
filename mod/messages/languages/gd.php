@@ -60,7 +60,6 @@ Airson teachdairead a chur gu %s, briog an-seo:
 	*/
 
 	'messages:blank' => "Tha sinn duilich ach feumaidh tu teachdaireachd a sgrìobhadh mus urrainn dhuinn a shàbhaladh.",
-	'messages:nomessages' => "Chan eil teachdaireachd ann.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "Cha b' urrainn dhuinn an neach-fhaighinn a lorg ann an stòr-data nan cleachdaichean.",
 	'messages:user:blank' => "Cha do thagh thu neach-fhaighinn.",
 	'messages:user:self' => "Chan urrainn dhut teachdaireachd a chur dhut fhèin.",

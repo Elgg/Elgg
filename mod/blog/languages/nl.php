@@ -41,7 +41,6 @@ return array(
 	'blog:error:cannot_save' => 'Blog kon niet worden opgeslagen.',
 	'blog:error:cannot_write_to_container' => 'Je hebt onvoldoende rechten om de blog in de groep op te slaan.',
 	'blog:edit_revision_notice' => '(Oude versie)',
-	'blog:none' => 'Geen blogs', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Geef een titel aan de blog!',
 	'blog:error:missing:description' => 'Vertel iets in je blog!',
 	'blog:error:post_not_found' => 'Deze blog is verwijderd, ongeldig, of je hebt onvoldoende rechten om hem te mogen zien.',

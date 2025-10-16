@@ -14,7 +14,6 @@ return array(
 	'reportedcontent' => '報告されたコンテント',
 	'reportedcontent:this' => '不適切',
 	'reportedcontent:this:tooltip' => '管理者にこのページが不適切だと報告する',
-	'reportedcontent:none' => '報告されたコンテントはありません', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => '管理者に報告',
 	'reportedcontent:archive' => '報告を書庫に',
 	'reportedcontent:archived' => '報告を書庫に保存しました',

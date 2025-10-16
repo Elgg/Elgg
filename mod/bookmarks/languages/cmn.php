@@ -24,7 +24,6 @@ return array(
 	'bookmarks:bookmarklet' => "添加书签小工具",
 	'bookmarks:bookmarklet:group' => "添加圈子书签小工具",
 	'bookmarks:address' => "书签地址",
-	'bookmarks:none' => '无书签', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => '新的书签是 %s',
 	'bookmarks:notify:subject' => '新的书签：%s',

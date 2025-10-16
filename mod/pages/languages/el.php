@@ -30,7 +30,6 @@ return array(
 	'pages:notify:subject' => "Νέα σελίδα: %s",
 
 	'pages:more' => 'Περισσότερες σελίδες',
-	'pages:none' => 'Δεν υπάρχουν ακόμα σελίδες', // @todo remove in Elgg 7.0
 
 	/**
 	* River

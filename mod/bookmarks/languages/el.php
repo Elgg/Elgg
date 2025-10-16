@@ -24,7 +24,6 @@ return array(
 	'bookmarks:bookmarklet' => "Λήψη σελιδοδείκτη",
 	'bookmarks:bookmarklet:group' => "Λήψη σελιδοδείκτη ομάδας",
 	'bookmarks:address' => "Διεύθυνση συνδέσμου",
-	'bookmarks:none' => 'Δεν υπάρχουν σύνδεσμοι', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Νέος σύνδεσμος με τίτλο %s',
 	'bookmarks:notify:subject' => 'Νέος σύνδεσμος: %s',

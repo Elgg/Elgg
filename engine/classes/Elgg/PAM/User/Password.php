@@ -2,7 +2,7 @@
 
 namespace Elgg\PAM\User;
 
-use Elgg\Exceptions\LoginException;
+use Elgg\Exceptions\Http\LoginException;
 
 /**
  * PAM handler to authenticate a user based on username/password

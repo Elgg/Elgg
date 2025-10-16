@@ -42,7 +42,6 @@ Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
 %s',
 
 	'pages:more' => 'Weitere Coop-Seiten',
-	'pages:none' => 'Es wurden noch keine Coop-Seiten erstellt.', // @todo remove in Elgg 7.0
 
 	/**
 	* River

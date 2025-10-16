@@ -21,7 +21,6 @@ return array(
 	'discussion:settings:enable_global_discussions:help' => 'Permetti di creare discussioni al di fuori dei gruppi',
 
 	'discussion:latest' => 'Ultimi argomenti',
-	'discussion:none' => 'Nessuna discussione', // @todo remove in Elgg 7.0
 	'discussion:updated' => "Ultima risposta di %s %s",
 
 	'discussion:topic:created' => 'L\'argomento è stato creato.',

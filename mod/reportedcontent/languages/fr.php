@@ -16,7 +16,6 @@ return array(
 	'reportedcontent' => 'Contenu signalé',
 	'reportedcontent:this' => 'Signaler ceci',
 	'reportedcontent:this:tooltip' => 'Signaler cette page à un administrateur',
-	'reportedcontent:none' => 'Aucun signalement', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Signaler à l\'administrateur',
 	'reportedcontent:archive' => 'Archiver le signalement',
 	'reportedcontent:archived' => 'Le signalement a bien été archivé',

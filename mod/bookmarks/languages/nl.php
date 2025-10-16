@@ -28,7 +28,6 @@ return array(
 	'bookmarks:bookmarklet' => "Bookmarklet",
 	'bookmarks:bookmarklet:group' => "Verkrijg groeps-bookmarklet",
 	'bookmarks:address' => "Adres van de favoriet",
-	'bookmarks:none' => 'Geen favorieten', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Nieuwe favoriet genaamd \'%s\'',
 	'bookmarks:notify:subject' => 'Nieuwe favoriet: %s',

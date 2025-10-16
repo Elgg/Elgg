@@ -24,7 +24,6 @@ return array(
 	'bookmarks:bookmarklet' => "Obtener marcadores",
 	'bookmarks:bookmarklet:group' => "Obtener widget de marcadores del grupo",
 	'bookmarks:address' => "Direcciones del marcador",
-	'bookmarks:none' => 'No hay marcadores', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Nuevo marcador llamado %s',
 	'bookmarks:notify:subject' => 'Nuevo marcador: %s',

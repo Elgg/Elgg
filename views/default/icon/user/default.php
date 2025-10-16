@@ -62,7 +62,7 @@ if ($show_menu) {
 	
 	$wrapper_class[] = 'elgg-avatar-menu';
 	
-	elgg_import_esm('icon/user/default'); // @todo move this file to navigation/menu/user_hover in Elgg 7.0
+	elgg_import_esm('icon/user/default');
 }
 
 if (elgg_extract('use_link', $vars, true)) {

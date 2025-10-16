@@ -30,7 +30,6 @@ return array(
 	'pages:notify:subject' => "Нова страна: %s",
 
 	'pages:more' => 'Више страна',
-	'pages:none' => 'Још увек нема креираних страна', // @todo remove in Elgg 7.0
 
 	/**
 	* River

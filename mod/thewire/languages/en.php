@@ -31,7 +31,6 @@ return array(
 	'thewire:thread' => "Thread",
 	'thewire:charleft' => "characters remaining",
 	'thewire:tags' => "Wire posts tagged with '%s'",
-	'thewire:noposts' => "No wire posts yet", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Wire post by %s',
 

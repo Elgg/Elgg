@@ -24,7 +24,6 @@ return array(
 	'bookmarks:bookmarklet' => "Hämta scriptbokmärket",
 	'bookmarks:bookmarklet:group' => "Hämta scriptbokmärket för grupp",
 	'bookmarks:address' => "Bokmärkets adress",
-	'bookmarks:none' => 'Inga bokmärken', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Nytt bokmärke med namnet %s',
 	'bookmarks:notify:subject' => 'Nytt bokmärke: %s',

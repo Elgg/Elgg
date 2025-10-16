@@ -24,7 +24,6 @@ return array(
 	'thewire:replying' => "Antworten auf %s (@%s), der schrieb",
 	'thewire:charleft' => "Zeichen übrig",
 	'thewire:tags' => "Nachrichten im Heißen Draht mit dem Tag '%s'",
-	'thewire:noposts' => "Noch keine Nachrichten im Heißen Draht.", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Nachricht im Heißen Draht von %s',
 

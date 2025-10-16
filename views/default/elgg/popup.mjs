@@ -7,14 +7,6 @@ import * as focusTrap from 'focus-trap';
 let menuTrap;
 
 var popup = {
-	
-	/**
-	 * Deprecated function
-	 *
-	 * @return void
-	 * @deprecated Since v6.2 this function is no longer in use
-	 */
-	init: function () {},
 	/**
 	 * Shortcut to bind a click event on a set of $triggers.
 	 *
@@ -107,7 +99,7 @@ var popup = {
 		$target.data('trigger', $trigger); // used to remove elgg-state-active class when popup is closed
 		$target.data('position', position); // used to reposition the popup module on window manipulations
 
-		if (!$trigger.is('.elgg-popup-inline')) { // @todo remove this class check in Elgg 7.0
+		if (!$trigger.is('.elgg-popup-inline')) {
 			$target.appendTo('body');
 		}
 		

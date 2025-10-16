@@ -11,7 +11,6 @@ return array(
 	 * Menu items and titles
 	 */
 	'messageboard:board' => "Opslagstavle",
-	'messageboard:none' => "Der er intet på denne opslagstavle endnu", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "Antal viste beskeder",
 	'messageboard:owner' => '%s\'s opslagstavle',
 	'messageboard:owner_history' => '%s\'s beskeder på %s\'s opslagstavle',

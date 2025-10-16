@@ -2,8 +2,6 @@
 
 use Elgg\TheWire\Notifications\CreateTheWireEventHandler;
 
-require_once(__DIR__ . '/lib/functions.php');
-
 return [
 	'plugin' => [
 		'name' => 'The Wire',

@@ -35,7 +35,6 @@ return array(
 	'blog:error:cannot_save' => 'Blog gönderisi kaydedilemedi.',
 	'blog:error:cannot_write_to_container' => 'Gruba blog kaydedebilmek için yetkisiz erişim.',
 	'blog:edit_revision_notice' => '(Eski sürüm)',
-	'blog:none' => 'Blog gönderisi yok', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Lütfen bir blog başlığı girin!',
 	'blog:error:missing:description' => 'Lütfen blogunuzun gövdesini girin!',
 	'blog:error:post_not_found' => 'Belirtilen blog gönderisi bulunamadı.',

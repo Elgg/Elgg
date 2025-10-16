@@ -27,7 +27,6 @@ return array(
 	'bookmarks:bookmarklet' => "Закладки",
 	'bookmarks:bookmarklet:group' => "Закладки группы",
 	'bookmarks:address' => "Адрес сайта",
-	'bookmarks:none' => 'Нет закладок', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Новая закладка %s',
 	'bookmarks:notify:subject' => 'Новая закладка: %s',

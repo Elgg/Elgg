@@ -4,7 +4,7 @@
  */
 
 use Elgg\Exceptions\AuthenticationException;
-use Elgg\Exceptions\LoginException;
+use Elgg\Exceptions\Http\LoginException;
 
 $username = get_input('username');
 $password = get_input('password', null, false);

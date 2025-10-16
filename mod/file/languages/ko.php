@@ -70,7 +70,6 @@ return array(
 	 * Error messages
 	 */
 
-	'file:none' => "파일 없슴.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "죄송합니다. 파일을 저장할 수 없었습니다.",
 	'file:noaccess' => "이 파일을 변경할 권한이 없습니다.",
 	'file:cannotload' => "파일 올릴 때 오류가 있었습니다",

@@ -27,7 +27,6 @@ return array(
 	'bookmarks:bookmarklet' => "Bookmarklet zum Browser hinzufügen",
 	'bookmarks:bookmarklet:group' => "Gruppen-Bookmarklet zum Browser hinzufügen",
 	'bookmarks:address' => "Zieladresse des Lesezeichens",
-	'bookmarks:none' => 'Noch keine Lesezeichen vorhanden.', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Ein neues Lesezeichen %s wurde erstellt',
 	'bookmarks:notify:subject' => 'Neues Lesezeichen: %s',

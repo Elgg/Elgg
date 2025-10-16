@@ -27,7 +27,6 @@ return array(
 	'bookmarks:bookmarklet' => "Faigh comharrag-lìn",
 	'bookmarks:bookmarklet:group' => "Faigh comharrag-lìn a' bhuidhinn",
 	'bookmarks:address' => "Seòladh na comharra-lìn",
-	'bookmarks:none' => 'Gun comharra-lìn', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Comharra-lìn ùr air a bheil an t-ainm \'%s\'',
 	'bookmarks:notify:subject' => 'Comharra-lìn ùr: %s',

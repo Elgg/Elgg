@@ -48,7 +48,6 @@ return array(
 	*/
 
 	'messages:blank' => "Debes escribir algo en el cuerpo del mensaje antes de guardar.",
-	'messages:nomessages' => "No hay mensajes.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "No se pudo encontrar al receptor entre los usuarios registrados.",
 	'messages:user:blank' => "No has seleccionado a nadie a quien enviar el mensaje.",
 	'messages:user:self' => "No puedes enviarte un mensaje a ti mismo.",

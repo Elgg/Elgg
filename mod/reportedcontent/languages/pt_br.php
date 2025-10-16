@@ -15,7 +15,6 @@ return array(
 	'reportedcontent' => 'Conteúdo Denunciado',
 	'reportedcontent:this' => 'Denunciar',
 	'reportedcontent:this:tooltip' => 'Denunciar esta Página para o Administrador',
-	'reportedcontent:none' => 'Nenhum conteúdo foi Denunciado', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Denunciar ao Administrador',
 	'reportedcontent:archive' => 'Arquivar Denúncia',
 	'reportedcontent:archived' => 'A Denúncia foi arquivada!',

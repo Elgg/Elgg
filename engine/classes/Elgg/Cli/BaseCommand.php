@@ -72,20 +72,6 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 	}
 
 	/**
-	 * Dump a variable
-	 *
-	 * @param mixed $data Data to dump
-	 *
-	 * @return void
-	 * @deprecated 6.3
-	 */
-	final public function dump($data) {
-		elgg_deprecated_notice(__METHOD__ . ' is deprecated and will be removed', '6.3');
-		
-		VarDumper::dump($data);
-	}
-
-	/**
 	 * Write messages to output buffer
 	 *
 	 * @param string|array $messages Data or messages
@@ -95,58 +81,8 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 	 */
 	final public function write($messages, $style = 'info'): void {
 		$formatter = new FormatterHelper();
-
-		if (!$this->output->getFormatter()->hasStyle($style)) {
-			elgg_deprecated_notice(__METHOD__ . " using '{$style}' needs to be a supported style, use [info, error, comment or question]", '6.3');
-			
-			switch ($style) {
-				case LogLevel::EMERGENCY:
-				case LogLevel::CRITICAL:
-				case LogLevel::ALERT:
-				case LogLevel::ERROR:
-					$style = 'error';
-					break;
-				
-				case LogLevel::WARNING:
-					$style = 'comment';
-					break;
-				
-				default:
-					$style = 'info';
-					break;
-			}
-		}
-
 		$message = $formatter->formatBlock($messages, $style);
 		$this->output->writeln($message);
-	}
-
-	/**
-	 * Print an error
-	 *
-	 * @param string $message Error message
-	 *
-	 * @return void
-	 * @deprecated 6.3 use elgg_log($message, LogLevel::ERROR)
-	 */
-	public function error($message) {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated, use elgg_log()', '6.3');
-		
-		elgg_log($message, LogLevel::ERROR);
-	}
-
-	/**
-	 * Print a notice
-	 *
-	 * @param string $message Error message
-	 *
-	 * @return void
-	 * @deprecated 6.3 use elgg_log($message, LogLevel::NOTICE)
-	 */
-	public function notice($message) {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated, use elgg_log()', '6.3');
-		
-		elgg_log($message, LogLevel::NOTICE);
 	}
 
 	/**

@@ -40,7 +40,6 @@ return array(
 	'blog:error:cannot_save' => 'Не удается сохранить публикацию.',
 	'blog:error:cannot_write_to_container' => 'Недостаточно прав для сохранения блога в группе.',
 	'blog:edit_revision_notice' => '(Старая версия)',
-	'blog:none' => 'Нет публикаций в блоге', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Введите название!',
 	'blog:error:missing:description' => 'Заполните сообщение публикации!',
 	'blog:error:post_not_found' => 'Не удается найти указанную запись в блоге.',

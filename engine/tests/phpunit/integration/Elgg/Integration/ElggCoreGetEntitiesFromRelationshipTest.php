@@ -203,7 +203,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesIntegra
 		$es = elgg_get_entities([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
-			'relationship_created_time_lower' => $ts_lower,
+			'relationship_created_after' => $ts_lower,
 		]);
 		$this->assertIsArray($es);
 		$this->assertCount(1, $es);
@@ -216,7 +216,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesIntegra
 		$es = elgg_get_entities([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
-			'relationship_created_time_lower' => $ts_upper,
+			'relationship_created_after' => $ts_upper,
 		]);
 		$this->assertIsArray($es);
 		$this->assertCount(0, $es);
@@ -244,7 +244,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesIntegra
 		$es = elgg_get_entities([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
-			'relationship_created_time_upper' => $ts_upper,
+			'relationship_created_before' => $ts_upper,
 		]);
 		$this->assertIsArray($es);
 		$this->assertCount(1, $es);
@@ -257,7 +257,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesIntegra
 		$es = elgg_get_entities([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
-			'relationship_created_time_upper' => $ts_lower,
+			'relationship_created_before' => $ts_lower,
 		]);
 		$this->assertIsArray($es);
 		$this->assertCount(0, $es);
@@ -285,8 +285,8 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesIntegra
 		$es = elgg_get_entities([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
-			'relationship_created_time_lower' => $ts_lower,
-			'relationship_created_time_upper' => $ts_upper,
+			'relationship_created_after' => $ts_lower,
+			'relationship_created_before' => $ts_upper,
 		]);
 		$this->assertIsArray($es);
 		$this->assertCount(1, $es);
@@ -299,8 +299,8 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesIntegra
 		$es = elgg_get_entities([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
-			'relationship_created_time_lower' => $ts_upper,
-			'relationship_created_time_upper' => $ts_lower,
+			'relationship_created_after' => $ts_upper,
+			'relationship_created_before' => $ts_lower,
 		]);
 		$this->assertIsArray($es);
 		$this->assertCount(0, $es);

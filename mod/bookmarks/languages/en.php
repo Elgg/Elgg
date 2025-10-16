@@ -28,7 +28,6 @@ return array(
 	'bookmarks:bookmarklet' => "Get bookmarklet",
 	'bookmarks:bookmarklet:group' => "Get group bookmarklet",
 	'bookmarks:address' => "Address of the bookmark",
-	'bookmarks:none' => 'No bookmarks', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'New bookmark called %s',
 	'bookmarks:notify:subject' => 'New bookmark: %s',

@@ -62,7 +62,7 @@ foreach ($fields as $field) {
 if ($entity instanceof \ElggDiscussion) {
 	echo elgg_view_field([
 		'#type' => 'hidden',
-		'name' => 'topic_guid',
+		'name' => 'guid',
 		'value' => $entity->guid,
 	]);
 }

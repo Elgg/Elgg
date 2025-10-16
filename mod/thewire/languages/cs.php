@@ -17,7 +17,6 @@ return array(
 	'thewire:thread' => "Vlákno",
 	'thewire:charleft' => "znaků zbývá",
 	'thewire:tags' => "Telegrafní zprávy se štítkem '%s'",
-	'thewire:noposts' => "Zatím žádné telegrafní zprávy", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Telegrafní zpráva od %s',
 	
