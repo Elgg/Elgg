@@ -43,7 +43,6 @@ $icons = [
 	'thumbtack',
 	'times-circle',
 	'trash',
-	'twitter-square',
 	'undo',
 	'unlock',
 	'user',

@@ -1,0 +1,14 @@
+From 5.x to 6.0
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+Plugin changes
+--------------
+
+Profile
+~~~~~~~
+
+The profile field `Twitter` has been removed.
