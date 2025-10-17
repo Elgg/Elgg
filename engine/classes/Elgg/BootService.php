@@ -6,6 +6,7 @@ use Elgg\Cache\BootCache;
 use Elgg\Di\InternalContainer;
 use Elgg\Exceptions\RuntimeException;
 use Elgg\Traits\Debug\Profilable;
+use Psr\Log\LogLevel;
 
 /**
  * Boots Elgg and manages a cache of data needed during boot
@@ -74,6 +75,14 @@ class BootService {
 		}
 
 		$services->plugins->setBootPlugins($data->getActivePlugins(), false);
+
+		if (!Application::isCli()) {
+			// CLI log level is determined by CLI verbosity
+			// use value in settings.php if available
+			// database needs to be loaded into config to determine log level correctly
+			$debug = $config->getInitialValue('debug') ?? ($config->debug ?: LogLevel::CRITICAL);
+			$services->logger->setLevel($debug);
+		}
 
 		$services->views->configureFromCache();
 	}
