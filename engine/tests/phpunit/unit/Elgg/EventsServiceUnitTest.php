@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Helpers\EventsServiceTestInvokable;
 use Elgg\Helpers\TestEventHandler;
 use Psr\Log\LogLevel;
@@ -358,9 +359,9 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 			
 		};
 		
-		$this->assertTrue($this->events->registerHandler('foo', 'bar', 'callback1'));
-		$this->assertTrue($this->events->registerHandler('foo', 'bar', $f));
-		$this->assertTrue($this->events->registerHandler('foo', 'baz', 'callback3', 100));
+		$this->events->registerHandler('foo', 'bar', 'callback1');
+		$this->events->registerHandler('foo', 'bar', $f);
+		$this->events->registerHandler('foo', 'baz', 'callback3', 100);
 		
 		$expected = [
 			'foo' => [
@@ -376,7 +377,8 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertSame($expected, $this->events->getAllHandlers());
 		
 		// check possibly invalid callbacks
-		$this->assertFalse($this->events->registerHandler('foo', 'bar', 1234));
+		$this->expectException(InvalidArgumentException::class);
+		$this->events->registerHandler('foo', 'bar', 1234);
 	}
 	
 	public function testCanUnregisterHandlers() {
@@ -492,8 +494,8 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 	
 	public function testStaticCallbacksWithPrecedingSlash() {
-		$this->assertTrue($this->events->registerHandler('foo', 'bar', '\MyCustomClass::static_callback'));
-		$this->assertTrue($this->events->registerHandler('foo', 'bar', 'MyCustomClass2::static_callback'));
+		$this->events->registerHandler('foo', 'bar', '\MyCustomClass::static_callback');
+		$this->events->registerHandler('foo', 'bar', 'MyCustomClass2::static_callback');
 		
 		$expected = [
 			'foo' => [

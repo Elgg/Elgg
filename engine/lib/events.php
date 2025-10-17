@@ -43,10 +43,10 @@
  * @param callable $callback The handler callback
  * @param int      $priority The priority - 500 is default, negative before, positive after
  *
- * @return bool
+ * @return void
  */
-function elgg_register_event_handler(string $event, string $type, callable|string $callback, int $priority = 500): bool {
-	return _elgg_services()->events->registerHandler($event, $type, $callback, $priority);
+function elgg_register_event_handler(string $event, string $type, callable|string $callback, int $priority = 500): void {
+	_elgg_services()->events->registerHandler($event, $type, $callback, $priority);
 }
 
 /**

@@ -81,7 +81,7 @@ class ServiceUnitTest extends UnitTestCase {
 		$this->assertTrue($items->has('test1'));
 		$this->assertTrue($items->has('test2'));
 		
-		$this->assertNotEmpty(elgg_unregister_menu_item('test', 'test1'));
+		elgg_unregister_menu_item('test', 'test1');
 		
 		$items = elgg()->menus->getUnpreparedMenu('test')->getItems();
 		$this->assertFalse($items->has('test1'));

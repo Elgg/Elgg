@@ -37,9 +37,9 @@ class AuthenticationService {
 	 * @param string   $importance The importance of the authentication handler ('sufficient' or 'required')
 	 * @param string   $policy     The policy for which the authentication handler can be used (eg. 'user' or 'api')
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	public function registerHandler($handler, string $importance = 'sufficient', string $policy = 'user'): bool {
+	public function registerHandler($handler, string $importance = 'sufficient', string $policy = 'user'): void {
 		$handler_string = $this->handlerService->describeCallable($handler);
 		if (!isset($this->handlers[$policy])) {
 			$this->handlers[$policy] = [];
@@ -49,8 +49,6 @@ class AuthenticationService {
 			'handler' => $handler,
 			'importance' => strtolower($importance),
 		];
-		
-		return true;
 	}
 	
 	/**
