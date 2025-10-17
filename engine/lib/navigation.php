@@ -94,11 +94,11 @@ function elgg_register_menu_item(string $menu_name, array|\ElggMenuItem $menu_it
  * @param string $menu_name The name of the menu
  * @param string $item_name The unique identifier for this menu item
  *
- * @return \ElggMenuItem|null
+ * @return void
  * @since 1.8.0
  */
-function elgg_unregister_menu_item(string $menu_name, string $item_name): ?\ElggMenuItem {
-	return _elgg_services()->menus->unregisterMenuItem($menu_name, $item_name);
+function elgg_unregister_menu_item(string $menu_name, string $item_name): void {
+	_elgg_services()->menus->unregisterMenuItem($menu_name, $item_name);
 }
 
 /**

@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\EventsService\MethodMatcher;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Traits\Debug\Profilable;
 use Elgg\Traits\Loggable;
 use Psr\Log\LogLevel;
@@ -341,14 +342,18 @@ class EventsService {
 	 * @param callable $callback The name of a valid function or an array with object and method
 	 * @param int      $priority The priority - 500 is default, lower numbers called first
 	 *
-	 * @return bool
+	 * @return void
 	 *
 	 * @warning This doesn't check if a callback is valid to be called, only if it is in the
 	 *          correct format as a callable.
 	 */
-	public function registerHandler(string $name, string $type, $callback, int $priority = 500): bool {
-		if (empty($name) || empty($type) || !is_callable($callback, true)) {
-			return false;
+	public function registerHandler(string $name, string $type, $callback, int $priority = 500): void {
+		if (empty($name) || empty($type)) {
+			throw new InvalidArgumentException('$name and $type cannot be empty');
+		}
+
+		if (!is_callable($callback, true)) {
+			throw new InvalidArgumentException('$callback must be a callable');
 		}
 		
 		if (in_array($this->getLogger()->getLevel(false), [LogLevel::WARNING, LogLevel::NOTICE, LogLevel::INFO, LogLevel::DEBUG])) {
@@ -365,8 +370,6 @@ class EventsService {
 		$this->next_index++;
 		
 		unset($this->ordered_handlers_cache);
-		
-		return true;
 	}
 	
 	/**

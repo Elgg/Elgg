@@ -1,4 +1,4 @@
 The Wire
 ========
 
-Elgg wire plugin "The Wire" is Twitter-style microblogging plugin that allows users to post notes to the wire.
+Elgg wire plugin "The Wire" is a microblogging plugin that allows users to post notes to the wire.

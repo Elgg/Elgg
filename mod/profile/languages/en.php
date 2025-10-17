@@ -23,7 +23,6 @@ return array(
 	'profile:phone' => "Telephone",
 	'profile:mobile' => "Mobile phone",
 	'profile:website' => "Website",
-	'profile:twitter' => "Twitter username",
 	'profile:saved' => "Your profile was successfully saved.",
 
 	'profile:field:text' => 'Short text',

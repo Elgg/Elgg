@@ -5,6 +5,7 @@ namespace Elgg\Assets;
 use Elgg\Cache\ServerCache;
 use Elgg\Cache\SimpleCache;
 use Elgg\Config;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Http\Urls;
 use Elgg\ViewsService;
 
@@ -51,12 +52,13 @@ class ExternalFiles {
 	 * @param string $url      URL
 	 * @param string $location Location in the page to include the file
 	 *
-	 * @return bool
+	 * @return void
+	 * @throws InvalidArgumentException
 	 */
-	public function register(string $type, string $name, string $url, string $location): bool {
+	public function register(string $type, string $name, string $url, string $location): void {
 		$name = trim(strtolower($name));
 		if (empty($name) || empty($url)) {
-			return false;
+			throw new InvalidArgumentException('$name and $url are not allowed to be empty');
 		}
 	
 		$url = $this->urls->normalizeUrl($url);
@@ -79,8 +81,6 @@ class ExternalFiles {
 		}
 
 		$this->files[$type][$name] = $item;
-	
-		return true;
 	}
 	
 	/**
@@ -89,19 +89,14 @@ class ExternalFiles {
 	 * @param string $type Type of file: js or css
 	 * @param string $name The identifier of the file
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	public function unregister(string $type, string $name): bool {
+	public function unregister(string $type, string $name): void {
 		$this->setupType($type);
 		
 		$name = trim(strtolower($name));
-	
-		if (!isset($this->files[$type][$name])) {
-			return false;
-		}
-		
+
 		unset($this->files[$type][$name]);
-		return true;
 	}
 
 	/**

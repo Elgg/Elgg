@@ -631,7 +631,7 @@ class Application {
 	 *
 	 * @return bool
 	 */
-	public static function isCli() {
+	public static function isCli(): bool {
 		switch (PHP_SAPI) {
 			case 'cli':
 			case 'phpdbg':

@@ -352,23 +352,20 @@ class Service {
 	 * @param string $menu_name The name of the menu
 	 * @param string $item_name The unique identifier for this menu item
 	 *
-	 * @return \ElggMenuItem|null
+	 * @return void
 	 * @since 5.0
 	 */
-	public function unregisterMenuItem(string $menu_name, string $item_name): ?\ElggMenuItem {
+	public function unregisterMenuItem(string $menu_name, string $item_name): void {
 		if (!isset($this->menus[$menu_name])) {
-			return null;
+			return;
 		}
 		
 		foreach ($this->menus[$menu_name] as $index => $menu_item) {
 			if ($menu_item->getName() === $item_name) {
-				$item = $this->menus[$menu_name][$index];
 				unset($this->menus[$menu_name][$index]);
-				return $item;
+				return;
 			}
 		}
-		
-		return null;
 	}
 	
 	/**
