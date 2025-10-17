@@ -49,7 +49,6 @@ return array(
 	*/
 
 	'messages:blank' => "죄송합니다. 저장하기 전에 내용을 입력해야 합니다.",
-	'messages:nomessages' => "쪽지가 없습니다.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "받을 사람을 찾을 수 없습니다. ",
 	'messages:user:blank' => "받을 사람을 선택하지 않았습니다.",
 	'messages:user:self' => "자신에게 쪽지를 보낼 수 없습니다.",

@@ -27,7 +27,6 @@ return array(
 	'bookmarks:bookmarklet' => "Preia marcatorul",
 	'bookmarks:bookmarklet:group' => "Preia marcatorul de grup",
 	'bookmarks:address' => "Adresa marcajului",
-	'bookmarks:none' => 'Nu sunt marcaje', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Marcaj nou numit %s',
 	'bookmarks:notify:subject' => 'Marcaj nou: %s',

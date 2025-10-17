@@ -15,7 +15,6 @@ return array(
 	'reportedcontent' => 'Жалобы',
 	'reportedcontent:this' => 'Пожаловаться',
 	'reportedcontent:this:tooltip' => 'Сообщить об этой странице администратору',
-	'reportedcontent:none' => 'Жалоб нет', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Пожаловаться администратору',
 	'reportedcontent:archive' => 'Архивировать',
 	'reportedcontent:archived' => 'Жалоба заархивирована',

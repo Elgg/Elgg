@@ -33,7 +33,6 @@ return array(
 	'blog:error:cannot_save' => '无法保存博客',
 	'blog:error:cannot_write_to_container' => '无权限保存圈子博客',
 	'blog:edit_revision_notice' => '（旧版）',
-	'blog:none' => '无博客', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => '请输入博客标题',
 	'blog:error:missing:description' => '请输入博客内容',
 	'blog:error:post_not_found' => '无法找到指定的博客',

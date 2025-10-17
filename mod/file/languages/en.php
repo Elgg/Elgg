@@ -100,7 +100,6 @@ View and comment on the file:
 	 * Error messages
 	 */
 
-	'file:none' => "No files.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Sorry; we could not save your file.",
 	'file:noaccess' => "You do not have permissions to change this file",
 	'file:cannotload' => "There was an error uploading the file",

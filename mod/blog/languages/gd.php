@@ -36,7 +36,6 @@ return array(
 	'blog:error:cannot_save' => 'Chan urrainn dhuinn am brath-bloga a shàbhaladh.',
 	'blog:error:cannot_write_to_container' => 'Chan eilear còirichean gu leòr gus am blog a shàbhaladh dhan bhuidheann',
 	'blog:edit_revision_notice' => '(Seann-tionndadh)',
-	'blog:none' => 'Chan eil brath-bloga sam bith ann', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Cuir a-steach tiotal a\' bhratha-bhloga!',
 	'blog:error:missing:description' => 'Cuir a-steach bodhaig a\' bhratha-bhloga agad!',
 	'blog:error:post_not_found' => 'Cha deach am brath-bloga seo a lorg.',

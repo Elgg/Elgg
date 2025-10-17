@@ -24,7 +24,6 @@ return array(
 	'site_notifications:settings:read_cleanup_interval' => 'Intervalo para limpar notificações lidas',
 	'site_notifications:settings:read_cleanup_interval:help' => 'Com que frequência as notificações lidas devem ser limpas. Em sites com muita atividade, você pode aumentar esse intervalo para acompanhar o volume de notificações.',
 	
-	'site_notifications:empty' => 'Nenhuma notificação', // @todo remove in Elgg 7.0
 	'site_notifications:toggle_all' => 'Selecionar Tudo',
 	'site_notifications:mark_read' => 'Marcar como lidas',
 	'site_notifications:mark_read:confirm' => 'Tem certeza que deseja marcar todas as notificações selecionadas como lidas?',

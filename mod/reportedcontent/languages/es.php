@@ -13,7 +13,6 @@ return array(
 	'reportedcontent' => 'Contenido reportado',
 	'reportedcontent:this' => 'Reportar esto',
 	'reportedcontent:this:tooltip' => 'Reportar esta p&aacute;gina',
-	'reportedcontent:none' => 'No hay contenidos reportados', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Reportar',
 	'reportedcontent:archive' => 'Reportes archivados',
 	'reportedcontent:archived' => 'El reporta ha sido archivado',

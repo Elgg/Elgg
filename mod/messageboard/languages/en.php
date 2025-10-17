@@ -12,7 +12,6 @@ return array(
 	 * Menu items and titles
 	 */
 	'messageboard:board' => "Message board",
-	'messageboard:none' => "There is nothing on this message board yet", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "Number of messages to display",
 	'messageboard:owner' => '%s\'s message board',
 	'messageboard:owner_history' => '%s\'s posts on %s\'s message board',

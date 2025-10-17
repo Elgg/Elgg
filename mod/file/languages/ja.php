@@ -79,7 +79,6 @@ return array(
 	 * Error messages
 	 */
 
-	'file:none' => "ファイルがありません。", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "申し訳ありません。ファイルを保存できません。",
 	'file:noaccess' => "あなたには、このファイルを変更する権限がありません。",
 	'file:cannotload' => "ファイルをアップロードするときにエラーが生じました",

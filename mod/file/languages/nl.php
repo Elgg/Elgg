@@ -100,7 +100,6 @@ Om het bestand te bekijken en te reageren, klik hier:
 	 * Error messages
 	 */
 
-	'file:none' => "We konden op dit moment geen bestanden vinden.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Sorry, we konden het bestand niet opslaan.",
 	'file:noaccess' => "Je hebt onvoldoende rechten om dit bestand aan te passen",
 	'file:cannotload' => "Er was een fout tijdens het uploaden van het bestand",

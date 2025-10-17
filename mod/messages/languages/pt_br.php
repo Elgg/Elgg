@@ -60,7 +60,6 @@ enviar uma Mensagem a %s, clique aqui:
 	*/
 
 	'messages:blank' => "Desculpe, você precisa digitar algo no Corpo da Mensagem antes de salvar.",
-	'messages:nomessages' => "Não há Mensagens.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "Não encontramos o Destinatário na Base de Usuários.",
 	'messages:user:blank' => "Você não selecionou ninguém para enviar a Mensagem.",
 	'messages:user:self' => "Você não pode enviar uma Mensagem para si mesmo.",

@@ -21,7 +21,6 @@ return array(
 	'discussion:settings:enable_global_discussions:help' => 'Permite ca discuțiile să fie create în afara grupurilor',
 
 	'discussion:latest' => 'Ultimele discuții',
-	'discussion:none' => 'Nu sunt discuții', // @todo remove in Elgg 7.0
 	'discussion:updated' => "Ultimul comentariu de către %s%s",
 
 	'discussion:topic:created' => 'Subiectul de discuție a fost creat',

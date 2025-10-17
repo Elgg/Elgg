@@ -21,7 +21,6 @@ return array(
 	'discussion:settings:enable_global_discussions:help' => 'Ceadaich deasbadan taobh a-muigh buidhnean',
 
 	'discussion:latest' => 'Na deasbadan as ùire',
-	'discussion:none' => 'Gun deasbad', // @todo remove in Elgg 7.0
 	'discussion:updated' => "An fhreagairt as ùire le %s %s",
 
 	'discussion:topic:created' => 'Chaidh an deasbad a chruthachadh.',

@@ -11,16 +11,7 @@ use Elgg\Exceptions\Http\ValidationException;
  * @since 6.2
  */
 class EditAction extends \Elgg\Controllers\EntityEditAction {
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function sanitize(): void {
-		parent::sanitize();
-		
-		$this->request->setParam('guid', $this->request->getParam('guid', $this->request->getParam('file_guid'))); // @todo remove in Elgg 7.0
-	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 *
@@ -47,7 +38,7 @@ class EditAction extends \Elgg\Controllers\EntityEditAction {
 	protected function execute(array $skip_field_names = []): void {
 		parent::execute($skip_field_names);
 		
-		/** @var @vars \ElggFile $file */
+		/** @var \ElggFile $file */
 		$file = $this->entity;
 		
 		if (!$file->save()) {

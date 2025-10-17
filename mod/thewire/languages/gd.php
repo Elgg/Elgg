@@ -25,7 +25,6 @@ return array(
 	'thewire:thread' => "Snàth",
 	'thewire:charleft' => "caractaran air fhàgail",
 	'thewire:tags' => "Brathan-uèir leis an taga '%s'",
-	'thewire:noposts' => "Gun brath-uèir fhathast", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Brath-uèir le %s',
 

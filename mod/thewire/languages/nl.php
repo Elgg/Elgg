@@ -31,7 +31,6 @@ return array(
 	'thewire:thread' => "Conversatie",
 	'thewire:charleft' => "karakters resterend",
 	'thewire:tags' => "Wire berichten met de tag '%s'",
-	'thewire:noposts' => "Nog geen wire berichten", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Wire bericht van %s',
 

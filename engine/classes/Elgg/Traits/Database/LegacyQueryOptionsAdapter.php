@@ -40,7 +40,6 @@ trait LegacyQueryOptionsAdapter {
 		$options = array_merge($this->getDefaults(), $options);
 
 		$options = $this->normalizeGuidOptions($options);
-		$options = $this->normalizeTimeOptions($options);
 		$options = $this->normalizeAccessOptions($options);
 		$options = $this->normalizeTypeSubtypeOptions($options);
 		$options = $this->normalizeRelationshipOptions($options);
@@ -154,17 +153,7 @@ trait LegacyQueryOptionsAdapter {
 			'subtype',
 		]);
 
-		if (isset($options['type_subtype_pair'])) {
-			elgg_deprecated_notice("Using the singular option 'type_subtype_pair' is deprecated. Update your code to use the plural 'type_subtype_pairs' instead.", '6.3');
-		}
-
-		// can't use helper function with type_subtype_pair because
-		// it's already an array...just need to merge it
-		if (isset($options['type_subtype_pair']) && isset($options['type_subtype_pairs'])) {
-			$options['type_subtype_pairs'] = array_merge((array) $options['type_subtype_pairs'], (array) $options['type_subtype_pair']);
-		} else if (isset($options['type_subtype_pair'])) {
-			$options['type_subtype_pairs'] = (array) $options['type_subtype_pair'];
-		} else if (isset($options['type_subtype_pairs'])) {
+		if (isset($options['type_subtype_pairs'])) {
 			$options['type_subtype_pairs'] = (array) $options['type_subtype_pairs'];
 		} else if (isset($options['types'])) {
 			$options['type_subtype_pairs'] = [];
@@ -189,7 +178,6 @@ trait LegacyQueryOptionsAdapter {
 			}
 		}
 
-		unset($options['type_subtype_pair']);
 		unset($options['types']);
 		unset($options['subtypes']);
 
@@ -604,60 +592,6 @@ trait LegacyQueryOptionsAdapter {
 				if ($value === false || $value === '') {
 					unset($options[$name][$key]);
 				}
-			}
-		}
-
-		return $options;
-	}
-
-	/**
-	 * Normalizes time based options
-	 *
-	 * @param array $options Options array
-	 *
-	 * @return array
-	 */
-	protected function normalizeTimeOptions(array $options = []): array {
-		$props = [
-			'modified',
-			'created',
-			'updated',
-			'metadata_created',
-			'annotation_created',
-			'relationship_created',
-			'last_action',
-			'posted',
-		];
-
-		$bounds = ['time_lower', 'time_upper', 'after', 'before'];
-
-		foreach ($props as $prop) {
-			foreach ($bounds as $bound) {
-				$prop_name = "{$prop}_{$bound}";
-				if (!isset($options[$prop_name])) {
-					// required to remove key from array of defaults
-					unset($options[$prop_name]);
-					continue;
-				}
-				
-				$new_prop_name = $prop_name;
-				$new_prop_name = str_replace('modified', 'updated', $new_prop_name);
-				$new_prop_name = str_replace('posted', 'created', $new_prop_name);
-				$new_prop_name = str_replace('time_lower', 'after', $new_prop_name);
-				$new_prop_name = str_replace('time_upper', 'before', $new_prop_name);
-				
-				if ($new_prop_name === $prop_name) {
-					// no changes
-					continue;
-				}
-
-				if (!isset($options[$new_prop_name])) {
-					elgg_deprecated_notice("Using the option '{$prop_name}' is deprecated. Update your code to use '{$new_prop_name}' instead.", '6.3');
-					$options[$new_prop_name] = elgg_extract($prop_name, $options);
-				}
-				
-				// always remove unwanted prop name
-				unset($options[$prop_name]);
 			}
 		}
 

@@ -24,7 +24,6 @@ return array(
 	'bookmarks:bookmarklet' => "책갈피도구 얻기",
 	'bookmarks:bookmarklet:group' => "모둠 책갈피도구 얻기",
 	'bookmarks:address' => "책갈피 주소",
-	'bookmarks:none' => '책갈피 없슴', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => '%s 라는 새 책갈피',
 	'bookmarks:notify:subject' => '새 책갈피: %s',

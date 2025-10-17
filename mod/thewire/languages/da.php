@@ -21,8 +21,7 @@ return array(
 	'thewire:thread' => "Tråd",
 	'thewire:charleft' => "tegn tilbage",
 	'thewire:tags' => "Wire indlæg tagged med '%s'",
-	'thewire:noposts' => "Ingen wire indlæg endnu", // @todo remove in Elgg 7.0
-	
+
 	/**
 	 * The wire river
 	 */

@@ -11,7 +11,6 @@ return array(
 	 * Menu items and titles
 	 */
 	'messageboard:board' => "伝言板",
-	'messageboard:none' => "伝言はありません。", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "表示数",
 	'messageboard:owner' => '%sさんの伝言板',
 	'messageboard:owner_history' => '%sさんは、%sさんの伝言板に伝言を残しています',

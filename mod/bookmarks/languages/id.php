@@ -24,7 +24,6 @@ return array(
 	'bookmarks:bookmarklet' => "Dapatkan bookmarklet",
 	'bookmarks:bookmarklet:group' => "Dapatkan grup bookmarklet ",
 	'bookmarks:address' => "Alamat bookmark",
-	'bookmarks:none' => 'Tidak ada bookmark', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Panggil bookmark baru %s',
 	'bookmarks:notify:subject' => 'Bookmark baru: %s',

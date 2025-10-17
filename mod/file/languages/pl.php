@@ -64,7 +64,6 @@ return array(
 	 * Error messages
 	 */
 
-	'file:none' => "Brak plików.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Przykro nam, nie można było zapisać pliku.",
 	'file:noaccess' => "Nie masz uprawnień do modyfikacji tego pliku",
 );

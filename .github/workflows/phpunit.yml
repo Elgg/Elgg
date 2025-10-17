@@ -114,7 +114,7 @@ jobs:
           php ./elgg-cli plugins:list --no-ansi
       
       - name: Seed Elgg database
-        run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv --no-ansi --no-interaction
+        run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -v --no-ansi --no-interaction
 
       - name: Run PHPUnit - Core unit
         run: ./vendor/bin/phpunit --testsuite unit
@@ -133,4 +133,4 @@ jobs:
       
       - name: Unseed Elgg database
         if: ${{ always() }}
-        run: php ./elgg-cli database:unseed -vv --no-ansi
+        run: php ./elgg-cli database:unseed -v --no-ansi

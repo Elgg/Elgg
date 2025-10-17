@@ -86,7 +86,7 @@ return [
 					$logger->setLevel(LogLevel::ERROR);
 					break;
 			}
-		} else {
+		} elseif (!empty($c->config->debug)) {
 			$logger->setLevel($c->config->debug);
 		}
 

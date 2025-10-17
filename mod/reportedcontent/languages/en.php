@@ -16,7 +16,6 @@ return array(
 	'reportedcontent' => 'Reported content',
 	'reportedcontent:this' => 'Report this',
 	'reportedcontent:this:tooltip' => 'Report this page to an administrator',
-	'reportedcontent:none' => 'There is no reported content', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Report to admin',
 	'reportedcontent:archive' => 'Archive report',
 	'reportedcontent:archived' => 'The report has been archived',

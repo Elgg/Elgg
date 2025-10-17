@@ -28,7 +28,6 @@ return array(
 	'pages:notify:subject' => "En ny side: %s",
 
 	'pages:more' => 'Flere sider',
-	'pages:none' => 'Der er ikke oprettet sider endnu', // @todo remove in Elgg 7.0
 
 	/**
 	* River

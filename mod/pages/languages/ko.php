@@ -30,7 +30,6 @@ return array(
 	'pages:notify:subject' => "새 페이지:%s",
 
 	'pages:more' => '페이지 더보기',
-	'pages:none' => '아직 페이지를 만들지 않았습니다.', // @todo remove in Elgg 7.0
 
 	/**
 	* River

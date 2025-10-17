@@ -3,7 +3,7 @@
  * Logout as the current user, back to the original user.
  */
 
-use Elgg\Exceptions\LoginException;
+use Elgg\Exceptions\Http\LoginException;
 
 $session = elgg_get_session();
 

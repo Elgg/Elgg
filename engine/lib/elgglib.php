@@ -69,11 +69,7 @@ function elgg_register_error_message(string|array $options): void {
 }
 
 /**
- * Log a message.
- *
- * If $level is >= to the debug setting in {@link $CONFIG->debug}, the
- * message will be sent to {@link elgg_dump()}.  Messages with lower
- * priority than {@link $CONFIG->debug} are ignored.
+ * Log a message
  *
  * @note Use the developers plugin to display logs
  *

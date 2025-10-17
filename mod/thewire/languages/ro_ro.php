@@ -25,7 +25,6 @@ return array(
 	'thewire:thread' => "Fir",
 	'thewire:charleft' => "caractere rămase",
 	'thewire:tags' => "Postări de fir etichetate cu '%s'",
-	'thewire:noposts' => "Încă nu sunt postări de fir", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Postări de fir de către %s',
 

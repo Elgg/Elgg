@@ -14,7 +14,6 @@ return array(
 	'reportedcontent' => 'Gemeldete Beiträge',
 	'reportedcontent:this' => 'Beitrag melden',
 	'reportedcontent:this:tooltip' => 'Melde diese Seiten/diesen Beitrag einem Administrator.',
-	'reportedcontent:none' => 'Es gibt keine gemeldeten Beiträge.', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Einem Admin melden',
 	'reportedcontent:archive' => 'Meldung archivieren',
 	'reportedcontent:archived' => 'Die Meldung wurde archiviert.',

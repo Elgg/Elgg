@@ -24,7 +24,6 @@ return array(
 	'bookmarks:bookmarklet' => "Hent \"Bookmarklet\"",
 	'bookmarks:bookmarklet:group' => "Hent gruppe \"Bookmarklet\"",
 	'bookmarks:address' => "Adresse på ressourcen der skal bogmærkes",
-	'bookmarks:none' => 'Ingen bogmærker', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Nyt bogmærke kaldt %s',
 	'bookmarks:notify:subject' => 'Nyt bogmærk: %s',

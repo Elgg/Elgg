@@ -24,14 +24,4 @@ class SystemCache extends CacheService {
 		
 		$this->enabled = (bool) $this->config->system_cache_enabled;
 	}
-	
-	/**
-	 * Returns the cache
-	 *
-	 * @return CompositeCache
-	 * @deprecated 6.1 only use for BC purposes
-	 */
-	public function getCache(): CompositeCache {
-		return $this->cache;
-	}
 }

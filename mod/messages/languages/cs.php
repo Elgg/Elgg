@@ -49,7 +49,6 @@ return array(
 	*/
 
 	'messages:blank' => "Omlouváme se, ale před odesláním musíte zadat nějakou zprávu.",
-	'messages:nomessages' => "Nemáte zde žádné zprávy.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "V databázi uživatelů jsme nenalezli příjemce.",
 	'messages:user:blank' => "Nevybral/a jste uživatele, kterému chcete zprávu poslat.",
 	'messages:user:self' => "Nemůžete poslat zprávu sám/sama sobě.",

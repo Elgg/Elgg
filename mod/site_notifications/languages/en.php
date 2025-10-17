@@ -25,7 +25,6 @@ return array(
 	'site_notifications:settings:read_cleanup_interval' => 'Cleanup read notifications interval',
 	'site_notifications:settings:read_cleanup_interval:help' => 'How often should the read notifications be cleaned up. On higher activity sites you might want to increase the interval in order to keep up with the number of new site notifications',
 	
-	'site_notifications:empty' => 'No notifications', // @todo remove in Elgg 7.0
 	'site_notifications:toggle_all' => 'Toggle all',
 	'site_notifications:mark_read' => 'Mark as read',
 	'site_notifications:mark_read:confirm' => 'Are you sure you wish to mark all selected notifications as read?',

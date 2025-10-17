@@ -60,7 +60,6 @@ return array(
 	*/
 
 	'messages:blank' => "申し訳ありません。メッセージの本文が空欄のため、保存できません。。",
-	'messages:nomessages' => "メッセージがありません。", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "ユーザー一覧にその送信先がありません。",
 	'messages:user:blank' => "送信先を指定してください。",
 	'messages:user:self' => "自分宛にメールを送ることはできません。",

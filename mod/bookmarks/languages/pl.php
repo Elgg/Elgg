@@ -24,7 +24,6 @@ return array(
 	'bookmarks:bookmarklet' => "Pobierz skryptozakładkę",
 	'bookmarks:bookmarklet:group' => "Pobierz skryptozakładkę grupy",
 	'bookmarks:address' => "Adres zakładki",
-	'bookmarks:none' => 'Brak zakładek', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => 'Nowa zakładka o nazwie %s',
 	'bookmarks:notify:subject' => 'Nowa zakładka: %s',

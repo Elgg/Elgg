@@ -49,7 +49,6 @@ return array(
 	*/
 
 	'messages:blank' => "Przykro nam, ale musisz jednak coś wpisać w treści wiadomości zanim ją zapiszesz.",
-	'messages:nomessages' => "Brak wiadomości.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "Nie odnaleziono adresata w bazie danych użytkowników.",
 	'messages:user:blank' => "Musisz wybrać adresata wiadomości.",
 	'messages:user:self' => "Nie można wysłać wiadomości do samego siebie.",

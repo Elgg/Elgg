@@ -24,7 +24,6 @@ return array(
 	'bookmarks:bookmarklet' => "Descarrega els marcadors dinàmics",
 	'bookmarks:bookmarklet:group' => "Descarrega un grup de marcadors dinàmics",
 	'bookmarks:address' => "URL del recurs a marcar com adreça d'interès",
-	'bookmarks:none' => 'No hi ha enllaços', // @todo remove in Elgg 7.0
 
 	'bookmarks:notify:summary' => '´Nou enllaç anomenat %s',
 	'bookmarks:notify:subject' => 'Nou enllaç: %s',

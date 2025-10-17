@@ -21,7 +21,6 @@ return array(
 	'thewire:thread' => "Дискусија",
 	'thewire:charleft' => "знакова остало",
 	'thewire:tags' => "Објаве таговане са '%s'",
-	'thewire:noposts' => "Нема објава", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Објаве од %s',
 	

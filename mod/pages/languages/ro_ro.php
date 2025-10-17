@@ -42,7 +42,6 @@ Vezi și comentează pe pagină:
 %s',
 
 	'pages:more' => 'Mai multe pagini',
-	'pages:none' => 'Încă nu s-au creat pagini', // @todo remove in Elgg 7.0
 
 	/**
 	* River

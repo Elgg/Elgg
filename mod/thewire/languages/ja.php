@@ -25,7 +25,6 @@ return array(
 	'thewire:thread' => "スレッド",
 	'thewire:charleft' => "残りの文字数（半角文字で）",
 	'thewire:tags' => "「 %s 」でタグ付けされたつぶやき",
-	'thewire:noposts' => "つぶやきはありません", // @todo remove in Elgg 7.0
 
 	'thewire:by' => '%s さんのつぶやき',
 

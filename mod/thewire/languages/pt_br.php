@@ -30,7 +30,6 @@ return array(
 	'thewire:thread' => "Conversas",
 	'thewire:charleft' => "caracteres restantes",
 	'thewire:tags' => "Recados marcados com '%s'",
-	'thewire:noposts' => "Nenhum Recado ainda...", // @todo remove in Elgg 7.0
 
 	'thewire:by' => 'Recado de %s',
 

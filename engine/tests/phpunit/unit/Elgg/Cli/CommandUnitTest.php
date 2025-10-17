@@ -22,22 +22,6 @@ class CommandUnitTest extends ExecuteCommandUnitTestCase {
 		$this->assertMatchesRegularExpression('/Exception thrown/im', $this->executeCommand($command));
 	}
 
-	public function testCanLogError() {
-		$command = $this->prepareCommand(function(Command $instance) {
-			$instance->error('History repeating');
-		});
-
-		$this->assertMatchesRegularExpression('/History repeating/im', $this->executeCommand($command));
-	}
-
-	public function testCanLogNotice() {
-		$command = $this->prepareCommand(function(Command $instance) {
-			$instance->notice('Alexander the Great');
-		});
-
-		$this->assertMatchesRegularExpression('/Alexander the Great/im', $this->executeCommand($command));
-	}
-
 	public function testCanRegisterSystemError() {
 		$command = $this->prepareCommand(function(Command $instance) {
 			elgg_register_error_message('Life is unfair');

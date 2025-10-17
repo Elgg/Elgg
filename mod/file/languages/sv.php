@@ -70,7 +70,6 @@ return array(
 	 * Error messages
 	 */
 
-	'file:none' => "Inga filer.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Tyvärr; vi kunde inte spara din fil.",
 	'file:noaccess' => "Du har inte behörigheter att ändra den här filen",
 	'file:cannotload' => "Det blev något fel när filen laddades upp",

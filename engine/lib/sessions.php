@@ -4,7 +4,7 @@
  * Functions to manage logins
  */
 
-use Elgg\Exceptions\LoginException;
+use Elgg\Exceptions\Http\LoginException;
 
 /**
  * Gets Elgg's session object

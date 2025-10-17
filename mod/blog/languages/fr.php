@@ -41,7 +41,6 @@ return array(
 	'blog:error:cannot_save' => 'Impossible d\'enregistrer l\'article de blog.',
 	'blog:error:cannot_write_to_container' => 'Droits d\'accès insuffisants pour enregistrer l\'article dans ce groupe.',
 	'blog:edit_revision_notice' => '(Ancienne version)',
-	'blog:none' => 'Aucun article de blog', // @todo remove in Elgg 7.0
 	'blog:error:missing:title' => 'Vous devez donner un titre à votre article !',
 	'blog:error:missing:description' => 'Vous devez écrire le corps de votre article !',
 	'blog:error:post_not_found' => 'Impossible de trouver l\'article de blog spécifié.',

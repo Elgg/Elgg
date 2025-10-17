@@ -56,7 +56,7 @@ jobs:
         run: php -f ./.scripts/ci/enable_plugins.php
 
       - name: Seed Elgg 4.3 database
-        run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv --no-ansi
+        run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -v --no-ansi
 
       - name: Code checkout Elgg 5.1
         uses: actions/checkout@v4
@@ -125,4 +125,4 @@ jobs:
 
       - name: Unseed Elgg database
         if: ${{ always() }}
-        run: php ./elgg-cli database:unseed -vv --no-ansi
+        run: php ./elgg-cli database:unseed -v --no-ansi

@@ -49,7 +49,6 @@ View and comment on the page:
 	'notification:mentions:object:page:subject' => '%s mentioned you in a page',
 
 	'pages:more' => 'More pages',
-	'pages:none' => 'No pages created yet', // @todo remove in Elgg 7.0
 
 	/**
 	* River

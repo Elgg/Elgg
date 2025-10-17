@@ -69,7 +69,7 @@ class ElggAccessCollection extends ElggData {
 			case 'owner_guid':
 				$value = (int) $value;
 				if (!_elgg_services()->entityTable->exists($value)) {
-					throw new \Elgg\Exceptions\InvalidArgumentException("The 'owner_guid' ({$value}) for the ElggAccessColelction doesn't seem to exists");
+					throw new \Elgg\Exceptions\InvalidArgumentException("The 'owner_guid' ({$value}) for the ElggAccessCollection doesn't seem to exists");
 				}
 				break;
 		}

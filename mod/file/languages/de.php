@@ -79,7 +79,6 @@ Schau Dir die Datei an und schreibe einen Kommentar:
 	 * Error messages
 	 */
 
-	'file:none' => "Noch keine Dateien vorhanden.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Entschuldigung, wir konnten die Datei nicht speichern.",
 	'file:noaccess' => "Du hast keine Berechtigung, um diesen Datei-Eintrag zu ändern.",
 	'file:cannotload' => "Beim Hochladen dieser Datei ist ein Fehler aufgetreten.",

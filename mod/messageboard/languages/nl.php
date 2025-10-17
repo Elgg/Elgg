@@ -12,7 +12,6 @@ return array(
 	 * Menu items and titles
 	 */
 	'messageboard:board' => "Berichtenbox",
-	'messageboard:none' => "Er zijn nog geen berichten geplaatst", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "Aantal berichten om weer te geven",
 	'messageboard:owner' => 'Berichtenbox van %s',
 	'messageboard:owner_history' => 'Berichten van %s in de berichtenbox van %s',

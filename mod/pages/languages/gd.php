@@ -42,7 +42,6 @@ Faodaidh tu fhaicinn is beachd fhàgail air aig:
 %s',
 
 	'pages:more' => 'Barrachd duilleagan',
-	'pages:none' => 'Cha deach duilleag a chruthachadh fhathast', // @todo remove in Elgg 7.0
 
 	/**
 	* River

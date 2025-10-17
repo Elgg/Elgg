@@ -59,7 +59,7 @@ You can read file contents using instanceof of ``ElggFile``.
 .. code-block:: php
 
 	// from an Elgg entity
-	$file = get_entity($file_guid);
+	$file = get_entity($guid);
 	readfile($file->getFilenameOnFilestore());
 
 

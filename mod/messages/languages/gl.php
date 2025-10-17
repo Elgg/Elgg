@@ -49,7 +49,6 @@ return array(
 	*/
 
 	'messages:blank' => "Non pode gardar unha mensaxe co corpo baleiro.",
-	'messages:nomessages' => "Non hai ningunha mensaxe.", // @todo remove in Elgg 7.0
 	'messages:user:nonexist' => "Non foi posíbel atopar o destinatario na base de datos de usuarios.",
 	'messages:user:blank' => "Non indicou ningún destinatario.",
 	'messages:user:self' => "Non pode enviarse unha mensaxe a vostede mesmo.",

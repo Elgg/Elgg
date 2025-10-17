@@ -13,7 +13,6 @@ return array(
 	'reportedcontent' => '신고된 내용',
 	'reportedcontent:this' => '이것을 신고합니다',
 	'reportedcontent:this:tooltip' => '관리자에게 이 페이지를 신고합니다',
-	'reportedcontent:none' => '신고된 내용이 없습니다', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => '관리자에게 신고',
 	'reportedcontent:archive' => '신고를 저장합니다',
 	'reportedcontent:archived' => '신고가 저장되었습니다',

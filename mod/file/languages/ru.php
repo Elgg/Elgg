@@ -99,7 +99,6 @@ return array(
 	 * Error messages
 	 */
 
-	'file:none' => "Файлов нет.", // @todo remove in Elgg 7.0
 	'file:uploadfailed' => "Не удается сохранить файл.",
 	'file:noaccess' => "У Вас нет прав для изменения этого файла.",
 	'file:cannotload' => "Ошибка загрузки файла",

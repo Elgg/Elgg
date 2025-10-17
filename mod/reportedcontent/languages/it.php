@@ -13,7 +13,6 @@ return array(
 	'reportedcontent' => 'Contenuti segnalati',
 	'reportedcontent:this' => 'Segnala questo',
 	'reportedcontent:this:tooltip' => 'Segnala questa pagina a un amministratore',
-	'reportedcontent:none' => 'Non ci sono contenuti segnalati', // @todo remove in Elgg 7.0
 	'reportedcontent:report' => 'Segnala all\'amministratore',
 	'reportedcontent:archive' => 'Archivia segnalazione',
 	'reportedcontent:archived' => 'Segnalazione archiviata',

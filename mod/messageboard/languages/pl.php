@@ -11,7 +11,6 @@ return array(
 	 * Menu items and titles
 	 */
 	'messageboard:board' => "Tablica ogłoszeń",
-	'messageboard:none' => "Ta tablica ogłoszeń jest jeszcze pusta", // @todo remove in Elgg 7.0
 	'messageboard:num_display' => "Liczba wiadomości do wyświetlenia",
 	'messageboard:owner' => 'tablica ogłoszeń użytkownika %s',
 	'messageboard:owner_history' => 'Wpisy %s na tablicy ogłoszeń użytkownika %s',

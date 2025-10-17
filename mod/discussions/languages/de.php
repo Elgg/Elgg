@@ -21,7 +21,6 @@ return array(
 	'discussion:settings:enable_global_discussions:help' => 'Erlaube Diskussionen ausserhalb von Gruppen.',
 
 	'discussion:latest' => 'Neueste Diskussionen',
-	'discussion:none' => 'Es gibt noch keine Diskussionen.', // @todo remove in Elgg 7.0
 	'discussion:updated' => "Letzte Antwort von %s %s",
 
 	'discussion:topic:created' => 'Die Diskussion wurde hinzugefügt.',

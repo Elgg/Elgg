@@ -48,7 +48,6 @@ View and comment on the page:
 	'notification:mentions:object:page:subject' => '%s mencionou você em uma página',
 
 	'pages:more' => 'Mais Páginas',
-	'pages:none' => 'Nenhuma Página foi criada ainda...', // @todo remove in Elgg 7.0
 
 	/**
 	* River

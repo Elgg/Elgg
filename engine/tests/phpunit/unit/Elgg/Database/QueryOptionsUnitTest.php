@@ -106,32 +106,6 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		], $options['type_subtype_pairs']);
 	}
 
-	public function testNormalizesTypeSubtypeOptionsFromPairSingulars() {
-		_elgg_services()->logger->disable();
-
-		$options = $this->options->normalizeOptions([
-			'type_subtype_pair' => ['object' => ['blog']],
-		]);
-
-		$this->assertEquals([
-			'object' => ['blog']
-		], $options['type_subtype_pairs']);
-	}
-
-	public function testNormalizesTypeSubtypeOptionsFromPairAndNonPairSingulars() {
-		_elgg_services()->logger->disable();
-
-		$options = $this->options->normalizeOptions([
-			'type' => 'group',
-			'subtype' => 'community',
-			'type_subtype_pair' => ['object' => ['blog']],
-		]);
-
-		$this->assertEquals([
-			'object' => ['blog'],
-		], $options['type_subtype_pairs']);
-	}
-
 	public function testNormalizesTypeSubtypeOptionsWithoutSubtype() {
 		$options = $this->options->normalizeOptions([
 			'type' => 'group',
@@ -147,20 +121,6 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->options->normalizeOptions([
 			'subtype' => 'blog',
 		]);
-	}
-
-	public function testNormalizesTypeSubtypeOptionsFromPairSingularAndPairPlural() {
-		_elgg_services()->logger->disable();
-
-		$options = $this->options->normalizeOptions([
-			'type_subtype_pair' => ['group' => 'community'],
-			'type_subtype_pairs' => ['object' => 'blog'],
-		]);
-
-		$this->assertEquals([
-			'group' => ['community'],
-			'object' => ['blog'],
-		], $options['type_subtype_pairs']);
 	}
 
 	public function testNormalizesTypeSubtypeOptionsFromPairPlural() {
@@ -225,31 +185,6 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals([5], $pair->ids);
 		$this->assertEquals(['status'], $pair->names);
 		$this->assertEquals(['draft'], $pair->values);
-	}
-	
-	public function testNormalizesDeprecatedTimeOptions() {
-		_elgg_services()->logger->disable();
-		
-		$options = $this->options->normalizeOptions([
-			'created_time_upper' => '-1 min',
-			'created_time_lower' => '-10 min',
-		]);
-		
-		$this->assertArrayHasKey('created_before', $options);
-		$this->assertArrayHasKey('created_after', $options);
-		$this->assertArrayNotHasKey('created_time_upper', $options);
-		$this->assertArrayNotHasKey('created_time_lower', $options);
-		
-		
-		$options = $this->options->normalizeOptions([
-			'modified_before' => '-1 min',
-			'posted_after' => '-10 min',
-		]);
-		
-		$this->assertArrayHasKey('updated_before', $options);
-		$this->assertArrayHasKey('created_after', $options);
-		$this->assertArrayNotHasKey('modified_before', $options);
-		$this->assertArrayNotHasKey('posted_after', $options);
 	}
 	
 	public function testNormalizesMetadataOptionsFromTimeOptions() {
