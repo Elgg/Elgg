@@ -222,6 +222,21 @@ class GatekeeperUnitTest extends UnitTestCase {
 		$this->assertNull($this->gatekeeper->assertAccessibleEntity($object, null, true));
 	}
 
+	public function testEntityGatekeeperReturnsEntity() {
+		$user = $this->createUser();
+
+		$object = $this->createObject([
+			'type' => 'object',
+			'subtype' => 'foo1',
+			'access_id' => ACCESS_PUBLIC,
+			'owner_guid' => $user->guid,
+		]);
+
+		$entity = elgg_entity_gatekeeper($object->guid, 'object', 'foo1');
+		$this->assertInstanceOf(\ElggEntity::class, $entity);
+		$this->assertEquals($object->guid, $entity->guid);
+	}
+
 	public function testEntityGatekeeperPreventsAccessByType() {
 		$user = $this->createUser();
 

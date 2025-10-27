@@ -56,15 +56,15 @@ function elgg_require_css(string $view): void {
  * @param string $url      URL
  * @param string $location Location in the page to include the file (default = 'footer' for js, 'head' for anything else)
  *
- * @return bool
+ * @return void
  * @since 1.8.0
  */
-function elgg_register_external_file(string $type, string $name, string $url, string $location = ''): bool {
+function elgg_register_external_file(string $type, string $name, string $url, string $location = ''): void {
 	if (empty($location)) {
 		$location = $type === 'js' ? 'footer' : 'head';
 	}
 	
-	return _elgg_services()->externalFiles->register($type, $name, $url, $location);
+	_elgg_services()->externalFiles->register($type, $name, $url, $location);
 }
 
 /**
@@ -73,11 +73,11 @@ function elgg_register_external_file(string $type, string $name, string $url, st
  * @param string $type Type of file: js or css
  * @param string $name The identifier of the file
  *
- * @return bool
+ * @return void
  * @since 1.8.0
  */
-function elgg_unregister_external_file(string $type, string $name): bool {
-	return _elgg_services()->externalFiles->unregister($type, $name);
+function elgg_unregister_external_file(string $type, string $name): void {
+	_elgg_services()->externalFiles->unregister($type, $name);
 }
 
 /**

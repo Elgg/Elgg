@@ -25,11 +25,11 @@
  * @param string   $importance The importance of the authentication handler ('sufficient' (default) or 'required')
  * @param string   $policy     The policy for which the authentication handler can be used (eg. 'user' (default) or 'api')
  *
- * @return bool
+ * @return void
  * @since 4.3
  */
-function elgg_register_pam_handler($handler, string $importance = 'sufficient', string $policy = 'user'): bool {
-	return _elgg_services()->authentication->registerHandler($handler, $importance, $policy);
+function elgg_register_pam_handler($handler, string $importance = 'sufficient', string $policy = 'user'): void {
+	_elgg_services()->authentication->registerHandler($handler, $importance, $policy);
 }
 
 /**

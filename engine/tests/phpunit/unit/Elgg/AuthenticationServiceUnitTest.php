@@ -32,7 +32,7 @@ class AuthenticationServiceUnitTest extends UnitTestCase {
 		$this->assertIsArray($handlers);
 		$this->assertEmpty($handlers);
 		
-		$this->assertTrue($this->service->registerHandler('foo'));
+		$this->service->registerHandler('foo');
 		
 		$handlers = $this->getInaccessableProperty($this->service, 'handlers');
 		
@@ -46,7 +46,7 @@ class AuthenticationServiceUnitTest extends UnitTestCase {
 		], $handlers['user']['foo']);
 		
 		// reregister the same callback, should overrule
-		$this->assertTrue($this->service->registerHandler('foo', 'required'));
+		$this->service->registerHandler('foo', 'required');
 		
 		$handlers = $this->getInaccessableProperty($this->service, 'handlers');
 		
@@ -66,7 +66,7 @@ class AuthenticationServiceUnitTest extends UnitTestCase {
 		$this->assertIsArray($handlers);
 		$this->assertEmpty($handlers);
 		
-		$this->assertTrue($this->service->registerHandler('foo'));
+		$this->service->registerHandler('foo');
 		
 		$handlers = $this->getInaccessableProperty($this->service, 'handlers');
 		
@@ -88,7 +88,7 @@ class AuthenticationServiceUnitTest extends UnitTestCase {
 	public function testAuthenticateWithNonCallable() {
 		_elgg_services()->logger->disable();
 		
-		$this->assertTrue($this->service->registerHandler('foo', 'sufficient', 'bar'));
+		$this->service->registerHandler('foo', 'sufficient', 'bar');
 		
 		$this->assertFalse($this->service->authenticate('bar'));
 		
@@ -102,52 +102,55 @@ class AuthenticationServiceUnitTest extends UnitTestCase {
 			'bar' => 'foo',
 		];
 		
-		$this->assertTrue($this->service->registerHandler(function($provided_params) use ($params) {
+		$this->service->registerHandler(function($provided_params) use ($params) {
 			$this->assertEquals($params, $provided_params);
 			
 			return true;
-		}, 'sufficient', 'bar'));
+		}, 'sufficient', 'bar');
 		
 		$this->assertTrue($this->service->authenticate('bar', $params));
 	}
 	
 	public function testAuthenticateMultipleSufficient() {
-		$this->assertTrue($this->service->registerHandler(function() {
+		$this->service->registerHandler(function() {
 			return true;
-		}, 'sufficient', 'bar'));
-		$this->assertTrue($this->service->registerHandler(function() {
+		}, 'sufficient', 'bar');
+
+		$this->service->registerHandler(function() {
 			return false;
-		}, 'sufficient', 'bar'));
+		}, 'sufficient', 'bar');
 		
 		$this->assertTrue($this->service->authenticate('bar'));
 	}
 	
 	public function testAuthenticateSufficientRequired() {
-		$this->assertTrue($this->service->registerHandler(function() {
+		$this->service->registerHandler(function() {
 			return true;
-		}, 'sufficient', 'bar'));
-		$this->assertTrue($this->service->registerHandler(function() {
+		}, 'sufficient', 'bar');
+
+		$this->service->registerHandler(function() {
 			return false;
-		}, 'required', 'bar'));
+		}, 'required', 'bar');
 		
 		$this->assertFalse($this->service->authenticate('bar'));
 	}
 	
 	public function testAuthenticateMultipleRequired() {
-		$this->assertTrue($this->service->registerHandler(function() {
+		$this->service->registerHandler(function() {
 			return true;
-		}, 'required', 'bar'));
-		$this->assertTrue($this->service->registerHandler(function() {
+		}, 'required', 'bar');
+
+		$this->service->registerHandler(function() {
 			return false;
-		}, 'required', 'bar'));
+		}, 'required', 'bar');
 		
 		$this->assertFalse($this->service->authenticate('bar'));
 	}
 	
 	public function testAuthenticateSufficientWithException() {
-		$this->assertTrue($this->service->registerHandler(function() {
+		$this->service->registerHandler(function() {
 			throw new Exception('this was required');
-		}, 'sufficient', 'bar'));
+		}, 'sufficient', 'bar');
 		
 		$this->expectException(AuthenticationException::class);
 		$this->expectExceptionMessage('this was required');
@@ -155,20 +158,21 @@ class AuthenticationServiceUnitTest extends UnitTestCase {
 	}
 	
 	public function testAuthenticateMultipleSufficientWithOneException() {
-		$this->assertTrue($this->service->registerHandler(function() {
+		$this->service->registerHandler(function() {
 			throw new Exception('this was required');
-		}, 'sufficient', 'bar'));
-		$this->assertTrue($this->service->registerHandler(function() {
+		}, 'sufficient', 'bar');
+
+		$this->service->registerHandler(function() {
 			return true;
-		}, 'sufficient', 'bar'));
+		}, 'sufficient', 'bar');
 		
 		$this->assertTrue($this->service->authenticate('bar'));
 	}
 	
 	public function testAuthenticateRequiredWithException() {
-		$this->assertTrue($this->service->registerHandler(function() {
+		$this->service->registerHandler(function() {
 			throw new Exception('this was required');
-		}, 'required', 'bar'));
+		}, 'required', 'bar');
 		
 		$this->expectException(AuthenticationException::class);
 		$this->expectExceptionMessage('this was required');

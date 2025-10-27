@@ -1,22 +1,16 @@
 <?php
-/**
- * Reply page
- */
 
 $guid = (int) elgg_extract('guid', $vars);
-elgg_entity_gatekeeper($guid, 'object', 'thewire');
+$entity = elgg_entity_gatekeeper($guid, 'object', 'thewire');
 
-/* @var $post ElggWire */
-$post = get_entity($guid);
+elgg_push_entity_breadcrumbs($entity);
 
-elgg_push_entity_breadcrumbs($post);
-
-$content = elgg_view('thewire/reply', ['post' => $post]);
+$content = elgg_view('thewire/reply', ['post' => $entity]);
 
 $content .= elgg_view_form('thewire/add', [
 	'class' => 'thewire-form',
 ], [
-	'post' => $post,
+	'post' => $entity,
 ]);
 
 echo elgg_view_page(elgg_echo('reply'), [

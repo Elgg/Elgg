@@ -7,7 +7,7 @@ Elgg provides a powerful framework for building web services. This
 allows developers to expose functionality to other web sites and desktop
 applications along with doing integrations with third-party web
 applications. While we call the API RESTful, it is actually a REST/RPC
-hybrid similar to the APIs provided by sites like Flickr and Twitter.
+hybrid similar to the APIs provided by sites like Flickr and X.
 
 To create an API for your Elgg site, you need to do 4 things:
 
@@ -228,7 +228,7 @@ In all of these cases, you can use Elgg's API authentication functions
 to control access. Elgg provides two built-in methods to perform API
 authentication: key based and HMAC signature based. You can also add
 your own authentication methods. The key based approach is very similar
-to what Google, Flickr, or Twitter. Developers can request a key (a
+to what Google, Flickr, or X. Developers can request a key (a
 random string) and pass that key with all calls that require API
 authentication. The keys are stored in the database and if an API call
 is made without a key or a bad key, the call is denied and an error

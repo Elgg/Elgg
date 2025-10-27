@@ -3,6 +3,7 @@
 namespace Elgg\Controllers;
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
+use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Http\Request;
 use Elgg\IntegrationTestCase;
 
@@ -63,7 +64,7 @@ class ServeIconIntegrationTest extends IntegrationTestCase {
 		
 		$this->createService($request);
 		
-		$this->expectException(EntityNotFoundException::class);
+		$this->expectException(PageNotFoundException::class);
 		$this->expectExceptionMessage('Icon does not exist');
 		$this->executeRequest($request);
 	}

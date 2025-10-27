@@ -8,6 +8,7 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 .. toctree::
 	:maxdepth: 1
 	
+	upgrade-notes/6.x-to-7.0
 	upgrade-notes/6.2-to-6.3
 	upgrade-notes/6.1-to-6.2
 	upgrade-notes/6.0-to-6.1

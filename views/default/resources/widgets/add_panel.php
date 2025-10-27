@@ -23,9 +23,7 @@ $owner_guid = (int) elgg_extract('owner_guid', $vars, (int) get_input('owner_gui
 $new_widget_column = elgg_extract('new_widget_column', $vars, get_input('new_widget_column'));
 $new_widget_position = elgg_extract('new_widget_position', $vars, get_input('new_widget_position'));
 
-elgg_entity_gatekeeper($owner_guid);
-
-$owner = get_entity($owner_guid);
+$owner = elgg_entity_gatekeeper($owner_guid);
 
 elgg_set_page_owner_guid($owner->guid);
 

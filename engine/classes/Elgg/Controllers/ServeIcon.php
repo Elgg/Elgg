@@ -3,6 +3,7 @@
 namespace Elgg\Controllers;
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
+use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Http\OkResponse;
 use Elgg\Http\ResponseBuilder;
 use Elgg\Request;
@@ -26,7 +27,7 @@ class ServeIcon {
 	 * @param Request $request the HTTP request
 	 *
 	 * @return ResponseBuilder
-	 * @throws EntityNotFoundException
+	 * @throws PageNotFoundException
 	 */
 	public function __invoke(Request $request) {
 		
@@ -47,8 +48,7 @@ class ServeIcon {
 		
 		$thumbnail = $entity->getIcon($size);
 		if (!$thumbnail->exists()) {
-			// @todo replace this with a PageNotFoundException in 7.0
-			throw new EntityNotFoundException('Icon does not exist');
+			throw new PageNotFoundException('Icon does not exist');
 		}
 		
 		$if_none_match = $request->getHttpRequest()->headers->get('if_none_match');

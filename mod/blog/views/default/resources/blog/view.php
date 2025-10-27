@@ -1,9 +1,7 @@
 <?php
 
 $guid = (int) elgg_extract('guid', $vars);
-elgg_entity_gatekeeper($guid, 'object', 'blog');
-
-$entity = get_entity($guid);
+$entity = elgg_entity_gatekeeper($guid, 'object', 'blog');
 
 elgg_push_entity_breadcrumbs($entity);
 

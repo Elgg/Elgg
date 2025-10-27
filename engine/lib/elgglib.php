@@ -14,6 +14,16 @@ function elgg(): \Elgg\Di\PublicContainer {
 }
 
 /**
+ * Checks if code is currently executed in a commandline
+ *
+ * @return bool
+ * @since 7.0
+ */
+function elgg_is_cli(): bool {
+	return \Elgg\Application::isCli();
+}
+
+/**
  * Set a response HTTP header
  *
  * @see header()

@@ -109,11 +109,6 @@ class FieldsHandler {
 				'name' => 'website',
 			],
 			[
-				'#type' => 'text',
-				'#label' => elgg_echo('profile:twitter'),
-				'name' => 'twitter',
-			],
-			[
 				'#type' => 'longtext',
 				'#label' => elgg_echo('profile:description'),
 				'name' => 'description',

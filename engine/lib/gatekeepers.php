@@ -88,7 +88,7 @@ function elgg_admin_gatekeeper(): void {
  * @param null|string $subtype           Optional required entity subtype
  * @param bool        $validate_can_edit flag to check canEdit access
  *
- * @return void
+ * @return \ElggEntity
  *
  * @throws Exception
  * @throws \Elgg\Exceptions\Http\EntityNotFoundException
@@ -96,9 +96,11 @@ function elgg_admin_gatekeeper(): void {
  * @throws \Elgg\Exceptions\HttpException
  * @since 1.9.0
  */
-function elgg_entity_gatekeeper(int $guid, ?string $type = null, ?string $subtype = null, bool $validate_can_edit = false): void {
+function elgg_entity_gatekeeper(int $guid, ?string $type = null, ?string $subtype = null, bool $validate_can_edit = false): \ElggEntity {
 	$entity = _elgg_services()->gatekeeper->assertExists($guid, $type, $subtype);
 	_elgg_services()->gatekeeper->assertAccessibleEntity($entity, null, $validate_can_edit);
+
+	return $entity;
 }
 
 /**

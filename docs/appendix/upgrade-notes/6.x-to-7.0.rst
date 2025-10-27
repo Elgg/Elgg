@@ -1,0 +1,27 @@
+From 5.x to 6.0
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+Plugin changes
+--------------
+
+Profile
+~~~~~~~
+
+The profile field `Twitter` has been removed.
+
+Changes in functions
+--------------------
+
+Changed function return types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* ``elgg_register_external_file()`` now returns void
+* ``elgg_register_pam_handler()`` now returns void
+* ``elgg_register_route()`` now returns void
+* ``elgg_unregister_external_file()`` now returns void
+* ``elgg_unregister_menu_item()`` now returns void
+

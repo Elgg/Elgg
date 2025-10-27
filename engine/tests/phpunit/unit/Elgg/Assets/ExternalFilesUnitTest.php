@@ -2,6 +2,8 @@
 
 namespace Elgg\Assets;
 
+use Elgg\Exceptions\InvalidArgumentException;
+
 class ExternalFilesUnitTest extends \Elgg\UnitTestCase {
 	
 	/**
@@ -58,19 +60,16 @@ class ExternalFilesUnitTest extends \Elgg\UnitTestCase {
 		$externalFiles->register('foo', 'bar2', 'http://elgg.org/', 'custom_location');
 		$externalFiles->register('foo', 'bar3', 'http://community.elgg.org/', 'custom_location', 'abc');
 
-		$this->assertFalse($externalFiles->register('foo', '', 'ipsum', 'dolor'));
-		$this->assertFalse($externalFiles->register('foo', 'lorem', '', 'dolor'));
-
 		$this->assertEquals(array(
 			'bar2' => 'http://elgg.org/'
-				), $this->getLoadedFiles('foo', 'custom_location'));
+		), $this->getLoadedFiles('foo', 'custom_location'));
 
 		$externalFiles->load('foo', 'bar1');
 
 		$this->assertEquals(array(
 			'bar2' => 'http://elgg.org/',
 			'bar1' => '#'
-				), $this->getLoadedFiles('foo', 'custom_location'));
+		), $this->getLoadedFiles('foo', 'custom_location'));
 
 		$externalFiles->load('foo', 'bar3');
 
@@ -78,23 +77,37 @@ class ExternalFilesUnitTest extends \Elgg\UnitTestCase {
 			'bar2' => 'http://elgg.org/',
 			'bar1' => '#',
 			'bar3' => 'http://community.elgg.org/'
-				), $this->getLoadedFiles('foo', 'custom_location'));
+		), $this->getLoadedFiles('foo', 'custom_location'));
 
-		$this->assertTrue($externalFiles->unregister('foo', 'bar1'));
+		$externalFiles->unregister('foo', 'bar1');
 
 		$this->assertEquals(array(
 			'bar2' => 'http://elgg.org/',
 			'bar3' => 'http://community.elgg.org/'
-				), $this->getLoadedFiles('foo', 'custom_location'));
+		), $this->getLoadedFiles('foo', 'custom_location'));
 
-		$this->assertFalse($externalFiles->unregister('foo', 'bar1'));
+		$externalFiles->unregister('foo', 'bar1');
 
 		$externalFiles->load('foo', 'bar5');
 
 		$this->assertEquals(array(
 			'bar5' => ''
-				), $this->getLoadedFiles('foo', ''));
+		), $this->getLoadedFiles('foo', ''));
 
 		$this->assertEquals(array(), $this->getLoadedFiles('nonexistent', 'custom_location'));
+	}
+
+	public function testRegisterItemsWithBlankName() {
+		$externalFiles = $this->service;
+
+		$this->expectException(InvalidArgumentException::class);
+		$externalFiles->register('foo', '', 'ipsum', 'dolor');
+	}
+
+	public function testRegisterItemsWithBlankUrl() {
+		$externalFiles = $this->service;
+
+		$this->expectException(InvalidArgumentException::class);
+		$externalFiles->register('foo', 'lorem', '', 'dolor');
 	}
 }
