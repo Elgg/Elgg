@@ -1,12 +1,9 @@
 <?php
 
-use Elgg\Exceptions\Http\EntityNotFoundException;
-
 $guid = (int) elgg_extract('guid', $vars);
-elgg_entity_gatekeeper($guid, 'object', 'blog', true);
 
-/* @var $blog \ElggBlog */
-$blog = get_entity($guid);
+/** @var \ElggBlog $blog */
+$blog = elgg_entity_gatekeeper($guid, 'object', 'blog', true);
 
 $vars['entity'] = $blog;
 
@@ -23,8 +20,7 @@ if (!empty($revision_id)) {
 	$title .= ' ' . elgg_echo('blog:edit_revision_notice');
 
 	if (!$revision instanceof \ElggAnnotation || $revision->entity_guid !== $guid) {
-		// @todo replace this with a PageNotFoundException in 7.0
-		throw new EntityNotFoundException(elgg_echo('blog:error:revision_not_found'));
+		throw new \Elgg\Exceptions\Http\PageNotFoundException(elgg_echo('blog:error:revision_not_found'));
 	}
 }
 

@@ -7,17 +7,14 @@
  * - actor
  */
 
-use Elgg\Exceptions\Http\EntityNotFoundException;
-
 $entity_guid = (int) elgg_extract('entity_guid', $vars);
 if (!elgg_entity_exists($entity_guid)) {
-	throw new EntityNotFoundException();
+	throw new \Elgg\Exceptions\Http\EntityNotFoundException();
 }
 
 $recipient_guid = (int) elgg_extract('recipient_guid', $vars);
-elgg_entity_gatekeeper($recipient_guid, 'user');
-
-$recipient = get_user($recipient_guid);
+/** @var \ElggUser $recipient */
+$recipient = elgg_entity_gatekeeper($recipient_guid, 'user');
 
 $actor_guid = (int) get_input('actor_guid', elgg_extract('actor_guid', $vars));
 
@@ -37,8 +34,7 @@ $content = elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity_guid, $recipien
 });
 
 if (empty($content)) {
-	// @todo replace this with a PageNotFoundException in 7.0
-	throw new EntityNotFoundException(elgg_echo('notifications:mute:error:content'));
+	throw new \Elgg\Exceptions\Http\PageNotFoundException(elgg_echo('notifications:mute:error:content'));
 }
 
 echo elgg_view_page(elgg_echo('notifications:mute:title'), [

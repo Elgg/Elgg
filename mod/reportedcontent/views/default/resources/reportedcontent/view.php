@@ -1,10 +1,9 @@
 <?php
 
 $guid = (int) elgg_extract('guid', $vars);
-elgg_entity_gatekeeper($guid, 'object', 'reported_content');
 
-/* @var \ElggReportedContent $entity */
-$entity = get_entity($guid);
+/** @var \ElggReportedContent $entity */
+$entity = elgg_entity_gatekeeper($guid, 'object', 'reported_content');
 
 if ($entity->state === 'active') {
 	elgg_push_breadcrumb(elgg_echo('reportedcontent:new'), elgg_normalize_url('admin/administer_utilities/reportedcontent'));

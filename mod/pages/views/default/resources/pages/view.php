@@ -1,43 +1,36 @@
 <?php
-/**
- * View a single page
- */
-
-use Elgg\Exceptions\Http\EntityNotFoundException;
 
 $guid = (int) elgg_extract('guid', $vars);
 
-elgg_entity_gatekeeper($guid, 'object', 'page');
+/** @var \ElggPage $entity */
+$entity = elgg_entity_gatekeeper($guid, 'object', 'page');
 
-/* @var $page ElggPage */
-$page = get_entity($guid);
-
-$container = $page->getContainerEntity();
+$container = $entity->getContainerEntity();
 if (!$container) {
-	throw new EntityNotFoundException();
+	throw new \Elgg\Exceptions\Http\EntityNotFoundException();
 }
 
 elgg_push_collection_breadcrumbs('object', 'page', $container);
-pages_prepare_parent_breadcrumbs($page);
+pages_prepare_parent_breadcrumbs($entity);
 
 // can add subpage if can edit this page and write to container (such as a group)
-if ($page->canEdit() && $container->canWriteToContainer(0, 'object', 'page')) {
+if ($entity->canEdit() && $container->canWriteToContainer(0, 'object', 'page')) {
 	elgg_register_menu_item('title', [
 		'name' => 'subpage',
 		'icon' => 'plus',
 		'href' => elgg_generate_url('add:object:page', [
-			'guid' => $page->guid,
+			'guid' => $entity->guid,
 		]),
 		'text' => elgg_echo('pages:newchild'),
 		'link_class' => 'elgg-button elgg-button-action',
 	]);
 }
 
-echo elgg_view_page($page->getDisplayName(), [
-	'content' => elgg_view_entity($page),
+echo elgg_view_page($entity->getDisplayName(), [
+	'content' => elgg_view_entity($entity),
 	'sidebar' => elgg_view('pages/sidebar/navigation', [
-		'page' => $page,
+		'page' => $entity,
 	]),
-	'entity' => $page,
+	'entity' => $entity,
 	'filter_id' => 'pages/view',
 ]);

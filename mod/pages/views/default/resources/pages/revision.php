@@ -3,19 +3,15 @@
  * View a revision of page
  */
 
-use Elgg\Exceptions\Http\EntityNotFoundException;
-use Elgg\Exceptions\Http\EntityPermissionsException;
-
 $id = (int) elgg_extract('id', $vars);
 $annotation = elgg_get_annotation_from_id($id);
 if (!$annotation instanceof \ElggAnnotation) {
-	// @todo replace this with a PageNotFoundException in 7.0
-	throw new EntityNotFoundException();
+	throw new \Elgg\Exceptions\Http\PageNotFoundException();
 }
 
 $page = $annotation->getEntity();
 if (!$page instanceof \ElggPage || !$page->canEdit()) {
-	throw new EntityPermissionsException();
+	throw new \Elgg\Exceptions\Http\EntityPermissionsException();
 }
 
 elgg_entity_gatekeeper($page->container_guid);

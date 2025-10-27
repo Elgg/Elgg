@@ -2,7 +2,7 @@
 
 namespace Elgg\Controllers;
 
-use Elgg\Exceptions\Http\EntityNotFoundException;
+use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Http\ResponseBuilder;
 use Elgg\Values;
 
@@ -19,14 +19,13 @@ class SecurityTxt {
 	 * @param \Elgg\Request $request current request
 	 *
 	 * @return ResponseBuilder
-	 * @throws EntityNotFoundException
+	 * @throws PageNotFoundException
 	 */
 	public function __invoke(\Elgg\Request $request): ResponseBuilder {
 		$contact = elgg_get_config('security_txt_contact');
 		$expires = elgg_get_config('security_txt_expires');
 		if (empty($contact) || empty($expires)) {
-			// @todo replace this with a PageNotFoundException in 7.0
-			throw new EntityNotFoundException();
+			throw new PageNotFoundException();
 		}
 		
 		$lines = [

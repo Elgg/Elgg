@@ -4,15 +4,13 @@
  */
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
-use Elgg\Exceptions\Http\EntityPermissionsException;
 
 $collection_id = (int) elgg_extract('collection_id', $vars);
 
 $collection = elgg_get_access_collection($collection_id);
 if (!$collection instanceof \ElggAccessCollection || !$collection->canEdit()) {
 	// We don't want to leak friendship/collection information
-	// @todo replace this with a ForbiddenException in 7.0
-	throw new EntityPermissionsException();
+	throw new \Elgg\Exceptions\Http\ForbiddenException();
 }
 
 $user = $collection->getOwnerEntity();
