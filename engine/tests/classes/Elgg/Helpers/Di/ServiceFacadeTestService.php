@@ -11,7 +11,7 @@ class ServiceFacadeTestService {
 	
 	use ServiceFacade;
 	
-	public static function name() {
+	public static function name(): string {
 		return 'foo';
 	}
 	

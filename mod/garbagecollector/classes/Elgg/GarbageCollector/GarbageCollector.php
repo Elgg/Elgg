@@ -54,7 +54,7 @@ class GarbageCollector {
 	 *
 	 * @return string
 	 */
-	public static function name() {
+	public static function name(): string {
 		return 'garbagecollector';
 	}
 

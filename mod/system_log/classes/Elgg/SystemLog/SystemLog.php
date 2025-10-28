@@ -269,7 +269,7 @@ class SystemLog {
 	 *
 	 * @return string
 	 */
-	public static function name() {
+	public static function name(): string {
 		return 'system_log';
 	}
 	

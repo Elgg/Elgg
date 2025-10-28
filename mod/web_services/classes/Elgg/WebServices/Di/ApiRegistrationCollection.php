@@ -32,7 +32,7 @@ class ApiRegistrationCollection extends Collection {
 	 *
 	 * @return string
 	 */
-	public static function name() {
+	public static function name(): string {
 		return 'webservices.api_collection';
 	}
 }
