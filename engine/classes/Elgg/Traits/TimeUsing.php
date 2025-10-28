@@ -9,24 +9,20 @@ namespace Elgg\Traits;
  */
 trait TimeUsing {
 
-	/**
-	 * @var \DateTime
-	 */
-	private $time;
+	private ?\DateTimeImmutable $time = null;
 
 	/**
-	 * Get the (cloned) time. If setCurrentTime() has not been set, this will return a new DateTime().
+	 * Get the time. If setCurrentTime() has not been set, this will return a new DateTimeImmutable().
 	 *
 	 * @param string $modifier Time modifier
 	 *
-	 * @return \DateTime
-	 * @see \DateTime::modify
+	 * @return \DateTimeImmutable
+	 * @see \DateTimeImmutable::modify
 	 */
-	public function getCurrentTime($modifier = '') {
-		$time = $this->time ?? new \DateTime();
-		$time = clone $time;
+	public function getCurrentTime(string $modifier = ''): \DateTimeImmutable {
+		$time = $this->time ?? new \DateTimeImmutable();
 		if ($modifier) {
-			$time->modify($modifier);
+			$time = $time->modify($modifier);
 		}
 		
 		return $time;
@@ -35,13 +31,16 @@ trait TimeUsing {
 	/**
 	 * Set the current time.
 	 *
-	 * @param null|\DateTime $time Current time (empty for now)
+	 * @param null|\DateTimeInterface $time Current time (empty for now)
 	 *
 	 * @return void
 	 */
-	public function setCurrentTime(?\DateTime $time = null) {
-		$time = $time ?? new \DateTime();
-		$this->time = clone $time;
+	public function setCurrentTime(?\DateTimeInterface $time = null): void {
+		if ($time instanceof \DateTimeInterface) {
+			$this->time = \DateTimeImmutable::createFromInterface($time);
+		} else {
+			$this->time = new \DateTimeImmutable();
+		}
 	}
 	
 	/**
