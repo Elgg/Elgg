@@ -101,7 +101,7 @@ class ApiRegistrationService {
 	 *
 	 * @return string
 	 */
-	public static function name() {
+	public static function name(): string {
 		return 'webservices.api_registration';
 	}
 	

@@ -25,3 +25,7 @@ Changed function return types
 * ``elgg_unregister_external_file()`` now returns void
 * ``elgg_unregister_menu_item()`` now returns void
 
+Changed class function return types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* ``\Elgg\Traits\Di\ServiceFacade`` now returns a ``string``

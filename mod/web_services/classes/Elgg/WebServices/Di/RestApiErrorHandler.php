@@ -53,7 +53,7 @@ class RestApiErrorHandler extends AbstractHandler {
 	 *
 	 * @return string
 	 */
-	public static function name() {
+	public static function name(): string {
 		return 'webservices.rest.error_handler';
 	}
 }
