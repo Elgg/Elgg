@@ -28,8 +28,8 @@ return array(
 	'developers:help:debug_level' => "This controls the amount of information logged. See elgg_log() for more information.",
 	'developers:label:display_errors' => 'Display fatal PHP errors',
 	'developers:help:display_errors' => "By default, Elgg's .htaccess file suppresses the display of fatal errors.",
-	'developers:label:screen_log' => "Log to the screen",
-	'developers:help:screen_log' => "This displays elgg_log() output and a DB query count.",
+	'developers:label:screen_log' => "Log to the browser console",
+	'developers:help:screen_log' => "This displays log output and some request statistics to the browser console",
 	'developers:show_strings:default' => "Normal translation",
 	'developers:show_strings:key_append' => "Translation key appended",
 	'developers:show_strings:key_only' => "Show translation key only",
@@ -104,10 +104,9 @@ return array(
 	'developers:inspect:service:path' => 'Definition',
 	'developers:inspect:service:class' => 'Class',
 
-	// event logging
-	'developers:request_stats' => "Request Statistics (does not include the shutdown event)",
+	'developers:request_stats' => "Request Statistics",
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
-	'developers:log_queries' => "DB queries: %s",
+	'developers:log_queries' => "DB queries",
 	'developers:boot_cache_rebuilt' => "The boot cache was rebuilt for this request",
 	'developers:elapsed_time' => "Elapsed time (s)",
 
