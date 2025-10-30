@@ -44,7 +44,7 @@ System events
 	The ``$params`` array will contain:
 
 	 * ``time`` - the timestamp of when the cron command was started
-	 * ``dt`` - the ``\DateTime`` object of when the cron command was started
+	 * ``dt`` - the ``\DateTimeImmutable`` object of when the cron command was started
 	 * ``logger`` - instance of ``\Elgg\Logger\Cron`` to log any information to the cron log
 
 **cron:intervals, system** |results|

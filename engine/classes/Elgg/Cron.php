@@ -61,7 +61,6 @@ class Cron {
 		
 		$scheduler = new Scheduler();
 		$time = $this->getCurrentTime();
-		$immutable = \DateTimeImmutable::createFromInterface($time);
 
 		foreach ($intervals as $interval) {
 			if (!array_key_exists($interval, $allowed_intervals)) {
@@ -69,7 +68,7 @@ class Cron {
 			}
 
 			$cron_interval = $force ? $allowed_intervals['minute'] : $allowed_intervals[$interval];
-			$filename = $this->getLogFilename($interval, $immutable);
+			$filename = $this->getLogFilename($interval, $time);
 			
 			$cron_logger = \Elgg\Logger\Cron::factory([
 				'interval' => $interval,
@@ -77,19 +76,19 @@ class Cron {
 			]);
 			
 			$scheduler
-				->call(function () use ($interval, $immutable, $cron_logger, $filename) {
-					return $this->execute($interval, $cron_logger, $filename, $immutable);
+				->call(function () use ($interval, $time, $cron_logger, $filename) {
+					return $this->execute($interval, $cron_logger, $filename, $time);
 				})
 				->at($cron_interval)
-				->before(function () use ($interval, $immutable, $cron_logger) {
-					$this->before($interval, $cron_logger, $immutable);
+				->before(function () use ($interval, $time, $cron_logger) {
+					$this->before($interval, $cron_logger, $time);
 				})
 				->then(function ($output) use ($interval, $cron_logger) {
 					$this->after($output, $interval, $cron_logger);
 				});
 		}
 
-		return $scheduler->run($time);
+		return $scheduler->run(\DateTime::createFromInterface($time));
 	}
 
 	/**
