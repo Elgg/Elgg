@@ -12,13 +12,7 @@ use Monolog\LogRecord;
 class ErrorLogHtmlFormatter extends HtmlFormatter {
 
 	/**
-	 * Creates an HTML table row
-	 *
-	 * @param  string $th       Row header content
-	 * @param  string $td       Row standard cell content
-	 * @param  bool   $escapeTd false if td content must not be html escaped
-	 *
-	 * @return string
+	 * {@inheritdoc}
 	 */
 	protected function addRow(string $th, string $td = ' ', bool $escapeTd = true): string {
 		$th = htmlspecialchars($th, ENT_NOQUOTES, 'UTF-8');
@@ -30,11 +24,7 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 	}
 
 	/**
-	 * Formats a log record.
-	 *
-	 * @param  array $record A record to format
-	 *
-	 * @return mixed The formatted record
+	 * {@inheritdoc}
 	 */
 	public function format(LogRecord $record): string {
 		
