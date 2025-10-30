@@ -13,12 +13,12 @@ use Elgg\I18n\NullTranslator;
 class Bootstrap extends DefaultPluginBootstrap {
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function boot() {
 		$this->processSettings();
 	}
-	
+
 	/**
 	 * Process plugin settings before plugins are started
 	 *
@@ -34,51 +34,36 @@ class Bootstrap extends DefaultPluginBootstrap {
 		if ($display_errors) {
 			ini_set('display_errors', $display_errors);
 		}
-		
-		if (!empty($settings['screen_log']) && (elgg_get_viewtype() === 'default') && !\Elgg\Application::isCli()) {
+
+		if (!empty($settings['screen_log']) && (elgg_get_viewtype() === 'default') && !elgg_is_cli() && !elgg_is_xhr()) {
 			// don't show in action/simplecache
 			$path = elgg_substr(elgg_get_current_url(), elgg_strlen(elgg_get_site_url()));
 			if (!preg_match('~^(cache|action)/~', $path)) {
-				elgg_require_css('developers/log');
-				
 				// Write to JSON file to not take up memory See #11886
 				$uid = substr(hash('md5', uniqid('', true)), 0, 10);
 				$log_file = elgg_sanitize_path(elgg_get_data_path() . "logs/screen/{$uid}.html", false);
 				$elgg->config->log_cache = $log_file;
-	
+
 				$handler = new \Monolog\Handler\StreamHandler(
 					$log_file,
 					$elgg->logger->getLevel()
 				);
 	
-				$formatter = new \Elgg\Developers\ErrorLogHtmlFormatter();
+				$formatter = new \Elgg\Developers\ConsoleLogFormatter();
 				$handler->setFormatter($formatter);
 	
 				$elgg->logger->pushHandler($handler);
 	
 				$handler->pushProcessor(new \Elgg\Logger\BacktraceProcessor());
-	
-				$events->registerHandler('view_vars', 'page/elements/html', function(\Elgg\Event $event)  use ($handler) {
-					$vars = $event->getValue();
 
-					// prevent logs from showing up in html mails
-					if (elgg_extract('email', $vars) instanceof \Elgg\Email) {
-						return null;
-					}
-					
-					$handler->close();
-					
-					$vars['body'] .= elgg_view('developers/log');
-					
-					return $vars;
-				});
-	
 				$events->registerHandler('shutdown', 'system', function() use ($handler, $elgg) {
-					// Prevent errors in cli
 					$handler->close();
-					
+
+					echo elgg_format_element('script', [], $this->getPageStats());
+
 					$log_file = $elgg->config->log_cache;
 					if (is_file($log_file)) {
+						echo elgg_format_element('script', [], file_get_contents($log_file));
 						unlink($log_file);
 					}
 				}, 1000);
@@ -143,5 +128,31 @@ class Bootstrap extends DefaultPluginBootstrap {
 	
 			$elgg->logger->pushHandler($handler);
 		}
+	}
+
+	/**
+	 * Returns page statistics to be used in developer console log
+	 *
+	 * @return string
+	 */
+	protected function getPageStats(): string {
+
+		$elapsed = microtime(true) - elgg_extract('START_MICROTIME', $GLOBALS);
+
+		$boot_cache_rebuilt = !elgg_get_config('_boot_cache_hit') ? elgg_echo('option:yes') : elgg_echo('option:no');
+		$system_cache_enabled = _elgg_services()->systemCache->isEnabled() ? elgg_echo('option:yes') : elgg_echo('option:no');
+
+		$request_stats = [
+			elgg_echo('developers:elapsed_time') => sprintf('%1.3f', $elapsed),
+			elgg_echo('developers:log_queries') => _elgg_services()->db->getQueryCount(),
+			elgg_echo('developers:boot_cache_rebuilt') => $boot_cache_rebuilt,
+			elgg_echo('developers:label:system_cache') => $system_cache_enabled,
+		];
+
+		$result = 'console.group("' . elgg_echo('developers:request_stats') . '");';
+		$result .= 'console.table(' . json_encode($request_stats) . ');';
+		$result .= 'console.groupEnd();';
+
+		return $result;
 	}
 }
