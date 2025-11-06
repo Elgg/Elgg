@@ -1,3 +1,17 @@
+<a name="6.3.2"></a>
+### 6.3.2 (2025-11-06)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+* Jerôme Bakker (1)
+
+#### Bug fixes
+
+* **log:** need to set log level after config loaded from db [c8faaa71f](https://github.com/Elgg/Elgg/commit/c8faaa71f800aa2b49212db85b7e74a4893cf5ae)
+* **tests:** correctly assert if route has required plugins [b98d010e6](https://github.com/Elgg/Elgg/commit/b98d010e622bad237fbd338042710d1d88815538)
+
+
 <a name="6.3.1"></a>
 ### 6.3.1 (2025-10-03)
 
