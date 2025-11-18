@@ -49,23 +49,31 @@ function _likes_count_menu_item(\ElggEntity $entity, int $priority = 500): \Elgg
 		$likes_string = elgg_echo('likes:userslikedthis', [$num_likes]);
 	}
 
-	return \ElggMenuItem::factory([
+	$options = [
 		'name' => 'likes_count',
-		'text' => '',
-		'title' => elgg_echo('likes:see'),
-		'href' => '#',
+		'text' => false,
+		'href' => false,
 		'badge' => $likes_string,
 		'data-likes-guid' => $entity->guid,
-		'data-colorbox-opts' => json_encode([
-			'maxHeight' => '85%',
-			'innerWidth' => '345px',
-			'href' => elgg_normalize_url("ajax/view/likes/popup?guid={$entity->guid}")
-		]),
-		'link_class' => 'elgg-lightbox',
 		'item_class' => $num_likes ? '' : 'hidden',
 		'priority' => $priority,
 		'deps' => ['elgg/likes'],
-	]);
+	];
+	
+	if ((bool) elgg_get_plugin_setting('details', 'likes') || $entity->canEdit()) {
+		$options['data-colorbox-opts'] = json_encode([
+			'maxHeight' => '85%',
+			'innerWidth' => '345px',
+			'href' => elgg_generate_url('ajax', [
+				'segments' => 'view/likes/popup',
+				'guid' => $entity->guid,
+			]),
+		]);
+		$options['link_class'] = 'elgg-lightbox';
+		$options['title'] = elgg_echo('likes:see');
+	}
+	
+	return \ElggMenuItem::factory($options);
 }
 
 /**

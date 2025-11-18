@@ -4,8 +4,10 @@ require_once(__DIR__ . '/lib/functions.php');
 
 return [
 	'plugin' => [
-		'name' => 'Likes',
 		'activate_on_install' => true,
+	],
+	'settings' => [
+		'details' => 0,
 	],
 	'actions' => [
 		'likes/add' => [],

@@ -17,6 +17,11 @@ need to call ``set_time_limit(0);``
 Plugin changes
 --------------
 
+Likes
+~~~~~
+
+By default only content owners can see who likes their content. This can be made public by a new plugin setting.
+
 Profile
 ~~~~~~~
 
