@@ -540,7 +540,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		_elgg_services()->events->restore();
 	}
 
-	public function testContainerTimeUpdatedChangesOnEntityCreate() {
+	public function testContainerLastActionChangesOnEntityCreate() {
 		$old_ts = time() - 10;
 		
 		$container = $this->createGroup();
@@ -551,11 +551,10 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		// triggering entity create should update container last action
 		$object = $this->createObject([
 			'container_guid' => $container->guid,
+			'time_created' => time() - 50,
 		]);
 		
-		$current_last_action = $container->last_action;
-		
-		$this->assertNotEquals($old_ts, $current_last_action);
+		$this->assertEquals($object->time_created, $container->last_action);
 		
 		// object update should not update container last action
 		$container->updateLastAction($old_ts);

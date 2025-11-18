@@ -738,7 +738,7 @@ abstract class ElggEntity extends \ElggData {
 		
 		if (isset($container) && !$container instanceof \ElggUser) {
 			// users have their own logic for setting last action
-			$container->updateLastAction();
+			$container->updateLastAction($this->time_created);
 		}
 		
 		// for BC reasons this event is still needed (for example for notifications)
