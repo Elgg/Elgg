@@ -44,7 +44,7 @@ class SendActionTest extends ActionResponseTestCase {
 		$response = $this->executeAction('messages/send', [
 			'subject' => 'Message Subject',
 			'body' => 'Message Body',
-			'recipients' => $user->guid,
+			'recipient' => $user->guid,
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
@@ -63,7 +63,7 @@ class SendActionTest extends ActionResponseTestCase {
 		$response = $this->executeAction('messages/send', [
 			'subject' => 'Message Subject',
 			'body' => 'Message Body',
-			'recipients' => 'abc',
+			'recipient' => '-1',
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
@@ -85,7 +85,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('messages/send', [
 			'body' => 'Message Body',
-			'recipients' => $recipient->guid,
+			'recipient' => $recipient->guid,
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
@@ -107,7 +107,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('messages/send', [
 			'subject' => 'Message Subject',
-			'recipients' => $recipient->guid,
+			'recipient' => $recipient->guid,
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
@@ -132,7 +132,7 @@ class SendActionTest extends ActionResponseTestCase {
 		$response = $this->executeAction('messages/send', [
 			'subject' => 'Message Subject',
 			'body' => 'Message Body',
-			'recipients' => $recipient->guid,
+			'recipient' => $recipient->guid,
 		]);
 
 		$this->assertInstanceOf(OkResponse::class, $response);

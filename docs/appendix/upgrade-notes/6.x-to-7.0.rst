@@ -14,13 +14,28 @@ Cron
 The PHP max execution time during the CRON execution has been set to 'unlimited'. So for developers there is no longer a
 need to call ``set_time_limit(0);``
 
+Entity restore
+~~~~~~~~~~~~~~
+
+The ``entity/chooserestoredestination`` form and action now use a singular parameter value for the ``destination_container_guid`` when selecting a different entity to restore to.
+
 Plugin changes
 --------------
+
+Groups
+~~~~~~
+
+The ``group/edit`` form and action now use a singular parameter value for the ``owner_guid`` when selecting a different group owner.
 
 Likes
 ~~~~~
 
 By default only content owners can see who likes their content. This can be made public by a new plugin setting.
+
+Messages
+~~~~~~~~
+
+The ``messages/send`` form and action parameter ``recipients`` has been renamed to ``recipient`` and now contains a singular value when selecting a recipient.
 
 Profile
 ~~~~~~~

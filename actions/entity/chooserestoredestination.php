@@ -4,13 +4,7 @@
  */
 
 $guid = (int) get_input('entity_guid');
-$destination_container_guid = (array) get_input('destination_container_guid');
-$destination_container_guid = array_filter($destination_container_guid, function($value) {
-	return is_numeric($value);
-});
-$destination_container_guid = array_map(function($value) {
-	return (int) $value;
-}, $destination_container_guid);
+$destination_container_guid = (int) get_input('destination_container_guid');
 
 if (empty($guid) || empty($destination_container_guid)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
@@ -23,7 +17,7 @@ if (!$entity instanceof \ElggEntity || !$entity->isDeleted()) {
 	return elgg_error_response(elgg_echo('entity:restore:item_not_found'));
 }
 
-$new_container = get_entity($destination_container_guid[0]);
+$new_container = get_entity($destination_container_guid);
 if (!$new_container instanceof \ElggEntity) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }

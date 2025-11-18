@@ -23,21 +23,16 @@ class PrepareFields {
 		$values = [
 			'subject' => '',
 			'body' => '',
-			'recipients' => [],
+			'recipient' => null,
 		];
 		
 		$vars = array_merge($values, $vars);
 		
-		// make sure the recipients are users
-		if (!is_array($vars['recipients'])) {
-			$vars['recipients'] = (array) $vars['recipients'];
+		// make sure the recipient is a user
+		if (!empty($vars['recipient']) && !get_user((int) $vars['recipient']) instanceof \ElggUser) {
+			unset($vars['recipient']);
 		}
-		
-		$vars['recipients'] = array_filter($vars['recipients'], function ($guid) {
-			$user = get_user((int) $guid);
-			return $user instanceof \ElggUser;
-		});
-		
+
 		return $vars;
 	}
 }

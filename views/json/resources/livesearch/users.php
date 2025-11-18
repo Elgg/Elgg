@@ -8,6 +8,7 @@ $options = [
 	'query' => elgg_extract('term', $vars),
 	'type' => 'user',
 	'limit' => elgg_extract('limit', $vars),
+	'save_as_array' => (bool) elgg_extract('save_as_array', $vars, true),
 	'sort_by' => [
 		'property_type' => 'metadata',
 		'property' => 'name',

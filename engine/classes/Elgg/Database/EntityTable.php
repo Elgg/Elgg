@@ -131,7 +131,7 @@ class EntityTable {
 	 * @return \stdClass|null
 	 */
 	public function getRow(int $guid, ?int $user_guid = null): ?\stdClass {
-		if ($guid < 0) {
+		if ($guid < 1) {
 			return null;
 		}
 
