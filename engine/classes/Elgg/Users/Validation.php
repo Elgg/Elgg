@@ -137,9 +137,6 @@ class Validation {
 			return;
 		}
 		
-		// removing users could take a while
-		set_time_limit(0);
-		
 		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($days) {
 			/* @var $users \ElggBatch */
 			$users = elgg_get_entities([

@@ -5,6 +5,15 @@ From 5.x to 6.0
    :local:
    :depth: 1
 
+Elgg core changes
+-----------------
+
+Cron
+~~~~
+
+The PHP max execution time during the CRON execution has been set to 'unlimited'. So for developers there is no longer a
+need to call ``set_time_limit(0);``
+
 Plugin changes
 --------------
 

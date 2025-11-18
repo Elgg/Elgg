@@ -97,6 +97,11 @@ return [
 				GroupToolContainerLogicCheck::class => [],
 			],
 		],
+		'cron' => [
+			'daily' => [
+				'Elgg\Discussions\Cron::autoClose' => [],
+			],
+		],
 		'entity:url' => [
 			'object:widget' => [
 				'Elgg\Discussions\Widgets::widgetURL' => [],
@@ -154,6 +159,9 @@ return [
 		],
 	],
 	'view_extensions' => [
+		'forms/discussion/save' => [
+			'discussion/auto_close' => ['priority' => 400],
+		],
 		'groups/edit/settings' => [
 			'discussion/groups/settings' => [],
 		],

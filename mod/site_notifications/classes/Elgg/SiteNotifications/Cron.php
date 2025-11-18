@@ -38,8 +38,6 @@ class Cron {
 	 * @return void
 	 */
 	public static function cleanupSiteNotificationsWithRemovedLinkedEntities(\Elgg\Event $event): void {
-		set_time_limit(0);
-		
 		/* @var $cron_logger \Elgg\Logger\Cron */
 		$cron_logger = $event->getParam('logger');
 		
@@ -100,8 +98,6 @@ class Cron {
 	 * @return void
 	 */
 	public static function cleanupUnreadSiteNotifications(\Elgg\Event $event): void {
-		set_time_limit(0);
-		
 		$days = (int) elgg_get_plugin_setting('unread_cleanup_days', 'site_notifications');
 		$interval = elgg_get_plugin_setting('unread_cleanup_interval', 'site_notifications');
 		if ($days < 1 || $interval !== $event->getType()) {
@@ -169,8 +165,6 @@ class Cron {
 	 * @return void
 	 */
 	public static function cleanupReadSiteNotifications(\Elgg\Event $event): void {
-		set_time_limit(0);
-		
 		$days = (int) elgg_get_plugin_setting('read_cleanup_days', 'site_notifications');
 		$interval = elgg_get_plugin_setting('read_cleanup_interval', 'site_notifications');
 		if ($days < 1 || $interval !== $event->getType()) {
