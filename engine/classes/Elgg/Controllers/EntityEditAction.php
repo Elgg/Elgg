@@ -142,14 +142,7 @@ class EntityEditAction extends GenericAction {
 	 * @param string|null $forward_url url to forward to
 	 */
 	protected function success(?string $forward_url = null): OkResponse {
-		//add to river only if new
-		if ($this->isNewEntity()) {
-			elgg_create_river_item([
-				'action_type' => 'create',
-				'object_guid' => $this->entity->guid,
-				'target_guid' => $this->entity->container_guid,
-			]);
-		}
+		$this->createRiverItem();
 		
 		$success_keys = [
 			"entity:edit:{$this->entity->getType()}:{$this->entity->getSubtype()}:success",
@@ -174,5 +167,26 @@ class EntityEditAction extends GenericAction {
 	 */
 	protected function isNewEntity(): bool {
 		return $this->is_new_entity;
+	}
+	
+	/**
+	 * On successful action create a river time
+	 *
+	 * By default, this will only happen when a new entity was created
+	 *
+	 * @return void
+	 * @since 7.0
+	 */
+	protected function createRiverItem(): void {
+		//add to river only if new
+		if (!$this->isNewEntity()) {
+			return;
+		}
+		
+		elgg_create_river_item([
+			'action_type' => 'create',
+			'object_guid' => $this->entity->guid,
+			'target_guid' => $this->entity->container_guid,
+		]);
 	}
 }
