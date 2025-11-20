@@ -8,6 +8,11 @@ From 5.x to 6.0
 Elgg core changes
 -----------------
 
+Default config changes
+~~~~~~~~~~~~~~~~~~~~~~
+
+* The trash is now enabled by default
+
 Cron
 ~~~~
 
