@@ -2,7 +2,6 @@
 
 namespace Elgg;
 
-use DateTime as PHPDateTime;
 use Elgg\I18n\DateTime as ElggDateTime;
 use Elgg\Exceptions\DataFormatException;
 
@@ -55,7 +54,7 @@ class Values {
 	/**
 	 * Returns timestamp value of the time representation
 	 *
-	 * @param \DateTime|\Elgg\I18n\DateTime|string|int $time Time
+	 * @param \DateTimeInterface|string|int $time Time
 	 *
 	 * @return int
 	 * @throws DataFormatException
@@ -67,7 +66,7 @@ class Values {
 	/**
 	 * Returns DateTime object based on time representation
 	 *
-	 * @param \DateTime|\Elgg\I18n\DateTime|string|int $time Time
+	 * @param \DateTimeInterface|string|int $time Time
 	 *
 	 * @return \Elgg\I18n\DateTime
 	 * @throws DataFormatException
@@ -76,8 +75,8 @@ class Values {
 		try {
 			if ($time instanceof ElggDateTime) {
 				$dt = $time;
-			} elseif ($time instanceof PHPDateTime) {
-				$dt = new ElggDateTime($time->format(PHPDateTime::RFC3339_EXTENDED));
+			} elseif ($time instanceof \DateTimeInterface) {
+				$dt = new ElggDateTime($time->format(\DateTimeInterface::RFC3339_EXTENDED));
 			} elseif (is_numeric($time)) {
 				$dt = new ElggDateTime();
 				$dt->setTimestamp((int) $time);

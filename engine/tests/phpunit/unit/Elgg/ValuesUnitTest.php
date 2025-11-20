@@ -30,6 +30,7 @@ class ValuesUnitTest extends UnitTestCase {
 			['January 9, 2018 12:00'],
 			[1515496794],
 			[new PHPDateTime('+2 days')],
+			[new \DateTimeImmutable('+10 days')],
 			[new ElggDateTime('-2 days')],
 			[null],
 			[''],

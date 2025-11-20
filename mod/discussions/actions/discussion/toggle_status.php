@@ -9,16 +9,16 @@ if (empty($guid)) {
 }
 
 $entity = get_entity($guid);
-if (!$entity instanceof ElggDiscussion || !$entity->canEdit()) {
+if (!$entity instanceof \ElggDiscussion || !$entity->canEdit()) {
 	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
 if ($entity->status === 'closed') {
-	$entity->status = 'open';
+	$entity->setStatus('open');
 	
 	return elgg_ok_response('', elgg_echo('discussion:topic:toggle_status:open'));
 }
 
-$entity->status = 'closed';
+$entity->setStatus('closed');
 	
 return elgg_ok_response('', elgg_echo('discussion:topic:toggle_status:closed'));

@@ -29,13 +29,14 @@ class Seeder extends Seed {
 				$discussion = $this->createObject([
 					'subtype' => 'discussion',
 					'container_guid' => $this->getRandomGroup()->guid,
-					'status' => $this->getRandomStatus(),
 					'excerpt' => $this->faker()->sentence(),
 				]);
 			} catch (MaxAttemptsException $e) {
 				// unable to create a discussion with the given options
 				continue;
 			}
+			
+			$discussion->setStatus($this->getRandomStatus());
 			
 			$this->createComments($discussion);
 			$this->createLikes($discussion);
@@ -81,7 +82,7 @@ class Seeder extends Seed {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public static function getType() : string {
 		return 'discussion';
@@ -99,7 +100,7 @@ class Seeder extends Seed {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getCountOptions() : array {
 		return [

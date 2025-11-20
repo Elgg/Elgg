@@ -53,21 +53,12 @@ class EditAction extends \Elgg\Controllers\EntityEditAction {
 	 * {@inheritdoc}
 	 */
 	protected function success(?string $forward_url = null): OkResponse {
+		$this->createRiverItem();
+		
 		$old_status = $this->old_status;
 		$new_status = $this->entity->status;
 		
 		if (($this->isNewEntity() || $old_status === 'draft') && $new_status === 'published') {
-			// add to river if changing status or published, regardless of new post
-			// because we remove it for drafts.
-			
-			elgg_create_river_item([
-				'view' => 'river/object/blog/create',
-				'action_type' => 'create',
-				'object_guid' => $this->entity->guid,
-				'subject_guid' => $this->entity->owner_guid,
-				'target_guid' => $this->entity->container_guid,
-			]);
-			
 			elgg_trigger_event('publish', 'object', $this->entity);
 			
 			// reset the creation time for posts that move from draft to published
@@ -95,5 +86,25 @@ class EditAction extends \Elgg\Controllers\EntityEditAction {
 			'guid' => $this->entity->guid,
 			'url' => $this->entity->getURL(),
 		], elgg_echo('blog:message:saved'), $forward_url);
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function createRiverItem(): void {
+		$old_status = $this->old_status;
+		$new_status = $this->entity->status;
+		
+		if (($this->isNewEntity() || $old_status === 'draft') && $new_status === 'published') {
+			// add to river if changing status or published, regardless of new post
+			// because we remove it for drafts.
+			elgg_create_river_item([
+				'view' => 'river/object/blog/create',
+				'action_type' => 'create',
+				'object_guid' => $this->entity->guid,
+				'subject_guid' => $this->entity->owner_guid,
+				'target_guid' => $this->entity->container_guid,
+			]);
+		}
 	}
 }

@@ -107,8 +107,8 @@ class Cron {
 			$this->getLogger()->error($t);
 		}
 
-		// give every period at least 'max_execution_time' (PHP ini setting)
-		set_time_limit((int) ini_get('max_execution_time'));
+		// set execution time to unlimited for each interval (in case somebody lowered it)
+		set_time_limit(0);
 		
 		$now = new DateTime();
 		

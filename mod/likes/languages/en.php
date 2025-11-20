@@ -9,6 +9,10 @@ return array(
 	'annotation:delete:likes:fail' => "There was a problem removing your like",
 	'annotation:delete:likes:success' => "Your like has been removed",
 	
+	// settings
+	'likes:settings:details' => 'Everybody can see who liked the content',
+	'likes:settings:details:help' => 'When enabled everybody can see who liked the content. When disabled only the content owner can see this.',
+	
 	'likes:this' => '%s liked this',
 	'likes:deleted' => 'Your like has been removed',
 	'likes:see' => 'See who liked this',

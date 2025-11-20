@@ -8,16 +8,29 @@
 class ElggDiscussion extends ElggObject {
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
 		$this->attributes['subtype'] = 'discussion';
+		
+		$this->setStatus('open');
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
+	 */
+	public function __set($name, $value) {
+		if ($name === 'status') {
+			throw new \Elgg\Exceptions\InvalidArgumentException("Use the function 'setStatus()' instead of using the magic setter");
+		}
+		
+		parent::__set($name, $value);
+	}
+	
+	/**
+	 * {@inheritdoc}
 	 */
 	public function hasSubscriptions(int $user_guid = 0, string|array $methods = []): bool {
 		if ($user_guid === 0) {
@@ -82,5 +95,31 @@ class ElggDiscussion extends ElggObject {
 		];
 		
 		return $result;
+	}
+	
+	/**
+	 * Set the status of the discussion
+	 *
+	 * @param string $status new status (open|closed)
+	 *
+	 * @return void
+	 * @throws \Elgg\Exceptions\DomainException
+	 */
+	public function setStatus(string $status): void {
+		if (!in_array($status, ['open', 'closed'])) {
+			throw new \Elgg\Exceptions\DomainException(__METHOD__ . " doesn't support the status '{$status}' only 'open' and 'closed' are allowed");
+		}
+		
+		if ($this->status === $status) {
+			return;
+		}
+		
+		$prev = $this->status;
+		$this->setMetadata('status', $status);
+		
+		if (isset($prev) && $status === 'open') {
+			// this will extend the auto closing date after re-opening a discussion
+			$this->updateLastAction();
+		}
 	}
 }
