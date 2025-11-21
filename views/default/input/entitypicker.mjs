@@ -63,6 +63,10 @@ function EntityPicker(wrapper) {
 	});
 
 	this.enforceLimit();
+
+	if (this.$ul.hasClass('elgg-entity-picker-sortable')) {
+		this.$ul.sortable();
+	}
 }
 
 EntityPicker.prototype = {

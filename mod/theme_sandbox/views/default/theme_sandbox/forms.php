@@ -483,10 +483,11 @@ $ipsum = elgg_view('theme_sandbox/demo/ipsum');
 			'#type' => 'userpicker',
 			'name' => 'f13',
 			'id' => 'f13',
+			'sortable' => true,
 			'value' => array_map(function ($e) {
 				return $e->guid;
 			}, elgg_get_entities(['types' => 'user', 'limit' => 5])),
-			'#label' => 'User picker input (.elgg-user-picker) with values:',
+			'#label' => 'User picker input (.elgg-user-picker) with sortable values:',
 		]);
 
 		echo elgg_view_field([

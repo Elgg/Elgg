@@ -10,6 +10,7 @@
  *                               If using custom options, make sure to impose a signed request gatekeeper in the resource view
  * @uses $vars['placeholder']    Optional placeholder text for the input
  * @uses $vars['item_view']      The item view to use for the display of the values (default 'input/autocomplete/item')
+ * @uses $vars['sortable']       Boolean to control if items in the list are sortable
  *
  * Defaults to lazy load entity lists in alphabetical order. User needs to type two characters before seeing the user popup list.
  *
@@ -77,10 +78,15 @@ foreach ($guids as $guid) {
 	]);
 }
 
-$picker .= elgg_format_element('ul', ['class' => [
+$list_class = [
 	'elgg-list',
 	'elgg-entity-picker-list',
-]], $items);
+];
+if (elgg_extract('sortable', $vars)) {
+	$list_class[] = 'elgg-entity-picker-sortable';
+}
+
+$picker .= elgg_format_element('ul', ['class' => $list_class], $items);
 
 echo elgg_format_element('div', $wrapper_options, $picker);
 
