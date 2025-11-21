@@ -142,32 +142,18 @@ class Config {
 	
 	use Loggable;
 
-	/**
-	 * @var array Configuration storage
-	 */
-	private $values;
+	private array $values = [];
 
-	/**
-	 * @var array
-	 */
-	private $initial_values;
+	private array $initial_values = [];
 
-	/**
-	 * @var bool
-	 */
-	private $cookies_configured = false;
+	private bool $cookies_configured = false;
 
-	/**
-	 * @var array
-	 */
-	private $cookies = [];
+	private array $cookies = [];
 	
 	/**
 	 * The following values can only be set once
-	 *
-	 * @var array
 	 */
-	protected $locked_values = [
+	protected array $locked_values = [
 		'assetroot',
 		'cacheroot',
 		'dataroot',
@@ -178,18 +164,13 @@ class Config {
 
 	/**
 	 * An array of deprecated config options in the format 'option' => '<version number when deprecated>'
-	 *
-	 * @var array
 	 */
-	protected $deprecated = [
-	];
+	protected array $deprecated = [];
 	
 	/**
 	 * Holds the set of default values
-	 *
-	 * @var array
 	 */
-	protected $config_defaults = [
+	protected array $config_defaults = [
 		'admin_validation_notification' => false,
 		'allow_phpinfo' => false,
 		'authentication_failures_lifetime' => 600,
@@ -242,7 +223,7 @@ class Config {
 		'subresource_integrity_enabled' => false,
 		'system_cache_enabled' => false,
 		'testing_mode' => false,
-		'trash_enabled' => false,
+		'trash_enabled' => true,
 		'trash_retention' => 30,
 		'user_joined_river' => false,
 		'webp_enabled' => true,
@@ -251,10 +232,8 @@ class Config {
 	
 	/**
 	 * The path properties will be sanitized when set
-	 *
-	 * @var array
 	 */
-	protected $path_properties = [
+	protected array $path_properties = [
 		'assetroot',
 		'cacheroot',
 		'dataroot',

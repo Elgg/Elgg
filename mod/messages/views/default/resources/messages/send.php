@@ -10,7 +10,7 @@ elgg_push_collection_breadcrumbs('object', 'messages', $page_owner);
 
 echo elgg_view_page(elgg_echo('messages:add'), [
 	'content' => elgg_view_form('messages/send', ['sticky_enabled' => true], [
-		'recipients' => [
+		'recipient' => [
 			(int) get_input('send_to'),
 		]
 	]),

@@ -51,6 +51,7 @@ if ($owner instanceof \ElggUser && $owner->getGroups(['count' => true])) {
 			'match_membership' => !elgg_is_admin_logged_in(),
 		],
 		'limit' => 1,
+		'save_as_array' => false,
 	]);
 	
 	echo elgg_view_field([

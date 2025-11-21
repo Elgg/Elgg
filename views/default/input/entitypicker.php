@@ -20,6 +20,12 @@
 $name = elgg_extract('name', $vars, 'entities', false);
 
 $guids = (array) elgg_extract('values', $vars, elgg_extract('value', $vars, []));
+$limit = (int) elgg_extract('limit', $vars, 0);
+
+$save_as_array = (bool) elgg_extract('save_as_array', $vars, true);
+if ($limit !== 1) {
+	$save_as_array = true;
+}
 
 $params = elgg_extract('options', $vars, []);
 
@@ -33,10 +39,11 @@ if (!empty($params)) {
 }
 
 $params['view'] = 'json'; // force json viewtype
+$params['save_as_array'] = $save_as_array;
 
 $wrapper_options = [
 	'class' => elgg_extract_class($vars, ['elgg-entity-picker']),
-	'data-limit' => (int) elgg_extract('limit', $vars, 0),
+	'data-limit' => $limit,
 	'data-name' => $name,
 	'data-match-on' => elgg_extract('match_on', $vars, 'entities', false),
 	'data-handler' => elgg_http_add_url_query_elements(elgg_extract('handler', $vars, 'livesearch'), $params),
@@ -66,6 +73,7 @@ foreach ($guids as $guid) {
 	$items .= elgg_view($item_view, [
 		'entity' => $entity,
 		'input_name' => $name,
+		'save_as_array' => $save_as_array,
 	]);
 }
 
@@ -79,6 +87,6 @@ echo elgg_format_element('div', $wrapper_options, $picker);
 ?>
 <script>
 	import('input/entitypicker').then((entitypicker) => {
-		entitypicker.default.setup('.elgg-entity-picker[data-name="' + <?= json_encode($name) ?> + '"]');
+		entitypicker.default.setup('.elgg-entity-picker[data-name=<?= json_encode($name) ?>]');
 	});
 </script>
