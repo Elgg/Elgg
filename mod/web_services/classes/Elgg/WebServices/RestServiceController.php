@@ -52,7 +52,14 @@ class RestServiceController {
 			'result' => $result,
 		]));
 		
-		return elgg_ok_response($output);
+		$filename = 'result.' . $request->getParam('view');
+		
+		$response = elgg_ok_response($output);
+		$response->setHeaders([
+			'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+		]);
+		
+		return $response;
 	}
 	
 	/**

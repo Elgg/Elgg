@@ -47,6 +47,11 @@ Profile
 
 The profile field `Twitter` has been removed.
 
+Webservices
+~~~~~~~~~~~
+
+The responses from the REST API calls now have a ``Content-Disposition: attachment; filename="result.<view>"`` header.
+
 Changes in functions
 --------------------
 
