@@ -130,6 +130,15 @@ DirectoryIndex index.php
 	# Prevent access to the composer.json and .lock file
 	RewriteRule /?(composer\.json|composer\.lock)$ - [F]
 
+	# Prevent access to the package(-lock).json and yarn.lock file
+	RewriteRule /?(package\.json|package-lock\.json|yarn\.lock)$ - [F]
+
+	# Prevent access to the phpunit.xml.dist file
+	RewriteRule /?(phpunit\.xml\.dist)$ - [F]
+
+	# Prevent access to the Grunt file
+	RewriteRule /?(Gruntfile\.js)$ - [F]
+
 	# Optional hardening rules to block access to files in the following directories
 	# The following conditions can be enabled, when enabling at least one the last three lines NEED to be enabled
 	RewriteCond %{REQUEST_URI} ^/actions/ [OR]
@@ -144,6 +153,7 @@ DirectoryIndex index.php
 	RewriteCond %{REQUEST_URI} ^/mod/(.*)/languages/ [OR]
 	RewriteCond %{REQUEST_URI} ^/mod/(.*)/vendor/ [OR]
 	RewriteCond %{REQUEST_URI} ^/mod/(.*)/classes/ [OR]
+	RewriteCond %{REQUEST_URI} ^/mod/(.*)/tests/ [OR]
 	# The following condition is needed in order to easily enable (some of the) previous conditions
 	RewriteCond 1 2
 	# The following files are whitelisted for the installer
