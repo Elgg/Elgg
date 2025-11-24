@@ -2,6 +2,7 @@ import 'jquery';
 import 'jquery-ui';
 import Ajax from 'elgg/Ajax';
 import lightbox from 'elgg/lightbox';
+import popup from 'elgg/popup';
 
 /**
  * Persist the widget's new position
@@ -37,7 +38,10 @@ function moveWidget(event, ui) {
 function removeWidget(event) {
 	event.preventDefault();
 
-	$(this).closest('.elgg-module-widget').remove();
+	// close the dropdown menu
+	popup.close();
+
+	$('#elgg-widget-' + $(this).data().widgetGuid).remove();
 
 	// delete the widget through ajax
 	var ajax = new Ajax(false);

@@ -27,7 +27,7 @@ function css_permissions_override() {
 
 $w = [];
 for ($i = 1; $i <= 6; $i++) {
-	$obj = new ElggWidget();
+	$obj = new \ElggWidget();
 	$obj->handler = 'friends';
 	$obj->title = "Widget {$i}";
 	$w[] = $obj;
@@ -56,22 +56,3 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 
 echo '</div>';
 echo '</div>';
-
-?>
-<script type='module'>
-import 'jquery';
-import elgg from 'elgg';
-
-// widgets do not have guids so we override the edit toggle and delete button
-$(function() {
-	$('.elgg-widget-edit-button').unbind('click')
-		.on('click', function() {
-			$(this).closest('.elgg-module-widget').find('.elgg-widget-edit').slideToggle('medium');
-			return false;
-		});
-	$('.elgg-widget-delete-button').on('click', function() {
-		$(this).closest('.elgg-module-widget').remove();
-		return false;
-	});
-});
-</script>
