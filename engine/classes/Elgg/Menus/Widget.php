@@ -34,9 +34,8 @@ class Widget {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'settings',
-			'text' => false,
+			'text' => elgg_echo('widget:edit'),
 			'icon' => 'settings-alt',
-			'title' => elgg_echo('widget:edit'),
 			'href' => elgg_http_add_url_query_elements('ajax/view/object/widget/edit', [
 				'guid' => $widget->guid,
 				'show_access' => $event->getParam('show_access', true),
@@ -46,7 +45,7 @@ class Widget {
 				'max-height' => '80%',
 				'fixed' => true,
 			]),
-			'link_class' => ['elgg-widget-edit-button', 'elgg-lightbox'],
+			'link_class' => ['elgg-lightbox'],
 			'priority' => 800,
 		]);
 		
@@ -71,7 +70,7 @@ class Widget {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'delete',
-			'text' => false,
+			'text' => elgg_echo('delete:this'),
 			'icon' => 'delete-alt',
 			'title' => elgg_echo('widget:delete', [$widget->getDisplayName()]),
 			'href' => elgg_generate_action_url('widgets/delete', [
@@ -79,8 +78,7 @@ class Widget {
 			]),
 			'confirm' => elgg_echo('deleteconfirm'),
 			'link_class' => 'elgg-widget-delete-button',
-			'id' => "elgg-widget-delete-button-{$widget->guid}",
-			'data-elgg-widget-type' => $widget->handler,
+			'data-widget-guid' => $widget->guid,
 			'priority' => 900,
 		]);
 		

@@ -43,19 +43,8 @@
 .elgg-menu.elgg-menu-hz {
 	flex-direction: row;
 	flex-wrap: wrap;
+	gap: 0.75rem;
 	align-items: center;
-	
-	> li {
-		margin: 0 0.25rem 0 0;
-		
-		> .elgg-button {
-			margin-bottom: .25rem;
-		}
-	}
-}
-
-.elgg-module-menu .elgg-menu-hz > li {
-	margin: 0 0 0 0.25rem;
 }
 
 .elgg-menu-item-has-dropdown .elgg-child-menu {
@@ -71,15 +60,17 @@
 	display: block;
 }
 
-.elgg-menu > li > a .elgg-icon.elgg-state-opened,
-.elgg-menu > li > a .elgg-icon.elgg-state-closed {
-	font-size: 9px;
-	color: inherit;
-	line-height: inherit;
-	margin: 0 0.5rem;
-}
-
 .elgg-menu > li {
+	> a .elgg-icon {
+		&.elgg-state-opened,
+		&.elgg-state-closed {
+			font-size: 9px;
+			color: inherit;
+			line-height: inherit;
+			margin: 0 0.5rem;
+		}
+	}
+	
 	> .elgg-menu-opened .elgg-icon {
 		&.elgg-state-opened {
 			display: inline-block;
@@ -348,7 +339,7 @@
 .elgg-river-metadata > .elgg-menu-container,
 .elgg-menu-annotation-container {
 	float: right;
-	margin-left: 1rem;
+	margin-left: 0.75rem;
 	display: flex;
 	flex-direction: row;
 	
@@ -368,10 +359,10 @@
 	color: var(--elgg-text-color-mild);
 	height: auto;
 	vertical-align: middle;
-
-	> li:not(:first-child) {
-		margin-left: 0.75rem;
-	}
+	
+	display: flex;
+	flex-direction: row;
+	row-gap: 0.25rem;
 
 	> li {
 	
