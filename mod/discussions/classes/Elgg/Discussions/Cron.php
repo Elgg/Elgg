@@ -22,30 +22,32 @@ class Cron {
 		
 		$dt = $event->getParam('dt');
 		
-		/** @var \ElggBatch $discussions */
-		$discussions = elgg_get_entities([
-			'type' => 'object',
-			'subtype' => 'discussion',
-			'last_action_before' => $dt->modify("-{$days} days")->getTimestamp(),
-			'limit' => 250,
-			'batch' => true,
-			'batch_inc_offset' => false,
-			'metadata_name_value_pairs' => [
-				[
-					'name' => 'status',
-					'value' => 'open',
+		elgg_call(ELGG_IGNORE_ACCESS, function () use ($days, $dt) {
+			/** @var \ElggBatch $discussions */
+			$discussions = elgg_get_entities([
+				'type' => 'object',
+				'subtype' => 'discussion',
+				'last_action_before' => $dt->modify("-{$days} days")->getTimestamp(),
+				'limit' => 250,
+				'batch' => true,
+				'batch_inc_offset' => false,
+				'metadata_name_value_pairs' => [
+					[
+						'name' => 'status',
+						'value' => 'open',
+					],
 				],
-			],
-			'sort_by' => [
-				'property' => 'last_action',
-				'direction' => 'desc',
-			],
-		]);
-		/** @var \ElggDiscussion $discussion */
-		foreach ($discussions as $discussion) {
-			$discussion->status = 'closed';
-			$discussion->save();
-			$discussion->invalidateCache();
-		}
+				'sort_by' => [
+					'property' => 'last_action',
+					'direction' => 'desc',
+				],
+			]);
+			/** @var \ElggDiscussion $discussion */
+			foreach ($discussions as $discussion) {
+				$discussion->status = 'closed';
+				$discussion->save();
+				$discussion->invalidateCache();
+			}
+		});
 	}
 }
