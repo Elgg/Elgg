@@ -555,7 +555,7 @@ function elgg_list_entities(array $options = [], ?callable $getter = null, ?call
 
 	$defaults = [
 		'offset' => (int) max(get_input($offset_key, 0), 0),
-		'limit' => (int) max(get_input('limit', _elgg_services()->config->default_limit), 0),
+		'limit' => (int) min(100, max(1, (int) get_input('limit', _elgg_services()->config->default_limit))),
 		'sort_by' => get_input('sort_by', []),
 		'full_view' => false,
 		'pagination' => true,

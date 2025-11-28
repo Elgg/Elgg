@@ -18,7 +18,8 @@ available via ``get_input()``)
 The site URL (home page) is a special case that produces an empty string identifier and
 an empty segments array.
 
-.. warning:: URL identifier/segments should be considered potentially dangerous user input. Elgg uses ``htmlspecialchars`` to escapes HTML entities in them.
+.. warning:: URL identifier/segments should be considered potentially dangerous user input. Elgg uses
+``htmlspecialchars`` to escapes HTML entities in them.
 
 Page Handling
 =============
@@ -78,7 +79,8 @@ The following conventions are used in core and recommended for plugins:
 **edit:<entity_type>:<entity_subtype>**
 	Maps to the form to edit the entity, e.g. ``edit:user:user`` or ``edit:object:blog``
 	The path must contain a ``guid``, or ``username`` for users
-	If you need to add subresources, use suffixes, e.g. ``edit:object:blog:images``, keeping at least one subresource as a default without suffix.
+	If you need to add subresources, use suffixes, e.g. ``edit:object:blog:images``, keeping at least one subresource
+    as a default without suffix.
 
 **add:<entity_type>:<entity_subtype>**
 	Maps to the form to add a new entity of a given type, e.g. ``add:object:blog``
@@ -123,8 +125,8 @@ For example, user profiles are routed to the same resource view regardless of us
 Route configuration
 -------------------
 
-Segments can be defined using wildcards, e.g. ``profile/{username}``, which will match all URLs that contain ``profile/`` followed by
-and arbitrary username.
+Segments can be defined using wildcards, e.g. ``profile/{username}``, which will match all URLs that contain
+``profile/`` followed by and arbitrary username.
 
 To make a segment optional you can add a ``?`` (question mark) to the wildcard name, e.g. ``profile/{username}/{section?}``.
 In this case the URL will be matched even if the ``section`` segment is not provided.
@@ -270,15 +272,18 @@ This gatekeeper will prevent access if the upgrade URL is secured and the URL is
 WalledGarden
 ~~~~~~~~~~~~
 
-This middleware will prevent access to a route if the site is configured for authenticated users only and there is no authenticated user logged in.
-This middleware is automatically enabled for all routes. You can disable the walled garden gatekeeper with a :ref:`route config <guides/walled-garden#expose>` option.
+This middleware will prevent access to a route if the site is configured for authenticated users only and there is
+no authenticated user logged in.
+This middleware is automatically enabled for all routes. You can disable the walled garden gatekeeper with a
+:ref:`route config <guides/walled-garden#expose>` option.
 
 Custom Middleware
 ~~~~~~~~~~~~~~~~~
 
 Middleware handlers can be set to any callable that receives an instance of ``\Elgg\Request``:
 The handler should throw an instance of ``\Elgg\Exceptions\HttpException`` to prevent route access.
-The handler can return an instance of ``\Elgg\Http\ResponseBuilder`` to prevent further implementation of the routing sequence (a redirect response can be returned to re-route the request).
+The handler can return an instance of ``\Elgg\Http\ResponseBuilder`` to prevent further implementation of the routing
+sequence (a redirect response can be returned to re-route the request).
 
 .. code-block:: php
 
@@ -329,6 +334,77 @@ that receives an instance of ``\Elgg\Request``:
 		'controller' => [MyController::class, 'handleFoo'],
 	]);
 
+
+Listing controller
+~~~~~~~~~~~~~~~~~~
+
+Elgg offers a default listing controller. This controller will render a full page with:
+
+- A title
+- A breadcrumb
+- The default filter tabs
+- An add new content button (if available)
+- The list of content items
+
+All of this is done based of the recommended route names.
+
+**collection:<entity_type>:<entity_subtype>:<collection_type>**
+**default:<entity_type>:<entity_subtype>**
+
+The title of the page will be the language key ``collection:<entity_type>:<entity_subtype>:<collection_type>``
+for the ``default:<entity_type>:<entity_subtype>`` route this will be ``collection:<entity_type>:<entity_subtype>:all``.
+
+.. code-block:: php
+
+	// elgg-plugin.php
+	return [
+		'routes' => [
+			'collection:object:my_content:all' => [
+				'path' => '/my_path/all',
+				'controller' => \Elgg\Controllers\GenericContentListing::class,
+			],
+			'collection:object:my_content:friends' => [
+				'path' => '/my_path/friends/{username}',
+				'controller' => \Elgg\Controllers\GenericContentListing::class,
+                'middleware' => [
+                    \Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+                ],
+			],
+			'collection:object:my_content:group' => [
+				'path' => '/my_path/group/{guid}',
+				'controller' => \Elgg\Controllers\GenericContentListing::class,
+                'middleware' => [
+                    \Elgg\Router\Middleware\GroupPageOwnerGatekeeper::class,
+                ],
+                'options' => [
+                    'group_tool' => 'my_group_tool', // optional, if provided the group will need to have this tool enabled
+                ],
+			],
+			'collection:object:my_content:owner' => [
+				'path' => '/my_path/owner/{username}',
+				'controller' => \Elgg\Controllers\GenericContentListing::class,
+                'middleware' => [
+                    \Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
+                ],
+                'options' => [
+                    'sidebar_view' => 'my_content/sidebar', // optional
+                ],
+			],
+			'default:object:my_content' => [
+				'path' => '/my_path',
+				'controller' => \Elgg\Controllers\GenericContentListing::class,
+			],
+		]
+	];
+
+If you have an additional collection listing you can extend the ``\Elgg\Controllers\GenericContentListing`` class
+and add a function ``listCollectionType`` where ``CollectionType`` is taken from the route name and made into a camel case
+for example ``collection:object:my_content:my_listing`` will call the function ``listMyListing()``.
+
+There a also more helper function in the controller you can extend if you just need to change some parameters.
+
+If you provide your route definition with an option ``sidebar_view`` that view will be called during the rendering of
+the page.
 
 The ``route:rewrite`` event
 ===========================
