@@ -2,6 +2,7 @@
 /**
  * Generic view for entity listing
  *
+ * @uses $vars['getter']  (optional) different getter function to be used by elgg_list_entities()
  * @uses $vars['options'] array with additional listing options
  */
 
@@ -17,4 +18,6 @@ if (empty($options['type']) && empty($options['subtype'])) {
 	throw new \Elgg\Exceptions\InvalidArgumentException("Missing 'type' and 'subtype' in the listing options");
 }
 
-echo elgg_list_entities($options);
+$getter = elgg_extract('getter', $vars);
+
+echo elgg_list_entities($options, $getter);
