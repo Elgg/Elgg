@@ -5,7 +5,7 @@
 
 $body = elgg_view_form('members/search', [
 	'method' => 'get',
-	'action' => elgg_generate_url('search:user:user'),
+	'action' => elgg_generate_url('collection:user:user:search'),
 	'disable_security' => true,
 	'role' => 'search',
 	'aria-label' => elgg_echo('members:aria:label:member_search'),

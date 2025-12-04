@@ -1,26 +1,40 @@
 <?php
 
+use Elgg\Members\Controllers\ListMembers;
+
 return [
 	'plugin' => [
 		'name' => 'Members',
 		'activate_on_install' => true,
 	],
 	'routes' => [
-		'collection:user:user' => [
+		'collection:user:user:all' => [
 			'path' => '/members',
-			'resource' => 'members/all',
+			'controller' => ListMembers::class,
+			'options' => [
+				'sidebar_view' => 'members/sidebar',
+			],
 		],
 		'collection:user:user:online' => [
 			'path' => '/members/online',
-			'resource' => 'members/online',
+			'controller' => ListMembers::class,
+			'options' => [
+				'sidebar_view' => 'members/sidebar',
+			],
 		],
 		'collection:user:user:popular' => [
 			'path' => '/members/popular',
-			'resource' => 'members/popular',
+			'controller' => ListMembers::class,
+			'options' => [
+				'sidebar_view' => 'members/sidebar',
+			],
 		],
-		'search:user:user' => [
+		'collection:user:user:search' => [
 			'path' => '/members/search',
-			'resource' => 'members/search',
+			'controller' => ListMembers::class,
+			'options' => [
+				'sidebar_view' => 'members/sidebar',
+			],
 		],
 	],
 	'events' => [

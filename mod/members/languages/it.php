@@ -8,10 +8,10 @@
 return array(
 	'members:search' => 'Cerca iscritti',
 	'members:total' => 'Totale iscritti: %s',
-	'members:title:all' => 'Tutti gli iscritti',
+	'collection:user:user:all' => 'Tutti gli iscritti',
 	'members:title:newest' => 'Ultimi iscritti',
-	'members:title:popular' => 'Iscritti più popolari',
-	'members:title:online' => 'Iscritti online',
+	'collection:user:user:popular' => 'Iscritti più popolari',
+	'collection:user:user:online' => 'Iscritti online',
 	'members:title:alpha' => 'Tutti gli iscritti',
 	'members:list:popular:none' => 'Nessun iscritto ha amici',
 );

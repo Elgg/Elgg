@@ -9,10 +9,10 @@ return array(
 	'members:label:online' => 'Онлајн',
 	'members:search' => 'Претражи чланове',
 	'members:total' => 'Укупно корисника: %s',
-	'members:title:all' => 'Сви чланови',
+	'collection:user:user:all' => 'Сви чланови',
 	'members:title:newest' => 'Најновији чланови',
-	'members:title:popular' => 'Најпопуларнији чланови',
-	'members:title:online' => 'Онлајн чланови',
+	'collection:user:user:popular' => 'Најпопуларнији чланови',
+	'collection:user:user:online' => 'Онлајн чланови',
 	'members:title:alpha' => 'Сви чланови',
 	'members:list:popular:none' => 'Нема чланова без иједног пријатеља',
 );

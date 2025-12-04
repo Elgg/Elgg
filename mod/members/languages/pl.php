@@ -9,10 +9,10 @@ return array(
 	'members:label:online' => 'On-line',
 	'members:search' => 'Wyszukaj członków',
 	'members:total' => 'Wszyscy członkowie: %s',
-	'members:title:all' => 'Wszyscy członkowie',
+	'collection:user:user:all' => 'Wszyscy członkowie',
 	'members:title:newest' => 'Najnowsi użytkownicy',
-	'members:title:popular' => 'Najpopularniejsi członkowie',
-	'members:title:online' => 'Członkowie on-line',
+	'collection:user:user:popular' => 'Najpopularniejsi członkowie',
+	'collection:user:user:online' => 'Członkowie on-line',
 	'members:title:alpha' => 'Wszyscy członkowie',
 	'members:list:popular:none' => 'Żadni członkowie nie mają jeszcze znajomych.',
 );
