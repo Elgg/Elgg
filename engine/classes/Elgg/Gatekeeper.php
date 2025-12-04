@@ -11,10 +11,12 @@ use Elgg\Exceptions\Http\GatekeeperException;
 use Elgg\Exceptions\Http\Gatekeeper\AdminGatekeeperException;
 use Elgg\Exceptions\Http\Gatekeeper\AjaxGatekeeperException;
 use Elgg\Exceptions\Http\Gatekeeper\GroupGatekeeperException;
+use Elgg\Exceptions\Http\Gatekeeper\GroupToolGatekeeperException;
 use Elgg\Exceptions\Http\Gatekeeper\LoggedInGatekeeperException;
 use Elgg\Exceptions\Http\Gatekeeper\LoggedOutGatekeeperException;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\I18n\Translator;
+use Elgg\Page\PageOwnerService;
 
 /**
  * Gatekeeper
@@ -32,6 +34,7 @@ class Gatekeeper {
 	 * @param EntityTable           $entities        Entity table
 	 * @param AccessCollections     $access          Access collection table
 	 * @param Translator            $translator      Translator
+	 * @param PageOwnerService      $page_owner      Page owner service
 	 */
 	public function __construct(
 		protected SessionManagerService $session_manager,
@@ -39,7 +42,8 @@ class Gatekeeper {
 		protected RedirectService $redirects,
 		protected EntityTable $entities,
 		protected AccessCollections $access,
-		protected Translator $translator
+		protected Translator $translator,
+		protected PageOwnerService $page_owner
 	) {
 	}
 
@@ -266,6 +270,36 @@ class Gatekeeper {
 		]);
 		$exception->setRedirectUrl($group->getURL());
 		throw $exception;
+	}
+	
+	/**
+	 * Validate group tool enabled
+	 *
+	 * @param string          $group_tool the group tool to check
+	 * @param \ElggGroup|null $group      the group to check on (default: page owner)
+	 *
+	 * @return void
+	 * @throws GroupToolGatekeeperException
+	 * @throws HttpException
+	 */
+	public function assertGroupToolEnabled(string $group_tool, ?\ElggGroup $group = null): void {
+		$group = $group ?? $this->page_owner->getPageOwnerEntity();
+		if (!$group instanceof \ElggGroup) {
+			return;
+		}
+		
+		if ($group->isToolEnabled($group_tool)) {
+			return;
+		}
+		
+		$ex = new GroupToolGatekeeperException();
+		$ex->setRedirectUrl($group->getURL());
+		$ex->setParams([
+			'entity' => $group,
+			'tool' => $group_tool,
+		]);
+		
+		throw $ex;
 	}
 
 	/**

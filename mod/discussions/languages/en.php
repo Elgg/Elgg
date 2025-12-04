@@ -12,8 +12,10 @@ return array(
 	
 	'add:object:discussion' => 'Add discussion topic',
 	'edit:object:discussion' => 'Edit topic',
+	'collection:object:discussion:all' => 'Latest discussions',
 	'collection:object:discussion:group' => 'Group discussions',
 	'collection:object:discussion:my_groups' => 'Discussions in my groups',
+	'collection:object:discussion:owner' => '%s\'s discussions',
 	
 	'notification:object:discussion:create' => "Send a notification when a discussion is created",
 	'notifications:mute:object:discussion' => "about the discussion '%s'",
@@ -23,7 +25,6 @@ return array(
 	'discussion:settings:auto_close' => 'Automatically close discussions after a given number of days',
 	'discussion:settings:auto_close:help' => 'When there are no more comments after the given number of days the discussion will be closed.',
 
-	'discussion:latest' => 'Latest discussions',
 	'discussion:updated' => "Last comment by %s %s",
 
 	'discussion:topic:created' => 'The discussion topic was created.',

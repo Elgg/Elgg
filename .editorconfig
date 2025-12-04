@@ -17,7 +17,7 @@ indent_style = space
 trim_trailing_whitespace = false
 
 [*.rst]
-indent_style = space
+trim_trailing_whitespace = false
 
 [*.txt]
 indent_style = space

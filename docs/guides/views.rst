@@ -510,18 +510,24 @@ Entity listings will default try to load entity owners and container owners. If 
 
 See also :doc:`this background information on Elgg's database </design/database>`.
 
-If you want to show a message when the list does not contain items to list, you can pass
-a ``no_results`` message or ``true`` for the default message. If you want even more controle over the ``no_results`` message you
-can also pass a Closure (an anonymous function).
+No results
+----------
+
+If you want to show a message when the list does not contain items to list, you can pass a ``no_results`` message
+or ``true`` for the default message. If you want even more controle over the ``no_results`` message you can also
+pass a Closure (an anonymous function).
 
 .. code-block:: php
 
 	echo elgg_list_entities([
-	    'type' => 'object',
-	    'subtype' => 'blog',
-
-	    'no_results' => elgg_echo('notfound'),
+		'type' => 'object',
+		'subtype' => 'blog',
+		'no_results' => true,
 	]);
+
+If you pass ``'no_results' => true`` the system will check if there is a language key ``list:<type>:<subtype>:no_results``
+if you wish to have a bit more of a specific no results text (for example: **No blogs found**). If no specific language key
+could be found the default ``elgg_echo('notfound')`` is used.
 
 Rendering a list with an alternate view
 ---------------------------------------

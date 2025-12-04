@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\Controllers\GenericContentListing;
 use Elgg\File\FieldsHandler;
 use Elgg\File\Forms\PrepareFields;
 use Elgg\File\GroupToolContainerLogicCheck;
@@ -40,22 +41,31 @@ return [
 	'routes' => [
 		'default:object:file' => [
 			'path' => '/file',
-			'resource' => 'file/all',
+			'controller' => GenericContentListing::class,
+			'options' => [
+				'sidebar_view' => 'file/sidebar',
+			],
 		],
 		'collection:object:file:all' => [
 			'path' => '/file/all',
-			'resource' => 'file/all',
+			'controller' => GenericContentListing::class,
+			'options' => [
+				'sidebar_view' => 'file/sidebar',
+			],
 		],
 		'collection:object:file:owner' => [
 			'path' => '/file/owner/{username}',
-			'resource' => 'file/owner',
+			'controller' => GenericContentListing::class,
+			'options' => [
+				'sidebar_view' => 'file/sidebar',
+			],
 			'middleware' => [
 				\Elgg\Router\Middleware\UserPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:object:file:friends' => [
 			'path' => '/file/friends/{username}',
-			'resource' => 'file/friends',
+			'controller' => GenericContentListing::class,
 			'required_plugins' => [
 				'friends',
 			],
@@ -65,12 +75,13 @@ return [
 		],
 		'collection:object:file:group' => [
 			'path' => '/file/group/{guid}',
-			'resource' => 'file/group',
+			'controller' => GenericContentListing::class,
+			'options' => [
+				'group_tool' => 'file',
+				'sidebar_view' => 'file/sidebar',
+			],
 			'required_plugins' => [
 				'groups',
-			],
-			'middleware' => [
-				\Elgg\Router\Middleware\GroupPageOwnerGatekeeper::class,
 			],
 		],
 		'add:object:file' => [

@@ -5,6 +5,7 @@ namespace Elgg\Router;
 use Elgg\Database\Plugins;
 use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Router\Middleware\GroupToolGatekeeper;
 use Elgg\Router\Middleware\MaintenanceGatekeeper;
 use Elgg\Router\Middleware\WalledGarden;
 use Elgg\SessionManagerService;
@@ -76,6 +77,7 @@ class RouteRegistrationService {
 		$use_logged_in = (bool) elgg_extract('use_logged_in', $params, false);
 		$detect_page_owner = (bool) elgg_extract('detect_page_owner', $params, $use_logged_in);
 		$priority = (int) elgg_extract('priority', $params);
+		$options = array_merge((array) elgg_extract('options', $params, []), ['utf8' => true]);
 
 		if (!$path || (!$controller && !$resource && !$handler && !$file)) {
 			throw new InvalidArgumentException(
@@ -147,6 +149,10 @@ class RouteRegistrationService {
 			$middleware[] = WalledGarden::class;
 		}
 		
+		if (!empty($options['group_tool'])) {
+			$middleware[] = GroupToolGatekeeper::class;
+		}
+		
 		$middleware[] = MaintenanceGatekeeper::class;
 
 		$defaults['_controller'] = $controller;
@@ -158,8 +164,6 @@ class RouteRegistrationService {
 		$defaults['_detect_page_owner'] = $detect_page_owner;
 		$defaults['_use_logged_in'] = $use_logged_in;
 
-		$options = array_merge((array) elgg_extract('options', $params, []), ['utf8' => true]);
-		
 		$route = new Route($path, $defaults, $requirements, $options, '', [], $methods);
 
 		$this->routes->add($name, $route, $priority);

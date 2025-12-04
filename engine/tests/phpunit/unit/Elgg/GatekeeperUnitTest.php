@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\Http\Gatekeeper\GroupToolGatekeeperException;
 use Elgg\Exceptions\HttpException;
 use Elgg\Exceptions\Http\EntityNotFoundException;
 use Elgg\Exceptions\Http\EntityPermissionsException;
@@ -505,5 +506,45 @@ class GatekeeperUnitTest extends UnitTestCase {
 	public function testXhrGatekeeperPreventsAccess() {
 		$this->expectException(AjaxGatekeeperException::class);
 		$this->gatekeeper->assertXmlHttpRequest();
+	}
+	
+	public function testGroupToolGatekeeperWithNonExistingTool() {
+		$group = $this->createGroup([
+			'membership' => ACCESS_PUBLIC,
+			'access_id' => ACCESS_PUBLIC,
+			'content_access_mode' => \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
+		]);
+		
+		$this->expectException(GroupToolGatekeeperException::class);
+		$this->gatekeeper->assertGroupToolEnabled('foo', $group);
+	}
+	
+	public function testGroupToolGatekeeperWithDisabledTool() {
+		$group = $this->createGroup([
+			'membership' => ACCESS_PUBLIC,
+			'access_id' => ACCESS_PUBLIC,
+			'content_access_mode' => \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
+		]);
+		
+		_elgg_services()->group_tools->register('foo');
+		
+		$this->assertTrue($group->disableTool('foo'));
+		
+		$this->expectException(GroupToolGatekeeperException::class);
+		$this->gatekeeper->assertGroupToolEnabled('foo', $group);
+	}
+	
+	public function testGroupToolGatekeeperWithEnabledTool() {
+		$group = $this->createGroup([
+			'membership' => ACCESS_PUBLIC,
+			'access_id' => ACCESS_PUBLIC,
+			'content_access_mode' => \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
+		]);
+		
+		_elgg_services()->group_tools->register('foo');
+		
+		$this->assertTrue($group->enableTool('foo'));
+		
+		$this->assertNull($this->gatekeeper->assertGroupToolEnabled('foo', $group));
 	}
 }

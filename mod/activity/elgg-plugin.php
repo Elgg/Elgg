@@ -26,11 +26,11 @@ return [
 		'collection:river:group' => [
 			'path' => '/activity/group/{guid}',
 			'resource' => 'activity/group',
+			'options' => [
+				'group_tool' => 'activity',
+			],
 			'required_plugins' => [
 				'groups',
-			],
-			'middleware' => [
-				\Elgg\Router\Middleware\GroupPageOwnerGatekeeper::class,
 			],
 		],
 		'collection:river:all' => [
