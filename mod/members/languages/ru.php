@@ -12,10 +12,10 @@ return array(
 	'members:aria:label:member_search' => "Поиск участников",
 	'members:title:search' => "Поиск пользователя '%s'",
 	'members:total' => 'Всего пользователей: %s',
-	'members:title:all' => 'Все участники',
+	'collection:user:user:all' => 'Все участники',
 	'members:title:newest' => 'Новые',
-	'members:title:popular' => 'Популярные',
-	'members:title:online' => 'Онлайн',
+	'collection:user:user:popular' => 'Популярные',
+	'collection:user:user:online' => 'Онлайн',
 	'members:title:alpha' => 'Все участники',
 	'members:list:popular:none' => 'Пользователи не имеют друзей.',
 );

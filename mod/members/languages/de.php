@@ -9,10 +9,10 @@ return array(
 	'members:label:online' => 'Im Moment aktiv',
 	'members:search' => 'Mitgliedersuche',
 	'members:total' => 'Gesamtzahl der Mitglieder: %s',
-	'members:title:all' => 'Alle Mitglieder',
+	'collection:user:user:all' => 'Alle Mitglieder',
 	'members:title:newest' => 'Neueste Mitglieder',
-	'members:title:popular' => 'Beliebte Mitglieder',
-	'members:title:online' => 'Gerade aktive Mitglieder',
+	'collection:user:user:popular' => 'Beliebte Mitglieder',
+	'collection:user:user:online' => 'Gerade aktive Mitglieder',
 	'members:title:alpha' => 'Alle Mitglieder',
 	'members:list:popular:none' => 'Es gibt keine Mitglieder, die bereits Freunde haben.',
 );

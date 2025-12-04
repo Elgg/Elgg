@@ -12,10 +12,10 @@ return array(
 	'members:aria:label:member_search' => "Rechercher des membres",
 	'members:title:search' => "Recherche de membres pour \"%s\"",
 	'members:total' => 'Nombre total de membres : %s',
-	'members:title:all' => 'Tous les membres',
+	'collection:user:user:all' => 'Tous les membres',
 	'members:title:newest' => 'Nouveaux membres',
-	'members:title:popular' => 'Membres les plus populaires',
-	'members:title:online' => 'Membres en ligne',
+	'collection:user:user:popular' => 'Membres les plus populaires',
+	'collection:user:user:online' => 'Membres en ligne',
 	'members:title:alpha' => 'Tous les membres',
 	'members:list:popular:none' => 'Aucun membre n\'a de contact.',
 );

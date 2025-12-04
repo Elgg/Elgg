@@ -57,6 +57,16 @@ Likes
 
 By default only content owners can see who likes their content. This can be made public by a new plugin setting.
 
+Members
+~~~~~~~
+
+The names of some routes have been changed to align with the route naming suggestions
+
+- ``collection:user:user`` was changed to ``collection:user:user:all``
+- ``search:user:user`` was changed to ``collection:user:user:search``
+
+Inline with the route name changes some language keys have been renamed.
+
 Messages
 ~~~~~~~~
 

@@ -9,10 +9,10 @@ return array(
 	'members:label:online' => 'انلاین',
 	'members:search' => 'جستجوی کاربران',
 	'members:total' => 'کل کاربران : %s',
-	'members:title:all' => 'همه کاربران',
+	'collection:user:user:all' => 'همه کاربران',
 	'members:title:newest' => 'کاربران جدید',
-	'members:title:popular' => 'بیشترین کاربران محبوب',
-	'members:title:online' => 'کاربران انلاین',
+	'collection:user:user:popular' => 'بیشترین کاربران محبوب',
+	'collection:user:user:online' => 'کاربران انلاین',
 	'members:title:alpha' => 'همه کاربران',
 	'members:list:popular:none' => 'هیچ کاربری دوست شما نیست',
 );

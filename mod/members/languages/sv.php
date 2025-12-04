@@ -8,10 +8,10 @@
 return array(
 	'members:search' => 'Sök medlemmar',
 	'members:total' => 'Antalet medlemmar: %s',
-	'members:title:all' => 'Alla medlemmar',
+	'collection:user:user:all' => 'Alla medlemmar',
 	'members:title:newest' => 'Nyaste medlemmar',
-	'members:title:popular' => 'Mest populära medlemmar',
-	'members:title:online' => 'Online medlemmar',
+	'collection:user:user:popular' => 'Mest populära medlemmar',
+	'collection:user:user:online' => 'Online medlemmar',
 	'members:title:alpha' => 'Alla medlemmar',
 	'members:list:popular:none' => 'Inga medlemmar har några vänner.',
 );

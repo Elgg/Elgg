@@ -25,7 +25,7 @@ class Site {
 			'name' => 'members',
 			'icon' => 'address-book-regular',
 			'text' => elgg_echo('members'),
-			'href' => elgg_generate_url('collection:user:user'),
+			'href' => elgg_generate_url('collection:user:user:all'),
 		]);
 		
 		return $return;

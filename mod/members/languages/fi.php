@@ -9,10 +9,10 @@ return array(
 	'members:label:online' => 'Kirjautuneet',
 	'members:search' => 'Etsi jäseniä',
 	'members:total' => 'Jäseniä yhteensä: %s',
-	'members:title:all' => 'Kaikki jäsenet',
+	'collection:user:user:all' => 'Kaikki jäsenet',
 	'members:title:newest' => 'Uusimmat',
-	'members:title:popular' => 'Suosituimmat',
-	'members:title:online' => 'Kirjautuneet',
+	'collection:user:user:popular' => 'Suosituimmat',
+	'collection:user:user:online' => 'Kirjautuneet',
 	'members:title:alpha' => 'Kaikki jäsenet',
 	'members:list:popular:none' => 'Kenelläkään jäsenellä ei ole vielä ystäviä.',
 );

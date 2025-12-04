@@ -10,7 +10,7 @@ return array(
 	'members:search' => 'Buscar membros',
 	'members:total' => 'Membros totais: %s',
 	'members:title:newest' => 'Últimos membros',
-	'members:title:popular' => 'Membros máis populares',
-	'members:title:online' => 'Membros conectados',
+	'collection:user:user:popular' => 'Membros máis populares',
+	'collection:user:user:online' => 'Membros conectados',
 	'members:list:popular:none' => 'Ningún dos membros ten contactos.',
 );

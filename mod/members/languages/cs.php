@@ -9,10 +9,10 @@ return array(
 	'members:label:online' => 'Přihlášení',
 	'members:search' => 'Hledat členy',
 	'members:total' => 'Celkem členů: %s',
-	'members:title:all' => 'Všichni členové',
+	'collection:user:user:all' => 'Všichni členové',
 	'members:title:newest' => 'Nejnovější členové',
-	'members:title:popular' => 'Nejoblíbenější členové',
-	'members:title:online' => 'Přihlášení členové',
+	'collection:user:user:popular' => 'Nejoblíbenější členové',
+	'collection:user:user:online' => 'Přihlášení členové',
 	'members:title:alpha' => 'Všichni členové',
 	'members:list:popular:none' => 'Žádní členové, kteří by měli nějaké přátele.',
 );

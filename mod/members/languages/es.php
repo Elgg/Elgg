@@ -9,10 +9,10 @@ return array(
 	'members:label:online' => 'En linea',
 	'members:search' => 'Buscar miembros',
 	'members:total' => 'Total de miembros: %s',
-	'members:title:all' => 'Todos los miembros',
+	'collection:user:user:all' => 'Todos los miembros',
 	'members:title:newest' => 'Nuevos miembros',
-	'members:title:popular' => 'Miembros más populares',
-	'members:title:online' => 'Miembros en línea',
+	'collection:user:user:popular' => 'Miembros más populares',
+	'collection:user:user:online' => 'Miembros en línea',
 	'members:title:alpha' => 'Todos los miembros',
 	'members:list:popular:none' => 'Ningún miembro tiene amigos',
 );
