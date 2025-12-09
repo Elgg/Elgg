@@ -9,7 +9,7 @@ return array(
 	'members:search' => 'Sæg medlemmer',
 	'members:total' => 'Total medlemmer: %s',
 	'members:title:newest' => 'Seneste medlemmer',
-	'members:title:popular' => 'Mest populære medlemmer',
-	'members:title:online' => 'Online medlemmer',
+	'collection:user:user:popular' => 'Mest populære medlemmer',
+	'collection:user:user:online' => 'Online medlemmer',
 	'members:list:popular:none' => 'Ingen medlemmer er uden venner',
 );

@@ -9,10 +9,10 @@ return array(
 	'members:label:online' => 'Air loidhne',
 	'members:search' => 'Lorg sna buill',
 	'members:total' => 'Buill gu h-iomlan: %s',
-	'members:title:all' => 'Buill gu lèir',
+	'collection:user:user:all' => 'Buill gu lèir',
 	'members:title:newest' => 'Buill as ùire',
-	'members:title:popular' => 'Buill as mòr-chòrdte',
-	'members:title:online' => 'Buill air loidhne',
+	'collection:user:user:popular' => 'Buill as mòr-chòrdte',
+	'collection:user:user:online' => 'Buill air loidhne',
 	'members:title:alpha' => 'Buill gu lèir',
 	'members:list:popular:none' => 'Chan eil caraid aig buill sam bith.',
 );

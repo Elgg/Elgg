@@ -23,7 +23,7 @@ class Members {
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'all',
 			'text' => elgg_echo('all'),
-			'href' => elgg_generate_url('collection:user:user'),
+			'href' => elgg_generate_url('collection:user:user:all'),
 		]);
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'popular',
@@ -41,7 +41,7 @@ class Members {
 			$result[] = \ElggMenuItem::factory([
 				'name' => 'search',
 				'text' => elgg_echo('members:label:search'),
-				'href' => elgg_generate_url('search:user:user', [
+				'href' => elgg_generate_url('collection:user:user:search', [
 					'member_query' => $query,
 				]),
 			]);
