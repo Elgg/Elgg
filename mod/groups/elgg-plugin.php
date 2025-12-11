@@ -153,6 +153,7 @@ return [
 				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
+			'use_logged_in' => true,
 		],
 	],
 	'widgets' => [

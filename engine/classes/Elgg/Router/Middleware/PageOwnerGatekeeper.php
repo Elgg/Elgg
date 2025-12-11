@@ -38,6 +38,7 @@ class PageOwnerGatekeeper {
 		}
 		
 		$this->page_owner = $page_owner;
+		_elgg_services()->pageOwner->setPageOwnerGuid($page_owner->guid);
 		
 		$this->assert($request, $route);
 	}
