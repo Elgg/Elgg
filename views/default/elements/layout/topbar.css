@@ -55,16 +55,6 @@
 	}
 }
 
-@media only $(media-desktop-up) {
-	.elgg-nav-logo {
-		flex-grow: 0;
-	}
-
-	#login-dropdown {
-		order: 5;
-	}
-}
-
 .elgg-nav-collapse {
 	height: auto;
 	width: 100%;
@@ -78,71 +68,41 @@
 	flex-direction: column;
 }
 
-@media only $(media-desktop-up) {
-	.elgg-nav-collapse {
-		position: relative;
-		top: auto;
-		bottom: auto;
-		width: auto;
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-end;
-	}
-}
-
 .elgg-nav-button {
 	width: 20px;
 	height: 15px;
 	position: relative;
 	margin: 10px 0 10px 20px;
-	-moz-transform: rotate(0deg);
-	-ms-transform: rotate(0deg);
-	-webkit-transform: rotate(0deg);
 	transform: rotate(0deg);
-	-moz-transition: ease-in-out 0.5s;
-	-o-transition: ease-in-out 0.5s;
-	-webkit-transition: ease-in-out 0.5s;
 	transition: ease-in-out 0.5s;
 	cursor: pointer;
 	display: block;
 	order: 3;
 	flex-grow: 0;
-}
-
-@media only $(media-desktop-up) {
-	.elgg-nav-button {
-		display: none;
-	}
-}
-
-.elgg-nav-button span {
-	display: block;
-	position: absolute;
-	height: 3px;
-	width: 100%;
-	background: #ffffff;
-	border-radius: 2px;
-	opacity: 1;
-	left: 0;
-	-moz-transform: rotate(0deg);
-	-ms-transform: rotate(0deg);
-	-webkit-transform: rotate(0deg);
-	transform: rotate(0deg);
-	-moz-transition: ease-in-out 0.25s;
-	-o-transition: ease-in-out 0.25s;
-	-webkit-transition: ease-in-out 0.25s;
-	transition: ease-in-out 0.25s;
 	
-	&:nth-child(1) {
-		top: 0;
-	}
-	
-	&:nth-child(2) {
-		top: 6px;
-	}
-	
-	&:nth-child(3) {
-		top: 12px;
+	span {
+		display: block;
+		position: absolute;
+		height: 3px;
+		width: 100%;
+		background: #ffffff;
+		border-radius: 2px;
+		opacity: 1;
+		left: 0;
+		transform: rotate(0deg);
+		transition: ease-in-out 0.25s;
+		
+		&:nth-child(1) {
+			top: 0;
+		}
+		
+		&:nth-child(2) {
+			top: 6px;
+		}
+		
+		&:nth-child(3) {
+			top: 12px;
+		}
 	}
 }
 
@@ -280,8 +240,27 @@ html.elgg-nav-collapsed {
 	scroll-margin-top: 4rem;
 }
 
-@media only $(media-desktop-up) {
+@media screen and (min-width: 80rem) {
+	.elgg-nav-logo {
+		flex-grow: 0;
+	}
+	
+	.elgg-nav-button {
+		display: none;
+	}
+	
+	#login-dropdown {
+		order: 5;
+	}
+	
 	.elgg-nav-collapse {
+		position: relative;
+		top: auto;
+		bottom: auto;
+		width: auto;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
 		align-items: center;
 		
 		> .elgg-menu-container > .elgg-menu > li {

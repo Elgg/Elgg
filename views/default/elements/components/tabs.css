@@ -46,7 +46,7 @@
 	}
 }
 
-@media $(media-tablet-up) {
+@media screen and (min-width: 50rem) {
 	.elgg-menu-filter > li,
 	.elgg-tabs > li {
 		border-bottom-width: 1px;

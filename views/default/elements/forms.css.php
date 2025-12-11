@@ -71,7 +71,7 @@ input[type=datetime-local],
 input[type=month],
 input[type=search],
 input[type=tel],
-input[type=week], {
+input[type=week] {
 	height: 2.5rem;
 }
 
@@ -193,7 +193,7 @@ select:not([multiple]) {
 	}
 }
 
-@media $(media-phone-up) {
+@media screen and (min-width: 30rem) {
 	.elgg-field {
 		&.elgg-field-stretch {
 			flex-basis: 1%;

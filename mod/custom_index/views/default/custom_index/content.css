@@ -1,4 +1,4 @@
-@media $(media-tablet-up) {
+@media screen and (min-width: 50rem) {
 	.custom-index {
 		display: grid;
 		column-gap: 2rem;

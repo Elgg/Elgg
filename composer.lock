@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17197261564661c5320448e376ea1240",
+    "content-hash": "b7a77208854f611b8a39c4e863f683ae",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -552,68 +552,6 @@
                 }
             ],
             "time": "2025-08-20T19:15:30+00:00"
-        },
-        {
-            "name": "css-crush/css-crush",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/peteboere/css-crush.git",
-                "reference": "7d055b59071d1908cd1bb4d190f2c480508c8047"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/peteboere/css-crush/zipball/7d055b59071d1908cd1bb4d190f2c480508c8047",
-                "reference": "7d055b59071d1908cd1bb4d190f2c480508c8047",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.1"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "9.6.23",
-                "psr/log": "1.0.*@dev",
-                "twig/twig": "3.11.3"
-            },
-            "default-branch": true,
-            "bin": [
-                "bin/csscrush"
-            ],
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "lib/functions.php"
-                ],
-                "psr-0": {
-                    "CssCrush": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Pete Boere",
-                    "email": "pete@the-echoplex.net"
-                },
-                {
-                    "name": "GitHub contributors",
-                    "homepage": "https://github.com/peteboere/css-crush/contributors"
-                }
-            ],
-            "description": "CSS preprocessor",
-            "homepage": "http://the-echoplex.net/csscrush",
-            "keywords": [
-                "css",
-                "preprocessor"
-            ],
-            "support": {
-                "issues": "https://github.com/peteboere/css-crush/issues",
-                "source": "https://github.com/peteboere/css-crush/tree/v5.0.0"
-            },
-            "time": "2025-09-09T11:34:00+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -8873,7 +8811,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "css-crush/css-crush": 20,
         "elgg/sniffs": 20,
         "roave/security-advisories": 20
     },

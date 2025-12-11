@@ -35,7 +35,7 @@
 	}
 }
 
-@media $(media-desktop-up) {
+@media screen and (min-width: 80rem) {
 	.elgg-page-footer .elgg-menu-container {
 		flex-direction: row;
 		justify-content: flex-end;

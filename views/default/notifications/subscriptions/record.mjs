@@ -8,16 +8,16 @@ $(document).on('click', '.elgg-subscription-details-toggle', function() {
 	$subscription_container.find('.elgg-subscription-details-toggle').toggleClass('hidden');
 	
 	var $details_container = $subscription_container.next();
-	if ($details_container.is(':visible')) {
-		$details_container.hide();
+	if (!$details_container.hasClass('hidden')) {
+		$details_container.addClass('hidden');
 	} else {
 		if (!$details_container.is(':empty')) {
 			// already loaded... just toggle the details
-			$details_container.show();
+			$details_container.removeClass('hidden');
 		} else {
 			ajax.view($(this).data('view'), {
 				success: function(output) {
-					$details_container.html(output).show();
+					$details_container.html(output).removeClass('hidden');
 				}
 			});
 		}
@@ -35,7 +35,7 @@ $(document).on('click', '.elgg-subscription-container-details .elgg-subscription
 	var $record = $(this).closest('.elgg-subscription-record');
 	var $details = $record.find('.elgg-subscription-container-details');
 	$details.find('.elgg-input-checkbox').prop('checked', false);
-	$details.hide();
+	$details.addClass('hidden');
 	
 	$record.find('.elgg-subscription-methods input').prop('disabled', false);
 	$record.find('.elgg-subscription-details-toggle').removeClass('elgg-state-active').toggleClass('hidden');

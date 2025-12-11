@@ -16,7 +16,7 @@
 	}
 }
 
-@media $(media-tablet-up) {
+@media screen and (min-width: 50rem) {
 	.elgg-menu-container.elgg-menu-title-container {
 		 flex-direction: row;
 	}

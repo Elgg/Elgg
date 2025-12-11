@@ -56,7 +56,7 @@ echo elgg_view('core.css');
 	}
 }
 
-@media only $(media-desktop-up) {
+@media screen and (min-width: 80rem) {
 	.elgg-page-admin {
 		.elgg-page-topbar .elgg-menu-admin-header-alt {
 			order: 2;
@@ -71,16 +71,6 @@ echo elgg_view('core.css');
 	> .elgg-image {
 		min-width: 1rem;
 		text-align: center;
-		
-		.elgg-icon-times {
-			color: var(--elgg-state-danger-font-color);
-		}
-		.elgg-icon-exclamation-triangle {
-			color: var(--elgg-state-warning-font-color);
-		}
-		.elgg-icon-checkmark {
-			color: var(--elgg-state-success-font-color);
-		}
 	}
 }
 
@@ -186,9 +176,11 @@ echo elgg_view('core.css');
 	}
 }
 
-.elgg-state-cannot-activate .elgg-image a[disabled],
-.elgg-state-cannot-deactivate .elgg-image a[disabled] {
-	text-decoration: none;
+.elgg-state-cannot-activate,
+.elgg-state-cannot-deactivate {
+	.elgg-image a[disabled] {
+		text-decoration: none;
+	}
 }
 
 .elgg-plugin-placeholder {
@@ -212,7 +204,8 @@ echo elgg_view('core.css');
 	position: relative;
 	
 	.elgg-plugin {
-		.elgg-state-error, .elgg-state-warning {
+		.elgg-state-error, 
+		.elgg-state-warning {
 			display: inline-block;
 		}
 	}

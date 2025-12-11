@@ -12,7 +12,7 @@
 	flex-basis: 100%;
 }
 
-@media $(media-desktop-up) {
+@media screen and (min-width: 80rem) {
 	.elgg-widgets-grid {
 		flex-direction: row-reverse;
 		align-items: stretch;

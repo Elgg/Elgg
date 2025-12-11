@@ -14,9 +14,9 @@ echo elgg_view('output/longtext', [
 	'value' => elgg_echo('admin:security:information:description'),
 ]);
 
-$icon_ok = elgg_view_icon('check');
-$icon_warning = elgg_view_icon('exclamation-triangle');
-$icon_error = elgg_view_icon('times');
+$icon_ok = elgg_view_icon('check', ['class' => ['elgg-state', 'elgg-state-success']]);
+$icon_warning = elgg_view_icon('exclamation-triangle', ['class' => ['elgg-state', 'elgg-state-warning']]);
+$icon_error = elgg_view_icon('times', ['class' => ['elgg-state', 'elgg-state-danger']]);
 
 $view_module = function($icon, $title, $value = '', $subtext = '') {
 	$body = elgg_format_element('strong', [], $title);

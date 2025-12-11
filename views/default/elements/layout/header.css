@@ -26,7 +26,7 @@
 	}
 }
 
-@media $(media-desktop-up) {
+@media screen and (min-width: 80rem) {
 	.elgg-layout-header {
 		flex-direction: row;
 		align-items: flex-start;

@@ -32,7 +32,6 @@ use Elgg\Traits\Loggable;
  * @property bool          $comments_latest_first					Determines if the default order of comments is latest first
  * @property int           $comments_max_depth						Maximum level of threaded comments (0 means disabled)
  * @property int           $comments_per_page						Number of comments per page
- * @property array         $css_compiler_options 					Options passed to CssCrush during CSS compilation
  * @property string        $dataroot             					Path of data storage with trailing "/"
  * @property string        $date_format          					Preferred PHP date format
  * @property string        $date_format_datepicker 					Preferred jQuery datepicker date format

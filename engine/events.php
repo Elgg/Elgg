@@ -42,11 +42,6 @@ return [
 			'\Elgg\Cache\EventHandlers::disable' => [],
 		],
 	],
-	'cache:generate' => [
-		'css' => [
-			\Elgg\Views\PreProcessCssHandler::class => [],
-		],
-	],
 	'cache:invalidate' => [
 		'system' => [
 			'\Elgg\Cache\EventHandlers::invalidate' => [],
@@ -402,7 +397,6 @@ return [
 	'simplecache:generate' => [
 		'css' => [
 			\Elgg\Views\CalculateSRI::class => ['priority' => 999],
-			\Elgg\Views\PreProcessCssHandler::class => [],
 			\Elgg\Views\MinifyHandler::class => [],
 		],
 		'js' => [

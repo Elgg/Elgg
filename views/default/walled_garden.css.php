@@ -73,18 +73,16 @@ echo elgg_view('core.css');
 	}
 }
 
-@ifset walled-garden-background-image {
-	.elgg-page-walled-garden-background {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-image: url($(walled-garden-background-image));
-		background-size: cover;
-		background-repeat: no-repeat;
-		background-position: 50%;
-		background-attachment: fixed;
-		filter: blur(4px);
-	}
+.elgg-page-walled-garden-background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: var(--elgg-walled-garden-background-image);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50%;
+	background-attachment: fixed;
+	filter: blur(4px);
 }

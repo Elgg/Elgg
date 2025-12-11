@@ -63,18 +63,16 @@ echo elgg_view('core.css', $vars);
 	}
 }
 
-@ifset maintenance-background-image {
-	.elgg-page-maintenance-background {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-image: url($(maintenance-background-image));
-		background-size: cover;
-		background-repeat: no-repeat;
-		background-position: 50%;
-		background-attachment: fixed;
-		filter: blur(4px);
-	}
+.elgg-page-maintenance-background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: var(--elgg-maintenance-background-image);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50%;
+	background-attachment: fixed;
+	filter: blur(4px);
 }

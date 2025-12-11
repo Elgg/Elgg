@@ -31,7 +31,7 @@
 	}
 }
 
-@media $(media-tablet-up) {
+@media screen and (min-width: 50rem) {
 	#profile-owner-block {
 		width: 12rem;
 	}
