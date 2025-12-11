@@ -20,7 +20,7 @@
 	}
 }
 
-@media $(media-desktop-up) {
+@media screen and (min-width: 80rem) {
 	.elgg-layout {
 		flex-direction: row;
 		min-height: calc(100vh - 8rem);

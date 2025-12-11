@@ -56,7 +56,7 @@ echo elgg_view('core.css');
 	}
 }
 
-@media only $(media-desktop-up) {
+@media screen and (min-width: 80rem) {
 	.elgg-page-admin {
 		.elgg-page-topbar .elgg-menu-admin-header-alt {
 			order: 2;
@@ -71,43 +71,6 @@ echo elgg_view('core.css');
 	> .elgg-image {
 		min-width: 1rem;
 		text-align: center;
-		
-		.elgg-icon-times {
-			color: var(--elgg-state-danger-font-color);
-		}
-		.elgg-icon-exclamation-triangle {
-			color: var(--elgg-state-warning-font-color);
-		}
-		.elgg-icon-checkmark {
-			color: var(--elgg-state-success-font-color);
-		}
-	}
-}
-
-/* ***************************************
-	PLUGINS FILTER
-**************************************** */
-.elgg-admin-plugins-categories {
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: row;
-	margin-top: 1rem;
-	grid-gap: 0.5rem;
-	
-	> a {
-		padding: 0.25rem 0.5rem;
-		background: #e6e6ea;
-		border-radius: 3px;
-		font-size:0.85rem;
-		color: #2d3047;
-		text-decoration: none;
-		
-		&.elgg-state-selected,
-		&:hover {
-			color: #fff;
-			background: #2d3047;
-			text-decoration: none;
-		}
 	}
 }
 
@@ -186,9 +149,11 @@ echo elgg_view('core.css');
 	}
 }
 
-.elgg-state-cannot-activate .elgg-image a[disabled],
-.elgg-state-cannot-deactivate .elgg-image a[disabled] {
-	text-decoration: none;
+.elgg-state-cannot-activate,
+.elgg-state-cannot-deactivate {
+	.elgg-image a[disabled] {
+		text-decoration: none;
+	}
 }
 
 .elgg-plugin-placeholder {
@@ -212,7 +177,8 @@ echo elgg_view('core.css');
 	position: relative;
 	
 	.elgg-plugin {
-		.elgg-state-error, .elgg-state-warning {
+		.elgg-state-error, 
+		.elgg-state-warning {
 			display: inline-block;
 		}
 	}
@@ -230,41 +196,5 @@ echo elgg_view('core.css');
 	
 	.elgg-tabs a {
 		cursor: pointer;
-	}
-}
-
-/****************************************
-	MARKDOWN
-****************************************/
-.elgg-markdown {
-	margin: 15px;
-	
-	h1, h2, h3, h4, h5, h6 {
-		margin: 1em 0 1em -15px;
-		color: #333;
-	}
-	
-	ol {
-		list-style: decimal;
-		padding-left: 2em;
-	}
-	
-	ul {
-		list-style: disc;
-		padding-left: 2em;
-	}
-	
-	p {
-		margin: 15px 0;
-	}
-	
-	img {
-		max-width: 100%;
-		height: auto;
-		margin: 10px 0;
-	}
-	
-	pre > code {
-		border: none;
 	}
 }

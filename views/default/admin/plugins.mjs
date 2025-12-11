@@ -9,20 +9,9 @@ import i18n from 'elgg/i18n';
 function freezePlugins() {
 	$('#elgg-plugin-list-cover').css('display', 'block');
 };
+
 function unfreezePlugins() {
 	$('#elgg-plugin-list-cover').css('display', 'none');
-};
-
-function initPluginReordering() {
-	$('#elgg-plugin-list > .elgg-list-container > ul').sortable({
-		items: 'li:has(> .elgg-state-draggable)',
-		handle: '.elgg-body',
-		forcePlaceholderSize: true,
-		placeholder: 'elgg-plugin-placeholder',
-		opacity: 0.8,
-		revert: 500,
-		stop: movePlugin
-	});
 };
 
 function toggleSinglePlugin() {
@@ -101,25 +90,15 @@ function movePlugin(e, ui) {
 	});
 };
 
-/**
- * Filters the plugin list based on a selected category
- *
- * @return void
- */
-function filterPluginCategory(event) {
-	event.preventDefault();
-	
-	// remove selected state from all buttons
-	$('.elgg-admin-plugins-categories > a').removeClass('elgg-state-selected');
+$('#elgg-plugin-list > .elgg-list-container > ul').sortable({
+	items: 'li:has(> .elgg-state-draggable)',
+	handle: '.elgg-body',
+	forcePlaceholderSize: true,
+	placeholder: 'elgg-plugin-placeholder',
+	opacity: 0.8,
+	revert: 500,
+	stop: movePlugin
+});
 
-	// show plugins with the selected category
-	$('.elgg-plugin').hide();
-	$('.elgg-plugin-category-' + $(this).attr('rel')).show();
-	$(this).addClass('elgg-state-selected');
-};
-
-initPluginReordering();
-
-$(document).on('click', '.elgg-admin-plugins-categories a', filterPluginCategory);
 $(document).on('click', '.elgg-plugins-toggle', toggleAllPlugins);
 $(document).on('click', '.elgg-plugin-state-change', toggleSinglePlugin);

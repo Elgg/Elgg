@@ -2,8 +2,7 @@
 
 elgg_set_viewtype('default');
 
-$css = elgg_view('core.css', []);
-echo _elgg_services()->cssCompiler->compile($css);
+echo elgg_view('core.css');
 
 elgg_set_viewtype('installation');
 

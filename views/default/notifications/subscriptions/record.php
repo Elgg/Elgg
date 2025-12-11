@@ -96,4 +96,4 @@ $container .= elgg_view('output/url', [
 echo elgg_format_element('div', ['class' => 'elgg-subscription-container'], $container);
 
 // placeholder for the details
-echo elgg_format_element('div', ['class' => 'elgg-subscription-container-details']);
+echo elgg_format_element('div', ['class' => ['elgg-subscription-container-details', 'hidden']]);

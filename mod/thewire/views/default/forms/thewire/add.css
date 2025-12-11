@@ -3,7 +3,7 @@
 	font-weight: bold;
 	
 	.thewire-characters-remaining-warning {
-		color: $(state-danger-font-color);
+		color: var(--elgg-state-danger-font-color);
 	}
 }
 

@@ -12,12 +12,27 @@ Default config changes
 ~~~~~~~~~~~~~~~~~~~~~~
 
 * The trash is now enabled by default
+* The config option ``css_compiler_options`` has been removed
 
 Cron
 ~~~~
 
 The PHP max execution time during the CRON execution has been set to 'unlimited'. So for developers there is no longer a
 need to call ``set_time_limit(0);``
+
+CSS Crush has been removed
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+CSS files are no longer preprocessed by CSS Crush. CSS Crush is no longer maintained and various features are now part
+of regular CSS (like nesting and the usage of variables). 
+Variables set in your ``elgg-plugin.php`` (or those available in core) are still available in CSS files but you will
+need to update your CSS to use ``var(--elgg-your-variable)``. If you have a custom theme you will need to check all
+your CSS files for CSS Crush features and update your code accordingly.
+
+.. note::
+
+	The variables for the ``walled garden`` and ``maintenance`` page background images have been changed. The variables
+	used for media queries have been removed and will need to be hardcoded in your css files.
 
 Entity restore
 ~~~~~~~~~~~~~~

@@ -979,7 +979,7 @@ Views
     wish to specify the column directly.
     
 **vars:compiler, css** |results|
-    Allows plugins to alter CSS variables passed to CssCrush during compilation.
+    Allows plugins to alter CSS variables.
     See `CSS variables <_guides/theming#css-vars>`.
     
 **view, <view_name>** |results|

@@ -36,7 +36,7 @@
 	z-index: 60;
 }
 
-@media only $(media-desktop-up) {
+@media screen and (min-width: 80rem) {
 	.elgg-page-topbar .elgg-menu li .elgg-child-menu {
 		z-index: 70;
 	}

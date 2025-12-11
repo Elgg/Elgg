@@ -6,6 +6,9 @@ if (empty($categories)) {
 	return;
 }
 
+elgg_require_css('admin/plugins/categories');
+elgg_import_esm('admin/plugins/categories');
+
 asort($categories);
 
 $common_categories = [

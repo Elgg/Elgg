@@ -18,7 +18,7 @@
 	}
 }
 
-@media $(media-tablet-up) {
+@media screen and (min-width: 50rem) {
 	.elgg-profile-fields {
 		.elgg-profile-field {
 			grid-template-columns: 12rem 1fr;

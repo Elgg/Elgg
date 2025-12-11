@@ -2,14 +2,12 @@
 
 namespace Elgg\Assets;
 
-use CssCrush\Crush;
-use Elgg\Config;
 use Elgg\EventsService;
 use Elgg\Includer;
 use Elgg\Project\Paths;
 
 /**
- * Compile CSS with CSSCrush
+ * Gives access to CSS variables in the system
  *
  * @internal
  */
@@ -18,37 +16,9 @@ class CssCompiler {
 	/**
 	 * Constructor
 	 *
-	 * @param Config        $config Config
 	 * @param EventsService $events Events service
 	 */
-	public function __construct(protected Config $config, protected EventsService $events) {
-	}
-
-	/**
-	 * Compile CSS
-	 *
-	 * @param string $css     CSS string
-	 * @param array  $options CssCrush options
-	 *
-	 * @return string
-	 */
-	public function compile($css, array $options = []): string {
-		$defaults = [
-			'minify' => false, // minify handled by \Elgg\Views\MinifyHandler::class
-			'formatter' => 'single-line', // shows lowest byte size
-			'versioning' => false, // versioning done by Elgg
-			'rewrite_import_urls' => false,
-			'boilerplate' => false,
-		];
-
-		$config = (array) $this->config->css_compiler_options;
-
-		$options = array_merge($defaults, $config, $options);
-		$options['vars'] = $this->getCssVars($options);
-	
-		Crush::$process = new CssCrushProcess($options, ['type' => 'filter', 'data' => $css]);
-
-		return (string) Crush::$process->compile();
+	public function __construct(protected EventsService $events) {
 	}
 	
 	/**

@@ -37,7 +37,6 @@ class EmailService {
 	 * @param HtmlFormatter       $html_formatter Html formatter
 	 * @param ViewsService        $views          Views service
 	 * @param ImageFetcherService $image_fetcher  Image fetcher
-	 * @param CssCompiler         $css_compiler   Css compiler
 	 */
 	public function __construct(
 		protected Config $config,
@@ -45,8 +44,7 @@ class EmailService {
 		protected TransportInterface $mailer,
 		protected HtmlFormatter $html_formatter,
 		protected ViewsService $views,
-		protected ImageFetcherService $image_fetcher,
-		protected CssCompiler $css_compiler
+		protected ImageFetcherService $image_fetcher
 	) {
 	}
 
@@ -366,8 +364,7 @@ class EmailService {
 		$css_views = $this->views->renderView('elements/variables.css', $options);
 		$css_views .= $this->views->renderView('email/email.css', $options);
 
-		$css_compiled = $this->css_compiler->compile($css_views);
-		$minifier = new \MatthiasMullie\Minify\CSS($css_compiled);
+		$minifier = new \MatthiasMullie\Minify\CSS($css_views);
 		$css = $minifier->minify();
 		
 		$options['css'] = $css;

@@ -8,8 +8,8 @@ return [
 	// layout and shell
 	'body-background-color' => '#f3f3f3',
 	'page-section-max-width' => '90rem',
-	'maintenance-background-image' => 'graphics/maintenance.jpg',
-	'walled-garden-background-image' => 'graphics/walled_garden.jpg',
+	'maintenance-background-image' => 'url(graphics/maintenance.jpg)',
+	'walled-garden-background-image' => 'url(graphics/walled_garden.jpg)',
 	
 	// Typography
 	'font-size' => '16px', // global font size
@@ -88,12 +88,4 @@ return [
 	// topbar
 	'topbar-background-color' => '#0078ac',
 	'topbar-indicator' => '#faa51a',
-
-	// breakpoints
-	'media-phone-up' => 'screen and (min-width: 30rem)',
-	'media-tablet-up' => 'screen and (min-width: 50rem)',
-	'media-desktop-up' => 'screen and (min-width: 80rem)',
-	'media-mobile-only' => 'screen and (max-width: 50rem)',
-	'media-desktop-down' => 'screen and (max-width: 80rem)',
-	'media-tablet-only' => 'screen and (min-width: 50rem) and (max-width: 80rem)',
 ];

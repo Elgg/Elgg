@@ -40,7 +40,7 @@
 	width: 15rem;
 }
 
-@media $(media-tablet-up) {
+@media screen and (min-width: 50rem) {
 	.elgg-table,
 	.elgg-table-alt {
 		thead,

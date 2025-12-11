@@ -15,7 +15,6 @@
         "ext-xml": "*",
         "composer/installers": ">=1.0.8",
         "composer/semver": "~3.4.0",
-        "css-crush/css-crush": "dev-master#7d055b59071d1908cd1bb4d190f2c480508c8047",
         "doctrine/dbal": "~4.2.0",
         "eloquent/composer-config-reader": "~3.0.0",
         "fakerphp/faker": "~1.24.0",
@@ -76,7 +75,6 @@
             "engine/classes/"
         ],
         "psr-4": {
-            "CssCrush\\": "engine/vendor_classes/CssCrush/",
             "Elgg\\": "engine/classes/Elgg/",
             "Laminas\\Mime\\": "engine/vendor_classes/Laminas/Mime/"
         }
