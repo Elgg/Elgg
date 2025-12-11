@@ -1,0 +1,32 @@
+.elgg-markdown {
+	margin: 15px;
+	
+	h1, h2, h3, h4, h5, h6 {
+		margin: 1em 0 1em -15px;
+		color: #333;
+	}
+	
+	ol {
+		list-style: decimal;
+		padding-left: 2em;
+	}
+	
+	ul {
+		list-style: disc;
+		padding-left: 2em;
+	}
+	
+	p {
+		margin: 15px 0;
+	}
+	
+	img {
+		max-width: 100%;
+		height: auto;
+		margin: 10px 0;
+	}
+	
+	pre > code {
+		border: none;
+	}
+}

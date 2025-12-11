@@ -75,33 +75,6 @@ echo elgg_view('core.css');
 }
 
 /* ***************************************
-	PLUGINS FILTER
-**************************************** */
-.elgg-admin-plugins-categories {
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: row;
-	margin-top: 1rem;
-	grid-gap: 0.5rem;
-	
-	> a {
-		padding: 0.25rem 0.5rem;
-		background: #e6e6ea;
-		border-radius: 3px;
-		font-size:0.85rem;
-		color: #2d3047;
-		text-decoration: none;
-		
-		&.elgg-state-selected,
-		&:hover {
-			color: #fff;
-			background: #2d3047;
-			text-decoration: none;
-		}
-	}
-}
-
-/* ***************************************
 	PLUGINS
 **************************************** */
 
@@ -223,41 +196,5 @@ echo elgg_view('core.css');
 	
 	.elgg-tabs a {
 		cursor: pointer;
-	}
-}
-
-/****************************************
-	MARKDOWN
-****************************************/
-.elgg-markdown {
-	margin: 15px;
-	
-	h1, h2, h3, h4, h5, h6 {
-		margin: 1em 0 1em -15px;
-		color: #333;
-	}
-	
-	ol {
-		list-style: decimal;
-		padding-left: 2em;
-	}
-	
-	ul {
-		list-style: disc;
-		padding-left: 2em;
-	}
-	
-	p {
-		margin: 15px 0;
-	}
-	
-	img {
-		max-width: 100%;
-		height: auto;
-		margin: 10px 0;
-	}
-	
-	pre > code {
-		border: none;
 	}
 }
