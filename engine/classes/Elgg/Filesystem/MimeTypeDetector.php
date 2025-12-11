@@ -207,7 +207,7 @@ class MimeTypeDetector {
 
 		$finfo = finfo_open(FILEINFO_MIME);
 		$type = finfo_file($finfo, $file);
-		finfo_close($finfo);
+		
 		// Mimetype can come in text/plain; charset=us-ascii form
 		if (strpos($type, ';')) {
 			list($type,) = explode(';', $type);

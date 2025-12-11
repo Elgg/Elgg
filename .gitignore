@@ -68,9 +68,7 @@ startup.sh
 
 # don't ignore special configs
 !/.mailmap
-!/.travis.yml
 !/.readthedocs.yml
-!/.scrutinizer.yml
 !.editorconfig
 !.github
 !.gitignore

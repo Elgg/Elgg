@@ -24,7 +24,7 @@ Add a section in your ``composer.json`` as described in de `Composer JSON refere
 
 	{
 		"require": {
-			"php": ">8.1",
+			"php": ">8.3",
 			"ext-json": "*"
 		}
 	}

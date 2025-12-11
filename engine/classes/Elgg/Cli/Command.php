@@ -15,7 +15,7 @@ abstract class Command extends BaseCommand {
 	/**
 	 * {@inheritdoc}
 	 */
-	final public function execute(InputInterface $input, OutputInterface $output) {
+	final public function execute(InputInterface $input, OutputInterface $output): int {
 		$this->input = $input;
 		$this->output = $output;
 

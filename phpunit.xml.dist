@@ -58,50 +58,6 @@
     <testsuite name="plugins-integration">
       <directory>./mod/*/tests/phpunit/integration/</directory>
     </testsuite>
-    <!-- The following suites are used to segment code coverage jobs -->
-    <testsuite name="integration-a-to-d">
-      <directory>./engine/tests/phpunit/integration/Elgg/Actions/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Ajax/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Assets/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Cli/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Comments/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Controllers/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Database/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Di/</directory>
-    </testsuite>
-    <testsuite name="integration-e-to-s">
-      <directory>./engine/tests/phpunit/integration/Elgg/Forms/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Http/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/I18n/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Lib/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Navigation/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Notifications/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Plugin/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Router/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Search/</directory>
-      <directory>./engine/tests/phpunit/integration/Elgg/Security/</directory>
-    </testsuite>
-    <testsuite name="integration-t-to-all">
-      <directory>./engine/tests/phpunit/integration/</directory>
-      <exclude>engine/tests/phpunit/integration/Elgg/Actions/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Ajax/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Assets/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Cli/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Comments/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Controllers/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Database/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Di/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Forms/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Http/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/I18n/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Lib/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Navigation/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Notifications/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Plugin/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Router/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Search/</exclude>
-      <exclude>engine/tests/phpunit/integration/Elgg/Security/</exclude>
-    </testsuite>
   </testsuites>
   <source>
     <include>

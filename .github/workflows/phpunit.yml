@@ -38,38 +38,38 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.1', '8.2', '8.3', '8.4']
+        php-versions: ['8.3', '8.4', '8.5']
         experimental: [false]
         extra-title: ['']
         memcache: [0]
         db-image: ['mysql:8.0']
         redis: [0]
         include:
-          - php-versions: '8.1'
+          - php-versions: '8.3'
             experimental: false
             extra-title: '- Memcache'
             memcache: 1
             db-image: 'mysql:8.0'
             redis: 0
-          - php-versions: '8.1'
+          - php-versions: '8.3'
             experimental: false
             extra-title: '- Redis'
             memcache: 0
             db-image: 'mysql:8.0'
             redis: 1
-          - php-versions: '8.1'
+          - php-versions: '8.3'
             experimental: false
             extra-title: ''
             memcache: 0
             db-image: 'mysql:8.4'
             redis: 0
-          - php-versions: '8.1'
+          - php-versions: '8.3'
             experimental: false
             extra-title: ''
             memcache: 0
             db-image: 'mariadb:10.6'
             redis: 0
-          - php-versions: '8.1'
+          - php-versions: '8.3'
             experimental: false
             extra-title: ''
             memcache: 0
