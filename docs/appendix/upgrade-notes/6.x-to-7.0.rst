@@ -5,6 +5,14 @@ From 6.x to 7.0
    :local:
    :depth: 1
 
+Composer
+--------
+
+PHP Requirements
+~~~~~~~~~~~~~~~~
+
+The minimal PHP version is now 8.3.
+
 Elgg core changes
 -----------------
 

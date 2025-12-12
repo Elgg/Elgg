@@ -23,7 +23,6 @@ Requirements
 * Transifex client installed (``easy_install transifex-client``)
 * Transifex account with access to Elgg project
 * Admin access to `Read The Docs`_
-* Admin access to `Scrutinizer`_
 
 Merge commits up from lower branches
 ====================================
@@ -157,7 +156,6 @@ Additional actions for the first new minor / major
 * Make a new branch on GitHub (for example 3.3)
 * Set the new branch as the default branch (optional, but suggested for stable releases)
 * Configure `Read The Docs`_ to build the new branch (not the new tag)
-* Configure `Scrutinizer`_ to build the new branch
 * Check the Elgg starter project for potential requirement / config changes in the ``composer.json``
 * Add the new minor / major version to the ``Elgg/community_plugins`` repository so developers can upload plugins for the new release
 * Update the build configuration for the `Elgg reference`_ (on the Elgg.org webserver)
@@ -173,7 +171,6 @@ Additional action for the first new major
 -----------------------------------------
 
 * On GitHub add a branch protection rule (for example ``4.*``) 
-* Configure Scrutinizer to track the new major branches (for example ``4.*``)
 
 Update the website
 ==================
@@ -230,5 +227,4 @@ This should be the very last thing you do.
 
 .. _Twitter account: https://twitter.com/elgg
 .. _Read The Docs: https://readthedocs.org/projects/elgg/
-.. _Scrutinizer: https://scrutinizer-ci.com/g/Elgg/Elgg/
 .. _Elgg reference: http://reference.elgg.org/
