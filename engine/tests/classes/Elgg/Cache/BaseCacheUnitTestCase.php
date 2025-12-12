@@ -81,8 +81,7 @@ abstract class BaseCacheUnitTestCase extends UnitTestCase {
 		$pool = $this->getInaccessableProperty($this->cache, 'pool');
 		
 		$this->assertNull($this->cache->load($key));
-
-		$this->assertTrue($this->cache->save($key, $value)); // need to do double save for Redis
+		
 		$this->assertTrue($this->cache->save($key, $value, \Elgg\Values::normalizeTime('-1 second')));
 		
 		// need to detach to make sure the item is loaded from the backend and does not use static cache
@@ -167,18 +166,15 @@ abstract class BaseCacheUnitTestCase extends UnitTestCase {
 		// check if values are written to the correct namespaced cache
 		$this->assertNull($cache1->load('foo2'));
 		$this->assertNull($cache2->load('foo1'));
-
-		// redis/memcache do not support flushing namespaces
-		if (static::class !== 'Elgg\Cache\PersistentCacheUnitTest') {
-			// check if clearing namespace 1 does not clear namespace 2
-			$cache1->clear();
-			$this->assertNull($cache1->load('foo1'));
-			
-			$pool = $this->getInaccessableProperty($cache2, 'pool');
-			
-			// need to detach to make sure the item is loaded from the backend and does not use static cache
-			$pool->detachAllItems();
-			$this->assertEquals('bar', $cache2->load('foo2'));
-		}
+		
+		// check if clearing namespace 1 does not clear namespace 2
+		$cache1->clear();
+		$this->assertNull($cache1->load('foo1'));
+		
+		$pool = $this->getInaccessableProperty($cache2, 'pool');
+		
+		// need to detach to make sure the item is loaded from the backend and does not use static cache
+		$pool->detachAllItems();
+		$this->assertEquals('bar', $cache2->load('foo2'));
 	}
 }

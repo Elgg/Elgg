@@ -208,8 +208,6 @@ class CompositeCache extends BaseCache {
 	protected function createPool(): ExtendedCacheItemPoolInterface {
 		
 		$drivers = [];
-		$drivers[] = $this->buildRedisDriver();
-		$drivers[] = $this->buildMemcachedDriver();
 		$drivers[] = $this->buildFileSystemDriver();
 		$drivers[] = $this->buildLocalFileSystemDriver();
 		$drivers[] = $this->buildBlackHoleDriver();
@@ -244,48 +242,6 @@ class CompositeCache extends BaseCache {
 		]));
 		
 		return $cluster_driver;
-	}
-
-	/**
-	 * Builds Redis driver
-	 * @return null|ExtendedCacheItemPoolInterface
-	 */
-	protected function buildRedisDriver(): ?ExtendedCacheItemPoolInterface {
-		if (!($this->flags & self::CACHE_PERSISTENT)) {
-			return null;
-		}
-
-		if (!self::isRedisAvailable()) {
-			return null;
-		}
-		
-		$config = \Elgg\Cache\Config\Redis::fromElggConfig($this->namespace, $this->config);
-		if (empty($config)) {
-			return null;
-		}
-				
-		return CacheManager::getInstance('Redis', $config, $this->prefixInstanceId('redis'));
-	}
-
-	/**
-	 * Builds Memcached driver
-	 * @return null|ExtendedCacheItemPoolInterface
-	 */
-	protected function buildMemcachedDriver(): ?ExtendedCacheItemPoolInterface {
-		if (!($this->flags & self::CACHE_PERSISTENT)) {
-			return null;
-		}
-			
-		if (!self::isMemcacheAvailable()) {
-			return null;
-		}
-		
-		$config = \Elgg\Cache\Config\Memcached::fromElggConfig($this->namespace, $this->config);
-		if (empty($config)) {
-			return null;
-		}
-		
-		return CacheManager::getInstance('Memcached', $config, $this->prefixInstanceId('memcache'));
 	}
 
 	/**
@@ -367,27 +323,5 @@ class CompositeCache extends BaseCache {
 		$config = new \Phpfastcache\Drivers\Devnull\Config();
 		
 		return CacheManager::getInstance('Devnull', $config, $this->prefixInstanceId('devnull'));
-	}
-	
-	/**
-	 * Helper function to check if memcache is available
-	 *
-	 * @return bool
-	 *
-	 * @since 4.2
-	 */
-	public static function isMemcacheAvailable(): bool {
-		return class_exists('Memcached');
-	}
-	
-	/**
-	 * Helper function to check if Redis is available
-	 *
-	 * @return bool
-	 *
-	 * @since 4.2
-	 */
-	public static function isRedisAvailable(): bool {
-		return extension_loaded('Redis');
 	}
 }

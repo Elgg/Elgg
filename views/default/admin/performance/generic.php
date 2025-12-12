@@ -96,46 +96,6 @@ if (function_exists('opcache_get_status')) {
 
 echo $view_module($icon, $title, $value, $subtext);
 
-// memcache
-$icon = $icon_error;
-$title = elgg_echo('admin:server:label:memcache');
-$value = elgg_echo('status:unavailable');
-$subtext = '';
-
-if (\Elgg\Cache\CompositeCache::isMemcacheAvailable()) {
-	$icon = $icon_warning;
-	
-	if (elgg_get_config('memcache') && !empty(elgg_get_config('memcache_servers'))) {
-		$icon = $icon_ok;
-		$value = elgg_echo('status:enabled');
-	} else {
-		$value = elgg_echo('status:disabled');
-		$subtext = elgg_echo('admin:server:memcache:inactive');
-	}
-}
-
-echo $view_module($icon, $title, $value, $subtext);
-
-// redis
-$icon = $icon_error;
-$title = elgg_echo('admin:server:label:redis');
-$value = elgg_echo('status:unavailable');
-$subtext = '';
-
-if (\Elgg\Cache\CompositeCache::isRedisAvailable()) {
-	$icon = $icon_warning;
-	
-	if (elgg_get_config('redis') && !empty(elgg_get_config('redis_servers'))) {
-		$icon = $icon_ok;
-		$value = elgg_echo('status:enabled');
-	} else {
-		$value = elgg_echo('status:disabled');
-		$subtext = elgg_echo('admin:server:redis:inactive');
-	}
-}
-
-echo $view_module($icon, $title, $value, $subtext);
-
 // simplecache
 $icon = $icon_error;
 $title = elgg_view('output/url', [
