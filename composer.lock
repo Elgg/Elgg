@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "199213123abe20b300955d248385aea8",
+    "content-hash": "23e345bfebd6dbf9f3fcd3c4ff0cb394",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -772,21 +772,21 @@
             "time": "2025-10-31T18:51:33+00:00"
         },
         {
-            "name": "eloquent/composer-config-reader",
-            "version": "3.0.0",
+            "name": "elgg/composer-config-reader",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/eloquent/composer-config-reader.git",
-                "reference": "ea8398e742182237baec71156939e54c012a97e4"
+                "url": "https://github.com/Elgg/composer-config-reader.git",
+                "reference": "871fc2ecb763d01f71e1aa0be4cd07d3e0a10275"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eloquent/composer-config-reader/zipball/ea8398e742182237baec71156939e54c012a97e4",
-                "reference": "ea8398e742182237baec71156939e54c012a97e4",
+                "url": "https://api.github.com/repos/Elgg/composer-config-reader/zipball/871fc2ecb763d01f71e1aa0be4cd07d3e0a10275",
+                "reference": "871fc2ecb763d01f71e1aa0be4cd07d3e0a10275",
                 "shasum": ""
             },
             "require": {
-                "eloquent/enumeration": "^6",
+                "elgg/enumeration": "dev-master",
                 "justinrainbow/json-schema": "^5",
                 "php": ">=7.2"
             },
@@ -796,6 +796,7 @@
                 "friendsofphp/php-cs-fixer": "^2",
                 "phpunit/phpunit": "^8"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -827,24 +828,22 @@
                 "reader"
             ],
             "support": {
-                "issues": "https://github.com/eloquent/composer-config-reader/issues",
-                "source": "https://github.com/eloquent/composer-config-reader/tree/3.0.0"
+                "source": "https://github.com/Elgg/composer-config-reader/tree/master"
             },
-            "abandoned": true,
-            "time": "2020-11-16T06:11:04+00:00"
+            "time": "2025-12-12T14:28:06+00:00"
         },
         {
-            "name": "eloquent/enumeration",
-            "version": "6.0.0",
+            "name": "elgg/enumeration",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/eloquent/enumeration.git",
-                "reference": "15a1959683ae4fea75e19ff09d72a344ece3c6a4"
+                "url": "https://github.com/Elgg/enumeration.git",
+                "reference": "6ed8ed6e1387dd75157dbb74885e10497db4ed9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eloquent/enumeration/zipball/15a1959683ae4fea75e19ff09d72a344ece3c6a4",
-                "reference": "15a1959683ae4fea75e19ff09d72a344ece3c6a4",
+                "url": "https://api.github.com/repos/Elgg/enumeration/zipball/6ed8ed6e1387dd75157dbb74885e10497db4ed9e",
+                "reference": "6ed8ed6e1387dd75157dbb74885e10497db4ed9e",
                 "shasum": ""
             },
             "require": {
@@ -853,6 +852,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^7"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -881,11 +881,68 @@
                 "type"
             ],
             "support": {
-                "issues": "https://github.com/eloquent/enumeration/issues",
-                "source": "https://github.com/eloquent/enumeration/tree/master"
+                "source": "https://github.com/Elgg/enumeration/tree/master"
             },
-            "abandoned": true,
-            "time": "2018-11-22T02:45:56+00:00"
+            "time": "2025-12-12T14:20:08+00:00"
+        },
+        {
+            "name": "elgg/php-cron-scheduler",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Elgg/php-cron-scheduler.git",
+                "reference": "2f274a66f050a265c85944686f9398a147022e46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Elgg/php-cron-scheduler/zipball/2f274a66f050a265c85944686f9398a147022e46",
+                "reference": "2f274a66f050a265c85944686f9398a147022e46",
+                "shasum": ""
+            },
+            "require": {
+                "dragonmantank/cron-expression": "^3.0",
+                "php": "^7.3 || ^8.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.4",
+                "phpunit/phpunit": "~9.5",
+                "swiftmailer/swiftmailer": "~5.4 || ^6.0"
+            },
+            "suggest": {
+                "swiftmailer/swiftmailer": "Required to send the output of a job to email address/es (~5.4 || ^6.0)."
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GO\\": "src/GO/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Giuseppe Occhipinti",
+                    "email": "peppeocchi@gmail.com"
+                },
+                {
+                    "name": "Carsten Windler",
+                    "email": "carsten@carstenwindler.de",
+                    "homepage": "http://carstenwindler.de",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "PHP Cron Job Scheduler",
+            "keywords": [
+                "cron job",
+                "scheduler"
+            ],
+            "support": {
+                "source": "https://github.com/Elgg/php-cron-scheduler/tree/master"
+            },
+            "time": "2025-12-12T14:27:16+00:00"
         },
         {
             "name": "fakerphp/faker",
@@ -1515,16 +1572,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "5.3.0",
+            "version": "5.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jsonrainbow/json-schema.git",
-                "reference": "feb2ca6dd1cebdaf1ed60a4c8de2e53ce11c4fd8"
+                "reference": "b5a44b6391a3bbb75c9f2b73e1ef03d6045e1e20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/feb2ca6dd1cebdaf1ed60a4c8de2e53ce11c4fd8",
-                "reference": "feb2ca6dd1cebdaf1ed60a4c8de2e53ce11c4fd8",
+                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/b5a44b6391a3bbb75c9f2b73e1ef03d6045e1e20",
+                "reference": "b5a44b6391a3bbb75c9f2b73e1ef03d6045e1e20",
                 "shasum": ""
             },
             "require": {
@@ -1574,9 +1631,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jsonrainbow/json-schema/issues",
-                "source": "https://github.com/jsonrainbow/json-schema/tree/5.3.0"
+                "source": "https://github.com/jsonrainbow/json-schema/tree/5.3.1"
             },
-            "time": "2024-07-06T21:00:26+00:00"
+            "time": "2025-12-12T08:56:22+00:00"
         },
         {
             "name": "laminas/laminas-loader",
@@ -2708,65 +2765,6 @@
                 "source": "https://github.com/MyIntervals/emogrifier"
             },
             "time": "2025-11-27T21:56:48+00:00"
-        },
-        {
-            "name": "peppeocchi/php-cron-scheduler",
-            "version": "v4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/peppeocchi/php-cron-scheduler.git",
-                "reference": "0acfa032e60f0ea22a27b96a6b15a673a31d3448"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/peppeocchi/php-cron-scheduler/zipball/0acfa032e60f0ea22a27b96a6b15a673a31d3448",
-                "reference": "0acfa032e60f0ea22a27b96a6b15a673a31d3448",
-                "shasum": ""
-            },
-            "require": {
-                "dragonmantank/cron-expression": "^3.0",
-                "php": "^7.3 || ^8.0"
-            },
-            "require-dev": {
-                "php-coveralls/php-coveralls": "^2.4",
-                "phpunit/phpunit": "~9.5",
-                "swiftmailer/swiftmailer": "~5.4 || ^6.0"
-            },
-            "suggest": {
-                "swiftmailer/swiftmailer": "Required to send the output of a job to email address/es (~5.4 || ^6.0)."
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "GO\\": "src/GO/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Giuseppe Occhipinti",
-                    "email": "peppeocchi@gmail.com"
-                },
-                {
-                    "name": "Carsten Windler",
-                    "email": "carsten@carstenwindler.de",
-                    "homepage": "http://carstenwindler.de",
-                    "role": "Contributor"
-                }
-            ],
-            "description": "PHP Cron Job Scheduler",
-            "keywords": [
-                "cron job",
-                "scheduler"
-            ],
-            "support": {
-                "issues": "https://github.com/peppeocchi/php-cron-scheduler/issues",
-                "source": "https://github.com/peppeocchi/php-cron-scheduler/tree/v4.0"
-            },
-            "time": "2021-04-22T21:32:03+00:00"
         },
         {
             "name": "php-di/invoker",
@@ -8252,6 +8250,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "elgg/composer-config-reader": 20,
+        "elgg/php-cron-scheduler": 20,
         "elgg/sniffs": 20,
         "roave/security-advisories": 20
     },
@@ -8269,5 +8269,5 @@
     "platform-overrides": {
         "php": "8.3"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
