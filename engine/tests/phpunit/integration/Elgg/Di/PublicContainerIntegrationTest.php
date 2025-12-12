@@ -5,12 +5,11 @@ namespace Elgg\Di;
 use Elgg\IntegrationTestCase;
 use Elgg\Project\Paths;
 use phpDocumentor\Reflection\DocBlock\Tag;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class PublicContainerIntegrationTest extends IntegrationTestCase {
 
-	/**
-	 * @dataProvider servicesListProvider
-	 */
+	#[DataProvider('servicesListProvider')]
 	public function testPropertyType($name, $type) {
 		$service = elgg()->{$name};
 

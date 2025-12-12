@@ -2,11 +2,11 @@
 
 namespace Elgg\Cache;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 class CacheServiceIntegrationTest extends \Elgg\IntegrationTestCase {
-	
-	/**
-	 * @dataProvider cacheServiceProvider
-	 */
+
+	#[DataProvider('cacheServiceProvider')]
 	public function testServiceEnabledState($service_name) {
 		/**
 		 * @var $service CacheService
@@ -21,10 +21,8 @@ class CacheServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 		$service->disable();
 		$this->assertFalse($service->isEnabled());
 	}
-	
-	/**
-	 * @dataProvider cacheServiceProvider
-	 */
+
+	#[DataProvider('cacheServiceProvider')]
 	public function testItemStorage($service_name) {
 		/**
 		 * @var $service CacheService
@@ -53,10 +51,8 @@ class CacheServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->assertNull($service->load('foo'));
 		$this->assertEquals('bar2', $service->load('foo2'));
 	}
-	
-	/**
-	 * @dataProvider cacheServiceProvider
-	 */
+
+	#[DataProvider('cacheServiceProvider')]
 	public function testCacheResets($service_name) {
 		/**
 		 * @var $service CacheService

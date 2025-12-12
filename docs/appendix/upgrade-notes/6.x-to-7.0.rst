@@ -13,6 +13,11 @@ PHP Requirements
 
 The minimal PHP version is now 8.3.
 
+PHPUnit
+~~~~~~~
+
+Elgg now uses PHPUnit 12.5. You might need to update your tests.
+
 Elgg core changes
 -----------------
 

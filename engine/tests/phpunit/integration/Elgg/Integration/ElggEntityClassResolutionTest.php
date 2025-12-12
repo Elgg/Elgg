@@ -3,6 +3,7 @@
 namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ElggEntityClassResolutionTest extends IntegrationTestCase {
 
@@ -19,10 +20,8 @@ class ElggEntityClassResolutionTest extends IntegrationTestCase {
 	public function down() {
 		_elgg_services()->events->restore();
 	}
-	
-	/**
-	 * @dataProvider entityClasses
-	 */
+
+	#[DataProvider('entityClasses')]
 	public function testCoreEntityClassRegistrations($type, $subtype, $class) {
 
 		$entity = $this->createOne($type, [

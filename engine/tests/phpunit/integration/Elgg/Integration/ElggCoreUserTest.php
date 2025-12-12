@@ -4,6 +4,7 @@ namespace Elgg\Integration;
 
 use Elgg\Database\EntityTable;
 use Elgg\Database\Select;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 
@@ -190,10 +191,8 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$this->assertNotContains('methods2', $enabled_methods);
 		$this->assertNotContains('methods3', $enabled_methods);
 	}
-	
-	/**
-	 * @dataProvider profileDataProvider
-	 */
+
+	#[DataProvider('profileDataProvider')]
 	public function testSavePrivateProfileData($name, $value) {
 		$profile_user = $this->createUser();
 		$reading_user = $this->createUser();
@@ -214,10 +213,8 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		
 		$this->assertEmpty($profile_user->getProfileData($name));
 	}
-	
-	/**
-	 * @dataProvider profileDataProvider
-	 */
+
+	#[DataProvider('profileDataProvider')]
 	public function testSavePublicProfileData($name, $value) {
 		$profile_user = $this->createUser();
 		$reading_user = $this->createUser();
@@ -249,10 +246,8 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 			['field_d', null],
 		];
 	}
-	
-	/**
-	 * @dataProvider emptyProfileDataProvider
-	 */
+
+	#[DataProvider('emptyProfileDataProvider')]
 	public function testSaveEmptyProfileData($value) {
 		$user = $this->createUser();
 		

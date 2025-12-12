@@ -17,6 +17,7 @@ use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\Database\Clauses\WhereClause;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class QueryOptionsUnitTest extends UnitTestCase {
 
@@ -382,9 +383,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals([1], $pair->values);
 	}
 
-	/**
-	 * @dataProvider singlePairProvider
-	 */
+	#[DataProvider('singlePairProvider')]
 	public function testNormalizesMetadataOptionsForSinglePairInRoot($case_sensitive, $expected) {
 
 		$options = $this->options->normalizeOptions([

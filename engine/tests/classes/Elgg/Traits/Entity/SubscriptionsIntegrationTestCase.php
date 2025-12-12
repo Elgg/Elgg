@@ -4,6 +4,7 @@ namespace Elgg\Traits\Entity;
 
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 abstract class SubscriptionsIntegrationTestCase extends IntegrationTestCase {
 
@@ -71,34 +72,26 @@ abstract class SubscriptionsIntegrationTestCase extends IntegrationTestCase {
 		$this->assertFalse($this->target->hasSubscription($this->user->guid, ['apples', 'bananas']));
 		$this->assertFalse($this->target->hasSubscriptions($this->user->guid, ['apples', 'bananas']));
 	}
-	
-	/**
-	 * @dataProvider invalidMethodsProvider
-	 */
+
+	#[DataProvider('invalidMethodsProvider')]
 	public function testAddSubscriptionWithInvalidMethod($methods) {
 		$this->expectException(InvalidArgumentException::class);
 		$this->target->addSubscription($this->user->guid, $methods);
 	}
-	
-	/**
-	 * @dataProvider invalidMethodsProvider
-	 */
+
+	#[DataProvider('invalidMethodsProvider')]
 	public function testHasSubscriptionWithInvalidMethod($methods) {
 		$this->expectException(InvalidArgumentException::class);
 		$this->target->hasSubscription($this->user->guid, $methods);
 	}
-	
-	/**
-	 * @dataProvider invalidMethodsProvider
-	 */
+
+	#[DataProvider('invalidMethodsProvider')]
 	public function testHasSubscriptionsWithInvalidMethod($methods) {
 		$this->expectException(InvalidArgumentException::class);
 		$this->target->hasSubscriptions($this->user->guid, $methods);
 	}
-	
-	/**
-	 * @dataProvider invalidMethodsProvider
-	 */
+
+	#[DataProvider('invalidMethodsProvider')]
 	public function testRemoveSubscriptionWithInvalidMethod($methods) {
 		$this->expectException(InvalidArgumentException::class);
 		$this->target->removeSubscription($this->user->guid, $methods);

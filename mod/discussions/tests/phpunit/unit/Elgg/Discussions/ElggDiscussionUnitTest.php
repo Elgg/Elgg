@@ -5,6 +5,7 @@ namespace Elgg\Discussions;
 use Elgg\Exceptions\DomainException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ElggDiscussionUnitTest extends UnitTestCase {
 	
@@ -35,10 +36,8 @@ class ElggDiscussionUnitTest extends UnitTestCase {
 		$this->expectException(DomainException::class);
 		$this->entity->setStatus('foo');
 	}
-	
-	/**
-	 * @dataProvider validStatusProvider
-	 */
+
+	#[DataProvider('validStatusProvider')]
 	public function testSetStatusWithValidStatus(string $new_status) {
 		$this->entity->setStatus($new_status);
 		$this->assertEquals($new_status, $this->entity->status);

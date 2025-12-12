@@ -6,6 +6,7 @@ use Elgg\Database;
 use Elgg\Database\RelationshipsTable;
 use Elgg\Database\Select;
 use Elgg\Exceptions\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
@@ -184,34 +185,26 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertEquals($subscriptions, $this->service->getSubscriptionsForContainer($container_guid, $methods));
 	}
-	
-	/**
-	 * @dataProvider invalidTypeSubtypeActionProvider
-	 */
+
+	#[DataProvider('invalidTypeSubtypeActionProvider')]
 	public function testAddSubscriptionThrowsExceptionWithInvalidTypeSubtypeActionInput($type, $subtype, $action) {
 		$this->expectException(InvalidArgumentException::class);
 		$this->service->addSubscription($this->object->owner_guid, 'apples', $this->object->guid, $type, $subtype, $action);
 	}
-	
-	/**
-	 * @dataProvider invalidTypeSubtypeActionProvider
-	 */
+
+	#[DataProvider('invalidTypeSubtypeActionProvider')]
 	public function testHasSubscriptionThrowsExceptionWithInvalidTypeSubtypeActionInput($type, $subtype, $action) {
 		$this->expectException(InvalidArgumentException::class);
 		$this->service->hasSubscription($this->object->owner_guid, 'apples', $this->object->guid, $type, $subtype, $action);
 	}
-	
-	/**
-	 * @dataProvider invalidTypeSubtypeActionProvider
-	 */
+
+	#[DataProvider('invalidTypeSubtypeActionProvider')]
 	public function testRemoveSubscriptionThrowsExceptionWithInvalidTypeSubtypeActionInput($type, $subtype, $action) {
 		$this->expectException(InvalidArgumentException::class);
 		$this->service->removeSubscription($this->object->owner_guid, 'apples', $this->object->guid, $type, $subtype, $action);
 	}
-	
-	/**
-	 * @dataProvider invalidTypeSubtypeActionProvider
-	 */
+
+	#[DataProvider('invalidTypeSubtypeActionProvider')]
 	public function testGetEntitySubscriptionsThrowsExceptionWithInvalidTypeSubtypeActionInput($type, $subtype, $action) {
 		$this->expectException(InvalidArgumentException::class);
 		$this->service->getEntitySubscriptions($this->object->guid, $this->object->owner_guid, ['apples'], $type, $subtype, $action);

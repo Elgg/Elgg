@@ -2,6 +2,8 @@
 
 namespace Elgg\Integration;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * Elgg Regression Tests -- GitHub Bugfixes
  * Any bugfixes from GitHub that require testing belong here.
@@ -76,9 +78,8 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	 * @see https://github.com/elgg/elgg/issues/2276 - improve char encoding
 	 * @see https://github.com/Elgg/Elgg/issues/13228 - length limit for multybyte characters
 	 * @see https://github.com/Elgg/Elgg/issues/14577 - improved multibyte cutoff place
-	 *
-	 * @dataProvider friendlyTitleProvider
 	 */
+	#[DataProvider('friendlyTitleProvider')]
 	public function testFriendlyTitle($input, $expected) {
 		$actual = elgg_get_friendly_title($input);
 		$this->assertEquals($expected, $actual);
@@ -117,9 +118,8 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	/**
 	 * Test #5369 -- elgg_parse_urls()
 	 * @see https://github.com/Elgg/Elgg/issues/5369
-	 *
-	 * @dataProvider parseUrlsProvider
 	 */
+	#[DataProvider('parseUrlsProvider')]
 	public function testParseUrls($input, $expected) {
 		$this->assertEquals($expected, elgg_parse_urls($input));
 	}
@@ -162,9 +162,8 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	/**
 	 * Test #10398 -- elgg_parse_emails()
 	 * @see https://github.com/Elgg/Elgg/pull/10398
-	 *
-	 * @dataProvider elggParseEmailsProvider
 	 */
+	#[DataProvider('elggParseEmailsProvider')]
 	public function testElggParseEmails($input, $expected) {
 		$this->assertEquals($expected, elgg_parse_emails($input));
 	}
@@ -187,9 +186,8 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	 * Ensure additional select columns do not end up in entity attributes.
 	 *
 	 * @see https://github.com/Elgg/Elgg/issues/5538
-	 *
-	 * @dataProvider extraColumnsDontAppearInAttributesProvider
 	 */
+	#[DataProvider('extraColumnsDontAppearInAttributesProvider')]
 	public function testExtraColumnsDontAppearInAttributes($type) {
 		$seed_entity = false;
 		if ($type !== 'site') {

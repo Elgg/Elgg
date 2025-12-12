@@ -3,6 +3,7 @@
 namespace Elgg\Application;
 
 use Elgg\Exceptions\DomainException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 
@@ -78,9 +79,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(400, $response->getStatusCode());
 	}
 
-	/**
-	 * @dataProvider fileProvider
-	 */
+	#[DataProvider('fileProvider')]
 	public function testSend403OnUrlExpiration($filename) {
 
 		$test_file = $this->createFile($filename);
@@ -98,9 +97,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		unset($this->file);
 	}
 
-	/**
-	 * @dataProvider fileProvider
-	 */
+	#[DataProvider('fileProvider')]
 	public function testSends403OnFileModificationTimeMismatch($filename) {
 
 		$test_file = $this->createFile($filename);
@@ -129,9 +126,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		unset($this->file);
 	}
 
-	/**
-	 * @dataProvider fileProvider
-	 */
+	#[DataProvider('fileProvider')]
 	public function testResponseCodesOnSessionRestartWithCookieEnabledForFileUrls($filename) {
 
 		$test_file = $this->createFile($filename);
@@ -158,9 +153,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		unset($this->file);
 	}
 
-	/**
-	 * @dataProvider fileProvider
-	 */
+	#[DataProvider('fileProvider')]
 	public function testResponseHeadersMatchFileAttributesForInlineUrls($filename) {
 		$test_file = $this->createFile($filename);
 		$this->file = $test_file;
@@ -186,9 +179,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		unset($this->file);
 	}
 
-	/**
-	 * @dataProvider fileProvider
-	 */
+	#[DataProvider('fileProvider')]
 	public function testResponseHeadersMatchFileAttributesForAttachmentUrls($filename) {
 		$test_file = $this->createFile($filename);
 		$this->file = $test_file;
@@ -214,9 +205,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		unset($this->file);
 	}
 
-	/**
-	 * @dataProvider fileProvider
-	 */
+	#[DataProvider('fileProvider')]
 	public function testInvalidDisposition($filename) {
 		$test_file = $this->createFile($filename);
 		$this->file = $test_file;
@@ -231,9 +220,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		unset($this->file);
 	}
 
-	/**
-	 * @dataProvider fileProvider
-	 */
+	#[DataProvider('fileProvider')]
 	public function testSends304WithIfNoneMatchHeadersIncluded($filename) {
 		$test_file = $this->createFile($filename);
 		$this->file = $test_file;
@@ -251,9 +238,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		unset($this->file);
 	}
 
-	/**
-	 * @dataProvider fileProvider
-	 */
+	#[DataProvider('fileProvider')]
 	public function testSends304WithIfNoneMatchHeadersIncludedAndDeflationEnabled($filename) {
 		$test_file = $this->createFile($filename);
 		$this->file = $test_file;

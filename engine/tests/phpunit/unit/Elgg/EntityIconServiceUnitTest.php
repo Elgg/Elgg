@@ -5,6 +5,7 @@ namespace Elgg;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\UnexpectedValueException;
 use Elgg\Project\Paths;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
@@ -687,10 +688,8 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($service->hasIcon($this->entity, 'tiny'));
 		$this->assertFalse($service->hasIcon($this->entity, 'topbar'));
 	}
-
-	/**
-	 * @dataProvider iconDimensionsProvider
-	 */
+	
+	#[DataProvider('iconDimensionsProvider')]
 	public function testIconDimensionsAfterResize($sw, $sh, $size, $ew, $eh, $crop, $cw = null, $ch = null) {
 
 		$service = $this->createService();

@@ -3,6 +3,7 @@
 use Elgg\Exceptions\DomainException;
 use Elgg\Exceptions\Filesystem\IOException;
 use Elgg\Project\Paths;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ElggFileUnitTest extends \Elgg\UnitTestCase {
 
@@ -45,9 +46,7 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($mimetype, $this->file->getMimeType());
 	}
 
-	/**
-	 * @dataProvider providerSimpleTypeMap
-	 */
+	#[DataProvider('providerSimpleTypeMap')]
 	public function testCanParseSimpleType($mime_type, $simple_type) {
 		unset($this->file->simpletype);
 		$this->file->mimetype = $mime_type;
@@ -425,10 +424,8 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 
 		$file->delete();
 	}
-	
-	/**
-	 * @dataProvider pathTraversalProvider
-	 */
+
+	#[DataProvider('pathTraversalProvider')]
 	public function testPathTraversal($filename, $expected_filename, $expected_path) {
 		$file = new \ElggFile();
 		$file->owner_guid = elgg_get_site_entity()->guid;

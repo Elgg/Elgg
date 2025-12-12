@@ -5,12 +5,11 @@ namespace Elgg\Lib;
 use Elgg\Exceptions\RangeException;
 use Elgg\IntegrationTestCase;
 use Elgg\Router\Route;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class PageOwnerIntegrationTest extends IntegrationTestCase {
-
-	/**
-	 * @dataProvider setterProvider
-	 */
+	
+	#[DataProvider('setterProvider')]
 	public function testSetPageOwner($initial_guid, $new_guid, $expected) {
 		
 		_elgg_services()->pageOwner->setPageOwnerGuid($initial_guid);
@@ -27,9 +26,7 @@ class PageOwnerIntegrationTest extends IntegrationTestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider libSetSetterProvider
-	 */
+	#[DataProvider('libSetSetterProvider')]
 	public function testSetPageOwnerWithSetterLibFunction($initial_guid, $new_guid, $expected) {
 		
 		elgg_set_page_owner_guid($initial_guid);
@@ -52,10 +49,8 @@ class PageOwnerIntegrationTest extends IntegrationTestCase {
 		$this->expectException(RangeException::class);
 		_elgg_services()->pageOwner->setPageOwnerGuid(-1);
 	}
-	
-	/**
-	 * @dataProvider routeProvider
-	 */
+
+	#[DataProvider('routeProvider')]
 	public function testPageOwnerDetectedFromRoute($url_part, $match_on) {
 		self::createApplication(['isolate'=> true]);
 		

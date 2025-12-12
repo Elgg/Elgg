@@ -1,5 +1,7 @@
 <?php
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * Depends on elgg_normalize_url() in output.php
  */
@@ -207,9 +209,7 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEmpty(elgg_register_menu_item('foo', array('name' => 'foo', 'text' => 'bar')));
 	}
 	
-	/**
-	 * @dataProvider invalidMenuRegistrationOptions
-	 */
+	#[DataProvider('invalidMenuRegistrationOptions')]
 	public function testArgumentTypeValidationOnItemRegistrationWithFails($options) {
 		$this->expectException(\Elgg\Exceptions\InvalidArgumentException::class);
 		elgg_register_menu_item('foo', $options);

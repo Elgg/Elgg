@@ -6,6 +6,7 @@ use Elgg\UnitTestCase;
 use Elgg\Exceptions\Plugin\ComposerException;
 use Eloquent\Composer\Configuration\Element\Configuration;
 use Elgg\Exceptions\Plugin\IdMismatchException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ComposerUnitTest extends UnitTestCase {
 
@@ -94,10 +95,8 @@ class ComposerUnitTest extends UnitTestCase {
 			'elgg' => '<1.9',
 		], $composer->getConflicts());
 	}
-	
-	/**
-	 * @dataProvider validVersionProvider
-	 */
+
+	#[DataProvider('validVersionProvider')]
 	public function testCheckConstraintsValid($version_input, $version_constraint) {
 		$composer = $this->getComposer();
 		
@@ -111,10 +110,8 @@ class ComposerUnitTest extends UnitTestCase {
 			['2.0.0', '>1.0'],
 		];
 	}
-	
-	/**
-	 * @dataProvider invalidVersionProvider
-	 */
+
+	#[DataProvider('invalidVersionProvider')]
 	public function testCheckConstraintsInvalid($version_input, $version_constraint) {
 		$composer = $this->getComposer();
 		

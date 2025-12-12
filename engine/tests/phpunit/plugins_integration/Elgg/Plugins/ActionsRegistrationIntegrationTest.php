@@ -3,6 +3,7 @@
 namespace Elgg\Plugins;
 
 use Elgg\Actions\RegistrationIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ActionsRegistrationIntegrationTest extends RegistrationIntegrationTestCase {
 	
@@ -30,7 +31,7 @@ class ActionsRegistrationIntegrationTest extends RegistrationIntegrationTestCase
 			
 			$actions = _elgg_services()->actions->getAllActions();
 			foreach ($actions as $name => $params) {
-				$result[] = [$name, $params['access'], $plugin, $plugin->getID()];
+				$result[] = [$name, $params['access'], $plugin];
 			}
 		}
 		
@@ -41,10 +42,8 @@ class ActionsRegistrationIntegrationTest extends RegistrationIntegrationTestCase
 		
 		return $result;
 	}
-	
-	/**
-	 * @dataProvider actionsProvider
-	 */
+
+	#[DataProvider('actionsProvider')]
 	public function testCanRequestActionWithoutParameters($name, $access, ?\ElggPlugin $plugin = null) {
 		if (!isset($name)) {
 			$this->markTestSkipped('no plugin actions to test');
@@ -54,10 +53,8 @@ class ActionsRegistrationIntegrationTest extends RegistrationIntegrationTestCase
 		
 		parent::testCanRequestActionWithoutParameters($name, $access);
 	}
-	
-	/**
-	 * @dataProvider actionsProvider
-	 */
+
+	#[DataProvider('actionsProvider')]
 	public function testCanRequestActionWithoutParametersViaAjax($name, $access, ?\ElggPlugin $plugin = null) {
 		if (!isset($name)) {
 			$this->markTestSkipped('no plugin actions to test');

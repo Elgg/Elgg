@@ -3,6 +3,7 @@
 namespace Elgg\Http;
 
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -113,10 +114,8 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		
 		return false;
 	}
-	
-	/**
-	 * @dataProvider respondWithErrorProvider
-	 */
+
+	#[DataProvider('respondWithErrorProvider')]
 	public function testRespondWithErrorDefaultContentText($status_code, $elgg_echo_part) {
 		
 		ob_start();
@@ -159,10 +158,8 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertTrue($exception_found, 'No exception found in view vars of resource/error');
 	}
-	
-	/**
-	 * @dataProvider redirectCodeProvider
-	 */
+
+	#[DataProvider('redirectCodeProvider')]
 	public function testRespondWithRedirectCode(int $status_code, int $expected_code) {
 		$request = $this->prepareHttpRequest('action/foo', 'POST', [], 0, true);
 		_elgg_services()->request = $request;

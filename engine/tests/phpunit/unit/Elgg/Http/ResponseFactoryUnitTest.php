@@ -7,6 +7,7 @@ use Elgg\Config;
 use Elgg\EventsService;
 use Elgg\HandlersService;
 use Elgg\SystemMessagesService;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -338,9 +339,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($service->isAction());
 	}
 
-	/**
-	 * @dataProvider requestContextDataProvider
-	 */
+	#[DataProvider('requestContextDataProvider')]
 	public function testCanParseContext($path, $expected) {
 		$this->request = $this->createRequest($path);
 		$service = $this->createService();
@@ -360,9 +359,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider stringifyProvider
-	 */
+	#[DataProvider('stringifyProvider')]
 	public function testStringify($input, $expected_output) {
 		$this->createService();
 		

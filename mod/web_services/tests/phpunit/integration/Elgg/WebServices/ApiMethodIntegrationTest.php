@@ -6,6 +6,7 @@ use Elgg\Collections\CollectionItemInterface;
 use Elgg\Exceptions\DomainException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Plugins\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ApiMethodIntegrationTest extends IntegrationTestCase {
 
@@ -54,9 +55,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals('GET:foo', $api->getID());
 	}
 	
-	/**
-	 * @dataProvider setterArrayNameProvider
-	 */
+	#[DataProvider('setterArrayNameProvider')]
 	public function testArrayParams($name) {
 		$api = $this->getApiMethod();
 		
@@ -69,10 +68,8 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 			['params'],
 		];
 	}
-	
-	/**
-	 * @dataProvider setterStringNameProvider
-	 */
+
+	#[DataProvider('setterStringNameProvider')]
 	public function testStringParams($name) {
 		$api = $this->getApiMethod();
 		
@@ -86,10 +83,8 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 			['call_method'],
 		];
 	}
-	
-	/**
-	 * @dataProvider setterBooleanNameProvider
-	 */
+
+	#[DataProvider('setterBooleanNameProvider')]
 	public function testBooleanParams($name) {
 		$api = $this->getApiMethod();
 		
@@ -154,10 +149,8 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 		$this->expectException(DomainException::class);
 		$api->call_method = 'PUT';
 	}
-	
-	/**
-	 * @dataProvider supportedCallMethods
-	 */
+
+	#[DataProvider('supportedCallMethods')]
 	public function testSetCallMethodToSupportedValue($value) {
 		$api = $this->getApiMethod();
 		
@@ -173,10 +166,8 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 			['POST'],
 		];
 	}
-	
-	/**
-	 * @dataProvider typeCastParameterProvider
-	 */
+
+	#[DataProvider('typeCastParameterProvider')]
 	public function testTypeCastParameter($key, $value, $type, $expected) {
 		$api = $this->getApiMethod();
 		

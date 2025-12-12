@@ -3,6 +3,7 @@
 use Elgg\IntegrationTestCase;
 use Elgg\Menu\PreparedMenu;
 use Elgg\Menu\MenuSection;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ElggMenuBuilderIntegrationTest extends IntegrationTestCase {
 
@@ -75,10 +76,8 @@ class ElggMenuBuilderIntegrationTest extends IntegrationTestCase {
 		$this->assertInstanceOf(ElggMenuItem::class, $selected);
 		$this->assertEquals('b_menu_item', $selected->getID());
 	}
-	
-	/**
-	 * @dataProvider getMenuSortingProvider
-	 */
+
+	#[DataProvider('getMenuSortingProvider')]
 	public function testGetMenuSorting($sort_by, $expected) {
 		$builder = $this->getMenuBuilder();
 		
@@ -102,10 +101,8 @@ class ElggMenuBuilderIntegrationTest extends IntegrationTestCase {
 			['name', ['a_menu_item', 'b_menu_item', 'c_menu_item']],
 		];
 	}
-	
-	/**
-	 * @dataProvider filterByContextProvider
-	 */
+
+	#[DataProvider('filterByContextProvider')]
 	public function testFilterByContext($context, $expected) {
 		$builder = $this->getMenuBuilder();
 		

@@ -2,6 +2,8 @@
 
 namespace Elgg\Views;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 class AutoParagraphUnitTest extends \Elgg\UnitTestCase {
 
 	/**
@@ -31,9 +33,7 @@ class AutoParagraphUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($exp, $out, "DOMDocument's parsing/serialization roundtrip");
 	}
 
-	/**
-	 * @dataProvider provider
-	 */
+	#[DataProvider('provider')]
 	public function testProcess($test, $in, $exp) {
 		$exp = $this->flattenString($exp);
 		$out = $this->_autop->process($in);

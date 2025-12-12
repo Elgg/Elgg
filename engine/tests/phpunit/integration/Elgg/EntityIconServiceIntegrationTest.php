@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 class EntityIconServiceIntegrationTest extends IntegrationTestCase {
 	
 	public function up() {
@@ -9,10 +11,8 @@ class EntityIconServiceIntegrationTest extends IntegrationTestCase {
 			'isolate' => true,
 		]);
 	}
-	
-	/**
-	 * @dataProvider invalidCoordinatesProvider
-	 */
+
+	#[DataProvider('invalidCoordinatesProvider')]
 	public function testInvalidDetectCroppingCoordinates($input_name, $params) {
 		$request = $this->prepareHttpRequest('', 'POST', $params);
 		
@@ -36,10 +36,8 @@ class EntityIconServiceIntegrationTest extends IntegrationTestCase {
 			['foo', ['foo_x1' => '10', 'foo_x2' => '100', 'foo_y1' => '100', 'foo_y2' => '10']], // y2 < y1
 		];
 	}
-	
-	/**
-	 * @dataProvider detectCroppingCoordinatesDataProvider
-	 */
+
+	#[DataProvider('detectCroppingCoordinatesDataProvider')]
 	public function testDetectCroppingCoordinates($input_name, $params, $expected_value) {
 		$request = $this->prepareHttpRequest('', 'POST', $params);
 		

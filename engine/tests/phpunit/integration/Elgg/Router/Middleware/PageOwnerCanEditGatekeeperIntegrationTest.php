@@ -5,6 +5,7 @@ namespace Elgg\Router\Middleware;
 use Elgg\Exceptions\Http\EntityPermissionsException;
 use Elgg\Exceptions\Http\Gatekeeper\LoggedInGatekeeperException;
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class PageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase {
 
@@ -19,11 +20,9 @@ class PageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase {
 		
 		return $request;
 	}
-	
-	/**
-	 * @dataProvider getGatekeepers
-	 */
-	public function testUserNotLoggedIn($middleware) {
+
+	#[DataProvider('getGatekeepers')]
+	public function testUserNotLoggedIn($middleware, $content_type) {
 		$user = $this->createUser();
 		
 		elgg_register_route('add:object:foo', [
@@ -42,10 +41,8 @@ class PageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase {
 		$this->expectException(LoggedInGatekeeperException::class);
 		_elgg_services()->router->route($http_request);
 	}
-	
-	/**
-	 * @dataProvider getGatekeepers
-	 */
+
+	#[DataProvider('getGatekeepers')]
 	public function testPageOwnerCantEdit($middleware, $content_type) {
 		$owner = $this->createUser();
 		
@@ -71,9 +68,7 @@ class PageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase {
 		_elgg_services()->router->route($http_request);
 	}
 
-	/**
-	 * @dataProvider getGatekeepers
-	 */
+	#[DataProvider('getGatekeepers')]
 	public function testPageOwnerCanEdit($middleware, $content_type) {
 		
 		$owner = $this->createUser();

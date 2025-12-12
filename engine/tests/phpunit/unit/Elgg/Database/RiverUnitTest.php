@@ -10,6 +10,7 @@ use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\RiverWhereClause;
 use Elgg\Exceptions\DataFormatException;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class RiverUnitTest extends UnitTestCase {
 
@@ -167,11 +168,8 @@ class RiverUnitTest extends UnitTestCase {
 
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
-	
-	
-	/**
-	 * @dataProvider orderBys
-	 */
+
+	#[DataProvider('orderBys')]
 	public function testCanExecuteGetWithCorrectDefaultOrderBy($additional_options, $query_orders) {
 		$options = [
 			'limit' => false,

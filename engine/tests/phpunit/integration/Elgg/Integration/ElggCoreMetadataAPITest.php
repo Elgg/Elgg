@@ -7,6 +7,7 @@ use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\Database\Update;
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ElggCoreMetadataAPITest extends IntegrationTestCase {
 
@@ -70,9 +71,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		$this->object->delete();
 	}
 
-	/**
-	 * @dataProvider caseSensitivePairsProvider
-	 */
+	#[DataProvider('caseSensitivePairsProvider')]
 	public function testElggGetEntitiesFromMetadataCaseSensitive($comparison, $value, $case_sensitive, $count) {
 		$this->object->setSubtype($this->getRandomSubtype());
 		$this->object->metadata = 'CaseSensitive';
@@ -151,9 +150,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider booleanPairsProvider
-	 */
+	#[DataProvider('booleanPairsProvider')]
 	public function testElggGetEntitiesFromBooleanMetadata($value, $query, $type) {
 		$this->object->setSubtype($this->getRandomSubtype());
 		$this->object->metadata = $value;

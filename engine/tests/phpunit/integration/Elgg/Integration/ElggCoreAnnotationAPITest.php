@@ -3,6 +3,7 @@
 namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
@@ -77,9 +78,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 		$this->assertFalse(elgg_annotation_exists($guid, 'test_annotation'));
 	}
 
-	/**
-	 * @dataProvider booleanPairsProvider
-	 */
+	#[DataProvider('booleanPairsProvider')]
 	public function testElggGetEntitiesFromBooleanAnnotation($value, $query, $type) {
 
 		$object = $this->createObject();

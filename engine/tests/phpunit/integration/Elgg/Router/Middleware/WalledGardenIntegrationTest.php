@@ -5,6 +5,7 @@ namespace Elgg\Router\Middleware;
 use Elgg\Exceptions\Http\Gatekeeper\WalledGardenException;
 use Elgg\Http\Request;
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 
 class WalledGardenIntegrationTest extends IntegrationTestCase {
@@ -50,10 +51,8 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 		
 		return $ret;
 	}
-	
-	/**
-	 * @dataProvider publicPagesProvider
-	 */
+
+	#[DataProvider('publicPagesProvider')]
 	public function testCanDetectPublicPage($path, $expected) {
 		$instance = new WalledGarden();
 		

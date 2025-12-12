@@ -31,7 +31,7 @@ abstract class PluginsIntegrationTestCase extends IntegrationTestCase {
 		
 		$plugins = elgg_get_plugins();
 		foreach ($plugins as $plugin) {
-			$result[] = [$plugin, $plugin->getID()];
+			$result[] = [$plugin];
 		}
 		
 		return $result;

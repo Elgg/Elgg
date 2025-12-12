@@ -2,6 +2,8 @@
 
 namespace Elgg\Http;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 class DownloadResponseUnitTest extends ResponseUnitTestCase {
 	
 	public function getReponseClassName(): string {
@@ -76,10 +78,8 @@ class DownloadResponseUnitTest extends ResponseUnitTestCase {
 	/**
 	 * Overruled tests from parent because of changes to the DownloadResponse
 	 */
-	
-	/**
-	 * @dataProvider validForwardURLsProvider
-	 */
+
+	#[DataProvider('validForwardURLsProvider')]
 	public function testCanSetForwardURL($value) {
 		$test_class = $this->getReponseClassName();
 		$response = new $test_class();

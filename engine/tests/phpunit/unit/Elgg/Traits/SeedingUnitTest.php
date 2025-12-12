@@ -3,16 +3,15 @@
 namespace Elgg\Traits;
 
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class SeedingUnitTest extends UnitTestCase {
 	
 	use Seeding {
 		createObject as createSeededObject;
 	}
-	
-	/**
-	 * @dataProvider propertyProvider
-	 */
+
+	#[DataProvider('propertyProvider')]
 	public function testCreateObjectTitle($input) {
 		$object = $this->createSeededObject([
 			'title' => $input,
@@ -29,10 +28,8 @@ class SeedingUnitTest extends UnitTestCase {
 			$this->assertEquals($input, $object->title);
 		}
 	}
-	
-	/**
-	 * @dataProvider propertyProvider
-	 */
+
+	#[DataProvider('propertyProvider')]
 	public function testCreateObjectDescription($input) {
 		$object = $this->createSeededObject([
 			'description' => $input,
@@ -49,10 +46,8 @@ class SeedingUnitTest extends UnitTestCase {
 			$this->assertEquals($input, $object->description);
 		}
 	}
-	
-	/**
-	 * @dataProvider propertyProvider
-	 */
+
+	#[DataProvider('propertyProvider')]
 	public function testCreateObjectTags($input) {
 		$object = $this->createSeededObject([
 			'tags' => $input,

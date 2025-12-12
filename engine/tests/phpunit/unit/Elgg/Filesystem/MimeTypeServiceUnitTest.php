@@ -4,6 +4,7 @@ namespace Elgg\Filesystem;
 
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MimeTypeServiceUnitTest extends UnitTestCase {
 
@@ -18,10 +19,8 @@ class MimeTypeServiceUnitTest extends UnitTestCase {
 	public function up() {
 		$this->service = _elgg_services()->mimetype;
 	}
-	
-	/**
-	 * @dataProvider validFilenameProvider
-	 */
+
+	#[DataProvider('validFilenameProvider')]
 	public function testGetMimeTypeFromValidFile($filename, $expected) {
 		$this->assertEquals($expected, $this->service->getMimeType($filename));
 	}
@@ -64,10 +63,8 @@ class MimeTypeServiceUnitTest extends UnitTestCase {
 	public function testGetMimeTypeFromUnknownFileTypeWithCustomDefault() {
 		$this->markTestSkipped("Don't know how to generate a file which results in an unknow mimetype");
 	}
-	
-	/**
-	 * @dataProvider getSimpleTypeProvider
-	 */
+
+	#[DataProvider('getSimpleTypeProvider')]
 	public function testGetSimpleType($mimetype, $expected) {
 		$this->assertEquals($expected, $this->service->getSimpleType($mimetype));
 	}
@@ -99,10 +96,8 @@ class MimeTypeServiceUnitTest extends UnitTestCase {
 		
 		elgg_unregister_event_handler('simple_type', 'file', $handler);
 	}
-	
-	/**
-	 * @dataProvider validSimpleTypeFilenameProvider
-	 */
+
+	#[DataProvider('validSimpleTypeFilenameProvider')]
 	public function testGetSimpleTypeFromFile($filename, $expected) {
 		$this->assertEquals($expected, $this->service->getSimpleTypeFromFile($filename));
 	}

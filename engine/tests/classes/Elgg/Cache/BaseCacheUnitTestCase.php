@@ -4,6 +4,7 @@ namespace Elgg\Cache;
 
 use Elgg\Exceptions\ConfigurationException;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 abstract class BaseCacheUnitTestCase extends UnitTestCase {
 
@@ -57,9 +58,7 @@ abstract class BaseCacheUnitTestCase extends UnitTestCase {
 		return true;
 	}
 
-	/**
-	 * @dataProvider cacheableValuesProvider
-	 */
+	#[DataProvider('cacheableValuesProvider')]
 	public function testCanSaveAndLoad($value) {
 		$key = $this->makeKey();
 
@@ -102,9 +101,7 @@ abstract class BaseCacheUnitTestCase extends UnitTestCase {
 		$this->assertNull($this->cache->load($key));
 	}
 
-	/**
-	 * @dataProvider cacheableValuesProvider
-	 */
+	#[DataProvider('cacheableValuesProvider')]
 	public function testCanSaveAndLoadWithArrayAccess($value) {
 		$key = $this->makeKey();
 
@@ -120,9 +117,7 @@ abstract class BaseCacheUnitTestCase extends UnitTestCase {
 		$this->assertNull($this->cache->load($key));
 	}
 
-	/**
-	 * @dataProvider cacheableValuesProvider
-	 */
+	#[DataProvider('cacheableValuesProvider')]
 	public function testCanClearCache($value) {
 		$key = $this->makeKey();
 

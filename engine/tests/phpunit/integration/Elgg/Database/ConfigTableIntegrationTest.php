@@ -4,6 +4,7 @@ namespace Elgg\Database;
 
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ConfigTableIntegrationTest extends IntegrationTestCase {
 
@@ -19,9 +20,7 @@ class ConfigTableIntegrationTest extends IntegrationTestCase {
 		$this->service = _elgg_services()->configTable;
 	}
 
-	/**
-	 * @dataProvider setValueProvider
-	 */
+	#[DataProvider('setValueProvider')]
 	public function testSetGetRemoveValue($value) {
 		// set
 		$this->assertTrue($this->service->set('foo', $value));

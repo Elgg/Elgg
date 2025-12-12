@@ -97,7 +97,7 @@
     },
     "require-dev": {
         "elgg/sniffs": "dev-master",
-        "phpunit/phpunit": "~10.5",
+        "phpunit/phpunit": "~12.5",
         "phpdocumentor/reflection-docblock": "^5.2"
     },
     "repositories": [

@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Exceptions\RangeException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class EntityDirLocatorUnitTest extends \Elgg\UnitTestCase {
 
@@ -25,9 +26,7 @@ class EntityDirLocatorUnitTest extends \Elgg\UnitTestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider badGuidsProvider
-	 */
+	#[DataProvider('badGuidsProvider')]
 	public function testConstructorThrowsWithBadGuid($guid) {
 		$this->expectException(RangeException::class);
 		$this->expectExceptionMessage('"guid" must be greater than 0');

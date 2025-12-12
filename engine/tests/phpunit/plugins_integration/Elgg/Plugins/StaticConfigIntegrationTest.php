@@ -5,12 +5,11 @@ namespace Elgg\Plugins;
 use Elgg\PluginBootstrapInterface;
 use Elgg\PluginsIntegrationTestCase;
 use Elgg\Router\Route;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+	#[DataProvider('activePluginsProvider')]
 	public function testEntityRegistration(\ElggPlugin $plugin) {
 		
 		$entities = $plugin->getStaticConfig('entities');
@@ -36,10 +35,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			}
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testActionsRegistration(\ElggPlugin $plugin) {
 		$actions = $plugin->getStaticConfig('actions');
 		if (empty($actions)) {
@@ -73,10 +70,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			}
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testRouteRegistrations(\ElggPlugin $plugin) {
 		$routes = $plugin->getStaticConfig('routes');
 		if (empty($routes)) {
@@ -115,10 +110,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			elgg_unregister_route($name);
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testBootstrapRegistration(\ElggPlugin $plugin) {
 		$bootstrap = $plugin->getStaticConfig('bootstrap');
 		if (empty($bootstrap)) {
@@ -129,10 +122,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 		$this->assertTrue(class_exists($bootstrap));
 		$this->assertTrue(is_a($bootstrap, PluginBootstrapInterface::class, true));
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testHooksRegistration(\ElggPlugin $plugin) {
 		$hooks = $plugin->getStaticConfig('hooks');
 		if (empty($hooks)) {
@@ -164,10 +155,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			}
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testEventsRegistration(\ElggPlugin $plugin) {
 		$events = $plugin->getStaticConfig('events');
 		if (empty($events)) {
@@ -199,10 +188,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			}
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testViewsRegistration(\ElggPlugin $plugin) {
 		$views = $plugin->getStaticConfig('views');
 		if (empty($views)) {
@@ -221,10 +208,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			}
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testWidgetRegistration(\ElggPlugin $plugin) {
 		$widgets = $plugin->getStaticConfig('widgets');
 		if (empty($widgets)) {
@@ -241,10 +226,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			$this->assertIsString($actual_widget_id);
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testViewExtensionsRegistration(\ElggPlugin $plugin) {
 		$view_extensions = $plugin->getStaticConfig('view_extensions');
 		if (empty($view_extensions)) {
@@ -271,10 +254,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			}
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testGroupToolsRegistration(\ElggPlugin $plugin) {
 		$tools = $plugin->getStaticConfig('group_tools');
 		if (empty($tools)) {
@@ -292,10 +273,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			}
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testViewOptionsRegistration(\ElggPlugin $plugin) {
 		$view_options = $plugin->getStaticConfig('view_options');
 		if (empty($view_options)) {
@@ -317,10 +296,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			}
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testNotificationRegistration(\ElggPlugin $plugin) {
 		$notifications = $plugin->getStaticConfig('notifications');
 		if (empty($notifications)) {
@@ -349,10 +326,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			}
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testDefaultPluginSettingRegistration(\ElggPlugin $plugin) {
 		$settings = $plugin->getStaticConfig('settings');
 		if (empty($settings)) {
@@ -370,10 +345,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			}
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testDefaultPluginUserSettingRegistration(\ElggPlugin $plugin) {
 		$user_settings = $plugin->getStaticConfig('user_settings');
 		if (empty($user_settings)) {
@@ -391,10 +364,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			}
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testCliCommandsRegistration(\ElggPlugin $plugin) {
 		$commands = $plugin->getStaticConfig('cli_commands');
 		if (empty($commands)) {
@@ -408,10 +379,8 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 			$this->assertTrue(is_a($command, \Elgg\Cli\BaseCommand::class, true));
 		}
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testUpgradesRegistration(\ElggPlugin $plugin) {
 		$upgrades = $plugin->getStaticConfig('upgrades');
 		if (empty($upgrades)) {
@@ -427,4 +396,3 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 		}
 	}
 }
-

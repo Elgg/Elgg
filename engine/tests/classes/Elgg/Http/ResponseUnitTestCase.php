@@ -5,6 +5,7 @@ namespace Elgg\Http;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\RangeException;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 abstract class ResponseUnitTestCase extends UnitTestCase {
 
@@ -14,9 +15,7 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 
 	abstract public function testCanConstructWithArguments();
 
-	/**
-	 * @dataProvider validContentValuesProvider
-	 */
+	#[DataProvider('validContentValuesProvider')]
 	public function testCanSetContent($value) {
 		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
@@ -39,9 +38,7 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider invalidContentValuesProvider
-	 */
+	#[DataProvider('invalidContentValuesProvider')]
 	public function testThrowsExceptionForInvalidContent($value) {
 		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
@@ -64,9 +61,7 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider validStatusCodesProvider
-	 */
+	#[DataProvider('validStatusCodesProvider')]
 	public function testCanSetStatusCode($value) {
 		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
@@ -84,9 +79,7 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider invalidStatusCodesProvider
-	 */
+	#[DataProvider('invalidStatusCodesProvider')]
 	public function testThrowsExceptionForInvalidStatusCodes($value) {
 		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
@@ -106,10 +99,8 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 			[-1],
 		];
 	}
-	
-	/**
-	 * @dataProvider invalidStatusCodesTypesProvider
-	 */
+
+	#[DataProvider('invalidStatusCodesTypesProvider')]
 	public function testThrowsExceptionForInvalidStatusCodesTypes($value) {
 		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
@@ -127,10 +118,7 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 		];
 	}
 
-
-	/**
-	 * @dataProvider validForwardURLsProvider
-	 */
+	#[DataProvider('validForwardURLsProvider')]
 	public function testCanSetForwardURL($value) {
 		$test_class = $this->getReponseClassName();
 		$response = new $test_class();
@@ -158,9 +146,7 @@ abstract class ResponseUnitTestCase extends UnitTestCase {
 		$this->assertEquals(['Content-Type' => 'application/json'], $response->getHeaders());
 	}
 
-	/**
-	 * @dataProvider statusCodesProvider
-	 */
+	#[DataProvider('statusCodesProvider')]
 	public function testCanResolveStatusCodes($code, $status) {
 		$test_class = $this->getReponseClassName();
 		$response = new $test_class();

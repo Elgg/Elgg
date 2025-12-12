@@ -156,7 +156,8 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function testCanSendResponseUnbooted() {
-
+		$backup = Application::getInstance();
+		
 		Application::setInstance(null);
 
 		$builder = new OkResponse('hello');
@@ -167,7 +168,8 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals($output, $response->getContent());
-
+		
+		Application::setInstance($backup);
 	}
 
 	function testCanSendResponse() {

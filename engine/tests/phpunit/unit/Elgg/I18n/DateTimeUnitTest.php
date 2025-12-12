@@ -3,6 +3,7 @@
 namespace Elgg\I18n;
 
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class DateTimeUnitTest extends UnitTestCase {
 
@@ -19,10 +20,8 @@ class DateTimeUnitTest extends UnitTestCase {
 	public function down() {
 		date_default_timezone_set($this->timezone);
 	}
-	
-	/**
-	 * @dataProvider formatLocaleProvider
-	 */
+
+	#[DataProvider('formatLocaleProvider')]
 	public function testFormatLocale($time, $date_format, $language, $expected) {
 		$date = new DateTime($time);
 		

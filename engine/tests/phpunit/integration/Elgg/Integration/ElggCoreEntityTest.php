@@ -4,6 +4,7 @@ namespace Elgg\Integration;
 
 use Elgg\Database\EntityTable;
 use Elgg\Database\Select;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
@@ -566,10 +567,8 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$object->delete();
 		$this->assertEquals($old_ts, $container->last_action);
 	}
-	
-	/**
-	 * @dataProvider entitiesFromCacheProvider
-	 */
+
+	#[DataProvider('entitiesFromCacheProvider')]
 	public function testEntityGetReturnedFromCache($type, $subtype, $check_type, $check_subtype) {
 		$entity = $this->createOne($type, [
 			'subtype' => $subtype,
@@ -620,10 +619,8 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 			['user', 'foo', 'user', 'foo'],
 		];
 	}
-	
-	/**
-	 * @dataProvider entitiesNotTypesMatch
-	 */
+
+	#[DataProvider('entitiesNotTypesMatch')]
 	public function testEntityGetNotReturnedIfTypesMismatch($type, $subtype, $check_type, $check_subtype) {
 		$entity = $this->createOne($type, ['subtype' => $subtype]);
 		

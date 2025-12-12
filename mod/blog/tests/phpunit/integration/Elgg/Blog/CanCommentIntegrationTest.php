@@ -3,12 +3,11 @@
 namespace Elgg\Blog;
 
 use Elgg\Plugins\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class CanCommentIntegrationTest extends IntegrationTestCase {
-	
-	/**
-	 * @dataProvider blogCommentStatusProvider
-	 */
+
+	#[DataProvider('blogCommentStatusProvider')]
 	public function testCanComment($enable_comments, $status, $expected) {
 		$blog = $this->createObject([
 			'subtype' => 'blog',

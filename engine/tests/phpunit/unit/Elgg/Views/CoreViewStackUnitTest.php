@@ -4,6 +4,7 @@ namespace Elgg\Views;
 
 use Elgg\Project\Paths;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class CoreViewStackUnitTest extends UnitTestCase {
 
@@ -34,9 +35,7 @@ class CoreViewStackUnitTest extends UnitTestCase {
 		return $provides;
 	}
 
-	/**
-	 * @dataProvider viewsProvider
-	 */
+	#[DataProvider('viewsProvider')]
 	public function testViewStackRegistrations($view, $viewtype, $path, $is_simplecache_view) {
 
 		$this->assertTrue(is_file($path));

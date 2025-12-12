@@ -3,6 +3,7 @@
 namespace Elgg\Plugin;
 
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 
@@ -44,10 +45,8 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 	public function testBootstrapRegistration() {
 		$this->assertInstanceOf(\Elgg\StaticConfig\Bootstrap::class, $this->plugin->getBootstrap());
 	}
-	
-	/**
-	 * @dataProvider viewsRegistrationProvider
-	 */
+
+	#[DataProvider('viewsRegistrationProvider')]
 	public function testViewsRegistration(string $view_name, string $expected_view_output) {
 		$this->assertFalse(elgg_view_exists($view_name));
 		

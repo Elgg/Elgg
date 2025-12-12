@@ -3,6 +3,7 @@
 namespace Elgg\Search;
 
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class SearchServiceIntegrationTest extends IntegrationTestCase {
 
@@ -20,9 +21,8 @@ class SearchServiceIntegrationTest extends IntegrationTestCase {
 			'annotations' => ['haystack'],
 		];
 	}
-	/**
-	 * @dataProvider searchDataProvider
-	 */
+
+	#[DataProvider('searchDataProvider')]
 	public function testSearch($needle, $haystack, $tokenize, $partial, $count, $entity_type, $property) {
 		$entity = $this->createOne($entity_type);
 
