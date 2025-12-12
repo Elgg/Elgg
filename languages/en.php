@@ -985,13 +985,6 @@ See the full list of users here:
 	'admin:server:label:post_max_size' => 'POST maximum size',
 	'admin:server:label:upload_max_filesize' => 'Upload maximum size',
 	'admin:server:warning:post_max_too_small' => '(Note: post_max_size must be larger than this value to support uploads of this size)',
-	'admin:server:label:memcache' => 'Memcache',
-	'admin:server:memcache:inactive' => 'Memcache is not setup on this server or it has not yet been configured in Elgg config.
-For improved performance, it is recommended that you enable and configure memcache (or redis).',
-
-	'admin:server:label:redis' => 'Redis',
-	'admin:server:redis:inactive' => 'Redis is not setup on this server or it has not yet been configured in Elgg config.
-For improved performance, it is recommended that you enable and configure redis (or memcache).',
 
 	'admin:server:label:opcache' => 'OPcache',
 	'admin:server:opcache:inactive' => 'OPcache is not available on this server or it has not yet been enabled.

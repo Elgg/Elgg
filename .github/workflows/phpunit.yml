@@ -7,11 +7,6 @@ env:
   ELGG_DB_USER: root
   ELGG_DB_PASS: password
   ELGG_WWWROOT: http://localhost:8888/
-  ELGG_MEMCACHE_SERVER1_HOST: 127.0.0.1
-  ELGG_MEMCACHE_SERVER1_PORT: 11211
-  ELGG_MEMCACHE_NAMESPACE_PREFIX: elgg_
-  ELGG_REDIS_SERVER1_HOST: 127.0.0.1
-  ELGG_REDIS_SERVER1_PORT: 6379
 
 jobs:
   phpunit:
@@ -26,14 +21,6 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
         ports:
           - 3306:3306
-      memcached:
-        image: memcached:1.6
-        ports:
-          - 11211:11211
-      redis:
-        image: redis:6
-        ports:
-          - 6379:6379
           
     strategy:
       fail-fast: false
@@ -41,43 +28,20 @@ jobs:
         php-versions: ['8.3', '8.4', '8.5']
         experimental: [false]
         extra-title: ['']
-        memcache: [0]
         db-image: ['mysql:8.0']
-        redis: [0]
         include:
           - php-versions: '8.3'
             experimental: false
-            extra-title: '- Memcache'
-            memcache: 1
-            db-image: 'mysql:8.0'
-            redis: 0
-          - php-versions: '8.3'
-            experimental: false
-            extra-title: '- Redis'
-            memcache: 0
-            db-image: 'mysql:8.0'
-            redis: 1
-          - php-versions: '8.3'
-            experimental: false
             extra-title: ''
-            memcache: 0
             db-image: 'mysql:8.4'
-            redis: 0
           - php-versions: '8.3'
             experimental: false
             extra-title: ''
-            memcache: 0
             db-image: 'mariadb:10.6'
-            redis: 0
           - php-versions: '8.3'
             experimental: false
             extra-title: ''
-            memcache: 0
             db-image: 'mariadb:10.11'
-            redis: 0
-    env:
-      ELGG_MEMCACHE: ${{ matrix.memcache }}
-      ELGG_REDIS: ${{ matrix.redis }}
         
     steps:
       - name: Install PHP
@@ -85,7 +49,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: none
-          extensions: gd,pdo,xml,json,memcached,redis-5.3.7,mysqli,pdo_mysql,libxml,mbstring,intl
+          extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring,intl
           ini-values: max_execution_time=180,zend.enable_gc=0
         
       - name: Code checkout

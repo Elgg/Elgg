@@ -120,8 +120,7 @@ Elgg also caches information like the language mapping and class map.
 This can be disabled by setting ``$CONFIG->system_cache_enabled = false;``
 For best performance, make sure this value is set to ``true``.
 
-This is currently stored in files in your dataroot (although later
-versions of Elgg may use memcache). As with the simple cache it is
+This is currently stored in files in your dataroot. As with the simple cache it is
 flushed when a plugin is enabled, disabled or reordered, or when
 upgrade.php is executed.
 
@@ -163,55 +162,6 @@ If the static assets aren't being cached:
  * Enable Simplecache_, which turns select views into browser-cacheable assets
 
 __ https://addons.mozilla.org/en-us/firefox/addon/yslow/
-
-Memcached
----------
-
-Libmemcached was created by Brian Aker and was designed from day one to give the best performance available to users of Memcached. 
-
-.. seealso::
-
-	http://libmemcached.org/About.html and https://secure.php.net/manual/en/book.memcached.php
-
-Installation requirements:
-
-- php-memcached
-- libmemcached
-- memcached
-
-Configuration:
-
-Uncomment and populate the following sections in ``settings.php``
-
-.. code-block:: php
-
-    $CONFIG->memcache = true;
-    
-    $CONFIG->memcache_servers = array (
-        array (
-            'host' => 'server1',
-            'port' => 11211
-        ),
-        array (
-            'host' => 'server2',
-            'port' => 11211
-        )
-    );
-
-Optionaly if you run multiple Elgg installations but use ony one Memcache server, you may want 
-to add a namespace prefix. In order to do this, uncomment the following line
-
-.. code-block:: php
-
-    $CONFIG->memcache_namespace_prefix = '';
-
-Squid
------
-
-We have had good results by using `Squid`_ to cache images for us.
-
-.. _Squid: http://en.wikipedia.org/wiki/Squid_cache
-
 
 Bytecode caching
 ----------------

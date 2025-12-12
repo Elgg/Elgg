@@ -36,7 +36,6 @@ Under the hood:
  * DBAL
  * Phinx database migrations
  * Imagine for image manipulation
- * Persistent caching with Memcached and/or Redis
  * Error handling with Monolog
 
 Examples

@@ -132,55 +132,6 @@ $CONFIG->dbencoding = 'utf8mb4';
 //$CONFIG->db['read'][1]['dbport'] = "";
 
 /**
- * Memcache setup (optional)
- * This is where you may optionally set up memcache.
- *
- * Requirements:
- * 	1) One or more memcache servers (http://www.danga.com/memcached/)
- *  2) PHP memcache wrapper (http://php.net/manual/en/memcache.setup.php)
- *
- * You can set a namespace prefix if you run multiple Elgg instances
- * on the same Memcache server.
- *
- * Note: Multiple server support is only available on server 1.2.1
- * or higher with PECL library > 2.0.0
- */
-//$CONFIG->memcache = true;
-//
-//$CONFIG->memcache_servers = array (
-//	array(
-// 		'host' => 'server1',
-//		'port' => 11211,
-// 	),
-//	array(
-// 		'host' => 'server2',
-//		'port' => 11211,
-// 	),
-//);
-
-// namespace prefix (can only be used with memcached)
-// $CONFIG->memcache_namespace_prefix = '';
-
-/**
- * Redis setup (optional)
- * This is where you may optionally set up Redis.
- */
-//$CONFIG->redis = true;
-//
-//$CONFIG->redis_options = array (
-//	'database' => '', // The "database" option lets developers specific which specific database to use.
-//	'password' => '', // The "password" option is used for clusters which required authentication.
-//);
-//
-// Only one server can be configured
-//$CONFIG->redis_servers = array (
-//	array(
-//		'host' => 'server1',
-//		'port' => 6379,
-//	),
-//);
-
-/**
  * Better caching performance
  *
  * Configuring simplecache in the settings.php file improves caching performance.
