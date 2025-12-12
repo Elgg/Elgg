@@ -4,6 +4,7 @@ namespace Elgg\Plugins;
 
 use Elgg\Plugin\Composer;
 use Elgg\PluginsIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ComposerIntegrationTest extends PluginsIntegrationTestCase {
 	
@@ -18,10 +19,8 @@ class ComposerIntegrationTest extends PluginsIntegrationTestCase {
 	protected function getComposer(\ElggPlugin $plugin): Composer {
 		return new Composer($plugin);
 	}
-	
-	/**
-	 * @dataProvider activePluginsProvider
-	 */
+
+	#[DataProvider('activePluginsProvider')]
 	public function testAssertPluginId(\ElggPlugin $plugin) {
 		$composer = $this->getComposer($plugin);
 		

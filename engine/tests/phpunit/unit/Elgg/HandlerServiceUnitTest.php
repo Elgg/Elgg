@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 class HandlerServiceUnitTest extends UnitTestCase {
 	
 	/**
@@ -51,10 +53,8 @@ class HandlerServiceUnitTest extends UnitTestCase {
 		
 		$this->validateCallResult($result, true, 'event', \Elgg\Event::class);
 	}
-	
-	/**
-	 * @dataProvider callRequestProvider
-	 */
+
+	#[DataProvider('callRequestProvider')]
 	public function testCallRequest($object_type) {
 		$request = $this->prepareHttpRequest();
 		$result = $this->service->call([$this, 'callableRequest'], $object_type, [$request]);
@@ -89,10 +89,8 @@ class HandlerServiceUnitTest extends UnitTestCase {
 	public function testDescribeInstancedCallable() {
 		$this->assertStringContainsString('(Elgg\HandlerServiceUnitTest)->callableEvent', $this->service->describeCallable([$this, 'callableEvent'], ''));
 	}
-	
-	/**
-	 * @dataProvider describeCallableProvider
-	 */
+
+	#[DataProvider('describeCallableProvider')]
 	public function testDescribeCallable($callable, $fileroot, $expected) {
 		$this->assertStringContainsString($expected, $this->service->describeCallable($callable, $fileroot));
 	}

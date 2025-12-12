@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Exceptions\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ElggUserUnitTest extends \Elgg\UnitTestCase {
 
@@ -117,10 +118,8 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		$this->assertNotEmpty($user->language);
 		$this->assertIsString($user->language);
 	}
-	
-	/**
-	 * @dataProvider protectedValues
-	 */
+
+	#[DataProvider('protectedValues')]
 	public function testSetProtectedValuesThrowsException($name) {
 		$user = $this->createUser();
 		

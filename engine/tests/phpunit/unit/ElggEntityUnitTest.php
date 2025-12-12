@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Exceptions\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * This requires elgg_get_logged_in_user_guid() in session.php, the access
@@ -30,19 +31,15 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('no', $this->obj->deleted);
 	}
 
-	/**
-	 * @dataProvider protectedAttributeProvider
-	 */
+	#[DataProvider('protectedAttributeProvider')]
 	public function testMagicSettingAndGettingProtectedAttributeThrowsException($attribute) {
 		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessageMatches("/{$attribute}/");
 		$this->obj->$attribute = 'foo';
 		$this->assertNotEquals('foo', $this->obj->$attribute);
 	}
-	
-	/**
-	 * @dataProvider protectedAttributeProvider
-	 */
+
+	#[DataProvider('protectedAttributeProvider')]
 	public function testUnsettingProtectedAttributeThrowsException($attribute) {
 		$this->obj->setSubtype('foo'); // needed for subtype test
 		
@@ -64,10 +61,8 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('foo', $this->obj->subtype);
 		$this->assertEquals('foo', $this->obj->getSubtype());
 	}
-	
-	/**
-	 * @dataProvider integerAttributeProvider
-	 */
+
+	#[DataProvider('integerAttributeProvider')]
 	public function testSettingIntegerAttributes($attribute) {
 		$this->obj->$attribute = '77';
 		$this->assertSame(77, $this->obj->$attribute);
@@ -81,9 +76,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider unsettableAttributeProvider
-	 */
+	#[DataProvider('unsettableAttributeProvider')]
 	public function testSettingUnsettableAttributes($attribute) {
 		$this->obj->$attribute = 'foo';
 		$this->assertNotEquals('foo', $this->obj->$attribute);
@@ -157,9 +150,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($this->obj->getTimeUpdated(), $this->obj->time_updated);
 	}
 
-	/**
-	 * @dataProvider unsetSuccessfullProvider
-	 */
+	#[DataProvider('unsetSuccessfullProvider')]
 	public function testUnsetSuccessfullAttribute($attribute, $value) {
 		$this->obj->$attribute = $value;
 		$this->assertEquals($value, $this->obj->$attribute);
@@ -176,9 +167,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
  		];
 	}
 
-	/**
-	 * @dataProvider unsetUnsuccessfullProvider
-	 */
+	#[DataProvider('unsetUnsuccessfullProvider')]
 	public function testUnsetUnsuccessfullAttribute($attribute, $value) {
 		$current_value = $this->obj->$attribute;
 		$this->obj->$attribute = $value;
@@ -227,10 +216,8 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals($keys, $object_keys);
 	}
-	
-	/**
-	 * @dataProvider latLongProvider
-	 */
+
+	#[DataProvider('latLongProvider')]
 	public function testSetLatLong($lat, $long) {
 		$this->obj->setLatLong($lat, $long);
 		

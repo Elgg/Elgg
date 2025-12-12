@@ -3,12 +3,11 @@
 namespace Elgg\Http;
 
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class DownloadResponseIntegrationTest extends IntegrationTestCase {
 	
-	/**
-	 * @dataProvider getDownloadResponseProvider
-	 */
+	#[DataProvider('getDownloadResponseProvider')]
 	public function testGetDownloadResponse(string $content, string $filename = '', bool $inline = false, array $headers = []) {
 		$response = elgg_download_response($content, $filename, $inline, $headers);
 		

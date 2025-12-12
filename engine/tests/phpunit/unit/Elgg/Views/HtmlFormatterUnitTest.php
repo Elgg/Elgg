@@ -4,6 +4,7 @@ namespace Elgg\Views;
 
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class HtmlFormatterUnitTest extends UnitTestCase {
 
@@ -15,9 +16,7 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		$this->htmlFormatter = _elgg_services()->html_formatter;
 	}
 
-	/**
-	 * @dataProvider htmlBlockProvider
-	 */
+	#[DataProvider('htmlBlockProvider')]
 	public function testCanFormatHTMLBlock($before, $after) {
 
 		$actual = elgg_format_html($before);
@@ -133,9 +132,7 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		$event->unregister();
 	}
 
-	/**
-	 * @dataProvider providerElggFormatElement
-	 */
+	#[DataProvider('providerElggFormatElement')]
 	public function testElggFormatElement($expected, $vars) {
 		$tag_name = $vars['tag_name'];
 		$text = $vars['text'] ?? '';
@@ -196,9 +193,7 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		return $ret;
 	}
 
-	/**
-	 * @dataProvider providerElggGetFriendlyTime
-	 */
+	#[DataProvider('providerElggGetFriendlyTime')]
 	public function testElggGetFriendlyTime($num_seconds, $friendlytime) {
 		$current_time = time();
 		$this->assertSame(elgg_get_friendly_time($current_time + $num_seconds, $current_time), $friendlytime);
@@ -279,10 +274,8 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		
 		$this->assertEquals($expected, $this->htmlFormatter->normalizeUrls($text));
 	}
-	
-	/**
-	 * @dataProvider stripTagsProvider
-	 */
+
+	#[DataProvider('stripTagsProvider')]
 	public function testStripTags($input, $expected_output, $allowed_tags) {
 		$event = $this->registerTestingEvent('format', 'strip_tags', function (\Elgg\Event $event) {
 		});

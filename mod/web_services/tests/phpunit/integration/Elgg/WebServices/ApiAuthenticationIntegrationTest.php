@@ -97,6 +97,9 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 			// just catching
 		}
 		
+		// need to cleanup the exception handler set in the API middleware
+		restore_exception_handler();
+		
 		ob_get_clean();
 		
 		if ($t instanceof \Throwable) {

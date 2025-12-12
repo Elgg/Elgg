@@ -6,6 +6,7 @@ use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Helpers\CustomUser;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class AccountsServiceUnitTest extends UnitTestCase {
 
@@ -28,9 +29,7 @@ class AccountsServiceUnitTest extends UnitTestCase {
 		elgg()->config->minusername = $this->minusername_backup;
 	}
 
-	/**
-	 * @dataProvider invalidUsernameProvider
-	 */
+	#[DataProvider('invalidUsernameProvider')]
 	public function testInvalidUsernameFailsValidation($username) {
 		$this->expectException(RegistrationException::class);
 		elgg()->accounts->assertValidUsername($username);
@@ -55,10 +54,8 @@ class AccountsServiceUnitTest extends UnitTestCase {
 		$this->expectException(RegistrationException::class);
 		elgg()->accounts->assertValidEmail('username@');
 	}
-	
-	/**
-	 * @dataProvider validUsernameProvider
-	 */
+
+	#[DataProvider('validUsernameProvider')]
 	public function testValidUsername($username) {
 		elgg()->accounts->assertValidUsername($username);
 	}

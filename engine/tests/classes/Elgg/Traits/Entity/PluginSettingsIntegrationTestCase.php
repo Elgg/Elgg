@@ -3,6 +3,7 @@
 namespace Elgg\Traits\Entity;
 
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 abstract class PluginSettingsIntegrationTestCase extends IntegrationTestCase {
 	
@@ -31,10 +32,8 @@ abstract class PluginSettingsIntegrationTestCase extends IntegrationTestCase {
 	 * @return \ElggEntity
 	 */
 	abstract protected function getEntity(): \ElggEntity;
-	
-	/**
-	 * @dataProvider namespaceProvider
-	 */
+
+	#[DataProvider('namespaceProvider')]
 	public function testGetNamespacedPluginSettingName(string $plugin_id, string $setting_name) {
 		$result = $this->entity->getNamespacedPluginSettingName($plugin_id, $setting_name);
 		
@@ -50,10 +49,8 @@ abstract class PluginSettingsIntegrationTestCase extends IntegrationTestCase {
 			['static_config', 'bar'],
 		];
 	}
-	
-	/**
-	 * @dataProvider setPluginSettingProvider
-	 */
+
+	#[DataProvider('setPluginSettingProvider')]
 	public function testSetGetRemovePluginSettings(string $plugin_id, string $setting_name, $setting_value) {
 		$plugin_setting_name = $this->entity->getNamespacedPluginSettingName($plugin_id, $setting_name);
 		
@@ -86,19 +83,15 @@ abstract class PluginSettingsIntegrationTestCase extends IntegrationTestCase {
 			['test_plugin', 'multiple', ['a', 'b']],
 		];
 	}
-	
-	/**
-	 * @dataProvider invalidPluginSettingValueProvider
-	 */
+
+	#[DataProvider('invalidPluginSettingValueProvider')]
 	public function testSetInvalidPluginSettingValue($value) {
 		_elgg_services()->logger->disable();
 		
 		$this->assertFalse($this->entity->setPluginSetting('test_plugin', 'invalid_value', $value));
 	}
-	
-	/**
-	 * @dataProvider invalidPluginSettingValueProvider
-	 */
+
+	#[DataProvider('invalidPluginSettingValueProvider')]
 	public function testUseEventToConvertInvalidPluginSettingValue($invalid_value) {
 		$plugin_event = $this->registerTestingEvent('plugin_setting', $this->entity->getType(), function(\Elgg\Event $event) {
 			return serialize($event->getValue());

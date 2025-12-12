@@ -5,6 +5,7 @@ namespace Elgg\Router;
 use Elgg\IntegrationTestCase;
 use Elgg\Users\Accounts;
 use Elgg\Http\Request;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class RouteRegistrationServiceIntegrationTest extends IntegrationTestCase {
 
@@ -37,10 +38,8 @@ class RouteRegistrationServiceIntegrationTest extends IntegrationTestCase {
 		$this->route_service = _elgg_services()->routes;
 		$this->account_service = elgg()->accounts;
 	}
-	
-	/**
-	 * @dataProvider validUsernames
-	 */
+
+	#[DataProvider('validUsernames')]
 	public function testCanGenerateRouteForUsername($username) {
 		// make sure a user could register with the username
 		$this->account_service->assertValidUsername($username);

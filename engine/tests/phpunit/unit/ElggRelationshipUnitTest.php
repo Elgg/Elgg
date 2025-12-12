@@ -1,5 +1,7 @@
 <?php
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 
 	/**
@@ -27,10 +29,8 @@ class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 		
 		return $relationship->save() ? $relationship : false;
 	}
-	
-	/**
-	 * @dataProvider setterDataProvider
-	 */
+
+	#[DataProvider('setterDataProvider')]
 	public function testSettingAndGettingAttribute($name, $value, $expected) {
 		$rel = $this->getRelationshipMock();
 		
@@ -128,10 +128,8 @@ class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 			$this->assertEmpty($relationship->getOriginalAttributes());
 		}
 	}
-	
-	/**
-	 * @dataProvider originalAttributesProvider
-	 */
+
+	#[DataProvider('originalAttributesProvider')]
 	public function testOriginalAttributesOnChange($name, $value) {
 		$relationship = $this->createRelationship();
 		

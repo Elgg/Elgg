@@ -3,6 +3,7 @@
 namespace Elgg\Database;
 
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 	
@@ -34,10 +35,8 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 			[false],
 		];
 	}
-	
-	/**
-	 * @dataProvider removeAllEventToggleProvider
-	 */
+
+	#[DataProvider('removeAllEventToggleProvider')]
 	public function testRemoveAllRelationshipsByGUID(bool $trigger_events) {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
@@ -63,10 +62,8 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
 	}
-	
-	/**
-	 * @dataProvider removeAllEventToggleProvider
-	 */
+
+	#[DataProvider('removeAllEventToggleProvider')]
 	public function testRemoveAllRelationshipsByGUIDAndRelationship(bool $trigger_events) {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
@@ -92,10 +89,8 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
 	}
-	
-	/**
-	 * @dataProvider removeAllEventToggleProvider
-	 */
+
+	#[DataProvider('removeAllEventToggleProvider')]
 	public function testRemoveAllRelationshipsByGUIDAndInverse(bool $trigger_events) {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
@@ -121,10 +116,8 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
 	}
-	
-	/**
-	 * @dataProvider removeAllEventToggleProvider
-	 */
+
+	#[DataProvider('removeAllEventToggleProvider')]
 	public function testRemoveAllRelationshipsByGUIDAndRelationshipAndInverse(bool $trigger_events) {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
@@ -150,10 +143,8 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
 	}
-	
-	/**
-	 * @dataProvider removeAllEventToggleProvider
-	 */
+
+	#[DataProvider('removeAllEventToggleProvider')]
 	public function testRemoveAllRelationshipsByGUIDAndType(bool $trigger_events) {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
@@ -192,10 +183,8 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
 	}
-	
-	/**
-	 * @dataProvider removeAllEventToggleProvider
-	 */
+
+	#[DataProvider('removeAllEventToggleProvider')]
 	public function testRemoveAllRelationshipsByGUIDAndRelationshipAndType(bool $trigger_events) {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
@@ -234,10 +223,8 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship2', $object1->guid));
 		$this->assertNotFalse($this->service->check($object2->guid, 'testRelationship3', $object1->guid));
 	}
-	
-	/**
-	 * @dataProvider removeAllEventToggleProvider
-	 */
+
+	#[DataProvider('removeAllEventToggleProvider')]
 	public function testRemoveAllRelationshipsByGUIDAndRelationshipAndInverseAndType(bool $trigger_events) {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();

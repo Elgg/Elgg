@@ -7,6 +7,7 @@ use Elgg\Router\Middleware\GroupToolGatekeeper;
 use Elgg\Router\Middleware\MaintenanceGatekeeper;
 use Elgg\Router\Middleware\WalledGarden;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class RouteRegistrationServiceUnitTest extends UnitTestCase {
 	
@@ -223,10 +224,8 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 		
 		$this->assertStringContainsString('The route "view:foo:bar" has been deprecated.', $message_details['message']);
 	}
-	
-	/**
-	 * @dataProvider validUsernameProvider
-	 */
+
+	#[DataProvider('validUsernameProvider')]
 	public function testGenerateUrlWithValidUsername($username) {
 		$this->service->register('valid:username', [
 			'path' => '/valid/{username}',
@@ -256,10 +255,8 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 			['देवनागरी'], // https://github.com/Elgg/Elgg/issues/12518 and https://github.com/Elgg/Elgg/issues/13067
 		];
 	}
-	
-	/**
-	 * @dataProvider invalidUsernameProvider
-	 */
+
+	#[DataProvider('invalidUsernameProvider')]
 	public function testGenerateUrlWithInvalidUsername($username) {
 		$this->service->register('invalid:username', [
 			'path' => '/invalid/{username}',

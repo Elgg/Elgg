@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use PHPUnit\Framework\Attributes\Depends;
+
 class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function elgg_set_config($key, $val) {
@@ -157,11 +159,8 @@ class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 		return $value;
 	}
 
-	/**
-	 * @depends testCanRegisterType
-	 * @param \Elgg\WidgetsService $service
-	 */
-	public function testRegistrationParametersPreserveContext($service) {
+	#[Depends('testCanRegisterType')]
+	public function testRegistrationParametersPreserveContext(\Elgg\WidgetsService $service) {
 
 		$params = array(
 			//context, expected
@@ -182,11 +181,8 @@ class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 		return $service;
 	}
 
-	/**
-	 * @depends testRegistrationParametersPreserveContext
-	 * @param \Elgg\WidgetsService $service
-	 */
-	public function testRegistrationParametersPreserveMultiple($service) {
+	#[Depends('testRegistrationParametersPreserveContext')]
+	public function testRegistrationParametersPreserveMultiple(\Elgg\WidgetsService $service) {
 
 		$resps = array(
 			'widget_type' => false,
@@ -210,12 +206,9 @@ class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		return $service;
 	}
-
-	/**
-	 * @depends testRegistrationParametersPreserveMultiple
-	 * @param \Elgg\WidgetsService $service
-	 */
-	public function testRegistrationParametersPreserveNameDescription($service) {
+	
+	#[Depends('testRegistrationParametersPreserveMultiple')]
+	public function testRegistrationParametersPreserveNameDescription(\Elgg\WidgetsService $service) {
 
 		$resps = array(
 			'widget_type' => array('Widget name1', 'Widget description1'),
@@ -242,11 +235,8 @@ class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 		return $service;
 	}
 
-	/**
-	 * @depends testRegistrationParametersPreserveNameDescription
-	 * @param \Elgg\WidgetsService $service
-	 */
-	public function testCanUnregisterType($service) {
+	#[Depends('testRegistrationParametersPreserveNameDescription')]
+	public function testCanUnregisterType(\Elgg\WidgetsService $service) {
 
 		$service->unregisterType('widget_type');
 		$service->unregisterType('widget_type_con');

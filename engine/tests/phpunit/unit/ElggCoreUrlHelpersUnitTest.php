@@ -1,5 +1,7 @@
 <?php
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * @see \ElggCoreHelpersTest
  */
@@ -7,9 +9,8 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * Test if elgg_http_add_url_query_elements() preserves original url when no params are passed
-	 *
-	 * @dataProvider providerElggHttpAddURLQueryElementsPreserveURL
 	 */
+	#[DataProvider('providerElggHttpAddURLQueryElementsPreserveURL')]
 	public function testElggHttpAddURLQueryElementsPreserveURL($input, $params, $output) {
 		$this->assertEquals($output, elgg_http_add_url_query_elements($input, $params));
 	}
@@ -41,9 +42,8 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * Test elgg_http_add_url_query_elements() addition of parameters
-	 *
-	 * @dataProvider providerElggHttpAddURLQueryElementsAddElements
 	 */
+	#[DataProvider('providerElggHttpAddURLQueryElementsAddElements')]
 	public function testElggHttpAddURLQueryElementsAddElements($input, $params, $output) {
 		$this->assertEquals($output, elgg_http_add_url_query_elements($input, $params));
 	}
@@ -76,9 +76,8 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * Test elgg_http_add_url_query_elements() removal of parameters
-	 *
-	 * @dataProvider providerElggHttpAddURLQueryElementsRemoveElements
 	 */
+	#[DataProvider('providerElggHttpAddURLQueryElementsRemoveElements')]
 	public function testElggHttpAddURLQueryElementsRemoveElements($input, $params, $output) {
 		$this->assertEquals($output, elgg_http_add_url_query_elements($input, $params));
 		if ($params === array('foo' => null)) {
@@ -117,11 +116,8 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 			array('https://example.com/path?foo=123&bar=abc', array('foo2' => 'bar', 'foo' => null), 'https://example.com/path?bar=abc&foo2=bar'),
 		];
 	}
-
-
-	/**
-	 * @dataProvider providerHttpUrlIsIdentical
-	 */
+	
+	#[DataProvider('providerHttpUrlIsIdentical')]
 	public function testHttpUrlIsIdentical($input, $output) {
 		$this->assertTrue(elgg_http_url_is_identical($output, $input), "Failed to determine URLs as identical for: '$output' and '$input'");
 		$this->assertTrue(elgg_http_url_is_identical($input, $output), "Failed to determine URLs as identical for: '$input' and '$output'");
@@ -179,9 +175,7 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 		return $ret;
 	}
 
-	/**
-	 * @dataProvider providerHttpUrlIsNotIdentical
-	 */
+	#[DataProvider('providerHttpUrlIsNotIdentical')]
 	public function testHttpUrlIsNotIdentical($input, $output) {
 		$this->assertFalse(elgg_http_url_is_identical($output, $input), "Failed to determine URLs as NOT identical for: '$output' and '$input'");
 		$this->assertFalse(elgg_http_url_is_identical($input, $output), "Failed to determine URLs as NOT identical for: '$input' and '$output'");
@@ -209,9 +203,7 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 		return $ret;
 	}
 
-	/**
-	 * @dataProvider providerHttpUrlIsIdenticalIgnoreParamsHandling
-	 */
+	#[DataProvider('providerHttpUrlIsIdenticalIgnoreParamsHandling')]
 	public function testHttpUrlIsIdenticalIgnoreParamsHandling($url1, $url2, $ignore_params, $result) {
 		$this->assertSame(elgg_http_url_is_identical($url1, $url2, $ignore_params), $result, "Failed to determine URLs as "
 			. ($result ? 'identical' : 'different') . " for: '$url1', '$url2' and ignore params set to " . print_r($ignore_params, true));

@@ -11,6 +11,7 @@ use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -200,8 +201,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * See #9793
-	 * @dataProvider invalidActionNamesDataProvider
 	 */
+	#[DataProvider('invalidActionNamesDataProvider')]
 	public function testCanCheckActionNamesForSanity($name) {
 		$this->markTestSkipped();
 		_elgg_services()->actions->register($name, "{$this->actionsDir}/output.php", 'public');

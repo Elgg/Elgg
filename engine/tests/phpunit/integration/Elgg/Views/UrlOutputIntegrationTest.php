@@ -2,6 +2,8 @@
 
 namespace Elgg\Views;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 class UrlOutputIntegrationTest extends ViewRenderingIntegrationTestCase {
 
 	public static function getViewNames() {
@@ -30,10 +32,8 @@ class UrlOutputIntegrationTest extends ViewRenderingIntegrationTestCase {
 			'href' => $href,
 		]);
 	}
-	
-	/**
-	 * @dataProvider anchorTextProvider
-	 */
+
+	#[DataProvider('anchorTextProvider')]
 	public function testCanRenderAnchorWithText($text_input, $text_output) {
 		$href = 'http://example.com';
 

@@ -2,11 +2,11 @@
 
 namespace Elgg\Cli;
 
-class PluginsListCommandUnitTest extends ExecuteCommandUnitTestCase {
+use PHPUnit\Framework\Attributes\DataProvider;
 
-	/**
-	 * @dataProvider statusProvider
-	 */
+class PluginsListCommandUnitTest extends ExecuteCommandUnitTestCase {
+	
+	#[DataProvider('statusProvider')]
 	public function testCanExecuteCommand($status, $exit_code) {
 		$this->assertEquals($exit_code, $this->executeCommand(new PluginsListCommand(), [
 			'--status' => $status,

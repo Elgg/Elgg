@@ -3,6 +3,7 @@
 namespace Elgg\WebServices;
 
 use Elgg\Plugins\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ElggApiClientIntegrationTest extends IntegrationTestCase {
 
@@ -32,10 +33,8 @@ class ElggApiClientIntegrationTest extends IntegrationTestCase {
 		$this->assertInstanceOf(ElggApiClient::class, $client->setParams(['bar' => 'foo']));
 		$this->assertEquals(['bar' => 'foo'], $client->getParams());
 	}
-	
-	/**
-	 * @dataProvider validMethodProvider
-	 */
+
+	#[DataProvider('validMethodProvider')]
 	public function testGetSetMethod($method) {
 		// test set by constructor
 		$client = new ElggApiClient('http://localhost', [], $method);
@@ -54,18 +53,14 @@ class ElggApiClientIntegrationTest extends IntegrationTestCase {
 			['POST'],
 		];
 	}
-	
-	/**
-	 * @dataProvider invalidMethodProvider
-	 */
+
+	#[DataProvider('invalidMethodProvider')]
 	public function testConstructorWithInvalidMethod($method) {
 		$this->expectException(\APIException::class);
 		new ElggApiClient('http://localhost', [], $method);
 	}
-	
-	/**
-	 * @dataProvider invalidMethodProvider
-	 */
+
+	#[DataProvider('invalidMethodProvider')]
 	public function testSetMethodWithInvalidMethod($method) {
 		$client = new ElggApiClient('http://localhost');
 		

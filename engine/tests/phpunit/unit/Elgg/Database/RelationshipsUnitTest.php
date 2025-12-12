@@ -11,6 +11,7 @@ use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Exceptions\DataFormatException;
 use Elgg\Exceptions\DomainException;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class RelationshipsUnitTest extends UnitTestCase {
 
@@ -92,10 +93,8 @@ class RelationshipsUnitTest extends UnitTestCase {
 
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
-	
-	/**
-	 * @dataProvider orderBys
-	 */
+
+	#[DataProvider('orderBys')]
 	public function testCanExecuteGetWithCorrectDefaultOrderBy($additional_options, $query_orders) {
 		$select = Select::fromTable(RelationshipsTable::TABLE_NAME, 'er');
 		$select->select("DISTINCT {$select->getTableAlias()}.*");

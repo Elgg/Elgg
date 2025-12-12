@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 class ConfigIntegrationTest extends IntegrationTestCase {
 
 	/**
@@ -16,9 +18,7 @@ class ConfigIntegrationTest extends IntegrationTestCase {
 		$this->service = _elgg_services()->config;
 	}
 
-	/**
-	 * @dataProvider setValueProvider
-	 */
+	#[DataProvider('setValueProvider')]
 	public function testSaveGetRemoveValue($value) {
 		// set
 		$this->assertTrue($this->service->save('foo', $value));

@@ -5,6 +5,7 @@ namespace Elgg\Traits\Entity;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\RangeException;
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 abstract class IconsIntegrationTestCase extends IntegrationTestCase {
 	
@@ -17,10 +18,8 @@ abstract class IconsIntegrationTestCase extends IntegrationTestCase {
 	}
 	
 	abstract protected function getEntity(): \ElggEntity;
-	
-	/**
-	 * @dataProvider tooFewCoordinatesProvider
-	 */
+
+	#[DataProvider('tooFewCoordinatesProvider')]
 	public function testSaveIconCoordinatesWithTooFewCoordinates($x1, $x2, $y1, $y2, $icon_type) {
 		$coords = [
 			'x1' => $x1,
@@ -45,10 +44,8 @@ abstract class IconsIntegrationTestCase extends IntegrationTestCase {
 			[null, 100, 200, 200, 'avatar'],
 		];
 	}
-	
-	/**
-	 * @dataProvider invalidCoordinatesProvider
-	 */
+
+	#[DataProvider('invalidCoordinatesProvider')]
 	public function testSaveIconCoordinatesWithTooInvalidCoordinates($x1, $x2, $y1, $y2, $icon_type) {
 		$coords = [
 			'x1' => $x1,

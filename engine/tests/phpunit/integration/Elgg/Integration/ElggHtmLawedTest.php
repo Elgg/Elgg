@@ -4,6 +4,7 @@ namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
 use Elgg\Event;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ElggHtmLawedTest extends IntegrationTestCase {
 
@@ -165,11 +166,7 @@ class ElggHtmLawedTest extends IntegrationTestCase {
 		}
 	}
 
-	/**
-	 * Test other tags and attributes
-	 *
-	 * @dataProvider htmlawedFilterTagsProvider
-	 */
+	#[DataProvider('htmlawedFilterTagsProvider')]
 	public function testHtmlawedFilterTags($input, $expected) {
 		$handler = new \Elgg\Input\ValidateInputHandler();
 		$result = $handler(new Event(elgg(), '', '', $input));

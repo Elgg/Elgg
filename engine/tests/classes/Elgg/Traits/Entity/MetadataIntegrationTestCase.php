@@ -3,6 +3,7 @@
 namespace Elgg\Traits\Entity;
 
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 abstract class MetadataIntegrationTestCase extends IntegrationTestCase {
 
@@ -348,10 +349,8 @@ abstract class MetadataIntegrationTestCase extends IntegrationTestCase {
 			$this->assertEquals($metadata['foo3'], $entity->foo3);
 		}
 	}
-	
-	/**
-	 * @dataProvider emptyValues
-	 */
+
+	#[DataProvider('emptyValues')]
 	public function testSetMetadataEmpty($empty_value) {
 		foreach ($this->entities as $entity) {
 			$entity->setMetadata('foo', 'bar');

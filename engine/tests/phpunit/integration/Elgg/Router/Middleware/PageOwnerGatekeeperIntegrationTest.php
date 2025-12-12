@@ -4,6 +4,7 @@ namespace Elgg\Router\Middleware;
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class PageOwnerGatekeeperIntegrationTest extends IntegrationTestCase {
 	
@@ -18,11 +19,9 @@ class PageOwnerGatekeeperIntegrationTest extends IntegrationTestCase {
 		
 		return $request;
 	}
-	
-	/**
-	 * @dataProvider getGatekeepers
-	 */
-	public function testPageOwnerMissing($middleware) {
+
+	#[DataProvider('getGatekeepers')]
+	public function testPageOwnerMissing($middleware, $content_type) {
 		elgg_register_route('add:object:foo', [
 			'path' => '/foo/add/{username}',
 			'handler' => '\Elgg\Values::getTrue',
@@ -39,10 +38,8 @@ class PageOwnerGatekeeperIntegrationTest extends IntegrationTestCase {
 		$this->expectException(EntityNotFoundException::class);
 		_elgg_services()->router->route($http_request);
 	}
-	
-	/**
-	 * @dataProvider getGatekeepers
-	 */
+
+	#[DataProvider('getGatekeepers')]
 	public function testPageOwnerExists($middleware, $content_type) {
 		
 		$entity = $this->createOne($content_type);
@@ -63,10 +60,8 @@ class PageOwnerGatekeeperIntegrationTest extends IntegrationTestCase {
 		$response = _elgg_services()->router->route($http_request);
 		$this->assertTrue($response);
 	}
-	
-	/**
-	 * @dataProvider getInvalidGatekeepers
-	 */
+
+	#[DataProvider('getInvalidGatekeepers')]
 	public function testPageOwnerThrowsOnInvalidType($middleware, $content_type) {
 		$entity = $this->createOne($content_type);
 		

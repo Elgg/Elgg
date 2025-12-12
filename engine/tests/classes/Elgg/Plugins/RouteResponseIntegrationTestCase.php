@@ -8,6 +8,7 @@ use Elgg\Exceptions\Http\Gatekeeper\GroupGatekeeperException;
 use Elgg\Exceptions\Http\Gatekeeper\GroupToolGatekeeperException;
 use Elgg\Exceptions\Http\GatekeeperException;
 use Elgg\Router\Route;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 
@@ -320,9 +321,7 @@ abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 	}
 
-	/**
-	 * @dataProvider collectionRoutes
-	 */
+	#[DataProvider('collectionRoutes')]
 	public function testCollectionRoutesRespondOk($route, $params) {
 		if ($params instanceof \Closure) {
 			$params = $params($this);
@@ -339,9 +338,7 @@ abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 	}
 
-	/**
-	 * @dataProvider groupRoutesProtectedByToolOption
-	 */
+	#[DataProvider('groupRoutesProtectedByToolOption')]
 	public function testProtectedGroupRoutesThrowException($route, $tool) {
 		$group = $this->createGroup([
 			'access_id' => ACCESS_PUBLIC,
@@ -362,9 +359,7 @@ abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 		_elgg_services()->router->route($request);
 	}
 
-	/**
-	 * @dataProvider groupRoutesProtectedByToolOption
-	 */
+	#[DataProvider('groupRoutesProtectedByToolOption')]
 	public function testProtectedGroupRoutesRespondOk($route, $tool) {
 		$group = $this->createGroup([
 			'access_id' => ACCESS_PUBLIC,

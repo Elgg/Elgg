@@ -7,6 +7,7 @@ use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\Exceptions\DomainException;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ComparisonClauseUnitTest extends UnitTestCase {
 
@@ -20,9 +21,7 @@ class ComparisonClauseUnitTest extends UnitTestCase {
 		$this->qb->select('*');
 	}
 
-	/**
-	 * @dataProvider operators
-	 */
+	#[DataProvider('operators')]
 	public function testBuildEmptyClause($operator) {
 		$clause = new ComparisonClause('x', $operator);
 
@@ -428,9 +427,7 @@ class ComparisonClauseUnitTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 
-	/**
-	 * @dataProvider operatorComparison
-	 */
+	#[DataProvider('operatorComparison')]
 	public function testCanCompareUsingOtherOperators($input, $type, $normalized_input, $operator, $method, $boolean) {
 		$parts = [];
 		if (is_array($normalized_input)) {

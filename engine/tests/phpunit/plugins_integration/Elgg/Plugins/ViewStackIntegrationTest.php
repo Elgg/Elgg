@@ -4,6 +4,7 @@ namespace Elgg\Plugins;
 
 use Elgg\PluginsIntegrationTestCase;
 use Elgg\ViewsService;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ViewStackIntegrationTest extends PluginsIntegrationTestCase {
 	
@@ -66,10 +67,8 @@ class ViewStackIntegrationTest extends PluginsIntegrationTestCase {
 		
 		return $result;
 	}
-	
-	/**
-	 * @dataProvider viewsProvider
-	 */
+
+	#[DataProvider('viewsProvider')]
 	public function testViewStackRegistrations(?\ElggPlugin $plugin, $view, $viewtype, $path, $is_simplecache_view) {
 		if (!isset($plugin)) {
 			$this->markTestSkipped('no plugin views to test');

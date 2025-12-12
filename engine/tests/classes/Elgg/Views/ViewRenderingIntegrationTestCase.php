@@ -4,6 +4,7 @@ namespace Elgg\Views;
 
 use Elgg\Exceptions\HttpException;
 use Elgg\Plugins\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Abstract class for testing view output
@@ -65,9 +66,7 @@ abstract class ViewRenderingIntegrationTestCase extends IntegrationTestCase {
 		$this->assertXmlStringEqualsXmlString($expected, $actual, $message);
 	}
 
-	/**
-	 * @dataProvider viewListProvider
-	 */
+	#[DataProvider('viewListProvider')]
 	public function testCanRenderViewWithEmptyVars($view, $viewtype) {
 		try {
 			$output = $this->view($view, [], $viewtype);
@@ -77,9 +76,7 @@ abstract class ViewRenderingIntegrationTestCase extends IntegrationTestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider viewListProvider
-	 */
+	#[DataProvider('viewListProvider')]
 	public function testCanRenderViewWithVars($view, $viewtype) {
 		try {
 			$output = $this->view($view, $this->getDefaultViewVars(), $viewtype);

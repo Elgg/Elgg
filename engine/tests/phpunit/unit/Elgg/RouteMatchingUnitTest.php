@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Exceptions\Http\PageNotFoundException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 
 class RouteMatchingUnitTest extends \Elgg\UnitTestCase {
@@ -49,9 +50,7 @@ class RouteMatchingUnitTest extends \Elgg\UnitTestCase {
 		elgg_unregister_route('foo');
 	}
 
-	/**
-	 * @dataProvider patternProvider
-	 */
+	#[DataProvider('patternProvider')]
 	public function testPatterns($route, $match_path, $is_match) {
 
 		$calls = 0;

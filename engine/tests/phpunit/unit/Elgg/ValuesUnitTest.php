@@ -4,6 +4,7 @@ namespace Elgg;
 
 use DateTime as PHPDateTime;
 use Elgg\I18n\DateTime as ElggDateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ValuesUnitTest extends UnitTestCase {
 
@@ -13,10 +14,8 @@ class ValuesUnitTest extends UnitTestCase {
 		
 		parent::down();
 	}
-	
-	/**
-	 * @dataProvider timeProvider
-	 */
+
+	#[DataProvider('timeProvider')]
 	public function testCanNormalizeTime($time) {
 
 		$dt = Values::normalizeTime($time);
@@ -37,10 +36,8 @@ class ValuesUnitTest extends UnitTestCase {
 			[0],
 		];
 	}
-	
-	/**
-	 * @dataProvider emptyProvider
-	 */
+
+	#[DataProvider('emptyProvider')]
 	public function testIsEmpty($value, $expected_result) {
 		$this->assertEquals($expected_result, Values::isEmpty($value));
 	}
@@ -57,10 +54,8 @@ class ValuesUnitTest extends UnitTestCase {
 			[new \stdClass(), false],
 		];
 	}
-	
-	/**
-	 * @dataProvider timezoneProvider
-	 */
+
+	#[DataProvider('timezoneProvider')]
 	public function testSetTimeAfterNormalize($timezone) {
 		
 		$tz = date_default_timezone_get();
@@ -83,10 +78,8 @@ class ValuesUnitTest extends UnitTestCase {
 			['America/New_York'],
 		];
 	}
-	
-	/**
-	 * @dataProvider shortNumberProvider
-	 */
+
+	#[DataProvider('shortNumberProvider')]
 	public function testCanShortenNumber($number, $precision, $expected) {
 		$this->assertEquals($expected, Values::shortFormatOutput($number, $precision));
 	}
@@ -117,10 +110,8 @@ class ValuesUnitTest extends UnitTestCase {
 			[1120000000000000, 2, '1,120T']
 		];
 	}
-	
-	/**
-	 * @dataProvider numberFormatProvider
-	 */
+
+	#[DataProvider('numberFormatProvider')]
 	public function testNumberFormat($number, $decimals, $expected_en, $expected_nl) {
 		_elgg_services()->translator->setCurrentLanguage('en');
 		

@@ -5,6 +5,7 @@ namespace Elgg\I18n;
 use Elgg\Includer;
 use Elgg\Project\Paths;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class TranslationLoadingUnitTest extends UnitTestCase {
 
@@ -80,9 +81,7 @@ class TranslationLoadingUnitTest extends UnitTestCase {
 		return $provides;
 	}
 
-	/**
-	 * @dataProvider languageProvider
-	 */
+	#[DataProvider('languageProvider')]
 	public function testCanLoadTranslations($language) {
 		_elgg_services()->translator->setCurrentLanguage($language);
 
@@ -104,9 +103,8 @@ class TranslationLoadingUnitTest extends UnitTestCase {
 	/**
 	 * Elgg uses Transifex, which sometimes produces language files with syntax errors
 	 * We will try to catch those
-	 *
-	 * @dataProvider languageProvider
 	 */
+	#[DataProvider('languageProvider')]
 	public function testCanCalculateLanguageCompleteness($language) {
 		_elgg_services()->translator->setCurrentLanguage($language);
 
@@ -142,9 +140,8 @@ class TranslationLoadingUnitTest extends UnitTestCase {
 	/**
 	 * Elgg uses Transifex, which sometimes produces language files with syntax errors
 	 * We will try to catch those
-	 *
-	 * @dataProvider coreLanguageProvider
 	 */
+	#[DataProvider('coreLanguageProvider')]
 	public function testCanEncodeCoreTranslations($language) {
 		$translations = Includer::includeFile(Paths::elgg() . "languages/{$language}.php");
 		$this->assertIsArray($translations);
@@ -160,9 +157,8 @@ class TranslationLoadingUnitTest extends UnitTestCase {
 	/**
 	 * Elgg uses Transifex, which sometimes produces language files with syntax errors
 	 * We will try to catch those
-	 *
-	 * @dataProvider installationLanguageProvider
 	 */
+	#[DataProvider('installationLanguageProvider')]
 	public function testCanEncodeInstallationTranslations($language) {
 		$translations = Includer::includeFile(Paths::elgg() . "install/languages/{$language}.php");
 		$this->assertIsArray($translations);

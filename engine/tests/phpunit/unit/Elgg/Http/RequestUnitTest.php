@@ -2,6 +2,8 @@
 
 namespace Elgg\Http;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 class RequestUnitTest extends \Elgg\UnitTestCase {
 
 	public function down() {
@@ -68,9 +70,7 @@ class RequestUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('b', $request->getParam('bar'));
 	}
 
-	/**
-	 * @dataProvider trustedProxySettingsProvider
-	 */
+	#[DataProvider('trustedProxySettingsProvider')]
 	public function testTrustedProxySettings($proxy_ips, $proxy_headers) {
 		_elgg_services()->config->http_request_trusted_proxy_ips = $proxy_ips;
 		_elgg_services()->config->http_request_trusted_proxy_headers = $proxy_headers;

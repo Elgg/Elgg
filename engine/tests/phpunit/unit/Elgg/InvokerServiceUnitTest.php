@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Exceptions\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class InvokerServiceUnitTest extends UnitTestCase {
 	
@@ -13,10 +14,8 @@ class InvokerServiceUnitTest extends UnitTestCase {
 		$this->invoker = _elgg_services()->invoker;
 		$this->session_manager = _elgg_services()->session_manager;
 	}
-	
-	/**
-	 * @dataProvider callFlagProvider
-	 */
+
+	#[DataProvider('callFlagProvider')]
 	public function testCallFlags($flag1, $flag2, $getter_function, $setter_function, $default_value) {
 		// test default value
 		$this->assertEquals($default_value, $this->session_manager->$getter_function());
@@ -55,10 +54,8 @@ class InvokerServiceUnitTest extends UnitTestCase {
 		$this->assertTrue($test3);
 		$this->assertEquals($default_value, $this->session_manager->$getter_function());
 	}
-	
-	/**
-	 * @dataProvider callFlagProvider
-	 */
+
+	#[DataProvider('callFlagProvider')]
 	public function testCallFlagsWithExceptions($flag1, $flag2, $getter_function, $setter_function, $default_value) {
 		// test default value
 		$this->assertEquals($default_value, $this->session_manager->$getter_function());

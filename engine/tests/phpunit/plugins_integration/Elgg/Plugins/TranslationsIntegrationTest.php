@@ -5,6 +5,7 @@ namespace Elgg\Plugins;
 use Elgg\I18n\Translator;
 use Elgg\Includer;
 use Elgg\PluginsIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class TranslationsIntegrationTest extends PluginsIntegrationTestCase {
 	
@@ -50,7 +51,7 @@ class TranslationsIntegrationTest extends PluginsIntegrationTestCase {
 				
 				$plugin_language_code = $file_info->getBasename('.php');
 				if (in_array($plugin_language_code, $codes)) {
-					$result[] = [$plugin, $plugin_language_code, $plugin->getID()];
+					$result[] = [$plugin, $plugin_language_code];
 				}
 			}
 		}
@@ -62,10 +63,8 @@ class TranslationsIntegrationTest extends PluginsIntegrationTestCase {
 		
 		return $result;
 	}
-	
-	/**
-	 * @dataProvider languageProvider
-	 */
+
+	#[DataProvider('languageProvider')]
 	public function testCanLoadTranslations(?\ElggPlugin $plugin, ?string $language) {
 		if (!isset($plugin)) {
 			$this->markTestSkipped('no plugin translations to test');
@@ -91,9 +90,8 @@ class TranslationsIntegrationTest extends PluginsIntegrationTestCase {
 	/**
 	 * Elgg uses Transifex, which sometimes produces language files with syntax errors
 	 * We will try to catch those
-	 *
-	 * @dataProvider languageProvider
 	 */
+	#[DataProvider('languageProvider')]
 	public function testCanCalculateLanguageCompleteness(?\ElggPlugin $plugin, ?string $language) {
 		if (!isset($plugin)) {
 			$this->markTestSkipped('no plugin translations to test');
@@ -133,9 +131,8 @@ class TranslationsIntegrationTest extends PluginsIntegrationTestCase {
 	/**
 	 * Elgg uses Transifex, which sometimes produces language files with syntax errors
 	 * We will try to catch those
-	 *
-	 * @dataProvider languageProvider
 	 */
+	#[DataProvider('languageProvider')]
 	public function testCanEncodeTranslations(?\ElggPlugin $plugin, ?string $language) {
 		if (!isset($plugin)) {
 			$this->markTestSkipped('no plugin translations to test');

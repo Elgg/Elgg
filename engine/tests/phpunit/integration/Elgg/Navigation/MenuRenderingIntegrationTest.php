@@ -3,6 +3,7 @@
 namespace Elgg\Navigation;
 
 use Elgg\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * The purpose of these tests is to catch validation problems in menu events
@@ -30,9 +31,7 @@ class MenuRenderingIntegrationTest extends IntegrationTestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider entityMenuNamesProvider
-	 */
+	#[DataProvider('entityMenuNamesProvider')]
 	public function testEntityMenus($menu) {
 		$menu_item = \ElggMenuItem::factory([
 			'name' => 'foo',
@@ -81,9 +80,7 @@ class MenuRenderingIntegrationTest extends IntegrationTestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider layoutMenuNamesProvider
-	 */
+	#[DataProvider('layoutMenuNamesProvider')]
 	public function testLayoutMenu($menu) {
 
 		$menu_item = \ElggMenuItem::factory([

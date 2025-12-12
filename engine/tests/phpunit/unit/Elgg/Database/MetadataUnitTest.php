@@ -11,6 +11,7 @@ use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Exceptions\DataFormatException;
 use Elgg\Exceptions\DomainException;
 use Elgg\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MetadataUnitTest extends UnitTestCase {
 
@@ -89,9 +90,7 @@ class MetadataUnitTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @dataProvider orderBys
-	 */
+	#[DataProvider('orderBys')]
 	public function testCanExecuteGetWithCorrectDefaultOrderBy($additional_options, $query_orders) {
 		$select = Select::fromTable(MetadataTable::TABLE_NAME, MetadataTable::DEFAULT_JOIN_ALIAS);
 		$select->select("DISTINCT {$select->getTableAlias()}.*");

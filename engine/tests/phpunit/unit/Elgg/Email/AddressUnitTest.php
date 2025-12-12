@@ -3,6 +3,7 @@
 namespace Elgg\Email;
 
 use Elgg\Exceptions\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class AddressUnitTest extends \Elgg\UnitTestCase {
 
@@ -168,19 +169,15 @@ class AddressUnitTest extends \Elgg\UnitTestCase {
 		$this->expectException(InvalidArgumentException::class);
 		Address::getFormattedEmailAddress('example@elgg.org', []);
 	}
-	
-	/**
-	 * @dataProvider nameHtmlDecodingProvider
-	 */
+
+	#[DataProvider('nameHtmlDecodingProvider')]
 	public function testConstructorNameHtmlDecoding($input_name, $expected_output) {
 		$address = new Address('john.doe@example.com', $input_name);
 		
 		$this->assertEquals($expected_output, $address->getName());
 	}
-	
-	/**
-	 * @dataProvider nameHtmlDecodingProvider
-	 */
+
+	#[DataProvider('nameHtmlDecodingProvider')]
 	public function testSetNameHtmlDecoding($input_name, $expected_output) {
 		$address = new Address('john.doe@example.com');
 		$address->setName($input_name);
