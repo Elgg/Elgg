@@ -23,17 +23,6 @@
         <env name="ELGG_DB_PREFIX" value=""/>
         <env name="ELGG_DB_ENCODING" value="utf8mb4"/>
 
-        <env name="ELGG_MEMCACHE" value="1"/>
-        <env name="ELGG_MEMCACHE_SERVER1_HOST" value="127.0.0.1"/>
-        <env name="ELGG_MEMCACHE_SERVER1_PORT" value="11211"/>
-        <env name="ELGG_MEMCACHE_SERVER2_HOST" value=""/>
-        <env name="ELGG_MEMCACHE_SERVER2_PORT" value=""/>
-        <env name="ELGG_MEMCACHE_NAMESPACE_PREFIX" value="elgg_"/>
-
-        <env name="ELGG_REDIS" value="1"/>
-        <env name="ELGG_REDIS_SERVER1_HOST" value="127.0.0.1"/>
-        <env name="ELGG_REDIS_SERVER1_PORT" value="6379"/>
-
         <env name="ELGG_WWWROOT" value="http://localhost/"/>
         
         <env name="ELGG_SEEDER_LOCAL_IMAGE_FOLDER" value=""/>

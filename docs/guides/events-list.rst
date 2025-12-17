@@ -21,8 +21,7 @@ System events
     Return false to prevent activation of the plugin.
     
 **cache:clear, system** |sequence|
-    Clear internal and external caches, by default including system_cache, simplecache, and memcache. One might use it to 
-    reset others such as APC, OPCache, or WinCache.
+    Clear internal and external caches.
 
 **cache:generate, <view>** |results|
 	Filters the view output for a ``/cache`` URL when simplecache is disabled. Note this will be fired

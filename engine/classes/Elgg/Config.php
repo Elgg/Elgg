@@ -72,9 +72,6 @@ use Elgg\Traits\Loggable;
  * @property bool          $language_detect_from_browser            Control if language can be detected from browser
  * @property int           $lastcache								The timestamp the cache was last invalidated
  * @property string        $localcacheroot            				Path of local cache storage with trailing "/"
- * @property bool          $memcache
- * @property string        $memcache_namespace_prefix
- * @property array         $memcache_servers
  * @property string        $mentions_display_format                 How should a mention be displayed
  * @property int           $min_password_length                     The minimal length of a password
  * @property int           $min_password_lower                      The minimal number of lower case characters in a password
@@ -90,9 +87,6 @@ use Elgg\Traits\Loggable;
  * @property string        $profiling_minimum_percentage
  * @property bool          $profiling_sql
  * @property array         $proxy                                   Contains proxy related settings
- * @property bool          $redis
- * @property array         $redis_options
- * @property array         $redis_servers
  * @property bool          $remove_branding 						Is Elgg branding disabled
  * @property int           $remove_unvalidated_users_days			The number of days after which unvalidated users will be removed
  * @property bool          $require_admin_validation

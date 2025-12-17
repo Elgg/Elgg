@@ -26,6 +26,17 @@ Default config changes
 
 * The trash is now enabled by default
 * The config option ``css_compiler_options`` has been removed
+* The config option ``memcache`` has been removed
+* The config option ``memcache_namespace_prefix`` has been removed
+* The config option ``memcache_servers`` has been removed
+* The config option ``redis`` has been removed
+* The config option ``redis_options`` has been removed
+* The config option ``redis_servers`` has been removed
+
+Redis & Memcached
+~~~~~~~~~~~~~~~~~
+
+Built-in support for caching with Redis and Memcached features have been removed.
 
 Cron
 ~~~~

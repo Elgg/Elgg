@@ -263,10 +263,6 @@ Now we can install our second git project, which we can use to contribute code b
     crontab -l
 
 
-    # start memcached
-    memcached -d start
-
-
     # backup the database
     cd /home/vagrant/Code/elgg-starter/
     mkdir backups
@@ -275,4 +271,3 @@ Now we can install our second git project, which we can use to contribute code b
 
     # restore the database
     mysql -u root -psecret elgg-starter < backups/elgg-starter.sql
-

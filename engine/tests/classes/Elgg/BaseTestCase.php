@@ -45,23 +45,6 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			'dbport' => getenv('ELGG_DB_PORT') ?: 3306,
 			'dbencoding' => getenv('ELGG_DB_ENCODING') ?: 'utf8mb4',
 
-			'memcache' => (bool) getenv('ELGG_MEMCACHE'),
-			'memcache_servers' => [
-				[
-					'host' => getenv('ELGG_MEMCACHE_SERVER1_HOST'),
-					'port' => (int) getenv('ELGG_MEMCACHE_SERVER1_PORT'),
-				],
-			],
-			'memcache_namespace_prefix' => getenv('ELGG_MEMCACHE_NAMESPACE_PREFIX') ?: 'elgg_mc_prefix_',
-
-			'redis' => (bool) getenv('ELGG_REDIS'),
-			'redis_servers' => [
-				[
-					'host' => getenv('ELGG_REDIS_SERVER1_HOST'),
-					'port' => (int) getenv('ELGG_REDIS_SERVER1_PORT'),
-				],
-			],
-
 			// These are fixed, because tests rely on specific location of the dataroot for source files
 			'wwwroot' => getenv('ELGG_WWWROOT') ?: 'http://localhost/',
 			'dataroot' => Paths::elgg() . 'engine/tests/test_files/dataroot/',
@@ -186,19 +169,6 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	 * {@inheritdoc}
 	 */
 	public static function tearDownAfterClass(): void {
-		// performing some additional cleanup as we can't rely on php garbage collection
-		foreach (CacheManager::getInstances() as $instance) {
-			if ($instance instanceof \Phpfastcache\Drivers\Memcached\Driver) {
-				$memcached_software = self::getInaccessableProperty($instance, 'instance');
-				$memcached_software->flush();
-				$memcached_software->quit();
-			} elseif ($instance instanceof \Phpfastcache\Drivers\Redis\Driver) {
-				$redis_software = self::getInaccessableProperty($instance, 'instance');
-				$redis_software->flushAll();
-				$redis_software->close();
-			}
-		}
-		
 		CacheManager::clearInstances();
 		
 		parent::tearDownAfterClass();
