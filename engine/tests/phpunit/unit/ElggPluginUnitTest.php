@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Application;
+use Elgg\Application\ShutdownHandler;
 use Elgg\Exceptions\ConfigurationException;
 use Elgg\Exceptions\InvalidArgumentException;
 
@@ -125,7 +126,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 		foreach ($methods as $method) {
 			$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
-			$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
+			$this->assertEquals(1, $plugin->$prop, "Method {$method} was called {$plugin->$prop} instead of expected 1 times");
 		}
 	}
 
@@ -171,7 +172,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 		foreach ($methods as $method) {
 			$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
-			$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
+			$this->assertEquals(1, $plugin->$prop, "Method {$method} was called {$plugin->$prop} instead of expected 1 times");
 		}
 	}
 
@@ -228,7 +229,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 			foreach ($methods as $method) {
 				$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
-				$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
+				$this->assertEquals(1, $plugin->$prop, "Method {$method} was called {$plugin->$prop} instead of expected 1 times");
 			}
 
 			$assertions++;
@@ -251,8 +252,23 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testUsesBootstrapOnShutdown() {
-		// @todo Test that bootstrap handlers are called during the shutdown event
-		$this->markTestIncomplete();
+		$app = $this->createApplication();
+
+		elgg_set_entity_class('object', 'plugin', \ElggPlugin::class);
+
+		$plugin = \ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
+		$app->internal_services->plugins->addTestingPlugin($plugin);
+
+		$app->bootCore();
+
+		$shutdown = new ShutdownHandler($app);
+		$shutdown();
+
+		$methods = ['shutdown'];
+		foreach ($methods as $method) {
+			$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
+			$this->assertEquals(1, $plugin->$prop, "Method {$method} was called {$plugin->$prop} instead of expected 1 times");
+		}
 	}
 	
 	public function testGetVersion() {

@@ -273,11 +273,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse(_elgg_services()->csrf->isValidToken($token, $timestamp));
 	}
 
-	public function testActionGatekeeperForLoginAction() {
-		// test action/login token validation
-		$this->markTestIncomplete();
-	}
-
 	public function testCanExecute() {
 
 		$request = $this->prepareHttpRequest('action/output3', 'POST', [], false);
