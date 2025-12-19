@@ -1038,18 +1038,11 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		// compensate for fact that ResponseFactory::redirect closes a buffer it didn't open
 		ob_start();
 		
-		/**
-		 * @todo: decide what the output should be
-		 * Do we use the buffer output when responding with error to Ajax2?
-		 * See #9798
-		 */
 		$output = json_encode([
 			'error' => 'hello',
 		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
-
-		$this->markTestIncomplete();
 	}
 
 	public function testCanRespondToAjaxViewRequestForARegisteredFormView() {

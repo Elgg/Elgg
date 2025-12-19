@@ -10,8 +10,6 @@ class UpgradeCommandIntegrationTest extends ExecuteCommandIntegrationTestCase {
 		if (_elgg_services()->mutex->isLocked('upgrade')) {
 			_elgg_services()->mutex->unlock('upgrade');
 		}
-		
-		parent::down();
 	}
 
 	public function testExecute() {

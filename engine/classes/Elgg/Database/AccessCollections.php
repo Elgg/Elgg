@@ -349,7 +349,7 @@ class AccessCollections {
 	/**
 	 * Creates a new access collection.
 	 *
-	 * Access colletions allow plugins and users to create granular access
+	 * Access collections allow plugins and users to create granular access
 	 * for entities.
 	 *
 	 * Triggers event sequence 'create', 'access_collection'

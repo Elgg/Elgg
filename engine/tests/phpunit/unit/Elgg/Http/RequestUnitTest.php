@@ -51,6 +51,25 @@ class RequestUnitTest extends \Elgg\UnitTestCase {
 		]);
 		$this->assertTrue($req->isXmlHttpRequest());
 	}
+
+	public function testGetParamDefaultsToProvidedDefaultValue() {
+		$request = new Request();
+		$this->assertNull($request->getParam('foo'));
+		$this->assertEquals('bar', $request->getParam('foo', 'bar'));
+	}
+
+	public function testGetParamCanBeOverriddenBySetParam() {
+		$request = new Request(['foo' => 'bar']);
+		$this->assertEquals('bar', $request->getParam('foo'));
+		$request->setParam('foo', 'bar2', true);
+		$this->assertEquals('bar2', $request->getParam('foo'));
+	}
+
+	public function testGetParamChecksBothPostAndGet() {
+		$request = new Request(['foo' => 'bar'], ['foo2' => 'bar2']);
+		$this->assertEquals('bar', $request->getParam('foo'));
+		$this->assertEquals('bar2', $request->getParam('foo2'));
+	}
 	
 	public function testSetParamNoOverride() {
 		$request = Request::create('/foo?bar=a');

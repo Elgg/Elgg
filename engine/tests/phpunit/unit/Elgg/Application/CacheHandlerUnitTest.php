@@ -50,10 +50,6 @@ class CacheHandlerUnitTest extends \Elgg\UnitTestCase {
 		$this->_testParseFail('cache/1234/default/hello/world');
 	}
 
-	public function testCanHandleConditionalRequests() {
-		$this->markTestIncomplete();
-	}
-
 	public function testGetViewFileTypeHandlesJs() {
 		$type = $this->handler->getViewFileType('js/some/view.js');
 

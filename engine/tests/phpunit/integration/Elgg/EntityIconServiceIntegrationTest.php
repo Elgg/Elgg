@@ -12,6 +12,27 @@ class EntityIconServiceIntegrationTest extends IntegrationTestCase {
 		]);
 	}
 
+	/**
+	 * test \Elgg\Icons\TouchIconsOnAccessChangeHandler does it's job
+	 * @todo fix the need for ELGG_IGNORE_ACCESS related to thumbnail generation lock metadata
+	 */
+	public function testIconURLInvalidatedOnAccessIdChange() {
+		elgg_call(ELGG_IGNORE_ACCESS, function() {
+			$entity = $this->createObject([
+				'access_id' => ACCESS_PRIVATE,
+			]);
+			
+			$this->assertTrue($entity->saveIconFromLocalFile($this->normalizeTestFilePath('dataroot/1/1/300x300.jpg')));
+			$icon_url = $entity->getIconURL('medium');
+			$this->assertNotEmpty($icon_url);
+			$this->assertEquals($icon_url, $entity->getIconURL('medium')); // test it does not change
+			
+			$entity->access_id = ACCESS_PUBLIC;
+			$entity->save();
+			$this->assertEquals($icon_url, $entity->getIconURL('medium')); // test it does not change
+		});
+	}
+
 	#[DataProvider('invalidCoordinatesProvider')]
 	public function testInvalidDetectCroppingCoordinates($input_name, $params) {
 		$request = $this->prepareHttpRequest('', 'POST', $params);

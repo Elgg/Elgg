@@ -59,6 +59,11 @@ class Mutex {
 	public function unlock(string $namespace): void {
 		$this->assertNamespace($namespace);
 
+		if (!$this->isLocked($namespace)) {
+			// already unlocked
+			return;
+		}
+		
 		$this->db->getConnection(DbConfig::WRITE)->executeStatement("DROP TABLE {$this->db->prefix}{$namespace}_lock");
 
 		$this->getLogger()->notice("Mutex unlocked for {$namespace}.");

@@ -32,11 +32,7 @@ class SearchServiceTest extends UnitTestCase {
 
 		$this->assertFalse($result);
 	}
-
-	/**
-	 * @todo We need a data provider for XSS vectors => sanitized outputs,
-	 *       so we can use them across tests
-	 */
+	
 	public function testSanitizesSearchQueryAgainstXssAttack() {
 		$options = [
 			'query' => "'';!--\"<XSS>=&{()}",
@@ -45,8 +41,6 @@ class SearchServiceTest extends UnitTestCase {
 		$options = _elgg_services()->search->normalizeOptions($options);
 
 		$this->assertEquals("&#039;&#039;;!--&quot;=&amp;{()}", $options['query']);
-
-		$this->markTestIncomplete();
 	}
 
 	public function testStripsTagsFromQuery() {

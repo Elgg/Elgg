@@ -24,11 +24,6 @@ class LocatorUnitTest extends \Elgg\UnitTestCase {
 			->willReturn('test_plugin');
 	}
 
-	public function testRunner() {
-		// Can be implemented once Plugins::find() is mocked
-		$this->markTestIncomplete();
-	}
-
 	public function testCanGetPluginUpgrade() {
 		elgg_call(ELGG_IGNORE_ACCESS, function() {
 			$class = TestBatch::class;
