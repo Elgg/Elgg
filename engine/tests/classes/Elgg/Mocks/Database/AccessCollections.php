@@ -4,6 +4,7 @@ namespace Elgg\Mocks\Database;
 
 use Elgg\Database\AccessCollections as DbAccessCollections;
 use Elgg\Database\Insert;
+use Elgg\Database\Select;
 
 class AccessCollections extends DbAccessCollections {
 
@@ -82,5 +83,35 @@ class AccessCollections extends DbAccessCollections {
 			'params' => $insert->getParameters(),
 			'insert_id' => $row->id,
 		]);
+
+		$select = Select::fromTable(self::TABLE_NAME);
+		$select->select('*')
+			->where($select->compare('id', '=', $row->id, ELGG_VALUE_ID));
+
+		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
+			'sql' => $select->getSQL(),
+			'params' => $select->getParameters(),
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->id])) {
+					return [$this->rows[$row->id]];
+				}
+				return [];
+			},
+		]);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getCollectionsForWriteAccess(int $owner_guid): array {
+		$result = [];
+		
+		foreach ($this->rows as $row) {
+			if ($row->owner_guid === $owner_guid) {
+				$result[$row->id] = $row->name;
+			}
+		}
+		
+		return $result;
 	}
 }
