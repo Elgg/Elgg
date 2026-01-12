@@ -39,21 +39,14 @@
 	cursor: pointer;
 }
 
-.elgg-discover .elgg-discoverable {
+.elgg-discover:not(:hover) .elgg-discoverable {
 	display: none;
-}
-
-.elgg-discover:hover .elgg-discoverable {
-	display: block;
 }
 
 /* ***************************************
 	BORDERS AND SEPARATORS
 *************************************** */
 .elgg-border-plain {
-	border: 1px solid var(--elgg-border-color-soft);
-}
-.elgg-border-transition {
 	border: 1px solid var(--elgg-border-color-soft);
 }
 .elgg-divide-top {

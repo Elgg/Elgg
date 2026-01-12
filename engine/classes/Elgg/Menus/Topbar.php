@@ -36,7 +36,7 @@ class Topbar {
 			]),
 			'text' => elgg_echo('account'),
 			'href' => false,
-			'link_class' => 'elgg-avatar-small',
+			'link_class' => ['elgg-avatar', 'elgg-avatar-small'],
 			'priority' => 800,
 			'section' => 'alt',
 		]);

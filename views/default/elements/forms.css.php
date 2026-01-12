@@ -9,8 +9,7 @@
 *************************************** */
 .elgg-form-body,
 .elgg-form-body > div,
-.elgg-form-body fieldset:not(.elgg-fieldset) > div,
-.elgg-field {
+.elgg-form-body fieldset:not(.elgg-fieldset) > div {
 	&:not(:last-child) {
 		margin-bottom: 1rem;
 	}
@@ -145,10 +144,10 @@ select {
 	line-height: 1.75rem;
 	vertical-align: middle;
 	border-radius: 3px;
-}
-
-select:not([multiple]) {
-	height: 2.5rem;
+	
+	&:not([multiple]) {
+		height: 2.5rem;
+	}
 }
 
 .elgg-form-account {
@@ -172,7 +171,8 @@ select:not([multiple]) {
 	}
 }
 
-.elgg-form-login, .elgg-form-account {
+.elgg-form-login,
+.elgg-form-account {
 	max-width: 40rem;
 	margin: 0 auto;
 }
@@ -185,11 +185,6 @@ select:not([multiple]) {
 	&.elgg-fieldset-has-legend {
 		border: 1px solid var(--elgg-border-color-soft);
 		padding: 1rem;
-		margin-bottom: 1rem;
-	}
-	
-	> .elgg-field {
-		margin: 0;
 	}
 }
 

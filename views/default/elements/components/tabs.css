@@ -3,7 +3,6 @@
 *************************************** */
 .elgg-menu-filter,
 .elgg-tabs {
-	margin-bottom: 0.5rem;
 	border-bottom: 1px solid var(--elgg-border-color-soft);
 	display: flex;
 	flex-direction: row;
@@ -47,14 +46,16 @@
 }
 
 @media screen and (min-width: 50rem) {
-	.elgg-menu-filter > li,
-	.elgg-tabs > li {
-		border-bottom-width: 1px;
-		margin: .25rem 0 0 0.5rem;
-		border-radius: 3px 3px 0 0;
-		position: relative;
-		top: 1px;
-		flex-grow: 0;
+	.elgg-menu-filter,
+	.elgg-tabs {
+		> li {
+			border-bottom-width: 1px;
+			margin: .25rem 0 0 0.5rem;
+			border-radius: 3px 3px 0 0;
+			position: relative;
+			top: 1px;
+			flex-grow: 0;
+		}
 	}
 	
 	.elgg-menu-filter {

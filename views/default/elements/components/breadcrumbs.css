@@ -1,16 +1,8 @@
 /* ***************************************
 	BREADCRUMBS
 *************************************** */
-.elgg-layout-breadcrumbs {
-	margin-bottom: 1rem;
-}
-
 .elgg-breadcrumbs.elgg-menu-hz {
-	gap: 0.5rem;
-	
 	> li {
-		margin: 0;
-		
 		> a {
 			color: var(--elgg-text-color-soft);
 			background-color: white;

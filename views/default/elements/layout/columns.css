@@ -13,6 +13,9 @@
 		min-width: 1%;
 		background: white;
 		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+		row-gap: 1rem;
 	}
 	
 	> .elgg-layout-sidebar {

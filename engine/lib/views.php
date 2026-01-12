@@ -1059,34 +1059,27 @@ function elgg_get_form_footer(): string {
 }
 
 /**
- * Split array of vars into subarrays based on property prefixes
+ * Split array of vars into subarrays based on 'hash' prefix
  *
  * @see elgg_view_field()
  *
- * @param array      $vars     Vars to split
- * @param null|array $prefixes Prefixes to split
+ * @param array $vars Vars to split
  *
  * @return array
  * @internal
  */
-function _elgg_split_vars(array $vars = [], ?array $prefixes = null): array {
-
-	if (!isset($prefixes)) {
-		$prefixes = ['#'];
-	}
-
-	$return = [];
-	$default_section = ''; // something weird with PHP 8.1 compatibility
+function _elgg_split_vars(array $vars = []): array {
+	$return = [
+		'' => [],
+		'#' => [],
+	];
 	
 	foreach ($vars as $key => $value) {
-		foreach ($prefixes as $prefix) {
-			if (substr($key, 0, 1) === $prefix) {
-				$key = substr($key, 1);
-				$return[$prefix][$key] = $value;
-				break;
-			} else {
-				$return[$default_section][$key] = $value;
-			}
+		if (str_starts_with($key, '#')) {
+			$key = substr($key, 1);
+			$return['#'][$key] = $value;
+		} else {
+			$return[''][$key] = $value;
 		}
 	}
 
@@ -1124,7 +1117,7 @@ function elgg_view_field(array $params = []): string {
 	}
 
 	$input_type = $params['#type'];
-	if (!elgg_view_exists("input/$input_type")) {
+	if (!elgg_view_exists("input/{$input_type}")) {
 		return '';
 	}
 
@@ -1187,8 +1180,6 @@ function elgg_view_field(array $params = []): string {
 	}
 
 	$element_vars['label'] = elgg_view('elements/forms/label', $label_vars);
-
-	// wrap if present
 	$element_vars['help'] = elgg_view('elements/forms/help', $element_vars);
 
 	if ($make_special_checkbox_label) {
