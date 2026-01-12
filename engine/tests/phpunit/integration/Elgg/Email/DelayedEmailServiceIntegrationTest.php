@@ -6,7 +6,7 @@ use Elgg\IntegrationTestCase;
 use Elgg\Notifications\Notification;
 use Elgg\Notifications\NotificationEventHandler;
 use Elgg\Notifications\SubscriptionNotificationEvent;
-use Laminas\Mail\Message;
+use Symfony\Component\Mime\Email as SymfonyEmail;
 
 class DelayedEmailServiceIntegrationTest extends IntegrationTestCase {
 
@@ -66,15 +66,13 @@ class DelayedEmailServiceIntegrationTest extends IntegrationTestCase {
 			$this->assertTrue($this->service->enqueueNotification($notification));
 		}
 		
-		// proccess queue
+		// process queue
 		$this->service->processQueuedNotifications('daily', time() + 10);
 		
-		/* @var $mailer \Laminas\Mail\Transport\InMemory */
-		$mailer = _elgg_services()->mailer;
-	
-		$message = $mailer->getLastMessage();
-		$this->assertInstanceOf(Message::class, $message);
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 		
-		$this->assertEquals(elgg_echo('notifications:delayed_email:subject:daily'), $message->getSubject());
+		$this->assertEquals(elgg_echo('notifications:delayed_email:subject:daily'), $email->getSubject());
 	}
 }

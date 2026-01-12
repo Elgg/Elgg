@@ -4,6 +4,8 @@ use Elgg\Application;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\Transport;
 
 return [
 	'autoloadCache' => DI\autowire(\Elgg\Cache\AutoloadCache::class),
@@ -93,17 +95,10 @@ return [
 		return $logger;
 	}),
 	'mailer' => DI\factory(function (ContainerInterface $c) {
-		switch ($c->config->emailer_transport) {
-			case 'smtp':
-				$transport = new \Laminas\Mail\Transport\Smtp();
-				$transportOptions = new \Laminas\Mail\Transport\SmtpOptions(
-					$c->config->emailer_smtp_settings
-				);
-				$transport->setOptions($transportOptions);
-				return $transport;
-			default:
-				return new \Laminas\Mail\Transport\Sendmail($c->config->emailer_sendmail_settings);
-		}
+		return new Mailer($c->mailer_transport);
+	}),
+	'mailer_transport' => DI\factory(function (ContainerInterface $c) {
+		return Transport::fromDsn($c->config->emailer_transport);
 	}),
 	'menus' => DI\autowire(\Elgg\Menu\Service::class),
 	'metadataCache' => DI\autowire(\Elgg\Cache\MetadataCache::class),

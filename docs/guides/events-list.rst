@@ -760,10 +760,10 @@ Emails
 
 	 * ``email`` - An instance of ``\Elgg\Email``
 
-**zend:message, system:email** |results|
-	Triggered by the default email transport handler (Elgg uses ``laminas/laminas-mail``).
+**message, system:email** |results|
+	Triggered by the default email transport handler (Elgg uses ``symfomy/mailer``).
 	Applies to all outgoing system and notification emails that were not transported using the **transport, system:email** event.
-	This event allows you to alter an instance of ``\Laminas\Mail\Message`` before it is passed to the Laminas email transport.
+	This event allows you to alter an instance of ``\Symfony\Component\Mime\Email`` before it is passed to the Symfony email transport.
 
 	``$params`` contains:
 

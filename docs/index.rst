@@ -31,7 +31,7 @@ Under the hood:
  * NGINX or Apache compatible
  * Symfony2 HTTP Foundation handles requests and responses
  * modular javascript with ECMAScript modules
- * Laminas Mail handles outgoing email
+ * Symfony Mailer handles outgoing email
  * htmLawed XSS filters
  * DBAL
  * Phinx database migrations

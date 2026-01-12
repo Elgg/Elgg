@@ -4,10 +4,11 @@
  */
 
 use Elgg\Email;
+use Symfony\Component\Mime\Address;
 
 $site = elgg_get_site_entity();
 // create the from address
-$from = \Elgg\Email\Address::getFormattedEmailAddress($site->getEmailAddress(), $site->getDisplayName());
+$from = new Address($site->getEmailAddress(), $site->getDisplayName());
 
 $emails = (string) get_input('emails');
 $emailmessage = get_input('emailmessage');

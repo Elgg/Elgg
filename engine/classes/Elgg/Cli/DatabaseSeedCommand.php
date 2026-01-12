@@ -2,8 +2,8 @@
 
 namespace Elgg\Cli;
 
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * elgg-cli database:seed [--limit]
@@ -60,7 +60,8 @@ class DatabaseSeedCommand extends Command {
 			return self::INVALID;
 		}
 
-		_elgg_services()->set('mailer', new \Laminas\Mail\Transport\InMemory());
+		_elgg_services()->set('mailer_transport', new \Symfony\Component\Mailer\Transport\NullTransport());
+		_elgg_services()->reset('mailer');
 		_elgg_services()->events->registerHandler('enqueue', 'notification', '\Elgg\Values::getFalse', 99999);
 
 		$options = [

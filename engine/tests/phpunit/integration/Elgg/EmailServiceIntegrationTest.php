@@ -2,18 +2,13 @@
 
 namespace Elgg;
 
-use Laminas\Mail\Transport\InMemory as InMemoryTransport;
-use Elgg\Email\Address;
-use Laminas\Mime\Mime;
-use Laminas\Mail\Header\ContentType;
-use Elgg\Email\HtmlPart;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email as SymfonyEmail;
+use Symfony\Component\Mime\Part\AbstractMultipartPart;
+use Symfony\Component\Mime\Part\Multipart\AlternativePart;
+use Symfony\Component\Mime\Part\TextPart;
 
-class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
-
-	/**
-	 * @var InMemoryTransport
-	 */
-	public $mailer;
+class EmailServiceIntegrationTest extends IntegrationTestCase {
 
 	public function up() {
 		self::createApplication([
@@ -36,42 +31,44 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			'body' => $body,
 		]));
 
-		/* @var $message \Laminas\Mail\Message */
-		$message = _elgg_services()->mailer->getLastMessage();
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 		
-		$this->assertEquals('Tō', $message->getTo()->get('to@elgg.org')->getName());
-		$this->assertEquals('Frōm', $message->getFrom()->get('from@elgg.org')->getName());
-		$this->assertEquals($subject_expected, $message->getSubject());
+		$this->assertCount(1, $email->getTo());
+		$this->assertEquals('Tō', $email->getTo()[0]->getName());
+		$this->assertCount(1, $email->getFrom());
+		$this->assertEquals('Frōm', $email->getFrom()[0]->getName());
+		$this->assertEquals($subject_expected, $email->getSubject());
+		
+		/** @var AbstractMultipartPart $email_body */
+		$email_body = $email->getBody();
+		$this->assertInstanceOf(AbstractMultipartPart::class, $email_body);
 		
 		$plain_text_part = null;
-		foreach ($message->getBody()->getParts() as $part) {
-			if ($part->getId() === 'plaintext') {
+		foreach ($email_body->getParts() as $part) {
+			if ($part instanceof TextPart && $part->getMediaType() === 'text' && $part->getMediaSubtype() === 'plain') {
 				$plain_text_part = $part;
 				break;
 			}
 		}
 		
-		$this->assertNotEmpty($plain_text_part);
+		$this->assertInstanceOf(TextPart::class, $plain_text_part);
 		
-		$this->assertEquals($body_expected, $plain_text_part->getRawContent());
-		$this->assertEquals('UTF-8', $message->getEncoding());
+		$this->assertEquals($body_expected, $plain_text_part->getBody());
+		$this->assertEquals('utf-8', $email->getTextCharset());
 	}
 
 	function testElggSendEmailUsesEvent() {
-
-		$calls = 0;
 		$original_email = null;
-		$handler = function (\Elgg\Event $event) use (&$original_email, &$calls) {
+		$test_handler = $this->registerTestingEvent('prepare', 'system:email', function(\Elgg\Event $event) use (&$original_email) {
 			$email = $event->getValue();
-			
-			$calls++;
 			$original_email = clone $email;
+			
 			$email->setBody("<p>&lt;Hello&gt;</p>");
 			
 			return $email;
-		};
-
-		_elgg_services()->events->registerHandler('prepare', 'system:email', $handler);
+		});
 
 		elgg_send_email(\Elgg\Email::factory([
 			'from' => "from@elgg.org",
@@ -81,28 +78,34 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			'params' => ['foo' => 1],
 		]));
 
-		$this->assertEquals(1, $calls);
+		$test_handler->assertNumberOfCalls(1);
 
 		$this->assertInstanceOf(\Elgg\Email::class, $original_email);
-		$this->assertEquals("to@elgg.org", $original_email->getTo()[0]->getEmail());
-		$this->assertEquals("from@elgg.org", $original_email->getFrom()->getEmail());
+		$this->assertEquals("to@elgg.org", $original_email->getTo()[0]->getAddress());
+		$this->assertEquals("from@elgg.org", $original_email->getFrom()->getAddress());
 		$this->assertEquals("Hello", $original_email->getSubject());
 		$this->assertEquals("World", $original_email->getBody());
 		$this->assertEquals(['foo' => 1], $original_email->getParams());
 		
-		$message = _elgg_services()->mailer->getLastMessage();
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
+		
+		/** @var AbstractMultipartPart $email_body */
+		$email_body = $email->getBody();
+		$this->assertInstanceOf(AbstractMultipartPart::class, $email_body);
 		
 		$plain_text_part = null;
-		foreach ($message->getBody()->getParts() as $part) {
-			if ($part->getId() === 'plaintext') {
+		foreach ($email_body->getParts() as $part) {
+			if ($part instanceof TextPart && $part->getMediaType() === 'text' && $part->getMediaSubtype() === 'plain') {
 				$plain_text_part = $part;
 				break;
 			}
 		}
 		
-		$this->assertNotEmpty($plain_text_part);
+		$this->assertInstanceOf(TextPart::class, $plain_text_part);
 
-		$this->assertEquals("<Hello>", $plain_text_part->getRawContent());
+		$this->assertEquals("<Hello>", $plain_text_part->getBody());
 	}
 
 	function testElggSendEmailBypass() {
@@ -116,40 +119,44 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			'params' => ['foo' => 1],
 		])));
 
-		$this->assertNull(_elgg_services()->mailer->getLastMessage());
+		$this->assertNull(_elgg_services()->mailer_transport->getLastMessage());
 	}
 	
 	function testElggSendEmailMultipleRecipients() {
 		elgg_send_email(\Elgg\Email::factory([
 			'from' => "from@elgg.org",
 			'to' => "To <to@elgg.org>",
-			'cc' => Address::fromString('cc@elgg.org'),
-			'bcc' => ['bcc1@elgg.org', Address::fromString('bcc2@elgg.org')],
+			'cc' => Address::create('cc@elgg.org'),
+			'bcc' => ['bcc1@elgg.org', Address::create('bcc2@elgg.org')],
 			'subject' => 'foo',
 			'body' => 'bar',
 		]));
 
-		$message = _elgg_services()->mailer->getLastMessage();
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 		
-		$this->assertNotFalse($message->getFrom()->get('from@elgg.org'));
+		$this->assertCount(1, $email->getFrom());
+		$this->assertEquals('from@elgg.org', $email->getFrom()[0]->getAddress());
 		
 		// to
-		$this->assertNotFalse($message->getTo()->get('to@elgg.org'));
-		$this->assertEquals('To', $message->getTo()->get('to@elgg.org')->getName());
+		$this->assertCount(1, $email->getTo());
+		$this->assertEquals('To', $email->getTo()[0]->getName());
 		
 		// cc
-		$this->assertNotFalse($message->getCc()->get('cc@elgg.org'));
+		$this->assertCount(1, $email->getCc());
+		$this->assertEquals('cc@elgg.org', $email->getCc()[0]->getAddress());
 		
 		// bcc
-		$this->assertNotFalse($message->getBcc()->get('bcc1@elgg.org'));
-		$this->assertNotFalse($message->getBcc()->get('bcc2@elgg.org'));
+		$this->assertCount(2, $email->getBcc());
+		$this->assertEquals('bcc1@elgg.org', $email->getBcc()[0]->getAddress());
+		$this->assertEquals('bcc1@elgg.org', $email->getBcc()[0]->getAddress());
 	}
 
 	function testElggEmailSetters() {
 		// can't use dataProvider as entities get mangled
 		$setterRecipients = function () {
-			$address = new Address('no@reply.com');
-			$address->setName('No-Reply');
+			$address = new Address('no@reply.com', 'No-Reply');
 			
 			$user = $this->createUser();
 			
@@ -176,7 +183,7 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 					$address,
 					[
 						[
-							'email' => $address->getEmail(),
+							'email' => $address->getAddress(),
 							'name' => $address->getName(),
 						],
 					],
@@ -211,7 +218,7 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 							'name' => 'Recipient',
 						],
 						[
-							'email' => $address->getEmail(),
+							'email' => $address->getAddress(),
 							'name' => $address->getName(),
 						],
 					],
@@ -233,7 +240,7 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 				
 				foreach ($adresses as $index => $adress) {
 					$this->assertInstanceOf(Address::class, $adress);
-					$this->assertEquals($adress->getEmail(), $expected[$index]['email']);
+					$this->assertEquals($adress->getAddress(), $expected[$index]['email']);
 					$this->assertEquals($adress->getName(), $expected[$index]['name']);
 				}
 			}
@@ -254,17 +261,15 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			'body' => $body,
 		]));
 
-		/* @var $message \Laminas\Mail\Message */
-		$message = _elgg_services()->mailer->getLastMessage();
-		$this->assertEquals($subject, $message->getSubject());
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 		
-		$parts = $message->getBody()->getParts();
-		$this->assertCount(1, $parts);
+		$this->assertEquals($subject, $email->getSubject());
 		
-		$this->assertInstanceOf(\Elgg\Email\PlainTextPart::class, $parts[0]);
-		$content_type = $message->getHeaders()->get('content-type');
-		$this->assertInstanceOf(ContentType::class, $content_type);
-		$this->assertEquals(Mime::TYPE_TEXT, $content_type->getType());
+		/** @var TextPart $email_body */
+		$email_body = $email->getBody();
+		$this->assertInstanceOf(TextPart::class, $email_body);
 	}
 
 	function testPlainTextMessageWithAttachments() {
@@ -290,19 +295,20 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			],
 		]));
 
-		/* @var $message \Laminas\Mail\Message */
-		$message = _elgg_services()->mailer->getLastMessage();
-		$this->assertEquals($subject, $message->getSubject());
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 		
-		$parts = $message->getBody()->getParts();
+		$this->assertEquals($subject, $email->getSubject());
+		
+		/** @var AbstractMultipartPart $email_body */
+		$email_body = $email->getBody();
+		$this->assertInstanceOf(AbstractMultipartPart::class, $email_body);
+		
+		$parts = $email_body->getParts();
 		$this->assertCount(2, $parts);
 		
-		$this->assertInstanceOf(\Elgg\Email\PlainTextPart::class, $parts[0]);
 		$this->assertInstanceOf(\Elgg\Email\Attachment::class, $parts[1]);
-		
-		$content_type = $message->getHeaders()->get('content-type');
-		$this->assertInstanceOf(ContentType::class, $content_type);
-		$this->assertEquals(Mime::MULTIPART_MIXED, $content_type->getType());
 	}
 	
 	function testHtmlMessage() {
@@ -316,19 +322,21 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			'body' => $body,
 		]));
 
-		/* @var $message \Laminas\Mail\Message */
-		$message = _elgg_services()->mailer->getLastMessage();
-		$this->assertEquals($subject, $message->getSubject());
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 		
-		$parts = $message->getBody()->getParts();
+		$this->assertEquals($subject, $email->getSubject());
+		
+		/** @var AbstractMultipartPart $email_body */
+		$email_body = $email->getBody();
+		$this->assertInstanceOf(AbstractMultipartPart::class, $email_body);
+		
+		$parts = $email_body->getParts();
 		$this->assertCount(2, $parts);
 		
-		$this->assertInstanceOf(\Elgg\Email\PlainTextPart::class, $parts[0]);
-		$this->assertInstanceOf(\Elgg\Email\HtmlPart::class, $parts[1]);
-		
-		$content_type = $message->getHeaders()->get('content-type');
-		$this->assertInstanceOf(ContentType::class, $content_type);
-		$this->assertEquals(Mime::MULTIPART_ALTERNATIVE, $content_type->getType());
+		$this->assertInstanceOf(TextPart::class, $parts[1]);
+		$this->assertEquals('html', $parts[1]->getMediaSubtype());
 	}
 	
 	function testHtmlMessageWithAttachments() {
@@ -351,21 +359,23 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			],
 		]));
 
-		/* @var $message \Laminas\Mail\Message */
-		$message = _elgg_services()->mailer->getLastMessage();
-		$this->assertEquals($subject, $message->getSubject());
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 		
-		$parts = $message->getBody()->getParts();
+		$this->assertEquals($subject, $email->getSubject());
+		
+		/** @var AbstractMultipartPart $email_body */
+		$email_body = $email->getBody();
+		$this->assertInstanceOf(AbstractMultipartPart::class, $email_body);
+		
+		$parts = $email_body->getParts();
 		$this->assertCount(2, $parts);
 		
-		$this->assertInstanceOf(\Laminas\Mime\Part::class, $parts[0]);
+		$this->assertInstanceOf(AlternativePart::class, $parts[0]);
+		$this->assertCount(2, $parts[0]->getParts());
+		
 		$this->assertInstanceOf(\Elgg\Email\Attachment::class, $parts[1]);
-		
-		$this->assertEquals(Mime::MULTIPART_ALTERNATIVE, $parts[0]->getType());
-		
-		$content_type = $message->getHeaders()->get('content-type');
-		$this->assertInstanceOf(ContentType::class, $content_type);
-		$this->assertEquals(Mime::MULTIPART_MIXED, $content_type->getType());
 	}
 	
 	function testHtmlMessageFormatting() {
@@ -379,21 +389,24 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			'body' => $body,
 		]));
 
-		/* @var $message \Laminas\Mail\Message */
-		$message = _elgg_services()->mailer->getLastMessage();
-		$this->assertEquals($subject, $message->getSubject());
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 		
-		$parts = $message->getBody()->getParts();
+		$this->assertEquals($subject, $email->getSubject());
+		
+		/** @var AbstractMultipartPart $email_body */
+		$email_body = $email->getBody();
+		$this->assertInstanceOf(AbstractMultipartPart::class, $email_body);
+		
+		$parts = $email_body->getParts();
 		$this->assertCount(2, $parts);
 		
-		$this->assertInstanceOf(\Elgg\Email\PlainTextPart::class, $parts[0]);
-		$this->assertInstanceOf(\Elgg\Email\HtmlPart::class, $parts[1]);
-		
 		// validate plain text
-		$this->assertEquals('Foo link bar', $parts[0]->getRawContent());
+		$this->assertEquals('Foo link bar', $parts[0]->getBody());
 		
 		// validate html text
-		$html_content = $parts[1]->getRawContent();
+		$html_content = $parts[1]->getBody();
 		
 		$this->assertStringContainsString('<html', $html_content);
 		$this->assertStringContainsString('</html>', $html_content);
@@ -409,26 +422,28 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 		$body = '<p>Foo <a href="http://elgg.org">link</a> bar</p>';
 		$subject = 'subject' . uniqid();
 		
-		$custom_part = new HtmlPart($body);
-		$custom_part->setId('custom_html');
 		elgg_send_email(\Elgg\Email::factory([
 			'from' => 'from@elgg.org',
 			'to' => 'to@elgg.org',
 			'subject' => $subject,
 			'body' => $body,
-			'params' => ['html_message' => $custom_part],
+			'params' => ['html_message' => $body],
 		]));
 
-		/* @var $message \Laminas\Mail\Message */
-		$message = _elgg_services()->mailer->getLastMessage();
-		$this->assertEquals($subject, $message->getSubject());
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 		
-		$parts = $message->getBody()->getParts();
+		$this->assertEquals($subject, $email->getSubject());
+		
+		/** @var AbstractMultipartPart $email_body */
+		$email_body = $email->getBody();
+		$this->assertInstanceOf(AbstractMultipartPart::class, $email_body);
 
-		$this->assertInstanceOf(\Elgg\Email\HtmlPart::class, $parts[1]);
+		$parts = $email_body->getParts();
+		$this->assertCount(2, $parts);
 
-		$this->assertEquals($body, $parts[1]->getRawContent());
-		$this->assertEquals('custom_html', $parts[1]->getId());
+		$this->assertEquals($body, $parts[1]->getBody());
 	}
 	
 	function testHtmlMessageCustomHtmlMessageNoCss() {
@@ -446,15 +461,20 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			],
 		]));
 
-		/* @var $message \Laminas\Mail\Message */
-		$message = _elgg_services()->mailer->getLastMessage();
-		$this->assertEquals($subject, $message->getSubject());
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 		
-		$parts = $message->getBody()->getParts();
+		$this->assertEquals($subject, $email->getSubject());
+		
+		/** @var AbstractMultipartPart $email_body */
+		$email_body = $email->getBody();
+		$this->assertInstanceOf(AbstractMultipartPart::class, $email_body);
 
-		$this->assertInstanceOf(\Elgg\Email\HtmlPart::class, $parts[1]);
-
-		$this->assertEquals($body, $parts[1]->getRawContent());
+		$parts = $email_body->getParts();
+		$this->assertCount(2, $parts);
+		
+		$this->assertEquals($body, $parts[1]->getBody());
 	}
 	
 	function testHtmlMessageCustomHtmlMessageWithCss() {
@@ -474,17 +494,22 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			],
 		]));
 
-		/* @var $message \Laminas\Mail\Message */
-		$message = _elgg_services()->mailer->getLastMessage();
-		$this->assertEquals($subject, $message->getSubject());
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 		
-		$parts = $message->getBody()->getParts();
+		$this->assertEquals($subject, $email->getSubject());
+		
+		/** @var AbstractMultipartPart $email_body */
+		$email_body = $email->getBody();
+		$this->assertInstanceOf(AbstractMultipartPart::class, $email_body);
 
-		$this->assertInstanceOf(\Elgg\Email\HtmlPart::class, $parts[1]);
+		$parts = $email_body->getParts();
+		$this->assertCount(2, $parts);
 
-		$this->assertStringContainsString('<html', $parts[1]->getRawContent());
-		$this->assertStringContainsString('</html>', $parts[1]->getRawContent());
-		$this->assertStringContainsString($expected_body, $parts[1]->getRawContent());
+		$this->assertStringContainsString('<html', $parts[1]->getBody());
+		$this->assertStringContainsString('</html>', $parts[1]->getBody());
+		$this->assertStringContainsString($expected_body, $parts[1]->getBody());
 	}
 	
 	function testHtmlMessageImagesBase64() {
@@ -501,15 +526,20 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			'body' => $body,
 		]));
 
-		/* @var $message \Laminas\Mail\Message */
-		$message = _elgg_services()->mailer->getLastMessage();
-		$this->assertEquals($subject, $message->getSubject());
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
+		
+		$this->assertEquals($subject, $email->getSubject());
 
-		$parts = $message->getBody()->getParts();
+		/** @var AbstractMultipartPart $email_body */
+		$email_body = $email->getBody();
+		$this->assertInstanceOf(AbstractMultipartPart::class, $email_body);
 		
-		$this->assertInstanceOf(\Elgg\Email\HtmlPart::class, $parts[1]);
+		$parts = $email_body->getParts();
+		$this->assertCount(2, $parts);
 		
-		$html_content = $parts[1]->getRawContent();
+		$html_content = $parts[1]->getBody();
 		$this->assertStringNotContainsString($image_url, $html_content);
 		$this->assertStringContainsString('src="data:image/jpeg;charset=UTF-8;base64,', $html_content);
 	}
@@ -528,16 +558,21 @@ class EmailServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			'body' => $body,
 		]));
 
-		/* @var $message \Laminas\Mail\Message */
-		$message = _elgg_services()->mailer->getLastMessage();
-		$this->assertEquals($subject, $message->getSubject());
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 
-		$parts = $message->getBody()->getParts();
+		$this->assertEquals($subject, $email->getSubject());
 		
-		$this->assertInstanceOf(\Laminas\Mime\Part::class, $parts[1]);
+		/** @var AbstractMultipartPart $email_body */
+		$email_body = $email->getBody();
+		$this->assertInstanceOf(AbstractMultipartPart::class, $email_body);
 		
-		$msg_content = $parts[1]->getRawContent();
-		$this->assertStringContainsString('Content-ID: <htmltext>', $msg_content);
-		$this->assertStringContainsString('Content-Disposition: inline; filename="300x300.jpg"', $msg_content);
+		$parts = $email_body->getParts();
+		$this->assertCount(2, $parts);
+		
+		$this->assertNotEmpty($parts[1]->getContentId());
+		$this->assertEquals('inline', $parts[1]->getDisposition());
+		$this->assertEquals('300x300.jpg', $parts[1]->getFilename());
 	}
 }

@@ -2,21 +2,14 @@
 
 namespace Elgg;
 
-use Elgg\Assets\CssCompiler;
 use Elgg\Assets\ImageFetcherService;
 use Elgg\Email\Attachment;
-use Elgg\Email\HtmlPart;
-use Elgg\Email\PlainTextPart;
 use Elgg\Exceptions\RuntimeException;
 use Elgg\Traits\Loggable;
 use Elgg\Views\HtmlFormatter;
-use Laminas\Mail\Header\ContentType;
-use Laminas\Mail\Message as MailMessage;
-use Laminas\Mail\Transport\TransportInterface;
-use Laminas\Mime\Message as MimeMessage;
-use Laminas\Mime\Exception\InvalidArgumentException;
-use Laminas\Mime\Part;
-use Laminas\Mime\Mime;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email as SymfonyEmail;
 
 /**
  * Email service
@@ -33,7 +26,7 @@ class EmailService {
 	 *
 	 * @param Config              $config         Config
 	 * @param EventsService       $events         Events service
-	 * @param TransportInterface  $mailer         Mailer
+	 * @param MailerInterface     $mailer         Mailer
 	 * @param HtmlFormatter       $html_formatter Html formatter
 	 * @param ViewsService        $views          Views service
 	 * @param ImageFetcherService $image_fetcher  Image fetcher
@@ -41,7 +34,7 @@ class EmailService {
 	public function __construct(
 		protected Config $config,
 		protected EventsService $events,
-		protected TransportInterface $mailer,
+		protected MailerInterface $mailer,
 		protected HtmlFormatter $html_formatter,
 		protected ViewsService $views,
 		protected ImageFetcherService $image_fetcher
@@ -70,14 +63,13 @@ class EmailService {
 
 		return $this->transport($email);
 	}
-
+	
 	/**
 	 * Transports an email
 	 *
 	 * @param Email $email Email
 	 *
 	 * @return bool
-	 * @throws RuntimeException
 	 */
 	public function transport(Email $email): bool {
 		if ($this->events->triggerResults('transport', 'system:email', ['email' => $email], false)) {
@@ -85,13 +77,12 @@ class EmailService {
 		}
 
 		// create the e-mail message
-		$message = new MailMessage();
-		$message->setEncoding('UTF-8');
-		$message->setSender($email->getFrom());
+		$message = new SymfonyEmail();
+		$message->sender($email->getSender());
 		$message->addFrom($email->getFrom());
-		$message->addTo($email->getTo());
-		$message->addCc($email->getCc());
-		$message->addBcc($email->getBcc());
+		$message->addTo(...$email->getTo());
+		$message->addCc(...$email->getCc());
+		$message->addBcc(...$email->getBcc());
 		
 		// set headers
 		$headers = [
@@ -101,38 +92,20 @@ class EmailService {
 		$headers = array_merge($headers, $email->getHeaders());
 
 		foreach ($headers as $name => $value) {
-			// See #11018
-			// Create a headerline as a concatenated string "name: value"
-			// This is done to force correct class detection for each header type,
-			// which influences the output of the header in the message
-			$message->getHeaders()->addHeaderLine("{$name}: {$value}");
+			$message->getHeaders()->addHeader($name, $value);
 		}
 		
 		// add the body to the message
-		try {
-			$message = $this->setMessageBody($message, $email);
-		} catch (InvalidArgumentException $e) {
-			$this->getLogger()->error($e->getMessage());
-			
-			return false;
-		}
-		
-		$message->setSubject($this->prepareSubject($email->getSubject()));
+		$this->setMessageBody($message, $email);
+		$message->subject($this->prepareSubject($email->getSubject()));
 		
 		// allow others to modify the $message content
-		// eg. add html body, add attachments
-		$message = $this->events->triggerResults('zend:message', 'system:email', ['email' => $email], $message);
-
-		// fix content type header
-		// @see https://github.com/Elgg/Elgg/issues/12555
-		$ct = $message->getHeaders()->get('Content-Type');
-		if ($ct instanceof ContentType) {
-			$ct->addParameter('format', 'flowed');
-		}
+		// eg. add HTML body, add attachments
+		$message = $this->events->triggerResults('message', 'system:email', ['email' => $email], $message);
 		
 		try {
 			$this->mailer->send($message);
-		} catch (RuntimeException $e) {
+		} catch (TransportExceptionInterface $e) {
 			$this->getLogger()->error($e->getMessage());
 
 			return false;
@@ -151,7 +124,7 @@ class EmailService {
 	protected function prepareSubject(string $subject): string {
 		$subject = elgg_strip_tags($subject);
 		$subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-		// Sanitise subject by stripping line endings
+		// Sanitize subject by stripping line endings
 		$subject = preg_replace("/(\r\n|\r|\n)/", ' ', $subject);
 		return trim($subject);
 	}
@@ -159,85 +132,45 @@ class EmailService {
 	/**
 	 * Build the body part of the e-mail message
 	 *
-	 * @param MailMessage $message Current message
-	 * @param Email       $email   Email
+	 * @param SymfonyEmail $message Current message
+	 * @param Email        $email   Email
 	 *
-	 * @return \Laminas\Mail\Message
+	 * @return void
 	 */
-	protected function setMessageBody(MailMessage $message, Email $email): MailMessage {
-		// create body
-		$multipart = new MimeMessage();
-		$raw_body = $email->getBody();
-		$message_content_type = '';
+	protected function setMessageBody(SymfonyEmail $message, Email $email): void {
+		// add plaintext body part
+		$plain_text = $email->getBody();
+		$plain_text = elgg_strip_tags($plain_text);
+		$plain_text = html_entity_decode($plain_text, ENT_QUOTES, 'UTF-8');
+		$plain_text = wordwrap($plain_text);
 		
-		// add plain text part
-		$plain_text_part = new PlainTextPart($raw_body);
-		$multipart->addPart($plain_text_part);
+		$message->text($plain_text);
+		$this->addHtmlPart($message, $email);
 		
-		$make_html = (bool) elgg_get_config('email_html_part');
-		
-		if ($make_html) {
-			$multipart->addPart($this->makeHtmlPart($email));
-			$message_content_type = Mime::MULTIPART_ALTERNATIVE;
-		}
-		
-		$body = $multipart;
-		
-		// process attachments
 		$attachments = $email->getAttachments();
-		if (!empty($attachments)) {
-			if ($make_html) {
-				$multipart_content = new Part($multipart->generateMessage());
-				$multipart_content->setType(Mime::MULTIPART_ALTERNATIVE);
-				$multipart_content->setBoundary($multipart->getMime()->boundary());
-			
-				$body = new MimeMessage();
-				$body->addPart($multipart_content);
-			}
-			
-			foreach ($attachments as $attachement) {
-				$body->addPart($attachement);
-			}
-			
-			$message_content_type = Mime::MULTIPART_MIXED;
+		foreach ($attachments as $attachment) {
+			$message->addPart($attachment);
 		}
-		
-		$message->setBody($body);
-		
-		if (!empty($message_content_type)) {
-			// set correct message content type
-			
-			$headers = $message->getHeaders();
-			foreach ($headers as $header) {
-				if (!$header instanceof ContentType) {
-					continue;
-				}
-				
-				$header->setType($message_content_type);
-				$header->addParameter('boundary', $body->getMime()->boundary());
-				break;
-			}
-		}
-		
-		return $message;
 	}
 	
 	/**
-	 * Make the html part of the e-mail message
+	 * Add the HTML part to the e-mail message
 	 *
-	 * @param \Elgg\Email $email the e-mail to get information from
+	 * @param SymfonyEmail $message Current message
+	 * @param \Elgg\Email  $email   the e-mail to get information from
 	 *
-	 * @return \Laminas\Mime\Part
+	 * @return void
 	 */
-	protected function makeHtmlPart(\Elgg\Email $email): Part {
-		$mail_params = $email->getParams();
-		$html_text = elgg_extract('html_message', $mail_params);
-		if ($html_text instanceof Part) {
-			return $html_text;
+	protected function addHtmlPart(SymfonyEmail $message, \Elgg\Email $email): void {
+		if (!$this->config->email_html_part) {
+			return;
 		}
-	
+		
+		$mail_params = $email->getParams();
+		
+		$html_text = elgg_extract('html_message', $mail_params);
 		if (is_string($html_text)) {
-			// html text already provided
+			// HTML text already provided
 			if (elgg_extract('convert_css', $mail_params, true)) {
 				// still needs to be converted to inline CSS
 				$css = (string) elgg_extract('css', $mail_params);
@@ -254,17 +187,19 @@ class EmailService {
 		// normalize urls in text
 		$html_text = $this->html_formatter->normalizeUrls($html_text);
 		if (empty($html_text)) {
-			return new HtmlPart($html_text);
+			return;
 		}
 		
-		$email_html_part_images = elgg_get_config('email_html_part_images');
+		$email_html_part_images = $this->config->email_html_part_images;
 		if ($email_html_part_images !== 'base64' && $email_html_part_images !== 'attach') {
-			return new HtmlPart($html_text);
+			$message->html($html_text);
+			return;
 		}
 		
 		$images = $this->findImages($html_text);
 		if (empty($images)) {
-			return new HtmlPart($html_text);
+			$message->html($html_text);
+			return;
 		}
 		
 		if ($email_html_part_images === 'base64') {
@@ -289,7 +224,8 @@ class EmailService {
 				$html_text = str_replace($url, $replacement, $html_text);
 			}
 			
-			return new HtmlPart($html_text);
+			$message->html($html_text);
+			return;
 		}
 		
 		// attach images
@@ -305,7 +241,7 @@ class EmailService {
 			}
 			
 			// Unique ID
-			$uid = uniqid();
+			$uid = uniqid() . '@elgg-image';
 			
 			$attachments[$uid] = $image;
 			
@@ -315,29 +251,19 @@ class EmailService {
 			$html_text = str_replace($url, $replacement, $html_text);
 		}
 		
-		// split html body and related images
-		$message = new MimeMessage();
-		$message->addPart(new HtmlPart($html_text));
-		
+		// split HTML body and related images
 		foreach ($attachments as $uid => $image_data) {
-			$attachment = Attachment::factory([
-				'id' => $uid,
+			$inline_image = Attachment::factory([
 				'content' => $image_data['data'],
 				'type' => $image_data['content-type'],
 				'filename' => $image_data['name'],
-				'encoding' => Mime::ENCODING_BASE64,
-				'disposition' => Mime::DISPOSITION_INLINE,
-				'charset' => 'UTF-8',
+				'id' => $uid,
 			]);
 			
-			$message->addPart($attachment);
+			$message->addPart($inline_image->asInline());
 		}
 		
-		$part = new Part($message->generateMessage());
-		$part->setType(Mime::MULTIPART_RELATED);
-		$part->setBoundary($message->getMime()->boundary());
-		
-		return $part;
+		$message->html($html_text);
 	}
 	
 	/**

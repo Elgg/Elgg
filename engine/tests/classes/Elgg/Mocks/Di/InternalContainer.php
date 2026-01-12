@@ -14,6 +14,7 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Mocks\Database\EntityTable                 $entityTable                     Entity mocks
  * @property-read \Elgg\Mocks\Database\HMACCacheTable              $hmacCacheTable                  HMAC Cache table
  * @property-read \Elgg\Mocks\Database\MetadataTable               $metadataTable                   Metadata mocks
+ * @property-read \Elgg\Mocks\Mailer\Transport\InMemoryTransport   $mailer_transport                Mailer transport
  * @property-read \Elgg\Mocks\Database\Mutex                       $mutex                           Mutex
  * @property-read \Elgg\Notifications\NotificationsService         $notifications                   Notification service (with memory queue)
  * @property-read \Elgg\Mocks\Database\RelationshipsTable          $relationshipsTable              Annotation mocks
@@ -42,8 +43,8 @@ class InternalContainer extends \Elgg\Di\InternalContainer{
 		$container->set('configTable', \DI\autowire(\Elgg\Mocks\Database\ConfigTable::class));
 		$container->set('users_remember_me_cookies_table', \DI\autowire(\Elgg\Mocks\Database\UsersRememberMeCookiesTable::class));
 
-		$container->set('mailer', function (ContainerInterface $c) {
-			return new \Laminas\Mail\Transport\InMemory();
+		$container->set('mailer_transport', function (ContainerInterface $c) {
+			return new \Elgg\Mocks\Mailer\Transport\InMemoryTransport();
 		});
 
 		$container->set('plugins', function (ContainerInterface $c) {

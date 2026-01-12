@@ -3,10 +3,10 @@
 namespace Elgg\Users;
 
 use Elgg\Email;
-use Elgg\Email\Address;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Http\ResponseBuilder;
 use Elgg\Request;
+use Symfony\Component\Mime\Address;
 
 /**
  * Controller to handle confirmation of a user e-mail address change

@@ -57,8 +57,6 @@ use Elgg\Traits\Loggable;
  * @property bool          $enable_delayed_email                    Is the delivery method 'delayed_email' enabled
  * @property bool          $enable_profiling
  * @property string        $emailer_transport                       This is an override for Elgg's default email handling transport (default sendmail)
- * @property array         $emailer_sendmail_settings               This configures SendMail if $emailer_transport is set to "sendmail" or default
- * @property array         $emailer_smtp_settings                   This configures SMTP if $emailer_transport is set to "smtp"
  * @property string        $exception_include						This is an optional script used to override Elgg's default handling of uncaught exceptions.
  * @property int           $friendly_time_number_of_days            Number of days after which timestamps will no longer be presented in a friendly format (x hours ago) but in a full date
  * @property string[]      $http_request_trusted_proxy_ips			When Elgg is behind a loadbalancer/proxy this can contain IP adresses to allow access to better client information
@@ -191,6 +189,7 @@ class Config {
 		'email_html_part' => true,
 		'email_html_part_images' => 'no',
 		'email_subject_limit' => 998,
+		'emailer_transport' => PHP_OS_FAMILY === 'Windows' ? 'native://default' : 'sendmail://default',
 		'enable_delayed_email' => true,
 		'friendly_time_number_of_days' => 30,
 		'icon_sizes' => [
