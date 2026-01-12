@@ -8,6 +8,8 @@ use Elgg\Exceptions\PluginException;
 class ElggCorePluginsAPITest extends \Elgg\IntegrationTestCase {
 
 	protected ?\ElggPlugin $plugin = null;
+	
+	protected bool $initial_active = false;
 		
 	public function up() {
 		parent::up();
@@ -18,8 +20,9 @@ class ElggCorePluginsAPITest extends \Elgg\IntegrationTestCase {
 		}
 		
 		$this->plugin = $plugin;
+		$this->initial_active = $plugin->isActive();
 		
-		if (!$plugin->isActive()) {
+		if (!$this->initial_active) {
 			try {
 				$plugin->activate();
 			} catch (PluginException $e) {
@@ -29,7 +32,17 @@ class ElggCorePluginsAPITest extends \Elgg\IntegrationTestCase {
 	}
 	
 	public function down() {
-		if ($this->plugin instanceof \ElggPlugin) {
+		if (!$this->plugin instanceof \ElggPlugin) {
+			return;
+		}
+		
+		if ($this->initial_active && !$this->plugin->isActive()) {
+			try {
+				$this->plugin->activate();
+			} catch (PluginException $e) {
+				// nothing
+			}
+		} elseif (!$this->initial_active && $this->plugin->isActive()) {
 			try {
 				$this->plugin->deactivate();
 			} catch (PluginException $e) {
