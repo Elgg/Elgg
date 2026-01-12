@@ -84,7 +84,7 @@ class AdminHeader {
 				'src' => $admin->getIconURL('small'),
 				'alt' => $admin->getDisplayName(),
 			]),
-			'link_class' => 'elgg-avatar-small',
+			'link_class' => ['elgg-avatar', 'elgg-avatar-small'],
 			'section' => 'alt',
 		]);
 		

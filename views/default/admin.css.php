@@ -77,13 +77,6 @@ echo elgg_view('core.css');
 /* ***************************************
 	PLUGINS
 **************************************** */
-
-#elgg-plugin-list .elgg-list > li {
-	padding: 0;
-	border: none;
-	margin-bottom: 2px;
-}
-
 .elgg-plugin {
 	border: 1px solid var(--elgg-border-color-mild);
 	padding: 0.5rem;
@@ -175,6 +168,12 @@ echo elgg_view('core.css');
 
 #elgg-plugin-list {
 	position: relative;
+	
+	.elgg-list > li {
+		padding: 0;
+		border: none;
+		margin-bottom: 2px;
+	}
 	
 	.elgg-plugin {
 		.elgg-state-error, 

@@ -22,10 +22,6 @@ button {
 	}
 }
 
-.elgg-button + .elgg-button {
-	margin-left: 0.5rem;
-}
-
 .elgg-button-submit {
 	background: var(--elgg-button-submit-background-color);
 	color: var(--elgg-button-submit-font-color);
@@ -114,14 +110,6 @@ button {
 	}
 }
 
-.elgg-button:disabled,
-.elgg-button.elgg-state-disabled {
-	background: var(--elgg-background-color-mild);
-	color: var(--elgg-text-color-mild);
-	cursor: not-allowed;
-}
-
-/* Use .elgg-size-small or .elgg-size-large for additional sizes */
 .elgg-module-menu .elgg-button,
 .elgg-message-menu .elgg-button,
 .elgg-button.elgg-size-small {
@@ -130,15 +118,18 @@ button {
 	height: 2rem;
 }
 
-.elgg-button.elgg-size-large {
-	font-size: 1.5rem;
-	line-height: 2.5rem;
-	padding: 1rem 2rem;
-	height: 4.5rem;
-	border-radius: 3px;
-}
-
 .elgg-button {
+	&:disabled,
+	&.elgg-state-disabled {
+		background: var(--elgg-background-color-mild);
+		color: var(--elgg-text-color-mild);
+		cursor: not-allowed;
+	}
+	
+	& + .elgg-button {
+		margin-left: 0.5rem;
+	}
+	
 	* + .elgg-button-label {
 		margin-left: 0.5rem;
 	}

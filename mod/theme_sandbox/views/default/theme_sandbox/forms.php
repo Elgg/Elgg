@@ -2,7 +2,7 @@
 $ipsum = elgg_view('theme_sandbox/demo/ipsum');
 ?>
 <form action="#">
-	<fieldset>
+	<fieldset class="elgg-fieldset">
 		<legend>Fieldset Legend</legend>
 		<?php
 		echo elgg_view_field([
@@ -738,4 +738,5 @@ $body .= elgg_view_field([
 echo elgg_view('input/form', [
 	'body' => $body,
 	'action' => '#',
+	'class' => 'mtl',
 ]);

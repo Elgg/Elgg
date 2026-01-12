@@ -18,14 +18,3 @@
 		flex: 1;
 	}
 }
-
-/* ***************************************
-	Image-related
-*************************************** */
-.elgg-photo {
-	border: 1px solid var(--elgg-border-color-soft);
-	padding: 2px;
-	background-color: #ffffff;
-	max-width: 100%;
-	height: auto;
-}

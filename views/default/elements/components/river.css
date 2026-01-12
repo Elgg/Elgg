@@ -21,13 +21,15 @@
 	padding-left: 1rem;
 }
 
-.elgg-river-attachments .elgg-avatar,
-.elgg-river-attachments .elgg-icon {
-	display: inline-block;
-}
-
-.elgg-river-attachments .elgg-icon-arrow-right {
-	margin: 0.5rem;
+.elgg-river-attachments {
+	.elgg-avatar,
+	.elgg-icon {
+		display: inline-block;
+	}
+	
+	.elgg-icon-arrow-right {
+		margin: 0.5rem;
+	}
 }
 
 .elgg-river-more {

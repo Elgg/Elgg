@@ -1,0 +1,87 @@
+/* ***************************************
+	AJAX LOADER
+*************************************** */
+@keyframes infinite-spinning {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.elgg-ajax-loader {
+	background-color: #fff;
+	height: 2.5rem;
+	width: 2.5rem;
+	animation: infinite-spinning 1s infinite linear;
+	border-radius: 50%;
+	border-width: 5px;
+	border-color: var(--elgg-border-color-highlight) var(--elgg-border-color-soft) var(--elgg-border-color-soft);
+	border-style: solid;
+	display: block;
+	margin: 0.75rem auto;
+}
+
+/* ***************************************
+	Image-related
+*************************************** */
+.elgg-photo {
+	border: 1px solid var(--elgg-border-color-soft);
+	padding: 2px;
+	background-color: #ffffff;
+	max-width: 100%;
+	height: auto;
+}
+
+/* ***************************************
+	AVATAR ICONS
+*************************************** */
+.elgg-avatar {
+	--avatar-max-dimension: 100%;
+	--avatar-border-radius: initial;
+	
+	&.elgg-avatar-tiny {
+		--avatar-max-dimension: 25px;
+		--avatar-border-radius: 50%;
+	}
+	
+	&.elgg-avatar-small {
+		--avatar-max-dimension: 40px;
+		--avatar-border-radius: 50%;
+	}
+	
+	&.elgg-avatar-medium {
+		--avatar-max-dimension: 100px;
+		--avatar-border-radius: 50%;
+	}
+	
+	position: relative;
+	display: inline-block;
+	
+	&.elgg-state-banned {
+		opacity: 0.5;
+		
+		&:hover {
+			opacity: 1;
+		}
+	}
+	
+	> a {
+		display: inline-block;
+		
+		img {
+			display: inline-block;
+			vertical-align: middle;
+			width: 100%;
+			height: auto;
+		}
+	}
+	
+	img {
+		border-radius: var(--avatar-border-radius);
+		
+		max-width: var(--avatar-max-dimension);
+		max-height: var(--avatar-max-dimension);
+	}
+}

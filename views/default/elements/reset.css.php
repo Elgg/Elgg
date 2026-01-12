@@ -195,13 +195,13 @@ pre {
 	padding: 1.25rem 1.5rem;
 	white-space: pre;
 	word-wrap: normal;
-}
-
-pre code {
-	background-color: transparent;
-	color: currentColor;
-	font-size: 1em;
-	padding: 0;
+	
+	code {
+		background-color: transparent;
+		color: currentColor;
+		font-size: 1em;
+		padding: 0;
+	}
 }
 
 table td,

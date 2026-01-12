@@ -35,13 +35,7 @@
 }
 
 @media (hover: hover) {
-	.elgg-system-messages .elgg-message {
-		&:before {
-			display: none;
-		}
-		
-		&:hover:before {
-			display: block;
-		}
+	.elgg-system-messages .elgg-message:not(:hover):before {
+		display: none;
 	}
 }
