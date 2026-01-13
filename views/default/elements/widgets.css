@@ -82,7 +82,7 @@
 	}
 	
 	> .elgg-body {
-		background-color: #ffffff;
+		background-color: var(--elgg-layout-background-color);
 		width: 100%;
 	}
 	

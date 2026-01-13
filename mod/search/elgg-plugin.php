@@ -24,12 +24,22 @@ return [
 		],
 	],
 	'theme' => [
-		'search-highlight-color' => '#BBDAF7',
-		'search-highlight-color-1' => '#BBDAF7',
-		'search-highlight-color-2' => '#A0FFFF',
-		'search-highlight-color-3' => '#FDFFC3',
-		'search-highlight-color-4' => '#CCCCCC',
-		'search-highlight-color-5' => '#08A7E7',
+		'default' => [
+			'search-highlight-color' => '#BBDAF7',
+			'search-highlight-color-1' => '#BBDAF7',
+			'search-highlight-color-2' => '#A0FFFF',
+			'search-highlight-color-3' => '#FDFFC3',
+			'search-highlight-color-4' => '#CCCCCC',
+			'search-highlight-color-5' => '#08A7E7',
+		],
+		'dark' => [
+			'search-highlight-color' => '#2d3133',
+			'search-highlight-color-1' => '#2d3133',
+			'search-highlight-color-2' => '#006c6c',
+			'search-highlight-color-3' => '#404100',
+			'search-highlight-color-4' => '#35393b',
+			'search-highlight-color-5' => '#003f5a',
+		],
 	],
 	'view_extensions' => [
 		'elgg.css' => [

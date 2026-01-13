@@ -23,13 +23,13 @@ echo elgg_view('core.css');
 	min-height: 100vh;
 	
 	> .elgg-inner {
-		min-width: 30rem;
-		max-width: 50%;
+		min-width: min(30rem, 90%);
+		max-width: min(var(--elgg-page-section-max-width), 90%);
 		min-height: 100%;
 		
 		> .elgg-page-body {
-			padding: 0 1rem;
-			background: #fff;
+			padding: 1rem;
+			background: var(--elgg-body-background-color);
 			box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3), -1px -1px 1px rgba(0, 0, 0, 0.3);
 			
 			.elgg-layout {
@@ -84,5 +84,5 @@ echo elgg_view('core.css');
 	background-repeat: no-repeat;
 	background-position: 50%;
 	background-attachment: fixed;
-	filter: blur(4px);
+	filter: brightness(var(--elgg-walled-garden-background-image-brightness)) blur(4px);
 }

@@ -11,7 +11,6 @@
 }
 
 .elgg-ajax-loader {
-	background-color: #fff;
 	height: 2.5rem;
 	width: 2.5rem;
 	animation: infinite-spinning 1s infinite linear;
@@ -29,7 +28,7 @@
 .elgg-photo {
 	border: 1px solid var(--elgg-border-color-soft);
 	padding: 2px;
-	background-color: #ffffff;
+	background-color: white;
 	max-width: 100%;
 	height: auto;
 }

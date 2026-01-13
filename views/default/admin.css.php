@@ -88,7 +88,7 @@ echo elgg_view('core.css');
 	}
 
 	&.elgg-state-active {
-		background: #fff;
+		background: white;
 	}
 	
 	&.elgg-state-inactive {
