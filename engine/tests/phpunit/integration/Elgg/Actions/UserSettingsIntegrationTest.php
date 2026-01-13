@@ -17,6 +17,7 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		_elgg_services()->events->backup();
 		_elgg_services()->events->backup();
 
+		elgg_register_event_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setColorScheme');
 		elgg_register_event_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setLanguage');
 		elgg_register_event_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setPassword');
 		elgg_register_event_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setDefaultAccess');
@@ -311,9 +312,10 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 
 		elgg()->config->allow_user_default_access = true;
 
-		$user = $this->createUser();
-		$user->setMetadata('elgg_default_access', ACCESS_PUBLIC);
-
+		$user = $this->createUser([
+			'elgg_default_access' => ACCESS_PUBLIC,
+		]);
+		
 		_elgg_services()->session_manager->setLoggedInUser($user);
 
 		$response = $this->executeAction('usersettings/save', [
@@ -326,5 +328,27 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		$this->assertSystemMessageEmitted(elgg_echo('user:default_access:success'));
 
 		$this->assertEquals(ACCESS_PRIVATE, elgg_get_default_access($user));
+	}
+
+	public function testColorSchemeChangeSucceeds() {
+
+		elgg()->config->color_schemes_enabled = true;
+
+		$user = $this->createUser([
+			'elgg_color_scheme' => 'light',
+		]);
+		
+		_elgg_services()->session_manager->setLoggedInUser($user);
+
+		$response = $this->executeAction('usersettings/save', [
+			'guid' => $user->guid,
+			'color_scheme' => 'dark',
+		]);
+
+		$this->assertInstanceOf(OkResponse::class, $response);
+
+		$this->assertSystemMessageEmitted(elgg_echo('user:color_scheme:success'));
+
+		$this->assertEquals('dark', $user->elgg_color_scheme);
 	}
 }

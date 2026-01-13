@@ -4,21 +4,27 @@
  */
 
 $body = elgg_view_field([
-	'#type' => 'checkbox',
-	'#label' => elgg_echo('config:remove_branding:label'),
-	'#help' => elgg_echo('config:remove_branding:help'),
-	'name' => 'remove_branding',
-	'checked' => (bool) elgg_get_config('remove_branding'),
-	'switch' => true,
+	'#type' => 'switch',
+	'#label' => elgg_echo('config:color_schemes_enabled:label'),
+	'#help' => elgg_echo('config:color_schemes_enabled:help'),
+	'name' => 'color_schemes_enabled',
+	'value' => elgg_get_config('color_schemes_enabled'),
 ]);
 
 $body .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
+	'#label' => elgg_echo('config:remove_branding:label'),
+	'#help' => elgg_echo('config:remove_branding:help'),
+	'name' => 'remove_branding',
+	'value' => elgg_get_config('remove_branding'),
+]);
+
+$body .= elgg_view_field([
+	'#type' => 'switch',
 	'#label' => elgg_echo('config:disable_rss:label'),
 	'#help' => elgg_echo('config:disable_rss:help'),
 	'name' => 'disable_rss',
-	'checked' => (bool) elgg_get_config('disable_rss'),
-	'switch' => true,
+	'value' => elgg_get_config('disable_rss'),
 ]);
 
 $body .= elgg_view_field([

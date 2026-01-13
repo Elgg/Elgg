@@ -83,6 +83,7 @@ class SystemEventHandlers {
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/name', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/email', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/password', 100);
+		elgg_extend_view('forms/usersettings/save', 'core/settings/account/color_scheme', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/language', 100);
 		elgg_extend_view('forms/usersettings/save', 'core/settings/account/default_access', 100);
 		

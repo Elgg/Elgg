@@ -978,10 +978,6 @@ Views
     ``$params['arguments']`` and should return an instance of ``Elgg\Views\TableColumn`` if they
     wish to specify the column directly.
     
-**vars:compiler, css** |results|
-    Allows plugins to alter CSS variables.
-    See `CSS variables <_guides/theming#css-vars>`.
-    
 **view, <view_name>** |results|
     Filters the returned content of the view
     
