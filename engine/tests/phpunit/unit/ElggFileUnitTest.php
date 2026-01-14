@@ -235,7 +235,7 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanCreateAndReadSymlinks() {
-		if (stripos(PHP_OS, 'WIN') !== false) {
+		if (PHP_OS_FAMILY === 'Windows') {
 			$this->markTestSkipped('Unable to test symlinks on Windows');
 		}
 
@@ -284,7 +284,7 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanDeleteSymlinkAndTarget() {
-		if (stripos(PHP_OS, 'WIN') !== false) {
+		if (PHP_OS_FAMILY === 'Windows') {
 			$this->markTestSkipped('Unable to test symlinks on Windows');
 		}
 
@@ -310,7 +310,7 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanDeleteSymlinkWithMissingTarget() {
-		if (stripos(PHP_OS, 'WIN') !== false) {
+		if (PHP_OS_FAMILY === 'Windows') {
 			$this->markTestSkipped('Unable to test symlinks on Windows');
 		}
 

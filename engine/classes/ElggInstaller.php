@@ -1133,7 +1133,7 @@ class ElggInstaller {
 		}
 
 		// check that data root is absolute path
-		if (stripos(PHP_OS, 'win') === 0) {
+		if (PHP_OS_FAMILY === 'Windows') {
 			if (strpos($submissionVars['dataroot'], ':') !== 1) {
 				$save_value = $this->sanitizeInputValue($submissionVars['dataroot']);
 				$app->internal_services->system_messages->addErrorMessage(elgg_echo('install:error:relative_path', [$save_value]));

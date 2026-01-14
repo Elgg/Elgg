@@ -25,7 +25,7 @@ class PostInstall {
 
 		self::createProjectModFolder();
 
-		if (stripos(PHP_OS, 'win') !== 0) {
+		if (PHP_OS_FAMILY !== 'Windows') {
 			// symlink the mods from Elgg /mod to the project /mod
 			$managed_plugins = \Elgg\Database\Plugins::BUNDLED_PLUGINS;
 			foreach ($managed_plugins as $plugin) {
