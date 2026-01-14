@@ -66,7 +66,7 @@ class ImageFetcherService {
 		$site = elgg_get_site_entity();
 		$options = [];
 		
-		if (stripos($image_url, $site->getURL()) === 0) {
+		if (str_starts_with($image_url, $site->getURL())) {
 			// internal url, can use session cookie
 			$cookie_config = $this->config->getCookieConfig();
 			

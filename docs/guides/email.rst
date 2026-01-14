@@ -22,7 +22,7 @@ If your email contains images, those images can be converted to inline base64 en
 Converted images are the best way to have images show consistently in various clients.
 
 Instead of having the message converted automatically to a HTML, you can also provide your own ``html_message`` in the ``params`` of a notification.
-The ``html_message`` can be either a ``Elgg\Email\HtmlPart`` or a ``string``. If it is a ``string`` Elgg will automatically try to inline provided CSS present in the ``css`` param.
+The ``html_message`` must be a ``string``. Elgg will automatically try to inline provided CSS present in the ``css`` param.
 If you do not want to inline CSS you will need to set the ``convert_css`` param to ``false``. Below an example of a custom HTML part.
 
 .. code-block:: php
@@ -87,27 +87,19 @@ add a key ``attachments`` in ``$params`` which is an array of the attachments. A
 E-mail address formatting
 =========================
 
-Elgg has a helper class to aid in getting formatted e-mail addresses: ``\Elgg\Email\Address``.
+Elgg uses the Symfony library to help with e-mail address formatting: ``\Symfony\Component\Mime\Address``.
 
 .. code-block:: php
 
 	// the constructor takes two variables
 	// first is the email address, this is REQUIRED
 	// second is the name, this is optional
-	$address = new \Elgg\Email\Address('example@elgg.org', 'Example');
+	$address = new \Symfony\Component\Mime\Address('example@elgg.org', 'Example');
 	
 	// this will result in 'Example <example@elgg.org>'
 	echo $address->toString();
-	
-	// to change the name use:
-	$address->setName('New Example');
-	
-	// to change the e-mail address use:
-	$address->setEmail('example2@elgg.org');
 
 There are some helper functions available
 
-- ``\Elgg\Email\Address::fromString($string)`` Will return an ``\Elgg\Email\Address`` class with e-mail and name set,
-  provided a formatted string (eg. ``Example <example@elgg.org>``)
-- ``\Elgg\Email\Address::fromEntity($entity)`` Will return an ``\Elgg\Email\Address`` class with e-mail and name set based on the entity
-- ``\Elgg\Email\Address::getFormattedEmailAddress($email, $name)`` Will return a formatted string provided an e-mail address and optionaly a name
+- ``\Symfony\Component\Mime\Address::create($string)`` Will return an ``\Symfony\Component\Mime\Address`` class with 
+  e-mail and name set, provided a formatted string (eg. ``Example <example@elgg.org>``)

@@ -4,7 +4,6 @@ namespace Elgg\Users;
 
 use Elgg\Config;
 use Elgg\Email;
-use Elgg\Email\Address;
 use Elgg\EmailService;
 use Elgg\EventsService;
 use Elgg\Exceptions\Configuration\RegistrationException;
@@ -13,6 +12,7 @@ use Elgg\I18n\Translator;
 use Elgg\PasswordService;
 use Elgg\Security\PasswordGeneratorService;
 use Elgg\Validation\ValidationResults;
+use Symfony\Component\Mime\Address;
 
 /**
  * User accounts service
@@ -44,7 +44,7 @@ class Accounts {
 	 *
 	 * @param string       $username              The username of the new user
 	 * @param string|array $password              The password
-	 *                                            Can be an array [$password, $oonfirm_password]
+	 *                                            Can be an array [$password, $confirm_password]
 	 * @param string       $name                  The user's display name
 	 * @param string       $email                 The user's email address
 	 * @param bool         $allow_multiple_emails Allow the same email address to be
@@ -121,9 +121,9 @@ class Accounts {
 	 *                      (string) name                  => The user's display name
 	 *                      (string) email                 => The user's email address
 	 *                      (string) subtype               => (optional) Subtype of the user entity
-	 *                      (string) language              => (optional) user language (defaults to current language)
-	 *                      (bool)   allow_multiple_emails => (optional) Allow the same email address to be registered multiple times (default false)
-	 *                      (bool)   validated             => (optional) Is the user validated (default true)
+	 *                      (string) language              => (optional) user language (default: current language)
+	 *                      (bool)   allow_multiple_emails => (optional) Allow the same email address to be registered multiple times (default: false)
+	 *                      (bool)   validated             => (optional) Is the user validated (default: true)
 	 *
 	 * @return \ElggUser
 	 * @throws RegistrationException
@@ -303,7 +303,7 @@ class Accounts {
 	}
 
 	/**
-	 * Simple validation of a email.
+	 * Simple validation of an email.
 	 *
 	 * @param string $address             Email address
 	 * @param bool   $assert_unregistered Also assert that the email address has not yet been used for a user account

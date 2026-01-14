@@ -3,10 +3,10 @@
 namespace Elgg;
 
 use Elgg\Database\DbConfig;
+use Elgg\Mocks\Mailer\Transport\InMemoryTransport;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Laminas\Mail\Transport\InMemory;
 
 /**
  * Integration test abstraction
@@ -66,9 +66,7 @@ abstract class BaseIntegrationTestCase extends BaseTestCase {
 			return \ElggSession::getMock();
 		});
 
-		$app->internal_services->set('mailer', function () {
-			return new InMemory();
-		});
+		$app->internal_services->set('mailer_transport', new InMemoryTransport());
 
 		try {
 			$app->internal_services->db->getConnection(DbConfig::WRITE);

@@ -5,7 +5,8 @@ namespace Elgg\Messages;
 use Elgg\ActionResponseTestCase;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
-use Laminas\Mail\Message;
+use Symfony\Component\Mime\Email as SymfonyEmail;
+use Symfony\Component\Mime\Part\TextPart;
 
 class SendActionTest extends ActionResponseTestCase {
 
@@ -16,7 +17,6 @@ class SendActionTest extends ActionResponseTestCase {
 	}
 
 	public function testSendFailsWithoutRecipient() {
-
 		$user = $this->createUser([
 			'language' => 'de',
 		]);
@@ -34,7 +34,6 @@ class SendActionTest extends ActionResponseTestCase {
 	}
 
 	public function testSendFailsToSelf() {
-
 		$user = $this->createUser([
 			'language' => 'de',
 		]);
@@ -53,7 +52,6 @@ class SendActionTest extends ActionResponseTestCase {
 	}
 
 	public function testSendFailsToInvalidUser() {
-
 		$user = $this->createUser([
 			'language' => 'de',
 		]);
@@ -72,7 +70,6 @@ class SendActionTest extends ActionResponseTestCase {
 	}
 
 	public function testSendFailsWithoutMessageSubject() {
-
 		$user = $this->createUser([
 			'language' => 'de',
 		]);
@@ -94,7 +91,6 @@ class SendActionTest extends ActionResponseTestCase {
 	}
 
 	public function testSendFailsWithoutMessageBody() {
-
 		$user = $this->createUser([
 			'language' => 'de',
 		]);
@@ -116,7 +112,6 @@ class SendActionTest extends ActionResponseTestCase {
 	}
 
 	public function testSendSuccess() {
-
 		$user = $this->createUser([
 			'language' => 'de',
 		]);
@@ -150,11 +145,6 @@ class SendActionTest extends ActionResponseTestCase {
 			$this->assertEquals('Message Body', $message->description);
 		});
 		
-		$notification = _elgg_services()->mailer->getLastMessage();
-		/* @var $notification \Laminas\Mail\Message */
-
-		$this->assertInstanceOf(Message::class, $notification);
-
 		$expected_subject = elgg_echo('messages:email:subject', [], $recipient->getLanguage());
 		$expected_body = elgg_echo('messages:email:body', [
 			$user->getDisplayName(),
@@ -170,17 +160,15 @@ class SendActionTest extends ActionResponseTestCase {
 			$recipient->getLanguage()
 		);
 
-		$plain_text_part = null;
-		foreach ($notification->getBody()->getParts() as $part) {
-			if ($part->getId() === 'plaintext') {
-				$plain_text_part = $part;
-				break;
-			}
-		}
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 		
-		$this->assertNotEmpty($plain_text_part);
+		/** @var TextPart $plain_text_part */
+		$plain_text_part = $email->getBody();
+		$this->assertInstanceOf(TextPart::class, $plain_text_part);
 
-		$this->assertEquals($expected_subject, $notification->getSubject());
-		$this->assertStringContainsString(preg_replace('/\\n/m', ' ', $expected_body), preg_replace('/\\n/m', ' ', $plain_text_part->getRawContent()));
+		$this->assertEquals($expected_subject, $email->getSubject());
+		$this->assertStringContainsString($expected_body, $plain_text_part->getBody());
 	}
 }

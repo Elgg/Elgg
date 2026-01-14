@@ -18,6 +18,18 @@ PHPUnit
 
 Elgg now uses PHPUnit 12.5. You might need to update your tests.
 
+Laminas Mail
+~~~~~~~~~~~~
+
+The libraries ``laminas/laminas-mail``, ``laminas/laminas-mime`` and ``laminas/laminas-servicemanager`` have been replaced
+by ``symfony/mailer`` because of the end of support.
+
+Because of this change the config setting ``emailer_transport`` (which can be found in the ``elgg-config/settings.php``) 
+now requires a different format. Please read the instructions in ``elgg-config/settings.example.php``. The config settings
+``emailer_sendmail_settings`` and ``emailer_smtp_settings`` have been removed.
+
+The event ``zend:message, system:email`` has been renamed to ``message, system:email``.
+
 Elgg core changes
 -----------------
 
@@ -138,3 +150,10 @@ Changed class function return types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * ``\Elgg\Traits\Di\ServiceFacade`` now returns a ``string``
+
+Removed Classes
+~~~~~~~~~~~~~~~
+
+* ``\Elgg\Email\Address`` has been removed, use ``\Symfony\Component\Mime\Address``
+* ``\Elgg\Email\HtmlPart.php`` has been removed
+* ``\Elgg\Email\PlainTextPart.php`` has been removed

@@ -2,23 +2,13 @@
 
 namespace Elgg\Email;
 
-use Laminas\Mime\Part;
-use Laminas\Mime\Mime;
+use Elgg\Exceptions\InvalidArgumentException;
+use Symfony\Component\Mime\Part\DataPart;
 
 /**
  * Email attachment
  */
-class Attachment extends Part {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function __construct($content = '') {
-		parent::__construct($content);
-		
-		$this->disposition = 'attachment';
-		$this->setId(uniqid('attachment'));
-	}
+class Attachment extends DataPart {
 	
 	/**
 	 * Create an attachment
@@ -32,24 +22,22 @@ class Attachment extends Part {
 	 *		                 - disposition: (string) the attachment disposition (default: attachment)
 	 *		                 - charset:     (string) the charset
 	 *
-	 * @see \Laminas\Mime\Part
+	 * @see \Symfony\Component\Mime\Part\DataPart
 	 *
-	 * @return false|\Elgg\Email\Attachment return the attachment or false on error
+	 * @return Attachment return the attachment
+	 * @throws InvalidArgumentException
 	 */
-	public static function factory($options) {
-		
+	public static function factory(mixed $options): static {
 		if ($options instanceof \ElggFile) {
 			return self::fromElggFile($options);
 		}
 		
 		if (!is_array($options)) {
-			elgg_log(__METHOD__ . ': $options needs to be an array', \Psr\Log\LogLevel::ERROR);
-			return false;
+			throw new InvalidArgumentException(__METHOD__ . ': $options needs to be an array');
 		}
 		
 		if (!isset($options['content']) && !isset($options['filepath'])) {
-			elgg_log(__METHOD__ . ': $options "content" or "filepath" is required', \Psr\Log\LogLevel::ERROR);
-			return false;
+			throw new InvalidArgumentException(__METHOD__ . ': $options "content" or "filepath" is required');
 		}
 		
 		$content = elgg_extract('content', $options);
@@ -57,13 +45,10 @@ class Attachment extends Part {
 		if (!isset($content)) {
 			$filepath = elgg_extract('filepath', $options);
 			if (empty($filepath) || !is_file($filepath)) {
-				elgg_log(__METHOD__ . ': $options[filepath] didn\'t result in a valid file', \Psr\Log\LogLevel::ERROR);
-				return false;
+				throw new InvalidArgumentException(__METHOD__ . ': $options[filepath] didn\'t result in a valid file');
 			}
 			
 			$content = file_get_contents($filepath);
-			
-			$options['encoding'] = Mime::ENCODING_BASE64;
 			
 			if (!isset($options['filename'])) {
 				$options['filename'] = basename($filepath);
@@ -74,12 +59,19 @@ class Attachment extends Part {
 			}
 		}
 		
-		unset($options['filepath']);
+		$filename = $options['filename'] ?? null;
+		$content_type = $options['type'] ?? null;
+		$encoding = $options['encoding'] ?? null;
 		
-		$attachment = new self($content);
+		$attachment = new self($content, $filename, $content_type, $encoding);
 		
-		foreach ($options as $key => $value) {
-			$attachment->$key = $value;
+		if (isset($options['id'])) {
+			$id = $options['id'];
+			if (!str_contains($id, '@')) {
+				$id .= '@elgg';
+			}
+			
+			$attachment->setContentId($id);
 		}
 		
 		return $attachment;
@@ -90,21 +82,18 @@ class Attachment extends Part {
 	 *
 	 * @param \ElggFile $file the file
 	 *
-	 * @return false|\Elgg\Email\Attachment
+	 * @return Attachment
+	 * @throws InvalidArgumentException
 	 */
-	public static function fromElggFile(\ElggFile $file) {
-		
+	public static function fromElggFile(\ElggFile $file): static {
 		if (!$file->exists()) {
-			return false;
+			throw new InvalidArgumentException(__METHOD__ . ': $file doesn\'t exist');
 		}
 		
-		$options = [
+		return self::factory([
 			'content' => $file->grabFile(),
 			'type' => $file->getMimeType(),
 			'filename' => basename($file->getFilename()),
-			'encoding' => Mime::ENCODING_BASE64,
-		];
-		
-		return self::factory($options);
+		]);
 	}
 }

@@ -3,16 +3,18 @@
 namespace Elgg\Messages;
 
 use Elgg\Plugins\IntegrationTestCase;
-use Laminas\Mail\Message;
+use Symfony\Component\Mime\Email as SymfonyEmail;
+use Symfony\Component\Mime\Part\TextPart;
 
 class MessagesPluginTest extends IntegrationTestCase {
 
 	public function up() {
 		self::createApplication(['isolate' => true]);
+		
+		$this->startPlugin();
 	}
 
 	public function testCanSendMessage() {
-
 		$sender = $this->createUser();
 		$recipient = $this->createUser();
 		$recipient->setNotificationSetting('email', true);
@@ -50,11 +52,6 @@ class MessagesPluginTest extends IntegrationTestCase {
 		$this->assertTrue($message->hasAccess($recipient->guid));
 		$this->assertFalse($message->hasAccess($sender->guid));
 
-		$notification = _elgg_services()->mailer->getLastMessage();
-		/* @var $notification \Laminas\Mail\Message */
-
-		$this->assertInstanceOf(Message::class, $notification);
-
 		$expected_subject = elgg_echo('messages:email:subject', [], $recipient->getLanguage());
 		$expected_body = elgg_echo('messages:email:body', [
 			$sender->getDisplayName(),
@@ -70,17 +67,15 @@ class MessagesPluginTest extends IntegrationTestCase {
 			$recipient->getLanguage()
 		);
 
-		$plain_text_part = null;
-		foreach ($notification->getBody()->getParts() as $part) {
-			if ($part->getId() === 'plaintext') {
-				$plain_text_part = $part;
-				break;
-			}
-		}
+		/** @var SymfonyEmail $email */
+		$email = _elgg_services()->mailer_transport->getLastEmail();
+		$this->assertInstanceOf(SymfonyEmail::class, $email);
 		
-		$this->assertNotEmpty($plain_text_part);
+		/** @var TextPart $plain_text_part */
+		$plain_text_part = $email->getBody();
+		$this->assertInstanceOf(TextPart::class, $plain_text_part);
 
-		$this->assertEquals($expected_subject, $notification->getSubject());
-		$this->assertStringContainsString($expected_body, $plain_text_part->getRawContent());
+		$this->assertEquals($expected_subject, $email->getSubject());
+		$this->assertStringContainsString($expected_body, $plain_text_part->getBody());
 	}
 }
