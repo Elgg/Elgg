@@ -125,7 +125,7 @@ class ChangelogWriter {
 			$options['format'],
 			$options['to'],
 			implode(' ', array_map(function ($value) {
-				if (str_contains(PHP_OS, 'WIN')) {
+				if (PHP_OS_FAMILY === 'Windows') {
 					return "^^{$value}";
 				}
 				
@@ -230,7 +230,7 @@ class ChangelogWriter {
 		$command = vsprintf('git shortlog -sne %s --no-merges %s', [
 			$options['to'],
 			implode(' ', array_map(function ($value) {
-				if (str_contains(PHP_OS, 'WIN')) {
+				if (PHP_OS_FAMILY === 'Windows') {
 					return "^^{$value}";
 				}
 				

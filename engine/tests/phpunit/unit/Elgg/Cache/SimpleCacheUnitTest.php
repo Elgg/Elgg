@@ -59,7 +59,7 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 	
 	public function testClearSimplecacheSymlinked() {
 		
-		if (stripos(PHP_OS, 'WIN') !== false) {
+		if (PHP_OS_FAMILY === 'Windows') {
 			$this->markTestSkipped('Unable to test symlinks on Windows');
 		}
 		
@@ -99,7 +99,7 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 	}
 	
 	public function testCanSymlinkCache() {
-		if (stripos(PHP_OS, 'WIN') !== false) {
+		if (PHP_OS_FAMILY === 'Windows') {
 			$this->markTestSkipped('Unable to test symlinks on Windows');
 		}
 		

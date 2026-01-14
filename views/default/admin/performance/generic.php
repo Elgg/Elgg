@@ -57,7 +57,7 @@ if (!empty($open_basedirs)) {
 	$value = elgg_format_element('span', ['class' => ['elgg-subtext']], $open_basedirs);
 	
 	$separator = ':';
-	if (stripos(PHP_OS, 'WIN') === 0) {
+	if (PHP_OS_FAMILY === 'Windows') {
 		$separator = ';';
 	}
 	
