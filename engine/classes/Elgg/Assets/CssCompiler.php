@@ -12,6 +12,8 @@ use Elgg\Project\Paths;
  * @internal
  */
 class CssCompiler {
+	
+	protected ?array $css_variables = null;
 
 	/**
 	 * Constructor
@@ -24,43 +26,46 @@ class CssCompiler {
 	/**
 	 * Fetches a combined set of CSS variables and their value
 	 *
-	 * @param array $compiler_options compiler arguments with potential custom variables
-	 * @param bool  $load_config_vars (internal) determines if config values are being loaded
+	 * @param bool $load_config_vars determines if config values are being loaded
 	 *
 	 * @return array
 	 */
-	public function getCssVars(array $compiler_options = [], bool $load_config_vars = true): array {
-		$default_vars = array_merge($this->getCoreVars(), $this->getPluginVars());
-		$custom_vars = (array) elgg_extract('vars', $compiler_options, []);
-		$vars = array_merge($default_vars, $custom_vars);
-		
-		$results = (array) $this->events->triggerResults('vars:compiler', 'css', $compiler_options, $vars);
+	public function getCssVars(bool $load_config_vars = true): array {
+		if (!isset($this->css_variables)) {
+			$this->css_variables = Includer::includeFile(Paths::elgg() . 'engine/theme.php');
+			$this->loadPluginVars();
+		}
+
+		$results = $this->css_variables;
 		
 		if (!$load_config_vars) {
 			return $results;
 		}
 		
-		return array_merge($results, (array) elgg_get_config('custom_theme_vars', []));
-	}
-
-	/**
-	 * Default Elgg theme variables
-	 *
-	 * @return array
-	 */
-	protected function getCoreVars(): array {
-		$file = Paths::elgg() . 'engine/theme.php';
-		return Includer::includeFile($file);
-	}
-
-	/**
-	 * Plugin theme variables
-	 *
-	 * @return array
-	 */
-	protected function getPluginVars(): array {
-		$return = [];
+		$custom_vars = (array) elgg_get_config('custom_theme_vars', []);
+		if (empty($custom_vars)) {
+			return $results;
+		}
 		
+		$first_element = $custom_vars[array_key_first($custom_vars)];
+		if (!is_array($first_element)) {
+			// assume site config only has default color scheme variables (pre 7.0)
+			$custom_vars = ['default' => $custom_vars];
+		}
+
+		foreach ($custom_vars as $color_scheme => $variables) {
+			$results[$color_scheme] = array_merge(elgg_extract($color_scheme, $results), $variables);
+		}
+		
+		return $results;
+	}
+
+	/**
+	 * Loads the plugin theme variables
+	 *
+	 * @return void
+	 */
+	protected function loadPluginVars(): void {
 		$plugins = elgg_get_plugins('active');
 		foreach ($plugins as $plugin) {
 			$plugin_vars = $plugin->getStaticConfig('theme', []);
@@ -68,9 +73,16 @@ class CssCompiler {
 				continue;
 			}
 			
-			$return = array_merge($return, $plugin_vars);
+			$first_item = $plugin_vars[array_key_first($plugin_vars)];
+			if (!is_array($first_item)) {
+				// assume plugin config only has default color scheme variables
+				$plugin_vars = ['default' => $plugin_vars];
+			}
+			
+			foreach ($plugin_vars as $color_scheme => $variables) {
+				$merged_variables = array_merge(elgg_extract($color_scheme, $this->css_variables), $variables);
+				$this->css_variables[$color_scheme] = $merged_variables;
+			}
 		}
-		
-		return $return;
 	}
 }
