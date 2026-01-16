@@ -89,7 +89,6 @@ return array(
 	'developers:inspect:handler' => 'Handler',
 	'developers:inspect:controller' => 'Controller',
 	'developers:inspect:file' => 'Datei',
-	'developers:inspect:middleware' => 'Datei',
 	'developers:inspect:handler_type' => 'Verarbeitet von',
 	'developers:inspect:services' => 'Services',
 	'developers:inspect:service:name' => 'Name',

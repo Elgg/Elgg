@@ -97,7 +97,7 @@ return array(
 	'developers:inspect:handler' => 'Gestionnaire',
 	'developers:inspect:controller' => 'Contrôleur',
 	'developers:inspect:file' => 'Fichier',
-	'developers:inspect:middleware' => 'Fichier',
+	'developers:inspect:middleware' => 'Middleware',
 	'developers:inspect:handler_type' => 'Géré par',
 	'developers:inspect:services' => 'Services',
 	'developers:inspect:service:name' => 'Nom',
