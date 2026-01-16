@@ -1,3 +1,16 @@
+<a name="6.3.3"></a>
+### 6.3.3 (2026-01-16)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Jeroen Dalsem (1)
+
+#### Bug fixes
+
+* **js:** datepicker not updating timestamp on manual input or reset [4c0788754](https://github.com/Elgg/Elgg/commit/4c0788754464a5493b1fc6482f74acbd374de392)
+
+
 <a name="6.3.2"></a>
 ### 6.3.2 (2025-11-06)
 
