@@ -1153,7 +1153,7 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'banned' => "Geblokkeerd",
 	'enable' => "Activeren",
 	'disable' => "Deactiveren",
-	'request' => "Aanvraag",
+	'request' => "Aanvragen",
 	'complete' => "Compleet",
 	'open' => 'Open',
 	'close' => 'Sluiten',

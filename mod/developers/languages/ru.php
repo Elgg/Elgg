@@ -94,7 +94,6 @@ return array(
 	'developers:inspect:handler' => 'Обработчик',
 	'developers:inspect:controller' => 'Контроллер',
 	'developers:inspect:file' => 'Файл',
-	'developers:inspect:middleware' => 'Файл',
 	'developers:inspect:handler_type' => 'Обрабатывается',
 	'developers:inspect:services' => 'Сервисы',
 	'developers:inspect:service:name' => 'Наименование',
