@@ -177,12 +177,18 @@ function elgg_get_subscriptions_for_container(int $container_guid): array {
 /**
  * Send an email to any email address
  *
- * @param \Elgg\Email $email Email
+ * @param array|\Elgg\Email $email Email or array of options for \Elgg\Email::factory()
+ *
+ * @see \Elgg\Email::factory()
  *
  * @return bool
  * @since 1.7.2
  */
-function elgg_send_email(\Elgg\Email $email): bool {
+function elgg_send_email(array|\Elgg\Email $email): bool {
+	if (is_array($email)) {
+		$email = \Elgg\Email::factory($email);
+	}
+	
 	return _elgg_services()->emails->send($email);
 }
 

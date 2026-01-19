@@ -70,13 +70,13 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 			return $email;
 		});
 
-		elgg_send_email(\Elgg\Email::factory([
+		elgg_send_email([
 			'from' => "from@elgg.org",
 			'to' => "to@elgg.org",
 			'subject' => "Hello",
 			'body' => "World",
 			'params' => ['foo' => 1],
-		]));
+		]);
 
 		$test_handler->assertNumberOfCalls(1);
 
@@ -111,26 +111,26 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 	function testElggSendEmailBypass() {
 		_elgg_services()->events->registerHandler('transport', 'system:email', [\Elgg\Values::class, 'getTrue']);
 
-		$this->assertTrue(elgg_send_email(\Elgg\Email::factory([
+		$this->assertTrue(elgg_send_email([
 			'from' => "from1@elgg.org",
 			'to' => "to1@elgg.org",
 			'subject' => "Hello",
 			'body' => "World",
 			'params' => ['foo' => 1],
-		])));
+		]));
 
 		$this->assertNull(_elgg_services()->mailer_transport->getLastMessage());
 	}
 	
 	function testElggSendEmailMultipleRecipients() {
-		elgg_send_email(\Elgg\Email::factory([
+		elgg_send_email([
 			'from' => "from@elgg.org",
 			'to' => "To <to@elgg.org>",
 			'cc' => Address::create('cc@elgg.org'),
 			'bcc' => ['bcc1@elgg.org', Address::create('bcc2@elgg.org')],
 			'subject' => 'foo',
 			'body' => 'bar',
-		]));
+		]);
 
 		/** @var SymfonyEmail $email */
 		$email = _elgg_services()->mailer_transport->getLastEmail();
@@ -254,12 +254,12 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 		// no email part
 		elgg_set_config('email_html_part', false);
 		
-		elgg_send_email(\Elgg\Email::factory([
+		elgg_send_email([
 			'from' => 'from@elgg.org',
 			'to' => 'to@elgg.org',
 			'subject' => $subject,
 			'body' => $body,
-		]));
+		]);
 
 		/** @var SymfonyEmail $email */
 		$email = _elgg_services()->mailer_transport->getLastEmail();
@@ -285,7 +285,7 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 
 		$this->assertTrue($file->exists());
 		
-		elgg_send_email(\Elgg\Email::factory([
+		elgg_send_email([
 			'from' => 'from@elgg.org',
 			'to' => 'to@elgg.org',
 			'subject' => $subject,
@@ -293,7 +293,7 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 			'params' => [
 				'attachments' =>[$file],
 			],
-		]));
+		]);
 
 		/** @var SymfonyEmail $email */
 		$email = _elgg_services()->mailer_transport->getLastEmail();
@@ -315,12 +315,12 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 		$body = '<p>Foo <a href="http://elgg.org">link</a> bar</p>';
 		$subject = 'subject' . uniqid();
 				
-		elgg_send_email(\Elgg\Email::factory([
+		elgg_send_email([
 			'from' => 'from@elgg.org',
 			'to' => 'to@elgg.org',
 			'subject' => $subject,
 			'body' => $body,
-		]));
+		]);
 
 		/** @var SymfonyEmail $email */
 		$email = _elgg_services()->mailer_transport->getLastEmail();
@@ -349,7 +349,7 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 
 		$this->assertTrue($file->exists());
 		
-		elgg_send_email(\Elgg\Email::factory([
+		elgg_send_email([
 			'from' => 'from@elgg.org',
 			'to' => 'to@elgg.org',
 			'subject' => $subject,
@@ -357,7 +357,7 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 			'params' => [
 				'attachments' =>[$file],
 			],
-		]));
+		]);
 
 		/** @var SymfonyEmail $email */
 		$email = _elgg_services()->mailer_transport->getLastEmail();
@@ -382,12 +382,12 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 		$body = '<p>Foo <a href="http://elgg.org">link</a> bar</p>';
 		$subject = 'subject' . uniqid();
 		
-		elgg_send_email(\Elgg\Email::factory([
+		elgg_send_email([
 			'from' => 'from@elgg.org',
 			'to' => 'to@elgg.org',
 			'subject' => $subject,
 			'body' => $body,
-		]));
+		]);
 
 		/** @var SymfonyEmail $email */
 		$email = _elgg_services()->mailer_transport->getLastEmail();
@@ -422,13 +422,13 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 		$body = '<p>Foo <a href="http://elgg.org">link</a> bar</p>';
 		$subject = 'subject' . uniqid();
 		
-		elgg_send_email(\Elgg\Email::factory([
+		elgg_send_email([
 			'from' => 'from@elgg.org',
 			'to' => 'to@elgg.org',
 			'subject' => $subject,
 			'body' => $body,
 			'params' => ['html_message' => $body],
-		]));
+		]);
 
 		/** @var SymfonyEmail $email */
 		$email = _elgg_services()->mailer_transport->getLastEmail();
@@ -450,7 +450,7 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 		$body = '<p>Foo <a href="http://elgg.org">link</a> bar</p>';
 		$subject = 'subject' . uniqid();
 		
-		elgg_send_email(\Elgg\Email::factory([
+		elgg_send_email([
 			'from' => 'from@elgg.org',
 			'to' => 'to@elgg.org',
 			'subject' => $subject,
@@ -459,7 +459,7 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 				'html_message' => $body,
 				'convert_css' => false
 			],
-		]));
+		]);
 
 		/** @var SymfonyEmail $email */
 		$email = _elgg_services()->mailer_transport->getLastEmail();
@@ -482,7 +482,7 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 		$expected_body = '<p style="color: red;">Foo <a href="http://elgg.org">link</a> bar</p>';
 		$subject = 'subject' . uniqid();
 		
-		elgg_send_email(\Elgg\Email::factory([
+		elgg_send_email([
 			'from' => 'from@elgg.org',
 			'to' => 'to@elgg.org',
 			'subject' => $subject,
@@ -492,7 +492,7 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 				'convert_css' => true,
 				'css' => 'p { color: red; }',
 			],
-		]));
+		]);
 
 		/** @var SymfonyEmail $email */
 		$email = _elgg_services()->mailer_transport->getLastEmail();
@@ -519,12 +519,12 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 		
 		elgg_set_config('email_html_part_images', 'base64');
 		
-		elgg_send_email(\Elgg\Email::factory([
+		elgg_send_email([
 			'from' => 'from@elgg.org',
 			'to' => 'to@elgg.org',
 			'subject' => $subject,
 			'body' => $body,
-		]));
+		]);
 
 		/** @var SymfonyEmail $email */
 		$email = _elgg_services()->mailer_transport->getLastEmail();
@@ -551,12 +551,12 @@ class EmailServiceIntegrationTest extends IntegrationTestCase {
 
 		elgg_set_config('email_html_part_images', 'attach');
 		
-		elgg_send_email(\Elgg\Email::factory([
+		elgg_send_email([
 			'from' => 'from@elgg.org',
 			'to' => 'to@elgg.org',
 			'subject' => $subject,
 			'body' => $body,
-		]));
+		]);
 
 		/** @var SymfonyEmail $email */
 		$email = _elgg_services()->mailer_transport->getLastEmail();
