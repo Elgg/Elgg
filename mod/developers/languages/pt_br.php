@@ -94,7 +94,6 @@ Isso pode causar problemas em views que não são HTML no tipo de view padrão."
 	'developers:inspect:handler' => 'Manipulador',
 	'developers:inspect:controller' => 'Controladores',
 	'developers:inspect:file' => 'Arquivos',
-	'developers:inspect:middleware' => 'Arquivos',
 	'developers:inspect:handler_type' => 'Manipulado por',
 	'developers:inspect:services' => 'Serviços',
 	'developers:inspect:service:name' => 'Nome',

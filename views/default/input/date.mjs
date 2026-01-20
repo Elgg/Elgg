@@ -48,19 +48,27 @@ var datepicker = {
 			var $elem = $(this);
 			var opts = $elem.data('datepickerOpts') || {};
 			opts = $.extend({}, defaults, opts);
-
-			opts.onSelect = function (dateText, instance) {
-				if ($(this).is('.elgg-input-timestamp')) {
-					timestamp = '';
-					if (dateText.length) {
-						// convert to unix timestamp
-						var timestamp = Date.UTC(instance.selectedYear, instance.selectedMonth, instance.selectedDay);
-						timestamp = timestamp / 1000;
-					}
-					
-					$('input[rel="' + this.id + '"]').val(timestamp);
+			
+			const updateTimestamp = function(instance) {
+				let timestamp = '';
+				const datetime = $('#' + instance.id).datepicker('getDate');
+				
+				if (datetime) {
+					// convert to unix timestamp in seconds
+					const newdate = new Date(datetime);
+					timestamp = Date.UTC(newdate.getFullYear(), newdate.getMonth(), newdate.getDate()) / 1000;
 				}
+				
+				$('input[rel="' + instance.id + '"]').val(timestamp);
 			};
+
+			if ($(this).is('.elgg-input-timestamp')) {
+				opts.onUpdateDatepicker = updateTimestamp;
+				
+				opts.onSelect = function (dateText, instance) {
+					updateTimestamp(instance);
+				};
+			}
 
 			// defer until language loaded
 			i18n_ready.then(function () {
