@@ -3,7 +3,7 @@
 namespace Elgg\Bookmarks\Forms;
 
 /**
- * Prepare the fields for the bookmarks/save form
+ * Prepare the fields for the bookmarks/edit form
  *
  * @since 5.0
  */
@@ -12,7 +12,7 @@ class PrepareFields {
 	/**
 	 * Prepare fields
 	 *
-	 * @param \Elgg\Event $event 'form:prepare:fields', 'bookmarks/save'
+	 * @param \Elgg\Event $event 'form:prepare:fields', 'bookmarks/edit'
 	 *
 	 * @return array
 	 */

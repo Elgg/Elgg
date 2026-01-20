@@ -6,7 +6,7 @@ use Elgg\Exceptions\Http\InternalServerErrorException;
 use Elgg\Exceptions\Http\ValidationException;
 
 /**
- * Elgg file uploader/edit action
+ * Elgg file edit action
  *
  * @since 6.2
  */

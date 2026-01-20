@@ -86,6 +86,23 @@ of 100.
 Plugin changes
 --------------
 
+Entity related forms and actions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The entity related forms and actions have been unified. The following forms were affected:
+
+- ``forms/blog/save`` is now ``forms/blog/edit``
+- ``forms/bookmarks/save`` is now ``forms/bookmarks/edit``
+- ``forms/discussion/save`` is now ``forms/discussion/edit``
+- ``forms/file/upload`` is now ``forms/file/edit``
+
+The following related actions were affected:
+
+- ``action/blog/save`` is now ``action/blog/edit``
+- ``action/bookmarks/save`` is now ``action/bookmarks/edit``
+- ``action/discussion/save`` is now ``action/discussion/edit``
+- ``action/file/upload`` is now ``action/file/edit``
+
 Group route definitions
 ~~~~~~~~~~~~~~~~~~~~~~~
 

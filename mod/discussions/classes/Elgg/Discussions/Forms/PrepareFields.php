@@ -3,7 +3,7 @@
 namespace Elgg\Discussions\Forms;
 
 /**
- * Prepare the fields for the discussion/save form
+ * Prepare the fields for the discussion/edit form
  *
  * @since 5.0
  */
@@ -12,7 +12,7 @@ class PrepareFields {
 	/**
 	 * Prepare fields
 	 *
-	 * @param \Elgg\Event $event 'form:prepare:fields', 'discussion/save'
+	 * @param \Elgg\Event $event 'form:prepare:fields', 'discussion/edit'
 	 *
 	 * @return array
 	 */

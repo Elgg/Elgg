@@ -34,7 +34,7 @@ $body_vars = [
 ];
 
 echo elgg_view_page($title, [
-	'content' => elgg_view_form('blog/save', $form_vars, $body_vars),
+	'content' => elgg_view_form('blog/edit', $form_vars, $body_vars),
 	'sidebar' => elgg_view('blog/sidebar/revisions', $vars),
 	'filter_id' => 'blog/edit',
 ]);
