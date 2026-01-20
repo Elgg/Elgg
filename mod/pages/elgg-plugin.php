@@ -16,7 +16,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'page',
-			'class' => '\ElggPage',
+			'class' => \ElggPage::class,
 			'capabilities' => [
 				'commentable' => true,
 				'searchable' => true,

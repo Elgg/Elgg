@@ -14,7 +14,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'discussion',
-			'class' => 'ElggDiscussion',
+			'class' => \ElggDiscussion::class,
 			'capabilities' => [
 				'commentable' => true,
 				'searchable' => true,

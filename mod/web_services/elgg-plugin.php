@@ -25,7 +25,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'api_key',
-			'class' => 'ElggApiKey',
+			'class' => \ElggApiKey::class,
 			'capabilities' => [
 				'commentable' => false,
 			],

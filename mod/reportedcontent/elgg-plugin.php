@@ -9,7 +9,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'reported_content',
-			'class' => 'ElggReportedContent',
+			'class' => \ElggReportedContent::class,
 			'capabilities' => [
 				'commentable' => true,
 			],

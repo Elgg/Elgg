@@ -14,7 +14,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'blog',
-			'class' => 'ElggBlog',
+			'class' => \ElggBlog::class,
 			'capabilities' => [
 				'commentable' => true,
 				'searchable' => true,

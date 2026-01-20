@@ -12,7 +12,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'thewire',
-			'class' => 'ElggWire',
+			'class' => \ElggWire::class,
 			'capabilities' => [
 				'commentable' => false,
 				'searchable' => true,

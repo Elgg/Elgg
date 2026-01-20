@@ -14,7 +14,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'bookmarks',
-			'class' => 'ElggBookmark',
+			'class' => \ElggBookmark::class,
 			'capabilities' => [
 				'commentable' => true,
 				'searchable' => true,
