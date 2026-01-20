@@ -27,7 +27,7 @@ If you do not want to inline CSS you will need to set the ``convert_css`` param 
 
 .. code-block:: php
 
-	elgg_send_email(\Elgg\Email::factory([
+	elgg_send_email([
 		'from' => 'from@elgg.org',
 		'to' => 'to@elgg.org',
 		'subject' => 'Test Email',
@@ -40,7 +40,7 @@ If you do not want to inline CSS you will need to set the ``convert_css`` param 
 			'convert_css' => true,
 			'css' => 'p { padding: 10px;}'
 		],
-	]));
+	]);
 
 
 Attachments

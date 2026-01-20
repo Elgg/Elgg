@@ -3,7 +3,6 @@
  * Elgg invite friends action
  */
 
-use Elgg\Email;
 use Symfony\Component\Mime\Address;
 
 $site = elgg_get_site_entity();
@@ -46,13 +45,8 @@ foreach ($emails as $email_address) {
 		$already_members[] = $email_address;
 		continue;
 	}
-
-	$invite_link = elgg_get_registration_url([
-		'friend_guid' => $current_user->guid,
-		'invitecode' => elgg_generate_invite_code($current_user->username),
-	]);
 	
-	$email = Email::factory([
+	elgg_send_email([
 		'to' => $email_address,
 		'from' => $from,
 		'subject' => elgg_echo('invitefriends:subject', [$site->getDisplayName()]),
@@ -60,11 +54,12 @@ foreach ($emails as $email_address) {
 			$site->getDisplayName(),
 			$current_user->getDisplayName(),
 			$emailmessage,
-			$invite_link,
+			elgg_get_registration_url([
+				'friend_guid' => $current_user->guid,
+				'invitecode' => elgg_generate_invite_code($current_user->username),
+			]),
 		]),
 	]);
-	
-	elgg_send_email($email);
 	$sent_total++;
 }
 
