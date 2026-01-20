@@ -35,15 +35,11 @@ function elgg_create_river_item(array $options = []): ?\ElggRiverItem {
 	$item->annotation_id = elgg_extract('annotation_id', $options);
 	$item->posted = elgg_extract('posted', $options);
 	
-	if (!$item->save()) {
-		return null;
-	}
-	
-	return $item;
+	return $item->save() ? $item : null;
 }
 
 /**
- * Get river items
+ * Get river items (default only returns activity for installed type/subtypes and with a river_emittable capability)
  *
  * Supports passing the following options
  *   ids                  => INT|ARR River item id(s)
@@ -99,6 +95,28 @@ function elgg_create_river_item(array $options = []): ?\ElggRiverItem {
  * @since 1.8.0
  */
 function elgg_get_river(array $options = []) {
+	if (!isset($options['type_subtype_pairs']) &&
+		!isset($options['type']) &&
+		!isset($options['subtype']) &&
+		!isset($options['id']) &&
+		!isset($options['object_guid'])) {
+		$type_subtype_pairs = [];
+		foreach (_elgg_services()->entityTable->getEntityClasses() as $type => $subtypes) {
+			$enabled_subtypes = [];
+			foreach (array_keys($subtypes) as $subtype) {
+				if (_elgg_services()->entity_capabilities->hasCapability($type, $subtype, 'river_emittable')) {
+					$enabled_subtypes[] = $subtype;
+				}
+			}
+			
+			if (!empty($enabled_subtypes)) {
+				$type_subtype_pairs[$type] = $enabled_subtypes;
+			}
+		}
+		
+		$options['type_subtype_pairs'] = $type_subtype_pairs;
+	}
+	
 	return \Elgg\Database\River::find($options);
 }
 
@@ -161,8 +179,9 @@ function elgg_delete_river(array $options = []): bool {
 		$options['batch'] = true;
 		$options['batch_size'] = 25;
 		$options['batch_inc_offset'] = false;
-	
-		$river = elgg_get_river($options);
+		
+		// fetch directly from table as we do not want a check on entity classes and capabilities
+		$river = \Elgg\Database\River::find($options);
 		$count = $river->count();
 	
 		if (!$count) {

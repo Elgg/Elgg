@@ -19,6 +19,7 @@ return [
 			'subtype' => 'file',
 			'capabilities' => [
 				'commentable' => true,
+				'river_emittable' => true,
 				'searchable' => true,
 				'subscribable' => true,
 				'likable' => true,

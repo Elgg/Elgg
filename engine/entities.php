@@ -6,6 +6,7 @@ return [
 		'class' => \ElggUser::class,
 		'capabilities' => [
 			'searchable' => true,
+			'river_emittable' => true,
 		],
 	],
 	[
@@ -41,6 +42,7 @@ return [
 			'commentable' => true,
 			'likable' => true,
 			'searchable' => true,
+			'river_emittable' => true,
 		],
 	],
 	[

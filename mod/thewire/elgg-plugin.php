@@ -14,6 +14,7 @@ return [
 			'subtype' => 'thewire',
 			'class' => \ElggWire::class,
 			'capabilities' => [
+				'river_emittable' => true,
 				'searchable' => true,
 				'likable' => true,
 			],

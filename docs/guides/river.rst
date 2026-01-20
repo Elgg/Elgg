@@ -100,3 +100,10 @@ For example, the blog plugin uses the following code for its river view:
 	$vars['message'] = $blog->getExcerpt();
 	
 	echo elgg_view('river/elements/layout', $vars);
+
+Capability
+==========
+
+Entities can have the capability ``river_emittable``. This capability determines if the entity type/subtype is filterable
+on the activity pages and, if not explicitly requested, is filtered out of ``elgg_get_river()`` queries. If the entity
+is using the default ``EntityEditAction`` the capability also determines if the default ``create`` river activity is created.

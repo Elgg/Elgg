@@ -17,6 +17,7 @@ return [
 			'class' => \ElggBlog::class,
 			'capabilities' => [
 				'commentable' => true,
+				'river_emittable' => true,
 				'searchable' => true,
 				'subscribable' => true,
 				'likable' => true,
