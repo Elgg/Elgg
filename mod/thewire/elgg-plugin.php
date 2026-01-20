@@ -14,7 +14,6 @@ return [
 			'subtype' => 'thewire',
 			'class' => \ElggWire::class,
 			'capabilities' => [
-				'commentable' => false,
 				'searchable' => true,
 				'likable' => true,
 			],

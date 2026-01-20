@@ -24,7 +24,6 @@ return [
 			'type' => 'group',
 			'subtype' => 'group',
 			'capabilities' => [
-				'commentable' => false,
 				'searchable' => true,
 				'likable' => true,
 				'restorable' => true,

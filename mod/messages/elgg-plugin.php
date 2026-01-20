@@ -19,7 +19,6 @@ return [
 			'subtype' => 'messages',
 			'class' => \ElggMessage::class,
 			'capabilities' => [
-				'commentable' => false,
 				'searchable' => true,
 			],
 		],

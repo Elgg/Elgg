@@ -30,15 +30,6 @@ class SystemEventHandlers {
 	 * @return void
 	 */
 	public static function init() {
-		// searchable
-		elgg_entity_enable_capability('object', 'comment', 'searchable');
-		elgg_entity_enable_capability('user', 'user', 'searchable');
-		
-		// likable
-		elgg_entity_enable_capability('object', 'comment', 'likable');
-		
-		elgg_entity_enable_capability('object', 'comment', 'commentable');
-		
 		elgg_register_notification_method('email');
 		if ((bool) elgg_get_config('enable_delayed_email')) {
 			elgg_register_notification_method('delayed_email');

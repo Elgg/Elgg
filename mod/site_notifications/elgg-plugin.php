@@ -16,9 +16,6 @@ return [
 			'type' => 'object',
 			'subtype' => 'site_notification',
 			'class' => \SiteNotification::class,
-			'capabilities' => [
-				'commentable' => false,
-			],
 		],
 	],
 	'actions' => [

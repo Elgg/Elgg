@@ -68,15 +68,17 @@ abstract class UnitTestCase extends BaseTestCase {
 	final protected function setUp(): void {
 		parent::setUp();
 
-		elgg_set_entity_class('user', 'user', \ElggUser::class);
-		elgg_set_entity_class('group', 'group', \ElggGroup::class);
-		elgg_set_entity_class('site', 'site', \ElggSite::class);
-		elgg_set_entity_class('object', 'plugin', \ElggPlugin::class);
-		elgg_set_entity_class('object', 'file', \ElggFile::class);
-		elgg_set_entity_class('object', 'widget', \ElggWidget::class);
-		elgg_set_entity_class('object', 'comment', \ElggComment::class);
-		elgg_set_entity_class('object', 'elgg_upgrade', \ElggUpgrade::class);
+		$conf = \Elgg\Project\Paths::elgg() . 'engine/entities.php';
+		$spec = \Elgg\Includer::includeFile($conf);
 
+		foreach ($spec as $entity) {
+			if (!isset($entity['type'], $entity['subtype'], $entity['class'])) {
+				continue;
+			}
+
+			elgg_set_entity_class($entity['type'], $entity['subtype'], $entity['class']);
+		}
+		
 		_elgg_services()->boot->boot(_elgg_services());
 
 		$this->up();
