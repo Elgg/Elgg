@@ -1,6 +1,5 @@
 <?php
 
-use Elgg\Controllers\GenericContentListing;
 use Elgg\Discussions\Controllers\ContentListing;
 use Elgg\Discussions\Forms\PrepareFields;
 use Elgg\Discussions\GroupToolContainerLogicCheck;
@@ -15,7 +14,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'discussion',
-			'class' => 'ElggDiscussion',
+			'class' => \ElggDiscussion::class,
 			'capabilities' => [
 				'commentable' => true,
 				'searchable' => true,
@@ -29,7 +28,7 @@ return [
 		'enable_global_discussions' => 0,
 	],
 	'actions' => [
-		'discussion/save' => [
+		'discussion/edit' => [
 			'controller' => \Elgg\Discussions\Controllers\EditAction::class,
 			'options' => [
 				'entity_type' => 'object',
@@ -110,7 +109,7 @@ return [
 			],
 		],
 		'form:prepare:fields' => [
-			'discussion/save' => [
+			'discussion/edit' => [
 				PrepareFields::class => [],
 			],
 		],
@@ -161,7 +160,7 @@ return [
 		],
 	],
 	'view_extensions' => [
-		'forms/discussion/save' => [
+		'forms/discussion/edit' => [
 			'discussion/auto_close' => ['priority' => 400],
 		],
 		'groups/edit/settings' => [

@@ -3,7 +3,7 @@
 namespace Elgg\Blog\Forms;
 
 /**
- * Prepare the fields for the blog/save form
+ * Prepare the fields for the blog/edit form
  *
  * @since 5.0
  */
@@ -12,7 +12,7 @@ class PrepareFields {
 	/**
 	 * Prepare fields
 	 *
-	 * @param \Elgg\Event $event 'form:prepare:fields', 'blog/save'
+	 * @param \Elgg\Event $event 'form:prepare:fields', 'blog/edit'
 	 *
 	 * @return array
 	 */

@@ -27,7 +27,7 @@ if (!$container_entity instanceof \ElggGroup) {
 	}
 	
 	if (count($options_values) > 1) {
-		elgg_import_esm('forms/discussion/save');
+		elgg_import_esm('forms/discussion/edit');
 		echo elgg_view_field([
 			'#type' => 'select',
 			'#label' => elgg_echo('discussion:topic:container'),

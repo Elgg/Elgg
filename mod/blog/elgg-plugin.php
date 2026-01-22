@@ -14,7 +14,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'blog',
-			'class' => 'ElggBlog',
+			'class' => \ElggBlog::class,
 			'capabilities' => [
 				'commentable' => true,
 				'searchable' => true,
@@ -25,7 +25,7 @@ return [
 		],
 	],
 	'actions' => [
-		'blog/save' => [
+		'blog/edit' => [
 			'controller' => \Elgg\Blog\Controllers\EditAction::class,
 			'options' => [
 				'entity_type' => 'object',
@@ -133,7 +133,7 @@ return [
 			],
 		],
 		'form:prepare:fields' => [
-			'blog/save' => [
+			'blog/edit' => [
 				PrepareFields::class => [],
 			],
 		],

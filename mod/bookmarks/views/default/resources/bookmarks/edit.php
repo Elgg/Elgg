@@ -7,5 +7,5 @@ elgg_push_entity_breadcrumbs($entity);
 
 echo elgg_view_page(elgg_echo('edit:object:bookmarks'), [
 	'filter_id' => 'bookmarks/edit',
-	'content' => elgg_view_form('bookmarks/save', ['sticky_enabled' => true], ['entity' => $entity]),
+	'content' => elgg_view_form('bookmarks/edit', ['sticky_enabled' => true], ['entity' => $entity]),
 ]);

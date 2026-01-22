@@ -5,7 +5,7 @@ namespace Elgg\Discussions\Controllers;
 use Elgg\Exceptions\Http\ValidationException;
 
 /**
- * Topic save action
+ * Topic edit action
  *
  * @property \ElggDiscussion $entity the discussion entity
  *

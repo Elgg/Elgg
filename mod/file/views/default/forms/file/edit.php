@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg file upload/save form
+ * Elgg file edit form
  */
 
 $entity = elgg_extract('entity', $vars);

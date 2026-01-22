@@ -14,7 +14,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'bookmarks',
-			'class' => 'ElggBookmark',
+			'class' => \ElggBookmark::class,
 			'capabilities' => [
 				'commentable' => true,
 				'searchable' => true,
@@ -25,7 +25,7 @@ return [
 		],
 	],
 	'actions' => [
-		'bookmarks/save' => [
+		'bookmarks/edit' => [
 			'controller' => \Elgg\Controllers\EntityEditAction::class,
 			'options' => [
 				'entity_type' => 'object',
@@ -117,7 +117,7 @@ return [
 			],
 		],
 		'form:prepare:fields' => [
-			'bookmarks/save' => [
+			'bookmarks/edit' => [
 				PrepareFields::class => [],
 			],
 		],

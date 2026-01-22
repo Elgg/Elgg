@@ -10,6 +10,6 @@ if (!$container->canWriteToContainer(0, 'object', 'discussion')) {
 elgg_push_collection_breadcrumbs('object', 'discussion', $container);
 
 echo elgg_view_page(elgg_echo('add:object:discussion'), [
-	'content' => elgg_view_form('discussion/save', ['sticky_enabled' => true]),
+	'content' => elgg_view_form('discussion/edit', ['sticky_enabled' => true]),
 	'filter_id' => 'discussion/edit',
 ]);

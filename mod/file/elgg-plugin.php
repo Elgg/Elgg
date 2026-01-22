@@ -30,7 +30,7 @@ return [
 		'Elgg\File\Upgrades\MoveFiles',
 	],
 	'actions' => [
-		'file/upload' => [
+		'file/edit' => [
 			'controller' => \Elgg\File\Controllers\EditAction::class,
 			'options' => [
 				'entity_type' => 'object',
@@ -126,7 +126,7 @@ return [
 			],
 		],
 		'form:prepare:fields' => [
-			'file/upload' => [
+			'file/edit' => [
 				PrepareFields::class => [],
 			],
 		],
