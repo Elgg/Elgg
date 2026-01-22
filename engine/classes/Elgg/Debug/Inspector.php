@@ -265,7 +265,7 @@ class Inspector {
 		$annotation->value = 'testvalue';
 		$annotation->entity_guid = elgg_get_logged_in_user_guid();
 
-		$entity = new \ElggObject();
+		$entity = new \ElggUndefinedObject();
 		$entity->guid = 999;
 		$entity->setSubtype('blog');
 		$entity->title = 'test entity';

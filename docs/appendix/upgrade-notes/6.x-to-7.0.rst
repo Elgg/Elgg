@@ -89,6 +89,11 @@ River emittable capability
 If an entity supports river activity this is now controlled by setting the ``river_emittable`` capability. Make sure to add
 it to the ``capabilities`` configuration in your ``elgg-plugin.php``.
 
+Abstract ElggObject
+~~~~~~~~~~~~~~~~~~~
+
+The ElggObject class is now abstract and it is required to have your own extensions of this class for each custom object.
+
 Plugin changes
 --------------
 

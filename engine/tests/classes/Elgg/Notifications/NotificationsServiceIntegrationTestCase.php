@@ -226,7 +226,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered object type
-		$this->notifications->enqueueEvent('create', new \ElggObject());
+		$this->notifications->enqueueEvent('create', new \Elgg\Helpers\ElggTestObject());
 		$this->assertNull($this->queue->dequeue());
 	}
 	
@@ -248,7 +248,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered object type
-		$this->notifications->enqueueEvent('create', new \ElggObject());
+		$this->notifications->enqueueEvent('create', new \Elgg\Helpers\ElggTestObject());
 		$this->assertNull($this->queue->dequeue());
 	}
 	
@@ -275,7 +275,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered object type
-		$this->notifications->enqueueEvent('create', new \ElggObject());
+		$this->notifications->enqueueEvent('create', new \Elgg\Helpers\ElggTestObject());
 		$this->assertNull($this->queue->dequeue());
 	}
 

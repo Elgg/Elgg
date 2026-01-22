@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Helpers\ElggTestObject;
+
 class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
@@ -11,7 +13,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanConstructWithoutArguments() {
-		$this->assertNotNull(new \ElggObject());
+		$this->assertNotNull(new ElggTestObject());
 	}
 
 	public function testCanSetDisplayName() {
@@ -46,7 +48,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$user = $this->createUser();
 		_elgg_services()->session_manager->setLoggedInUser($user);
 		
-		$object = new \ElggObject();
+		$object = new ElggTestObject();
 		$object->setSubtype($subtype);
 		$object->title = 'Foo';
 		$object->description = 'Bar';
@@ -223,7 +225,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testIsLoggable() {
-		$unsaved = new \ElggObject();
+		$unsaved = new ElggTestObject();
 		$this->assertEmpty($unsaved->getSystemLogID());
 		
 		$object = $this->createObject();
@@ -233,7 +235,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 	}
 	
 	public function testGetDisplaynameReturnsString() {
-		$object = new ElggObject();
+		$object = new ElggTestObject();
 		$this->assertEquals('', $object->getDisplayName());
 		
 		$object->title = 'foo';

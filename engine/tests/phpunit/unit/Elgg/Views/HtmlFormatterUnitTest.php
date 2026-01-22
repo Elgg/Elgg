@@ -232,7 +232,7 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 				[],
 			],
 			'i' => [
-				new \ElggObject(),
+				new \Elgg\Helpers\ElggTestObject(),
 			],
 		];
 		$expected = 'a="Hello &amp; &amp; &lt; &lt;" c="c" e="&amp; &amp; &lt; &lt;" g="bar 1 1.5 2"';

@@ -131,13 +131,10 @@ Create the file ``/mod/my_blog/actions/my_blog/save.php``:
     $tags = elgg_string_to_array((string) get_input('tags'));
 
     // create a new my_blog object and put the content in it
-    $blog = new ElggObject();
+    $blog = new \ElggBlog();
     $blog->title = $title;
     $blog->description = $body;
     $blog->tags = $tags;
-
-    // the object can and should have a subtype
-    $blog->setSubtype('my_blog');
     
     // for now, make all my_blog posts public
     $blog->access_id = ACCESS_PUBLIC;

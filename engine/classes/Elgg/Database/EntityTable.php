@@ -98,7 +98,7 @@ class EntityTable {
 		
 		if (empty($class_name)) {
 			$map = [
-				'object' => \ElggObject::class,
+				'object' => \ElggUndefinedObject::class,
 				'user' => \ElggUser::class,
 				'group' => \ElggGroup::class,
 				'site' => \ElggSite::class,
