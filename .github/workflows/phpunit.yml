@@ -50,7 +50,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           coverage: none
           extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring,intl
-          ini-values: max_execution_time=180,zend.enable_gc=0
+          ini-values: max_execution_time=180
         
       - name: Code checkout
         uses: actions/checkout@v4
