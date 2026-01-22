@@ -8,6 +8,7 @@ use Elgg\Exceptions\RuntimeException;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\Http\ResponseBuilder;
 use Elgg\Http\ResponseFactory;
+use Elgg\Router\Middleware\MaintenanceGatekeeper;
 use Elgg\Router\RouteCollection;
 use Elgg\Router\UrlMatcher;
 use Elgg\Traits\Debug\Profilable;
@@ -78,7 +79,7 @@ class Router {
 	 * @return ResponseBuilder
 	 * @throws PageNotFoundException
 	 */
-	public function getResponse(HttpRequest $request) {
+	public function getResponse(HttpRequest $request): ResponseBuilder {
 		$response = $this->prepareResponse($request);
 		
 		if (!$response instanceof ResponseBuilder) {
@@ -143,6 +144,9 @@ class Router {
 				elgg_deprecated_notice("The route \"{$route->getName()}\" has been deprecated.", $deprecated);
 			}
 			
+			// force presence of MaintenanceGatekeeper
+			array_unshift($middleware, MaintenanceGatekeeper::class);
+			
 			foreach ($middleware as $callable) {
 				$result = $this->handlers->call($callable, $envelope, null);
 				if ($result[1] instanceof ResponseBuilder) {
@@ -164,6 +168,12 @@ class Router {
 			$output = elgg_view_resource($resource, $parameters);
 			return elgg_ok_response($output);
 		} catch (ResourceNotFoundException $ex) {
+			$envelope = new \Elgg\Request(elgg(), $request);
+			$result = $this->handlers->call(MaintenanceGatekeeper::class, $envelope, null);
+			if ($result[1] instanceof ResponseBuilder) {
+				return $result[1];
+			}
+			
 			throw new PageNotFoundException();
 		} catch (MethodNotAllowedException $ex) {
 			throw new BadRequestException();

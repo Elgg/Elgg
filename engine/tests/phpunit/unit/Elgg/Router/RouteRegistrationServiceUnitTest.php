@@ -4,7 +4,6 @@ namespace Elgg\Router;
 
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Router\Middleware\GroupToolGatekeeper;
-use Elgg\Router\Middleware\MaintenanceGatekeeper;
 use Elgg\Router\Middleware\WalledGarden;
 use Elgg\UnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -49,19 +48,6 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 		$this->service->register('view:object:blog', [
 			'path' => '/blog/view/{guid}/{title?}',
 		]);
-	}
-	
-	public function testRegisterRouteGetsMaintenanceGateKeeper() {
-		$route = $this->service->register('view:object:blog', [
-			'path' => '/blog/view/{guid}/{title?}',
-			'resource' => 'blog/view',
-		]);
-		
-		$this->assertInstanceOf(Route::class, $route);
-		
-		$middleware = $route->getDefault('_middleware');
-		$this->assertIsArray($middleware);
-		$this->assertContains(MaintenanceGatekeeper::class, $middleware);
 	}
 	
 	public function testRegisterRouteGetsWalledGardenGateKeeper() {

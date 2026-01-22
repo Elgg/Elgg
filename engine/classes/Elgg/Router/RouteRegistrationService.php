@@ -6,7 +6,6 @@ use Elgg\Database\Plugins;
 use Elgg\EventsService;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Router\Middleware\GroupToolGatekeeper;
-use Elgg\Router\Middleware\MaintenanceGatekeeper;
 use Elgg\Router\Middleware\WalledGarden;
 use Elgg\SessionManagerService;
 use Elgg\Traits\Loggable;
@@ -152,8 +151,6 @@ class RouteRegistrationService {
 		if (!empty($options['group_tool'])) {
 			$middleware[] = GroupToolGatekeeper::class;
 		}
-		
-		$middleware[] = MaintenanceGatekeeper::class;
 
 		$defaults['_controller'] = $controller;
 		$defaults['_file'] = $file;
