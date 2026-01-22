@@ -178,7 +178,7 @@ defined sizes will be generated when requested.
 
 .. code-block:: php
 
-	$object = new ElggObject();
+	$object = new \ElggBlog();
 	$object->title = 'Example entity';
 	$object->description = 'An example object with an icon.';
 	

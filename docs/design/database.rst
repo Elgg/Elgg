@@ -269,7 +269,7 @@ your new element (defaulting to the current user's container):
         $container_guid = elgg_get_logged_in_user_guid();
     }
 
-    $object = new ElggObject();
+    $object = new YourObjectClass();
     $object->container_guid = $container_guid;
 
     ...

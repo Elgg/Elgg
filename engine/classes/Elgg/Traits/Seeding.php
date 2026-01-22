@@ -445,12 +445,12 @@ trait Seeding {
 			}
 
 			$class = elgg_get_entity_class('object', $properties['subtype']);
-			if ($class && class_exists($class)) {
-				$object = new $class();
-			} else {
-				$object = new \ElggObject();
+			if (!class_exists($class)) {
+				return false;
 			}
-
+			
+			$object = new $class();
+			
 			foreach ($properties as $name => $value) {
 				switch ($name) {
 					case 'type':

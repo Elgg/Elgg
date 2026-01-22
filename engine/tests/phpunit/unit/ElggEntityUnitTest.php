@@ -13,7 +13,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 	protected $obj;
 
 	public function up() {
-		$this->obj = new \ElggObject();
+		$this->obj = new \Elgg\Helpers\ElggTestObject();
 	}
 
 	public function testDefaultAttributes() {

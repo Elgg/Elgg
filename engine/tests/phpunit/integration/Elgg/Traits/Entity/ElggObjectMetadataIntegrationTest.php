@@ -9,6 +9,6 @@ class ElggObjectMetadataIntegrationTest extends MetadataIntegrationTestCase {
 	}
 	
 	protected function getUnsavedEntity(): \ElggEntity {
-		return new \ElggObject();
+		return new \Elgg\Helpers\ElggTestObject();
 	}
 }
