@@ -61,7 +61,7 @@ class BootHandler {
 			return;
 		}
 
-		$this->setEntityClasses();
+		$this->registerEntities();
 		
 		// need to be registered as part of services, because partial boots do at least include the services
 		// the system relies on the existence of some of the event
@@ -145,20 +145,26 @@ class BootHandler {
 	}
 
 	/**
-	 * Set core entity classes
+	 * Registers core entities
 	 *
 	 * @return void
 	 */
-	public function setEntityClasses(): void {
-		elgg_set_entity_class('user', 'user', \ElggUser::class);
-		elgg_set_entity_class('group', 'group', \ElggGroup::class);
-		elgg_set_entity_class('site', 'site', \ElggSite::class);
-		elgg_set_entity_class('object', 'plugin', \ElggPlugin::class);
-		elgg_set_entity_class('object', 'file', \ElggFile::class);
-		elgg_set_entity_class('object', 'widget', \ElggWidget::class);
-		elgg_set_entity_class('object', 'comment', \ElggComment::class);
-		elgg_set_entity_class('object', 'elgg_upgrade', \ElggUpgrade::class);
-		elgg_set_entity_class('object', 'admin_notice', \ElggAdminNotice::class);
+	public function registerEntities(): void {
+		$conf = \Elgg\Project\Paths::elgg() . 'engine/entities.php';
+		$spec = \Elgg\Includer::includeFile($conf);
+		
+		foreach ($spec as $entity) {
+			if (!isset($entity['type'], $entity['subtype'], $entity['class'])) {
+				continue;
+			}
+				
+			$this->app->internal_services->entityTable->setEntityClass($entity['type'], $entity['subtype'], $entity['class']);
+			
+			$capabilities = elgg_extract('capabilities', $entity, []);
+			foreach ($capabilities as $capability => $value) {
+				$this->app->internal_services->entity_capabilities->setCapability($entity['type'], $entity['subtype'], $capability, $value);
+			}
+		}
 	}
 	
 	/**

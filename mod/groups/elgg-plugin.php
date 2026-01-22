@@ -24,7 +24,7 @@ return [
 			'type' => 'group',
 			'subtype' => 'group',
 			'capabilities' => [
-				'commentable' => false,
+				'river_emittable' => true,
 				'searchable' => true,
 				'likable' => true,
 				'restorable' => true,

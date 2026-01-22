@@ -183,6 +183,10 @@ class EntityEditAction extends GenericAction {
 			return;
 		}
 		
+		if (!$this->entity->hasCapability('river_emittable')) {
+			return;
+		}
+		
 		elgg_create_river_item([
 			'action_type' => 'create',
 			'object_guid' => $this->entity->guid,

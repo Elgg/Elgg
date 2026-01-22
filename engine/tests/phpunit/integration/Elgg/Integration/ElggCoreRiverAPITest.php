@@ -56,6 +56,67 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		}
 	}
 
+	public function testGetRiverDefaultChecksRegisteredEntitiesAndCapabilities() {
+		$action_type = uniqid('action_');
+		
+		$entity1 = $this->createObject([
+			'owner_guid' => $this->user->guid,
+			'subtype' => 'registered_subtype',
+		]);
+		elgg_create_river_item([
+			'action_type' => $action_type,
+			'object_guid' => $entity1->guid,
+		]);
+		
+		$entity2 = $this->createObject([
+			'owner_guid' => $this->user->guid,
+			'subtype' => 'unregistered_subtype',
+		]);
+		
+		elgg_create_river_item([
+			'action_type' => $action_type,
+			'object_guid' => $entity2->guid,
+		]);
+
+		$this->assertCount(0, elgg_get_river([
+			'action_type' => $action_type,
+		]));
+		
+		elgg_set_entity_class('object', 'registered_subtype', \Elgg\Helpers\SeededElggObject::class);
+		elgg_entity_enable_capability('object', 'unregistered_subtype', 'river_emittable');
+		
+		$this->assertCount(0, elgg_get_river([
+			'action_type' => $action_type,
+		]));
+		
+		elgg_entity_enable_capability('object', 'registered_subtype', 'river_emittable');
+		
+		$river_items = elgg_get_river([
+			'action_type' => $action_type,
+		]);
+		
+		$this->assertCount(1, $river_items);
+		$this->assertEquals($entity1->guid, $river_items[0]->object_guid);
+
+		elgg_set_entity_class('object', 'unregistered_subtype', \Elgg\Helpers\SeededElggObject::class);
+		elgg_entity_disable_capability('object', 'registered_subtype', 'river_emittable');
+
+		$river_items = elgg_get_river([
+			'action_type' => $action_type,
+		]);
+
+		$this->assertCount(1, $river_items);
+		$this->assertEquals($entity2->guid, $river_items[0]->object_guid);
+		
+		// specific queries bypass the capabilities check
+		$river_items = elgg_get_river([
+			'action_type' => $action_type,
+			'object_guid' => [$entity1->guid, $entity2->guid],
+		]);
+
+		$this->assertCount(2, $river_items);
+	}
+
 	public function testCanCreateRiverItem() {
 		$item = elgg_create_river_item([
 			'action_type' => 'create',

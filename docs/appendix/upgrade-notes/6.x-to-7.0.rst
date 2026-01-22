@@ -83,6 +83,12 @@ The behaviour of ``elgg_list_entities()`` has been changed. The default value fo
 provided by the query parameter ``limit`` (eg. ``/blog/all?limit=20``) has been limited to a minimum of 1 and a maximum
 of 100.
 
+River emittable capability
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If an entity supports river activity this is now controlled by setting the ``river_emittable`` capability. Make sure to add
+it to the ``capabilities`` configuration in your ``elgg-plugin.php``.
+
 Plugin changes
 --------------
 

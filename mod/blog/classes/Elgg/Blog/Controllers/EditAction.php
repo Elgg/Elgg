@@ -92,6 +92,10 @@ class EditAction extends \Elgg\Controllers\EntityEditAction {
 	 * {@inheritdoc}
 	 */
 	protected function createRiverItem(): void {
+		if (!$this->entity->hasCapability('river_emittable')) {
+			return;
+		}
+		
 		$old_status = $this->old_status;
 		$new_status = $this->entity->status;
 		
