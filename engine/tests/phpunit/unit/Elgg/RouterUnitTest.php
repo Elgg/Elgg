@@ -1356,4 +1356,65 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(1, $base_calls);
 		$this->assertEquals(1, $deep_calls);
 	}
+	
+	public function testMaintenanceGatekeeperOnRoute() {
+		$request = $this->prepareHttpRequest('foo');
+		$this->createService($request);
+		
+		$called = 0;
+		
+		elgg_register_route('foo', [
+			'path' => '/foo',
+			'controller' => function(\Elgg\Request $request) use (&$called) {
+				$called++;
+				return elgg_ok_response('hello');
+			},
+		]);
+		
+		$response = _elgg_services()->router->getResponse($request);
+		
+		$this->assertInstanceOf(OkResponse::class, $response);
+		$this->assertEquals('hello', $response->getContent());
+		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
+		$this->assertEquals(1, $called);
+		
+		// enable maintenance mode
+		_elgg_services()->config->elgg_maintenance_mode = true;
+		$called = 0;
+		
+		ob_start();
+		
+		try {
+			$response2 = _elgg_services()->router->getResponse($request);
+		} catch (\Throwable $t) {
+		}
+		
+		ob_end_clean();
+		
+		$this->assertInstanceOf(OkResponse::class, $response2);
+		$this->assertNotEquals('hello', $response2->getContent());
+		$this->assertEquals(ELGG_HTTP_SERVICE_UNAVAILABLE, $response2->getStatusCode());
+		$this->assertEmpty($called);
+	}
+	
+	public function testMaintenanceGatekeeperOnUnknownRoute() {
+		$request = $this->prepareHttpRequest('foo');
+		$this->createService($request);
+		
+		// enable maintenance mode
+		_elgg_services()->config->elgg_maintenance_mode = true;
+		
+		ob_start();
+		
+		try {
+			$response = _elgg_services()->router->getResponse($request);
+		} catch (\Throwable $t) {
+		}
+		
+		ob_end_clean();
+		
+		$this->assertInstanceOf(OkResponse::class, $response);
+		$this->assertNotEquals('hello', $response->getContent());
+		$this->assertEquals(ELGG_HTTP_SERVICE_UNAVAILABLE, $response->getStatusCode());
+	}
 }
