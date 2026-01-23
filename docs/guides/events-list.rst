@@ -223,7 +223,7 @@ System events
     might not be shown until after the process is completed. This means that any long-running
     processes will still delay the page load.
 
-.. note:: This event is prefered above using ``register_shutdown_function`` as you may not have access
+.. note:: This event is preferred above using ``register_shutdown_function`` as you may not have access
     to all the Elgg services (eg. database) in the shutdown function but you will in the event.
 
 .. note:: The Elgg session is already closed before this event. Manipulating session is not possible.
@@ -894,6 +894,18 @@ Routing
 **route:rewrite, <identifier>** |results|
 	Allows altering the site-relative URL path for an incoming request. See :doc:`routing` for details.
 	Please note that the handler for this event should be registered outside of the ``init`` event handler, as route rewrites take place after ``plugins_boot`` event has completed.
+
+**route:match, system** |results|
+	When no route is registered for a given URL path this event is triggered to allow developers to provide a routing 
+	configuration for the given path. This will allow more generic URLs to be handled without the need to register every
+	individual route.
+
+	``$params`` array includes:
+
+     * ``pathinfo`` - string with the URL path to be matched
+
+	The expected result is an array with a route definition. See :doc:`routing` for details. Also the result must contain
+	a key ``route`` with the name of the route.
 
 .. _guides/events-list#views:
 
