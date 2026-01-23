@@ -38,7 +38,10 @@ return [
 	'annotation/delete' => [],
 	'avatar/upload' => [],
 	'comment/save' => [],
-	'diagnostics/download' => ['access' => 'admin'],
+	'diagnostics/download' => [
+		'access' => 'admin',
+		'controller' => \Elgg\Diagnostics\DownloadController::class,
+	],
 	'entity/chooserestoredestination' => [],
 	'entity/delete' => [],
 	'entity/mute' => [],
