@@ -157,6 +157,10 @@ class EntityEditAction extends GenericAction {
 			}
 		}
 		
+		if (!isset($forward_url)) {
+			$forward_url = get_input('forward_url');
+		}
+		
 		return elgg_ok_response('', $message, $forward_url ?: $this->entity->getURL());
 	}
 	
