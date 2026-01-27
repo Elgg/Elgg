@@ -20,15 +20,15 @@ class AdminHeader {
 	 */
 	public static function register(\Elgg\Event $event) {
 		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
-			return;
+			return null;
 		}
 		
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
-			'name' => 'configure_utilities:expages',
-			'text' => elgg_echo('admin:configure_utilities:expages'),
-			'href' => 'admin/configure_utilities/expages',
+			'name' => 'configure_utilities:external_pages',
+			'text' => elgg_echo('collection:object:external_page'),
+			'href' => 'admin/configure_utilities/external_pages',
 			'parent_name' => 'utilities',
 		]);
 	

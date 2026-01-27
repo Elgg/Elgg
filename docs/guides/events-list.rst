@@ -1314,6 +1314,12 @@ Other
 Plugins
 =======
 
+Site Pages
+----------
+
+**names, externalpages** |results|
+	Returns a set of allowed names for external pages
+
 Groups
 ------
 
