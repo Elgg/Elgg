@@ -22,11 +22,6 @@ $objects = elgg_get_entities([
 
 $entity = elgg_extract(0, $objects);
 
-$shell = 'default';
-if (elgg_get_config('walled_garden') && !elgg_is_logged_in()) {
-	$shell = 'walled_garden';
-}
-
 $title = elgg_language_key_exists("external_pages:{$page}") ? elgg_echo("external_pages:{$page}") : $page;
 echo elgg_view_page($title, [
 	'content' => elgg_view('output/longtext', [
@@ -34,4 +29,4 @@ echo elgg_view_page($title, [
 	]),
 	'sidebar' => false,
 	'entity' => $entity,
-], $shell);
+], 'walled_garden');

@@ -12,12 +12,8 @@ if (!$user instanceof \ElggUser) {
 	throw new BadRequestException();
 }
 
-$shell = elgg_get_config('walled_garden') ? 'walled_garden' : 'default';
-
-$content = elgg_view_form('uservalidationbyemail/change_email', [], ['user' => $user]);
-
 echo elgg_view_page(elgg_echo('uservalidationbyemail:change_email'), [
-	'content' => $content,
+	'content' => elgg_view_form('uservalidationbyemail/change_email', [], ['user' => $user]),
 	'sidebar' => false,
 	'filter' => false,
-], $shell);
+], 'walled_garden');
