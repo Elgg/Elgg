@@ -22,9 +22,6 @@ return array(
 	'collection:object:file' => 'Files',
 	'list:object:file:no_results' => 'No files found',
 	
-	'file:upgrade:2022092801:title' => 'Move Files',
-	'file:upgrade:2022092801:description' => 'Moves files uploaded using the file plugin to the file entity folder instead of the owner entity folder.',
-	
 	'collection:object:file:all' => "All site files",
 	'collection:object:file:owner' => "%s's files",
 	'collection:object:file:friends' => "Friends' files",

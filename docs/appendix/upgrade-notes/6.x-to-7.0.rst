@@ -114,6 +114,16 @@ The following related actions were affected:
 - ``action/discussion/save`` is now ``action/discussion/edit``
 - ``action/file/upload`` is now ``action/file/edit``
 
+Site Pages / External Pages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This plugin has been rewritten. The most important changes are:
+
+- Separate subtypes for each page has been merged into a single subtype ``external_page``
+- ``expages/edit`` action has been replaced by generic ``EntityEditAction`` controller
+- ``ElggExternalPage`` entity fields are available in the fields service
+- Extra external pages are extendable via the ``'names', 'externalpages'`` event 
+
 Group route definitions
 ~~~~~~~~~~~~~~~~~~~~~~~
 

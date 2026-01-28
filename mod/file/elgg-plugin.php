@@ -27,9 +27,6 @@ return [
 			],
 		],
 	],
-	'upgrades' => [
-		'Elgg\File\Upgrades\MoveFiles',
-	],
 	'actions' => [
 		'file/edit' => [
 			'controller' => \Elgg\File\Controllers\EditAction::class,

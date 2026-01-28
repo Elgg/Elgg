@@ -228,6 +228,8 @@ function elgg_get_view_extensions(string $view): array {
  * @param string       $page_shell Optional page shell to use. See page/shells view directory
  * @param array        $vars       Optional vars array to pass to the page
  *                                 shell. Automatically adds title, body, head, and sysmessages
+ *                                 The shell 'walled_garden' will automatically be changed to 'default' if a user is logged in
+ *                                 or if the walled_garden is not enabled in the config
  *
  * @return string The contents of the page
  * @since  1.8
@@ -257,7 +259,13 @@ function elgg_view_page(string $title, string|array $body, string $page_shell = 
 	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
 	$params['segments'] = _elgg_services()->request->getUrlSegments();
 	array_shift($params['segments']);
+	
 	$page_shell = elgg_trigger_event_results('shell', 'page', $params, $page_shell);
+	if ($page_shell === 'walled_garden') {
+		if (!elgg_get_config('walled_garden') || elgg_is_logged_in()) {
+			$page_shell = 'default';
+		}
+	}
 
 	$system_messages = _elgg_services()->system_messages;
 

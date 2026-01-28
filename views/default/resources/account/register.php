@@ -26,14 +26,12 @@ $body_params = [
 	'friend_guid' => $friend_guid,
 	'invitecode' => $invitecode
 ];
+
 $content = elgg_view_form('register', $form_params, $body_params);
-
 $content .= elgg_view('help/register');
-
-$shell = elgg_get_config('walled_garden') ? 'walled_garden' : 'default';
 
 echo elgg_view_page(elgg_echo('register'), [
 	'content' => $content,
 	'sidebar' => false,
 	'filter' => false,
-], $shell);
+], 'walled_garden');

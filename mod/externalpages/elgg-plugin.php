@@ -4,68 +4,46 @@ return [
 	'plugin' => [
 		'name' => 'Site Pages',
 	],
+	'bootstrap' => \Elgg\ExternalPages\Bootstrap::class,
 	'entities' => [
 		[
 			'type' => 'object',
-			'subtype' => 'about',
+			'subtype' => 'external_page',
 			'class' => \ElggExternalPage::class,
-		],
-		[
-			'type' => 'object',
-			'subtype' => 'terms',
-			'class' => \ElggExternalPage::class,
-		],
-		[
-			'type' => 'object',
-			'subtype' => 'privacy',
-			'class' => \ElggExternalPage::class,
-		],
-	],
-	'routes' => [
-		'view:object:about' => [
-			'path' => '/about',
-			'resource' => 'expages',
-			'defaults' => [
-				'expage' => 'about',
-			],
-			'walled' => false,
-		],
-		'view:object:privacy' => [
-			'path' => '/privacy',
-			'resource' => 'expages',
-			'defaults' => [
-				'expage' => 'privacy',
-			],
-			'walled' => false,
-		],
-		'view:object:terms' => [
-			'path' => '/terms',
-			'resource' => 'expages',
-			'defaults' => [
-				'expage' => 'terms',
-			],
-			'walled' => false,
 		],
 	],
 	'actions' => [
-		'expages/edit' => [
+		'external_page/edit' => [
 			'access' => 'admin',
+			'controller' => \Elgg\Controllers\EntityEditAction::class,
+			'options' => [
+				'entity_type' => 'object',
+				'entity_subtype' => 'external_page',
+			],
 		],
 	],
 	'events' => [
+		'form:prepare:fields' => [
+			'external_page/edit' => [
+				\Elgg\ExternalPages\Forms\PrepareFields::class => [],
+			],
+		],
 		'register' => [
 			'menu:admin_header' => [
 				'Elgg\ExternalPages\Menus\AdminHeader::register' => [],
 			],
-			'menu:expages' => [
-				'Elgg\ExternalPages\Menus\ExPages::register' => [],
+			'menu:external_pages' => [
+				'Elgg\ExternalPages\Menus\ExternalPages::register' => [],
 			],
 			'menu:footer' => [
-				'Elgg\ExternalPages\Menus\Footer::register' => [],
+				'Elgg\ExternalPages\Menus::register' => [],
 			],
 			'menu:walled_garden' => [
-				'Elgg\ExternalPages\Menus\WalledGarden::register' => [],
+				'Elgg\ExternalPages\Menus::register' => [],
 			],
 		],
+	],
+	'upgrades' => [
+		\Elgg\ExternalPages\Upgrades\MigrateEntities::class,
 	],
 ];
