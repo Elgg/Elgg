@@ -90,7 +90,7 @@
 .elgg-menu:not(.elgg-menu-hz) .elgg-menu-item-has-toggle {
 	.elgg-menu-closed:after,
 	.elgg-menu-opened:after {
-		font-family: 'Font Awesome\ 5 Free';
+		font-family: 'Font Awesome\ 7 Free';
 		font-weight: 900;
 		display: inline-block;
 		float: right;
@@ -113,7 +113,7 @@
 .elgg-menu.elgg-menu-filter .elgg-menu-item-has-dropdown {
 	.elgg-menu-closed:after,
 	.elgg-menu-opened:after {
-		font-family: 'Font Awesome\ 5 Free';
+		font-family: 'Font Awesome\ 7 Free';
 		font-weight: 900;
 		display: inline-block;
 		font-size: 0.5rem;

@@ -169,7 +169,9 @@ class ViewsService {
 		if (is_array($spec)) {
 			// check for uploaded fontawesome font
 			if ($this->config->font_awesome_zip) {
-				$spec['default']['font-awesome/'] = elgg_get_data_path() . 'fontawesome/webfont/';
+				$spec['default']['font-awesome/css/'] = elgg_get_data_path() . 'fontawesome/webfont/css/';
+				$spec['default']['font-awesome/otfs/'] = elgg_get_data_path() . 'fontawesome/webfont/otfs/';
+				$spec['default']['font-awesome/webfonts/'] = elgg_get_data_path() . 'fontawesome/webfont/webfonts/';
 			}
 			
 			$this->mergeViewsSpec($spec);

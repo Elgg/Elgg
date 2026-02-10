@@ -19,7 +19,7 @@
         "elgg/composer-config-reader": "dev-master",
         "elgg/php-cron-scheduler": "dev-master",
         "fakerphp/faker": "~1.24.0",
-        "fortawesome/font-awesome": "~5.14",
+        "fortawesome/font-awesome": "~7.1",
         "guzzlehttp/guzzle": "~7.10.0",
         "hackzilla/password-generator": "~1.7.0",
         "htmlawed/htmlawed": "~1.2.15",

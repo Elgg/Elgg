@@ -162,7 +162,7 @@ html.elgg-nav-collapsed {
 			> a.elgg-non-link {
 				&:after {
 					content: "\f107";
-					font-family: 'Font Awesome\ 5 Free';
+					font-family: 'Font Awesome\ 7 Free';
 					font-weight: 900;
 					font-size: 0.5rem;
 					display: none;
@@ -367,7 +367,7 @@ html.elgg-nav-collapsed {
 					
 					.elgg-menu-parent:after {
 						content: "\f105";
-						font-family: 'Font Awesome\ 5 Free';
+						font-family: 'Font Awesome\ 7 Free';
 						font-weight: 900;
 						font-size: 0.5rem;
 						line-height: 1.5rem;
