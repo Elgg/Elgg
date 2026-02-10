@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Exceptions\Http\Gatekeeper\AjaxGatekeeperException;
+use Elgg\Exceptions\Http\MethodNotAllowedException;
 use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Http\OkResponse;
 use Elgg\Http\Request;
@@ -1194,6 +1195,20 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->events->restore();
 
 		$this->assertEquals(1, $calls);
+	}
+	
+	public function testInvalidMethodsWhenRouting() {
+		$request = $this->prepareHttpRequest('hello');
+		$this->createService($request);
+
+		_elgg_services()->routes->register('hello', [
+			'path' => '/hello',
+			'handler' => 'hello_page_handler',
+			'methods' => 'POST',
+		]);
+
+		$this->expectException(MethodNotAllowedException::class);
+		_elgg_services()->router->route($request);
 	}
 	
 	public function testCheckRequiredPluginsWhenRouting() {
