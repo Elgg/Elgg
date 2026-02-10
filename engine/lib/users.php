@@ -125,7 +125,7 @@ function elgg_save_new_password(\ElggUser $user, string $conf_code, ?string $pas
 }
 
 /**
- * Generate a random 12 character clear text password.
+ * Generate a random 16 character clear text password.
  *
  * @return string
  *

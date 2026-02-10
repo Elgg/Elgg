@@ -28,7 +28,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 	public function testLoginWithUsernameAndPassword() {
 
 		$user = $this->user = $this->createUser([
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 			'language' => 'de',
 		]);
 
@@ -38,7 +38,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 			'persistent' => false,
 		]);
 
@@ -57,7 +57,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 	public function testLoginWithEmailAndPassword() {
 
 		$user = $this->user = $this->createUser([
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 		]);
 
 		$user->setValidationStatus(true, 'login_test');
@@ -66,7 +66,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('login', [
 			'username' => $user->email,
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 			'persistent' => false,
 		]);
 
@@ -81,7 +81,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 	public function testLoginFailsWithEmptyPassword() {
 
 		$user = $this->user = $this->createUser([
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 		]);
 
 		$user->setValidationStatus(true, 'login_test');
@@ -97,7 +97,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 	public function testLoginFailsWithIncorrectPassword() {
 
 		$user = $this->user = $this->createUser([
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 		]);
 
 		$user->setValidationStatus(true, 'login_test');
@@ -118,7 +118,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$username = $this->getRandomUsername();
 		$user = $this->user = $this->createUser([
 			'username' => $username,
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 		]);
 
 		elgg()->events->restore();
@@ -139,7 +139,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
@@ -150,7 +150,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('login', [
 			'username' => $this->getRandomUsername(),
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
@@ -160,7 +160,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 	public function testLoginFailsWithBannedUser() {
 
 		$user = $this->user = $this->createUser([
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 			'banned' => true,
 		]);
 
@@ -168,7 +168,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 			'persistent' => false,
 		]);
 
@@ -185,7 +185,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		_elgg_services()->events->registerHandler('login:before', 'user', $handler);
 
 		$user = $this->user = $this->createUser([
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 			'language' => 'de',
 		]);
 
@@ -193,7 +193,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 			'persistent' => false,
 		]);
 
@@ -248,7 +248,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 	public function testCanPersistLogin() {
 
 		$user = $this->user = $this->createUser([
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 			'language' => 'de',
 		]);
 		
@@ -256,7 +256,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		
 		$action_response = $this->executeAction('login', [
 			'username' => $user->username,
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 			'persistent' => true,
 		]);
 		
@@ -299,7 +299,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 	public function testRespectsLastForwardFrom() {
 
 		$user = $this->user = $this->createUser([
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 		]);
 
 		$user->setValidationStatus(true, 'login_test');
@@ -323,7 +323,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 			'persistent' => false,
 		]);
 

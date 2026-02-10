@@ -167,7 +167,7 @@ class PasswordGeneratorServiceIntegrationTest extends IntegrationTestCase {
 			}
 		}
 		
-		$expected .= '.{6,}';
+		$expected .= '.{16,}';
 		
 		$regex = _elgg_services()->passwordGenerator->getInputRegEx();
 		

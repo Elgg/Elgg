@@ -509,7 +509,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 					'type' => 'password',
 					'value' => '',
 					'required' => true,
-					'pattern' => '.{6,}',
+					'pattern' => '.{16,}',
 				],
 				'password2' => [
 					'type' => 'password',
@@ -565,8 +565,8 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 			'displayname' => 'admin user',
 			'email' => 'admin@example.com',
 			'username' => 'admin',
-			'password1' => '12345678',
-			'password2' => '12345678',
+			'password1' => '12345678abcdefgh',
+			'password2' => '12345678abcdefgh',
 		]);
 
 		$this->getApp()->internal_services->set('request', $request);
@@ -614,7 +614,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 			'displayname' => 'Administrator',
 			'email' => 'admin@ci.elgg.org',
 			'username' => 'admin',
-			'password' => 'fancypassword',
+			'password' => 'longenoughpassword',
 
 			// timezone
 			'timezone' => 'UTC',
