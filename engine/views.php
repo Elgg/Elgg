@@ -22,7 +22,9 @@ return [
 		"tabbable.mjs" => "vendor/npm-asset/tabbable/dist/index.esm.js",
 		
 		// need to use some folder structure, because FontAwesome includes fonts relative to css
-		"font-awesome/" => "vendor/fortawesome/font-awesome/",
+		"font-awesome/css/" => "vendor/fortawesome/font-awesome/css/",
+		"font-awesome/otfs/" => "vendor/fortawesome/font-awesome/otfs/",
+		"font-awesome/webfonts/" => "vendor/fortawesome/font-awesome/webfonts/",
 		
 		"jquery-ui/" => "vendor/npm-asset/jquery-ui/ui",
 		"tagify/" => "vendor/npm-asset/yaireo--tagify/dist",

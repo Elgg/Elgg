@@ -30,6 +30,13 @@ now requires a different format. Please read the instructions in ``elgg-config/s
 
 The event ``zend:message, system:email`` has been renamed to ``message, system:email``.
 
+Font Awesome
+~~~~~~~~~~~~
+
+The icon library version has been updated to version 7. Lots of things remain the same, but you might need to validate your use
+of icons or any special Font Awesome related CSS. If you use a custom or pro version of Font Awesome you need to update your pack
+to version 7.
+
 Elgg core changes
 -----------------
 
