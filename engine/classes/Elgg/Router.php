@@ -176,7 +176,7 @@ class Router {
 			
 			throw new PageNotFoundException();
 		} catch (MethodNotAllowedException $ex) {
-			throw new BadRequestException();
+			throw new \Elgg\Exceptions\Http\MethodNotAllowedException($ex->getMessage(), 0, $ex);
 		}
 	}
 
