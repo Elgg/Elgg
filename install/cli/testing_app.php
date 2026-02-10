@@ -24,7 +24,7 @@ return [
 	'displayname' => 'Administrator',
 	'email' => 'admin@ci.elgg.org',
 	'username' => 'admin',
-	'password' => 'fancypassword',
+	'password' => 'longenoughpassword',
 
 	// timezone
 	'timezone' => 'UTC'

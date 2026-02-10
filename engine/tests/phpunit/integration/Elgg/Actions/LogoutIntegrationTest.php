@@ -24,7 +24,7 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 	public function testLogout() {
 
 		$user = $this->createUser([
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 			'language' => 'de',
 		]);
 
@@ -43,7 +43,7 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 
 	public function testCanUseLogoutActionWithoutTokens() {
 		$user = $this->createUser([
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 			'language' => 'de',
 		]);
 
@@ -63,7 +63,7 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 	public function testCanPreventLogoutWithEvent() {
 
 		$user = $this->createUser([
-			'password' => 123456,
+			'password' => '123456789abcdefgh',
 			'language' => 'de',
 		]);
 

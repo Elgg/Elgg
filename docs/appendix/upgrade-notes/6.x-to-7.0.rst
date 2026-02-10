@@ -44,6 +44,7 @@ Default config changes
 ~~~~~~~~~~~~~~~~~~~~~~
 
 * The trash is now enabled by default
+* The config option ``min_password_length`` has been changed to 16
 * The config option ``css_compiler_options`` has been removed
 * The config option ``memcache`` has been removed
 * The config option ``memcache_namespace_prefix`` has been removed

@@ -104,8 +104,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('register', [
 			'username' => $username,
-			'password' => '1111111111111',
-			'password2' => '1111111111111 ',
+			'password' => 'longenoughpassword',
+			'password2' => 'longenoughpassword ',
 			'email' => $email,
 			'name' => 'Test User',
 		]);
@@ -122,8 +122,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('register', [
 			'username' => 'username\r\n',
-			'password' => '1111111111111',
-			'password2' => '1111111111111',
+			'password' => 'longenoughpassword',
+			'password2' => 'longenoughpassword',
 			'email' => $email,
 			'name' => 'Test User',
 		]);
@@ -140,8 +140,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('register', [
 			'username' => 'username?#',
-			'password' => '1111111111111',
-			'password2' => '1111111111111',
+			'password' => '123456789abcdefgh',
+			'password2' => '123456789abcdefgh',
 			'email' => $email,
 			'name' => 'Test User',
 		]);
@@ -158,8 +158,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('register', [
 			'username' => 'abc',
-			'password' => '1111111111111',
-			'password2' => '1111111111111',
+			'password' => '123456789abcdefgh',
+			'password2' => '123456789abcdefgh',
 			'email' => $email,
 			'name' => 'Test User',
 		]);
@@ -177,8 +177,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$username = str_repeat('a', 150);
 		$response = $this->executeAction('register', [
 			'username' => $username,
-			'password' => '1111111111111',
-			'password2' => '1111111111111',
+			'password' => '123456789abcdefgh',
+			'password2' => '123456789abcdefgh',
 			'email' => $email,
 			'name' => 'Test User',
 		]);
@@ -195,8 +195,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('register', [
 			'username' => $username,
-			'password' => '1111111111111',
-			'password2' => '1111111111111',
+			'password' => '123456789abcdefgh',
+			'password2' => '123456789abcdefgh',
 			'email' => "$username@",
 			'name' => 'Test User',
 		]);
@@ -217,8 +217,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		$username2 = $this->getRandomUsername();
 		$response = $this->executeAction('register', [
 			'username' => $username2,
-			'password' => '1111111111111',
-			'password2' => '1111111111111',
+			'password' => '123456789abcdefgh',
+			'password2' => '123456789abcdefgh',
 			'email' => "$username@example.com",
 			'name' => 'Test User',
 		]);
@@ -236,8 +236,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('register', [
 			'username' => $username,
-			'password' => '1111111111111',
-			'password2' => '1111111111111',
+			'password' => '123456789abcdefgh',
+			'password2' => '123456789abcdefgh',
 			'email' => $this->getRandomEmail(),
 			'name' => 'Test User',
 		]);
@@ -252,8 +252,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('register', [
 			'username' => $username,
-			'password' => '1111111111111',
-			'password2' => '1111111111111',
+			'password' => '123456789abcdefgh',
+			'password2' => '123456789abcdefgh',
 			'email' => $this->getRandomEmail(),
 			'name' => 'Test User',
 		]);
@@ -276,8 +276,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 		$response = $this->executeAction('register', [
 			'username' => $username,
-			'password' => '1111111111111',
-			'password2' => '1111111111111',
+			'password' => '123456789abcdefgh',
+			'password2' => '123456789abcdefgh',
 			'email' => $this->getRandomEmail(),
 			'name' => 'Test User',
 		]);
@@ -303,8 +303,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		
 		$response = $this->executeAction('register', [
 			'username' => $username,
-			'password' => '1111111111111',
-			'password2' => '1111111111111',
+			'password' => '123456789abcdefgh',
+			'password2' => '123456789abcdefgh',
 			'email' => $this->getRandomEmail(),
 			'name' => 'Test User',
 		]);
@@ -331,8 +331,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		
 		$response = $this->executeAction('register', [
 			'username' => $username,
-			'password' => '1111111111111',
-			'password2' => '1111111111111',
+			'password' => '123456789abcdefgh',
+			'password2' => '123456789abcdefgh',
 			'email' => $this->getRandomEmail(),
 			'name' => 'Test User',
 		]);

@@ -16,7 +16,7 @@ class ConfigTable extends \Elgg\Database\ConfigTable {
 		'language' => 'en',
 		'simplecache_enabled' => 0,
 		'system_cache_enabled' => 0,
-		'min_password_length' => 6,
+		'min_password_length' => 16,
 	];
 
 	/**

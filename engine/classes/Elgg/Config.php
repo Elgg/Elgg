@@ -199,7 +199,7 @@ class Config {
 		'lastcache' => 0,
 		'mentions_display_format' => 'display_name',
 		'message_delay' => 6,
-		'min_password_length' => 6,
+		'min_password_length' => 16,
 		'minusername' => 4,
 		'notifications_max_runtime' => 45,
 		'notifications_queue_delay' => 0,
