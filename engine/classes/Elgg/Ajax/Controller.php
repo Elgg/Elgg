@@ -23,30 +23,24 @@ class Controller {
 	 */
 	public function __invoke(Request $request) {
 		
+		$type = (string) $request->getParam('type');
 		$segments = explode('/', (string) $request->getParam('segments'));
-		if (count($segments) < 2) {
+		if (empty($segments)) {
 			return elgg_error_response('Ajax pagehandler called with invalid segments', REFERRER, ELGG_HTTP_BAD_REQUEST);
+		}
+
+		if (elgg_extract(0, $segments) === 'admin') {
+			// protect admin views similar to all admin pages that are protected automatically in the admin_page_handler
+			elgg_admin_gatekeeper();
 		}
 		
 		$view = '';
-		switch ($segments[0]) {
+		switch ($type) {
 			case 'view':
-				if (elgg_extract(1, $segments) === 'admin') {
-					// protect admin views similar to all admin pages that are protected automatically in the admin_page_handler
-					elgg_admin_gatekeeper();
-				}
-				
-				// ignore 'view/'
-				$view = implode('/', array_slice($segments, 1));
+				$view = implode('/', $segments);
 				break;
 			case 'form':
-				if (elgg_extract(1, $segments) === 'admin') {
-					// protect admin views similar to all admin pages that are protected automatically in the admin_page_handler
-					elgg_admin_gatekeeper();
-				}
-				
-				// form views start with "forms", not "form"
-				$view = 'forms/' . implode('/', array_slice($segments, 1));
+				$view = 'forms/' . implode('/', $segments);
 				break;
 			default:
 				return elgg_error_response('Ajax pagehandler called with invalid segments', REFERRER, ELGG_HTTP_BAD_REQUEST);
@@ -79,7 +73,7 @@ class Controller {
 		}
 		
 		$content_type = '';
-		if ($segments[0] === 'view') {
+		if ($type === 'view') {
 			$output = elgg_view($view, $vars);
 			
 			// Try to guess the mime-type
@@ -94,7 +88,7 @@ class Controller {
 				}
 			}
 		} else {
-			$action = implode('/', array_slice($segments, 1));
+			$action = implode('/', $segments);
 			$output = elgg_view_form($action, [], $vars);
 		}
 		

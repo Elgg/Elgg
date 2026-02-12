@@ -838,12 +838,6 @@ Action events
 	Filter the URL to forward a user to when ``forward($url, $reason)`` is called.
 	In certain cases, the ``params`` array will contain an instance of ``\Elgg\Exceptions\HttpException`` that triggered the error.
 
-**response, action:<action>** |results|
-    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
-    This event can be used to modify response content, status code, forward URL, or set additional response headers.
-    Note that the ``<action>`` value is parsed from the request URL, therefore you may not be able to filter
-    the responses of `action()` calls if they are nested within the another action script file.
-
 .. _guides/events-list#ajax:
 
 Ajax
@@ -858,33 +852,48 @@ Ajax
 	elgg/Ajax method  event type
 	================  ====================
 	action()          action:<action_name>
-	path()            path:<url_path>
+	path()            <route_name>
 	view()            view:<view_name>
 	form()            form:<action_name>
 	================  ====================
 
 **ajax_response, action:<action_name>** |results|
     Filters ``action/`` responses before they're sent back to the ``elgg/Ajax`` module.
+    Handlers receive the request via ``$params['request']``.
     
-**ajax_response, path:<path>** |results|
+**ajax_response, <route_name>** |results|
     Filters ajax responses before they're sent back to the ``elgg/Ajax`` module. This event type will
     only be used if the path did not start with "action/" or "ajax/".
+    Handlers receive the request via ``$params['request']``.
     
 **ajax_response, view:<view>** |results|
     Filters ``ajax/view/`` responses before they're sent back to the ``elgg/Ajax`` module.
+    Handlers receive the request via ``$params['request']``.
 
 **ajax_response, form:<action_name>** |results|
     Filters ``ajax/form/`` responses before they're sent back to the ``elgg/Ajax`` module.
+    Handlers receive the request via ``$params['request']``.
 
 Routing
 =======
 
-**response, path:<path>** |results|
+**response, <route_name>** |results|
     Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
     This event type will only be used if the path did not start with "action/" or "ajax/".
     This event can be used to modify response content, status code, forward URL, or set additional response headers.
-    Note that the ``<path>`` value is parsed from the request URL, therefore plugins using the ``route`` event should
-    use the original ``<path>`` to filter the response, or switch to using the ``route:rewrite`` event.
+    Handlers receive the request via ``$params['request']``.
+
+**response, form:<form_name>** |results|
+    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+    Applies to request to ``/ajax/form/<form_name>``.
+    This event can be used to modify response content, status code, forward URL, or set additional response headers.
+    Handlers receive the request via ``$params['request']``.
+    
+**response, view:<view_name>** |results|
+    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+    Applies to request to ``/ajax/view/<view_name>``.
+    This event can be used to modify response content, status code, forward URL, or set additional response headers.
+    Handlers receive the request via ``$params['request']``.
 
 **route:config, <route_name>** |results|
 	Allows altering the route configuration before it is registered.
@@ -966,16 +975,6 @@ Views
      * ``identifier`` - ID of the page being rendered
      * ``segments`` - URL segments of the page being rendered
      * other ``$vars`` received by ``elgg_view_layout()``
-
-**response, form:<form_name>** |results|
-    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
-    Applies to request to ``/ajax/form/<form_name>``.
-    This event can be used to modify response content, status code, forward URL, or set additional response headers.
-    
-**response, view:<view_name>** |results|
-    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
-    Applies to request to ``/ajax/view/<view_name>``.
-    This event can be used to modify response content, status code, forward URL, or set additional response headers.
     
 **shell, page** |results|
     In ``elgg_view_page()``, filters the page shell name

@@ -74,10 +74,11 @@ return [
 		],
 	],
 	'ajax' => [
-		'path' => '/ajax/{segments}',
+		'path' => '/ajax/{type}/{segments}',
 		'controller' => \Elgg\Ajax\Controller::class,
 		'requirements' => [
 			'segments' => '.+',
+			'type' => 'view|form',
 		],
 		'middleware' => [
 			\Elgg\Router\Middleware\AjaxGatekeeper::class,

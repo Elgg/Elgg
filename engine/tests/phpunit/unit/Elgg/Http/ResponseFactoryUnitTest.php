@@ -312,53 +312,6 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($json_response, $service->send($service->prepareResponse('bar')));
 	}
 
-	public function testCanDetectXhrRequest() {
-		$service = $this->createService();
-		$this->assertFalse($service->isXhr());
-
-		$this->request = $this->createRequest('foo', 'POST', [], true);
-		$service = $this->createService();
-
-		$this->assertTrue($service->isXhr());
-	}
-
-	public function testCanDetectActionRequest() {
-		$service = $this->createService();
-		$this->assertFalse($service->isAction());
-
-		$this->request = $this->createRequest('action/foo/bar', 'POST', [], true);
-		$service = $this->createService();
-
-		$this->assertTrue($service->isXhr());
-		$this->assertTrue($service->isAction());
-
-		$this->request = $this->createRequest('action/foo/bar', 'POST');
-		$service = $this->createService();
-
-		$this->assertFalse($service->isXhr());
-		$this->assertTrue($service->isAction());
-	}
-
-	#[DataProvider('requestContextDataProvider')]
-	public function testCanParseContext($path, $expected) {
-		$this->request = $this->createRequest($path);
-		$service = $this->createService();
-		$this->assertEquals($expected, $service->parseContext());
-	}
-
-	public static function requestContextDataProvider() {
-		return [
-			['ajax/view/foo/bar/', 'view:foo/bar'],
-			['ajax/form/foo/bar/baz/', 'form:foo/bar/baz'],
-			['ajax/foo/bar', 'path:ajax/foo/bar'],
-			['ajax/baz/', 'path:ajax/baz'],
-			['action/foo/bar', 'action:foo/bar'],
-			['action/baz/', 'action:baz'],
-			['cache/foo', 'path:cache/foo'],
-			['foo/bar/ajax', 'path:foo/bar/ajax'],
-		];
-	}
-
 	#[DataProvider('stringifyProvider')]
 	public function testStringify($input, $expected_output) {
 		$this->createService();

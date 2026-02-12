@@ -116,9 +116,11 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('foo/bar', 'GET');
 		$this->createService($request);
 
-		_elgg_services()->events->registerHandler('response', 'path:foo/bar', function (\Elgg\Event $event) {
+		_elgg_services()->events->registerHandler('response', 'foo', function (\Elgg\Event $event) {
 			$this->assertEquals('response', $event->getName());
-			$this->assertEquals('path:foo/bar', $event->getType());
+			$this->assertEquals('foo', $event->getType());
+			$this->assertInstanceOf(Request::class, $event->getParam('request'));
+			$this->assertEquals('/foo/bar', $event->getParam('request')->getRequestURI());
 			
 			$response = $event->getValue();
 			$this->assertInstanceOf(OkResponse::class, $response);
