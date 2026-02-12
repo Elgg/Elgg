@@ -65,7 +65,8 @@ function _likes_count_menu_item(\ElggEntity $entity, int $priority = 500): \Elgg
 			'maxHeight' => '85%',
 			'innerWidth' => '345px',
 			'href' => elgg_generate_url('ajax', [
-				'segments' => 'view/likes/popup',
+				'type' => 'view',
+				'segments' => 'likes/popup',
 				'guid' => $entity->guid,
 			]),
 		]);

@@ -221,6 +221,24 @@ class ResponseFactory {
 	}
 
 	/**
+	 * Returns the response type based on the route for use in events
+	 *
+	 * @return string
+	 */
+	protected function getResponseType(): string {
+		$route = $this->request->getRoute();
+		$route_name = $route?->getName();
+		
+		if ($route_name === 'ajax') {
+			$params = $route->getMatchedParameters();
+			$route_name = elgg_extract('type', $params) . ':';
+			$route_name .= elgg_extract('segments', $params);
+		}
+		
+		return $route_name ?: 'route:not_found';
+	}
+
+	/**
 	 * Send HTTP response
 	 *
 	 * @param ResponseBuilder $response ResponseBuilder instance
@@ -231,8 +249,9 @@ class ResponseFactory {
 	 * @throws UnexpectedValueException
 	 */
 	public function respond(ResponseBuilder $response) {
-		$response_type = $this->parseContext();
-		$response = $this->events->triggerResults('response', $response_type, [], $response);
+		$response_type = $this->getResponseType();
+
+		$response = $this->events->triggerResults('response', $response_type, ['request' => $this->request], $response);
 		if (!$response instanceof ResponseBuilder) {
 			throw new UnexpectedValueException("Handlers for 'response', '{$response_type}' event must return an instanceof " . ResponseBuilder::class);
 		}
@@ -248,7 +267,7 @@ class ResponseFactory {
 		
 		$is_xhr = $this->request->isXmlHttpRequest();
 
-		$is_action = $this->isAction();
+		$is_action = $this->request->isAction();
 
 		if ($is_action && $response->getForwardURL() === null) {
 			// actions must always set a redirect url
@@ -310,14 +329,14 @@ class ResponseFactory {
 			return $this->send($this->ajax->respondWithError($error, $status_code));
 		}
 
-		if ($this->isXhr()) {
+		if ($this->request->isXmlHttpRequest()) {
 			// xhr calls to non-actions (e.g. ajax/view or ajax/form) need to receive proper HTTP status code
 			return $this->send($this->prepareResponse($error, $status_code, $response->getHeaders()));
 		}
 
 		$forward_url = $this->getSiteRefererUrl();
 
-		if ($this->isAction()) {
+		if ($this->request->isAction()) {
 			$forward_url = $this->makeSecureForwardUrl($forward_url);
 			return $this->send($this->prepareRedirectResponse($forward_url));
 		}
@@ -365,7 +384,7 @@ class ResponseFactory {
 		$content = $this->stringify($response->getContent());
 		
 		if ($this->ajax->isReady()) {
-			return $this->send($this->ajax->respondFromOutput($content, $this->parseContext()));
+			return $this->send($this->ajax->respondFromOutput($content, $this->getResponseType()));
 		}
 
 		return $this->send($this->prepareResponse($content, $response->getStatusCode(), $response->getHeaders()));
@@ -451,7 +470,7 @@ class ResponseFactory {
 				break;
 		}
 
-		if ($this->isXhr()) {
+		if ($this->request->isXmlHttpRequest()) {
 			if ($status_code < 100 || ($status_code >= 300 && $status_code <= 399) || $status_code > 599) {
 				// We only want to preserve OK and error codes
 				// Redirect responses should be converted to OK responses as this is an XHR request
@@ -468,7 +487,7 @@ class ResponseFactory {
 			return $this->respond($response);
 		}
 
-		if ($this->isAction()) {
+		if ($this->request->isAction()) {
 			// actions should always redirect on non xhr-calls
 			if (!is_int($status_code) || $status_code < 300 || $status_code > 399) {
 				$status_code = ELGG_HTTP_SEE_OTHER;
@@ -482,58 +501,7 @@ class ResponseFactory {
 		
 		return $this->respond($response);
 	}
-
-	/**
-	 * Parses response type to be used as event type
-	 *
-	 * @return string
-	 */
-	public function parseContext(): string {
-		$segments = $this->request->getUrlSegments();
-
-		$identifier = array_shift($segments);
-		switch ($identifier) {
-			case 'ajax':
-				$page = array_shift($segments);
-				if ($page === 'view') {
-					$view = implode('/', $segments);
-					return "view:{$view}";
-				} elseif ($page === 'form') {
-					$form = implode('/', $segments);
-					return "form:{$form}";
-				}
-				
-				array_unshift($segments, $page);
-				break;
-
-			case 'action':
-				$action = implode('/', $segments);
-				return "action:{$action}";
-		}
-
-		array_unshift($segments, $identifier);
-		$path = implode('/', $segments);
-		return "path:{$path}";
-	}
-
-	/**
-	 * Check if the request is an XmlHttpRequest
-	 *
-	 * @return bool
-	 */
-	public function isXhr(): bool {
-		return $this->request->isXmlHttpRequest();
-	}
-
-	/**
-	 * Check if the requested path is an action
-	 *
-	 * @return bool
-	 */
-	public function isAction(): bool {
-		return str_starts_with($this->parseContext(), 'action:');
-	}
-
+	
 	/**
 	 * Normalizes content into serializable data by walking through arrays
 	 * and objectifying Elgg entities
