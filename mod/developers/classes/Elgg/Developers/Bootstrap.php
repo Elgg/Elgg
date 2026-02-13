@@ -58,13 +58,22 @@ class Bootstrap extends DefaultPluginBootstrap {
 
 				$events->registerHandler('shutdown', 'system', function() use ($handler, $elgg) {
 					$handler->close();
-
-					echo elgg_format_element('script', [], $this->getPageStats());
-
+					
 					$log_file = $elgg->config->log_cache;
+					$log_contents = '';
 					if (is_file($log_file)) {
-						echo elgg_format_element('script', [], file_get_contents($log_file));
+						$log_contents = file_get_contents($log_file);
 						unlink($log_file);
+					}
+					
+					if (elgg_get_viewtype() !== 'default') {
+						// double check viewtype as it might have changed
+						return;
+					}
+					
+					echo elgg_format_element('script', [], $this->getPageStats());
+					if (!empty($log_contents)) {
+						echo elgg_format_element('script', [], $log_contents);
 					}
 				}, 1000);
 			}

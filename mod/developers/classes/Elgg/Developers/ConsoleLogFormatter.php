@@ -40,7 +40,7 @@ class ConsoleLogFormatter extends LineFormatter {
 		}
 
 		$message_parts[] = $record->datetime->format($this->dateFormat);
-		$message_parts[] = addslashes($record_message);
+		$message_parts[] = addslashes(preg_replace('/[\s]+/', ' ', $record_message));
 
 		$message = implode(' - ', $message_parts);
 
