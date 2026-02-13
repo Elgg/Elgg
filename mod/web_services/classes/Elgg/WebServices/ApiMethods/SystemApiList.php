@@ -17,7 +17,7 @@ class SystemApiList {
 	 *
 	 * @return \GenericResult
 	 */
-	public function __invoke() {
+	public function __invoke(): \GenericResult {
 		$apis = ApiRegistrationService::instance()->getAllApiMethods();
 		
 		$result = [];

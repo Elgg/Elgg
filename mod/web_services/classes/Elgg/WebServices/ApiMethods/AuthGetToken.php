@@ -3,7 +3,6 @@
 namespace Elgg\WebServices\ApiMethods;
 
 use Elgg\Exceptions\AuthenticationException;
-use Elgg\Exceptions\SecurityException;
 
 /**
  * Api handler for the auth.gettoken call
@@ -23,10 +22,9 @@ class AuthGetToken {
 	 * @param string $username username
 	 * @param string $password password
 	 *
-	 * @return string
-	 * @throws SecurityException
+	 * @return \GenericResult
 	 */
-	public function __invoke(string $username, string $password) {
+	public function __invoke(string $username, string $password): \GenericResult {
 		// also check if username is an email address
 		$user = elgg_get_user_by_username($username, true);
 		if ($user instanceof \ElggUser) {
@@ -42,18 +40,24 @@ class AuthGetToken {
 			]);
 			if ($authenticated === true && $user instanceof \ElggUser) {
 				if ($user->isBanned()) {
-					throw new SecurityException(elgg_echo('SecurityException:BannedUser'));
+					$result = \ErrorResult::getInstance(elgg_echo('SecurityException:BannedUser'));
+					$result->setHttpStatus(ELGG_HTTP_FORBIDDEN);
+					
+					return $result;
 				}
 				
 				$token = _elgg_services()->usersApiSessionsTable->createToken($user->guid);
 				if ($token !== false) {
-					return $token;
+					return \SuccessResult::getInstance($token);
 				}
 			}
 		} catch (AuthenticationException $e) {
 			// authentication failed
 		}
 		
-		throw new SecurityException(elgg_echo('SecurityException:authenticationfailed'));
+		$result = \ErrorResult::getInstance(elgg_echo('SecurityException:authenticationfailed'));
+		$result->setHttpStatus(ELGG_HTTP_FORBIDDEN);
+		
+		return $result;
 	}
 }

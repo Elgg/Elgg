@@ -349,8 +349,9 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 		
 		$api = new ApiMethod('foo', 'not_callable');
 		
-		$this->expectException(\APIException::class);
-		$api->execute($request);
+		$result = $api->execute($request);
+		
+		$this->assertInstanceOf(\ErrorResult::class, $result);
 	}
 	
 	public function testExecuteNoResult() {
@@ -373,7 +374,8 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 			],
 		];
 		
-		$this->expectException(\APIException::class);
-		$api->execute($request);
+		$result = $api->execute($request);
+		
+		$this->assertInstanceOf(\ErrorResult::class, $result);
 	}
 }

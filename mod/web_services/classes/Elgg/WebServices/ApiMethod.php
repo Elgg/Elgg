@@ -22,13 +22,6 @@ use Elgg\Request;
  */
 class ApiMethod implements CollectionItemInterface {
 
-	/**
-	 * @var callable
-	 */
-	protected $callback;
-	
-	protected string $method;
-	
 	protected array $params = [];
 	
 	protected string $description = '';
@@ -47,9 +40,7 @@ class ApiMethod implements CollectionItemInterface {
 	 * @param string   $method   the API method name
 	 * @param callable $callback Callback function when the API method is called
 	 */
-	public function __construct(string $method, $callback) {
-		$this->method = $method;
-		$this->callback = $callback;
+	public function __construct(protected string $method, protected $callback) {
 	}
 	
 	/**
@@ -62,8 +53,7 @@ class ApiMethod implements CollectionItemInterface {
 	 * @throws \Elgg\Exceptions\DomainException
 	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 */
-	public function __set($name, $value): void {
-		
+	public function __set(string $name, mixed $value): void {
 		switch ($name) {
 			case 'method':
 			case 'callback':
@@ -131,7 +121,7 @@ class ApiMethod implements CollectionItemInterface {
 	 *
 	 * @return mixed
 	 */
-	public function __get($name) {
+	public function __get(string $name) {
 		return $this->$name;
 	}
 	
@@ -142,7 +132,7 @@ class ApiMethod implements CollectionItemInterface {
 	 *
 	 * @return bool
 	 */
-	public function __isset($name): bool {
+	public function __isset(string $name): bool {
 		return isset($this->$name);
 	}
 	
@@ -216,24 +206,36 @@ class ApiMethod implements CollectionItemInterface {
 	 * @param Request $request the Elgg request
 	 *
 	 * @return \GenericResult The result of the execution
-	 * @throws \APIException
 	 */
-	public function execute(Request $request) {
+	public function execute(Request $request): \GenericResult {
 		$handlers = _elgg_services()->handlers;
 		
 		$callable = $handlers->resolveCallable($this->callback);
 		
 		// function must be callable
 		if (empty($callable)) {
-			throw new \APIException(elgg_echo('APIException:FunctionDoesNotExist', [$this->method]));
+			$error = \ErrorResult::getInstance(elgg_echo('APIException:FunctionDoesNotExist', [$this->method]));
+			$error->setHttpStatus(ELGG_HTTP_NOT_IMPLEMENTED);
+			
+			return $error;
 		}
 		
 		// check http call method
 		if ($this->call_method !== $request->getMethod()) {
-			throw new \APIException(elgg_echo('APIException:InvalidCallMethod', [$this->method, $this->call_method]));
+			$error = \ErrorResult::getInstance(elgg_echo('APIException:InvalidCallMethod', [$this->method, $this->call_method]));
+			$error->setHttpStatus(ELGG_HTTP_METHOD_NOT_ALLOWED);
+			
+			return $error;
 		}
 		
-		$parameters = $this->getParameters($request);
+		try {
+			$parameters = $this->getParameters($request);
+		} catch (\APIException $e) {
+			$error = \ErrorResult::getInstance($e->getMessage());
+			$error->setHttpStatus(ELGG_HTTP_BAD_REQUEST);
+			
+			return $error;
+		}
 		
 		if ($this->supply_associative) {
 			$result = call_user_func($callable, $parameters);
@@ -250,7 +252,7 @@ class ApiMethod implements CollectionItemInterface {
 		}
 		
 		if ($result === false) {
-			throw new \APIException(elgg_echo('APIException:FunctionParseError', [
+			return \ErrorResult::getInstance(elgg_echo('APIException:FunctionParseError', [
 				$handlers->describeCallable($this->callback),
 				var_export($parameters, true),
 			]));
@@ -258,7 +260,7 @@ class ApiMethod implements CollectionItemInterface {
 		
 		if ($result === null) {
 			// If no value
-			throw new \APIException(elgg_echo('APIException:FunctionNoReturn', [
+			return \ErrorResult::getInstance(elgg_echo('APIException:FunctionNoReturn', [
 				$handlers->describeCallable($this->callback),
 				var_export($parameters, true),
 			]));
@@ -273,7 +275,7 @@ class ApiMethod implements CollectionItemInterface {
 	 *
 	 * @return string
 	 */
-	public function describeCallable() {
+	public function describeCallable(): string {
 		return _elgg_services()->handlers->describeCallable($this->callback);
 	}
 	
@@ -287,14 +289,14 @@ class ApiMethod implements CollectionItemInterface {
 	 * @return array containing parameters as key => value
 	 * @throws \APIException
 	 */
-	protected function getParameters(Request $request) {
+	protected function getParameters(Request $request): array {
 		$sanitised = [];
 		
 		// if there are parameters, sanitize them
 		foreach ($this->params as $key => $settings) {
 			$default = elgg_extract('default', $settings);
 			
-			// Make things go through the sanitiser
+			// Make things go through the sanitizer
 			$value = $request->getParam($key, $default);
 			
 			// check required
@@ -319,7 +321,7 @@ class ApiMethod implements CollectionItemInterface {
 	 * @return mixed
 	 * @throws \APIException
 	 */
-	protected function typeCastParameter(string $key, $value, string $type) {
+	protected function typeCastParameter(string $key, mixed $value, string $type): mixed {
 		if (is_null($value)) {
 			return null;
 		}
@@ -364,15 +366,15 @@ class ApiMethod implements CollectionItemInterface {
 	 */
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
-	public function getPriority() {
+	public function getPriority(): int {
 		// methods don't have a priority, only needed for CollectionItemInterface
 		return 1;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 *
 	 * @return string
 	 */

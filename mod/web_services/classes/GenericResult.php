@@ -8,13 +8,18 @@ use Elgg\WebServices\Di\RestApiErrorHandler;
 abstract class GenericResult {
 	
 	/**
+	 * The HTTP status of the result
+	 */
+	protected int $http_status_code;
+
+	/**
 	 * The status of the result
 	 */
 	protected int $status_code;
 
 	/**
 	 * Message returned along with the status which is almost always an error message.
-	 * This must be human-readable, understandable and localised
+	 * This must be human-readable, understandable and localized
 	 */
 	protected string $message;
 
@@ -24,7 +29,7 @@ abstract class GenericResult {
 	 *
 	 * @var mixed Should probably be an object of some sort.
 	 */
-	protected $result;
+	protected mixed $result = null;
 
 	/**
 	 * Set a status code and optional message.
@@ -46,7 +51,7 @@ abstract class GenericResult {
 	 *
 	 * @return void
 	 */
-	protected function setResult($result): void {
+	protected function setResult(mixed $result): void {
 		$this->result = $result;
 	}
 
@@ -73,14 +78,14 @@ abstract class GenericResult {
 	 *
 	 * @return mixed
 	 */
-	protected function getResult() {
+	protected function getResult(): mixed {
 		return $this->result;
 	}
 
 	/**
-	 * Serialise to a standard class.
+	 * Serialize to a standard class.
 	 *
-	 * DEVNOTE: The API is only interested in data, we can not easily serialise
+	 * DEVNOTE: The API is only interested in data, we can not easily serialize
 	 * custom classes without the need for 1) the other side being PHP, 2) you need to have the class
 	 * definition installed, 3) it's the right version!
 	 *
@@ -92,7 +97,7 @@ abstract class GenericResult {
 	 * if ELGG_DEBUG is set then additional information about the runtime environment and
 	 * authentication will be returned.
 	 *
-	 * @return \stdClass Object containing the serialised result.
+	 * @return \stdClass Object containing the serialized result.
 	 */
 	public function export(): \stdClass {
 		$result = new \stdClass;
@@ -115,5 +120,27 @@ abstract class GenericResult {
 		}
 
 		return $result;
+	}
+	
+	/**
+	 * Set the HTTP status code for the result
+	 *
+	 * @param int $status HTTP status code
+	 *
+	 * @return void
+	 * @since 7.0
+	 */
+	public function setHttpStatus(int $status): void {
+		$this->http_status_code = $status;
+	}
+	
+	/**
+	 * Get the HTTP status code
+	 *
+	 * @return int
+	 * @since 7.0
+	 */
+	public function getHttpStatus(): int {
+		return $this->http_status_code;
 	}
 }

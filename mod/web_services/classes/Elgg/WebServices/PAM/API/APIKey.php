@@ -14,10 +14,15 @@ class APIKey {
 	/**
 	 * Confirm that the call includes a valid API key
 	 *
-	 * @return bool
+	 * @return bool|null
 	 * @throws \APIException
 	 */
-	public function __invoke(): bool {
+	public function __invoke(): ?bool {
+		if (!elgg_get_plugin_setting('auth_allow_key', 'web_services')) {
+			// this method is not allowed
+			return null;
+		}
+		
 		// check that an API key is present
 		$api_key = (string) get_input('api_key');
 		if ($api_key === '') {

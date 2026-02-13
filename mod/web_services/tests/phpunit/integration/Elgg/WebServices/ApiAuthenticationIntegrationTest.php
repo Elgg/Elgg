@@ -5,10 +5,6 @@ namespace Elgg\WebServices;
 use Elgg\Http\Request;
 use Elgg\Plugins\IntegrationTestCase;
 use Elgg\WebServices\Di\ApiRegistrationService;
-use Elgg\WebServices\Middleware\ApiContextMiddleware;
-use Elgg\WebServices\Middleware\ViewtypeMiddleware;
-use Elgg\WebServices\Middleware\RestApiOutputMiddleware;
-use Elgg\WebServices\Middleware\RestApiErrorHandlingMiddleware;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
@@ -24,7 +20,7 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 	protected $plugin_settings;
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function up() {
 		$this->plugin = elgg_get_plugin_from_id('web_services');
@@ -32,7 +28,7 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function down() {
 		// restore plugin settings
@@ -60,12 +56,6 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 			'controller' => RestServiceController::class,
 			'defaults' => [
 				'view' => 'json',
-			],
-			'middleware' => [
-				ApiContextMiddleware::class,
-				ViewtypeMiddleware::class,
-				RestApiOutputMiddleware::class,
-				RestApiErrorHandlingMiddleware::class,
 			],
 			'requirements' => [
 				'segments' => '.+',
@@ -97,7 +87,7 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 			// just catching
 		}
 		
-		// need to cleanup the exception handler set in the API middleware
+		// need to clean up the exception handler set in the API controller
 		restore_exception_handler();
 		
 		ob_get_clean();
@@ -134,7 +124,7 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 			'require_api_auth' => true,
 		]));
 		
-		/* @var $result Response */
+		/** @var Response $result */
 		$result = $this->executeRequest($request);
 		$this->assertInstanceOf(Response::class, $result);
 		$this->assertEquals(ELGG_HTTP_OK, $result->getStatusCode());
@@ -176,8 +166,12 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 			},
 			'require_api_auth' => true,
 		]));
-		$this->expectException(\APIException::class);
-		$this->executeRequest($request);
+		
+		/** @var Response $result */
+		$result = $this->executeRequest($request);
+		
+		$this->assertInstanceOf(Response::class, $result);
+		$this->assertEquals(ELGG_HTTP_FORBIDDEN, $result->getStatusCode());
 	}
 	
 	public function testApiAuthenticationWithInvalidKey() {
@@ -202,8 +196,11 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 			'require_api_auth' => true,
 		]));
 		
-		$this->expectException(\APIException::class);
-		$this->executeRequest($request);
+		/** @var Response $result */
+		$result = $this->executeRequest($request);
+		
+		$this->assertInstanceOf(Response::class, $result);
+		$this->assertEquals(ELGG_HTTP_FORBIDDEN, $result->getStatusCode());
 	}
 	
 	public function testApiAuthenticationWithValidHMACHeaders() {
@@ -251,7 +248,7 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 			'require_api_auth' => true,
 		]));
 			
-		/* @var $result Response */
+		/** @var Response $result */
 		$result = $this->executeRequest($request);
 		$this->assertInstanceOf(Response::class, $result);
 		$this->assertEquals(ELGG_HTTP_OK, $result->getStatusCode());
@@ -312,9 +309,12 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 			},
 			'require_api_auth' => true,
 		]));
-			
-		$this->expectException(\APIException::class);
-		$this->executeRequest($request);
+		
+		/** @var Response $result */
+		$result = $this->executeRequest($request);
+		
+		$this->assertInstanceOf(Response::class, $result);
+		$this->assertEquals(ELGG_HTTP_FORBIDDEN, $result->getStatusCode());
 	}
 	
 	public function testApiAuthenticationWithInvalidHMACHeaders() {
@@ -362,8 +362,11 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 			'require_api_auth' => true,
 		]));
 		
-		$this->expectException(\APIException::class);
-		$this->executeRequest($request);
+		/** @var Response $result */
+		$result = $this->executeRequest($request);
+		
+		$this->assertInstanceOf(Response::class, $result);
+		$this->assertEquals(ELGG_HTTP_FORBIDDEN, $result->getStatusCode());
 	}
 	
 	public function testApiAuthenticationWithValidHMACHeadersPost() {
@@ -418,7 +421,7 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 			'require_api_auth' => true,
 		]));
 		
-		/* @var $result Response */
+		/** @var Response $result */
 		$result = $this->executeRequest($request);
 		$this->assertInstanceOf(Response::class, $result);
 		$this->assertEquals(ELGG_HTTP_OK, $result->getStatusCode());
@@ -488,7 +491,10 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 			'require_api_auth' => true,
 		]));
 		
-		$this->expectException(\APIException::class);
-		$this->executeRequest($request);
+		/** @var Response $result */
+		$result = $this->executeRequest($request);
+		
+		$this->assertInstanceOf(Response::class, $result);
+		$this->assertEquals(ELGG_HTTP_FORBIDDEN, $result->getStatusCode());
 	}
 }

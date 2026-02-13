@@ -34,6 +34,7 @@ class ErrorResult extends \GenericResult {
 		}
 
 		$this->setStatusCode((int) $code, $message);
+		$this->setHttpStatus(ELGG_HTTP_INTERNAL_SERVER_ERROR);
 	}
 
 	/**
@@ -43,9 +44,9 @@ class ErrorResult extends \GenericResult {
 	 * @param int|null        $code      Code
 	 * @param \Throwable|null $exception Optional exception for generating a stack trace.
 	 *
-	 * @return \ErrorResult
+	 * @return static
 	 */
-	public static function getInstance(string $message, ?int $code = null, ?\Throwable $exception = null): \ErrorResult {
-		return new self($message, $code, $exception);
+	public static function getInstance(string $message, ?int $code = null, ?\Throwable $exception = null): static {
+		return new static($message, $code, $exception);
 	}
 }
