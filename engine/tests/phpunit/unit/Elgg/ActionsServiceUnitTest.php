@@ -7,6 +7,7 @@ use Elgg\Exceptions\Http\GatekeeperException;
 use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Exceptions\Http\ValidationException;
 use Elgg\Exceptions\DomainException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Http\Request;
@@ -495,14 +496,13 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->createService($request);
 		$this->addCsrfTokens($request);
 
-		_elgg_services()->events->registerHandler(Services\AjaxResponse::RESPONSE_EVENT, 'action:output3', function (\Elgg\Event $event) {
-			/* @var $api_response Services\AjaxResponse */
-			$api_response = $event->getValue();
-			
-			$api_response->setTtl(1000);
-			$api_response->setData((object) ['value' => 'output3_modified']);
+		_elgg_services()->events->registerHandler('ajax_results', 'action:output3', function (\Elgg\Event $event) {
+			/* @var $results \stdClass */
+			$results = $event->getValue();
 
-			return $api_response;
+			$results->value = 'output3_modified';
+
+			return $results;
 		});
 
 		_elgg_services()->actions->register('output3', "{$this->actionsDir}/output3.php", 'public');
@@ -517,16 +517,10 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
-		$this->assertNotEmpty($date = $response->headers->get('Date'));
-		$this->assertNotEmpty($expires = $response->headers->get('Expires'));
-		$max_age = strtotime($expires) - strtotime($date);
-		$this->assertGreaterThanOrEqual(999, $max_age); // allow for time drift of 1 sec
-		$this->assertLessThanOrEqual(1001, $max_age); // allow for time drift of 1 sec
-		$this->assertStringContainsString("max-age={$max_age}", $response->headers->get('Cache-Control'));
-		$this->assertStringContainsString('private', $response->headers->get('Cache-Control'));
-
 		$output = json_encode([
 			'value' => 'output3_modified',
+			'current_url' => elgg_generate_url('action:output3'),
+			'forward_url' => elgg_normalize_site_url((string) $request->headers->get('Referer')),
 			'_elgg_msgs' => [
 				'success' => [
 					'success',
@@ -534,39 +528,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 			],
 			'_elgg_deps' => ['js' => [], 'css' => []]
 		]);
-
-		$this->assertEquals($output, $response->getContent());
-	}
-
-	public function testCanCancelAjax2Response() {
-
-		$request = $this->prepareHttpRequest('action/output3', 'POST', [], 2);
-		$this->createService($request);
-		$this->addCsrfTokens($request);
-
-		_elgg_services()->events->registerHandler(Services\AjaxResponse::RESPONSE_EVENT, 'action:output3', function (\Elgg\Event $event) {
-			/* @var $api_response Services\AjaxResponse */
-			$api_response = $event->getValue();
-			
-			return $api_response->cancel();
-		});
-
-		_elgg_services()->actions->register('output3', "{$this->actionsDir}/output3.php", 'public');
-
-		set_input('output', 'output3');
-		set_input('system_message', 'success');
-
-		$this->route($request);
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(Response::class, $response);
-		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
-		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
-
-		$output = json_encode([
-			'error' => 'The response was cancelled',
-		]);
-
+		
 		$this->assertEquals($output, $response->getContent());
 	}
 
@@ -576,14 +538,14 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->createService($request);
 		$this->addCsrfTokens($request);
 
-		_elgg_services()->events->registerHandler(Services\AjaxResponse::RESPONSE_EVENT, 'action:output3', [
+		_elgg_services()->events->registerHandler('ajax_results', 'action:output3', [
 			Values::class,
 			'getFalse'
 		]);
 
 		_elgg_services()->actions->register('output3', "{$this->actionsDir}/output3.php", 'public');
 
-		$this->expectException(\RuntimeException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->route($request);
 	}
 

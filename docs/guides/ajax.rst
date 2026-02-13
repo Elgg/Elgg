@@ -15,9 +15,9 @@ All the ajax methods perform the following:
 #. Client-side, the ``data`` option (if given as an object) is filtered by the hook ``ajax_request_data``.
 #. The request is made to the server, either rendering a view or a form, calling an action, or loading a path.
 #. The method returns a ``jqXHR`` object, which can be used as a Promise.
-#. Server-echoed content is turned into a response object (``Elgg\Services\AjaxResponse``) containing a string (or a JSON-parsed value).
-#. The response object is filtered by the event ``ajax_response``.
-#. The response object is used to create the HTTP response.
+#. Server-echoed content is turned into an object
+#. The object is filtered by the event ``ajax_results``.
+#. The object is used to create the HTTP response.
 #. Client-side, the response data is filtered by the hook ``ajax_response_data``.
 #. The ``jqXHR`` promise is resolved and any ``success`` callbacks are called.
 
@@ -78,7 +78,7 @@ Notes for actions:
 
 * All hooks have type ``action:<action_name>``. So in this case, three hooks will be triggered:
    * client-side ``"ajax_request_data", "action:do_math"`` to filter the request data (before it's sent)
-   * server-side ``"ajax_response", "action:do_math"`` to filter the response (after the action runs)
+   * server-side ``"ajax_results", "action:do_math"`` to filter the response (after the action runs)
    * client-side ``"ajax_response_data", "action:do_math"`` to filter the response data (before the calling code receives it)
 * CSRF tokens are added to the request data.
 * The default method is ``POST``.
@@ -283,30 +283,28 @@ This data can be read server-side via ``get_input('bar');``.
 Piggybacking on an Ajax response
 --------------------------------
 
-The server-side ``ajax_response`` event can be used to append or filter response data (or metadata).
+The server-side ``ajax_results`` event can be used to append or filter response data (or metadata).
 
 Let's say when the view ``foo`` is fetched, we want to also send the client some additional data:
 
 .. code-block:: php
 
-    use Elgg\Services\AjaxResponse;
-
     function myplugin_append_ajax(\Elgg\Event $event) {
 
-        /* @var $response AjaxResponse */
-        $response = $event->getValue();
+        /* @var $data /stdClass */
+        $data = $event->getValue();
         
         // alter the value being returned
-        $response->getData()->value .= " hello";
+        $data->value .= " hello";
 
-        // send some metadata back. Only client-side "ajax_response" hooks can see this!
-        $response->getData()->myplugin_alert = 'Listen to me!';
+        // send some metadata back
+        $data->myplugin_alert = 'Listen to me!';
 
-        return $response;
+        return $data;
     }
 
     // in myplugin_init()
-    elgg_register_event_handler(AjaxResponse::RESPONSE_EVENT, 'view:foo', 'myplugin_append_ajax');
+    elgg_register_event_handler('ajax_results', 'view:foo', 'myplugin_append_ajax');
 
 To capture the metadata send back to the client, we use the client-side ``ajax_response_data`` hook:
 
