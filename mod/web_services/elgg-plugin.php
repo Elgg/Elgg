@@ -4,8 +4,6 @@ use Elgg\Router\Middleware\AdminGatekeeper;
 use Elgg\WebServices\ApiMethods\AuthGetToken;
 use Elgg\WebServices\ApiMethods\SystemApiList;
 use Elgg\WebServices\Forms\PrepareFields;
-use Elgg\WebServices\Middleware\ApiContextMiddleware;
-use Elgg\WebServices\Middleware\RestApiErrorHandlingMiddleware;
 use Elgg\WebServices\Middleware\RestApiOutputMiddleware;
 use Elgg\WebServices\Middleware\ViewtypeMiddleware;
 use Elgg\WebServices\RestServiceController;
@@ -59,12 +57,6 @@ return [
 			'controller' => RestServiceController::class,
 			'defaults' => [
 				'view' => 'json',
-			],
-			'middleware' => [
-				ApiContextMiddleware::class,
-				ViewtypeMiddleware::class,
-				RestApiOutputMiddleware::class,
-				RestApiErrorHandlingMiddleware::class,
 			],
 			'requirements' => [
 				'segments' => '.+',

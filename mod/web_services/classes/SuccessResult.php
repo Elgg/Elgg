@@ -13,9 +13,10 @@ class SuccessResult extends \GenericResult {
 	 *
 	 * @param mixed $result The result
 	 */
-	public function __construct($result) {
+	public function __construct(mixed $result) {
 		$this->setResult($result);
 		$this->setStatusCode(self::RESULT_SUCCESS);
+		$this->setHttpStatus(ELGG_HTTP_OK);
 	}
 
 	/**
@@ -23,9 +24,9 @@ class SuccessResult extends \GenericResult {
 	 *
 	 * @param mixed $result A result of some kind?
 	 *
-	 * @return \SuccessResult
+	 * @return static
 	 */
-	public static function getInstance($result): \SuccessResult {
-		return new self($result);
+	public static function getInstance(mixed $result): static {
+		return new static($result);
 	}
 }

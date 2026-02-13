@@ -192,6 +192,9 @@ Webservices
 
 The responses from the REST API calls now have a ``Content-Disposition: attachment; filename="result.<view>"`` header.
 
+Also the HTTP status codes of the error responses better align with the HTTP standard and are no longer a ``200 OK``, but
+have different status codes like ``404 Not Found``, ``403 Forbidden``, ``500 Internal Server Error``, etc. 
+
 Changes in functions
 --------------------
 

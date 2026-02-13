@@ -16,10 +16,14 @@ class Hmac {
 	/**
 	 * Validate the HMAC signature of an API call
 	 *
-	 * @return bool
+	 * @return bool|null
 	 * @throws \Elgg\Exceptions\SecurityException
 	 */
-	public function __invoke(): bool {
+	public function __invoke(): ?bool {
+		if (!elgg_get_plugin_setting('auth_allow_hmac', 'web_services')) {
+			return null;
+		}
+		
 		// Get api header
 		$api_header = elgg_ws_get_and_validate_api_headers();
 		
