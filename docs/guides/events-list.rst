@@ -843,10 +843,11 @@ Action events
 Ajax
 ====
 
-**ajax_response, \*** |results|
-	When the ``elgg/Ajax`` module is used, this event gives access to the response object
-	(``\Elgg\Services\AjaxResponse``) so it can be altered/extended. The event type depends on
-	the method call:
+**ajax_results, <event_type>\*** |results|
+	When the ``elgg/Ajax`` module is used, this event gives access to the results object
+	so it can be altered/extended. Handlers receive the request via ``$params['request']``.
+	
+	The event type depends on the method call:
 
 	================  ====================
 	elgg/Ajax method  event type
@@ -856,23 +857,6 @@ Ajax
 	view()            view:<view_name>
 	form()            form:<action_name>
 	================  ====================
-
-**ajax_response, action:<action_name>** |results|
-    Filters ``action/`` responses before they're sent back to the ``elgg/Ajax`` module.
-    Handlers receive the request via ``$params['request']``.
-    
-**ajax_response, <route_name>** |results|
-    Filters ajax responses before they're sent back to the ``elgg/Ajax`` module. This event type will
-    only be used if the path did not start with "action/" or "ajax/".
-    Handlers receive the request via ``$params['request']``.
-    
-**ajax_response, view:<view>** |results|
-    Filters ``ajax/view/`` responses before they're sent back to the ``elgg/Ajax`` module.
-    Handlers receive the request via ``$params['request']``.
-
-**ajax_response, form:<action_name>** |results|
-    Filters ``ajax/form/`` responses before they're sent back to the ``elgg/Ajax`` module.
-    Handlers receive the request via ``$params['request']``.
 
 Routing
 =======

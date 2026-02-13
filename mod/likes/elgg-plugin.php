@@ -22,7 +22,7 @@ return [
 		],
 	],
 	'events' => [
-		'ajax_response' => [
+		'ajax_results' => [
 			'all' => [
 				\Elgg\Likes\AjaxResponseHandler::class => [],
 			],

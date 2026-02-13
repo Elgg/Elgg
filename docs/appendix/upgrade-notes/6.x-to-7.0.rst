@@ -106,7 +106,8 @@ Response event
 ~~~~~~~~~~~~~~
 
 The ``response`` and ``ajax_response`` event type has been changed. Besides the specials for actions and ajax responses
-the former ``path`` has been replaced to the ``route_name`` to be path agnostic.
+the former ``path`` has been replaced to the ``route_name`` to be path agnostic. The ``ajax_response`` event has been replaced
+with the ``ajax_results`` event to influence only the data and not the full response. You might need to update your event handlers.
 
 Ajax route
 ~~~~~~~~~~

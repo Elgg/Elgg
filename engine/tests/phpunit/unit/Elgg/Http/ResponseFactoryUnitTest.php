@@ -234,7 +234,14 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 
 		$data = ['foo' => 'bar'];
 		$content = json_encode($data);
-		$wrapped_content = json_encode(['value' => $data]);
+		$wrapped_content = json_encode([
+			'value' => $data,
+			'_elgg_msgs' => (object) [],
+			'_elgg_deps' => [
+				'js' => [],
+				'css' => [],
+			],
+		]);
 
 		$response = $service->send($this->ajax->respondFromOutput($content));
 		$this->assertInstanceOf(JsonResponse::class, $response);
@@ -249,41 +256,6 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		ob_start();
 		$json_response = $this->ajax->respondFromOutput('foo');
 		ob_get_clean();
-		$this->assertEquals($json_response, $service->send($service->prepareResponse('bar')));
-	}
-
-	public function testCanSendAjaxResponseFromApiResponse() {
-		$service = $this->createService();
-
-		ob_start();
-
-		$data = ['foo' => 'bar'];
-		$wrapped_content = json_encode(['value' => $data]);
-
-		$api_response = new \Elgg\Ajax\Response();
-		$api_response->setData((object) [
-					'value' => $data,
-		]);
-
-		$response = $service->send($this->ajax->respondFromApiResponse($api_response));
-
-		$this->assertInstanceOf(JsonResponse::class, $response);
-		$this->assertEquals($wrapped_content, $response->getContent());
-
-		$output = ob_get_clean();
-		$this->assertEquals($wrapped_content, $output);
-	}
-
-	public function testCanNotSendANewResponseAfterAjaxResponseFromApiResponseIsSent() {
-		$service = $this->createService();
-		$api_response = new \Elgg\Ajax\Response();
-		$api_response->setData((object) [
-					'value' => 'foo',
-		]);
-		ob_start();
-		$json_response = $this->ajax->respondFromApiResponse($api_response);
-		ob_get_clean();
-
 		$this->assertEquals($json_response, $service->send($service->prepareResponse('bar')));
 	}
 
