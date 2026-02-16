@@ -1,8 +1,6 @@
 <?php
 /**
  * Quick introduction to the theme sandbox
- *
- * @todo links to resources?
  */
 ?>
 
