@@ -1,7 +1,8 @@
 <?php
 
-namespace Elgg\Notifications;
+namespace Elgg\Notifications\Handlers;
 
+use Elgg\Notifications\NonConfigurableNotificationEventHandler;
 use Elgg\Views\HtmlFormatter;
 
 /**
@@ -9,7 +10,7 @@ use Elgg\Views\HtmlFormatter;
  *
  * @since 5.0
  */
-class MentionsEventHandler extends NonConfigurableNotificationEventHandler {
+class Mentions extends NonConfigurableNotificationEventHandler {
 	
 	/**
 	 * {@inheritdoc}

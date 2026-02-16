@@ -1,6 +1,6 @@
 <?php
 
-namespace Elgg\Notifications;
+namespace Elgg\Notifications\Events;
 
 /**
  * Apply subscriptions based on preferences
@@ -8,7 +8,7 @@ namespace Elgg\Notifications;
  * @since 4.0
  * @internal
  */
-class CreateContentEventHandler {
+class CreateContent {
 	
 	/**
 	 * Subscribe to content you just created in order to receive notifications

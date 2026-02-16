@@ -1,13 +1,13 @@
 <?php
 
-namespace Elgg\Notifications;
+namespace Elgg\Notifications\Events;
 
 /**
  * Enqueue mention notifications
  *
  * @since 5.0
  */
-class MentionsEnqueueEventHandler {
+class MentionsEnqueue {
 	
 	/**
 	 * @var array Contains entity GUIDs already queued this script run (to prevent doubles)

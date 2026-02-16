@@ -1,13 +1,15 @@
 <?php
 
-namespace Elgg\Notifications;
+namespace Elgg\Notifications\Handlers;
+
+use Elgg\Notifications\NonConfigurableNotificationEventHandler;
 
 /**
  * Notification Event Handler for 'object' 'comment' 'create' action
  *
  * @since 4.0
  */
-class CreateCommentEventHandler extends NonConfigurableNotificationEventHandler {
+class CreateComment extends NonConfigurableNotificationEventHandler {
 	
 	/**
 	 * Tells if the recipient is the owner of the entity commented on

@@ -156,7 +156,7 @@ return [
 		'object' => [
 			'discussion' => [
 				'create' => CreateDiscussionEventHandler::class,
-				'mentions' => \Elgg\Notifications\MentionsEventHandler::class,
+				'mentions' => \Elgg\Notifications\Handlers\Mentions::class,
 			],
 		],
 	],

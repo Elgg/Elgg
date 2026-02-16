@@ -115,6 +115,23 @@ Ajax route
 The definition of the ``ajax`` route has been changed. The ``segments`` has been split into ``type`` and ``segments``.
 You might need to update your url generation.
 
+Notifications
+~~~~~~~~~~~~~
+
+The following notification handlers have been moved and renamed:
+
+- ``Elgg\Notifications\CreateCommentEventHandler`` moved to ``Elgg\Notifications\Handlers\CreateComment``
+- ``Elgg\Notifications\MakeAdminUserEventHandler`` moved to ``Elgg\Notifications\Handlers\MakeAdminUser``
+- ``Elgg\Notifications\MentionsEventHandler`` moved to ``Elgg\Notifications\Handlers\Mentions``
+- ``Elgg\Notifications\RemoveAdminUserEventHandler`` moved to ``Elgg\Notifications\Handlers\RemoveAdminUser``
+- ``Elgg\Notifications\UnbanUserEventHandler`` moved to ``Elgg\Notifications\Handlers\UnbanUser``
+
+The following event handlers related to notifications have been moved and renamed:
+
+- ``Elgg\Notifications\CreateContentEventHandler`` moved to ``Elgg\Notifications\Events\CreateContent``
+- ``Elgg\Notifications\EnqueueEventHandler`` moved to ``Elgg\Notifications\Events\Enqueue``
+- ``Elgg\Notifications\MentionsEnqueueEventHandler`` moved to ``Elgg\Notifications\Events\MentionsEnqueue``
+
 Plugin changes
 --------------
 
