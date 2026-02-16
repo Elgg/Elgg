@@ -137,6 +137,11 @@ Widgets Add Panel
 
 The route for the widget add panel has been replaced by an ajax view.
 
+Actions
+~~~~~~~
+
+The ``admin/site/flush_cache`` has been renamed to ``admin/site/cache/clear`` to be consistent with other cache actions.
+
 Plugin changes
 --------------
 
