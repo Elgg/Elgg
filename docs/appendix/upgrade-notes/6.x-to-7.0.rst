@@ -132,6 +132,11 @@ The following event handlers related to notifications have been moved and rename
 - ``Elgg\Notifications\EnqueueEventHandler`` moved to ``Elgg\Notifications\Events\Enqueue``
 - ``Elgg\Notifications\MentionsEnqueueEventHandler`` moved to ``Elgg\Notifications\Events\MentionsEnqueue``
 
+Widgets Add Panel
+~~~~~~~~~~~~~~~~~
+
+The route for the widget add panel has been replaced by an ajax view.
+
 Plugin changes
 --------------
 

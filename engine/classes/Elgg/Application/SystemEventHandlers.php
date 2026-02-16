@@ -65,6 +65,7 @@ class SystemEventHandlers {
 		elgg_register_ajax_view('object/plugin/details');
 		elgg_register_ajax_view('object/widget/edit');
 		elgg_register_ajax_view('page/elements/comments');
+		elgg_register_ajax_view('page/layouts/widgets/add_panel');
 		elgg_register_ajax_view('river/elements/responses');
 		
 		elgg_extend_view('admin.css', 'lightbox/elgg-colorbox-theme/colorbox.css');

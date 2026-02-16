@@ -218,14 +218,6 @@ return [
 		],
 		'use_logged_in' => true,
 	],
-	'widgets:add_panel' => [
-		// @todo this route could also be a ajax view or have some parameters (context/container) in the route definition
-		'path' => '/widgets/add_panel',
-		'resource' => 'widgets/add_panel',
-		'middleware' => [
-			\Elgg\Router\Middleware\Gatekeeper::class,
-		],
-	],
 	'view:object:comment' => [
 		'path' => '/comment/view/{guid}/{container_guid?}',
 		'controller' => \Elgg\Controllers\CommentEntityRedirector::class,

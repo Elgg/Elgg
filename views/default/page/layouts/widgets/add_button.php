@@ -3,7 +3,9 @@
  * Button area for showing the add widgets panel
  */
 
-$href = elgg_generate_url('widgets:add_panel', [
+$href = elgg_generate_url('ajax', [
+	'type' => 'view',
+	'segments' => 'page/layouts/widgets/add_panel',
 	'context' => elgg_get_context(),
 	'context_stack' => elgg_get_context_stack(),
 	'show_access' => elgg_extract('show_access', $vars, true),
