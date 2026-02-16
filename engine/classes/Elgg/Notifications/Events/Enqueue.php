@@ -1,13 +1,14 @@
 <?php
 
-namespace Elgg\Notifications;
+namespace Elgg\Notifications\Events;
 
 /**
  * Enqueue notification event
  *
  * @since 4.0
+ * @internal
  */
-class EnqueueEventHandler {
+class Enqueue {
 	
 	/**
 	 * Queue a notification event for later handling

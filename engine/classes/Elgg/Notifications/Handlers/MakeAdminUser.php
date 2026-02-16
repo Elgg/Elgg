@@ -1,15 +1,16 @@
 <?php
 
-namespace Elgg\Notifications;
+namespace Elgg\Notifications\Handlers;
 
 use Elgg\Database\QueryBuilder;
+use Elgg\Notifications\NonConfigurableNotificationEventHandler;
 
 /**
  * Notification Event Handler for 'user' 'user' 'make_admin' action
  *
  * @since 4.0
  */
-class MakeAdminUserEventHandler extends NonConfigurableNotificationEventHandler {
+class MakeAdminUser extends NonConfigurableNotificationEventHandler {
 	
 	/**
 	 * Tells if the recipient is the user being changed

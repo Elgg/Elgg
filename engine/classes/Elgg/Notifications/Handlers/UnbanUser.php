@@ -1,13 +1,15 @@
 <?php
 
-namespace Elgg\Notifications;
+namespace Elgg\Notifications\Handlers;
+
+use Elgg\Notifications\NonConfigurableNotificationEventHandler;
 
 /**
  * Notification Event Handler for 'user' 'user' 'unban' action
  *
  * @since 4.0
  */
-class UnbanUserEventHandler extends NonConfigurableNotificationEventHandler {
+class UnbanUser extends NonConfigurableNotificationEventHandler {
 	
 	/**
 	 * Tells if the recipient is the user being unbanned

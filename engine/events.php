@@ -17,7 +17,7 @@ return [
 	],
 	'all' => [
 		'all' => [
-			\Elgg\Notifications\EnqueueEventHandler::class => [
+			\Elgg\Notifications\Events\Enqueue::class => [
 				'priority' => 700,
 			],
 		],
@@ -78,11 +78,11 @@ return [
 	],
 	'create:after' => [
 		'all' => [
-			\Elgg\Notifications\MentionsEnqueueEventHandler::class => [],
+			\Elgg\Notifications\Events\MentionsEnqueue::class => [],
 		],
 		'object' => [
 			\Elgg\Comments\AutoSubscribeHandler::class => [],
-			\Elgg\Notifications\CreateContentEventHandler::class => [],
+			\Elgg\Notifications\Events\CreateContent::class => [],
 			\Elgg\Upgrade\CreateAdminNoticeHandler::class => [],
 		],
 		'river' => [
@@ -409,7 +409,7 @@ return [
 			\Elgg\Comments\SyncContainerAccessHandler::class => [
 				'priority' => 600,
 			],
-			\Elgg\Notifications\MentionsEnqueueEventHandler::class => [],
+			\Elgg\Notifications\Events\MentionsEnqueue::class => [],
 		],
 		'group' => [
 			\Elgg\Icons\MoveIconsOnOwnerChangeHandler::class => [],

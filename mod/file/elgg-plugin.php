@@ -166,7 +166,7 @@ return [
 		'object' => [
 			'file' => [
 				'create' => CreateFileEventHandler::class,
-				'mentions' => \Elgg\Notifications\MentionsEventHandler::class,
+				'mentions' => \Elgg\Notifications\Handlers\Mentions::class,
 			],
 		],
 	],

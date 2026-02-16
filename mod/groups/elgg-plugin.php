@@ -188,7 +188,7 @@ return [
 		'create:after' => [
 			'group' => [
 				'Elgg\Groups\Group::createAccessCollection' => [],
-				\Elgg\Notifications\CreateContentEventHandler::class => [],
+				\Elgg\Notifications\Events\CreateContent::class => [],
 			],
 		],
 		'default' => [
