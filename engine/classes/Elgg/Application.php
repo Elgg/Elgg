@@ -452,14 +452,14 @@ class Application {
 			$forward_url = $ex->getRedirectUrl();
 			if (!$forward_url) {
 				if ($ex instanceof GatekeeperException) {
-					$forward_url = elgg_is_logged_in() ? null : elgg_get_login_url();
+					$forward_url = elgg_is_logged_in() ? '' : elgg_get_login_url();
 				} else if ($request->getFirstUrlSegment() == 'action') {
 					$forward_url = REFERRER;
 				}
 			}
-
-			$forward_url = (string) $this->internal_services->events->triggerResults('forward', $ex->getCode(), ['exception' => $ex], $forward_url);
-
+			
+			$forward_url = (string) $forward_url;
+			
 			if ($forward_url && !$request->isXmlHttpRequest()) {
 				if ($ex->getMessage()) {
 					$this->internal_services->system_messages->addErrorMessage($ex->getMessage());

@@ -142,6 +142,11 @@ Actions
 
 The ``admin/site/flush_cache`` has been renamed to ``admin/site/cache/clear`` to be consistent with other cache actions.
 
+Events
+~~~~~~
+
+Removed the legacy ``forward`` event in favor of the ``response`` event. 
+
 Plugin changes
 --------------
 
