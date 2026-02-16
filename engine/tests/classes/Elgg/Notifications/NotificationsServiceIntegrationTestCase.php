@@ -482,7 +482,6 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 	}
 
 	public function testCanProcessSubscriptionNotificationsQueue() {
-
 		$object = $this->getTestObject();
 
 		$call_count = 0;
@@ -546,20 +545,11 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->notifications->enqueueEvent('test_event', $object);
 		$this->assertEquals(1, $this->queue->size());
 
-		$deliveries = [
-			"test_event:{$object->getType()}:{$object->getSubtype()}" => [
-				$recipient->guid => [
-					'test_method' => true,
-					'bad_method' => false,
-				]
-			]
-		];
-
 		$this->session_manager->removeLoggedInUser();
 
-		$result = $this->notifications->processQueue($this->time + 10, true);
+		$result = $this->notifications->processQueue($this->time + 10);
 		$this->assertEquals(1, $call_count);
-		$this->assertEquals($deliveries, $result);
+		$this->assertEquals(1, $result);
 		
 		_elgg_services()->reset('subscriptions');
 	}

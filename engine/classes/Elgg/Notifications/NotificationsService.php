@@ -17,20 +17,11 @@ class NotificationsService {
 
 	use Loggable;
 	
-	/** @var Queue */
-	protected $queue;
-
-	/** @var EventsService */
-	protected $elgg_events;
-
-	/** @var \ElggSession */
-	protected $session;
-	
 	/** @var array Registered notification events */
-	protected $events = [];
+	protected array $events = [];
 
 	/** @var array Registered notification methods */
-	protected $methods = [];
+	protected array $methods = [];
 
 	/**
 	 * Constructor
@@ -40,14 +31,10 @@ class NotificationsService {
 	 * @param EventsService $elgg_events Events service
 	 */
 	public function __construct(
-			Queue $queue,
-			\ElggSession $session,
-			EventsService $elgg_events
+			protected Queue $queue,
+			protected \ElggSession $session,
+			protected EventsService $elgg_events
 	) {
-
-		$this->queue = $queue;
-		$this->session = $session;
-		$this->elgg_events = $elgg_events;
 	}
 
 	/**
@@ -254,15 +241,12 @@ class NotificationsService {
 	/**
 	 * Pull notification events from queue until stop time is reached
 	 *
-	 * @param int  $stopTime The Unix time to stop sending notifications
-	 * @param bool $matrix   If true, will return delivery matrix instead of a notifications event count
+	 * @param int $stopTime The Unix time to stop sending notifications
 	 *
-	 * @return int|array The number of notification events handled, or a delivery matrix
+	 * @return int The number of notification events handled
 	 */
-	public function processQueue(int $stopTime, bool $matrix = false) {
-		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($stopTime, $matrix) {
-			$delivery_matrix = [];
-			
+	public function processQueue(int $stopTime): int {
+		return elgg_call(ELGG_IGNORE_ACCESS, function() use ($stopTime) {
 			$count = 0;
 			
 			while (time() < $stopTime) {
@@ -291,14 +275,14 @@ class NotificationsService {
 				}
 				
 				try {
-					$delivery_matrix[$event->getDescription()] = $handler->send();
+					$handler->send();
 					$count++;
 				} catch (\Throwable $t) {
 					$this->getLogger()->error($t);
 				}
 			}
 			
-			return $matrix ? $delivery_matrix : $count;
+			return $count;
 		});
 	}
 
