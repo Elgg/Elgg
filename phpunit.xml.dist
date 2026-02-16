@@ -29,7 +29,6 @@
     -->
     <ini name="memory_limit" value="-1"/>
     <ini name="max_execution_time" value="0"/>
-    <ini name="max_input_time" value="0"/>
   </php>
   <testsuites>
     <testsuite name="unit">
