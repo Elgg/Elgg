@@ -286,43 +286,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($error_page, $response->getContent());
 	}
 
-	public function testCanSafelyRedirectWithinRedirect() {
-		$request = $this->prepareHttpRequest('phpunit', 'GET');
-		$this->createService($request);
-
-		_elgg_services()->events->registerHandler('forward', (string) ELGG_HTTP_NOT_FOUND, function () {
-			$this->fooHandlerCalls++;
-			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_BAD_REQUEST);
-		});
-
-		_elgg_services()->events->registerHandler('forward', (string) ELGG_HTTP_BAD_REQUEST, function () {
-			$this->fooHandlerCalls++;
-			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_INTERNAL_SERVER_ERROR);
-		});
-
-		elgg_register_route('phpunit', [
-			'path' => '/phpunit',
-			'handler' => function ($segments, $identifier) {
-				_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
-
-				return elgg_ok_response('foo');
-			},
-		]);
-		
-		$this->route($request);
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(Response::class, $response);
-		$this->assertEquals(ELGG_HTTP_INTERNAL_SERVER_ERROR, $response->getStatusCode());
-		$error_page = elgg_view_resource('error', [
-			'type' => (string) ELGG_HTTP_INTERNAL_SERVER_ERROR,
-		]);
-
-		$this->assertEquals($error_page, $response->getContent());
-
-		$this->assertTrue($this->fooHandlerCalls > 0);
-	}
-
 	public function testCanRespondToAjaxRequestFromOkResponseBuilder() {
 
 		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);

@@ -341,24 +341,18 @@ class ResponseFactory {
 			return $this->send($this->prepareRedirectResponse($forward_url));
 		}
 		
+		if (isset($this->response_sent)) {
+			// Clearing handlers to void infinite loops
+			return $this->response_sent;
+		}
+		
 		$params = [
 			'current_url' => $this->request->getCurrentURL(),
 			'forward_url' => $forward_url,
 		];
 		
-		// For BC, let plugins serve their own error page
-		// @todo can this event be dropped
-		$forward_reason = (string) $status_code;
-
-		$this->events->triggerResults('forward', $forward_reason, $params, $forward_url);
-
-		if (isset($this->response_sent)) {
-			// Response was sent from a forward event
-			return $this->response_sent;
-		}
-
 		if (elgg_view_exists('resources/error')) {
-			$params['type'] = $forward_reason;
+			$params['type'] = (string) $status_code;
 			$params['exception'] = $response->getException();
 			if (!elgg_is_empty($error)) {
 				$params['params']['error'] = $error;
@@ -422,37 +416,17 @@ class ResponseFactory {
 	 * @throws UnexpectedValueException
 	 */
 	public function redirect(string $forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
-		$location = $forward_url;
-		
-		if ($forward_url === REFERRER) {
-			$forward_url = $this->getSiteRefererUrl();
-		}
-
-		$forward_url = $this->makeSecureForwardUrl($forward_url);
-
-		// allow plugins to rewrite redirection URL
-		$params = [
-			'current_url' => $this->request->getCurrentURL(),
-			'forward_url' => $forward_url,
-			'location' => $location,
-		];
-
-		$forward_reason = (string) $status_code;
-
-		$forward_url = (string) $this->events->triggerResults('forward', $forward_reason, $params, $forward_url);
-		
 		if (isset($this->response_sent)) {
-			// Response was sent from a forward event
 			// Clearing handlers to void infinite loops
 			return $this->response_sent;
 		}
-
+		
 		if ($forward_url === REFERRER) {
 			$forward_url = $this->getSiteRefererUrl();
 		}
 
 		$forward_url = $this->makeSecureForwardUrl($forward_url);
-
+		
 		switch ($status_code) {
 			case 'system':
 			case 'csrf':

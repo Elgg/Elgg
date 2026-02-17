@@ -834,10 +834,6 @@ Action events
 **action_gatekeeper:permissions:check, all** |results|
 	Triggered after a CSRF token is validated. Return false to prevent validation.
 
-**forward, <reason>** |results|
-	Filter the URL to forward a user to when ``forward($url, $reason)`` is called.
-	In certain cases, the ``params`` array will contain an instance of ``\Elgg\Exceptions\HttpException`` that triggered the error.
-
 .. _guides/events-list#ajax:
 
 Ajax
