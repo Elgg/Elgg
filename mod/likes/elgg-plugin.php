@@ -75,7 +75,9 @@ return [
 	'notifications' => [
 		'annotation' => [
 			'likes' => [
-				'create' => \Elgg\Likes\Notifications\CreateLikesEventHandler::class,
+				'create' => [
+					\Elgg\Likes\Notifications\CreateLikesEventHandler::class => [],
+				],
 			],
 		],
 	],

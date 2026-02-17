@@ -132,6 +132,17 @@ The following event handlers related to notifications have been moved and rename
 - ``Elgg\Notifications\EnqueueEventHandler`` moved to ``Elgg\Notifications\Events\Enqueue``
 - ``Elgg\Notifications\MentionsEnqueueEventHandler`` moved to ``Elgg\Notifications\Events\MentionsEnqueue``
 
+It's now possible to have multiple notification handlers on the same action. An example could be ``'ban', 'user'`` where
+you need one notification to the user being banned and one notification to the site administrators that the user was banned.
+This could be handled in one notification handler, but that requires making a different message based on the recipient.
+Having 2 distinct notification handlers will make this task easier.
+
+Because of this change the function parameters for ``elgg_unregister_notification_event()`` have been changed. You now also
+need to provide a ``$handler`` which is the notification handler you wish to unregister.
+
+Another change to the function parameters of both ``elgg_register_notification_event()`` and ``elgg_unregister_notification_event()``
+is that ``array $actions`` has been replaced by a single ``string $action``.
+
 Widgets Add Panel
 ~~~~~~~~~~~~~~~~~
 

@@ -209,13 +209,21 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 		'notifications' => [
 			'object' => [
 				'blog' => [
-					'publish' => true, // registers the event to be notified
+					'publish' => [
+						Elgg\Notifications\NotificationEventHandler::class => [], // registers the event to be notified
+					],
 				],
 				'thewire' => [
-					'create' => false, // unregisters the event to be notified
+					'create' => [
+						Elgg\Notifications\NotificationEventHandler::class => [
+							'unregister' => true, // unregisters the event to be notified
+						],
+					],
 				],
 				'page' => [
-					'create' => MyPluginPageCreateEventHandler::class, // a custom event handler, needs to be an extension of a NotificationEventHandler
+					'create' => [
+						MyPluginPageCreateEventHandler::class => [], // a custom event handler, needs to be an extension of a NotificationEventHandler
+					],
 				],
 			],
 		],

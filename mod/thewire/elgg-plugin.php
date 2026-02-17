@@ -138,8 +138,12 @@ return [
 	'notifications' => [
 		'object' => [
 			'thewire' => [
-				'create' => CreateTheWireEventHandler::class,
-				'mentions' => \Elgg\Notifications\Handlers\Mentions::class,
+				'create' => [
+					CreateTheWireEventHandler::class => [],
+				],
+				'mentions' => [
+					\Elgg\Notifications\Handlers\Mentions::class => [],
+				],
 			],
 		],
 	],
