@@ -194,8 +194,12 @@ return [
 	'notifications' => [
 		'object' => [
 			'page' => [
-				'create' => CreatePageEventHandler::class,
-				'mentions' => \Elgg\Notifications\Handlers\Mentions::class,
+				'create' =>	[
+					CreatePageEventHandler::class => [],
+				],
+				'mentions' => [
+					\Elgg\Notifications\Handlers\Mentions::class => [],
+				],
 			],
 		],
 	],

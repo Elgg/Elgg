@@ -1195,13 +1195,23 @@ class ElggPlugin extends ElggObject {
 
 		foreach ($spec as $type => $subtypes) {
 			foreach ($subtypes as $subtype => $actions) {
-				foreach ($actions as $action => $callback) {
-					if ($callback === false) {
-						_elgg_services()->notifications->unregisterEvent($type, $subtype, [$action]);
-					} elseif ($callback === true) {
-						_elgg_services()->notifications->registerEvent($type, $subtype, [$action]);
-					} else {
-						_elgg_services()->notifications->registerEvent($type, $subtype, [$action], $callback);
+				foreach ($actions as $action => $handlers) {
+					if (!is_array($handlers)) {
+						// this was prior to Elgg 7.0
+						continue;
+					}
+					
+					foreach ($handlers as $handler => $notification_spec) {
+						if (!is_array($notification_spec)) {
+							continue;
+						}
+						
+						$unregister = (bool) elgg_extract('unregister', $notification_spec);
+						if ($unregister) {
+							_elgg_services()->notifications->unregisterEvent($type, $subtype, $action, $handler);
+						} else {
+							_elgg_services()->notifications->registerEvent($type, $subtype, $action, $handler);
+						}
 					}
 				}
 			}

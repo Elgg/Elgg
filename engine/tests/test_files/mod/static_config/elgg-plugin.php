@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Notifications\NotificationEventHandler;
+
 return [
 	'actions' => [
 		'static_config/autodetect' => [],
@@ -66,8 +68,12 @@ return [
 	'notifications' => [
 		'object' => [
 			'static_config_subtype' => [
-				'create' => true,
-				'update' => false,
+				'create' => [
+					NotificationEventHandler::class => [],
+				],
+				'update' => [
+					NotificationEventHandler::class => ['unregister' => true],
+				],
 			],
 		],
 	],

@@ -114,6 +114,7 @@ class NotificationEventHandler {
 			'event' => $this->event,
 			'methods' => $this->getMethods(),
 			'methods_override' => $this->getMethodsOverride(),
+			'handler' => $this,
 		];
 		$subscriptions = _elgg_services()->events->triggerResults('get', 'subscriptions', $params, $subscriptions);
 		
@@ -136,7 +137,7 @@ class NotificationEventHandler {
 	 * @return array
 	 */
 	public function getSubscriptions(): array {
-		return _elgg_services()->subscriptions->getNotificationEventSubscriptions($this->event, $this->getMethods(), $this->getNotificationSubsciptionExclusionGUIDs());
+		return _elgg_services()->subscriptions->getNotificationEventSubscriptions($this->event, $this->getMethods(), $this->getNotificationSubscriptionExclusionGUIDs());
 	}
 	
 	/**
@@ -144,7 +145,7 @@ class NotificationEventHandler {
 	 *
 	 * @return int[]
 	 */
-	final protected function getNotificationSubsciptionExclusionGUIDs(): array {
+	final protected function getNotificationSubscriptionExclusionGUIDs(): array {
 		$object = $this->event->getObject();
 		if (!$object instanceof \ElggEntity) {
 			return [];

@@ -104,7 +104,7 @@ Tell Elgg to send notifications when a new object of subtype "photo" is created:
 	 * Initialize the photos plugin
 	 */
 	function photos_init() {
-		elgg_register_notification_event('object', 'photo', array('create'));
+		elgg_register_notification_event('object', 'photo');
 	}
 
 Or in the ``elgg-plugin.php``:
@@ -114,7 +114,9 @@ Or in the ``elgg-plugin.php``:
 	'notifications' => [
 		'object' => [
 			'photo' => [
-				'create' => true,
+				'create' => [
+					Elgg\Notifications\NotificationEventHandler::class => [],
+				],
 			],
 		],
 	],
@@ -124,9 +126,7 @@ Or in the ``elgg-plugin.php``:
 	In order to send the event-based notifications you must have the one-minute
 	:doc:`CRON </admin/cron>` interval configured.
 
-Contents of the notification message can be defined with the
-``'prepare', 'notification:[action]:[type]:[subtype]'`` event.
-
+Contents of the notification message can be defined with the ``'prepare', 'notification:[action]:[type]:[subtype]'`` event.
 
 Custom notification event registration example
 ----------------------------------------------
@@ -203,6 +203,26 @@ Tell Elgg to send notifications when a new object of the subtype "album" is crea
 
 	During the notification handling the language is automatically switched to the language of the recipient.
 
+Multiple notification event handlers
+------------------------------------
+
+It's possible to have multiple notification handlers on the same event. This can be useful when you want to send a different
+message to different recipient.
+
+.. code-block:: php
+
+	// in the elgg-plugin.php
+	'notifications' => [
+		'user' => [
+			'user' => [
+				'ban' => [
+					UserBanNotification::class => [], // send a notification to the banned user
+					AdminBanNotification::class => [], // send a notification to site admins that the user was banned
+				],
+			],
+		],
+	],
+
 Custom notification content example
 -----------------------------------
 
@@ -215,7 +235,7 @@ the contents of the notification when a new objects of subtype 'photo' is create
 	 * Initialize the photos plugin
 	 */
 	function photos_init() {
-	    elgg_register_notification_event('object', 'photo', array('create'));
+	    elgg_register_notification_event('object', 'photo');
 	    elgg_register_event_handler('prepare', 'notification:create:object:photo', 'photos_prepare_notification');
 	}
 
@@ -242,12 +262,12 @@ the contents of the notification when a new objects of subtype 'photo' is create
 	    $notification->subject = elgg_echo('photos:notify:subject', [$entity->getDisplayName()], $language);
 
 	    // Message body for the notification
-	    $notification->body = elgg_echo('photos:notify:body', array(
+	    $notification->body = elgg_echo('photos:notify:body', [
 	        $owner->getDisplayName(),
 	        $entity->getDisplayName(),
 	        $entity->getExcerpt(),
 	        $entity->getURL()
-	    ), $language);
+	    ], $language);
 
 	    // Short summary about the notification
 	    $notification->summary = elgg_echo('photos:notify:summary', [$entity->getDisplayName()], $language);
