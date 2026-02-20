@@ -644,6 +644,7 @@ Note that not all events apply to instant notifications.
 	 * ``event`` - ``\Elgg\Notifications\NotificationEvent`` instance that describes the notification event
 	 * ``origin`` - ``subscriptions_service`` or ``instant_notifications``
 	 * ``methods_override`` - delivery method preference for instant notifications
+	 * ``handler`` - ``\Elgg\Notifications\NotificationEventHandler`` instance that is handling this notification
 
 	Handlers must return an array in the form:
 
@@ -663,6 +664,7 @@ Note that not all events apply to instant notifications.
 
 	 * ``event`` - ``\Elgg\Notifications\NotificationEvent`` instance that describes the notification event
 	 * ``subscriptions`` - a list of subscriptions. See ``'get', 'subscriptions'`` event for details
+	 * ``handler`` - ``\Elgg\Notifications\NotificationEventHandler`` instance that is handling this notification
 
 **prepare, notification** |results|
 	A high level event that can be used to alter an instance of ``\Elgg\Notifications\Notification`` before it is sent to the user.
@@ -680,6 +682,7 @@ Note that not all events apply to instant notifications.
 	 * ``recipient`` - recipient
 	 * ``language`` - language of the notification (recipient's language)
 	 * ``origin`` - ``subscriptions_service`` or ``instant_notifications``
+	 * ``handler`` - ``\Elgg\Notifications\NotificationEventHandler`` instance that is handling this notification
 
 **prepare, notification:<action>:<entity_type>:<entity_type>** |results|
 	A granular event that can be used to filter a notification ``\Elgg\Notifications\Notification`` before it is sent to the user.
@@ -697,6 +700,7 @@ Note that not all events apply to instant notifications.
 	 * ``recipient`` - recipient
 	 * ``language`` - language of the notification (recipient's language)
 	 * ``origin`` - ``subscriptions_service`` or ``instant_notifications``
+	 * ``handler`` - ``\Elgg\Notifications\NotificationEventHandler`` instance that is handling this notification
 
 **format, notification:<method>** |results|
 	This event can be used to format a notification before it is passed to the ``'send', 'notification:<method>'`` event.
@@ -727,6 +731,7 @@ Note that not all events apply to instant notifications.
 	 * ``event`` - ``\Elgg\Notifications\NotificationEvent`` instance that describes the notification event
 	 * ``subscriptions`` - a list of subscriptions. See ``'get', 'subscriptions'`` event for details
 	 * ``deliveries`` - a matrix of delivery statuses by user for each delivery method
+	 * ``handler`` - ``\Elgg\Notifications\NotificationEventHandler`` instance that is handling this notification
 
 Emails
 ======

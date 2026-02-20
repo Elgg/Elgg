@@ -223,7 +223,7 @@ class ElggPluginStaticConfigIntegrationTest extends IntegrationTestCase {
 	public function testNotificationsRegistration() {
 		$notifications = _elgg_services()->notifications;
 		
-		$notifications->registerEvent('object', 'static_config_subtype', ['update']);
+		$notifications->registerEvent('object', 'static_config_subtype', 'update');
 		
 		$events = $notifications->getEvents();
 		$this->assertArrayHasKey('object', $events);

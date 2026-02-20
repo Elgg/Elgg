@@ -61,17 +61,15 @@ use Elgg\Notifications\NotificationEventHandler;
  *
  * @param string $object_type    'object', 'user', 'group', 'site'
  * @param string $object_subtype The subtype or name of the entity
- * @param array  $actions        Array of actions or empty array for the action event.
- *                               An event is usually described by the first string passed
- *                               to elgg_trigger_event(). Examples include
- *                               'create', 'update', and 'publish'. The default is 'create'.
+ * @param string $action         An event is usually described by the first string passed to elgg_trigger_event().
+ *                               Examples include 'create', 'update', and 'publish' (default: 'create').
  * @param string $handler        NotificationEventHandler classname
  *
  * @return void
  * @since 1.9
  */
-function elgg_register_notification_event(string $object_type, string $object_subtype, array $actions = [], string $handler = NotificationEventHandler::class): void {
-	_elgg_services()->notifications->registerEvent($object_type, $object_subtype, $actions, $handler);
+function elgg_register_notification_event(string $object_type, string $object_subtype, string $action = 'create', string $handler = NotificationEventHandler::class): void {
+	_elgg_services()->notifications->registerEvent($object_type, $object_subtype, $action, $handler);
 }
 
 /**
@@ -79,14 +77,34 @@ function elgg_register_notification_event(string $object_type, string $object_su
  *
  * @param string $object_type    'object', 'user', 'group', 'site'
  * @param string $object_subtype The type of the entity
- * @param array  $actions        The notification action to unregister, leave empty for all actions. Example ('create', 'delete', 'publish')
+ * @param string $action         The notification action to unregister (default: 'create')
+ * @param string $handler        NotificationEventHandler class to unregister
  *
  * @return void
  * @since 1.9
  * @see elgg_register_notification_event()
  */
-function elgg_unregister_notification_event(string $object_type, string $object_subtype, array $actions = []): void {
-	_elgg_services()->notifications->unregisterEvent($object_type, $object_subtype, $actions);
+function elgg_unregister_notification_event(string $object_type, string $object_subtype, string $action = 'create', string $handler = NotificationEventHandler::class): void {
+	_elgg_services()->notifications->unregisterEvent($object_type, $object_subtype, $action, $handler);
+}
+
+/**
+ * Get the registered notification events in the format
+ *
+ * array (
+ * 		<type> => array (
+ * 			<subtype> => array (
+ * 				<action1>,
+ * 				<action2>,
+ * 			)
+ * 		)
+ * )
+ *
+ * @return array
+ * @since 4.0
+ */
+function elgg_get_notification_events(): array {
+	return _elgg_services()->notifications->getEvents();
 }
 
 /**
@@ -107,22 +125,6 @@ function elgg_register_notification_method(string $name): void {
 }
 
 /**
- * Returns registered delivery methods for notifications
- * <code>
- *	[
- *		'email' => 'email',
- *		'sms' => 'sms',
- *	]
- * </code>
- *
- * @return array
- * @since 2.3
- */
-function elgg_get_notification_methods(): array {
-	return _elgg_services()->notifications->getMethods();
-}
-
-/**
  * Unregister a delivery method for notifications
  *
  * @param string $name The notification method name
@@ -136,22 +138,19 @@ function elgg_unregister_notification_method(string $name): void {
 }
 
 /**
- * Get the registered notification events in the format
- *
- * array (
- * 		<type> => array (
- * 			<subtype> => array (
- * 				<action1>,
- * 				<action2>,
- * 			)
- * 		)
- * )
+ * Returns registered delivery methods for notifications
+ * <code>
+ *	[
+ *		'email' => 'email',
+ *		'sms' => 'sms',
+ *	]
+ * </code>
  *
  * @return array
- * @since 4.0
+ * @since 2.3
  */
-function elgg_get_notification_events(): array {
-	return _elgg_services()->notifications->getEvents();
+function elgg_get_notification_methods(): array {
+	return _elgg_services()->notifications->getMethods();
 }
 
 /**

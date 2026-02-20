@@ -71,7 +71,9 @@ return [
 	'notifications' => [
 		'object' => [
 			'reported_content' => [
-				'create' => \Elgg\ReportedContent\Notifications\CreateReportedContentNotificationHandler::class,
+				'create' => [
+					\Elgg\ReportedContent\Notifications\CreateReportedContentNotificationHandler::class => [],
+				],
 			],
 		],
 	],

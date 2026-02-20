@@ -286,13 +286,19 @@ return [
 	'notifications' => [
 		'relationship' => [
 			'invited' => [
-				'create:after' => InviteMembershipEventHandler::class,
+				'create:after' => [
+					InviteMembershipEventHandler::class => [],
+				],
 			],
 			'member' => [
-				'add_membership' => AddMembershipEventHandler::class,
+				'add_membership' => [
+					AddMembershipEventHandler::class => [],
+				],
 			],
 			'membership_request' => [
-				'create:after' => RequestMembershipEventHandler::class,
+				'create:after' => [
+					RequestMembershipEventHandler::class => [],
+				],
 			],
 		],
 	],

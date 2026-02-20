@@ -154,8 +154,12 @@ return [
 	'notifications' => [
 		'object' => [
 			'bookmarks' => [
-				'create' => CreateBookmarksEventHandler::class,
-				'mentions' => \Elgg\Notifications\Handlers\Mentions::class,
+				'create' => [
+					CreateBookmarksEventHandler::class => [],
+				],
+				'mentions' => [
+					\Elgg\Notifications\Handlers\Mentions::class => [],
+				],
 			],
 		],
 	],
