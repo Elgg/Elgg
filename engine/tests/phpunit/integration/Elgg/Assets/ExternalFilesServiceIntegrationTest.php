@@ -10,6 +10,7 @@ class ExternalFilesServiceIntegrationTest extends \Elgg\IntegrationTestCase {
 			'custom_config_values' => [
 				'subresource_integrity_enabled' => true,
 				'system_cache_enabled' => true,
+				'simplecache_enabled' => true,
 			],
 		]);
 		

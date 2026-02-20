@@ -71,7 +71,7 @@ CSS files are no longer preprocessed by CSS Crush. CSS Crush is no longer mainta
 of regular CSS (like nesting and the usage of variables). 
 Variables set in your ``elgg-plugin.php`` (or those available in core) are still available in CSS files but you will
 need to update your CSS to use ``var(--elgg-your-variable)``. If you have a custom theme you will need to check all
-your CSS files for CSS Crush features and update your code accordingly.
+your CSS files for CSS Crush features and update your code accordingly. The ``vars:compiler, css`` event has been removed.
 
 .. note::
 

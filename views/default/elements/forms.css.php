@@ -9,7 +9,8 @@
 *************************************** */
 .elgg-form-body,
 .elgg-form-body > div,
-.elgg-form-body fieldset:not(.elgg-fieldset) > div {
+.elgg-form-body fieldset:not(.elgg-fieldset) > div,
+.elgg-module > .elgg-body > .elgg-field {
 	&:not(:last-child) {
 		margin-bottom: 1rem;
 	}
