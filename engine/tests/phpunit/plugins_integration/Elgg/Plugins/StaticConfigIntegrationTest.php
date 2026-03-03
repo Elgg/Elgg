@@ -314,13 +314,15 @@ class StaticConfigIntegrationTest extends PluginsIntegrationTestCase {
 				$this->assertIsString($subtype);
 				$this->assertIsArray($actions);
 				
-				foreach ($actions as $action => $callback) {
+				foreach ($actions as $action => $handlers) {
 					$this->assertIsString($action);
+					$this->assertIsArray($handlers);
 					
-					if (is_string($callback)) {
-						$this->assertTrue(is_a($callback, \Elgg\Notifications\NotificationEventHandler::class, true));
-					} else {
-						$this->assertIsBool($callback);
+					foreach ($handlers as $handler => $spec) {
+						$this->assertIsString($handler);
+						$this->assertIsArray($spec);
+						
+						$this->assertTrue(is_a($handler, \Elgg\Notifications\NotificationEventHandler::class, true));
 					}
 				}
 			}

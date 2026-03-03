@@ -1,9 +1,9 @@
 <?php
 
-use Elgg\Friends\Actions\AddFriendController;
-use Elgg\Friends\Actions\RevokeFriendRequestController;
-use Elgg\Friends\Actions\DeclineFriendRequestController;
 use Elgg\Friends\Actions\AcceptFriendRequestController;
+use Elgg\Friends\Actions\AddFriendController;
+use Elgg\Friends\Actions\DeclineFriendRequestController;
+use Elgg\Friends\Actions\RevokeFriendRequestController;
 use Elgg\Friends\Notifications\AcceptFriendRequestHandler;
 use Elgg\Friends\Notifications\AddFriendHandler;
 use Elgg\Friends\Notifications\DeclineFriendRequestHandler;
@@ -118,10 +118,18 @@ return [
 	'notifications' => [
 		'user' => [
 			'user' => [
-				'add_friend' => AddFriendHandler::class,
-				'friendrequest' => FriendRequestHandler::class,
-				'friendrequest:accept' => AcceptFriendRequestHandler::class,
-				'friendrequest:decline' => DeclineFriendRequestHandler::class,
+				'add_friend' => [
+					AddFriendHandler::class => [],
+				],
+				'friendrequest' => [
+					FriendRequestHandler::class => [],
+				],
+				'friendrequest:accept' => [
+					AcceptFriendRequestHandler::class => [],
+				],
+				'friendrequest:decline' => [
+					DeclineFriendRequestHandler::class => [],
+				],
 			],
 		],
 	],

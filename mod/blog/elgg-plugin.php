@@ -167,8 +167,12 @@ return [
 	'notifications' => [
 		'object' => [
 			'blog' => [
-				'publish' => PublishBlogEventHandler::class,
-				'mentions' => \Elgg\Notifications\Handlers\Mentions::class,
+				'publish' => [
+					PublishBlogEventHandler::class => [],
+				],
+				'mentions' => [
+					\Elgg\Notifications\Handlers\Mentions::class => [],
+				],
 			],
 		],
 	],

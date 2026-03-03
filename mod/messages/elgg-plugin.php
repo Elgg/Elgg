@@ -89,7 +89,9 @@ return [
 	'notifications' => [
 		'object' => [
 			'messages' => [
-				'send' => SendMessageHandler::class,
+				'send' => [
+					SendMessageHandler::class => [],
+				],
 			],
 		],
 	],

@@ -36,7 +36,9 @@ return [
 	'notifications' => [
 		'annotation' => [
 			'messageboard' => [
-				'create:after' => CreateMessageboardNotificationHandler::class,
+				'create:after' => [
+					CreateMessageboardNotificationHandler::class => [],
+				],
 			],
 		],
 	],

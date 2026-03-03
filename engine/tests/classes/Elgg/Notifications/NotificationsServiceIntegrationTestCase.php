@@ -4,6 +4,9 @@ namespace Elgg\Notifications;
 
 use Elgg\EventsService;
 use Elgg\Exceptions\Exception;
+use Elgg\Helpers\Notifications\TestInstantNotificationHandlerThreeRandomUsers;
+use Elgg\Helpers\Notifications\TestInstantNotificationHandlerTwoRandomUsers;
+use Elgg\Helpers\Notifications\TestSubscriptionNotificationHandler;
 use Elgg\IntegrationTestCase;
 use Elgg\Mocks\Queue\DatabaseQueue;
 use Elgg\Values;
@@ -138,16 +141,16 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$events = [
 			$object->getType() => [
 				$object->getSubtype() => [
-					'create' => NotificationEventHandler::class,
+					'create' => [NotificationEventHandler::class],
 				],
 			]
 		];
 		$this->assertEquals($events, $this->notifications->getEvents());
 
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'test_event');
 		$events[$object->getType()][$object->getSubtype()] = [
-			'create' => NotificationEventHandler::class,
-			'test_event' => NotificationEventHandler::class,
+			'create' => [NotificationEventHandler::class],
+			'test_event' => [NotificationEventHandler::class],
 		];
 		$this->assertEquals($events, $this->notifications->getEvents());
 
@@ -172,20 +175,21 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$object = $this->getTestObject();
 
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['create', 'delete']);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'create');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'delete');
 		
 		// unregister one action
-		$this->notifications->unregisterEvent($object->getType(), $object->getSubtype(), ['create']);
+		$this->notifications->unregisterEvent($object->getType(), $object->getSubtype(), 'create');
 
 		$events = [
 			$object->getType() => [
-				$object->getSubtype() => ['delete' => NotificationEventHandler::class],
+				$object->getSubtype() => ['delete' => [NotificationEventHandler::class]],
 			],
 		];
 		$this->assertEquals($events, $this->notifications->getEvents());
 		
 		// unregister last remaining action
-		$this->notifications->unregisterEvent($object->getType(), $object->getSubtype(), ['delete']);
+		$this->notifications->unregisterEvent($object->getType(), $object->getSubtype(), 'delete');
 		
 		$this->assertEquals([], $this->notifications->getEvents());
 	}
@@ -320,11 +324,9 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->session_manager->setLoggedInUser($this->actor);
 
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), [
-			'event1',
-			'event2',
-			'event3'
-		]);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'event1');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'event2');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'event3');
 
 		$this->notifications->enqueueEvent('event1', $object);
 		$this->notifications->enqueueEvent('event2', $object);
@@ -335,8 +337,33 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->assertEquals(3, $this->notifications->processQueue($this->time + 10));
 		_elgg_services()->reset('subscriptions');
 	}
+	
+	public function testProcessQueueWithMultipleHandlersOneSameEvent() {
+		$mock = $this->createMock(SubscriptionsService::class, ['getNotificationEventSubscriptions'], [], '', false);
+		$mock->expects($this->exactly(1))
+			->method('getNotificationEventSubscriptions')
+			->willReturn([]);
 
-	public function testProcessQueueTimesout() {
+		_elgg_services()->subscriptions = $mock;
+
+		$this->setupServices();
+
+		$object = $this->getTestObject();
+
+		$this->session_manager->setLoggedInUser($this->actor);
+
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'event1');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'event1', TestSubscriptionNotificationHandler::class);
+
+		$this->notifications->enqueueEvent('event1', $object);
+
+		$this->session_manager->removeLoggedInUser();
+
+		$this->assertEquals(2, $this->notifications->processQueue($this->time + 10));
+		_elgg_services()->reset('subscriptions');
+	}
+
+	public function testProcessQueueTimeouts() {
 
 		$mock = $this->createMock(SubscriptionsService::class, ['getNotificationEventSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(0))
@@ -351,11 +378,9 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->session_manager->setLoggedInUser($this->actor);
 
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), [
-			'event1',
-			'event2',
-			'event3'
-		]);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'event1');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'event2');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'event3');
 
 		$this->notifications->enqueueEvent('event1', $object);
 		$this->notifications->enqueueEvent('event2', $object);
@@ -404,7 +429,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->session_manager->setLoggedInUser($this->actor);
 
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'test_event');
 
 		$this->assertEquals(0, $this->queue->size());
 		$this->notifications->enqueueEvent('test_event', $object);
@@ -465,7 +490,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->notifications->registerMethod('test_method');
 
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'test_event');
 
 		$this->assertEquals(0, $this->queue->size());
 		$this->notifications->enqueueEvent('test_event', $object);
@@ -482,7 +507,6 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 	}
 
 	public function testCanProcessSubscriptionNotificationsQueue() {
-
 		$object = $this->getTestObject();
 
 		$call_count = 0;
@@ -532,7 +556,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->notifications->registerMethod('test_method');
 
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'test_event');
 
 		$this->assertEquals(0, $this->queue->size());
 		$this->notifications->enqueueEvent('test_event', $object);
@@ -546,20 +570,11 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->notifications->enqueueEvent('test_event', $object);
 		$this->assertEquals(1, $this->queue->size());
 
-		$deliveries = [
-			"test_event:{$object->getType()}:{$object->getSubtype()}" => [
-				$recipient->guid => [
-					'test_method' => true,
-					'bad_method' => false,
-				]
-			]
-		];
-
 		$this->session_manager->removeLoggedInUser();
 
-		$result = $this->notifications->processQueue($this->time + 10, true);
+		$result = $this->notifications->processQueue($this->time + 10);
 		$this->assertEquals(1, $call_count);
-		$this->assertEquals($deliveries, $result);
+		$this->assertEquals(1, $result);
 		
 		_elgg_services()->reset('subscriptions');
 	}
@@ -639,7 +654,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->notifications->registerMethod('test_method');
 
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'test_event');
 		$this->notifications->enqueueEvent('test_event', $object);
 
 		$this->session_manager->removeLoggedInUser();
@@ -709,7 +724,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->notifications->registerMethod('test_method');
 
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'test_event');
 		$this->notifications->enqueueEvent('test_event', $object);
 
 		$this->session_manager->removeLoggedInUser();
@@ -739,7 +754,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->session_manager->setLoggedInUser($this->actor);
 
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'test_event');
 		$this->notifications->enqueueEvent('test_event', $object);
 
 		$object->delete();
@@ -771,7 +786,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 
 		$this->session_manager->setLoggedInUser($this->actor);
 
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'test_event');
 		$this->notifications->enqueueEvent('test_event', $object);
 
 		$this->session_manager->removeLoggedInUser();
@@ -887,7 +902,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		$this->setupServices();
 		
 		$this->notifications->registerMethod('test_method');
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['elgg_notify_user'], InstantNotificationEventHandler::class);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'elgg_notify_user', InstantNotificationEventHandler::class);
 		
 		$expected = [
 			$to1->guid => [
@@ -932,7 +947,7 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 		]);
 
 		$this->notifications->registerMethod('test_method');
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['elgg_notify_user'], InstantNotificationEventHandler::class);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'elgg_notify_user', InstantNotificationEventHandler::class);
 
 		$this->assertEquals([], elgg_notify_user($to1, 'elgg_notify_user', $object, [
 			'subject' => $subject,
@@ -950,5 +965,27 @@ abstract class NotificationsServiceIntegrationTestCase extends IntegrationTestCa
 			'body' => $body,
 			'methods_override' => ['test_method'],
 		], $from));
+	}
+	
+	public function testNotifyUserWithMultipleHandlers() {
+		$object = $this->getTestObject();
+		
+		$to1 = $this->createUser();
+		
+		$this->setupServices();
+
+		$this->events->registerHandler('send', 'notification:test_method', [
+			Values::class,
+			'getTrue'
+		]);
+
+		$this->notifications->registerMethod('test_method');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'elgg_notify_user', TestInstantNotificationHandlerTwoRandomUsers::class);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), 'elgg_notify_user', TestInstantNotificationHandlerThreeRandomUsers::class);
+		
+		$result = elgg_notify_user($to1, 'elgg_notify_user', $object);
+		
+		$this->assertIsArray($result);
+		$this->assertCount(5, $result);
 	}
 }
