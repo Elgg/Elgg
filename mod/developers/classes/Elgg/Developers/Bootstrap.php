@@ -4,6 +4,7 @@ namespace Elgg\Developers;
 
 use Elgg\DefaultPluginBootstrap;
 use Elgg\I18n\NullTranslator;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Bootstraps the plugin
@@ -68,6 +69,11 @@ class Bootstrap extends DefaultPluginBootstrap {
 					
 					if (elgg_get_viewtype() !== 'default') {
 						// double check viewtype as it might have changed
+						return;
+					}
+					
+					$response = _elgg_services()->responseFactory->getSentResponse();
+					if (!$response instanceof Response || !str_starts_with($response->headers->get('Content-Type'), 'text/html')) {
 						return;
 					}
 					
