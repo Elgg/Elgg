@@ -15,17 +15,17 @@ if (!$id) {
 	return;
 }
 
-$editor_language = elgg_get_current_language();
+$language = elgg_get_current_language();
 
 ?>
-<script>
-	<?php
-	if ($editor_language !== 'en' && elgg_view_exists("ckeditor/translations/{$editor_language}.js")) {
-		$simple_cache_url = elgg_get_simplecache_url("ckeditor/translations/{$editor_language}.js");
-		echo "import('{$simple_cache_url}');" . PHP_EOL;
-	}
-	?>
-	import('ckeditor/editor').then((editor) => {
-		editor.default.init('#<?php echo $id; ?>');
-	});
+<script type="module">
+	import editor from 'ckeditor/editor';
+	
+	<?php if ($language !== 'en' && elgg_view_exists("ckeditor/translations/{$language}.js")) { ?>
+	import translations from '<?php echo elgg_get_simplecache_url("ckeditor/translations/{$language}.js"); ?>';
+	<?php } else { ?>
+	let translations = undefined;	
+	<?php } ?>
+	
+	editor.init('#<?php echo $id; ?>', undefined, translations);
 </script>
