@@ -28,6 +28,7 @@
         "michelf/php-markdown": "~2.0.0",
         "misd/linkify": "~1.1.2",
         "monolog/monolog": "~3.9.0",
+        "npm-asset/ckeditor5": "~47.0",
         "npm-asset/cropperjs": "~1.6.1",
         "npm-asset/focus-trap": "~7.6.0",
         "npm-asset/jquery": "~3.7.1",

@@ -42,4 +42,4 @@ echo elgg_view_page(elgg_echo('notifications:mute:title'), [
 	'filter_id' => 'notifications',
 	'filter_value' => 'mute',
 	'show_owner_block_menu' => false,
-]);
+], 'walled_garden');

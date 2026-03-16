@@ -7,8 +7,11 @@
  * @uses $vars['suffix'] The suffix to be added if text is cut
  */
 
-$text = elgg_extract('text', $vars, '');
-$text = trim(elgg_strip_tags($text));
+$text = (string) elgg_extract('text', $vars);
+$text = elgg_strip_tags($text);
+$text = str_replace('&nbsp;', ' ', $text);
+$text = preg_replace('/ +/', ' ', $text);
+$text = trim($text);
 
 $suffix = elgg_extract('suffix', $vars, '...');
 

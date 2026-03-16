@@ -3,7 +3,7 @@
  */
 
 import 'jquery';
-import './ckeditor.js';
+import { ClassicEditor } from 'ckeditor/ckeditor5';
 import elgg from 'elgg';
 import hooks from 'elgg/hooks';
 
@@ -16,7 +16,7 @@ $(document).on('submit', 'form', function() {
 });
 
 export default {
-	init: function (selector, editor_type) {
+	init: function (selector, editor_type, additional_translations) {
 		var $input = $(selector);
 		if (!$input.length) {
 			return;
@@ -29,6 +29,10 @@ export default {
 
 		import('ckeditor/config/' + editor_type).then((config) => {
 			config = hooks.trigger('config', 'ckeditor', {'editor': editor_type, 'selector': selector}, config.default);
+			
+			if (additional_translations) {
+				config.translations = [additional_translations];
+			}
 			
 			ClassicEditor.create(document.querySelector(selector), config)
 				.then(editor => {
