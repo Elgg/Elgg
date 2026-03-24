@@ -1,3 +1,17 @@
+<a name="6.3.4"></a>
+### 6.3.4 (2026-03-24)
+
+#### Contributors
+
+* Jerôme Bakker (6)
+* Jeroen Dalsem (1)
+
+#### Bug fixes
+
+* **cache:** improved caching logic for CDNs [e83222a80](https://github.com/Elgg/Elgg/commit/e83222a8068740a98c8c45d884beb0a494a57a5d)
+* **output:** handle more short number format cases correctly [b14ed92d0](https://github.com/Elgg/Elgg/commit/b14ed92d0ea88b2826ebf51c2b360a1aa87e0f46)
+
+
 <a name="6.3.3"></a>
 ### 6.3.3 (2026-01-16)
 
