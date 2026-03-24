@@ -226,7 +226,7 @@ class Preloader {
 			return;
 		}
 		
-		$preloader = new self(\Elgg\Likes\DataService::instance());
+		$preloader = new static(\Elgg\Likes\DataService::instance());
 		$preloader->preloadForList($items);
 	}
 }

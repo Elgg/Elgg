@@ -10,6 +10,7 @@
 .elgg-widgets {
 	flex-grow: 1;
 	flex-basis: 100%;
+	max-width: 100%;
 }
 
 @media screen and (min-width: 80rem) {

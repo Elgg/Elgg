@@ -364,7 +364,7 @@
 	> li {
 	
 		> a:not(.elgg-button) {
-			&:not(.elgg-state-active) {
+			&:not(.elgg-state-active):not(.elgg-state-selected) {
 				color: inherit;
 			}
 			
