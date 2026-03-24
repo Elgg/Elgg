@@ -16,7 +16,7 @@ class HttpProtocolTransport implements ResponseTransport {
 	 * {@inheritdoc}
 	 */
 	public function send(SymfonyResponse $response) {
-		if (!$response->headers->hasCacheControlDirective('no-cache')) {
+		if (!empty($response->headers->getCookies()) && !$response->headers->hasCacheControlDirective('no-cache')) {
 			$response->headers->addCacheControlDirective('no-cache', 'Set-Cookie');
 		}
 		

@@ -2,8 +2,8 @@
 
 namespace Elgg;
 
-use Elgg\I18n\DateTime as ElggDateTime;
 use Elgg\Exceptions\DataFormatException;
+use Elgg\I18n\DateTime as ElggDateTime;
 
 /**
  * Functions for use as event handlers or other situations where you need a
@@ -212,6 +212,8 @@ class Values {
 		if (!is_numeric($n)) {
 			return $n;
 		}
+		
+		$n = (float) $n;
 		
 		// remove negative sign
 		$negative = abs($n) !== $n;
