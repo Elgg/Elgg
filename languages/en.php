@@ -436,7 +436,6 @@ To see the full post, click on the link below:
 
 	'adduser:ok' => "You have successfully added a new user.",
 	
-	'user:set:name' => "Account name settings",
 	'user:name:label' => "Display name",
 	'user:name:success' => "Successfully changed display name on the system.",
 	'user:name:fail' => "Could not change display name on the system.",
@@ -454,8 +453,11 @@ To see the full post, click on the link below:
 	'user:delete:title' => 'Confirm account deletion',
 	'user:delete:description' => 'Please confirm that you wish to delete the account of %s. Deleting the account will also delete all content (including groups) owned by this user. This might also include related content such as group content, subpages or comments on the content. Below you can view a list of content owned by the user.',
 	'user:delete:confirm' => "I hereby confirm I want to delete this user",
-
-	'user:set:language' => "Language settings",
+	
+	'user:color_scheme:label' => "Color scheme",
+	'user:color_scheme:browser' => "Browser preference",
+	'user:color_scheme:success' => "Color scheme has been updated.",
+	
 	'user:language:label' => "Language",
 	'user:language:success' => "Language settings have been updated.",
 
@@ -503,7 +505,6 @@ To see the full post, click on the link below:
 	'admin:configuration:success' => "Your settings have been saved.",
 	'admin:configuration:fail' => "Your settings could not be saved.",
 	'admin:configuration:dataroot:relative_path' => 'Cannot set "%s" as the dataroot because it is not an absolute path.',
-	'admin:configuration:default_limit' => 'The number of items per page must be at least 1.',
 
 	'admin:unknown_section' => 'Invalid Admin Section.',
 
@@ -1550,6 +1551,8 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:delayed_email:help' => "Offer users delayed email notifications to bundle notifications received in a period (daily, weekly)",
 	'config:message_delay:label' => "System message delay",
 	'config:message_delay:help' => "Default number of seconds before a success message disappears",
+	'config:color_schemes_enabled:label' => "Color schemes enabled",
+	'config:color_schemes_enabled:help' => "Based on a user or browser preference the theme can be switched to different color schemes like a dark mode",
 
 	'upgrading' => 'Upgrading...',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',
@@ -1660,7 +1663,6 @@ If you didn't request this change, please contact a site administrator.
 	'default_access:settings' => "Your default access level",
 	'default_access:label' => "Default access",
 	'user:default_access:success' => "Your new default access level was saved.",
-	'user:default_access:failure' => "Your new default access level could not be saved.",
 
 /**
  * Comments
@@ -1828,6 +1830,12 @@ Global variables:
 	'trash:restore:group' => "Search for a group",
 	'trash:restore:group:help' => "Make sure the selected group has the feature active for the item or an error may occur.",
 	'trash:restore:owner' => "Restore to the owner (%s)",
+
+/**
+ * Color schemes
+ */
+	'color_scheme:default' => "Default (Light)",
+	'color_scheme:dark' => "Dark",
 
 /**
  * Miscellaneous

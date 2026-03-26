@@ -248,7 +248,7 @@ CSS variables
 Global CSS variables are available in PHP and in CSS. Plugins should, wherever possible, use global CSS variables, 
 and extend the core theme with their plugin variables, so they can be simply altered by other plugins.
 
-To add or alter variables, use the ``theme`` section in ``elgg-plugin.php`` or use the ``vars:compiler, css`` event. 
+To add or alter variables, use the ``theme`` section in ``elgg-plugin.php``. 
 Note that you may need to flush the cache to see your changes in action.
 
 For a list of default core variables, see ``engine/theme.php``.

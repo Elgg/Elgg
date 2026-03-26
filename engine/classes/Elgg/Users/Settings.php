@@ -325,12 +325,47 @@ class Settings {
 		if (!isset($default_access)) {
 			return;
 		}
-	
-		if (!$user->setMetadata('elgg_default_access', $default_access)) {
-			$request->validation()->fail('default_access', $default_access, elgg_echo('user:default_access:failure'));
+
+		if ($default_access === $user->elgg_default_access) {
 			return;
 		}
+
+		$user->elgg_default_access = $default_access;
 		
 		$request->validation()->pass('default_access', $default_access, elgg_echo('user:default_access:success'));
+	}
+
+	/**
+	 * Set a user's color scheme preference
+	 *
+	 * @param \Elgg\Event $event 'usersettings:save', 'user'
+	 *
+	 * @return void
+	 */
+	public static function setColorScheme(\Elgg\Event $event) {
+
+		if (!_elgg_services()->config->color_schemes_enabled) {
+			return;
+		}
+
+		$user = $event->getUserParam();
+		$request = $event->getParam('request');
+
+		if (!$user instanceof \ElggUser || !$request instanceof Request) {
+			return;
+		}
+
+		$color_scheme = $request->getParam('color_scheme');
+		if (!isset($color_scheme)) {
+			return;
+		}
+
+		if ($color_scheme === $user->elgg_color_scheme) {
+			return;
+		}
+
+		$user->elgg_color_scheme = $color_scheme;
+
+		$request->validation()->pass('color_scheme', $color_scheme, elgg_echo('user:color_scheme:success'));
 	}
 }

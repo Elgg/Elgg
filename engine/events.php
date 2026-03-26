@@ -422,6 +422,7 @@ return [
 	],
 	'usersettings:save' => [
 		'user' => [
+			'Elgg\Users\Settings::setColorScheme' => [],
 			'Elgg\Users\Settings::setDefaultAccess' => [],
 			'Elgg\Users\Settings::setEmail' => [],
 			'Elgg\Users\Settings::setLanguage' => [],
@@ -449,6 +450,9 @@ return [
 		],
 		'page/components/list' => [
 			'Elgg\Comments\Preloader::preload' => [],
+		],
+		'page/elements/html' => [
+			\Elgg\Page\AddColorSchemeHandler::class => [],
 		],
 	],
 ];
