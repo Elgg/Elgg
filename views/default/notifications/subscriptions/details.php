@@ -7,8 +7,8 @@
  */
 
 use Elgg\Exceptions\Http\BadRequestException;
-use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Exceptions\Http\EntityPermissionsException;
+use Elgg\Exceptions\Http\PageNotFoundException;
 
 $user = get_entity((int) elgg_extract('user_guid', $vars));
 $entity = get_entity((int) elgg_extract('entity_guid', $vars));
@@ -45,28 +45,33 @@ $notification_events = elgg_get_notification_events();
 $details = [];
 foreach ($notification_events as $type => $subtypes) {
 	foreach ($subtypes as $subtype => $actions) {
-		/* @var $handler \Elgg\Notifications\NotificationEventHandler */
-		foreach ($actions as $action => $handler) {
-			// can users configure this handler
-			if (!$handler::isConfigurableByUser()) {
-				continue;
+		foreach ($actions as $action => $handlers) {
+			/** @var \Elgg\Notifications\NotificationEventHandler $handler */
+			foreach ($handlers as $handler) {
+				// can users configure this handler
+				if (!$handler::isConfigurableByUser()) {
+					continue;
+				}
+				
+				// can this handler be configured for the current container
+				if (!$handler::isConfigurableForEntity($entity)) {
+					continue;
+				}
+				
+				$label = elgg_echo("notification:{$type}:{$subtype}:{$action}");
+				$details[$label] = elgg_view_field([
+					'#type' => 'checkboxes',
+					'#label' => $label,
+					'#class' => 'elgg-subscription-details',
+					'name' => "subscriptions[{$entity->guid}][notify:{$type}:{$subtype}:{$action}]",
+					'options' => $method_options,
+					'value' => $detailed_subscriptions[$type][$subtype][$action] ?? [],
+					'align' => 'horizontal',
+				]);
+				
+				// only show one checkbox per action
+				break;
 			}
-			
-			// can this handler be configured for the current container
-			if (!$handler::isConfigurableForEntity($entity)) {
-				continue;
-			}
-			
-			$label = elgg_echo("notification:{$type}:{$subtype}:{$action}");
-			$details[$label] = elgg_view_field([
-				'#type' => 'checkboxes',
-				'#label' => $label,
-				'#class' => 'elgg-subscription-details',
-				'name' => "subscriptions[{$entity->guid}][notify:{$type}:{$subtype}:{$action}]",
-				'options' => $method_options,
-				'value' => $detailed_subscriptions[$type][$subtype][$action] ?? [],
-				'align' => 'horizontal',
-			]);
 		}
 	}
 }
