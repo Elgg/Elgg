@@ -21,9 +21,6 @@ return array(
 	'item:object:file:word' => 'Word',
 	'collection:object:file' => 'Arquivos',
 	
-	'file:upgrade:2022092801:title' => 'Mover Arquivos',
-	'file:upgrade:2022092801:description' => 'Move os arquivos enviados usando o plugin de arquivos para a pasta da entidade do arquivo, em vez da pasta da entidade do proprietário.',
-	
 	'collection:object:file:all' => "Todos os Arquivos do Site",
 	'collection:object:file:owner' => "Arquivos de %s",
 	'collection:object:file:friends' => "Arquivos dos Amigos",

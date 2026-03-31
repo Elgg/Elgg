@@ -421,7 +421,6 @@ return array(
 
 	'adduser:ok' => "Você adicionou um novo usuário com sucesso.",
 	
-	'user:set:name' => "Configurações de nome de conta",
 	'user:name:label' => "Nome de Exibição",
 	'user:name:success' => "Nome de exibição alterado com sucesso no sistema.",
 	'user:name:fail' => "Não foi possível alterar o nome de exibição no sistema.",
@@ -438,8 +437,7 @@ return array(
 
 	'user:delete:title' => 'Confirmar exclusão da conta',
 	'user:delete:confirm' => "Confirmo que desejo excluir este usuário",
-
-	'user:set:language' => "Configurações do Idioma",
+	
 	'user:language:label' => "Idioma",
 	'user:language:success' => "As configurações do idioma foram atualizadas.",
 
@@ -487,7 +485,6 @@ return array(
 	'admin:configuration:success' => "As suas configurações foram salvas.",
 	'admin:configuration:fail' => "As suas configurações não podem ser salvas.",
 	'admin:configuration:dataroot:relative_path' => 'Não é possível definir "%s" como raiz de dados porque não é um caminho absoluto',
-	'admin:configuration:default_limit' => 'O número de itens por página deve ser de pelo menos 1.',
 
 	'admin:unknown_section' => 'Seção de Administração Inválida.',
 
@@ -762,9 +759,6 @@ return array(
 	'admin:server:label:post_max_size' => 'Tamanho Máximo do POST',
 	'admin:server:label:upload_max_filesize' => 'Tamanho Máximo para Upload',
 	'admin:server:warning:post_max_too_small' => '(Observação: post_max_size deve ser maior que este valor para suportar uploads deste tamanho)',
-	'admin:server:label:memcache' => 'Memcache',
-
-	'admin:server:label:redis' => 'Redis',
 
 	'admin:server:label:opcache' => 'OPcache',
 	'admin:server:opcache:inactive' => 'O OPcache não está disponível neste servidor ou ainda não foi habilitado. Para melhorar o desempenho, é recomendável habilitar e configurar o OPcache.',
@@ -1391,7 +1385,6 @@ return array(
 	'default_access:settings' => "Seu nível de acesso padrão",
 	'default_access:label' => "Acesso padrão",
 	'user:default_access:success' => "Seu novo nível de acesso padrão foi salvo.",
-	'user:default_access:failure' => "Seu novo nível de acesso padrão não pôde ser salvo.",
 
 /**
  * Comments
@@ -1515,6 +1508,10 @@ return array(
 	'trash:restore:group' => "Pesquisar Grupos",
 	'trash:restore:group:help' => "Certifique-se de que o grupo selecionado tenha o recurso ativo para o item ou poderá ocorrer um erro.",
 	'trash:restore:owner' => "Restaurar para o proprietário (%s)",
+
+/**
+ * Color schemes
+ */
 
 /**
  * Miscellaneous

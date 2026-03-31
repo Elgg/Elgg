@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-24 10:22+0100\n"
+"POT-Creation-Date: 2026-03-31 11:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -117,7 +117,7 @@ msgid "modular javascript with ECMAScript modules"
 msgstr ""
 
 #: ../../index.rst:34
-msgid "Laminas Mail handles outgoing email"
+msgid "Symfony Mailer handles outgoing email"
 msgstr ""
 
 #: ../../index.rst:35
@@ -133,57 +133,49 @@ msgid "Phinx database migrations"
 msgstr ""
 
 #: ../../index.rst:38
-msgid "CSS-Crush for CSS preprocessing"
-msgstr ""
-
-#: ../../index.rst:39
 msgid "Imagine for image manipulation"
 msgstr ""
 
-#: ../../index.rst:40
-msgid "Persistent caching with Memcached and/or Redis"
-msgstr ""
-
-#: ../../index.rst:41
+#: ../../index.rst:39
 msgid "Error handling with Monolog"
 msgstr ""
 
-#: ../../index.rst:44
+#: ../../index.rst:42
 msgid "Examples"
 msgstr ""
 
-#: ../../index.rst:46
+#: ../../index.rst:44
 msgid "It has been used to build `all kinds of social apps`__:"
 msgstr ""
 
-#: ../../index.rst:50
+#: ../../index.rst:48
 msgid "open networks (similar to Facebook)"
 msgstr ""
 
-#: ../../index.rst:51
+#: ../../index.rst:49
 msgid "topical (like the Elgg Community)"
 msgstr ""
 
-#: ../../index.rst:52
+#: ../../index.rst:50
 msgid "private/corporate intranets"
 msgstr ""
 
-#: ../../index.rst:53
+#: ../../index.rst:51
 msgid "dating"
 msgstr ""
 
-#: ../../index.rst:54
+#: ../../index.rst:52
 msgid "educational"
 msgstr ""
 
-#: ../../index.rst:55
+#: ../../index.rst:53
 msgid "company blog"
 msgstr ""
 
-#: ../../index.rst:57
+#: ../../index.rst:55
 msgid "This is the canonical documentation for the Elgg_ project."
 msgstr ""
 
-#: ../../index.rst:62
+#: ../../index.rst:60
 msgid "Continue Reading"
 msgstr ""

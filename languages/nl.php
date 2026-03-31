@@ -437,7 +437,6 @@ De volgende karakters zijn niet toegestaan: %s',
 
 	'adduser:ok' => "Nieuwe gebruiker is succesvol aangemaakt.",
 	
-	'user:set:name' => "Instellingen van accountnaam",
 	'user:name:label' => "Mijn weergavenaam",
 	'user:name:success' => "Je weergavenaam is succesvol gewijzigd.",
 	'user:name:fail' => "Er is een fout opgetreden tijdens het wijzigen van je weergavenaam.",
@@ -455,8 +454,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'user:delete:title' => 'Bevestig account verwijdering',
 	'user:delete:description' => 'Bevestig dat het account van %s verwijderd mag worden. Het verwijderen van het account zal ook alle content van deze gebruiker (inclusief groepen) verwijderen. Mogelijk gerelateerde content, zoals groepscontent, subpagina\'s of reacties op content zullen ook verwijderd worden. Hieronder een overzicht van de content waar deze gebruiker de eigenaar van is.',
 	'user:delete:confirm' => "Ik ga akkoord met het verwijderen van deze gebruiker",
-
-	'user:set:language' => "Taalinstelling",
+	
 	'user:language:label' => "Jouw taal",
 	'user:language:success' => "Je taalinstelling is gewijzigd.",
 
@@ -504,7 +502,6 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:configuration:success' => "Je instellingen zijn opgeslagen.",
 	'admin:configuration:fail' => "Je instellingen zijn niet opgeslagen.",
 	'admin:configuration:dataroot:relative_path' => 'Kan \'%s\' niet als datamap opslaan, omdat het geen absoluut pad is.',
-	'admin:configuration:default_limit' => 'Het aantal items per pagina moet minstens 1 zijn.',
 
 	'admin:unknown_section' => 'Ongeldige beheersectie.',
 
@@ -981,13 +978,6 @@ Bekijk hier de volledige lijst van gebruikers:
 	'admin:server:label:post_max_size' => 'Maximale POST-grootte',
 	'admin:server:label:upload_max_filesize' => 'Maximale grootte van uploadbestanden',
 	'admin:server:warning:post_max_too_small' => '(PS: post_max_size moet groter zijn dan deze waarde om uploads van deze grootte te ondersteunen)',
-	'admin:server:label:memcache' => 'Memcache',
-	'admin:server:memcache:inactive' => 'Memcache is niet beschikbaar op deze server, of is nog niet geconfigureerd in de Elgg configuratie.
-Voor verbeterde performance wordt het aangeraden om Memcache (of Redis) in te schakelen en te configureren.',
-
-	'admin:server:label:redis' => 'Redis',
-	'admin:server:redis:inactive' => 'Redis is niet beschikbaar op deze server, of is nog niet geconfigureerd in de Elgg configuratie.
-Voor verbeterde performance wordt het aangeraden om Redis (of Memcache) in te schakelen en te configureren.',
 
 	'admin:server:label:opcache' => 'OPcache',
 	'admin:server:opcache:inactive' => 'OPcache is niet beschikbaar op deze server, of is nog niet geactiveerd.
@@ -1663,7 +1653,6 @@ Indien je deze wijziging niet hebt aangevraagd, neem dan contact op met een behe
 	'default_access:settings' => "Je standaard toegangsniveau",
 	'default_access:label' => "Standaardtoegang",
 	'user:default_access:success' => "Je nieuwe standaard toegangsniveau is opgeslagen.",
-	'user:default_access:failure' => "Je nieuwe standaard toegangsniveau is niet opgeslagen.",
 
 /**
  * Comments
@@ -1831,6 +1820,10 @@ Global variables:
 	'trash:restore:group' => "Zoek een groep",
 	'trash:restore:group:help' => "Zorg er voor dat de geselecteerd groep wel het soort items ondersteunt, anders kan er een foutmelding optreden.",
 	'trash:restore:owner' => "Herstel naar de eigenaar (%s)",
+
+/**
+ * Color schemes
+ */
 
 /**
  * Miscellaneous

@@ -21,7 +21,6 @@ return array(
 	'discussion:settings:enable_global_discussions' => 'Activer les discussions globales',
 	'discussion:settings:enable_global_discussions:help' => 'Permet de créer des discussions hors des groupes',
 
-	'discussion:latest' => 'Discussions récentes',
 	'discussion:updated' => "Dernière réponse de %s %s",
 
 	'discussion:topic:created' => 'Le sujet de discussion a été créé.',

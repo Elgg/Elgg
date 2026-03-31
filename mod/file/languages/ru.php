@@ -21,9 +21,6 @@ return array(
 	'item:object:file:word' => 'Word',
 	'collection:object:file' => 'Файлы',
 	
-	'file:upgrade:2022092801:title' => 'Переместить файлы',
-	'file:upgrade:2022092801:description' => 'Перемещает файлы, загруженные с помощью плагина "Файлы", в папку объекта, а не в папку владельца.',
-	
 	'collection:object:file:all' => "Все файлы",
 	'collection:object:file:owner' => "Файлы %s",
 	'collection:object:file:friends' => "Файлы друзей",

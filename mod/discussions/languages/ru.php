@@ -20,7 +20,6 @@ return array(
 	'discussion:settings:enable_global_discussions' => 'Включить глобальные дискуссии',
 	'discussion:settings:enable_global_discussions:help' => 'Разрешить создавать дискуссии вне групп',
 
-	'discussion:latest' => 'Недавние дискуссии',
 	'discussion:updated' => "Последний комментарий%s %s",
 
 	'discussion:topic:created' => 'Дискуссия создана.',

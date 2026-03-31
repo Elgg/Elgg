@@ -74,7 +74,6 @@ return array(
 	'UserFetchFailureException' => 'Nemohu zkontrolovat práva pro user_guid [%s] neboť tento uživatel neexistuje.',
 	'BadRequestException' => 'Špatný požadavek',
 
-	'viewfailure' => 'V pohledu %s došlo k vnitřnímu selhání',
 	'changebookmark' => 'Změňte prosím vaši záložku pro tuto stránku.',
 	'error:missing_data' => 'V požadavku chybí nějaká data.',
 	'save:fail' => 'Při ukládání vašich dat se vyskytla chyba',
@@ -214,7 +213,6 @@ return array(
 	'link:view' => 'zobrazit odkaz',
 	'link:view:all' => 'Zobrazit vše',
 
-
 /**
  * River
  */
@@ -282,7 +280,6 @@ return array(
 
 	'adduser:ok' => "Úspěšně jste přidal/a nového uživatele.",
 	
-	'user:set:name' => "Nastavení jména účtu",
 	'user:name:label' => "Zobrazené jméno",
 	'user:name:success' => "Zobrazované jméno bylo úspěšně změněno.",
 	'user:name:fail' => "Nemohu změnit zobrazované jméno.",
@@ -294,8 +291,7 @@ return array(
 	'user:password:success' => "Heslo bylo změněno",
 	'user:changepassword:unknown_user' => 'Neplatný úživatel.',
 	'user:changepassword:change_password_confirm' => 'Tímto změníte vaše heslo.',
-
-	'user:set:language' => "Nastavení jazyka",
+	
 	'user:language:label' => "Jazyk",
 	'user:language:success' => "Jazykové nastavení bylo aktualizováno.",
 
@@ -317,8 +313,10 @@ return array(
  */
 	'menu:page:header:administer' => 'Spravovat',
 	'menu:page:header:configure' => 'Nastavovat',
+	'menu:page:header:utilities' => 'Nástroje',
 	'menu:page:header:develop' => 'Vyvíjet',
 	'menu:page:header:default' => 'Ostatní',
+	'menu:page:header:plugin_settings' => 'Nastavení doplňku',
 
 	'admin:view_site' => 'Zobrazit stránky',
 	'admin:loggedin' => 'Přihlášen jako %s',
@@ -327,7 +325,6 @@ return array(
 	'admin:configuration:success' => "Nastavení bylo uloženo.",
 	'admin:configuration:fail' => "Nastavení není možné uložit.",
 	'admin:configuration:dataroot:relative_path' => 'Nemohu "%s" nastavit jako dataroot, protože to není absolutní cesta.',
-	'admin:configuration:default_limit' => 'Počet položek na stránku musí být alespoň 1.',
 
 	'admin:unknown_section' => 'Neplatná sekce správce.',
 
@@ -441,6 +438,8 @@ return array(
 	'admin:security:settings' => 'Nastavení',
 	'admin:security:settings:label:account' => 'Účet',
 	'admin:security:settings:label:notifications' => 'Upozornění',
+	'admin:security:security_txt:contact' => "Kontakt",
+	'admin:security:security_txt:language' => "Jazyk",
 
 /**
  * Plugins
@@ -449,8 +448,6 @@ return array(
 	'plugins:disabled' => 'Doplňky nebyly načteny protože ve složce mod je soubor pojmenovaný "disabled".',
 	'plugins:settings:save:ok' => "Nastavení pro doplněk %s bylo úspěšně uloženo.",
 	'plugins:settings:save:fail' => "Při ukládání nastavení pro doplněk %s se vyskytl se problém.",
-	'plugins:usersettings:save:ok' => "Uživatelské nastavení pro doplněk %s bylo úspěšně uloženo.",
-	'plugins:usersettings:save:fail' => "Při ukládání uživatelského nastavení pro doplněk %s se vyskytl problém.",
 	
 	'item:object:plugin' => 'Doplňky',
 	'collection:object:plugin' => 'Doplňky',
@@ -512,7 +509,7 @@ return array(
 	'admin:statistics:label:numusers' => "Počet uživatelů",
 	'admin:statistics:label:numonline' => "Počet připojených uživatelů",
 	'admin:statistics:label:onlineusers' => "Aktuálně připojení uživatelé",
-	'admin:statistics:label:admins'=>"Správci",
+	'admin:statistics:label:admins' => "Správci",
 	'admin:statistics:label:version' => "Verze Elgg",
 	'admin:statistics:label:version:release' => "Vydání",
 	'admin:statistics:label:version:version' => "Verze",
@@ -926,10 +923,13 @@ return array(
 	'admin:legend:system' => 'Systém',
 	'admin:legend:caching' => 'Vyrovnávací paměť',
 	'admin:legend:content' => 'Obsah',
+	'admin:legend:comments' => 'Komentáře',
 	'admin:legend:content_access' => 'Přístup k obsahu',
 	'admin:legend:site_access' => 'Přístup ke stránkám',
 	'admin:legend:debug' => 'Ladění a výpisy',
 	'config:i18n:who_can_change_language:admin_only' => "Pouze pro správce",
+	'config:content:mentions_display_format:username' => "Uživatelské jméno",
+	'config:content:mentions_display_format:display_name' => "Zobrazené jméno",
 	'config:email' => "E-mail",
 
 	'upgrading' => 'Aktualizace...',
@@ -989,7 +989,6 @@ return array(
 	'default_access:settings' => "Vaše výchozí úroveň sdílení",
 	'default_access:label' => "Výchozí úroveň sdílení",
 	'user:default_access:success' => "Výchozí úroveň sdílení byla uložena.",
-	'user:default_access:failure' => "Výchozí úroveň sdílení není možné uložit.",
 
 /**
  * Comments
@@ -1001,8 +1000,6 @@ return array(
 
 	'generic_comments:add' => "Přidat komentář",
 	'generic_comments:edit' => "Upravit komentář",
-	'generic_comments:post' => "Odeslat komentář",
-	'generic_comments:text' => "Komentář",
 	'generic_comments:latest' => "Nejnovější komentáře",
 	'generic_comment:posted' => "Váš komentář byl úspěšně odeslán.",
 	'generic_comment:updated' => "Váš komentář byl úspěšně aktualizován.",
@@ -1010,9 +1007,7 @@ return array(
 	'generic_comment:notfound' => "Bohužel jsme nemohli najít požadovaný komentář.",
 	'generic_comment:failure' => "Při ukládání komentáře nastala nečekaná chyba.",
 	'generic_comment:none' => 'Žádné komentáře',
-	'generic_comment:title' => 'Komentováno uživatelem %s',
 	'generic_comment:on' => '%s na %s',
-	'generic_comments:latest:posted' => 'odeslal/a',
 
 /**
  * Entities
@@ -1026,6 +1021,9 @@ return array(
 	'entity:delete:permission_denied' => 'Nemáte oprávnění smazat tuto položku.',
 	'entity:delete:success' => '%s bylo odstraněno.',
 	'entity:delete:fail' => '%s nemůže být odstraněno.',
+	
+	'entity:restore:item' => 'Položka',
+
 
 /**
  * Annotations
@@ -1053,10 +1051,31 @@ return array(
  */
 	
 /**
+ * Trash
+ */
+
+/**
+ * Color schemes
+ */
+
+/**
  * Miscellaneous
  */
 	'elgg:powered' => "Postaveno na projektu Elgg",
-	
+	'field:required' => "Vyžadováno",
+
+/**
+ * Accessibility
+ */
+	'menu:comments:header' => "Komentáře",
+	'menu:filter:header' => "Filtrovat",
+	'menu:page:header' => "Články",
+	'menu:river:header' => "Aktivita",
+	'menu:site:header' => "Stránky",
+	'menu:social:header' => "Komunita",
+	'menu:title:header' => "Název",
+	'menu:topbar:header' => "Horní lišta",
+
 /**
  * Cli commands
  */
@@ -1214,5 +1233,7 @@ return array(
 	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulu",
 
-	"field:required" => 'Vyžadováno',
+/**
+ * Upgrades
+ */
 );

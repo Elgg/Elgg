@@ -9,6 +9,8 @@ return array(
 	'annotation:delete:likes:fail' => "Ошибка при удалении лайка",
 	'annotation:delete:likes:success' => "Лайк удалён",
 	
+	// settings
+	
 	'likes:this' => '%s понравилось это',
 	'likes:deleted' => 'Лайк удалён',
 	'likes:see' => 'Посмотреть кому нравится это',

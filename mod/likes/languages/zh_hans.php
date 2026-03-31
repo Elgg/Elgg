@@ -8,6 +8,8 @@
 return array(
 	'annotation:delete:likes:fail' => "移除您的稱讚時出現了問題",
 	'annotation:delete:likes:success' => "您的稱讚已移除",
+	
+	// settings
 	'likes:deleted' => '您的稱讚已移除',
 	'likes:see' => '看看誰稱讚這個項目',
 	'likes:remove' => '取消稱讚',

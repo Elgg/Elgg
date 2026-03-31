@@ -20,7 +20,6 @@ return array(
 	'discussion:settings:enable_global_discussions' => 'Activează discuțiile globale',
 	'discussion:settings:enable_global_discussions:help' => 'Permite ca discuțiile să fie create în afara grupurilor',
 
-	'discussion:latest' => 'Ultimele discuții',
 	'discussion:updated' => "Ultimul comentariu de către %s%s",
 
 	'discussion:topic:created' => 'Subiectul de discuție a fost creat',

@@ -20,7 +20,6 @@ return array(
 	'discussion:settings:enable_global_discussions' => 'グローバルディスカッションを有効にする',
 	'discussion:settings:enable_global_discussions:help' => 'グループの外からディスカッションを作成できる様にする',
 
-	'discussion:latest' => '最新の話題',
 	'discussion:updated' => "最新の返答:(%s さんより)「 %s 」",
 
 	'discussion:topic:created' => '議題を作成しました',

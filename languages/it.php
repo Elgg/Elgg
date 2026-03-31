@@ -286,7 +286,6 @@ return array(
 
 	'adduser:ok' => "Nuovo utente aggiunto",
 	
-	'user:set:name' => "Impostazioni del nome di profilo",
 	'user:name:label' => "Nome visualizzato",
 	'user:name:success' => "Il nome visualizzato è stato cambiato nel sistema.",
 	'user:name:fail' => "Impossibile cambiare il nome visualizzato nel sistema.",
@@ -298,8 +297,7 @@ return array(
 	'user:password:success' => "Password cambiata",
 	'user:changepassword:unknown_user' => 'Utente non valido.',
 	'user:changepassword:change_password_confirm' => 'Questo cambierà la tua password.',
-
-	'user:set:language' => "Impostazioni della lingua",
+	
 	'user:language:label' => "Lingua",
 	'user:language:success' => "Le impostazioni della lingua sono state aggiornate.",
 
@@ -333,7 +331,6 @@ return array(
 	'admin:configuration:success' => "Impostazioni salvate.",
 	'admin:configuration:fail' => "Impossibile salvare le impostazioni.",
 	'admin:configuration:dataroot:relative_path' => 'Impossibile impostare "%s" come dataroot perché non è un percorso assoluto.',
-	'admin:configuration:default_limit' => 'Il numero minimo di elementi per pagina deve essere almeno pari a 1.',
 
 	'admin:unknown_section' => 'Sezione di amministrazione non valida.',
 
@@ -561,8 +558,6 @@ Per andare sul sito, clicca qui:
 	'admin:server:label:post_max_size' => 'Dimensione massima del POST',
 	'admin:server:label:upload_max_filesize' => 'Dimensione massima di upload',
 	'admin:server:warning:post_max_too_small' => '(Nota: post_max_size deve essere maggiore di questo valore per permettere degli upload di questa dimensione)',
-	'admin:server:redis:inactive' => 'Redis non è configurato su questo server o non è stato ancora configurato nella configurazione di Elgg.
-Per migliorare le prestazioni, si consiglia di abilitare e configurare redis (o memcache).',
 
 	'admin:server:label:opcache' => 'cache OP',
 	
@@ -1051,7 +1046,6 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
 	'default_access:settings' => "Il tuo livello di accesso predefinito",
 	'default_access:label' => "Accesso predefinito",
 	'user:default_access:success' => "Il tuo nuovo livello di accesso predefinito è stato salvato.",
-	'user:default_access:failure' => "Impossibile salvare il tuo nuovo livello di accesso predefinito.",
 
 /**
  * Comments
@@ -1122,6 +1116,10 @@ Se non hai richiesto tu questa modifica, contatta un amministratore del sito.
 	
 /**
  * Trash
+ */
+
+/**
+ * Color schemes
  */
 
 /**

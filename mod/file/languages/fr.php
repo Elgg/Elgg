@@ -22,9 +22,6 @@ return array(
 	'collection:object:file' => 'Fichiers',
 	'list:object:file:no_results' => 'Aucun fichier trouvé',
 	
-	'file:upgrade:2022092801:title' => 'Déplacer des fichiers',
-	'file:upgrade:2022092801:description' => 'Déplace les fichiers téléchargés qui utilisent le plugin "file" vers le dossier de l\'entité du fichier au lieu du dossier de l\'entité propriétaire.',
-	
 	'collection:object:file:all' => "Tous les fichiers du site",
 	'collection:object:file:owner' => "Fichiers de %s",
 	'collection:object:file:friends' => "Fichiers des contacts",
