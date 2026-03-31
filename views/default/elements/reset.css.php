@@ -123,7 +123,6 @@ input,
 select,
 textarea {
 	font-family: var(--elgg-font-family);
-
 }
 
 code,
