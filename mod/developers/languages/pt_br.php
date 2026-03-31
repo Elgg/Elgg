@@ -100,10 +100,8 @@ Isso pode causar problemas em views que não são HTML no tipo de view padrão."
 	'developers:inspect:service:path' => 'Definição',
 	'developers:inspect:service:class' => 'Classe',
 
-	// event logging
 	'developers:request_stats' => "Estatísticas da requisição (não inclui o evento de desligamento)",
 	'developers:event_log_msg' => "%s: '%s, %s' em %s",
-	'developers:log_queries' => "Consultas ao Banco de Dados: %s",
 	'developers:boot_cache_rebuilt' => "O cache de inicialização foi reconstruído para esta requisição",
 	'developers:elapsed_time' => "Tempo decorrido (s)",
 

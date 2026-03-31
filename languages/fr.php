@@ -438,7 +438,6 @@ Pour voir l'article complet, cliquez sur le lien :
 
 	'adduser:ok' => "Vous avez bien ajouté un nouvel utilisateur.",
 	
-	'user:set:name' => "Paramètres du nom du compte",
 	'user:name:label' => "Nom",
 	'user:name:success' => "Votre nom a été changé avec succès.",
 	'user:name:fail' => "Impossible de changer le nom affiché.",
@@ -456,8 +455,7 @@ Pour voir l'article complet, cliquez sur le lien :
 	'user:delete:title' => 'Confirmer la suppression du compte',
 	'user:delete:description' => 'Veuillez confirmer que vous souhaitez supprimer le compte de %s. La suppression du compte entraînera également la suppression de tout le contenu (y compris les groupes) appartenant à cet utilisateur. Cela peut également inclure du contenu connexe tel que du contenu de groupe, des sous-pages ou des commentaires sur le contenu. Ci-dessous, vous pouvez voir une liste du contenu appartenant à l\'utilisateur.',
 	'user:delete:confirm' => "Par la présente, je déclare vouloir supprimer ce compte utilisateur",
-
-	'user:set:language' => "Langue",
+	
 	'user:language:label' => "Votre langue",
 	'user:language:success' => "Votre préférence de langue a bien été enregistré.",
 
@@ -505,7 +503,6 @@ Pour voir l'article complet, cliquez sur le lien :
 	'admin:configuration:success' => "Vos paramètres ont bien été été enregistrés.",
 	'admin:configuration:fail' => "Vos paramètres n'ont pas pu être enregistrés.",
 	'admin:configuration:dataroot:relative_path' => 'Impossible de définir "%s" comme racine pour le dossier de données car ce n\'est pas un chemin absolu.',
-	'admin:configuration:default_limit' => 'Le nombre d\'éléments par page doit être d\'au moins 1.',
 
 	'admin:unknown_section' => 'Partie Admin invalide.',
 
@@ -986,13 +983,6 @@ Voir la liste complète des utilisateurs :
 	'admin:server:label:post_max_size' => 'Taille maximum d\'un envoi POST',
 	'admin:server:label:upload_max_filesize' => 'Taille maximale d\'envoi',
 	'admin:server:warning:post_max_too_small' => '(Remarque : la valeur de post_max_size doit être supérieure à cette valeur pour supporter des envois de cette taille)',
-	'admin:server:label:memcache' => 'Memcache',
-	'admin:server:memcache:inactive' => 'Memcache n\'est pas installé sur ce serveur ou n\'a pas encore été configuré dans la configuration de Elgg.
-Pour des performances améliorées, il est recommandé que vous activiez et configuriez memcache (ou redis).',
-
-	'admin:server:label:redis' => 'Redis',
-	'admin:server:redis:inactive' => 'Redis n\'est pas installé sur ce serveur ou n\'a pas encore été configuré dans la configuration de Elgg.
-Pour des performances améliorées, il est recommandé que vous activiez et configuriez redis (ou memcache).',
 
 	'admin:server:label:opcache' => 'OPcache',
 	'admin:server:opcache:inactive' => 'OPcache n\'est pas disponible sur ce serveur ou n\'a pas encore été activé.
@@ -1669,7 +1659,6 @@ Si vous n'êtes pas à l'origine de cette modification, veuillez contacter un ad
 	'default_access:settings' => "Votre niveau d'accès par défaut",
 	'default_access:label' => "Niveau d'accès par défaut",
 	'user:default_access:success' => "Votre nouveau niveau d'accès par défaut a été enregistré.",
-	'user:default_access:failure' => "Votre nouveau niveau d'accès par défaut n'a pas pu être enregistré.",
 
 /**
  * Comments
@@ -1836,6 +1825,10 @@ Variables globales :
 	'trash:restore:group' => "Rechercher un groupe",
 	'trash:restore:group:help' => "Assurez-vous que le groupe sélectionné dispose de la fonctionnalité active pour l'élément, sinon une erreur pourrait se produire.",
 	'trash:restore:owner' => "Restaurer vers le propriétaire (%s)",
+
+/**
+ * Color schemes
+ */
 
 /**
  * Miscellaneous

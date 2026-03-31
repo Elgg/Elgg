@@ -21,7 +21,6 @@ return array(
 	'profile:phone' => "Telefon",
 	'profile:mobile' => "Mobil",
 	'profile:website' => "Site web",
-	'profile:twitter' => "Nume utilizator Twitter",
 	'profile:saved' => "Profilul tău a fost salvat cu succes.",
 
 	'profile:field:text' => 'Text scurt',

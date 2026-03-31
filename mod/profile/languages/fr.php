@@ -23,7 +23,6 @@ return array(
 	'profile:phone' => "Téléphone",
 	'profile:mobile' => "Téléphone portable",
 	'profile:website' => "Site internet",
-	'profile:twitter' => "Identifiant Twitter",
 	'profile:saved' => "Votre profil a bien été enregistré.",
 
 	'profile:field:text' => 'Texte court',

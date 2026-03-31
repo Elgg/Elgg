@@ -8,6 +8,8 @@
 return array(
 	'annotation:delete:likes:fail' => "Bha duilgheadas ann fhad 's a bhathar a' toirt a' mholaidh agad air falbh",
 	'annotation:delete:likes:success' => "Chaidh am moladh agad a thoirt air falbh",
+	
+	// settings
 	'likes:deleted' => 'Chaidh am moladh agad a thoirt air falbh',
 	'likes:see' => 'Seall na buill a tha air seo a mholadh',
 	'likes:remove' => 'Cha mol seo tuilleadh',

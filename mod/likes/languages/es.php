@@ -8,6 +8,8 @@
 return array(
 	'annotation:delete:likes:fail' => "Hubo un problema al quitar el Like",
 	'annotation:delete:likes:success' => "Tu Like ha sido removido",
+	
+	// settings
 	'likes:deleted' => 'Tu Like ha sido removido',
 	'likes:see' => 'Ver a quienes les gusta esto',
 	'likes:remove' => 'Ya no me gusta',

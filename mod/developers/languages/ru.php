@@ -100,10 +100,8 @@ return array(
 	'developers:inspect:service:path' => 'Определение',
 	'developers:inspect:service:class' => 'Класс',
 
-	// event logging
 	'developers:request_stats' => "Статистика запросов (не включает событие выключения)",
 	'developers:event_log_msg' => "%s: '%s, %s' в %s",
-	'developers:log_queries' => "Запросы к БД: %s",
 	'developers:boot_cache_rebuilt' => "Загрузочный кеш был перестроен для этого запроса",
 	'developers:elapsed_time' => "Прошедшее время (сек)",
 

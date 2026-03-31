@@ -20,7 +20,6 @@ return array(
 	'discussion:settings:enable_global_discussions' => 'Cuir an comas deasbadan uile-choitcheann',
 	'discussion:settings:enable_global_discussions:help' => 'Ceadaich deasbadan taobh a-muigh buidhnean',
 
-	'discussion:latest' => 'Na deasbadan as ùire',
 	'discussion:updated' => "An fhreagairt as ùire le %s %s",
 
 	'discussion:topic:created' => 'Chaidh an deasbad a chruthachadh.',

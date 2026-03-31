@@ -23,7 +23,6 @@ return array(
 	'profile:phone' => "Telefone",
 	'profile:mobile' => "Celular",
 	'profile:website' => "Site",
-	'profile:twitter' => "Usuário do X",
 	'profile:saved' => "Seu Perfil foi salvo com sucesso!",
 
 	'profile:field:text' => 'Texto Curto',

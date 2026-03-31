@@ -12,16 +12,19 @@ return array(
 	
 	'add:object:discussion' => 'Discussie toevoegen',
 	'edit:object:discussion' => 'Bewerk discussie',
+	'collection:object:discussion:all' => 'Recente discussies',
 	'collection:object:discussion:group' => 'Groepsdiscussies',
 	'collection:object:discussion:my_groups' => 'Discussies in mijn groepen',
+	'collection:object:discussion:owner' => 'Discussies van %s',
 	
 	'notification:object:discussion:create' => "Stuur een notificatie wanneer een discussie is gestart",
 	'notifications:mute:object:discussion' => "over de discussie '%s'",
 	
 	'discussion:settings:enable_global_discussions' => 'Schakel globale discussies in',
 	'discussion:settings:enable_global_discussions:help' => 'Discussies kunnen ook buiten groepen worden gestart',
+	'discussion:settings:auto_close' => 'Discussies automatisch sluiten na een aantal dagen',
+	'discussion:settings:auto_close:help' => 'Als er geen reacties meer zijn gegeven na het aantal opgegeven dagen zal de discussie worden gesloten',
 
-	'discussion:latest' => 'Laatste discussies',
 	'discussion:updated' => "Laatste reactie door %s: '%s'",
 
 	'discussion:topic:created' => 'Het discussieonderwerp is aangemaakt.',
@@ -35,6 +38,7 @@ return array(
 	'discussion:error:missing' => 'Zowel titel als bericht zijn verplichte velden',
 	'discussion:error:permissions' => 'Je hebt onvoldoende rechten om deze actie uit te mogen voeren',
 	'discussion:error:no_groups' => "Je hebt geen groepslidmaatschappen",
+	'discussion:error:status' => "Fout tijdens het opslaan van de discussie status",
 
 	/**
 	 * River
@@ -84,6 +88,9 @@ Bekijk en reageer hier op de discussie:
 	'discussion:topic:toggle_status:open:confirm' => 'Weet je zeker dat je deze discussie wilt heropenen?',
 	'discussion:topic:toggle_status:closed' => 'De discussie is gesloten',
 	'discussion:topic:toggle_status:closed:confirm' => 'Weet je zeker dat je deze discussie wilt sluiten?',
+	
+	'discussion:auto_close:new' => 'Discussies worden automatisch gesloten %d dagen na de laatste reactie.',
+	'discussion:auto_close:edit' => 'Deze discussie wordt automatisch gesloten over %d dagen. Als er een reactie wordt geplaatst zal deze tijd worden verlengt.',
 	
 	// widgets
 	'widgets:discussions:name' => 'Discussies',

@@ -21,7 +21,7 @@ return array(
 	'thewire:thread' => "Tråd",
 	'thewire:charleft' => "tegn tilbage",
 	'thewire:tags' => "Wire indlæg tagged med '%s'",
-
+	
 	/**
 	 * The wire river
 	 */

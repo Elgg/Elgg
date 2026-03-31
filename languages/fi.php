@@ -74,7 +74,6 @@ return array(
 	'UserFetchFailureException' => 'Oikeuksien tarkistaminen käyttäjälle GUID [%s] epäonnistui, koska käyttäjää ei ole olemassa.',
 	'BadRequestException' => 'Virheellinen pyyntö',
 
-	'viewfailure' => 'Näkymässä %s ilmeni sisäinen virhe.',
 	'changebookmark' => 'Kirjanmerkin polku on vanhentunut. Ole hyvä ja vaihda kirjanmerkkisi tälle sivulle',
 	'error:missing_data' => 'Pyynnössäsi oli puutteellisia tietoja',
 	'save:fail' => 'Tallentaminen epäonnistui',
@@ -214,7 +213,6 @@ return array(
 	'link:view' => 'Näytä linkki',
 	'link:view:all' => 'Näytä kaikki',
 
-
 /**
  * River
  */
@@ -282,7 +280,6 @@ return array(
 
 	'adduser:ok' => "Olet lisännyt uuden käyttäjän.",
 	
-	'user:set:name' => "Tilin nimiasetukset",
 	'user:name:label' => "Nimi",
 	'user:name:success' => "Nimi vaihdettu.",
 	'user:name:fail' => "Nimen vaihtaminen epäonnistui.",
@@ -294,8 +291,7 @@ return array(
 	'user:password:success' => "Salasana vaihdettu",
 	'user:changepassword:unknown_user' => 'Virheellinen käyttäjä.',
 	'user:changepassword:change_password_confirm' => 'Syötä uusi salasana.',
-
-	'user:set:language' => "Kieliasetukset",
+	
 	'user:language:label' => "Kieli",
 	'user:language:success' => "Kieliasetus päivitetty.",
 
@@ -317,8 +313,10 @@ return array(
  */
 	'menu:page:header:administer' => 'Hallinnointi',
 	'menu:page:header:configure' => 'Asetukset',
+	'menu:page:header:utilities' => 'Apuohjelmat',
 	'menu:page:header:develop' => 'Kehittäjän työkalut',
 	'menu:page:header:default' => 'Muut',
+	'menu:page:header:plugin_settings' => 'Liitännäisen asetukset',
 
 	'admin:view_site' => 'Siirry sivustolle',
 	'admin:loggedin' => 'Olet kirjautuneena käyttäjänä %s',
@@ -327,7 +325,6 @@ return array(
 	'admin:configuration:success' => "Asetukset tallennettiin.",
 	'admin:configuration:fail' => "Asetusten tallentaminen epäonnistui.",
 	'admin:configuration:dataroot:relative_path' => 'Sijaintia "%s" ei voida asettaa datahakemistoksi, koska se ei ole absoluuttinen polku.',
-	'admin:configuration:default_limit' => 'Kohteiden lukumäärän pitää olla vähintään 1',
 
 	'admin:unknown_section' => 'Virheellinen admin-osio.',
 
@@ -443,6 +440,8 @@ return array(
 	'admin:security:settings' => 'Asetukset',
 	'admin:security:settings:label:account' => 'Tili',
 	'admin:security:settings:label:notifications' => 'Ilmoitukset',
+	'admin:security:security_txt:contact' => "Yhteystiedot",
+	'admin:security:security_txt:language' => "Kieli",
 
 /**
  * Plugins
@@ -451,8 +450,6 @@ return array(
 	'plugins:disabled' => 'Liitännäiset ovat poissa käytöstä, sillä mod-hakemistossa on "disabled"-niminen tiedosto.',
 	'plugins:settings:save:ok' => "Päivitettiin asetukset liitännäiselle %s.",
 	'plugins:settings:save:fail' => "Asetusten päivittäminen liitännäiselle %s epäonnistui.",
-	'plugins:usersettings:save:ok' => "Päivitettiin käyttöasetukset liitännäiselle %s.",
-	'plugins:usersettings:save:fail' => "Käyttöasetusten päivittäminen liitännäiselle %s epäonnistui.",
 	
 	'item:object:plugin' => 'Liitännäiset',
 	'collection:object:plugin' => 'Liitännäiset',
@@ -514,7 +511,7 @@ return array(
 	'admin:statistics:label:numusers' => "Käyttäjien määrä",
 	'admin:statistics:label:numonline' => "Tällä hetkellä kirjautuneena",
 	'admin:statistics:label:onlineusers' => "Tällä hetkellä kirjautuneena",
-	'admin:statistics:label:admins'=>"Ylläpitäjät",
+	'admin:statistics:label:admins' => "Ylläpitäjät",
 	'admin:statistics:label:version' => "Elgg-versio",
 	'admin:statistics:label:version:release' => "Julkaisu",
 	'admin:statistics:label:version:version' => "Versio",
@@ -927,10 +924,13 @@ return array(
 	'admin:legend:system' => 'Järjestelmä',
 	'admin:legend:caching' => 'Välimuisti',
 	'admin:legend:content' => 'Sisältö',
+	'admin:legend:comments' => 'Kommentit',
 	'admin:legend:content_access' => 'Pääsy sisältöihin',
 	'admin:legend:site_access' => 'Pääsy sivustolle',
 	'admin:legend:debug' => 'Lokit ja virheidenjäljitys',
 	'config:i18n:who_can_change_language:admin_only' => "Vain ylläpitäjät",
+	'config:content:mentions_display_format:username' => "Käyttäjätunnus",
+	'config:content:mentions_display_format:display_name' => "Nimi",
 	'config:email' => "Sähköposti",
 
 	'upgrading' => 'Päivitetään...',
@@ -986,7 +986,6 @@ return array(
 	'default_access:settings' => "Oletuspääsyoikeudet",
 	'default_access:label' => "Oletuspääsyoikeus",
 	'user:default_access:success' => "Uusi oletusoikeustasosi tallennettu.",
-	'user:default_access:failure' => "Oletusoikeuden tallentaminen epäonnistui.",
 
 /**
  * Comments
@@ -998,8 +997,6 @@ return array(
 
 	'generic_comments:add' => "Kommentoi",
 	'generic_comments:edit' => "Muokkaa",
-	'generic_comments:post' => "Lähetä kommentti",
-	'generic_comments:text' => "Kommentti",
 	'generic_comments:latest' => "Viimeisimmät kommentit",
 	'generic_comment:posted' => "Kommentti lisätty.",
 	'generic_comment:updated' => "Kommentti päivitetty.",
@@ -1008,7 +1005,6 @@ return array(
 	'generic_comment:notfound' => "Etsimääsi kommenttia ei löytynyt.",
 	'generic_comment:failure' => "Kommentin tallentamisessa tapahtui odottamaton virhe.",
 	'generic_comment:none' => 'Ei kommentteja',
-	'generic_comment:title' => 'Kommentti käyttäjältä %s',
 	'generic_comment:on' => '%s kohteessa %s',
 
 /**
@@ -1023,6 +1019,9 @@ return array(
 	'entity:delete:permission_denied' => 'Sinulla ei ole oikeuksia tämän kohteen poistamiseen.',
 	'entity:delete:success' => 'Poistettiin %s',
 	'entity:delete:fail' => 'Kohteen %s poistaminen epäonnistui',
+	
+	'entity:restore:item' => 'Kohde',
+
 
 /**
  * Annotations
@@ -1050,9 +1049,30 @@ return array(
  */
 	
 /**
+ * Trash
+ */
+
+/**
+ * Color schemes
+ */
+
+/**
  * Miscellaneous
  */
-	
+	'field:required' => "Pakollinen",
+
+/**
+ * Accessibility
+ */
+	'menu:comments:header' => "Kommentit",
+	'menu:filter:header' => "Suodata",
+	'menu:page:header' => "Wikisivut",
+	'menu:river:header' => "Toimintalista",
+	'menu:site:header' => "Ilmoitukset",
+	'menu:social:header' => "Sosiaaliset",
+	'menu:title:header' => "Otsikko",
+	'menu:topbar:header' => "Yläpalkki",
+
 /**
  * Cli commands
  */
@@ -1210,5 +1230,7 @@ return array(
 	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulu",
 
-	"field:required" => 'Pakollinen',
+/**
+ * Upgrades
+ */
 );

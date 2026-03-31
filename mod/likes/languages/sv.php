@@ -8,6 +8,8 @@
 return array(
 	'annotation:delete:likes:fail' => "Det var problem att ta bort din gilla-markering",
 	'annotation:delete:likes:success' => "Din gilla-markering har tagits bort",
+	
+	// settings
 	'likes:deleted' => 'Din gilla-markering har tagits bort',
 	'likes:see' => 'Se vem som gillat detta',
 	'likes:remove' => 'Ogilla detta',

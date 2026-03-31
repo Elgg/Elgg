@@ -20,7 +20,6 @@ return array(
 	'profile:contactemail' => "連絡先Eメール",
 	'profile:phone' => "電話番号",
 	'profile:mobile' => "携帯電話番号",
-	'profile:twitter' => "Twitter ユーザ名",
 	'profile:saved' => "あなたのプロフィールを保存しました",
 	'profile:field:tags' => 'タグ',
 	'profile:field:url' => 'Webアドレス',

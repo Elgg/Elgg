@@ -20,7 +20,6 @@ return array(
 	'discussion:settings:enable_global_discussions' => 'Diskussionen allgemein aktivieren',
 	'discussion:settings:enable_global_discussions:help' => 'Erlaube Diskussionen ausserhalb von Gruppen.',
 
-	'discussion:latest' => 'Neueste Diskussionen',
 	'discussion:updated' => "Letzte Antwort von %s %s",
 
 	'discussion:topic:created' => 'Die Diskussion wurde hinzugefügt.',

@@ -95,10 +95,8 @@ return array(
 	'developers:inspect:service:path' => 'Definition',
 	'developers:inspect:service:class' => 'Klasse',
 
-	// event logging
 	'developers:request_stats' => "Abfragen-Statistik (Shutdown-Event nicht berücksichtigt)",
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
-	'developers:log_queries' => "Datenbankabfragen: %s",
 	'developers:boot_cache_rebuilt' => "Der Boot-Cache wurde für diese Abfrage neu erzeugt.",
 	'developers:elapsed_time' => "Benötigte Zeit (s)",
 

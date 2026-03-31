@@ -69,7 +69,6 @@ return array(
 	'UserFetchFailureException' => 'user_guid[%s] のユーザが存在しないため、パーミッションのチェックができません。',
 	'BadRequestException' => 'リクエストが変です',
 
-	'viewfailure' => 'View %s において内部エラーが発生しました。',
 	'changebookmark' => 'このページに対するあなたのブックマークを変更してください。',
 	'error:missing_data' => 'あなたのリクエストにおいていくつかデータの欠損がありました。',
 	'save:fail' => 'データを保存するのに失敗しました',
@@ -96,8 +95,20 @@ return array(
 /**
  * Table columns
  */
+	'table_columns:fromView:admin' => '管理者',
+	'table_columns:fromView:banned' => '入場禁止',
 	'table_columns:fromView:entity_menu' => 'メニュー',
+	'table_columns:fromView:excerpt' => '説明',
+	'table_columns:fromView:item' => '項目',
+	'table_columns:fromView:language' => '言語の設定',
+	'table_columns:fromView:owner' => '班長',
 	'table_columns:fromView:unvalidated_menu' => 'メニュー',
+	'table_columns:fromView:user' => 'ユーザ',
+
+	'table_columns:fromProperty:description' => '説明',
+	'table_columns:fromProperty:email' => 'Eメール',
+	'table_columns:fromProperty:name' => 'Name',
+	'table_columns:fromProperty:username' => 'ログイン名',
 
 /**
  * User details
@@ -186,7 +197,6 @@ return array(
 	'link:view' => 'リンクを見る',
 	'link:view:all' => '全て見る',
 
-
 /**
  * River
  */
@@ -250,7 +260,6 @@ return array(
 
 	'adduser:ok' => "新しいユーザを登録しました。",
 	
-	'user:set:name' => "アカウント編集",
 	'user:name:label' => "表示名",
 	'user:name:success' => "表示名を変更しました。",
 	'user:name:fail' => "表示名を変更できませんでした。",
@@ -262,8 +271,7 @@ return array(
 	'user:password:success' => "パスワードを変更しました。",
 	'user:changepassword:unknown_user' => 'ユーザが見当たりません。',
 	'user:changepassword:change_password_confirm' => 'パスワードを変更します。',
-
-	'user:set:language' => "言語設定",
+	
 	'user:language:label' => "言語の設定",
 	'user:language:success' => "言語の設定を更新しました。",
 
@@ -285,8 +293,10 @@ return array(
  */
 	'menu:page:header:administer' => '管理',
 	'menu:page:header:configure' => '設定',
+	'menu:page:header:utilities' => 'ユーティリティ',
 	'menu:page:header:develop' => '開発',
 	'menu:page:header:default' => 'その他',
+	'menu:page:header:plugin_settings' => 'プラグインの設定',
 
 	'admin:view_site' => 'サイトを見る',
 	'admin:loggedin' => '%s でログイン中',
@@ -295,7 +305,6 @@ return array(
 	'admin:configuration:success' => "設定を保存しました。",
 	'admin:configuration:fail' => "設定を保存できませんでした。",
 	'admin:configuration:dataroot:relative_path' => '「 %s 」をデータルートとして仕様出来ません：絶対パスを使用してください。',
-	'admin:configuration:default_limit' => '項目の数は、１ページ当たり最低でも1つ以上にしてください。',
 
 	'admin:unknown_section' => '不正な管理セクションです',
 
@@ -308,6 +317,7 @@ return array(
 	'admin:cron:period' => 'Cron の間隔',
 	'admin:cron:friendly' => '最後に完了した時間',
 	'admin:cron:date' => '日付と時間',
+	'admin:cron:msg' => 'メッセージ',
 
 	'admin:appearance' => '見た目',
 	'admin:administer_utilities' => 'ユーティリティ',
@@ -362,6 +372,7 @@ return array(
 	'admin:widget:cron_status:help' => '最後に cron jobs が完了したときの状態を表示する',
 	'admin:statistics:queue:name' => 'Name',
 
+	'admin:widget:admin_welcome' => 'こんにちは、ようこそ',
 	'admin:widget:admin_welcome:help' => "Elggの管理エリアについての短い紹介",
 	'admin:widget:admin_welcome:intro' => 'Elggにようこそ！現在あなたが見ている画面は管理用のダッシュボードです。このページはサイトで何がおこっているかを追跡するのに便利なようにできています。',
 
@@ -405,6 +416,8 @@ return array(
 	'admin:security:settings' => 'セッティング',
 	'admin:security:settings:label:account' => 'アカウント',
 	'admin:security:settings:label:notifications' => '通知',
+	'admin:security:security_txt:contact' => "お問い合わせ",
+	'admin:security:security_txt:language' => "言語の設定",
 
 /**
  * Plugins
@@ -413,8 +426,6 @@ return array(
 	'plugins:disabled' => '「disabled」というファイルがmodディレクトリにありますので、プラグインらを読み込みこんでおりません。',
 	'plugins:settings:save:ok' => "プラグイン %s のセッティングを保存しました。",
 	'plugins:settings:save:fail' => "プラグイン %s のセッティングを保存する際に問題が発生しました",
-	'plugins:usersettings:save:ok' => "プラグイン %s のユーザセッティングを保存しました。",
-	'plugins:usersettings:save:fail' => "プラグイン %s のユーザセッティングを保存する際に問題が発生しました",
 	
 	'item:object:plugin' => 'プラグイン',
 	'collection:object:plugin' => 'プラグイン管理',
@@ -469,10 +480,11 @@ return array(
 	'admin:statistics:label:numusers' => "ユーザ数",
 	'admin:statistics:label:numonline' => "ログイン中のユーザ数",
 	'admin:statistics:label:onlineusers' => "ログイン中のユーザ",
-	'admin:statistics:label:admins'=>"管理者",
+	'admin:statistics:label:admins' => "管理者",
 	'admin:statistics:label:version' => "Elgg バージョン",
 	'admin:statistics:label:version:release' => "リリース",
 	'admin:statistics:label:version:version' => "バージョン",
+	'admin:server:label:php' => 'PHP',
 	'admin:server:label:web_server' => 'Webサーバ',
 	'admin:server:label:server' => 'サーバ',
 	'admin:server:label:log_location' => 'ログ記録の保存場所',
@@ -624,6 +636,7 @@ return array(
 	'activity' => 'アクティビティ',
 	'members' => 'メンバ',
 	'menu' => 'メニュー',
+	'item' => '項目',
 
 	'up' => '上へ',
 	'down' => '下へ',
@@ -649,7 +662,6 @@ return array(
 	'active' => 'アクティブ',
 	'total' => '総数',
 	'unvalidated' => '未確認',
-	
 	'error' => 'エラー',
 
 	'other' => 'その他',
@@ -732,11 +744,13 @@ return array(
 /**
  * Messages
  */
+	'messages:title:error' => 'エラー',
 	'messages:title:help' => 'ヘルプ',
 
 /**
  * Time
  */
+	'input:date_format:datepicker' => '', // jQuery UI datepicker format
 	'friendlytime:minutes' => "%s 分前",
 	'friendlytime:minutes:singular' => "1 分前",
 	'friendlytime:hours' => "%s 時間前",
@@ -841,10 +855,13 @@ return array(
 	'admin:legend:system' => 'システム',
 	'admin:legend:caching' => 'キャシュ',
 	'admin:legend:content' => 'コンテント',
+	'admin:legend:comments' => 'コメント',
 	'admin:legend:content_access' => 'コンテント・アクセス',
 	'admin:legend:site_access' => 'サイト・アクセス',
 	'admin:legend:debug' => 'デバッグとログ',
 	'config:i18n:who_can_change_language:admin_only' => "管理者のみ",
+	'config:content:mentions_display_format:username' => "ログイン名",
+	'config:content:mentions_display_format:display_name' => "名前",
 	'config:email' => "Eメール",
 
 	'upgrading' => 'アップグレード中...',
@@ -863,6 +880,8 @@ return array(
 	'upgrade:finished' => 'アプグレードを完了しました',
 	'upgrade:finished_with_errors' => '<p>アップグレードはエラーが出て終了してしまいました。 ページをリフレッシュして、もう一度アップグレードを実行してください。</p></p><br />再びエラーが起こったなら、原因を究明するためサーバのエラーログをチェックしてみてください。Elgg community の <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> にエラーを修正するための答えがあるかもしれません。</p>',
 	
+	// Strings specific for the database guid columns reply upgrade
+	
 /**
  * Welcome
  */
@@ -873,6 +892,8 @@ return array(
 /**
  * Emails
  */
+	'email:subject' => 'タイトル',
+	'email:body' => '本文',
 
 	'email:settings' => "Eメール設定",
 	'email:address:label' => "Eメールアドレス",
@@ -896,7 +917,6 @@ return array(
 	'default_access:settings' => "あなたのデフォルトの公開範囲",
 	'default_access:label' => "デフォルトの公開範囲",
 	'user:default_access:success' => "新しい公開範囲の設定を保存しました。",
-	'user:default_access:failure' => "新しい公開範囲の設定が保存できません。",
 
 /**
  * Comments
@@ -908,8 +928,6 @@ return array(
 
 	'generic_comments:add' => "コメントする",
 	'generic_comments:edit' => "コメントを編集",
-	'generic_comments:post' => "コメントを投稿する",
-	'generic_comments:text' => "コメント",
 	'generic_comments:latest' => "最新のコメント",
 	'generic_comment:posted' => "コメントを投稿しました。",
 	'generic_comment:updated' => "コメントを更新しました。",
@@ -918,14 +936,11 @@ return array(
 	'generic_comment:notfound' => "申し訳ありません。お探しのコメントは見つかりませんでした。",
 	'generic_comment:failure' => "コメントを保存する際に予期せぬエラーが発生しました。",
 	'generic_comment:none' => 'コメントはありません',
-	'generic_comment:title' => '%s さんが付けたコメント',
 	'generic_comment:on' => '%s さんが %s にコメント',
-	'generic_comments:latest:posted' => '投稿:',
 
 /**
  * Entities
  */
-
 	'byline:ingroup' => '%sグループ内',
 	
 	'entity:delete:item' => '項目',
@@ -933,6 +948,9 @@ return array(
 	'entity:delete:permission_denied' => 'あなたには、この項目を削除する権限がありません。',
 	'entity:delete:success' => '%s は削除されました。',
 	'entity:delete:fail' => '%s は削除できませんでした。',
+	
+	'entity:restore:item' => '項目',
+
 
 /**
  * Annotations
@@ -960,9 +978,30 @@ return array(
  */
 	
 /**
+ * Trash
+ */
+
+/**
+ * Color schemes
+ */
+
+/**
  * Miscellaneous
  */
-	
+	'field:required' => "必須です",
+
+/**
+ * Accessibility
+ */
+	'menu:comments:header' => "コメント",
+	'menu:filter:header' => "フィルタ",
+	'menu:page:header' => "ページ",
+	'menu:river:header' => "River",
+	'menu:site:header' => "サイト",
+	'menu:social:header' => "ソーシャル",
+	'menu:title:header' => "タイトル",
+	'menu:topbar:header' => "トップバー",
+
 /**
  * Cli commands
  */
@@ -1120,5 +1159,7 @@ return array(
 	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulu",
 
-	"field:required" => '必須です',
+/**
+ * Upgrades
+ */
 );

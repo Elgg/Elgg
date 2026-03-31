@@ -8,6 +8,8 @@
 return array(
 	'annotation:delete:likes:fail' => "Si è verificato un problema nel rimuovere il tuo \"mi piace\"",
 	'annotation:delete:likes:success' => "Il tuo \"mi piace\" è stato rimosso",
+	
+	// settings
 	'likes:deleted' => 'Il tuo "mi piace" è stato rimosso',
 	'likes:see' => 'Guarda a chi piace',
 	'likes:remove' => 'Rimuovi il tuo "mi piace"',

@@ -104,10 +104,8 @@ return array(
 	'developers:inspect:service:path' => 'Définition',
 	'developers:inspect:service:class' => 'Classe',
 
-	// event logging
 	'developers:request_stats' => "Statistiques des requêtes (n'inclue pas l'événement shutdown)",
 	'developers:event_log_msg' => "%s : '%s, %s' dans %s",
-	'developers:log_queries' => "Requêtes sur la base de données : %s",
 	'developers:boot_cache_rebuilt' => "Le cache de démarrage a été reconstruit pour cette requête",
 	'developers:elapsed_time' => "Durée écoulée (s)",
 
