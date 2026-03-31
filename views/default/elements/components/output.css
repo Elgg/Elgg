@@ -19,6 +19,8 @@ p iframe {
 }
 
 .elgg-output {
+	display: flow-root;
+	
 	dt {
 		font-weight: bold;
 	}
