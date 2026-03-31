@@ -175,20 +175,20 @@
 
 .elgg-menu-page,
 .elgg-menu-owner-block {
-	background: #ffffff;
+	background: var(--elgg-layout-background-color);
 	border: 1px solid var(--elgg-border-color-soft);
 
 	li:not(:last-child) {
-		border-bottom: 1px solid #f7f7f8;
+		border-bottom: 1px solid var(--elgg-border-color-soft);
 	}
 
 	.elgg-child-menu {
-		border-top: #f7f7f8;
+		border-top: var(--elgg-border-color-soft);
 	}
 
 	.elgg-menu-item-has-toggle > .elgg-child-menu {
 		margin: 0;
-		border-top: 1px solid #f7f7f8;
+		border-top: 1px solid var(--elgg-border-color-soft);
 	}
 
 	.elgg-menu-item-has-toggle > .elgg-child-menu > li > a {
@@ -202,13 +202,13 @@
 		&:hover {
 			background: var(--elgg-background-color-soft);
 			text-decoration: none;
-			color: #333;
+			color: var(--elgg-text-color-strong);
 		}
 	}
 
 	li.elgg-state-selected > a,
 	li.elgg-state-selected > a {
-		color: #333;
+		color: var(--elgg-text-color-strong);
 		background-color: var(--elgg-background-color-mild);
 	}
 
@@ -232,7 +232,9 @@
 	display: none;
 	position: absolute;
 	overflow: hidden;
-	background-color: #ffffff;
+	background-color: var(--elgg-layout-background-color);
+	border: 1px solid var(--elgg-border-color-soft);
+	border-radius: 4px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 	min-width: 10rem;
 }
@@ -266,8 +268,8 @@
 		text-overflow: ellipsis;
 		
 		&:hover {
-			background: var(--elgg-background-color-soft);
-			color: #333;
+			background: var(--elgg-background-color-strong);
+			color: var(--elgg-text-color-strong);
 		}
 	}
 }
@@ -280,7 +282,7 @@
 		
 		&:before {
 			content: "\25b2";
-			color: #fff;
+			color: var(--elgg-layout-background-color);
 			font-size: 0.5rem;
 			text-shadow: 0 -2px var(--elgg-border-color-mild);
 			top: -0.5rem;

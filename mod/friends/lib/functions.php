@@ -54,7 +54,7 @@ function _elgg_friends_get_add_friend_menu_items(\ElggUser $user, bool $make_but
 				'username' => $current_user->username,
 			]),
 			'section' => 'action',
-			'link_class' => $make_button ? 'elgg-button elgg-button-action-done' : null,
+			'link_class' => $make_button ? 'elgg-button elgg-button-action' : null,
 			'item_class' => $pending_request ? '' : 'hidden',
 		]);
 	}

@@ -8,8 +8,8 @@
 	--tags-focus-border-color: var(--elgg-border-color-strong);
 	--tag-bg: var(--elgg-background-color-mild);
 	--tag-hover: var(--elgg-background-color-strong);
-	--tag-text-color: black;
-	--tag-text-color--edit: black;
+	--tag-text-color: var(--elgg-text-color-strong);
+	--tag-text-color--edit: var(--elgg-text-color-strong);
 	--tag-pad: 0.3em 0.5em;
 	--tag-inset-shadow-size: 1.1em;
 	--tag-invalid-color: #d39494;
@@ -28,7 +28,6 @@
 	display: flex;
 	align-items: flex-start;
 	flex-wrap: wrap;
-	border: 1px solid #ddd;
 	border: 1px solid var(--tags-border-color);
 	padding: 0;
 	line-height: normal;
@@ -106,6 +105,7 @@
 	height: 1px !important;
 	padding: 0 !important;
 	margin: -1px 0 0 0 !important;
+	color: transparent !important;
 }
 .tagify__tag {
 	display: inline-flex;
@@ -275,7 +275,7 @@
 	transition: 0.3s, color 0s;
 }
 .tagify__tag__removeBtn:hover {
-	color: #fff;
+	color: white;
 	background: #c77777;
 	background: var(--tag-remove-btn-bg--hover, #c77777);
 }
@@ -455,7 +455,7 @@
 .tagify__dropdown__wrapper {
 	max-height: 300px;
 	overflow: hidden;
-	background: #fff;
+	background: white;
 	background: var(--tagify-dd-bg-color);
 	border: 1px solid var(--elgg-border-color-strong);
 	border-color: var(--tagify-dd-color-primary);
@@ -486,7 +486,7 @@
 .tagify__dropdown__item--active {
 	background: #3595f6;
 	background: var(--tagify-dd-color-primary);
-	color: #fff;
+	color: white;
 }
 .tagify__dropdown__item:active {
 	filter: brightness(105%);

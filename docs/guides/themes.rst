@@ -127,24 +127,6 @@ Theming Principles and Best Practices
 		order: 2;
 	}
 
-**Symmetrical**
-	We maintain symmetry.
-
-.. code-block:: css
-
-	/* BAD */
-	.row .column:first-child {
-		margin-right: 10px;
-	}
-
-	/* GOOD */
-	.row {
-		margin: 0 -0.5rem;
-	}
-	.row .column {
-		margin: 0.5rem;
-	}
-
 **Simple color transitions**
 	We maintain 4 sets of colors for text, background and border: ``soft``, ``mild``, ``strong`` and ``highlight``.
 	When transitioning to hover or active state, we go one level up, e.g. from ``soft`` to ``mild``, or use ``highlight``.
@@ -248,12 +230,17 @@ CSS variables
 Global CSS variables are available in PHP and in CSS. Plugins should, wherever possible, use global CSS variables, 
 and extend the core theme with their plugin variables, so they can be simply altered by other plugins.
 
-To add or alter variables, use the ``theme`` section in ``elgg-plugin.php`` or use the ``vars:compiler, css`` event. 
+To add or alter variables, use the ``theme`` section in ``elgg-plugin.php``. 
 Note that you may need to flush the cache to see your changes in action.
 
 For a list of default core variables, see ``engine/theme.php``.
 
-.. _guides/theming#css-vars:
+Dark mode
+---------
+
+The theme supports different color schemes. In the CSS variables it is separated by a key in the ``theme`` configuration.
+The color scheme ``dark`` is supported as the dark-mode for the site. If a site administrator enables the user choice for dark-mode
+a user is able to decide if the dark-mode (or another available color-scheme) is enabled (or auto-detected) in their personal settings.
 
 View extension
 --------------

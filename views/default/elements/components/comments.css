@@ -8,7 +8,7 @@
 	/* Comments triangle */
 	&:before {
 		content: "\25b2";
-		color: #ffffff;
+		color: var(--elgg-layout-background-color);
 		position: absolute;
 		text-shadow: 0 -2px 0 var(--elgg-border-color-soft);
 		font-size: 1rem;

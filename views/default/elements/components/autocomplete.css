@@ -4,7 +4,7 @@
 .ui-autocomplete {
 	position: absolute;
 	cursor: default;
-	background-color: #ffffff;
+	background-color: white;
 	border: 1px solid var(--elgg-border-color-soft);
 	overflow: hidden;
 	border-radius: 3px;
@@ -21,7 +21,7 @@
 	a {
 		&:hover {
 			text-decoration: none;
-			color: #0078ac;
+			color: var(--elgg-anchor-color-hover);
 		}
 		
 		&.ui-state-hover {

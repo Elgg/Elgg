@@ -211,7 +211,7 @@ table th {
 }
 
 table th {
-	color: #363636;
+	color: var(--elgg-text-color-strong);
 }
 
 /* Elgg Reset /**/

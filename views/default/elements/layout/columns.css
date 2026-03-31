@@ -11,7 +11,7 @@
 	> .elgg-layout-body {
 		flex: 1;
 		min-width: 1%;
-		background: white;
+		background: var(--elgg-layout-background-color);
 		padding: 1rem;
 		display: flex;
 		flex-direction: column;

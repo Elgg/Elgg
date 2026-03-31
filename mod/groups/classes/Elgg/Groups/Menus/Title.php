@@ -54,7 +54,7 @@ class Title {
 				'name' => 'group-dropdown',
 				'href' => false,
 				'text' => elgg_echo($is_owner ? 'groups:button:owned' : 'groups:button:joined'),
-				'link_class' => 'elgg-button elgg-button-action-done',
+				'link_class' => 'elgg-button elgg-button-action',
 				'child_menu' => [
 					'display' => 'dropdown',
 				],

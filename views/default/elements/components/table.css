@@ -14,7 +14,7 @@
 		border-color: var(--elgg-border-color-soft);
 		padding: 0.5em 0.75em;
 		vertical-align: top;
-		background-color: white;
+		background-color: var(--elgg-layout-background-color);
 	}
 
 	tr.elgg-state-selected td,

@@ -1,11 +1,7 @@
 .elgg-likes-popup {
 	.elgg-listing-summary-title {
-		line-height: 1rem;
-		font-weight: 400;
-		font-size: 1rem;
+		line-height: var(--elgg-font-size);
+		font-weight: normal;
+		font-size: var(--elgg-font-size);
 	}
-}
-
-.elgg-menu-item-likes .elgg-icon-thumbs-up.elgg-state-active {
-	color: #5097cf;
 }

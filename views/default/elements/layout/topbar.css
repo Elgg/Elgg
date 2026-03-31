@@ -46,7 +46,7 @@
 	
 	&:before {
 		content: "\25b2";
-		color: #ffffff;
+		color: white;
 		position: absolute;
 		font-size: 1rem;
 		top: -1rem;
@@ -85,7 +85,7 @@
 		position: absolute;
 		height: 3px;
 		width: 100%;
-		background: #ffffff;
+		background: white;
 		border-radius: 2px;
 		opacity: 1;
 		left: 0;
@@ -151,7 +151,7 @@ html.elgg-nav-collapsed {
 	}
 	
 	a {
-		color: #fff;
+		color: white;
 		text-decoration: none;
 	}
 

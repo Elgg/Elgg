@@ -20,7 +20,7 @@ body {
 .elgg-page {
 	max-width: 50rem;
 	margin: 5rem auto;
-	background: #fff;
+	background: white;
 	border-radius: 2px;
 }
 
