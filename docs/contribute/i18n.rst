@@ -89,13 +89,13 @@ The process of setting up a new major version is:
  5. Push the translation sources to the new Transifex project with the command:
     ::
 
-      tx push -s
+      tx push -s -f
 
  6. Copy the new configuration file temporarily (do not commit) to the previous
     major version, and push the existing translations from it to the new project:
     ::
 
-      tx push -t -f --no-interactive
+      tx push -t -a --skip
 
 Later, once the dedicated branch (e.g. ``3.x`` has been created for the major version,
 configure Transifex to fetch new translation keys from it automatically in
