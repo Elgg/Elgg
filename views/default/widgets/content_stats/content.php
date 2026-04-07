@@ -38,6 +38,8 @@ echo '</tr></thead>';
 echo '<tbody>';
 
 foreach ($stats as $name => $num) {
+	$num = elgg_number_format($num);
+	
 	echo "<tr><td>{$name}</td><td>{$num}</td></tr>";
 }
 
