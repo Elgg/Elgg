@@ -8,8 +8,20 @@
 	Form Elements
 *************************************** */
 .elgg-form-body,
-.elgg-form-body > div,
-.elgg-form-body fieldset:not(.elgg-fieldset) > div,
+.elgg-form-footer {
+	&:not(:last-child) {
+		margin-bottom: 1rem;
+	}
+	
+	> div,
+	fieldset:not(.elgg-fieldset) > div {
+		&:not(:last-child) {
+			margin-bottom: 1rem;
+		}
+	}
+}
+
+.elgg-form > .elgg-field,
 .elgg-module > .elgg-body > .elgg-field {
 	&:not(:last-child) {
 		margin-bottom: 1rem;
