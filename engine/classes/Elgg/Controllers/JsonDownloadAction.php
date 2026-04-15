@@ -31,7 +31,7 @@ abstract class JsonDownloadAction extends DownloadAction {
 	protected function success(): DownloadResponse {
 		$contents = $this->getContents();
 		if (!is_string($contents)) {
-			$contents = json_encode($contents);
+			$contents = json_encode($contents, JSON_PRETTY_PRINT);
 		}
 		
 		return elgg_download_response($contents, $this->getFilename(), false, $this->getHeaders());
