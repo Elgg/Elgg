@@ -45,7 +45,7 @@ class FormsServiceIntegrationTest extends ActionResponseTestCase {
 		$response = $this->executeAction('foo/bar', [
 			'foo' => 'bar',
 			'baz2' => 'bar',
-			'_elgg_sticky_form_name' => 'foo/bar', // this is added by enabling sticky form support
+			'__elgg_sticky_form_name' => 'foo/bar', // this is added by enabling sticky form support
 		]);
 		
 		$this->assertInstanceOf(ErrorResponse::class, $response);
@@ -78,8 +78,8 @@ class FormsServiceIntegrationTest extends ActionResponseTestCase {
 			'foo' => 'bar',
 			'baz2' => 'bar',
 			'ignored' => 'foo',
-			'_elgg_sticky_form_name' => 'foo/bar', // this is added by enabling sticky form support
-			'_elgg_sticky_ignored_fields' => 'baz2,ignored', // this is added by sticky form support
+			'__elgg_sticky_form_name' => 'foo/bar', // this is added by enabling sticky form support
+			'__elgg_sticky_ignored_fields' => 'baz2,ignored', // this is added by sticky form support
 		]);
 		
 		$this->assertInstanceOf(ErrorResponse::class, $response);
@@ -111,7 +111,7 @@ class FormsServiceIntegrationTest extends ActionResponseTestCase {
 		$response = $this->executeAction('foo/bar', [
 			'foo' => 'bar',
 			'baz2' => 'bar',
-			'_elgg_sticky_form_name' => 'foo/bar', // this is added by enabling sticky form support
+			'__elgg_sticky_form_name' => 'foo/bar', // this is added by enabling sticky form support
 		]);
 		
 		$this->assertInstanceOf(OkResponse::class, $response);

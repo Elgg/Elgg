@@ -8,7 +8,7 @@ if ((bool) elgg_extract('sticky_enabled', $form_vars, false)) {
 	// can't use elgg_view_field() because the underlying fields might not not available
 	$footer .= elgg_format_element('input', [
 		'type' => 'hidden',
-		'name' => '_elgg_sticky_form_name',
+		'name' => '__elgg_sticky_form_name',
 		'value' => (string) elgg_extract('sticky_form_name', $form_vars),
 	]);
 	
@@ -16,7 +16,7 @@ if ((bool) elgg_extract('sticky_enabled', $form_vars, false)) {
 	if (!empty($ignored_fields)) {
 		$footer .= elgg_format_element('input', [
 			'type' => 'hidden',
-			'name' => '_elgg_sticky_ignored_fields',
+			'name' => '__elgg_sticky_ignored_fields',
 			'value' => implode(',', $ignored_fields),
 		]);
 	}
