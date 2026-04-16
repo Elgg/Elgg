@@ -1,18 +1,6 @@
 /* ***************************************
 	ENTITY PICKER
 *************************************** */
-.elgg-entity-picker-list {
-	> li {
-		padding: 0 1rem;
-		border-bottom: 1px solid var(--elgg-border-color-soft);
-		
-		&:first-child {
-			border-top: 1px solid var(--elgg-border-color-soft);
-			margin-top: 0.5rem;
-		}
-	}
-}
-
 .elgg-entity-picker.elgg-state-disabled {
 	> input,
 	> label {

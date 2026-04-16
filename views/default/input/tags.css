@@ -1,6 +1,6 @@
-:root {
+.tagify__dropdown {
 	--tagify-dd-color-primary: var(--elgg-background-color-highlight);
-	--tagify-dd-bg-color: white;
+	--tagify-dd-bg-color: var(--elgg-layout-background-color);
 }
 .tagify {
 	--tags-border-color: var(--elgg-border-color-mild);
@@ -29,6 +29,8 @@
 	align-items: flex-start;
 	flex-wrap: wrap;
 	border: 1px solid var(--tags-border-color);
+	border-radius: 3px;
+	background: var(--elgg-background-color-input);
 	padding: 0;
 	line-height: normal;
 	cursor: text;

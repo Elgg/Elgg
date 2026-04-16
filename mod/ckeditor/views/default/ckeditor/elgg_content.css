@@ -12,7 +12,7 @@
 	
 	--ck-color-text: var(--elgg-text-color-strong);
 	
-	--ck-color-base-background: var(--elgg-layout-background-color);
+	--ck-color-base-background: var(--elgg-background-color-input);
 	--ck-color-base-border: var(--elgg-border-color-mild);
 	
 	--ck-color-focus-border: var(--elgg-border-color-strong);
@@ -59,6 +59,10 @@
 	
 	/* -- Overrides the default colors used by the ckeditor5-link package. ---------------------- */
 	--ck-color-link-default: var(--elgg-anchor-color);
+}
+
+.ck-focused {
+	--ck-color-base-background: var(--elgg-layout-background-color);
 }
 
 .ck-content {

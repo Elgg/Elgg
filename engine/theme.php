@@ -21,6 +21,7 @@ return [
 		'font-family' => 'BlinkMacSystemFont, -apple-system, "Segoe UI",' .
 			'"Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",' .
 			'"Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif', // global font family
+		'font-family-font-awesome' => 'Font Awesome\ 7 Free',
 		'anchor-color' => '#0078ac',
 		'anchor-color-hover' => '#2d3047',
 		'h-font-family' => null, // defaults to 'font-family'
@@ -41,6 +42,7 @@ return [
 		'background-color-mild' => '#f3f3f3',
 		'background-color-strong' => '#cfcfd2',
 		'background-color-highlight' => '#0078ac',
+		'background-color-input' => '#ffffff',
 	
 		'border-color-soft' => '#e6e6ea',
 		'border-color-mild' => '#dcdcdc',
@@ -93,12 +95,13 @@ return [
 	
 		// topbar
 		'topbar-background-color' => '#0078ac',
-		'topbar-indicator' => '#faa51a',
+		'topbar-indicator' => '#cfcfd2',
 	],
 	'dark' => [
 		'body-background-color' => '#1f2123',
 		'layout-background-color' => '#181a1b',
 		'topbar-background-color' => '#004f71',
+		'topbar-indicator' => '#323639',
 
 		'walled-garden-background-image-brightness' => '0.4',
 		
@@ -115,6 +118,7 @@ return [
 		'background-color-mild' => '#1f2123',
 		'background-color-strong' => '#323639',
 		'background-color-highlight' => '#004f71',
+		'background-color-input' => '#323639',
 
 		'border-color-soft' => '#363b3d',
 		'border-color-mild' => '#2c2f31',

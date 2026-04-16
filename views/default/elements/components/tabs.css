@@ -40,6 +40,10 @@
 	}
 }
 
+.elgg-menu-navigation-tabs-container {
+	margin-bottom: 1rem;
+}
+
 @media screen and (min-width: 50rem) {
 	.elgg-menu-filter,
 	.elgg-tabs {

@@ -4,7 +4,7 @@
 
 .elgg-spinner {
 	/* general spinner styles */
-	background: white;
+	background: var(--elgg-layout-background-color);
 	padding: 0.5rem;
 	border: 1px solid var(--elgg-border-color-soft);
 	border-top: 0;

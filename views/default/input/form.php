@@ -24,10 +24,10 @@ $vars = array_merge($defaults, $vars);
 $ignore_empty_body = (bool) elgg_extract('ignore_empty_body', $vars, true);
 unset($vars['ignore_empty_body']);
 
-$body = elgg_extract('body', $vars);
+$form_body = elgg_extract('body', $vars);
 unset($vars['body']);
 
-if (!$ignore_empty_body && empty($body)) {
+if (!$ignore_empty_body && empty($form_body)) {
 	return;
 }
 
@@ -41,9 +41,30 @@ $vars['action'] = elgg_normalize_url((string) $vars['action']);
 $vars['method'] = strtolower((string) $vars['method']);
 
 // Generate a security header
+$body = '';
 if (!$vars['disable_security']) {
-	$body = elgg_view('input/securitytoken') . $body;
+	$body .= elgg_view('input/securitytoken');
 }
+
+// add automatic sticky form support
+if ((bool) elgg_extract('sticky_enabled', $vars, false)) {
+	$body .= elgg_view_field([
+		'#type' => 'hidden',
+		'name' => '__elgg_sticky_form_name',
+		'value' => (string) elgg_extract('sticky_form_name', $vars),
+	]);
+
+	$ignored_fields = (array) elgg_extract('sticky_ignored_fields', $vars);
+	if (!empty($ignored_fields)) {
+		$body .= elgg_view_field([
+			'#type' => 'hidden',
+			'name' => '__elgg_sticky_ignored_fields',
+			'value' => implode(',', $ignored_fields),
+		]);
+	}
+}
+
+$body .= $form_body;
 
 unset($vars['disable_security']);
 unset($vars['action_name']);
