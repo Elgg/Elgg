@@ -21,6 +21,7 @@ return [
 		'font-family' => 'BlinkMacSystemFont, -apple-system, "Segoe UI",' .
 			'"Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",' .
 			'"Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif', // global font family
+		'font-family-font-awesome' => 'Font Awesome\ 7 Free',
 		'anchor-color' => '#0078ac',
 		'anchor-color-hover' => '#2d3047',
 		'h-font-family' => null, // defaults to 'font-family'
