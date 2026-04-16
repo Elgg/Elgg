@@ -46,7 +46,7 @@
 	
 	&:before {
 		content: "\25b2";
-		color: white;
+		color: var(--elgg-layout-background-color);
 		position: absolute;
 		font-size: 1rem;
 		top: -1rem;
@@ -179,6 +179,7 @@ html.elgg-nav-collapsed {
 		
 		.elgg-badge {
 			background-color: var(--elgg-topbar-indicator);
+			color: var(--elgg-text-color-strong);
 		}
 	}
 	
@@ -401,7 +402,8 @@ html.elgg-nav-collapsed {
 				.elgg-badge {
 					position: absolute;
 					top: 1rem;
-					right: 0;
+					left: 1.5rem;
+					z-index: 1;
 				}
 			}
 		}

@@ -4,29 +4,23 @@
 .ui-autocomplete {
 	position: absolute;
 	cursor: default;
-	background-color: white;
+	background-color: var(--elgg-layout-background-color);
 	border: 1px solid var(--elgg-border-color-soft);
 	overflow: hidden;
 	border-radius: 3px;
+	padding: 4px;
 	
 	.ui-menu-item {
-		padding: 0 4px;
+		padding: 4px;
 		border-radius: 3px;
-		
-		&:hover {
-			background-color: var(--elgg-background-color-soft);
-		}
 	}
-	
-	a {
-		&:hover {
-			text-decoration: none;
-			color: var(--elgg-anchor-color-hover);
-		}
 		
-		&.ui-state-hover {
+	.ui-menu-item-wrapper.ui-state-active {
+		text-decoration: none;
+		color: var(--elgg-anchor-color-hover);
+		
+		.elgg-autocomplete-item {
 			background-color: var(--elgg-background-color-soft);
-			display: block;
 		}
 	}
 }

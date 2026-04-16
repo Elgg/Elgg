@@ -80,7 +80,7 @@
 	DROPDOWN MODULE
 *************************************** */
 .elgg-module-dropdown {
-	background-color: white;
+	background-color: var(--elgg-layout-background-color);
 	display: none;
 	width: 15rem;
 	padding: 2rem;

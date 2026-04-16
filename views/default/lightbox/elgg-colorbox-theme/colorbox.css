@@ -13,7 +13,7 @@
 	position: fixed;
 	width: 100%;
 	height: 100%;
-	background: white;
+	background: var(--elgg-layout-background-color);
 }
 
 #cboxMiddleLeft,
@@ -23,9 +23,9 @@
 
 #cboxContent {
 	position: relative;
-	background: white;
+	background: var(--elgg-layout-background-color);
 	margin: 20px;
-	border: 10px rgba(204, 204, 204, 0.5) solid;
+	border: 10px var(--elgg-border-color-soft) solid;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
@@ -47,6 +47,14 @@
 	max-height: -webkit-calc(100vh - 60px);
 	max-height: calc(100vh - 60px);
 	box-sizing: border-box !important;
+	
+	> .elgg-module {
+		border: none;
+		
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
 }
 
 #cboxLoadedContent > *:not(.cboxPhoto) {

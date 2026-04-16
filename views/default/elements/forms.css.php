@@ -55,6 +55,7 @@ label, .elgg-field-label {
 input, textarea {
 	border: 1px solid var(--elgg-border-color-mild);
 	color: var(--elgg-text-color-strong);
+	background: var(--elgg-background-color-input);
 	font-size: 1rem;
 	padding: 0.25rem 0.5rem;
 	line-height: normal;
@@ -153,6 +154,7 @@ select {
 	max-width: 100%;
 	border: 1px solid var(--elgg-border-color-mild);
 	color: var(--elgg-text-color-strong);
+	background: var(--elgg-background-color-input);
 	padding: 0.25rem 0.5rem;
 	line-height: 1.75rem;
 	vertical-align: middle;
