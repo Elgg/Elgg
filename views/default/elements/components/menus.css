@@ -116,6 +116,7 @@
 		font-family: var(--elgg-font-family-font-awesome);
 		font-weight: 900;
 		display: inline-block;
+		float: right;
 		font-size: 0.5rem;
 		text-align: center;
 		margin-left: 0.5rem;
