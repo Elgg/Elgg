@@ -21,6 +21,4 @@ if (!$add_form) {
 	return;
 }
 
-echo elgg_view_form('thewire/add', [
-	'class' => 'thewire-form',
-]);
+echo elgg_view_form('thewire/add');

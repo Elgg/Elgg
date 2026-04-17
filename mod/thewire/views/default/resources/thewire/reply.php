@@ -7,9 +7,7 @@ elgg_push_entity_breadcrumbs($entity);
 
 $content = elgg_view('thewire/reply', ['post' => $entity]);
 
-$content .= elgg_view_form('thewire/add', [
-	'class' => 'thewire-form',
-], [
+$content .= elgg_view_form('thewire/add', [], [
 	'post' => $entity,
 ]);
 
