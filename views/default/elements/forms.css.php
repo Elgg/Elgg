@@ -22,7 +22,8 @@
 }
 
 .elgg-form > .elgg-field,
-.elgg-module > .elgg-body > .elgg-field {
+.elgg-module > .elgg-body > .elgg-field,
+.elgg-tabs-content > div > .elgg-field {
 	&:not(:last-child) {
 		margin-bottom: 1rem;
 	}
