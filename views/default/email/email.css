@@ -103,7 +103,7 @@ body {
 	margin-top:30px;
 	padding:0;
 
-	color: #333333;
+	color: var(--elgg-text-color-strong);
 	font-size: 13px;
 
 	-webkit-text-size-adjust:100%;
@@ -140,7 +140,7 @@ p {
 	margin: 0 auto;
 }
 .edge-wrapper {
-	background: var(--elgg-background-color-mild);
+	background: var(--elgg-body-background-color);
 }
 
 .edge-wrapper > tr > td {
@@ -155,7 +155,7 @@ p {
 	background: white;
 }
 .content > tr > td {
-	padding: 20px 10px;
+	padding: 20px;
 }
 .footer td {
 	padding: 10px;
