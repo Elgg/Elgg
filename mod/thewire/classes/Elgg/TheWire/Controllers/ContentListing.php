@@ -18,21 +18,11 @@ class ContentListing extends GenericContentListing {
 	protected function getPageOptions(string $page, array $options): array {
 		$options = parent::getPageOptions($page, $options);
 		
-		$user = elgg_get_logged_in_user_entity();
-		$add_form = false;
-		if ($page === 'all') {
-			$add_form = ($user instanceof \ElggUser);
-		} elseif (in_array($page, ['friends', 'owner'])) {
-			$add_form = $user?->guid === $this->page_owner?->guid;
-		}
+		$form = elgg_view('thewire/list_form', [
+			'page' => $page,
+		]);
 		
-		if ($add_form) {
-			$form = elgg_view_form('thewire/add', [
-				'class' => 'thewire-form',
-			]);
-			
-			$options['content'] = $form . $options['content'];
-		}
+		$options['content'] = $form . $options['content'];
 		
 		return $options;
 	}
