@@ -18,6 +18,7 @@ if (empty($options['type']) && empty($options['subtype'])) {
 	throw new \Elgg\Exceptions\InvalidArgumentException("Missing 'type' and 'subtype' in the listing options");
 }
 
-$getter = elgg_extract('getter', $vars);
+$default_getter = isset($options['query']) ? 'elgg_search' : null;
+$getter = elgg_extract('getter', $vars, $default_getter);
 
 echo elgg_list_entities($options, $getter);
