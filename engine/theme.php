@@ -48,6 +48,10 @@ return [
 		'border-color-mild' => '#dcdcdc',
 		'border-color-strong' => '#cfcfd2',
 		'border-color-highlight' => '#0078ac',
+		
+		'border-radius-small' => '2px',
+		'border-radius-medium' => '4px',
+		'border-radius-large' => '8px',
 	
 		// messages and notices
 		'state-success-font-color' => '#397f2e',

@@ -5,7 +5,7 @@
 	display: none;
 	margin: 0;
 	padding: 0;
-	border-radius: 2px;
+	border-radius: var(--elgg-border-radius-small);
 	overflow: hidden;
 	min-width: 300px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
@@ -67,7 +67,7 @@
 		margin: 2px;
 		border: 1px solid var(--elgg-border-color-mild);
 		padding: 4px;
-		border-radius: 3px;
+		border-radius: var(--elgg-border-radius-small);
 	}
 }
 
@@ -80,7 +80,7 @@
 		border: 1px solid var(--elgg-border-color-mild);
 		color: var(--elgg-text-color-strong);
 		background: var(--elgg-layout-background-color);
-		border-radius: 2px;
+		border-radius: var(--elgg-border-radius-small);
 	}
 	
 	.ui-state-hover,

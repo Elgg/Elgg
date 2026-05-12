@@ -86,7 +86,7 @@
 		height: 3px;
 		width: 100%;
 		background: white;
-		border-radius: 2px;
+		border-radius: var(--elgg-border-radius-small);
 		opacity: 1;
 		left: 0;
 		transform: rotate(0deg);
