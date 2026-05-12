@@ -207,7 +207,6 @@
 		}
 	}
 
-	li.elgg-state-selected > a,
 	li.elgg-state-selected > a {
 		color: var(--elgg-text-color-strong);
 		background-color: var(--elgg-background-color-mild);
@@ -365,7 +364,6 @@
 	row-gap: 0.25rem;
 
 	> li {
-	
 		> a:not(.elgg-button) {
 			&:not(.elgg-state-active):not(.elgg-state-selected) {
 				color: inherit;
