@@ -248,6 +248,10 @@ function elgg_extract($key, $array, $default = null, bool $strict = true) {
 		return $default;
 	}
 
+	if (!is_int($key) && !is_string($key)) {
+		return $default;
+	}
+
 	if ($strict) {
 		return $array[$key] ?? $default;
 	}
