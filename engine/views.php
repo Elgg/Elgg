@@ -23,7 +23,6 @@ return [
 		
 		// need to use some folder structure, because FontAwesome includes fonts relative to css
 		"font-awesome/css/" => "vendor/fortawesome/font-awesome/css/",
-		"font-awesome/otfs/" => "vendor/fortawesome/font-awesome/otfs/",
 		"font-awesome/webfonts/" => "vendor/fortawesome/font-awesome/webfonts/",
 		
 		"jquery-ui/" => "vendor/npm-asset/jquery-ui/ui",
