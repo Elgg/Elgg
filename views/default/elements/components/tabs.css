@@ -29,7 +29,7 @@
 			display: block;
 			padding: 0.5rem 1rem;
 			text-align: center;
-			height: auto;
+			line-height: 1.5rem;
 			color: var(--elgg-text-color-soft);
 			
 			&:hover {
