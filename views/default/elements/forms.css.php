@@ -61,7 +61,7 @@ input, textarea {
 	padding: 0.25rem 0.5rem;
 	line-height: normal;
 	width: 100%;
-	border-radius: 3px;
+	border-radius: var(--elgg-border-radius-medium);
 }
 
 input:disabled,
@@ -140,7 +140,7 @@ input[type="number"] {
 	left: 5px;
 	top: 5px;
 	border: 1px solid #000;
-	border-radius: 3px;
+	border-radius: var(--elgg-border-radius-medium);
 }
 
 .elgg-input-color {
@@ -159,7 +159,7 @@ select {
 	padding: 0.25rem 0.5rem;
 	line-height: 1.75rem;
 	vertical-align: middle;
-	border-radius: 3px;
+	border-radius: var(--elgg-border-radius-medium);
 	
 	&:not([multiple]) {
 		height: 2.5rem;

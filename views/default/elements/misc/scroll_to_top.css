@@ -2,7 +2,7 @@
 	display: none;
 	font-size: 1.5rem;
 	padding: 0.5rem 1rem;
-	border-radius: 4px;
+	border-radius: var(--elgg-border-radius-medium);
 	background: var(--elgg-background-color-soft);
 	color: var(--elgg-text-color-highlight);
 	border: 1px solid var(--elgg-border-color-highlight);

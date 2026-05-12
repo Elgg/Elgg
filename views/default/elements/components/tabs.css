@@ -50,7 +50,7 @@
 		> li {
 			border-bottom-width: 1px;
 			margin: .25rem 0 0 0.5rem;
-			border-radius: 3px 3px 0 0;
+			border-radius: var(--elgg-border-radius-small) var(--elgg-border-radius-small) 0 0;
 			position: relative;
 			top: 1px;
 			flex-grow: 0;
