@@ -7,7 +7,7 @@
 
 $user = elgg_extract('entity', $vars);
 if ($user->isBanned()) {
-	$reason = (empty($user->ban_reason) || $user->ban_reason === 'banned') ? '' : (string) $user->ban_reason;
+	$reason = ($user->ban_reason === 'banned') ? '' : (string) $user->ban_reason;
 	
 	echo elgg_view_message('warning', $reason, [
 		'title' => elgg_echo('banned'),
