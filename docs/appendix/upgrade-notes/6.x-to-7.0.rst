@@ -30,6 +30,11 @@ now requires a different format. Please read the instructions in ``elgg-config/s
 
 The event ``zend:message, system:email`` has been renamed to ``message, system:email``.
 
+.. note::
+
+	Because of the switch to the Symfony Mailer you might have to update your PHP hardening to allow the function 
+	``proc_open`` as it's used by Symfony.
+
 Font Awesome
 ~~~~~~~~~~~~
 
