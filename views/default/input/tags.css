@@ -29,7 +29,7 @@
 	align-items: flex-start;
 	flex-wrap: wrap;
 	border: 1px solid var(--tags-border-color);
-	border-radius: var(--elgg-border-radius-small);
+	border-radius: var(--elgg-border-radius-medium);
 	background: var(--elgg-background-color-input);
 	padding: 0;
 	line-height: normal;
