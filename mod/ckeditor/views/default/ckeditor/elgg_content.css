@@ -75,4 +75,17 @@
 		border: 1px solid var(--elgg-state-notice-border-color);
 		color: var(--elgg-state-notice-font-color);
 	}
+	
+	ul,
+	ol {
+		margin: 0 0.5rem 0 0.5rem;
+		padding-left: 1rem;
+	}
+	
+	> ul,
+	> ol {
+		&:not(:first-child) {
+			margin-top: 1rem;
+		}
+	}
 }
