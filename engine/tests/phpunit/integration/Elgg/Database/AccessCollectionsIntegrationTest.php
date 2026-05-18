@@ -11,11 +11,14 @@ class AccessCollectionsIntegrationTest extends IntegrationTestCase {
 	 */
 	protected $service;
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	public function up() {
 		$this->service = _elgg_services()->accessCollections;
+		_elgg_services()->events->backup();
+		_elgg_services()->events->registerHandler('access:collections:write', 'all', \Elgg\WalledGarden\RemovePublicAccessHandler::class, 9999);
+	}
+	
+	public function down() {
+		_elgg_services()->events->restore();
 	}
 
 	public function testAccessPublicNotInWriteAccessArrayWhenInWalledGarden() {
