@@ -44,7 +44,7 @@ class Cron {
 			]);
 			/** @var \ElggDiscussion $discussion */
 			foreach ($discussions as $discussion) {
-				$discussion->status = 'closed';
+				$discussion->setStatus('closed');
 				$discussion->save();
 				$discussion->invalidateCache();
 			}

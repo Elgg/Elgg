@@ -210,6 +210,9 @@ In the group route definition we've dropped the ``subpage`` variable for the fol
 
 This could break user favorites to those pages.
 
+The route definition ``requests:group:group`` has been renamed to ``collection:user:user:group_requests`` for
+consistency with it's purpose and other routes within the Groups plugin.
+
 Groups
 ~~~~~~
 

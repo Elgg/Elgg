@@ -71,7 +71,7 @@ class RequestMembershipEventHandler extends NonConfigurableNotificationEventHand
 			$user->getDisplayName(),
 			$group->getDisplayName(),
 			$user->getURL(),
-			elgg_generate_url('requests:group:group', [
+			elgg_generate_url('collection:user:user:group_requests', [
 				'guid' => $group->guid,
 			]),
 		]);
@@ -86,7 +86,7 @@ class RequestMembershipEventHandler extends NonConfigurableNotificationEventHand
 			return parent::getNotificationURL($recipient, $method);
 		}
 		
-		return elgg_generate_url('requests:group:group', [
+		return elgg_generate_url('collection:user:user:group_requests', [
 			'guid' => $group->guid,
 		]);
 	}
