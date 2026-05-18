@@ -65,7 +65,9 @@ class Page {
 				'text' => $text,
 				'badge' => $count ?: null,
 				'title' => $title,
-				'href' => elgg_generate_entity_url($page_owner, 'requests'),
+				'href' => elgg_generate_url('collection:user:user:group_requests', [
+					'guid' => $page_owner->guid,
+				]),
 			]);
 		}
 		
