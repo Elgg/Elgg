@@ -43,13 +43,13 @@ return array(
 
 2. Скопировать файл install/config/htaccess.dist в .htaccess',
 
-	'install:check:php:version' => 'Elgg требуется PHP %s или выше. На этом сервере используетсы версия %s.',
+	'install:check:php:version' => 'Elgg требуется PHP %s или выше. На этом сервере используется версия %s.',
 	'install:check:php:extension' => 'Elgg требуется PHP расширение %s.',
 	'install:check:php:extension:recommend' => 'Рекомендуется установить расширение PHP %s.',
 	'install:check:php:open_basedir' => 'PHP-директива open_basedir может помешать Elgg сохранять файлы в его каталог данных.',
 	'install:check:php:safe_mode' => 'Запуск PHP в безопасном режиме не рекомендуется и может вызвать проблемы с Elgg.',
 	'install:check:php:arg_separator' => 'arg_separator.output должен быть & для работы Elgg, а значение вашего сервера %s',
-	'install:check:php:register_globals' => 'Register globals must be turned off.',
+	'install:check:php:register_globals' => 'Необходимо отключить глобальные переменные регистров.',
 	'install:check:php:session.auto_start' => "session.auto_start должен быть выключен для работы Elgg. Либо измените конфигурацию вашего сервера, либо добавьте эту директиву в файл .htaccess Elgg.",
 
 	'install:check:installdir' => 'У вашего веб-сервера нет разрешения на создание файла settings.php в каталоге установки. У вас есть два варианта:
@@ -152,7 +152,7 @@ return array(
 	'install:error:emailaddress' => '%s не является действительным адресом электронной почты',
 	'install:error:createsite' => 'Не удается создать сайт.',
 	'install:error:savesitesettings' => 'Невозможно сохранить настройки сайта',
-	'install:error:loadadmin' => 'Не удается загрузить пользователя - администритора.',
+	'install:error:loadadmin' => 'Не удается загрузить пользователя - администратора.',
 	'install:error:adminaccess' => 'Невозможно предоставить новой учетной записи пользователя привилегии администратора.',
 	'install:error:adminlogin' => 'Невозможно автоматически войти в систему новому пользователю - администратору.',
 	'install:error:rewrite:apache' => 'Мы думаем, что на вашем сервере установлен веб-сервер Apache.',

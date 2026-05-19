@@ -1,0 +1,270 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Jerôme Bakker, 2026
+# River Van Rain <vanrain@list.ru>, 2026
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-31 11:50+0200\n"
+"PO-Revision-Date: 2026-03-25 09:33+0000\n"
+"Last-Translator: River Van Rain <vanrain@list.ru>, 2026\n"
+"Language-Team: Russian (https://app.transifex.com/elgg/teams/11337/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: ../../index.rst:2
+msgid "Elgg Documentation (|version|)"
+msgstr "Документация Elgg (|version|)"
+
+#: ../../index.rst:4
+msgid ""
+"Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) is an "
+"open source rapid development framework for socially aware web applications."
+" It is a great fit for building any app where users log in and share "
+"information."
+msgstr ""
+"Elgg_ (:download:`произношение <_elgg_files/How_to_say_Elgg.mp3>`) — это "
+"фреймворк быстрой разработки с открытым исходным кодом для социально-"
+"ориентированных веб-приложений. Он отлично подходит для создания любых "
+"приложений, где пользователи входят в систему и обмениваются информацией."
+
+#: ../../index.rst:8
+msgid "Features"
+msgstr "Возможности"
+
+#: ../../index.rst:10
+msgid ""
+"**Well-documented core API** that allows developers to kick start their new "
+"project with a simple learning curve"
+msgstr ""
+"**Хорошо документированный базовый API**, который позволяет разработчикам "
+"быстро начать новый проект с простой кривой обучения"
+
+#: ../../index.rst:11
+msgid ""
+"**Composer** is the package manager of choice that greatly simplifes "
+"installation and maintenance of Elgg core and plugins"
+msgstr ""
+"**Composer** — это предпочтительный менеджер пакетов, который значительно "
+"упрощает установку и обслуживание ядра Elgg и плагинов"
+
+#: ../../index.rst:12
+msgid ""
+"**Flexible system of events** that allows plugins to extend and modify most "
+"aspects of application's functionality and behavior"
+msgstr ""
+"**Гибкая система событий**, которая позволяет плагинам расширять и изменять "
+"большинство аспектов функциональности и поведения приложения"
+
+#: ../../index.rst:13
+msgid ""
+"**Extendable system of views** that allows plugins to collaborate on "
+"application's presentation layer and built out complex custom themes"
+msgstr ""
+"**Расширяемая система представлений**, которая позволяет плагинам совместно "
+"работать над слоем представления приложения и создавать сложные "
+"пользовательские темы"
+
+#: ../../index.rst:14
+msgid ""
+"**Cacheable system of static assets** that allows themes and plugins to "
+"serve images, stylesheets, fonts and scripts bypassing the engine"
+msgstr ""
+"**Кэшируемая система статических ресурсов**, которая позволяет темам и "
+"плагинам обслуживать изображения, таблицы стилей, шрифты и скрипты, обходя "
+"движок"
+
+#: ../../index.rst:15
+msgid ""
+"**User authentication** is powered by pluggable auth modules, which allow "
+"applications to implement custom authentication protocols"
+msgstr ""
+"**Аутентификация пользователей** работает на основе подключаемых модулей "
+"аутентификации, которые позволяют приложениям реализовывать собственные "
+"протоколы аутентификации"
+
+#: ../../index.rst:16
+msgid ""
+"**Security** is ensured by built-in anti CSRF validation, strict XSS "
+"filters, HMAC signatures, latest cryptographic approaches to password "
+"hashing"
+msgstr ""
+"**Безопасность** обеспечивается встроенной защитой от CSRF, строгими "
+"фильтрами XSS, подписями HMAC и современными криптографическими подходами к "
+"хешированию паролей"
+
+#: ../../index.rst:17
+msgid ""
+"**Client-side API** powered by asynchronous ES modules and a built-in Ajax "
+"service for easy communication with the server"
+msgstr ""
+"**Клиентский API**, работающий на асинхронных модулях ES и встроенном "
+"сервисе Ajax для лёгкого взаимодействия с сервером"
+
+#: ../../index.rst:18
+msgid ""
+"**Flexible entity system** that allows applications to prototype new types "
+"of content and user interactions"
+msgstr ""
+"**Гибкая система сущностей**, которая позволяет приложениям создавать "
+"прототипы новых типов контента и пользовательских взаимодействий"
+
+#: ../../index.rst:19
+msgid ""
+"**Opinionated data model** with a consolidated API layer that allows the "
+"developers to easily interface with the database"
+msgstr ""
+"**Структурированная модель данных** с консолидированным слоем API, которая "
+"позволяет разработчикам легко взаимодействовать с базой данных"
+
+#: ../../index.rst:20
+msgid ""
+"**Access control system** that allows applications to build granular content"
+" access policies, as well as create private networks and intranets"
+msgstr ""
+"**Система контроля доступа**, которая позволяет приложениям создавать "
+"детализированные политики доступа к контенту, а также строить частные сети и"
+" интранет"
+
+#: ../../index.rst:21
+msgid "**Groups** - out of the box support for user groups"
+msgstr "**Группы** — встроенная поддержка пользовательских групп"
+
+#: ../../index.rst:22
+msgid ""
+"**File storage** powered by flexible API that allows plugins to store user-"
+"generated files and serve/stream them without booting the engine"
+msgstr ""
+"**Хранилище файлов**, работающее на гибком API, который позволяет плагинам "
+"хранить пользовательские файлы и обслуживать/транслировать их без загрузки "
+"движка"
+
+#: ../../index.rst:23
+msgid ""
+"**Notifications service** that allows applications to subscribe users to on-"
+"site and email notifications and implement integrations with other their-"
+"party services"
+msgstr ""
+"**Сервис уведомлений**, который позволяет приложениям подписывать "
+"пользователей на уведомления на сайте и по email, а также реализовывать "
+"интеграции со сторонними сервисами"
+
+#: ../../index.rst:24
+msgid ""
+"**RPC web services** that can be used for complex integrations with external"
+" applications and mobile clients"
+msgstr ""
+"**RPC веб-сервисы**, которые можно использовать для сложных интеграций с "
+"внешними приложениями и мобильными клиентами"
+
+#: ../../index.rst:25
+msgid ""
+"**Internationalization** and localization of Elgg applications is simple and"
+" can be integrated with third-party services such as Transifex"
+msgstr ""
+"**Интернационализация** и локализация приложений Elgg проста и может быть "
+"интегрирована со сторонними сервисами, такими как Transifex"
+
+#: ../../index.rst:26
+msgid ""
+"**Elgg community** that can help with any arising issues and hosts a "
+"repository of **1000+ open source plugins**"
+msgstr ""
+"**Сообщество Elgg**, которое может помочь с любыми возникающими вопросами и "
+"содержит репозиторий **1000+ плагинов с открытым исходным кодом**"
+
+#: ../../index.rst:28
+msgid "Under the hood:"
+msgstr "Под капотом:"
+
+#: ../../index.rst:30
+msgid "Elgg is a modular OOP framework that is driven by DI services"
+msgstr ""
+"Elgg — это модульный ООП-фреймворк, управляемый сервисами внедрения "
+"зависимостей (DI)"
+
+#: ../../index.rst:31
+msgid "NGINX or Apache compatible"
+msgstr "Совместимость с NGINX или Apache"
+
+#: ../../index.rst:32
+msgid "Symfony2 HTTP Foundation handles requests and responses"
+msgstr "Symfony2 HTTP Foundation обрабатывает запросы и ответы"
+
+#: ../../index.rst:33
+msgid "modular javascript with ECMAScript modules"
+msgstr "Модульный JavaScript с модулями ECMAScript"
+
+#: ../../index.rst:34
+msgid "Symfony Mailer handles outgoing email"
+msgstr "Symfony Mailer обрабатывает исходящую электронную почту"
+
+#: ../../index.rst:35
+msgid "htmLawed XSS filters"
+msgstr "Фильтры XSS htmLawed"
+
+#: ../../index.rst:36
+msgid "DBAL"
+msgstr "DBAL"
+
+#: ../../index.rst:37
+msgid "Phinx database migrations"
+msgstr "Миграции базы данных Phinx"
+
+#: ../../index.rst:38
+msgid "Imagine for image manipulation"
+msgstr "Imagine для манипуляций с изображениями"
+
+#: ../../index.rst:39
+msgid "Error handling with Monolog"
+msgstr "Обработка ошибок с Monolog"
+
+#: ../../index.rst:42
+msgid "Examples"
+msgstr "Примеры"
+
+#: ../../index.rst:44
+msgid "It has been used to build `all kinds of social apps`__:"
+msgstr "Он использовался для создания `всевозможных социальных приложений`__:"
+
+#: ../../index.rst:48
+msgid "open networks (similar to Facebook)"
+msgstr "открытые сети (аналогично Facebook)"
+
+#: ../../index.rst:49
+msgid "topical (like the Elgg Community)"
+msgstr "тематические (как сообщество Elgg)"
+
+#: ../../index.rst:50
+msgid "private/corporate intranets"
+msgstr "частные/корпоративные интранет"
+
+#: ../../index.rst:51
+msgid "dating"
+msgstr "знакомства"
+
+#: ../../index.rst:52
+msgid "educational"
+msgstr "образовательные"
+
+#: ../../index.rst:53
+msgid "company blog"
+msgstr "корпоративный блог"
+
+#: ../../index.rst:55
+msgid "This is the canonical documentation for the Elgg_ project."
+msgstr "Это каноническая документация для проекта Elgg_."
+
+#: ../../index.rst:60
+msgid "Continue Reading"
+msgstr "Продолжить чтение"
