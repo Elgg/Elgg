@@ -6,6 +6,7 @@
  */
 
 return array(
+	'list:annotation:messageboard:no_results' => 'Сообщения не найдены',
 	
 	/**
 	 * Menu items and titles

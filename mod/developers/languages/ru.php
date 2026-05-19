@@ -27,7 +27,9 @@ return array(
 	'developers:label:debug_level' => "Уровень отладки",
 	'developers:help:debug_level' => "Эта опция управляет количеством информации попадающей в логи. Смотрите документацию по функции elgg_log() для большей информации.",
 	'developers:label:display_errors' => 'Отображать критические ошибки PHP',
+	'developers:help:display_errors' => "По умолчанию файл .htaccess в Elgg подавляет отображение критических ошибок.",
 	'developers:label:screen_log' => "Отладка на экран",
+	'developers:help:screen_log' => "Эта функция отображает в консоли браузера вывод логов и некоторую статистику запросов",
 	'developers:show_strings:default' => "Нормальный перевод",
 	'developers:show_strings:key_append' => "Ключ перевода добавлен",
 	'developers:show_strings:key_only' => "Показать только ключ перевода",
@@ -76,6 +78,7 @@ return array(
 	'developers:inspect:notifications:subtype' => 'Подтип',
 	'developers:inspect:notifications:action' => 'Действие',
 	'developers:inspect:notifications:handler' => 'Обработчик',
+	'developers:inspect:notifications:instant' => 'Мгновенное уведомление',
 	'developers:inspect:priority' => 'Приоритет',
 	'developers:inspect:seeders' => 'Seeders',
 	'developers:inspect:simplecache' => 'Простой кэш',
@@ -94,6 +97,7 @@ return array(
 	'developers:inspect:handler' => 'Обработчик',
 	'developers:inspect:controller' => 'Контроллер',
 	'developers:inspect:file' => 'Файл',
+	'developers:inspect:middleware' => 'Промежуточный слой',
 	'developers:inspect:handler_type' => 'Обрабатывается',
 	'developers:inspect:services' => 'Сервисы',
 	'developers:inspect:service:name' => 'Наименование',
@@ -102,6 +106,7 @@ return array(
 
 	'developers:request_stats' => "Статистика запросов (не включает событие выключения)",
 	'developers:event_log_msg' => "%s: '%s, %s' в %s",
+	'developers:log_queries' => "Запросы к БД",
 	'developers:boot_cache_rebuilt' => "Загрузочный кеш был перестроен для этого запроса",
 	'developers:elapsed_time' => "Прошедшее время (сек)",
 

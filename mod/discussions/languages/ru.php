@@ -8,17 +8,22 @@
 return array(
 	'item:object:discussion' => "Дискуссия",
 	'collection:object:discussion' => 'Дискуссии',
+	'list:object:discussion:no_results' => 'Обсуждения не найдены',
 	
 	'add:object:discussion' => 'Добавить дискуссию',
 	'edit:object:discussion' => 'Изменить дискуссию',
+	'collection:object:discussion:all' => 'Последние обсуждения',
 	'collection:object:discussion:group' => 'Дискуссии группы',
 	'collection:object:discussion:my_groups' => 'Дискуссии в моих группах',
+	'collection:object:discussion:owner' => 'Обсуждения %s',
 	
 	'notification:object:discussion:create' => "Отправить уведомление при создании дискуссии",
 	'notifications:mute:object:discussion' => "о дискуссии '%s'",
 	
 	'discussion:settings:enable_global_discussions' => 'Включить глобальные дискуссии',
 	'discussion:settings:enable_global_discussions:help' => 'Разрешить создавать дискуссии вне групп',
+	'discussion:settings:auto_close' => 'Автоматическое закрытие обсуждений по истечении заданного количества дней.',
+	'discussion:settings:auto_close:help' => 'Если по истечении указанного количества дней комментарии не поступят, обсуждение будет закрыто.',
 
 	'discussion:updated' => "Последний комментарий%s %s",
 
@@ -33,6 +38,7 @@ return array(
 	'discussion:error:missing' => 'Оба поля заголовок и тема являются обязательными',
 	'discussion:error:permissions' => 'У Вас нет разрешений выполнять это действие',
 	'discussion:error:no_groups' => "Вы не являетесь участником ни одной группы",
+	'discussion:error:status' => "Не удалось сохранить статус обсуждения.",
 
 	/**
 	 * River
@@ -82,6 +88,9 @@ return array(
 	'discussion:topic:toggle_status:open:confirm' => 'Уверены, что хотите снова открыть дискуссию?',
 	'discussion:topic:toggle_status:closed' => 'Дискуссия закрыта',
 	'discussion:topic:toggle_status:closed:confirm' => 'Уверены, что хотите закрыть эту дискуссию?',
+	
+	'discussion:auto_close:new' => 'Обсуждения автоматически завершатся через %d дней после последнего комментария.',
+	'discussion:auto_close:edit' => 'Обсуждение автоматически закроется через %d дней. Если будет оставлен комментарий, это время будет продлено.',
 	
 	// widgets
 	'widgets:discussions:name' => 'Дискуссии',

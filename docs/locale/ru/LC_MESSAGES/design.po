@@ -1,0 +1,2706 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Jerôme Bakker, 2026
+# River Van Rain <vanrain@list.ru>, 2026
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-31 11:50+0200\n"
+"PO-Revision-Date: 2026-03-25 09:33+0000\n"
+"Last-Translator: River Van Rain <vanrain@list.ru>, 2026\n"
+"Language-Team: Russian (https://app.transifex.com/elgg/teams/11337/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: ../../design/a11y.rst:2
+msgid "Accessibility"
+msgstr "Доступность"
+
+#: ../../design/a11y.rst:4
+msgid ""
+"This document describes various design choices to improve accessibility of "
+"an Elgg site."
+msgstr ""
+"Этот документ описывает различные дизайнерские решения для улучшения "
+"доступности сайта на Elgg."
+
+#: ../../design/a11y.rst:10
+msgid "Forms"
+msgstr "Формы"
+
+#: ../../design/a11y.rst:12
+msgid ""
+"Input fields should always have an associated label. When using "
+"``elgg_view_field($options)`` to draw fields on a form you will need to pass"
+" ``$options['#label']  = elgg_echo('my_field:label')`` to have a correct "
+"label with your field."
+msgstr ""
+"Поля ввода всегда должны иметь связанную метку. При использовании "
+"``elgg_view_field($options)`` для отрисовки полей в форме вам нужно передать"
+" ``$options['#label']  = elgg_echo('my_field:label')``, чтобы у поля была "
+"правильная метка."
+
+#: ../../design/a11y.rst:15
+msgid ""
+"If you have a form that will perform a search when submitted it is "
+"recommended to add ``'role' => 'search'`` to your form attributes. You can "
+"provide this in ``$form_vars`` when using ``elgg_view_form()``."
+msgstr ""
+"Если у вас есть форма, которая будет выполнять поиск при отправке, "
+"рекомендуется добавить ``'role' => 'search'`` к атрибутам вашей формы. Вы "
+"можете указать это в ``$form_vars`` при использовании ``elgg_view_form()``."
+
+#: ../../design/a11y.rst:19
+msgid "Images"
+msgstr "Изображения"
+
+#: ../../design/a11y.rst:21
+msgid ""
+"When using ``elgg_view('output/img', $options)`` it is recommended to "
+"provide an ``alt`` description of the image. Elgg will report notices in the"
+" error log to let developers know when an ``alt`` attribute is missing."
+msgstr ""
+"При использовании ``elgg_view('output/img', $options)`` рекомендуется "
+"предоставить ``alt``-описание изображения. Elgg будет сообщать уведомления в"
+" журнале ошибок, чтобы разработчики знали, когда отсутствует атрибут "
+"``alt``."
+
+#: ../../design/a11y.rst:25
+msgid "Headings"
+msgstr "Заголовки"
+
+#: ../../design/a11y.rst:27
+msgid ""
+"Headings should be used to give structure to a page. There should always be "
+"a ``h1`` on the page and there should also be no gaps (so no ``h3`` without "
+"a ``h2``)."
+msgstr ""
+"Заголовки следует использовать для придания структуры странице. На странице "
+"всегда должен быть ``h1``, и не должно быть пропусков (то есть не должно "
+"быть ``h3`` без ``h2``)."
+
+#: ../../design/a11y.rst:30
+msgid ""
+"Elgg uses ``h1`` for the page title (like 'All blogs', the title of a blog "
+"or the name of a group on the group profile page). The ``h2`` heading is "
+"used by modules on a page, like an 'info' module, a widget or a module in "
+"the sidebar."
+msgstr ""
+"Elgg использует ``h1`` для заголовка страницы (например, 'Все блоги', "
+"заголовок блога или название группы на странице профиля группы). Заголовок "
+"``h2`` используется модулями на странице, например модулем 'информация', "
+"виджетом или модулем в боковой панели."
+
+#: ../../design/a11y.rst:33
+msgid ""
+"User generated content with markup, for example a description of a blog, "
+"should not allow ``h1`` to be used, but should start with ``h2`` as the "
+"first level heading. The configuration of the CKEditor plugin already "
+"handles this."
+msgstr ""
+"Контент, созданный пользователями, с разметкой, например описание блога, не "
+"должен позволять использование ``h1``, а должен начинаться с ``h2`` как "
+"заголовка первого уровня. Конфигурация плагина CKEditor уже обрабатывает "
+"это."
+
+#: ../../design/a11y.rst:37
+msgid "Sections"
+msgstr "Разделы"
+
+#: ../../design/a11y.rst:39
+msgid "A webpage in Elgg is typically sectioned into the following sections:"
+msgstr "Веб-страница в Elgg обычно разделена на следующие разделы:"
+
+#: ../../design/a11y.rst:41
+msgid ""
+"``header`` for the topbar contents like the site logo, site navigation and "
+"search"
+msgstr ""
+"``header`` для содержимого верхней панели, такого как логотип сайта, "
+"навигация по сайту и поиск"
+
+#: ../../design/a11y.rst:42
+msgid "``main`` the main content like the blog page or an overview of members"
+msgstr ""
+"``main`` — основное содержимое, например страница блога или обзор участников"
+
+#: ../../design/a11y.rst:43
+msgid ""
+"``footer`` typically found at the bottom of the page containing some links "
+"or other site related information"
+msgstr ""
+"``footer`` обычно находится в нижней части страницы и содержит некоторые "
+"ссылки или другую информацию, связанную с сайтом"
+
+#: ../../design/a11y.rst:46
+msgid "Menus"
+msgstr "Меню"
+
+#: ../../design/a11y.rst:48
+msgid ""
+"All our menus should be keyboard accessible. This is especially important "
+"with menus with multiple levels or submenus. If you rely on the default menu"
+" functionality of Elgg by using the function ``elgg_view_menu()`` Elgg will "
+"take care of this."
+msgstr ""
+"Все наши меню должны быть доступны с клавиатуры. Это особенно важно для меню"
+" с несколькими уровнями или подменю. Если вы полагаетесь на стандартную "
+"функциональность меню Elgg, используя функцию ``elgg_view_menu()``, Elgg "
+"позаботится об этом."
+
+#: ../../design/a11y.rst:51
+msgid ""
+"When using ``elgg_view_menu()`` the menu items will be wrapped inside a "
+"``nav`` html tag. To allow screenreaders to know what menu is being listed, "
+"the ``aria-label`` attribute is added to the ``nav`` element to describe the"
+" menu. By default Elgg uses the ``name`` of the menu, but it is possible to "
+"provide a translation. You need to register this translation with the "
+"following key: ``menu:name_of_the_menu:header``."
+msgstr ""
+"При использовании ``elgg_view_menu()`` элементы меню будут обернуты внутри "
+"тега ``nav``. Чтобы скринридеры понимали, какое меню перечисляется, к "
+"элементу ``nav`` добавляется атрибут ``aria-label`` для описания меню. По "
+"умолчанию Elgg использует ``name`` меню, но можно предоставить перевод. Вам "
+"нужно зарегистрировать этот перевод с помощью следующего ключа: "
+"``menu:name_of_the_menu:header``."
+
+#: ../../design/database.rst:2
+msgid "Database"
+msgstr "База данных"
+
+#: ../../design/database.rst:4
+msgid "A thorough discussion of Elgg's data model design and motivation."
+msgstr "Подробное обсуждение дизайна и мотивации модели данных Elgg."
+
+#: ../../design/database.rst:8 ../../design/events.rst:6
+#: ../../design/security.rst:12
+msgid "Contents"
+msgstr "Содержание"
+
+#: ../../design/database.rst:11 ../../design/events.rst:9
+msgid "Overview"
+msgstr "Обзор"
+
+#: ../../design/database.rst:13
+msgid ""
+"In Elgg, everything runs on a unified data model based on atomic units of "
+"data called entities."
+msgstr ""
+"В Elgg всё работает на единой модели данных, основанной на атомарных "
+"единицах данных, называемых сущностями."
+
+#: ../../design/database.rst:16
+msgid ""
+"Plugins are discouraged from interacting directly with the database, which "
+"creates a more stable system and a better user experience because content "
+"created by different plugins can be mixed together in consistent ways. With "
+"this approach, plugins are faster to develop, and are at the same time much "
+"more powerful."
+msgstr ""
+"Плагинам не рекомендуется напрямую взаимодействовать с базой данных, что "
+"создаёт более стабильную систему и лучший пользовательский опыт, поскольку "
+"контент, созданный разными плагинами, может смешиваться согласованным "
+"образом. При таком подходе плагины разрабатываются быстрее и в то же время "
+"становятся гораздо более мощными."
+
+#: ../../design/database.rst:22
+msgid ""
+"Every entity in the system inherits the ``ElggEntity`` class. This class "
+"controls access permissions, ownership, containment and provides consistent "
+"API for accessing and updating entity properties."
+msgstr ""
+"Каждая сущность в системе наследует класс ``ElggEntity``. Этот класс "
+"управляет правами доступа, владением, контейнерами и предоставляет "
+"согласованный API для доступа и обновления свойств сущности."
+
+#: ../../design/database.rst:28
+msgid "You can extend entities with extra information in two ways:"
+msgstr ""
+"Вы можете расширить сущности дополнительной информацией двумя способами:"
+
+#: ../../design/database.rst:33
+msgid "``Metadata``: This information describes the entity, it is usually"
+msgstr "``Metadata``: Эта информация описывает сущность, она обычно"
+
+#: ../../design/database.rst:31
+msgid ""
+"added by the author of the entity when the entity is created or updated. "
+"Examples of metadata include tags, ISBN number or a third-party ID, "
+"location, geocoordinates etc. Think of metadata as a simple key-value "
+"storage."
+msgstr ""
+"добавляется автором сущности при создании или обновлении сущности. Примеры "
+"метаданных включают теги, номер ISBN или сторонний ID, местоположение, "
+"геокоординаты и т.д. Представляйте метаданные как простое хранилище ключ-"
+"значение."
+
+#: ../../design/database.rst:36
+msgid ""
+"``Annotations``: This information extends the entity with properties usually"
+msgstr "``Annotations``: Эта информация расширяет сущность свойствами, обычно"
+
+#: ../../design/database.rst:36
+msgid ""
+"added by a third party. Such properties include ratings, likes, and votes."
+msgstr ""
+"добавляемыми третьей стороной. Такие свойства включают рейтинги, лайки и "
+"голоса."
+
+#: ../../design/database.rst:38
+msgid "The main differences between metadata and annotations:"
+msgstr "Основные различия между метаданными и аннотациями:"
+
+#: ../../design/database.rst:40
+msgid "metadata does not have owners, while annotations do"
+msgstr "метаданные не имеют владельцев, а аннотации имеют"
+
+#: ../../design/database.rst:41
+msgid "metadata is not access controlled, while annotations are"
+msgstr "метаданные не контролируются доступом, а аннотации контролируются"
+
+#: ../../design/database.rst:42
+msgid ""
+"metadata is preloaded when entity is constructed, while annotations are only"
+" loaded on demand"
+msgstr ""
+"метаданные предзагружаются при создании сущности, а аннотации загружаются "
+"только по требованию"
+
+#: ../../design/database.rst:44
+msgid ""
+"These differences might have implications for performance and your business "
+"logic, so consider carefully, how you would like to attach data to your "
+"entities."
+msgstr ""
+"Эти различия могут иметь последствия для производительности и вашей бизнес-"
+"логики, поэтому тщательно подумайте, как вы хотите прикреплять данные к "
+"вашим сущностям."
+
+#: ../../design/database.rst:47
+msgid ""
+"In certain cases, it may be beneficial to avoid using metadata and "
+"annotations and create new entities instead and attaching them via "
+"``container_guid`` or a relationship."
+msgstr ""
+"В некоторых случаях может быть полезно избежать использования метаданных и "
+"аннотаций и вместо этого создать новые сущности, прикрепив их через "
+"``container_guid`` или отношение."
+
+#: ../../design/database.rst:51
+msgid "Datamodel"
+msgstr "Модель данных"
+
+#: ../../design/database.rst:58
+msgid "The Elgg data model diagram"
+msgstr "Диаграмма модели данных Elgg"
+
+#: ../../design/database.rst:61
+msgid "Entities"
+msgstr "Сущности"
+
+#: ../../design/database.rst:63
+msgid ""
+"``ElggEntity`` is the base class for the Elgg data model and supports a "
+"common set of properties and methods."
+msgstr ""
+"``ElggEntity`` — базовый класс модели данных Elgg, поддерживающий общий "
+"набор свойств и методов."
+
+#: ../../design/database.rst:66
+msgid "A numeric Globally Unique IDentifier (See `GUIDs`_)"
+msgstr "Числовой глобально уникальный идентификатор (см. `GUIDs`_)"
+
+#: ../../design/database.rst:67
+msgid ""
+"Access permissions. (When a plugin requests data, it never gets to touch "
+"data that the current user doesn't have permission to see)"
+msgstr ""
+"Права доступа. (Когда плагин запрашивает данные, он никогда не получает "
+"доступ к данным, которые текущий пользователь не имеет права видеть)"
+
+#: ../../design/database.rst:69
+msgid "An arbitrary subtype (more below)"
+msgstr "Произвольный подтип (подробнее ниже)"
+
+#: ../../design/database.rst:70 ../../design/database.rst:322
+msgid "An owner"
+msgstr "Владелец"
+
+#: ../../design/database.rst:71
+msgid "A container, used to associate content with a group or a user"
+msgstr ""
+"Контейнер, используемый для связывания контента с группой или пользователем"
+
+#: ../../design/database.rst:75
+msgid "UNIX timestamps for certain actions:"
+msgstr "UNIX-метки времени для определённых действий:"
+
+#: ../../design/database.rst:73
+msgid "When was the entity created"
+msgstr "Когда была создана сущность"
+
+#: ../../design/database.rst:74
+msgid "When was the entity last updated"
+msgstr "Когда сущность была последний раз обновлена"
+
+#: ../../design/database.rst:75
+msgid "When did the the entity perform it's last action, or was acted upon"
+msgstr ""
+"Когда сущность выполнила своё последнее действие или над ней было совершено "
+"действие"
+
+#: ../../design/database.rst:76
+msgid "When was the entity deleted"
+msgstr "Когда сущность была удалена"
+
+#: ../../design/database.rst:77
+msgid ""
+"A deleted state (deleted entities aren't shown in normal circumstances)"
+msgstr ""
+"Состояние удаления (удалённые сущности не отображаются в обычных "
+"обстоятельствах)"
+
+#: ../../design/database.rst:78
+msgid ""
+"A disabled state (disabled entities aren't shown in normal circumstances)"
+msgstr ""
+"Состояние отключения (отключённые сущности не отображаются в обычных "
+"обстоятельствах)"
+
+#: ../../design/database.rst:81
+msgid "Types"
+msgstr "Типы"
+
+#: ../../design/database.rst:83
+msgid ""
+"**Actual** entities will be instances of four different subclasses, each "
+"having a distinct **type** property and their own additional properties and "
+"methods."
+msgstr ""
+"**Фактические** сущности будут экземплярами четырёх различных подклассов, "
+"каждый из которых имеет отдельное свойство **type** и свои дополнительные "
+"свойства и методы."
+
+#: ../../design/database.rst:87
+msgid "Type"
+msgstr "Тип"
+
+#: ../../design/database.rst:87
+msgid "PHP class"
+msgstr "PHP-класс"
+
+#: ../../design/database.rst:87 ../../design/database.rst:551
+msgid "Represents"
+msgstr "Представляет"
+
+#: ../../design/database.rst:89
+msgid "object"
+msgstr "object"
+
+#: ../../design/database.rst:89
+msgid "``ElggObject``"
+msgstr "``ElggObject``"
+
+#: ../../design/database.rst:89
+msgid "Most user-created content, like blog posts, uploads, and bookmarks."
+msgstr ""
+"Большая часть контента, созданного пользователями, например посты блога, "
+"загрузки и закладки."
+
+#: ../../design/database.rst:90
+msgid "group"
+msgstr "group"
+
+#: ../../design/database.rst:90
+msgid "``ElggGroup``"
+msgstr "``ElggGroup``"
+
+#: ../../design/database.rst:90
+msgid "An organized group of users with its own profile page"
+msgstr "Организованная группа пользователей со своей страницей профиля"
+
+#: ../../design/database.rst:91
+msgid "user"
+msgstr "user"
+
+#: ../../design/database.rst:91
+msgid "``ElggUser``"
+msgstr "``ElggUser``"
+
+#: ../../design/database.rst:91
+msgid "A user of the system"
+msgstr "Пользователь системы"
+
+#: ../../design/database.rst:92
+msgid "site"
+msgstr "site"
+
+#: ../../design/database.rst:92
+msgid "``ElggSite``"
+msgstr "``ElggSite``"
+
+#: ../../design/database.rst:92
+msgid "The site served by the Elgg installation"
+msgstr "Сайт, обслуживаемый установкой Elgg"
+
+#: ../../design/database.rst:95
+msgid ""
+"Each type has its own extended API. E.g. users can be friends with other "
+"users, group can have members, while objects can be liked and commented on."
+msgstr ""
+"Каждый тип имеет свой расширенный API. Например, пользователи могут быть "
+"друзьями с другими пользователями, группы могут иметь участников, а объекты "
+"могут получать лайки и комментарии."
+
+#: ../../design/database.rst:99
+msgid "Subtypes"
+msgstr "Подтипы"
+
+#: ../../design/database.rst:101
+msgid ""
+"Each entity must define a **subtype**, which plugins use to further "
+"specialize the entity. Elgg makes it easy to query specific for entities of "
+"a given subtype(s), as well as assign them special behaviors and views."
+msgstr ""
+"Каждая сущность должна определять **подтип**, который плагины используют для"
+" дальнейшей специализации сущности. Elgg упрощает запрос конкретных "
+"сущностей заданного подтипа(ов), а также назначение им специального "
+"поведения и представлений."
+
+#: ../../design/database.rst:104
+msgid ""
+"Subtypes are most commonly given to instances of ``ElggEntity`` to denote "
+"the kind of content created. E.g. the blog plugin creates objects with "
+"subtype ``\"blog\"``."
+msgstr ""
+"Подтипы чаще всего присваиваются экземплярам ``ElggEntity`` для обозначения "
+"типа созданного контента. Например, плагин блога создаёт объекты с подтипом "
+"``\"blog\"``."
+
+#: ../../design/database.rst:107
+msgid ""
+"By default, users, groups and sites have the subtypes of ``user``, ``group``"
+" and ``site`` respectively."
+msgstr ""
+"По умолчанию пользователи, группы и сайты имеют подтипы ``user``, ``group`` "
+"и ``site`` соответственно."
+
+#: ../../design/database.rst:109
+msgid ""
+"Plugins can use custom entity classes that extend the base type class. To do"
+" so, they need to register their class at runtime (e.g. in the ``'init', "
+"'system'`` handler), using ``elgg_set_entity_class()``. For example, the "
+"blog plugin could use ``elgg_set_entity_class('object', 'blog', "
+"\\ElggBlog::class)``."
+msgstr ""
+"Плагины могут использовать пользовательские классы сущностей, расширяющие "
+"базовый класс типа. Для этого им нужно зарегистрировать свой класс во время "
+"выполнения (например, в обработчике ``'init', 'system'``), используя "
+"``elgg_set_entity_class()``. Например, плагин блога может использовать "
+"``elgg_set_entity_class('object', 'blog', \\ElggBlog::class)``."
+
+#: ../../design/database.rst:113
+msgid ""
+"Plugins can use ``elgg-plugin.php`` to define entity class via shortcut "
+"``entities`` parameter."
+msgstr ""
+"Плагины могут использовать ``elgg-plugin.php`` для определения класса "
+"сущности через параметр ``entities``."
+
+#: ../../design/database.rst:116
+msgid "Subtype Gotchas"
+msgstr "Особенности подтипов"
+
+#: ../../design/database.rst:118
+msgid ""
+"Before an entity's ``save()`` method is called, the subtype must be set by "
+"writing a string to the ``subtype`` property."
+msgstr ""
+"Перед вызовом метода ``save()`` сущности подтип должен быть установлен путём"
+" записи строки в свойство ``subtype``."
+
+#: ../../design/database.rst:122
+msgid "Subtype cannot be changed after saving."
+msgstr "Подтип нельзя изменить после сохранения."
+
+#: ../../design/database.rst:125
+msgid "GUIDs"
+msgstr "GUIDs"
+
+#: ../../design/database.rst:127
+msgid ""
+"A GUID is an integer that uniquely identifies every entity in an Elgg "
+"installation (a Globally Unique IDentifier). It's assigned automatically "
+"when the entity is first saved and can never be changed."
+msgstr ""
+"GUID — это целое число, которое однозначно идентифицирует каждую сущность в "
+"установке Elgg (глобально уникальный идентификатор). Он назначается "
+"автоматически при первом сохранении сущности и никогда не может быть "
+"изменён."
+
+#: ../../design/database.rst:131
+msgid ""
+"Some Elgg API functions work with GUIDs instead of ``ElggEntity`` objects."
+msgstr ""
+"Некоторые функции API Elgg работают с GUID вместо объектов ``ElggEntity``."
+
+#: ../../design/database.rst:136
+msgid "Deleted state"
+msgstr "Состояние удаления"
+
+#: ../../design/database.rst:138
+msgid ""
+"As of Elgg 6.0 entities also have a deleted state. When a given entity "
+"type/subtype supports it before it's removed from the database it can get "
+"the deleted state. This way a user can restore the entity if the delete "
+"action was done too hastily. For example the user removes a blog post, but "
+"this shouldn't have been done. Now the user has the option to restore the "
+"blog in it's original state without having to rewrite it."
+msgstr ""
+"Начиная с Elgg 6.0 сущности также имеют состояние удаления. Когда заданный "
+"тип/подтип сущности поддерживает это, перед удалением из базы данных она "
+"может получить состояние удаления. Таким образом пользователь может "
+"восстановить сущность, если действие удаления было выполнено слишком "
+"поспешно. Например, пользователь удаляет пост блога, но этого не следовало "
+"делать. Теперь у пользователя есть возможность восстановить блог в его "
+"исходном состоянии без необходимости переписывать его."
+
+#: ../../design/database.rst:143
+msgid ""
+"In the database this is managed by the ``deleted`` column in the "
+"``entities`` table which can have a value of ``yes`` or ``no`` (default) and"
+" by the ``time_deleted`` column which holds a UNIX timestamp when the entity"
+" was deleted."
+msgstr ""
+"В базе данных это управляется столбцом ``deleted`` в таблице ``entities``, "
+"который может иметь значение ``yes`` или ``no`` (по умолчанию), и столбцом "
+"``time_deleted``, который хранит метку времени UNIX, когда сущность была "
+"удалена."
+
+#: ../../design/database.rst:146
+msgid ""
+"A site administrator can set a retention period for deleted items. Once the "
+"retention period is passed the entity will be permanently removed from the "
+"database."
+msgstr ""
+"Администратор сайта может установить период хранения для удалённых "
+"элементов. После истечения периода хранения сущность будет навсегда удалена "
+"из базы данных."
+
+#: ../../design/database.rst:149
+msgid ""
+"Deleted items will not show in normal use cases. In the example of the blog "
+"post, the blog will not show up in the blog listing and if anyone has saved "
+"a link to the blog post the page will return a ``404 - Not Found`` error."
+msgstr ""
+"Удалённые элементы не будут отображаться в обычных случаях использования. В "
+"примере с постом блога блог не будет отображаться в списке блогов, и если "
+"кто-то сохранил ссылку на пост блога, страница вернёт ошибку ``404 - Not "
+"Found``."
+
+#: ../../design/database.rst:152
+msgid ""
+"There is a special page in the user settings section where all the deleted "
+"entities of the user can be viewed. Here the user has the option to restore "
+"the entity or permanently delete it before the retention period has passed."
+msgstr ""
+"В разделе настроек пользователя есть специальная страница, где можно "
+"просмотреть все удалённые сущности пользователя. Здесь пользователь имеет "
+"возможность восстановить сущность или навсегда удалить её до истечения "
+"периода хранения."
+
+#: ../../design/database.rst:155
+msgid ""
+"This special page is also available to group owners for deleted entities in "
+"their group."
+msgstr ""
+"Эта специальная страница также доступна владельцам групп для удалённых "
+"сущностей в их группе."
+
+#: ../../design/database.rst:159
+msgid ""
+"For more information check out the :doc:`/guides/restore` documentation"
+msgstr ""
+"Для получения дополнительной информации ознакомьтесь с документацией "
+":doc:`/guides/restore`"
+
+#: ../../design/database.rst:162
+msgid "ElggObject"
+msgstr "ElggObject"
+
+#: ../../design/database.rst:164
+msgid ""
+"The ``ElggObject`` entity type represents arbitrary content within an Elgg "
+"installation things like blog posts, uploaded files, etc."
+msgstr ""
+"Тип сущности ``ElggObject`` представляет произвольный контент в установке "
+"Elgg, например посты блога, загруженные файлы и т.д."
+
+#: ../../design/database.rst:167
+msgid ""
+"Beyond the standard ``ElggEntity`` properties, ``ElggObject`` also supports:"
+msgstr ""
+"Помимо стандартных свойств ``ElggEntity``, ``ElggObject`` также "
+"поддерживает:"
+
+#: ../../design/database.rst:169
+msgid "``title`` The title of the object (HTML escaped text)"
+msgstr "``title`` — заголовок объекта (текст с экранированием HTML)"
+
+#: ../../design/database.rst:170
+msgid "``description`` A description of the object (HTML)"
+msgstr "``description`` — описание объекта (HTML)"
+
+#: ../../design/database.rst:172
+msgid "Most other data about the object is generally stored via metadata."
+msgstr ""
+"Большинство других данных об объекте обычно хранится через метаданные."
+
+#: ../../design/database.rst:176
+msgid ""
+"It's recommended to register a custom extension of an ``ElggObject`` for "
+"your subtype (eg. blog, file, etc.). There you can set the subtype to always"
+" be your subtype, you can configure default form fields if needed and other "
+"helper function can easily be created."
+msgstr ""
+"Рекомендуется зарегистрировать пользовательское расширение ``ElggObject`` "
+"для вашего подтипа (например, blog, file и т.д.). Там вы можете установить "
+"подтип, чтобы он всегда был вашим подтипом, при необходимости настроить поля"
+" формы по умолчанию и легко создать другие вспомогательные функции."
+
+#: ../../design/database.rst:181
+msgid "ElggUser"
+msgstr "ElggUser"
+
+#: ../../design/database.rst:183
+msgid ""
+"The ``ElggUser`` entity type represents users within an Elgg installation. "
+"These will be set to disabled until their accounts have been activated "
+"(unless they were created from within the admin panel)."
+msgstr ""
+"Тип сущности ``ElggUser`` представляет пользователей в установке Elgg. Они "
+"будут установлены как отключённые, пока их аккаунты не будут активированы "
+"(если только они не были созданы из панели администратора)."
+
+#: ../../design/database.rst:187
+msgid ""
+"Beyond the standard ``ElggEntity`` properties, ``ElggUser`` also supports:"
+msgstr ""
+"Помимо стандартных свойств ``ElggEntity``, ``ElggUser`` также поддерживает:"
+
+#: ../../design/database.rst:189
+msgid "``name`` The user's plain text name. e.g. \"Hugh Jackman\""
+msgstr ""
+"``name`` — имя пользователя в виде простого текста, например \"Hugh "
+"Jackman\""
+
+#: ../../design/database.rst:190
+msgid "``username`` Their login name. E.g. \"hjackman\""
+msgstr "``username`` — их имя для входа, например \"hjackman\""
+
+#: ../../design/database.rst:191
+msgid "``password`` A hashed version of their password"
+msgstr "``password`` — хешированная версия их пароля"
+
+#: ../../design/database.rst:192
+msgid "``email`` Their email address"
+msgstr "``email`` — их адрес электронной почты"
+
+#: ../../design/database.rst:193
+msgid "``language`` Their default language code."
+msgstr "``language`` — их код языка по умолчанию."
+
+#: ../../design/database.rst:194
+msgid "``prev_last_action`` The previous value of ``last_action``"
+msgstr "``prev_last_action`` — предыдущее значение ``last_action``"
+
+#: ../../design/database.rst:195
+msgid "``last_login`` The UNIX timestamp of their last log in"
+msgstr "``last_login`` — метка времени UNIX их последнего входа в систему"
+
+#: ../../design/database.rst:196
+msgid "``prev_last_login`` the previous value of ``last_login``"
+msgstr "``prev_last_login`` — предыдущее значение ``last_login``"
+
+#: ../../design/database.rst:199
+msgid "ElggSite"
+msgstr "ElggSite"
+
+#: ../../design/database.rst:201
+msgid ""
+"The ``ElggSite`` entity type represents your Elgg installation (via your "
+"site URL)."
+msgstr ""
+"Тип сущности ``ElggSite`` представляет вашу установку Elgg (через URL вашего"
+" сайта)."
+
+#: ../../design/database.rst:203
+msgid ""
+"Beyond the standard ``ElggEntity`` properties, ``ElggSite`` also supports:"
+msgstr ""
+"Помимо стандартных свойств ``ElggEntity``, ``ElggSite`` также поддерживает:"
+
+#: ../../design/database.rst:205
+msgid "``name`` The site name"
+msgstr "``name`` — название сайта"
+
+#: ../../design/database.rst:206
+msgid "``description`` A description of the site"
+msgstr "``description`` — описание сайта"
+
+#: ../../design/database.rst:207
+msgid "``url`` The address of the site"
+msgstr "``url`` — адрес сайта"
+
+#: ../../design/database.rst:210
+msgid "ElggGroup"
+msgstr "ElggGroup"
+
+#: ../../design/database.rst:212
+msgid ""
+"The ``ElggGroup`` entity type represents an association of Elgg users. Users"
+" can join, leave, and post content to groups."
+msgstr ""
+"Тип сущности ``ElggGroup`` представляет объединение пользователей Elgg. "
+"Пользователи могут присоединяться к группам, покидать их и публиковать "
+"контент в группах."
+
+#: ../../design/database.rst:215
+msgid ""
+"Beyond the standard ``ElggEntity`` properties, ``ElggGroup`` also supports:"
+msgstr ""
+"Помимо стандартных свойств ``ElggEntity``, ``ElggGroup`` также поддерживает:"
+
+#: ../../design/database.rst:217
+msgid "``name`` The group's name (HTML escaped text)"
+msgstr "``name`` — название группы (текст с экранированием HTML)"
+
+#: ../../design/database.rst:218
+msgid "``description`` A description of the group (HTML)"
+msgstr "``description`` — описание группы (HTML)"
+
+#: ../../design/database.rst:220
+msgid "``ElggGroup`` has addition methods to manage content and membership."
+msgstr ""
+"``ElggGroup`` имеет дополнительные методы для управления контентом и "
+"членством."
+
+#: ../../design/database.rst:223
+msgid "The Groups plugin"
+msgstr "Плагин Groups"
+
+#: ../../design/database.rst:225
+msgid ""
+"Not to be confused with the entity type ``ElggGroup``, Elgg comes with a "
+"plugin called \"Groups\" that provides a default UI/UX for site users to "
+"interact with groups. Each group is given a profile page linking users to "
+"content within the group."
+msgstr ""
+"Не следует путать с типом сущности ``ElggGroup``, Elgg поставляется с "
+"плагином под названием \"Groups\", который предоставляет стандартный UI/UX "
+"для взаимодействия пользователей сайта с группами. Каждой группе "
+"предоставляется страница профиля, связывающая пользователей с контентом "
+"внутри группы."
+
+#: ../../design/database.rst:230
+msgid ""
+"You can alter the user experience via the traditional means of extending "
+"plugins or completely replace the Groups plugin with your own."
+msgstr ""
+"Вы можете изменить пользовательский опыт с помощью традиционных средств "
+"расширения плагинов или полностью заменить плагин Groups на свой "
+"собственный."
+
+#: ../../design/database.rst:233
+msgid ""
+"Several of the Elgg core plugins offer support for group content like blogs,"
+" bookmarks, discussions, files and pages."
+msgstr ""
+"Несколько основных плагинов Elgg предлагают поддержку группового контента, "
+"такого как блоги, закладки, обсуждения, файлы и страницы."
+
+#: ../../design/database.rst:236
+msgid "Writing a group-aware plugin"
+msgstr "Написание плагина с поддержкой групп"
+
+#: ../../design/database.rst:238
+msgid ""
+"Plugin owners need not worry too much about writing group-aware "
+"functionality, but there are a few key points:"
+msgstr ""
+"Владельцам плагинов не стоит слишком беспокоиться о написании "
+"функциональности с поддержкой групп, но есть несколько ключевых моментов:"
+
+#: ../../design/database.rst:242
+msgid "Adding content"
+msgstr "Добавление контента"
+
+#: ../../design/database.rst:244
+msgid ""
+"By passing along the group as ``container_guid`` via a hidden input field, "
+"you can use a single form and action to add both user and group content."
+msgstr ""
+"Передавая группу как ``container_guid`` через скрытое поле ввода, вы можете "
+"использовать одну форму и одно действие для добавления как "
+"пользовательского, так и группового контента."
+
+#: ../../design/database.rst:247
+msgid ""
+"Use ``ElggEntity->canWriteToContainer(0, $type, $subtype)`` to determine "
+"whether or not the current user has the right to add content to a group."
+msgstr ""
+"Используйте ``ElggEntity->canWriteToContainer(0, $type, $subtype)``, чтобы "
+"определить, имеет ли текущий пользователь право добавлять контент в группу."
+
+#: ../../design/database.rst:250
+msgid ""
+"Be aware that you will then need to pass the container GUID or username to "
+"the page responsible for posting and the accompanying value, so that this "
+"can then be stored in your form as a hidden input field, for easy passing to"
+" your actions. Within a \"create\" action, you'll need to take in this input"
+" field and save it as a property of your new element (defaulting to the "
+"current user's container):"
+msgstr ""
+"Имейте в виду, что вам нужно будет передать GUID контейнера или имя "
+"пользователя на страницу, ответственную за публикацию, и соответствующее "
+"значение, чтобы это можно было сохранить в вашей форме как скрытое поле "
+"ввода для удобной передачи в ваши действия. В рамках действия \"create\" вам"
+" нужно будет принять это поле ввода и сохранить его как свойство вашего "
+"нового элемента (по умолчанию — контейнер текущего пользователя):"
+
+#: ../../design/database.rst:281
+msgid "Ownership"
+msgstr "Владение"
+
+#: ../../design/database.rst:283
+msgid ""
+"Entities have a ``owner_guid`` GUID property, which defines its owner. "
+"Typically this refers to the GUID of a user, although sites and users "
+"themselves often have no owner (a value of 0)."
+msgstr ""
+"Сущности имеют свойство GUID ``owner_guid``, которое определяет их "
+"владельца. Обычно это относится к GUID пользователя, хотя сайты и сами "
+"пользователи часто не имеют владельца (значение 0)."
+
+#: ../../design/database.rst:287
+msgid ""
+"The ownership of an entity dictates, in part, whether or not you can access "
+"or edit that entity."
+msgstr ""
+"Владение сущностью частично определяет, можете ли вы получить доступ к этой "
+"сущности или редактировать её."
+
+#: ../../design/database.rst:291
+msgid "Containers"
+msgstr "Контейнеры"
+
+#: ../../design/database.rst:293
+msgid ""
+"In order to easily search content by group or by user, content is generally "
+"set to be \"contained\" by either the user who posted it, or the group to "
+"which the user posted. This means the new object's ``container_guid`` "
+"property will be set to the GUID of the current ``ElggUser`` or the target "
+"``ElggGroup``."
+msgstr ""
+"Для удобного поиска контента по группе или по пользователю контент обычно "
+"устанавливается как \"содержащийся\" либо пользователем, который его "
+"опубликовал, либо группой, в которую пользователь опубликовал. Это означает,"
+" что свойство ``container_guid`` нового объекта будет установлено в GUID "
+"текущего ``ElggUser`` или целевого ``ElggGroup``."
+
+#: ../../design/database.rst:298
+msgid ""
+"E.g., three blog posts may be owned by different authors, but all be "
+"contained by the group they were posted to."
+msgstr ""
+"Например, три поста блога могут принадлежать разным авторам, но все они "
+"могут содержаться в группе, в которую они были опубликованы."
+
+#: ../../design/database.rst:303
+msgid ""
+"This is not always true. Comment entities are contained by the object "
+"commented upon, and in some 3rd party plugins the container may be used to "
+"model a parent-child relationship between entities (e.g. a \"folder\" object"
+" containing a file object)."
+msgstr ""
+"Это не всегда так. Сущности комментариев содержатся в объекте, на который "
+"оставлен комментарий, а в некоторых сторонних плагинах контейнер может "
+"использоваться для моделирования родительско-дочерней связи между сущностями"
+" (например, объект \"папка\", содержащий объект файла)."
+
+#: ../../design/database.rst:309
+msgid "Annotations"
+msgstr "Аннотации"
+
+#: ../../design/database.rst:311
+msgid ""
+"Annotations are pieces of data attached to an entity that allow users to "
+"leave ratings, or other relevant feedback. A poll plugin might register "
+"votes as annotations."
+msgstr ""
+"Аннотации — это фрагменты данных, прикреплённые к сущности, которые "
+"позволяют пользователям оставлять рейтинги или другую соответствующую "
+"обратную связь. Плагин опросов может регистрировать голоса как аннотации."
+
+#: ../../design/database.rst:315
+msgid "Annotations are stored as instances of the ``ElggAnnotation`` class."
+msgstr "Аннотации хранятся как экземпляры класса ``ElggAnnotation``."
+
+#: ../../design/database.rst:317
+msgid "Each annotation has:"
+msgstr "Каждая аннотация имеет:"
+
+#: ../../design/database.rst:319
+msgid "An internal annotation type (like *comment*)"
+msgstr "Внутренний тип аннотации (например, *comment*)"
+
+#: ../../design/database.rst:320
+msgid "A value (which can be a string, a boolean or an integer)"
+msgstr ""
+"Значение (которое может быть строкой, булевым значением или целым числом)"
+
+#: ../../design/database.rst:321
+msgid "An access permission distinct from the entity it's attached to"
+msgstr "Право доступа, отличное от сущности, к которой она прикреплена"
+
+#: ../../design/database.rst:325
+msgid "Adding an annotation"
+msgstr "Добавление аннотации"
+
+#: ../../design/database.rst:327
+msgid ""
+"The easiest way to annotate is to use the ``annotate`` method on an entity, "
+"which is defined as:"
+msgstr ""
+"Самый простой способ добавить аннотацию — использовать метод ``annotate`` на"
+" сущности, который определён как:"
+
+#: ../../design/database.rst:340
+msgid "For example, to leave a rating on an entity, you might call:"
+msgstr "Например, чтобы оставить рейтинг на сущности, вы можете вызвать:"
+
+#: ../../design/database.rst:347
+msgid "Reading annotations"
+msgstr "Чтение аннотаций"
+
+#: ../../design/database.rst:349
+msgid ""
+"To retrieve annotations on an object, you can call the following method:"
+msgstr "Для получения аннотаций на объекте вы можете вызвать следующий метод:"
+
+#: ../../design/database.rst:360
+msgid ""
+"If your annotation type largely deals with integer values, a couple of "
+"useful mathematical functions are provided:"
+msgstr ""
+"Если ваш тип аннотации в основном работает с целочисленными значениями, "
+"предоставляется пара полезных математических функций:"
+
+#: ../../design/database.rst:371
+msgid "Useful helper functions"
+msgstr "Полезные вспомогательные функции"
+
+#: ../../design/database.rst:374
+msgid "Comments"
+msgstr "Комментарии"
+
+#: ../../design/database.rst:376
+msgid ""
+"If you want to provide comment functionality on your plugin objects, the "
+"following function will provide the full listing, form and actions:"
+msgstr ""
+"Если вы хотите предоставить функциональность комментариев для объектов "
+"вашего плагина, следующая функция предоставит полный список, форму и "
+"действия:"
+
+#: ../../design/database.rst:385
+msgid "Metadata"
+msgstr "Метаданные"
+
+#: ../../design/database.rst:387
+msgid ""
+"Metadata in Elgg allows you to store extra data on an ``ElggEntity`` beyond "
+"the built-in fields that entity supports. For example, ``ElggObjects`` only "
+"support the basic entity fields plus title and description, but you might "
+"want to include tags or an ISBN number. Similarly, you might want users to "
+"be able to save a date of birth."
+msgstr ""
+"Метаданные в Elgg позволяют хранить дополнительные данные в ``ElggEntity`` "
+"помимо встроенных полей, которые поддерживает эта сущность. Например, "
+"``ElggObjects`` поддерживают только базовые поля сущности плюс заголовок и "
+"описание, но вы можете захотеть включить теги или номер ISBN. Аналогично, вы"
+" можете захотеть, чтобы пользователи могли сохранять дату рождения."
+
+#: ../../design/database.rst:393
+msgid ""
+"Under the hood, metadata is stored as an instance of the ``ElggMetadata`` "
+"class, but you don't need to worry about that in practice (although if "
+"you're interested, see the ``ElggMetadata`` class reference). What you need "
+"to know is:"
+msgstr ""
+"Под капотом метаданные хранятся как экземпляр класса ``ElggMetadata``, но на"
+" практике вам не нужно об этом беспокоиться (хотя если вам интересно, см. "
+"справку по классу ``ElggMetadata``). Что вам нужно знать:"
+
+#: ../../design/database.rst:398
+msgid ""
+"You can potentially have multiple items of each type of metadata attached to"
+" a single entity"
+msgstr ""
+"Вы потенциально можете иметь несколько элементов каждого типа метаданных, "
+"прикреплённых к одной сущности"
+
+#: ../../design/database.rst:400
+msgid "Like annotations, values are stored as strings, booleans or integers"
+msgstr ""
+"Как и аннотации, значения хранятся как строки, булевы значения или целые "
+"числа"
+
+#: ../../design/database.rst:401
+msgid "The metadata name is case sensitive"
+msgstr "Имя метаданных чувствительно к регистру"
+
+#: ../../design/database.rst:404
+msgid "The simple case"
+msgstr "Простой случай"
+
+#: ../../design/database.rst:407
+msgid "Adding metadata"
+msgstr "Добавление метаданных"
+
+#: ../../design/database.rst:409
+msgid "To add a piece of metadata to an entity, just call:"
+msgstr "Чтобы добавить фрагмент метаданных к сущности, просто вызовите:"
+
+#: ../../design/database.rst:415
+msgid "For example, to add a date of birth to a user:"
+msgstr "Например, чтобы добавить дату рождения пользователю:"
+
+#: ../../design/database.rst:421
+msgid "Or to add a couple of tags to an object:"
+msgstr "Или чтобы добавить пару тегов к объекту:"
+
+#: ../../design/database.rst:427
+msgid "When adding metadata like this:"
+msgstr "При добавлении метаданных таким образом:"
+
+#: ../../design/database.rst:429
+msgid "Reassigning a piece of metadata will overwrite the old value"
+msgstr "Переназначение фрагмента метаданных перезапишет старое значение"
+
+#: ../../design/database.rst:431
+msgid ""
+"This is suitable for most purposes. Be careful to note which attributes are "
+"metadata and which are built in to the entity type that you are working "
+"with. You do not need to save an entity after adding or updating metadata. "
+"You do need to save an entity if you have changed one of its built in "
+"attributes. As an example, if you changed the ``access_id`` of an "
+"``ElggObject``, you need to save it or the change isn't pushed to the "
+"database."
+msgstr ""
+"Это подходит для большинства целей. Будьте внимательны, чтобы отметить, "
+"какие атрибуты являются метаданными, а какие встроены в тип сущности, с "
+"которым вы работаете. Вам не нужно сохранять сущность после добавления или "
+"обновления метаданных. Вам нужно сохранить сущность, если вы изменили один "
+"из её встроенных атрибутов. Например, если вы изменили ``access_id`` объекта"
+" ``ElggObject``, вам нужно сохранить его, иначе изменение не будет "
+"отправлено в базу данных."
+
+#: ../../design/database.rst:440
+msgid "Reading metadata"
+msgstr "Чтение метаданных"
+
+#: ../../design/database.rst:442
+msgid "To retrieve metadata, treat it as a property of the entity:"
+msgstr "Для получения метаданных относитесь к ним как к свойству сущности:"
+
+#: ../../design/database.rst:448
+msgid ""
+"Note that this will return the absolute value of the metadata. To get "
+"metadata as an ``ElggMetadata`` object, you will need to use the methods "
+"described in the *finer control* section below."
+msgstr ""
+"Обратите внимание, что это вернёт абсолютное значение метаданных. Чтобы "
+"получить метаданные как объект ``ElggMetadata``, вам нужно будет "
+"использовать методы, описанные в разделе *более тонкое управление* ниже."
+
+#: ../../design/database.rst:452
+msgid ""
+"If you stored multiple values in this piece of metadata (as in the \"tags\" "
+"example above), you will get an array of all those values back. If you "
+"stored only one value, you will get a string, boolean or integer back. "
+"Storing an array with only one value will return a string back to you. E.g."
+msgstr ""
+"Если вы сохранили несколько значений в этом фрагменте метаданных (как в "
+"примере с \"тегами\" выше), вы получите массив всех этих значений. Если вы "
+"сохранили только одно значение, вы получите строку, булево значение или "
+"целое число. Сохранение массива только с одним значением вернёт вам строку. "
+"Например:"
+
+#: ../../design/database.rst:464
+msgid "To always get an array back, simply cast to an array;"
+msgstr "Чтобы всегда получать массив, просто приведите к массиву;"
+
+#: ../../design/database.rst:471
+msgid "Reading metadata as objects"
+msgstr "Чтение метаданных как объектов"
+
+#: ../../design/database.rst:473
+msgid ""
+"``elgg_get_metadata`` is the best function for retrieving metadata as "
+"``ElggMetadata`` objects:"
+msgstr ""
+"``elgg_get_metadata`` — лучшая функция для получения метаданных как объектов"
+" ``ElggMetadata``:"
+
+#: ../../design/database.rst:475
+msgid "E.g., to retrieve a user's DOB"
+msgstr "Например, для получения даты рождения пользователя"
+
+#: ../../design/database.rst:484
+msgid "Or to get all metadata objects:"
+msgstr "Или для получения всех объектов метаданных:"
+
+#: ../../design/database.rst:495
+msgid ""
+"When retrieving metadata by name the names are matched case-insensitive. "
+"Keep your code clean and do not mix uppercase and lowercase metadata names."
+msgstr ""
+"При получении метаданных по имени имена сопоставляются без учёта регистра. "
+"Поддерживайте чистоту кода и не смешивайте имена метаданных в верхнем и "
+"нижнем регистре."
+
+#: ../../design/database.rst:499
+msgid "Common mistakes"
+msgstr "Распространённые ошибки"
+
+#: ../../design/database.rst:502
+msgid "\"Appending\" metadata"
+msgstr "\"Добавление\" метаданных"
+
+#: ../../design/database.rst:504
+msgid ""
+"Note that you cannot \"append\" values to metadata arrays as if they were "
+"normal php arrays. For example, the following will not do what it looks like"
+" it should do."
+msgstr ""
+"Обратите внимание, что вы не можете \"добавлять\" значения к массивам "
+"метаданных так, как если бы это были обычные массивы PHP. Например, "
+"следующее не сделает то, что, как кажется, должно сделать."
+
+#: ../../design/database.rst:513
+msgid "Trying to store hashmaps"
+msgstr "Попытка сохранить хеш-карты"
+
+#: ../../design/database.rst:515
+msgid ""
+"Elgg does not support storing ordered maps (name/value pairs) in metadata. "
+"For example, the following does not work as you might first expect it to:"
+msgstr ""
+"Elgg не поддерживает хранение упорядоченных карт (пар имя/значение) в "
+"метаданных. Например, следующее не работает так, как вы могли бы сначала "
+"ожидать:"
+
+#: ../../design/database.rst:524
+msgid "You can instead store the information like so:"
+msgstr "Вместо этого вы можете сохранить информацию следующим образом:"
+
+#: ../../design/database.rst:533
+msgid "Storing GUIDs in metadata"
+msgstr "Хранение GUID в метаданных"
+
+#: ../../design/database.rst:535
+msgid ""
+"Though there are some cases to store entity GUIDs in metadata, "
+"`Relationships`_ are a much better construct for relating entities to each "
+"other."
+msgstr ""
+"Хотя есть некоторые случаи хранения GUID сущностей в метаданных, "
+"`Relationships`_ — гораздо лучшая конструкция для связи сущностей друг с "
+"другом."
+
+#: ../../design/database.rst:540
+msgid "Relationships"
+msgstr "Отношения"
+
+#: ../../design/database.rst:542
+msgid ""
+"Relationships allow you to bind entities together. Examples: an artist has "
+"fans, a user is a member of an organization, etc."
+msgstr ""
+"Отношения позволяют связывать сущности вместе. Примеры: у артиста есть "
+"фанаты, пользователь является членом организации и т.д."
+
+#: ../../design/database.rst:545
+msgid ""
+"The class ``ElggRelationship`` models a directed relationship between two "
+"entities, making the statement:"
+msgstr ""
+"Класс ``ElggRelationship`` моделирует направленное отношение между двумя "
+"сущностями, формируя утверждение:"
+
+#: ../../design/database.rst:548
+msgid "\"**{subject}** is a **{noun}** of **{target}**.\""
+msgstr "\"**{subject}** является **{noun}** для **{target}**.\""
+
+#: ../../design/database.rst:551
+msgid "API name"
+msgstr "Имя API"
+
+#: ../../design/database.rst:551
+msgid "Models"
+msgstr "Моделирует"
+
+#: ../../design/database.rst:553
+msgid "``guid_one``"
+msgstr "``guid_one``"
+
+#: ../../design/database.rst:553
+msgid "The subject"
+msgstr "Субъект"
+
+#: ../../design/database.rst:553
+msgid "Which entity is being bound"
+msgstr "Какая сущность связывается"
+
+#: ../../design/database.rst:554
+msgid "``relationship``"
+msgstr "``relationship``"
+
+#: ../../design/database.rst:554
+msgid "The noun"
+msgstr "Существительное"
+
+#: ../../design/database.rst:554
+msgid "The type of relationship"
+msgstr "Тип отношения"
+
+#: ../../design/database.rst:555
+msgid "``guid_two``"
+msgstr "``guid_two``"
+
+#: ../../design/database.rst:555
+msgid "The target"
+msgstr "Цель"
+
+#: ../../design/database.rst:555
+msgid "The entity to which the subject is bound"
+msgstr "Сущность, к которой привязан субъект"
+
+#: ../../design/database.rst:558
+msgid ""
+"The type of relationship may alternately be a verb, making the statement:"
+msgstr "Тип отношения также может быть глаголом, формируя утверждение:"
+
+#: ../../design/database.rst:560
+msgid "\"**{subject}** **{verb}** **{target}**.\""
+msgstr "\"**{subject}** **{verb}** **{target}**.\""
+
+#: ../../design/database.rst:562
+msgid "E.g. User A \"likes\" blog post B"
+msgstr "Например, пользователь A \"лайкает\" пост блога B"
+
+#: ../../design/database.rst:564
+msgid ""
+"**Each relationship has direction.** Imagine an archer shoots an arrow at a "
+"target; The arrow moves in one direction, binding the subject (the archer) "
+"to the target."
+msgstr ""
+"**Каждое отношение имеет направление.** Представьте, что лучник стреляет "
+"стрелой в мишень; стрела движется в одном направлении, связывая субъект "
+"(лучника) с целью."
+
+#: ../../design/database.rst:568
+msgid ""
+"**A relationship does not imply reciprocity**. **A** follows **B** does not "
+"imply that **B** follows **A**."
+msgstr ""
+"**Отношение не подразумевает взаимности**. То, что **A** подписан на **B**, "
+"не означает, что **B** подписан на **A**."
+
+#: ../../design/database.rst:571
+msgid ""
+"**Relationships do not have access control.** They're never hidden from view"
+" and can be edited with code at any privilege level, with the caveat that "
+"*the entities* in a relationship may be invisible due to access control!"
+msgstr ""
+"**Отношения не имеют контроля доступа.** Они никогда не скрываются из виду и"
+" могут редактироваться кодом на любом уровне привилегий, с оговоркой, что "
+"*сущности* в отношении могут быть невидимы из-за контроля доступа!"
+
+#: ../../design/database.rst:577
+msgid "Working with relationships"
+msgstr "Работа с отношениями"
+
+#: ../../design/database.rst:580
+msgid "Creating a relationship"
+msgstr "Создание отношения"
+
+#: ../../design/database.rst:582
+msgid ""
+"E.g. to establish that \"**$user** is a **fan** of **$artist**\" (user is "
+"the subject, artist is the target):"
+msgstr ""
+"Например, чтобы установить, что \"**$user** является **фанатом** "
+"**$artist**\" (пользователь — субъект, артист — цель):"
+
+#: ../../design/database.rst:589
+msgid ""
+"This triggers the event [create, relationship], passing in the created "
+"``ElggRelationship`` object. If a handler returns ``false``, the "
+"relationship will not be created and ``$success`` will be ``false``."
+msgstr ""
+"Это запускает событие [create, relationship], передавая созданный объект "
+"``ElggRelationship``. Если обработчик возвращает ``false``, отношение не "
+"будет создано, и ``$success`` будет ``false``."
+
+#: ../../design/database.rst:595
+msgid "Verifying a relationship"
+msgstr "Проверка отношения"
+
+#: ../../design/database.rst:597
+msgid "E.g. to verify that \"**$user** is a **fan** of **$artist**\":"
+msgstr ""
+"Например, чтобы проверить, что \"**$user** является **фанатом** "
+"**$artist**\":"
+
+#: ../../design/database.rst:606
+msgid "Deleting a relationship"
+msgstr "Удаление отношения"
+
+#: ../../design/database.rst:608
+msgid ""
+"E.g. to be able to assert that \"**$user** is no longer a **fan** of "
+"**$artist**\":"
+msgstr ""
+"Например, чтобы иметь возможность утверждать, что \"**$user** больше не "
+"является **фанатом** **$artist**\":"
+
+#: ../../design/database.rst:614
+msgid ""
+"This triggers the event [delete, relationship], passing in the associated "
+"``ElggRelationship`` object. If a handler returns ``false``, the "
+"relationship will remain, and ``$was_removed`` will be ``false``."
+msgstr ""
+"Это запускает событие [delete, relationship], передавая связанный объект "
+"``ElggRelationship``. Если обработчик возвращает ``false``, отношение "
+"останется, и ``$was_removed`` будет ``false``."
+
+#: ../../design/database.rst:619
+msgid "Other useful functions:"
+msgstr "Другие полезные функции:"
+
+#: ../../design/database.rst:621
+msgid "``\\ElggRelationship->delete()``: delete by object"
+msgstr "``\\ElggRelationship->delete()``: удалить по объекту"
+
+#: ../../design/database.rst:622
+msgid ""
+"``\\ElggEntity->removeAllRelationships()``: delete those relating to an "
+"entity"
+msgstr ""
+"``\\ElggEntity->removeAllRelationships()``: удалить те, которые относятся к "
+"сущности"
+
+#: ../../design/database.rst:625
+msgid "Finding relationships and related entities"
+msgstr "Поиск отношений и связанных сущностей"
+
+#: ../../design/database.rst:627
+msgid ""
+"Below are a few functions to fetch relationship objects and/or related "
+"entities. A few are listed below:"
+msgstr ""
+"Ниже приведены несколько функций для получения объектов отношений и/или "
+"связанных сущностей. Несколько из них перечислены ниже:"
+
+#: ../../design/database.rst:629
+msgid "``elgg_get_relationship()`` : get a relationship object by ID"
+msgstr "``elgg_get_relationship()``: получить объект отношения по ID"
+
+#: ../../design/database.rst:630
+msgid "``elgg_get_relationships()`` : fetch relationships"
+msgstr "``elgg_get_relationships()``: получить отношения"
+
+#: ../../design/database.rst:631
+msgid ""
+"``elgg_get_entities()`` : fetch entities in relationships in a variety of "
+"ways"
+msgstr ""
+"``elgg_get_entities()``: получить сущности в отношениях различными способами"
+
+#: ../../design/database.rst:633
+msgid "E.g. retrieving users who joined your group in January 2014."
+msgstr ""
+"Например, получение пользователей, которые присоединились к вашей группе в "
+"январе 2014 года."
+
+#: ../../design/database.rst:649
+msgid "Access Control"
+msgstr "Контроль доступа"
+
+#: ../../design/database.rst:651
+msgid ""
+"Granular access controls are one of the fundamental design principles in "
+"Elgg, and a feature that has been at the centre of the system throughout its"
+" development. The idea is simple: a user should have full control over who "
+"sees an item of data he or she creates."
+msgstr ""
+"Детализированный контроль доступа является одним из фундаментальных "
+"принципов дизайна в Elgg и функцией, которая находилась в центре системы на "
+"протяжении всей её разработки. Идея проста: пользователь должен иметь полный"
+" контроль над тем, кто видит созданный им элемент данных."
+
+#: ../../design/database.rst:657
+msgid "Access controls in the data model"
+msgstr "Контроль доступа в модели данных"
+
+#: ../../design/database.rst:659
+msgid ""
+"In order to achieve this, every entity and annotation contains an "
+"``access_id`` property, which in turn corresponds to one of the pre-defined "
+"access controls or an entry in the ``access_collections`` database table."
+msgstr ""
+"Для достижения этого каждая сущность и аннотация содержит свойство "
+"``access_id``, которое, в свою очередь, соответствует одному из "
+"предопределённых контролей доступа или записи в таблице базы данных "
+"``access_collections``."
+
+#: ../../design/database.rst:665
+msgid "Pre-defined access controls"
+msgstr "Предопределённые контроли доступа"
+
+#: ../../design/database.rst:667
+msgid "``ACCESS_PRIVATE`` (value: 0) Private."
+msgstr "``ACCESS_PRIVATE`` (значение: 0) Приватный."
+
+#: ../../design/database.rst:668
+msgid "``ACCESS_LOGGED_IN`` (value: 1) Logged in users."
+msgstr "``ACCESS_LOGGED_IN`` (значение: 1) Авторизованные пользователи."
+
+#: ../../design/database.rst:669
+msgid "``ACCESS_PUBLIC`` (value: 2) Public data."
+msgstr "``ACCESS_PUBLIC`` (значение: 2) Публичные данные."
+
+#: ../../design/database.rst:672
+msgid "User defined access controls"
+msgstr "Пользовательские контроли доступа"
+
+#: ../../design/database.rst:674
+msgid ""
+"You may define additional access groups and assign them to an entity, or "
+"annotation. A number of functions have been defined to assist you; see the "
+":doc:`/guides/access` for more information."
+msgstr ""
+"Вы можете определить дополнительные группы доступа и назначить их сущности "
+"или аннотации. Определён ряд функций, которые помогут вам; см. "
+":doc:`/guides/access` для получения дополнительной информации."
+
+#: ../../design/database.rst:679
+msgid "How access affects data retrieval"
+msgstr "Как доступ влияет на получение данных"
+
+#: ../../design/database.rst:681
+msgid ""
+"All data retrieval functions above the database layer - for example "
+"``elgg_get_entities`` will only return items that the current user has "
+"access to see. It is not possible to retrieve items that the current user "
+"does not have access to. This makes it very hard to create a security hole "
+"for retrieval."
+msgstr ""
+"Все функции получения данных выше уровня базы данных — например, "
+"``elgg_get_entities`` — будут возвращать только те элементы, к которым "
+"текущий пользователь имеет доступ для просмотра. Невозможно получить "
+"элементы, к которым текущий пользователь не имеет доступа. Это делает очень "
+"сложным создание уязвимости безопасности для получения данных."
+
+#: ../../design/database.rst:688
+msgid "Write access"
+msgstr "Доступ на запись"
+
+#: ../../design/database.rst:690
+msgid "The following rules govern write access:"
+msgstr "Следующие правила регулируют доступ на запись:"
+
+#: ../../design/database.rst:692
+msgid "The owner of an entity can always edit it"
+msgstr "Владелец сущности всегда может её редактировать"
+
+#: ../../design/database.rst:693
+msgid ""
+"The owner of a container can edit anything therein (note that this does not "
+"mean that the owner of a group can edit anything therein)"
+msgstr ""
+"Владелец контейнера может редактировать всё, что в нём находится (обратите "
+"внимание, что это не означает, что владелец группы может редактировать всё, "
+"что в ней находится)"
+
+#: ../../design/database.rst:695
+msgid "Admins can edit anything"
+msgstr "Администраторы могут редактировать всё"
+
+#: ../../design/database.rst:697
+msgid ""
+"You can override this behaviour using a :doc:`event </design/events>` called"
+" ``permissions_check``, which passes the entity in question to any function "
+"that has announced it wants to be referenced. Returning ``true`` will allow "
+"write access; returning ``false`` will deny it. See :ref:`the event "
+"reference for permissions\\_check <guides/events-list#permissions>` for more"
+" details."
+msgstr ""
+"Вы можете переопределить это поведение с помощью :doc:`события "
+"</design/events>` под названием ``permissions_check``, которое передаёт "
+"рассматриваемую сущность любой функции, которая объявила, что хочет быть "
+"вызванной. Возврат ``true`` разрешит доступ на запись; возврат ``false`` "
+"запретит его. См. :ref:`справку по событию permissions\\_check "
+"<guides/events-list#permissions>` для получения более подробной информации."
+
+#: ../../design/database.rst:704
+msgid "Schema"
+msgstr "Схема"
+
+#: ../../design/database.rst:706
+msgid ""
+"The database contains a number of primary and secondary tables. You can "
+"follow schema changes in ``engine/schema/migrations/``"
+msgstr ""
+"База данных содержит ряд основных и вторичных таблиц. Вы можете отслеживать "
+"изменения схемы в ``engine/schema/migrations/``"
+
+#: ../../design/database.rst:708
+msgid ""
+"The character set of the database should be ``utf8mb4``, this will provide "
+"full unicode character support when storing data."
+msgstr ""
+"Набор символов базы данных должен быть ``utf8mb4``, это обеспечит полную "
+"поддержку символов Unicode при хранении данных."
+
+#: ../../design/database.rst:711
+msgid "InnoDB"
+msgstr "InnoDB"
+
+#: ../../design/database.rst:713
+msgid ""
+"As of Elgg 3.0 the database uses the InnoDB engine. In order for a correct "
+"installation or migration some settings may need to be adjusted in the "
+"database settings."
+msgstr ""
+"Начиная с Elgg 3.0 база данных использует движок InnoDB. Для правильной "
+"установки или миграции некоторые настройки могут потребовать корректировки в"
+" настройках базы данных."
+
+#: ../../design/database.rst:716
+msgid "``innodb_large_prefix`` should be ``on``"
+msgstr "``innodb_large_prefix`` должен быть ``on``"
+
+#: ../../design/database.rst:717
+msgid "``innodb_file_format`` should be ``Barracuda``"
+msgstr "``innodb_file_format`` должен быть ``Barracuda``"
+
+#: ../../design/database.rst:718
+msgid "``innodb_file_per_table`` should be ``1``"
+msgstr "``innodb_file_per_table`` должен быть ``1``"
+
+#: ../../design/database.rst:721
+msgid "Main tables"
+msgstr "Основные таблицы"
+
+#: ../../design/database.rst:723
+msgid ""
+"This is a description of the main tables. Keep in mind that in a given Elgg "
+"installation, the tables will have a prefix (typically \"elgg\\_\")."
+msgstr ""
+"Это описание основных таблиц. Имейте в виду, что в данной установке Elgg "
+"таблицы будут иметь префикс (обычно \"elgg\\_\")."
+
+#: ../../design/database.rst:727
+msgid "Table: entities"
+msgstr "Таблица: entities"
+
+#: ../../design/database.rst:729
+msgid ""
+"This is the main `Entities`_ table containing Elgg users, sites, objects and"
+" groups. When you first install Elgg this is automatically populated with "
+"your first site, your first user and a set of bundled plugins."
+msgstr ""
+"Это основная таблица `Entities`_, содержащая пользователей, сайты, объекты и"
+" группы Elgg. При первой установке Elgg она автоматически заполняется вашим "
+"первым сайтом, первым пользователем и набором встроенных плагинов."
+
+#: ../../design/database.rst:733
+msgid "It contains the following fields:"
+msgstr "Она содержит следующие поля:"
+
+#: ../../design/database.rst:735
+msgid ""
+"**guid** An auto-incrementing counter producing a GUID that uniquely "
+"identifies this entity in the system"
+msgstr ""
+"**guid** — автоинкрементный счётчик, создающий GUID, который однозначно "
+"идентифицирует эту сущность в системе"
+
+#: ../../design/database.rst:736
+msgid "**type** The type of entity - object, user, group or site"
+msgstr "**type** — тип сущности: object, user, group или site"
+
+#: ../../design/database.rst:737
+msgid "**subtype** A subtype of entity"
+msgstr "**subtype** — подтип сущности"
+
+#: ../../design/database.rst:738
+msgid "**owner\\_guid** The GUID of the owner's entity"
+msgstr "**owner\\_guid** — GUID сущности владельца"
+
+#: ../../design/database.rst:739
+msgid ""
+"**container\\_guid** The GUID this entity is contained by - either a user or"
+" a group"
+msgstr ""
+"**container\\_guid** — GUID, которым содержится эта сущность — либо "
+"пользователь, либо группа"
+
+#: ../../design/database.rst:740
+msgid "**access\\_id** Access controls on this entity"
+msgstr "**access\\_id** — контроли доступа к этой сущности"
+
+#: ../../design/database.rst:741
+msgid "**time\\_created** Unix timestamp of when the entity is created"
+msgstr "**time\\_created** — метка времени Unix, когда была создана сущность"
+
+#: ../../design/database.rst:742
+msgid "**time\\_updated** Unix timestamp of when the entity was updated"
+msgstr "**time\\_updated** — метка времени Unix, когда сущность была обновлена"
+
+#: ../../design/database.rst:743
+msgid ""
+"**last\\_action** Unix timestamp of when the user last performed an action "
+"or when within the entity as container something happened"
+msgstr ""
+"**last\\_action** — метка времени Unix, когда пользователь последний раз "
+"выполнил действие или когда внутри сущности как контейнера что-то произошло"
+
+#: ../../design/database.rst:744
+msgid ""
+"**enabled** If this is 'yes' an entity is accessible, if 'no' the entity has"
+" been disabled (Elgg treats it as if it were deleted without actually "
+"removing it from the database)"
+msgstr ""
+"**enabled** — если это 'yes', сущность доступна, если 'no', сущность была "
+"отключена (Elgg обрабатывает её так, как если бы она была удалена, не удаляя"
+" её фактически из базы данных)"
+
+#: ../../design/database.rst:747
+msgid ""
+"**deleted** If this is 'yes' an entity is marked as deleted, if 'no' "
+"(default) the entity is visible within the regular site. Deleted entities "
+"can be viewed in the trash"
+msgstr ""
+"**deleted** — если это 'yes', сущность помечена как удалённая, если 'no' (по"
+" умолчанию), сущность видна на обычном сайте. Удалённые сущности можно "
+"просмотреть в корзине"
+
+#: ../../design/database.rst:750
+msgid "**time\\_deleted** Unix timestamp of when the entity was deleted"
+msgstr "**time\\_deleted** — метка времени Unix, когда сущность была удалена"
+
+#: ../../design/database.rst:753
+msgid "Table: metadata"
+msgstr "Таблица: metadata"
+
+#: ../../design/database.rst:755
+msgid ""
+"This table contains `Metadata`_, extra information attached to an entity."
+msgstr ""
+"Эта таблица содержит `Metadata`_, дополнительную информацию, прикреплённую к"
+" сущности."
+
+#: ../../design/database.rst:757 ../../design/database.rst:769
+#: ../../design/database.rst:796
+msgid "**id** A unique IDentifier"
+msgstr "**id** — уникальный идентификатор"
+
+#: ../../design/database.rst:758 ../../design/database.rst:770
+msgid "**entity\\_guid** The entity this is attached to"
+msgstr "**entity\\_guid** — сущность, к которой это прикреплено"
+
+#: ../../design/database.rst:759 ../../design/database.rst:771
+msgid "**name** The name string"
+msgstr "**name** — строка имени"
+
+#: ../../design/database.rst:760 ../../design/database.rst:772
+msgid "**value** The value string"
+msgstr "**value** — строка значения"
+
+#: ../../design/database.rst:761 ../../design/database.rst:773
+msgid "**value\\_type** The value class, either text, bool or an integer"
+msgstr "**value\\_type** — класс значения: текст, bool или целое число"
+
+#: ../../design/database.rst:762
+msgid "**time\\_created** Unix timestamp of when the metadata is created"
+msgstr "**time\\_created** — метка времени Unix, когда были созданы метаданные"
+
+#: ../../design/database.rst:765
+msgid "Table: annotations"
+msgstr "Таблица: annotations"
+
+#: ../../design/database.rst:767
+msgid "This table contains `Annotations`_, this is distinct from `Metadata`_."
+msgstr "Эта таблица содержит `Annotations`_, это отличается от `Metadata`_."
+
+#: ../../design/database.rst:774
+msgid "**owner\\_guid** The owner GUID of the owner who set this annotation"
+msgstr "**owner\\_guid** — GUID владельца, который установил эту аннотацию"
+
+#: ../../design/database.rst:775
+msgid "**access\\_id** An Access controls on this annotation"
+msgstr "**access\\_id** — Контроли доступа к этой аннотации"
+
+#: ../../design/database.rst:776
+msgid "**time\\_created** Unix timestamp of when the annotation is created."
+msgstr "**time\\_created** — метка времени Unix, когда была создана аннотация."
+
+#: ../../design/database.rst:779
+msgid "Table: relationships"
+msgstr "Таблица: relationships"
+
+#: ../../design/database.rst:781
+msgid ""
+"This table defines `Relationships`_, these link one entity with another."
+msgstr ""
+"Эта таблица определяет `Relationships`_, они связывают одну сущность с "
+"другой."
+
+#: ../../design/database.rst:783
+msgid "**guid\\_one** The GUID of the subject entity."
+msgstr "**guid\\_one** — GUID сущности-субъекта."
+
+#: ../../design/database.rst:784
+msgid "**relationship** The type of the relationship."
+msgstr "**relationship** — тип отношения."
+
+#: ../../design/database.rst:785
+msgid "**guid\\_two** The GUID of the target entity."
+msgstr "**guid\\_two** — GUID сущности-цели."
+
+#: ../../design/database.rst:786
+msgid "**time\\_created** Unix timestamp of when the relationship is created."
+msgstr "**time\\_created** — метка времени Unix, когда было создано отношение."
+
+#: ../../design/database.rst:789
+msgid "Secundairy tables"
+msgstr "Вторичные таблицы"
+
+#: ../../design/database.rst:792
+msgid "Table: access_collections"
+msgstr "Таблица: access_collections"
+
+#: ../../design/database.rst:794
+msgid ""
+"This table defines Access Collections, which grant users access to "
+"`Entities`_ or `Annotations`_."
+msgstr ""
+"Эта таблица определяет коллекции доступа, которые предоставляют "
+"пользователям доступ к `Entities`_ или `Annotations`_."
+
+#: ../../design/database.rst:797
+msgid "**name**  The name of the access collection"
+msgstr "**name** — название коллекции доступа"
+
+#: ../../design/database.rst:798
+msgid "**owner_guid** The GUID of the owning entity (eg. a user or a group)"
+msgstr ""
+"**owner_guid** — GUID владеющей сущности (например, пользователь или группа)"
+
+#: ../../design/database.rst:799
+msgid ""
+"**subtype** the subtype of the access collection (eg. `friends` or "
+"`group_acl`)"
+msgstr ""
+"**subtype** — подтип коллекции доступа (например, `friends` или `group_acl`)"
+
+#: ../../design/events.rst:2
+msgid "Events"
+msgstr "События"
+
+#: ../../design/events.rst:11
+msgid ""
+"Elgg has an event system that can be used to replace or extend core "
+"functionality."
+msgstr ""
+"Elgg имеет систему событий, которую можно использовать для замены или "
+"расширения базовой функциональности."
+
+#: ../../design/events.rst:13
+msgid ""
+"Plugins influence the system by creating handlers (`callables "
+"<http://php.net/manual/en/language.types.callable.php>`_ such as functions "
+"and methods) and registering them to handle the events."
+msgstr ""
+"Плагины влияют на систему, создавая обработчики (`callables "
+"<http://php.net/manual/en/language.types.callable.php>`_, такие как функции "
+"и методы) и регистрируя их для обработки событий."
+
+#: ../../design/events.rst:16
+msgid ""
+"When an event is triggered, a set of handlers is executed in order of "
+"priority. Each handler is passed arguments and has a chance to influence the"
+" process. After execution, the \"trigger\" function returns a value based on"
+" the behavior of the handlers."
+msgstr ""
+"Когда событие запускается, набор обработчиков выполняется в порядке "
+"приоритета. Каждому обработчику передаются аргументы, и он имеет возможность"
+" повлиять на процесс. После выполнения функция \"trigger\" возвращает "
+"значение на основе поведения обработчиков."
+
+#: ../../design/events.rst:21
+msgid ":doc:`/guides/events-list`"
+msgstr ":doc:`/guides/events-list`"
+
+#: ../../design/events.rst:24
+msgid "Elgg Events"
+msgstr "События Elgg"
+
+#: ../../design/events.rst:26
+msgid ""
+"Elgg Events are triggered when an Elgg object is created, updated, or "
+"deleted; and at important milestones while the Elgg framework is loading. "
+"Examples: a blog post being created or a user logging in."
+msgstr ""
+"События Elgg запускаются, когда объект Elgg создаётся, обновляется или "
+"удаляется; а также на важных этапах при загрузке фреймворка Elgg. Примеры: "
+"создание поста блога или вход пользователя в систему."
+
+#: ../../design/events.rst:30
+msgid ""
+"These events are mostly used to notify the rest of the system that something"
+" has happened."
+msgstr ""
+"Эти события в основном используются для уведомления остальной части системы "
+"о том, что что-то произошло."
+
+#: ../../design/events.rst:32
+msgid ""
+"There are also events that are used to influence output, configuration or "
+"behaviour of the system."
+msgstr ""
+"Также есть события, которые используются для влияния на вывод, конфигурацию "
+"или поведение системы."
+
+#: ../../design/events.rst:34
+msgid ""
+"Each Elgg event has a name and a type (system, user, object, relationship "
+"name, annotation, group) describing the type of object passed to the "
+"handlers."
+msgstr ""
+"Каждое событие Elgg имеет имя и тип (system, user, object, имя отношения, "
+"annotation, group), описывающий тип объекта, передаваемого обработчикам."
+
+#: ../../design/events.rst:40
+msgid "Before and After Events"
+msgstr "События Before и After"
+
+#: ../../design/events.rst:42
+msgid ""
+"Some events are split into \"before\" and \"after\". This avoids confusion "
+"around the state of the system while in flux. E.g. Is the user logged in "
+"during the [login, user] event?"
+msgstr ""
+"Некоторые события разделены на \"before\" и \"after\". Это позволяет "
+"избежать путаницы вокруг состояния системы во время изменений. Например, "
+"авторизован ли пользователь во время события [login, user]?"
+
+#: ../../design/events.rst:46
+msgid ""
+"Before Events have names ending in \":before\" and are triggered before "
+"something happens. Handlers can cancel the event by returning ``false``. "
+"When ``false`` is returned by a handler, following handlers will not be "
+"called."
+msgstr ""
+"События Before имеют имена, оканчивающиеся на \":before\", и запускаются до "
+"того, как что-то произойдёт. Обработчики могут отменить событие, вернув "
+"``false``. Когда обработчик возвращает ``false``, последующие обработчики не"
+" будут вызваны."
+
+#: ../../design/events.rst:50
+msgid ""
+"After Events, with names ending in \":after\", are triggered after something"
+" happened. Handlers **cannot** cancel these events; all handlers will always"
+" be called."
+msgstr ""
+"События After, с именами, оканчивающимися на \":after\", запускаются после "
+"того, как что-то произошло. Обработчики **не могут** отменить эти события; "
+"все обработчики всегда будут вызваны."
+
+#: ../../design/events.rst:53
+msgid ""
+"Where before and after events are available, developers are encouraged to "
+"transition to them, though older events will be supported for backwards "
+"compatibility."
+msgstr ""
+"Там, где доступны события before и after, разработчикам рекомендуется "
+"переходить на них, хотя старые события будут поддерживаться для обратной "
+"совместимости."
+
+#: ../../design/events.rst:58
+msgid "Elgg Event Handlers"
+msgstr "Обработчики событий Elgg"
+
+#: ../../design/events.rst:60
+msgid "Elgg event handlers are callables:"
+msgstr "Обработчики событий Elgg являются вызываемыми:"
+
+#: ../../design/events.rst:75
+msgid ""
+"In ``event_handler``, the ``Event`` object has various methods for getting "
+"the name, object type, and object of the event. See the ``Elgg\\Event`` "
+"class for details."
+msgstr ""
+"В ``event_handler`` объект ``Event`` имеет различные методы для получения "
+"имени, типа объекта и объекта события. См. класс ``Elgg\\Event`` для "
+"получения подробной информации."
+
+#: ../../design/events.rst:79
+msgid "Register to handle an Elgg Event"
+msgstr "Регистрация для обработки события Elgg"
+
+#: ../../design/events.rst:81
+msgid ""
+"Register your handler to an event using ``elgg_register_event_handler``:"
+msgstr ""
+"Зарегистрируйте свой обработчик для события с помощью "
+"``elgg_register_event_handler``:"
+
+#: ../../design/events.rst:89 ../../design/events.rst:165
+#: ../../design/events.rst:197 ../../design/events.rst:225
+msgid "Parameters:"
+msgstr "Параметры:"
+
+#: ../../design/events.rst:91 ../../design/events.rst:167
+#: ../../design/events.rst:227
+msgid "**$event** The event name."
+msgstr "**$event** — имя события."
+
+#: ../../design/events.rst:92
+msgid ""
+"**$type** The event type (e.g. \"user\" or \"object\") or 'all' for all "
+"types on which the event is fired."
+msgstr ""
+"**$type** — тип события (например, \"user\" или \"object\") или 'all' для "
+"всех типов, на которых запускается событие."
+
+#: ../../design/events.rst:93
+msgid "**$handler** The callback of the handler function."
+msgstr "**$handler** — обратный вызов функции обработчика."
+
+#: ../../design/events.rst:94
+msgid "**$priority** The priority - 0 is first and the default is 500."
+msgstr "**$priority** — приоритет: 0 — первый, по умолчанию — 500."
+
+#: ../../design/events.rst:96
+msgid "Example:"
+msgstr "Пример:"
+
+#: ../../design/events.rst:108
+msgid ""
+"If you handle the \"update\" event on an object, avoid calling ``save()`` in"
+" your event handler. For one it's probably not necessary as the object is "
+"saved after the event completes, but also because ``save()`` calls another "
+"\"update\" event and makes ``$object->getOriginalAttributes()`` no longer "
+"available."
+msgstr ""
+"Если вы обрабатываете событие \"update\" на объекте, избегайте вызова "
+"``save()`` в вашем обработчике событий. Во-первых, это, вероятно, не нужно, "
+"так как объект сохраняется после завершения события, но также потому, что "
+"``save()`` вызывает другое событие \"update\" и делает "
+"``$object->getOriginalAttributes()`` недоступным."
+
+#: ../../design/events.rst:113
+msgid "Invokable classes as handlers"
+msgstr "Вызываемые классы как обработчики"
+
+#: ../../design/events.rst:115
+msgid ""
+"You may use a class with an ``__invoke()`` method as a handler. Just "
+"register the class name and it will be instantiated (with no arguments) for "
+"the lifetime of the event."
+msgstr ""
+"Вы можете использовать класс с методом ``__invoke()`` в качестве "
+"обработчика. Просто зарегистрируйте имя класса, и он будет создан (без "
+"аргументов) на время жизни события."
+
+#: ../../design/events.rst:135
+msgid "Trigger an Elgg Event"
+msgstr "Запуск события Elgg"
+
+#: ../../design/events.rst:137
+msgid "You can trigger a custom Elgg event using ``elgg_trigger_event``:"
+msgstr ""
+"Вы можете запустить пользовательское событие Elgg с помощью "
+"``elgg_trigger_event``:"
+
+#: ../../design/events.rst:149
+msgid ""
+"For events with ambiguous states, like logging in a user, you should use "
+":ref:`before-after` by calling ``elgg_trigger_before_event`` or "
+"``elgg_trigger_after_event``. This makes it clear for the event handler what"
+" state to expect and which events can be cancelled."
+msgstr ""
+"Для событий с неоднозначными состояниями, таких как вход пользователя в "
+"систему, вы должны использовать :ref:`before-after`, вызывая "
+"``elgg_trigger_before_event`` или ``elgg_trigger_after_event``. Это делает "
+"понятным для обработчика событий, какого состояния ожидать и какие события "
+"могут быть отменены."
+
+#: ../../design/events.rst:168 ../../design/events.rst:228
+msgid "**$object_type** The object type (e.g. \"user\" or \"object\")."
+msgstr "**$object_type** — тип объекта (например, \"user\" или \"object\")."
+
+#: ../../design/events.rst:169 ../../design/events.rst:229
+msgid ""
+"**$object** The object (e.g. an instance of ``ElggUser`` or ``ElggGroup``)"
+msgstr ""
+"**$object** — объект (например, экземпляр ``ElggUser`` или ``ElggGroup``)"
+
+#: ../../design/events.rst:171
+msgid ""
+"The function will return ``false`` if any of the selected handlers returned "
+"``false`` and the event is stoppable, otherwise it will return ``true``."
+msgstr ""
+"Функция вернёт ``false``, если какой-либо из выбранных обработчиков вернул "
+"``false`` и событие может быть остановлено, в противном случае она вернёт "
+"``true``."
+
+#: ../../design/events.rst:177
+msgid "Trigger an Event with results"
+msgstr "Запуск события с результатами"
+
+#: ../../design/events.rst:179
+msgid ""
+"Events with results provide a way for plugins to collaboratively determine "
+"or alter a value. For example, to decide whether a user has permission to "
+"edit an entity or to add additional configuration options to a plugin."
+msgstr ""
+"События с результатами предоставляют способ для плагинов совместно "
+"определять или изменять значение. Например, чтобы решить, имеет ли "
+"пользователь разрешение на редактирование сущности или добавить "
+"дополнительные параметры конфигурации в плагин."
+
+#: ../../design/events.rst:183
+msgid ""
+"An event has a value passed into the trigger function, and each handler has "
+"an opportunity to alter the value before it's passed to the next handler. "
+"After the last handler has completed, the final value is returned by the "
+"trigger."
+msgstr ""
+"Событие имеет значение, передаваемое в функцию запуска, и каждый обработчик "
+"имеет возможность изменить значение перед передачей следующему обработчику. "
+"После завершения последнего обработчика триггер возвращает окончательное "
+"значение."
+
+#: ../../design/events.rst:188
+msgid "You can trigger a custom event using ``elgg_trigger_event_results``:"
+msgstr ""
+"Вы можете запустить пользовательское событие с помощью "
+"``elgg_trigger_event_results``:"
+
+#: ../../design/events.rst:199
+msgid "**$name** The name of the event."
+msgstr "**$name** — имя события."
+
+#: ../../design/events.rst:200
+msgid "**$type** The type of the event or 'all' for all types."
+msgstr "**$type** — тип события или 'all' для всех типов."
+
+#: ../../design/events.rst:201
+msgid "**$params** Arbitrary data passed from the trigger to the handlers."
+msgstr ""
+"**$params** — произвольные данные, передаваемые от триггера к обработчикам."
+
+#: ../../design/events.rst:202
+msgid "**$value** The initial value of the event."
+msgstr "**$value** — начальное значение события."
+
+#: ../../design/events.rst:207
+msgid "Trigger an Elgg Event sequence"
+msgstr "Запуск последовательности событий Elgg"
+
+#: ../../design/events.rst:209
+msgid ""
+"Instead of triggering the ``:before`` and ``:after`` event manually, it's "
+"possible to trigger an event sequence. This will trigger the ``:before`` "
+"event, then the actual event and finally the ``:after`` event."
+msgstr ""
+"Вместо ручного запуска событий ``:before`` и ``:after`` можно запустить "
+"последовательность событий. Это запустит событие ``:before``, затем "
+"фактическое событие и, наконец, событие ``:after``."
+
+#: ../../design/events.rst:219
+msgid ""
+"When called with for example ``'cache:clear', 'system'`` the following three"
+" events are triggered"
+msgstr ""
+"При вызове, например, с ``'cache:clear', 'system'`` запускаются следующие "
+"три события"
+
+#: ../../design/events.rst:221
+msgid "``'cache:clear:before', 'system'``"
+msgstr "``'cache:clear:before', 'system'``"
+
+#: ../../design/events.rst:222
+msgid "``'cache:clear', 'system'``"
+msgstr "``'cache:clear', 'system'``"
+
+#: ../../design/events.rst:223
+msgid "``'cache:clear:after', 'system'``"
+msgstr "``'cache:clear:after', 'system'``"
+
+#: ../../design/events.rst:230
+msgid "**$callable** Callable to run on successful event, before event:after"
+msgstr ""
+"**$callable** — вызываемый объект для запуска при успешном событии, перед "
+"событием :after"
+
+#: ../../design/events.rst:234
+msgid ""
+"As of Elgg 6.0 the ``:after`` event will no longer be triggered if the "
+"result of the callable is ``false``. This was done in order to prevent the "
+"system from thinking something was done which wasn't successful. For example"
+" the ``'delete', 'user'`` event sequence. If the callback (which handles the"
+" actual removal from the database) wasn't successful the ``:after`` event "
+"implied that the user was deleted. Now this is only triggered when the user "
+"is actually removed from the database."
+msgstr ""
+"Начиная с Elgg 6.0 событие ``:after`` больше не будет запускаться, если "
+"результат вызываемого объекта равен ``false``. Это было сделано для того, "
+"чтобы предотвратить ситуацию, когда система считает, что что-то было "
+"сделано, но не успешно. Например, последовательность событий ``'delete', "
+"'user'``. Если обратный вызов (который обрабатывает фактическое удаление из "
+"базы данных) не был успешным, событие ``:after`` подразумевало, что "
+"пользователь был удалён. Теперь это запускается только тогда, когда "
+"пользователь действительно удалён из базы данных."
+
+#: ../../design/events.rst:241
+msgid "Unregister Event Handlers"
+msgstr "Отмена регистрации обработчиков событий"
+
+#: ../../design/events.rst:243
+msgid ""
+"The functions ``elgg_unregister_event_handler`` can be used to remove "
+"handlers already registered by another plugin or Elgg core. The parameters "
+"are in the same order as the registration functions, except there's no "
+"priority parameter."
+msgstr ""
+"Функции ``elgg_unregister_event_handler`` могут использоваться для удаления "
+"обработчиков, уже зарегистрированных другим плагином или ядром Elgg. "
+"Параметры идут в том же порядке, что и в функциях регистрации, за "
+"исключением того, что нет параметра приоритета."
+
+#: ../../design/events.rst:253
+msgid ""
+"Anonymous functions or invokable objects cannot be unregistered, but dynamic"
+" method callbacks can be unregistered by giving the static version of the "
+"callback:"
+msgstr ""
+"Анонимные функции или вызываемые объекты нельзя отменить регистрацию, но "
+"динамические обратные вызовы методов можно отменить регистрацию, указав "
+"статическую версию обратного вызова:"
+
+#: ../../design/events.rst:267
+msgid ""
+"Even though the event handler references a dynamic method call, the code "
+"above will successfully remove the handler."
+msgstr ""
+"Несмотря на то, что обработчик событий ссылается на динамический вызов "
+"метода, приведённый выше код успешно удалит обработчик."
+
+#: ../../design/events.rst:271
+msgid "Handler Calling Order"
+msgstr "Порядок вызова обработчиков"
+
+#: ../../design/events.rst:273
+msgid ""
+"Handlers are called first in order of priority, then registration order."
+msgstr ""
+"Обработчики вызываются сначала в порядке приоритета, затем в порядке "
+"регистрации."
+
+#: ../../design/events.rst:277
+msgid ""
+"Before Elgg 2.0, registering with the ``all`` keywords caused handlers to be"
+" called later, even if they were registered with lower priorities."
+msgstr ""
+"До Elgg 2.0 регистрация с ключевыми словами ``all`` приводила к тому, что "
+"обработчики вызывались позже, даже если они были зарегистрированы с более "
+"низкими приоритетами."
+
+#: ../../design/index.rst:2
+msgid "Design Docs"
+msgstr "Документация по дизайну"
+
+#: ../../design/index.rst:4
+msgid ""
+"Gain a deep understanding of how Elgg works and why it's built the way it "
+"is."
+msgstr ""
+"Получите глубокое понимание того, как работает Elgg и почему он построен "
+"именно так."
+
+#: ../../design/loggable.rst:2
+msgid "Loggable"
+msgstr "Loggable"
+
+#: ../../design/loggable.rst:4
+msgid ""
+"Loggable is an interface inherited by any class that wants events relating "
+"to its member objects to be saved to the system log. ``ElggEntity`` and "
+"``ElggExtender`` both inherit ``Loggable``."
+msgstr ""
+"Loggable — это интерфейс, наследуемый любым классом, который хочет, чтобы "
+"события, связанные с его объектами-членами, сохранялись в системном журнале."
+" ``ElggEntity`` и ``ElggExtender`` оба наследуют ``Loggable``."
+
+#: ../../design/loggable.rst:6
+msgid ""
+"Loggable defines several class methods that are used in saving to the "
+"default system log, and can be used to define your own (as well as for other"
+" purposes):"
+msgstr ""
+"Loggable определяет несколько методов класса, которые используются при "
+"сохранении в системный журнал по умолчанию и могут использоваться для "
+"определения ваших собственных (а также для других целей):"
+
+#: ../../design/loggable.rst:8
+msgid ""
+"``getSystemLogID()`` Return a unique identifier for the object for storage "
+"in the system log. This is likely to be the object's GUID"
+msgstr ""
+"``getSystemLogID()`` — возвращает уникальный идентификатор для объекта для "
+"хранения в системном журнале. Это, вероятно, будет GUID объекта"
+
+#: ../../design/loggable.rst:9
+msgid "``getClassName()`` Return the class name of the object"
+msgstr "``getClassName()`` — возвращает имя класса объекта"
+
+#: ../../design/loggable.rst:10
+msgid "``getType()`` Return the object type"
+msgstr "``getType()`` — возвращает тип объекта"
+
+#: ../../design/loggable.rst:11
+msgid "``getSubtype()`` Get the object subtype"
+msgstr "``getSubtype()`` — получить подтип объекта"
+
+#: ../../design/loggable.rst:12
+msgid ""
+"``getObjectFromID($id)`` For a given ID, return the object associated with "
+"it"
+msgstr ""
+"``getObjectFromID($id)`` — для заданного ID возвращает связанный с ним "
+"объект"
+
+#: ../../design/loggable.rst:15
+msgid "Database details"
+msgstr "Детали базы данных"
+
+#: ../../design/loggable.rst:17
+msgid ""
+"The default system log is stored in the ``system_log`` :doc:`database table "
+"<database>`. It contains the following fields:"
+msgstr ""
+"Системный журнал по умолчанию хранится в таблице базы данных ``system_log`` "
+":doc:`database table <database>`. Она содержит следующие поля:"
+
+#: ../../design/loggable.rst:19
+msgid "**id** - A unique numeric row ID"
+msgstr "**id** — уникальный числовой ID строки"
+
+#: ../../design/loggable.rst:20
+msgid "**object_id** - The GUID of the entity being acted upon"
+msgstr "**object_id** — GUID сущности, над которой совершается действие"
+
+#: ../../design/loggable.rst:21
+msgid ""
+"**object_class** - The class of the entity being acted upon (eg ElggObject)"
+msgstr ""
+"**object_class** — класс сущности, над которой совершается действие "
+"(например, ElggObject)"
+
+#: ../../design/loggable.rst:22
+msgid "**object_type** - The type of the entity being acted upon (eg object)"
+msgstr ""
+"**object_type** — тип сущности, над которой совершается действие (например, "
+"object)"
+
+#: ../../design/loggable.rst:23
+msgid ""
+"**object_subtype** - The subtype of the entity being acted upon (eg blog)"
+msgstr ""
+"**object_subtype** — подтип сущности, над которой совершается действие "
+"(например, blog)"
+
+#: ../../design/loggable.rst:24
+msgid "**event** - The event being logged (eg create or update)"
+msgstr ""
+"**event** — событие, которое записывается в журнал (например, create или "
+"update)"
+
+#: ../../design/loggable.rst:25
+msgid ""
+"**performed_by_guid** - The GUID of the acting entity (the user performing "
+"the action)"
+msgstr ""
+"**performed_by_guid** — GUID действующей сущности (пользователя, "
+"выполняющего действие)"
+
+#: ../../design/loggable.rst:26
+msgid ""
+"**owner_guid** - The GUID of the user which owns the entity being acted upon"
+msgstr ""
+"**owner_guid** — GUID пользователя, владеющего сущностью, над которой "
+"совершается действие"
+
+#: ../../design/loggable.rst:27
+msgid "**access_id** - The access restriction associated with this log entry"
+msgstr "**access_id** — ограничение доступа, связанное с этой записью журнала"
+
+#: ../../design/loggable.rst:28
+msgid ""
+"**time_created** - The UNIX epoch timestamp of the time the event took place"
+msgstr "**time_created** — метка времени UNIX, когда произошло событие"
+
+#: ../../design/security.rst:2
+msgid "Security"
+msgstr "Безопасность"
+
+#: ../../design/security.rst:4
+msgid ""
+"Elgg's approach to the various security issues common to all web "
+"applications."
+msgstr ""
+"Подход Elgg к различным вопросам безопасности, общим для всех веб-"
+"приложений."
+
+#: ../../design/security.rst:8
+msgid "To report a potential vulnerability in Elgg, email security@elgg.org."
+msgstr ""
+"Чтобы сообщить о потенциальной уязвимости в Elgg, напишите на "
+"security@elgg.org."
+
+#: ../../design/security.rst:15
+msgid "Passwords"
+msgstr "Пароли"
+
+#: ../../design/security.rst:18
+msgid "Password validation"
+msgstr "Валидация пароля"
+
+#: ../../design/security.rst:20
+msgid ""
+"The only restriction that Elgg places on a password is that it must be at "
+"least 6 characters long by default, though this may be changed in ``/elgg-"
+"config/settings.php``. Additional criteria can be added by a plugin by "
+"registering for the ``registeruser:validate:password`` event."
+msgstr ""
+"Единственное ограничение, которое Elgg накладывает на пароль, — это то, что "
+"он должен быть длиной не менее 6 символов по умолчанию, хотя это можно "
+"изменить в ``/elgg-config/settings.php``. Дополнительные критерии могут быть"
+" добавлены плагином путём регистрации для события "
+"``registeruser:validate:password``."
+
+#: ../../design/security.rst:25
+msgid "Password hashing"
+msgstr "Хеширование пароля"
+
+#: ../../design/security.rst:27
+msgid ""
+"Passwords are never stored in plain text, only salted hashes produced with "
+"bcrypt. This is done via the standard ``password_hash()`` function. On older"
+" systems, the ``password-compat`` polyfill is used, but the algorithm is "
+"identical."
+msgstr ""
+"Пароли никогда не хранятся в открытом виде, только солёные хеши, созданные с"
+" помощью bcrypt. Это делается через стандартную функцию ``password_hash()``."
+" На старых системах используется полифил ``password-compat``, но алгоритм "
+"идентичен."
+
+#: ../../design/security.rst:30
+msgid ""
+"Elgg installations created before version 1.10 may have residual \"legacy\" "
+"password hashes created using salted MD5. These are migrated to bcrypt as "
+"users log in, and will be completely removed when a system is upgraded to "
+"Elgg 3.0. In the meantime we're happy to assist site owners to manually "
+"remove these legacy hashes, though it would force those users to reset their"
+" passwords."
+msgstr ""
+"Установки Elgg, созданные до версии 1.10, могут иметь остаточные "
+"\"устаревшие\" хеши паролей, созданные с использованием солёного MD5. Они "
+"мигрируют в bcrypt при входе пользователей и будут полностью удалены при "
+"обновлении системы до Elgg 3.0. Тем временем мы рады помочь владельцам "
+"сайтов вручную удалить эти устаревшие хеши, хотя это заставит этих "
+"пользователей сбросить свои пароли."
+
+#: ../../design/security.rst:35
+msgid "Password throttling"
+msgstr "Ограничение попыток ввода пароля"
+
+#: ../../design/security.rst:37
+msgid ""
+"Elgg has a password throttling mechanism to make dictionary attacks from the"
+" outside very difficult. A user is only allowed 5 login attempts over a 5 "
+"minute period."
+msgstr ""
+"Elgg имеет механизм ограничения попыток ввода пароля, чтобы сделать атаки по"
+" словарю извне очень сложными. Пользователю разрешается только 5 попыток "
+"входа в течение 5 минут."
+
+#: ../../design/security.rst:41
+msgid "Password resetting"
+msgstr "Сброс пароля"
+
+#: ../../design/security.rst:43
+msgid ""
+"If a user forgets his password, a new random password can be requested. "
+"After the request, an email is sent with a unique URL. When the user visits "
+"that URL, a new random password is sent to the user through email."
+msgstr ""
+"Если пользователь забывает свой пароль, можно запросить новый случайный "
+"пароль. После запроса отправляется электронное письмо с уникальным URL. "
+"Когда пользователь посещает этот URL, новый случайный пароль отправляется "
+"пользователю по электронной почте."
+
+#: ../../design/security.rst:47
+msgid "Sessions"
+msgstr "Сессии"
+
+#: ../../design/security.rst:49
+msgid ""
+"Elgg uses PHP's session handling with custom handlers. Session data is "
+"stored in the database. The session cookie contains the session id that "
+"links the user to the browser. The user's metadata is stored in the session "
+"including GUID, username, email address."
+msgstr ""
+"Elgg использует обработку сессий PHP с пользовательскими обработчиками. "
+"Данные сессии хранятся в базе данных. Куки сессии содержат ID сессии, "
+"который связывает пользователя с браузером. Метаданные пользователя хранятся"
+" в сессии, включая GUID, имя пользователя, адрес электронной почты."
+
+#: ../../design/security.rst:52
+msgid ""
+"The session's lifetime is controlled through the server's PHP configuration "
+"and additionally through options in the ``/elgg-config/settings.php``."
+msgstr ""
+"Время жизни сессии контролируется через конфигурацию PHP сервера и "
+"дополнительно через опции в ``/elgg-config/settings.php``."
+
+#: ../../design/security.rst:55
+msgid "Session fixation"
+msgstr "Фиксация сессии"
+
+#: ../../design/security.rst:57
+msgid ""
+"Elgg protects against session fixation by regenerating the session id when a"
+" user logs in."
+msgstr ""
+"Elgg защищает от фиксации сессии, перегенерируя ID сессии при входе "
+"пользователя."
+
+#: ../../design/security.rst:60
+msgid "\"Remember me\" cookie"
+msgstr "Куки \"Запомнить меня\""
+
+#: ../../design/security.rst:62
+msgid ""
+"To allow users to stay logged in for a longer period of time regardless of "
+"whether the browser has been closed, Elgg uses a cookie (default called "
+"``elggperm``) that contains what could be considered a super session "
+"identifier. This identifier is stored in a cookies table. When a session is "
+"being initiated, Elgg checks for the presence of the ``elggperm`` cookie. If"
+" it exists and the session code in the cookie matches the code in the "
+"cookies table, the corresponding user is automatically logged in."
+msgstr ""
+"Чтобы позволить пользователям оставаться авторизованными в течение более "
+"длительного периода времени независимо от того, был ли закрыт браузер, Elgg "
+"использует куки (по умолчанию называемые ``elggperm``), которые содержат то,"
+" что можно считать супер-идентификатором сессии. Этот идентификатор хранится"
+" в таблице куки. При инициализации сессии Elgg проверяет наличие куки "
+"``elggperm``. Если она существует и код сессии в куки совпадает с кодом в "
+"таблице куки, соответствующий пользователь автоматически авторизуется."
+
+#: ../../design/security.rst:67
+msgid ""
+"When a user changes their password all existing permanent cookie codes are "
+"removed from the database."
+msgstr ""
+"Когда пользователь меняет свой пароль, все существующие коды постоянных куки"
+" удаляются из базы данных."
+
+#: ../../design/security.rst:69
+msgid ""
+"The lifetime of the persistent cookie can be controlled in the `/elgg-"
+"config/settings.php` file. The default lifetime is 30 days. The database "
+"records for the persistent cookies will be removed after the lifetime "
+"expired."
+msgstr ""
+"Время жизни постоянной куки можно контролировать в файле `/elgg-"
+"config/settings.php`. Время жизни по умолчанию — 30 дней. Записи базы данных"
+" для постоянных куки будут удалены после истечения срока жизни."
+
+#: ../../design/security.rst:73
+msgid "Alternative authentication"
+msgstr "Альтернативная аутентификация"
+
+#: ../../design/security.rst:75
+msgid "This section is very hand-wavy"
+msgstr "Этот раздел очень общий"
+
+#: ../../design/security.rst:77
+msgid ""
+"To replace Elgg's default user authentication system, a plugin could replace"
+" the default ``login`` action with its own. Better would be to register a "
+"PAM handler using ``elgg_register_pam_handler()`` which handles the "
+"authentication of the user based on the new requirements."
+msgstr ""
+"Чтобы заменить систему аутентификации пользователей Elgg по умолчанию, "
+"плагин может заменить стандартное действие ``login`` на своё. Лучше было бы "
+"зарегистрировать обработчик PAM с помощью ``elgg_register_pam_handler()``, "
+"который обрабатывает аутентификацию пользователя на основе новых требований."
+
+#: ../../design/security.rst:81
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: ../../design/security.rst:83
+msgid ""
+"You must enable SSL support on your server for any of these techniques to "
+"work."
+msgstr ""
+"Вы должны включить поддержку SSL на вашем сервере, чтобы любые из этих "
+"методов работали."
+
+#: ../../design/security.rst:85
+msgid ""
+"You can serve your whole site over SSL by changing the site URL to include "
+"\"https\" instead of just \"http\"."
+msgstr ""
+"Вы можете обслуживать весь свой сайт через SSL, изменив URL сайта, чтобы "
+"включить \"https\" вместо просто \"http\"."
+
+#: ../../design/security.rst:88
+msgid "XSS"
+msgstr "XSS"
+
+#: ../../design/security.rst:90
+msgid ""
+"Filtering is used in Elgg to make XSS attacks more difficult. The purpose of"
+" the filtering is to remove Javascript and other dangerous input from users."
+msgstr ""
+"Фильтрация используется в Elgg, чтобы сделать атаки XSS более сложными. Цель"
+" фильтрации — удалить JavaScript и другой опасный ввод от пользователей."
+
+#: ../../design/security.rst:93
+msgid ""
+"Filtering is performed through the function ``elgg_sanitize_input()``. This "
+"function takes in a string and returns a filtered string. It triggers a "
+"``sanitize, input`` event."
+msgstr ""
+"Фильтрация выполняется через функцию ``elgg_sanitize_input()``. Эта функция "
+"принимает строку и возвращает отфильтрованную строку. Она запускает событие "
+"``sanitize, input``."
+
+#: ../../design/security.rst:96
+msgid ""
+"By default Elgg comes with the htmLawed filtering code. Developers can drop "
+"in any additional or replacement filtering code as a plugin."
+msgstr ""
+"По умолчанию Elgg поставляется с кодом фильтрации htmLawed. Разработчики "
+"могут добавить любой дополнительный или заменяющий код фильтрации в виде "
+"плагина."
+
+#: ../../design/security.rst:98
+msgid ""
+"The ``elgg_sanitize_input()`` function is called on any user input as long "
+"as the input is obtained through a call to ``get_input()``. If for some "
+"reason a developer did not want to perform the default filtering on some "
+"user input, the ``get_input()`` function has a parameter for turning off "
+"filtering."
+msgstr ""
+"Функция ``elgg_sanitize_input()`` вызывается для любого пользовательского "
+"ввода, пока ввод получен через вызов ``get_input()``. Если по какой-то "
+"причине разработчик не хочет выполнять фильтрацию по умолчанию для "
+"некоторого пользовательского ввода, функция ``get_input()`` имеет параметр "
+"для отключения фильтрации."
+
+#: ../../design/security.rst:102
+msgid "CSRF / XSRF"
+msgstr "CSRF / XSRF"
+
+#: ../../design/security.rst:104
+msgid ""
+"Elgg generates security tokens to prevent `cross-site request forgery`_. "
+"These are embedded in all forms and state-modifying AJAX requests as long as"
+" the correct API is used. Read more in the :doc:`/guides/actions` developer "
+"guide."
+msgstr ""
+"Elgg генерирует токены безопасности для предотвращения `cross-site request "
+"forgery`_. Они встраиваются во все формы и запросы AJAX, изменяющие "
+"состояние, при условии использования правильного API. Подробнее читайте в "
+"руководстве разработчика :doc:`/guides/actions`."
+
+#: ../../design/security.rst:108
+msgid "Signed URLs"
+msgstr "Подписанные URL"
+
+#: ../../design/security.rst:110
+msgid ""
+"It's possible to protect URLs with a unique signature. Read more in the "
+":doc:`/guides/actions` developer guide."
+msgstr ""
+"Возможно защитить URL с помощью уникальной подписи. Подробнее читайте в "
+"руководстве разработчика :doc:`/guides/actions`."
+
+#: ../../design/security.rst:113
+msgid "SQL Injection"
+msgstr "SQL-инъекция"
+
+#: ../../design/security.rst:115
+msgid ""
+"Elgg's API sanitizes all input before issuing DB queries. Read more in the "
+":doc:`/design/database` design doc."
+msgstr ""
+"API Elgg санирует весь ввод перед выполнением запросов к базе данных. "
+"Подробнее читайте в документации по дизайну :doc:`/design/database`."
+
+#: ../../design/security.rst:118
+msgid "Privacy"
+msgstr "Конфиденциальность"
+
+#: ../../design/security.rst:120
+msgid ""
+"Elgg uses an ACL system to control which users have access to various pieces"
+" of content. Read more in the :doc:`/design/database` design doc."
+msgstr ""
+"Elgg использует систему ACL для контроля того, какие пользователи имеют "
+"доступ к различным фрагментам контента. Подробнее читайте в документации по "
+"дизайну :doc:`/design/database`."
+
+#: ../../design/security.rst:125
+msgid "Hardening"
+msgstr "Усиление защиты"
+
+#: ../../design/security.rst:127
+msgid ""
+"Site administrators can configure settings which will help with hardening "
+"the website. Read more in the Administrator guide :doc:`/admin/security`."
+msgstr ""
+"Администраторы сайта могут настроить параметры, которые помогут усилить "
+"защиту сайта. Подробнее читайте в руководстве администратора "
+":doc:`/admin/security`."

@@ -20,6 +20,7 @@ return array(
 	'item:object:file:video' => 'Видео',
 	'item:object:file:word' => 'Word',
 	'collection:object:file' => 'Файлы',
+	'list:object:file:no_results' => 'Файлы не найдены',
 	
 	'collection:object:file:all' => "Все файлы",
 	'collection:object:file:owner' => "Файлы %s",

@@ -11,6 +11,7 @@ return array(
 	 */
 	'item:object:bookmarks' => 'Закладки',
 	'collection:object:bookmarks' => 'Закладки',
+	'list:object:bookmarks:no_results' => 'Закладки не найдены',
 	
 	'collection:object:bookmarks:group' => 'Закладки группы',
 	'collection:object:bookmarks:all' => "Все закладки",
