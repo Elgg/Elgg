@@ -23,7 +23,7 @@ class Site {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'file',
-			'icon' => 'copy-regular',
+			'icon' => 'copy',
 			'text' => elgg_echo('collection:object:file'),
 			'href' => elgg_generate_url('default:object:file'),
 		]);
