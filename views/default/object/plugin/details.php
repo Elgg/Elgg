@@ -34,7 +34,7 @@ if (!empty($authors)) {
 		if ($author->email()) {
 			$author_content .= elgg_view('output/email', [
 				'text' => false,
-				'icon' => 'envelope-regular',
+				'icon' => 'envelope',
 				'value' => $author->email(),
 				'class' => 'mls',
 			]);
