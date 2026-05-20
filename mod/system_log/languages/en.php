@@ -7,6 +7,12 @@
 
 return array(
 	'admin:administer_utilities:logbrowser' => 'Log browser',
+	
+	'system_log:settings:enable_ip_logging' => 'Log client IP address',
+	'system_log:settings:enable_ip_logging:help' => 'When enabled the IP address of the client which is performing the action is logged',
+	'system_log:settings:clear_ip_addresses' => 'Clear logged IP addresses',
+	'system_log:action:clear_ip_addresses:success' => 'IP addresses removed from the system log table',
+	
 	'logbrowser:search' => 'Refine results',
 	'logbrowser:user' => 'Username to search by',
 	'logbrowser:starttime' => 'Beginning time (for example "last monday", "1 hour ago")',
