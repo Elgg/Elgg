@@ -25,6 +25,8 @@ class SystemLog {
 	protected Database $db;
 	
 	protected bool $logging_enabled = true;
+	
+	protected bool $log_ip_address = true;
 
 	/**
 	 * Constructor
@@ -35,6 +37,7 @@ class SystemLog {
 	public function __construct(LogEventCache $cache, Database $db) {
 		$this->cache = $cache;
 		$this->db = $db;
+		$this->log_ip_address = (bool) elgg_get_plugin_setting('enable_ip_logging', 'system_log');
 	}
 
 	/**
@@ -110,24 +113,9 @@ class SystemLog {
 		$insert->object_subtype = $object->getSubtype();
 		$insert->ip_address = _elgg_services()->request->getClientIp() ?: '0.0.0.0';
 		$insert->performed_by_guid = elgg_get_logged_in_user_guid();
-
-		if (isset($object->access_id)) {
-			$insert->access_id = $object->access_id;
-		} else {
-			$insert->access_id = ACCESS_PUBLIC;
-		}
-
-		if (isset($object->enabled)) {
-			$insert->enabled = $object->enabled;
-		} else {
-			$insert->enabled = 'yes';
-		}
-
-		if (isset($object->owner_guid)) {
-			$insert->owner_guid = $object->owner_guid;
-		} else {
-			$insert->owner_guid = 0;
-		}
+		$insert->access_id = $object->access_id ?? ACCESS_PUBLIC;
+		$insert->enabled = $object->enabled ?? 'yes';
+		$insert->owner_guid = $object->owner_guid ?? 0;
 
 		return $insert;
 	}
@@ -169,7 +157,7 @@ class SystemLog {
 			'access_id' => $qb->param($object->access_id, ELGG_VALUE_INTEGER),
 			'enabled' => $qb->param($object->enabled, ELGG_VALUE_STRING),
 			'time_created' => $qb->param($this->getCurrentTime()->getTimestamp(), ELGG_VALUE_INTEGER),
-			'ip_address' => $qb->param($object->ip_address, ELGG_VALUE_STRING),
+			'ip_address' => $qb->param($this->log_ip_address ? $object->ip_address : '', ELGG_VALUE_STRING),
 		]);
 
 		$this->db->registerDelayedQuery($qb);

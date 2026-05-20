@@ -3,6 +3,9 @@
  * Elgg log rotator plugin settings.
  */
 
+use Elgg\Database\Select;
+use Elgg\SystemLog\SystemLog;
+
 $plugin = elgg_extract('entity', $vars);
 if (!$plugin instanceof ElggPlugin) {
 	return;
@@ -29,3 +32,29 @@ echo elgg_view_field([
 	'value' => $plugin->retention,
 	'min' => 0,
 ]);
+
+echo elgg_view_field([
+	'#type' => 'switch',
+	'#label' => elgg_echo('system_log:settings:enable_ip_logging'),
+	'#help' => elgg_echo('system_log:settings:enable_ip_logging:help'),
+	'name' => 'params[enable_ip_logging]',
+	'value' => $plugin->enable_ip_logging,
+]);
+
+if (!$plugin->enable_ip_logging) {
+	// check if we need to clean the current logs of IP addresses
+	$select = Select::fromTable(SystemLog::TABLE_NAME);
+	$select->select('count(*) as total')
+		->where($select->compare('ip_address', '!=', '', ELGG_VALUE_STRING));
+	
+	$result = elgg()->db->getDataRow($select);
+	if (!empty($result) && $result->total > 0) {
+		elgg_register_menu_item('title', [
+			'name' => 'clear_ip',
+			'text' => elgg_echo('system_log:settings:clear_ip_addresses'),
+			'href' => elgg_generate_action_url('system_log/clear_ip_addresses'),
+			'confirm' => elgg_echo('deleteconfirm:plural'),
+			'link_class' => ['elgg-button', 'elgg-button-delete'],
+		]);
+	}
+}

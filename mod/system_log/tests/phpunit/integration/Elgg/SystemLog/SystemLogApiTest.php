@@ -7,10 +7,23 @@ use Elgg\Event;
 
 class SystemLogApiTest extends IntegrationTestCase {
 
+	protected $log_ip;
+	
 	public function up() {
+		$plugin = elgg_get_plugin_from_id($this->getPluginID());
+		
+		$this->log_ip = (bool) $plugin->enable_ip_logging;
+		
 		self::createApplication(['isolate' => true]);
-
-		elgg()->system_log->setCurrentTime();
+		$plugin->setSetting('enable_ip_logging', true);
+		
+		elgg()->reset(SystemLog::name());
+		SystemLog::instance()->setCurrentTime();
+	}
+	
+	public function down() {
+		$plugin = elgg_get_plugin_from_id($this->getPluginID());
+		$plugin->setSetting('enable_ip_logging', $this->log_ip);
 	}
 
 	public function testLogsObjectEvent() {
@@ -37,7 +50,7 @@ class SystemLogApiTest extends IntegrationTestCase {
 		}
 
 		$entry = array_shift($log);
-		/* @var $entry \Elgg\SystemLog\SystemLogEntry */
+		/** @var \Elgg\SystemLog\SystemLogEntry $entry */
 
 		$this->assertInstanceOf(SystemLogEntry::class, $entry);
 
@@ -48,6 +61,58 @@ class SystemLogApiTest extends IntegrationTestCase {
 		$this->assertEquals($event, $entry->event);
 		$this->assertEquals($object->owner_guid, $entry->owner_guid);
 		$this->assertMatchesRegularExpression('/\d+\.\d+\.\d+\.\d+/', $entry->ip_address);
+		$this->assertEquals(elgg()->system_log->getCurrentTime()->getTimestamp(), $entry->time_created);
+		
+		$loaded_entry = SystemLog::instance()->get($entry->id);
+
+		$this->assertEquals($entry, $loaded_entry);
+
+		$loaded_object = $loaded_entry->getObject();
+
+		$this->assertEquals($object->guid, $loaded_object->guid);
+	}
+	
+	public function testLogsObjectEventWithIpLoggingDisabled() {
+		$plugin = elgg_get_plugin_from_id($this->getPluginID());
+		$plugin->setSetting('enable_ip_logging', false);
+		
+		elgg()->reset(SystemLog::name());
+		SystemLog::instance()->setCurrentTime();
+		
+		$object = $this->createObject();
+
+		$event = 'SystemLogApiTest' . rand();
+
+		\Elgg\SystemLog\Logger::log(new Event(elgg(), 'log', 'systemlog', null, ['object' => [
+			'object' => $object,
+			'event' => $event,
+		]]));
+
+		_elgg_services()->db->executeDelayedQueries();
+
+		$log = SystemLog::instance()->getAll([
+			'event' => $event,
+		]);
+
+		if (empty($log)) {
+			// We are seeing intermittent issues with tests on different systems
+			// likely due to delayed queries and shutdown events
+			// We don't care enough about system log to kill the build on error
+			$this->markTestSkipped();
+		}
+
+		$entry = array_shift($log);
+		/** @var \Elgg\SystemLog\SystemLogEntry $entry */
+
+		$this->assertInstanceOf(SystemLogEntry::class, $entry);
+
+		$this->assertEquals($object->guid, $entry->object_id);
+		$this->assertEquals($object::class, $entry->object_class);
+		$this->assertEquals($object->getType(), $entry->object_type);
+		$this->assertEquals($object->getSubtype(), $entry->object_subtype);
+		$this->assertEquals($event, $entry->event);
+		$this->assertEquals($object->owner_guid, $entry->owner_guid);
+		$this->assertEmpty($entry->ip_address);
 		$this->assertEquals(elgg()->system_log->getCurrentTime()->getTimestamp(), $entry->time_created);
 		
 		$loaded_entry = SystemLog::instance()->get($entry->id);
