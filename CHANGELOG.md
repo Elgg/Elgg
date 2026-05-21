@@ -1,3 +1,16 @@
+<a name="6.3.5"></a>
+### 6.3.5 (2026-05-21)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug fixes
+
+* **images:** prevent OOM issues when images are too large to resize [ab91d59dc](https://github.com/Elgg/Elgg/commit/ab91d59dc2caaa3fdbfe7e9b916fc0cc7e6b323a)
+* **email:** improved error handling when email transport fails [b8cb23916](https://github.com/Elgg/Elgg/commit/b8cb2391653ca7806559d08ebc1808a73224a48a)
+
+
 <a name="6.3.4"></a>
 ### 6.3.4 (2026-03-24)
 
