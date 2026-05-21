@@ -47,8 +47,14 @@ class EmailUnitTest extends UnitTestCase {
 		$this->assertEquals(new Address($site->getEmailAddress(), $from_display), $email->getFrom());
 		$this->assertEquals(new Address($to->email, $to->getDisplayName()), $email->getTo()[0]);
 		
+		$site = elgg_get_site_entity();
 		$this->assertInstanceOf(Address::class, $email->getSender());
-		$this->assertEquals(new Address($from->email, $from->getDisplayName()), $email->getSender());
+		$this->assertEquals(new Address($site->getEmailAddress(), $site->getDisplayName()), $email->getSender());
+		
+		// set custom sender
+		$email->setSender('sender@elgg.org');
+		$this->assertInstanceOf(Address::class, $email->getSender());
+		$this->assertEquals(new Address('sender@elgg.org'), $email->getSender());
 	}
 
 	public function testFactoryFromEmailString() {
