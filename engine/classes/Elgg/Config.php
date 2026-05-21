@@ -66,6 +66,9 @@ use Elgg\Traits\Loggable;
  * @property int           $http_request_trusted_proxy_headers		When Elgg is behind a loadbalancer/proxy this can contain a bitwise string of allowed headers for better client information
  * @property array         $icon_sizes
  * @property string        $image_processor
+ * @property int           $image_resize_max_height                 Before resizing an image check the source image for a max height
+ * @property int           $image_resize_max_resolution             Before resizing an image check the source image for a max resolution
+ * @property int           $image_resize_max_width                  Before resizing an image check the source image for a max width
  * @property int           $installed 								Set during installation to the timestamp of installation
  * @property bool          $installer_running
  * @property string        $language                   				Site language code
@@ -221,6 +224,9 @@ class Config {
 			'large' => ['w' => 200, 'h' => 200, 'square' => true, 'upscale' => true],
 			'master' => ['w' => 10240, 'h' => 10240, 'square' => false, 'upscale' => false, 'crop' => false],
 		],
+		'image_resize_max_height' => 10000,
+		'image_resize_max_resolution' => 16777216, // 16MP
+		'image_resize_max_width' => 10000,
 		'language' => 'en',
 		'language_detect_from_browser' => true,
 		'lastcache' => 0,

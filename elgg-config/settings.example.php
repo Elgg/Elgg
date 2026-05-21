@@ -373,15 +373,24 @@ $CONFIG->action_time_limit = 120;
 $CONFIG->allow_phpinfo = false;
 
 /**
- * Configure image processor
+ * Configure image settings
  *
- * This setting can be used to select a different image processor. By default the GD library is used.
+ * The 'image_processor' setting can be used to select a different image processor. By default, the GD library is used.
  * Currently only 'imagick' is supported as a different configuration.
  * For Imagick the 'imagick' extension is required.
  *
  * @global string $CONFIG->image_processor
+ *
+ * In order to help prevent OOM issues with image resizing limitations can be set on the source images
+ *
+ * @global int $CONFIG->image_resize_max_height     Max height of the source image (default: 10000 (px))
+ * @global int $CONFIG->image_resize_max_resolution Max resolution of the source image (default: 16777216 (16MP))
+ * @global int $CONFIG->image_resize_max_width      Max width of the source image (default: 10000 (px))
  */
 //$CONFIG->image_processor = 'imagick';
+//$CONFIG->image_resize_max_height = 10000;
+//$CONFIG->image_resize_max_resolution = 16777216; // 16MP
+//$CONFIG->image_resize_max_width = 10000;
 
 /**
  * Control if webp images are allowed to be served for icons (if supported by server and browser).

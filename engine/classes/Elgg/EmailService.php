@@ -10,13 +10,14 @@ use Elgg\Email\PlainTextPart;
 use Elgg\Exceptions\RuntimeException;
 use Elgg\Traits\Loggable;
 use Elgg\Views\HtmlFormatter;
+use Laminas\Mail\Exception\ExceptionInterface;
 use Laminas\Mail\Header\ContentType;
 use Laminas\Mail\Message as MailMessage;
 use Laminas\Mail\Transport\TransportInterface;
-use Laminas\Mime\Message as MimeMessage;
 use Laminas\Mime\Exception\InvalidArgumentException;
-use Laminas\Mime\Part;
+use Laminas\Mime\Message as MimeMessage;
 use Laminas\Mime\Mime;
+use Laminas\Mime\Part;
 
 /**
  * Email service
@@ -134,7 +135,7 @@ class EmailService {
 		
 		try {
 			$this->mailer->send($message);
-		} catch (RuntimeException $e) {
+		} catch (ExceptionInterface $e) {
 			$this->getLogger()->error($e->getMessage());
 
 			return false;

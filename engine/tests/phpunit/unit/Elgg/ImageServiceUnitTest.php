@@ -2,6 +2,9 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\RangeException;
+
 class ImageServiceUnitTest extends \Elgg\UnitTestCase {
 	
 	private $image_service;
@@ -11,6 +14,10 @@ class ImageServiceUnitTest extends \Elgg\UnitTestCase {
 	private $temp_destination_image_location;
 	
 	private $default_image_resize_params;
+	
+	protected int $config_image_height;
+	protected int $config_image_width;
+	protected int $config_image_resolution;
 
 	public function up() {
 		$this->image_service = _elgg_services()->imageService;
@@ -29,6 +36,10 @@ class ImageServiceUnitTest extends \Elgg\UnitTestCase {
 			'upscale' => false,
 			'square' => true,
 		];
+		
+		$this->config_image_height = _elgg_services()->config->image_resize_max_height;
+		$this->config_image_width = _elgg_services()->config->image_resize_max_width;
+		$this->config_image_resolution = _elgg_services()->config->image_resize_max_resolution;
 	}
 
 	public function down() {
@@ -41,6 +52,10 @@ class ImageServiceUnitTest extends \Elgg\UnitTestCase {
 			$this->assertTrue(unlink($this->temp_destination_image_location));
 		}
 		$this->assertFileDoesNotExist($this->temp_destination_image_location);
+		
+		_elgg_services()->config->image_resize_max_height = $this->config_image_height;
+		_elgg_services()->config->image_resize_max_width = $this->config_image_width;
+		_elgg_services()->config->image_resize_max_resolution = $this->config_image_resolution;
 	}
 
 	public function testResizeFromImageExtension() {
@@ -79,5 +94,43 @@ class ImageServiceUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertTrue($resize_result);
 		$this->assertFileExists($destination_image);
+	}
+	
+	public function testAssertValidImageDimensionsWithNonImage() {
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessageMatches('/Unable to read image data for \'.+\'/');
+		$this->invokeInaccessableMethod($this->image_service, 'assertValidImageDimensions', elgg_get_data_path() . '1/1/foobar.txt');
+	}
+	
+	public function testAssertValidImageDimensionsWithTooHighImage() {
+		_elgg_services()->config->image_resize_max_height = 100;
+		
+		$this->expectException(RangeException::class);
+		$this->expectExceptionMessage('Image height too large to resize');
+		$this->invokeInaccessableMethod($this->image_service, 'assertValidImageDimensions', $this->temp_source_image_location);
+	}
+	
+	public function testAssertValidImageDimensionsWithTooWideImage() {
+		_elgg_services()->config->image_resize_max_width = 100;
+		
+		$this->expectException(RangeException::class);
+		$this->expectExceptionMessage('Image width too large to resize');
+		$this->invokeInaccessableMethod($this->image_service, 'assertValidImageDimensions', $this->temp_source_image_location);
+	}
+	
+	public function testAssertValidImageDimensionsWithTooHighResolutionImage() {
+		_elgg_services()->config->image_resize_max_resolution = 100;
+		
+		$this->expectException(RangeException::class);
+		$this->expectExceptionMessage('Image resolution too large to resize');
+		$this->invokeInaccessableMethod($this->image_service, 'assertValidImageDimensions', $this->temp_source_image_location);
+	}
+
+	public function testAssertValidImageDimensionsWithValidImage() {
+		_elgg_services()->config->image_resize_max_height = 300;
+		_elgg_services()->config->image_resize_max_width = 300;
+		_elgg_services()->config->image_resize_max_resolution = 300 * 300;
+		
+		$this->invokeInaccessableMethod($this->image_service, 'assertValidImageDimensions', $this->temp_source_image_location);
 	}
 }
