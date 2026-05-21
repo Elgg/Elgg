@@ -4,11 +4,11 @@
 
 .elgg-spinner {
 	/* general spinner styles */
-	background: white;
+	background: var(--elgg-layout-background-color);
 	padding: 0.5rem;
 	border: 1px solid var(--elgg-border-color-soft);
 	border-top: 0;
-	border-radius: 0 0 1rem 1rem;
+	border-radius: 0 0 var(--elgg-border-radius-large) var(--elgg-border-radius-large);
 	/* negative half the width for proper centering */
 	margin-left: -2rem;
 

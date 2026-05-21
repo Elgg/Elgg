@@ -31,9 +31,6 @@ if (!$custom_form_section && !$access) {
 	return;
 }
 
-echo $custom_form_section;
-echo $access;
-
 echo elgg_view_field([
 	'#type' => 'hidden',
 	'name' => 'guid',
@@ -47,6 +44,9 @@ if (elgg_in_context('default_widgets')) {
 		'value' => 1,
 	]);
 }
+
+echo $custom_form_section;
+echo $access;
 
 $footer = elgg_view_field([
 	'#type' => 'submit',

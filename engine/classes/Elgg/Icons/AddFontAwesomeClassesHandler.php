@@ -19,7 +19,7 @@ class AddFontAwesomeClassesHandler {
 		'delete' => 'xmark',
 		'grid' => 'table-cells',
 		'info' => 'info-circle',
-		'mail' => 'envelope-regular',
+		'mail' => 'envelope',
 		'refresh' => 'arrow-rotate-right',
 		'remove' => 'times',
 		'settings' => 'wrench',
@@ -588,7 +588,7 @@ class AddFontAwesomeClassesHandler {
 			} elseif (in_array($base_icon, self::BRANDS)) {
 				$classes[] = 'fa-brands';
 			} else {
-				$classes[] = 'fa-solid';
+				$classes[] = 'fa';
 			}
 	
 			$classes[] = "fa-{$base_icon}";

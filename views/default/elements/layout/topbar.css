@@ -46,7 +46,7 @@
 	
 	&:before {
 		content: "\25b2";
-		color: white;
+		color: var(--elgg-layout-background-color);
 		position: absolute;
 		font-size: 1rem;
 		top: -1rem;
@@ -86,7 +86,7 @@
 		height: 3px;
 		width: 100%;
 		background: white;
-		border-radius: 2px;
+		border-radius: var(--elgg-border-radius-small);
 		opacity: 1;
 		left: 0;
 		transform: rotate(0deg);
@@ -159,17 +159,15 @@ html.elgg-nav-collapsed {
 		flex-direction: column;
 		
 		> .elgg-menu > li {
-			> a.elgg-non-link {
-				&:after {
-					content: "\f107";
-					font-family: 'Font Awesome\ 7 Free';
-					font-weight: 900;
-					font-size: 0.5rem;
-					display: none;
-					width: 1.5rem;
-					text-align: center;
-					float: right;
-				}
+			> a.elgg-non-link:before {
+				content: "\f107";
+				font-family: var(--elgg-font-family-font-awesome);
+				font-weight: 900;
+				font-size: 0.5rem;
+				display: none;
+				width: 1.5rem;
+				text-align: center;
+				float: right;
 			}
 		}
 	}
@@ -179,6 +177,7 @@ html.elgg-nav-collapsed {
 		
 		.elgg-badge {
 			background-color: var(--elgg-topbar-indicator);
+			color: var(--elgg-text-color-strong);
 		}
 	}
 	
@@ -264,10 +263,8 @@ html.elgg-nav-collapsed {
 		align-items: center;
 		
 		> .elgg-menu-container > .elgg-menu > li {
-			> a.elgg-non-link {
-				&:after {
-					display: inline-block;
-				}
+			> a.elgg-non-link:before {
+				display: inline-block;
 			}
 		}
 	}
@@ -365,9 +362,9 @@ html.elgg-nav-collapsed {
 						margin: 0;
 					}
 					
-					.elgg-menu-parent:after {
+					.elgg-menu-parent:before {
 						content: "\f105";
-						font-family: 'Font Awesome\ 7 Free';
+						font-family: var(--elgg-font-family-font-awesome);
 						font-weight: 900;
 						font-size: 0.5rem;
 						line-height: 1.5rem;
@@ -401,7 +398,8 @@ html.elgg-nav-collapsed {
 				.elgg-badge {
 					position: absolute;
 					top: 1rem;
-					right: 0;
+					left: 1.5rem;
+					z-index: 1;
 				}
 			}
 		}

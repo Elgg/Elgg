@@ -5,7 +5,10 @@
 *************************************** */
 .elgg-module {
 	display: block;
-	margin-bottom: 2rem;
+	
+	&:not(:last-child) {
+		margin-bottom: 2rem;
+	}
 	
 	> .elgg-head {
 		display: flex;
@@ -80,7 +83,7 @@
 	DROPDOWN MODULE
 *************************************** */
 .elgg-module-dropdown {
-	background-color: white;
+	background-color: var(--elgg-layout-background-color);
 	display: none;
 	width: 15rem;
 	padding: 2rem;

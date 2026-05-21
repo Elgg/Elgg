@@ -28,6 +28,7 @@ return array(
 
 	'item:object:messages' => 'Сообщение',
 	'collection:object:messages' => 'Сообщения',
+	'list:object:messages:no_results' => 'Сообщения не найдены',
 
 	/**
 	* Status messages

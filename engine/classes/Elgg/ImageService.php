@@ -142,8 +142,10 @@ class ImageService {
 	 *
 	 * @return bool
 	 */
-	public function fixOrientation($filename) {
+	public function fixOrientation(string $filename): bool {
 		try {
+			$this->assertValidImageDimensions($filename);
+			
 			$image = $this->imagine->open($filename);
 			$metadata = $image->metadata();
 			if (!isset($metadata['ifd0.Orientation'])) {
@@ -180,7 +182,8 @@ class ImageService {
 	 * @throws RangeException
 	 */
 	public function normalizeResizeParameters(string $source, array $params = []): array {
-
+		$this->assertValidImageDimensions($source);
+		
 		$image = $this->imagine->open($source);
 
 		$width = $image->getSize()->getWidth();
@@ -310,5 +313,37 @@ class ImageService {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Assert that the source image has valid dimensions.
+	 * This can help prevent OOM issues during resizing
+	 *
+	 * @param string $path path to the image to validate
+	 *
+	 * @return void
+	 * @throws InvalidArgumentException
+	 * @throws RangeException
+	 * @since 7.0
+	 */
+	protected function assertValidImageDimensions(string $path): void {
+		$info = getimagesize($path);
+		if (!is_array($info)) {
+			throw new InvalidArgumentException("Unable to read image data for '{$path}'");
+		}
+		
+		$height = (int) elgg_extract(1, $info);
+		if ($height > $this->config->image_resize_max_height) {
+			throw new RangeException('Image height too large to resize');
+		}
+		
+		$width = (int) elgg_extract(0, $info);
+		if ($width > $this->config->image_resize_max_width) {
+			throw new RangeException('Image width too large to resize');
+		}
+		
+		if (($width * $height) > $this->config->image_resize_max_resolution) {
+			throw new RangeException('Image resolution too large to resize');
+		}
 	}
 }

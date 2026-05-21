@@ -6,6 +6,9 @@
  */
 
 return array(
+	'collection:user:user:all' => 'Все участники',
+	'collection:user:user:online' => 'Участники онлайн',
+	'collection:user:user:popular' => 'Популярные участники',
 	
 	'members:label:online' => 'Онлайн',
 	'members:label:search' => 'Результаты поиска',

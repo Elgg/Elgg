@@ -10,7 +10,7 @@ button {
 	line-height: 1.75rem;
 	padding: 0.325rem 1rem;
 	cursor: pointer;
-	border-radius: 3px;
+	border-radius: var(--elgg-border-radius-medium);
 	transition: background-color 0.5s, color 0.5s;
 	border: none;
 	white-space: nowrap;

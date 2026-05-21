@@ -40,7 +40,7 @@ class Entity {
 	
 		$menu->add(\ElggMenuItem::factory([
 			'name' => 'thread',
-			'icon' => 'comments-regular',
+			'icon' => 'comments',
 			'text' => elgg_echo('thewire:thread'),
 			'href' => elgg_generate_url('collection:object:thewire:thread', [
 				'guid' => $entity->wire_thread,

@@ -4,12 +4,12 @@
 .elgg-progressbar {
 	height: 1rem;
 	border: 1px solid #dcdcdc;
-	border-radius: 0.5rem;
+	border-radius: var(--elgg-border-radius-large);
 }
 .ui-progressbar-value {
 	height: 1rem;
 	background: #0078ac;
-	border-radius: 0.5rem;
+	border-radius: var(--elgg-border-radius-large);
 	margin: -1px 0 0 -1px;
 }
 .elgg-progressbar-counter {

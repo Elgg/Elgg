@@ -139,7 +139,12 @@ function elgg_register_title_button(string $name = 'add', string $entity_type = 
 		return;
 	}
 	
-	$href = elgg_generate_url("{$name}:{$entity_type}:{$entity_subtype}", [
+	$route_name = "{$name}:{$entity_type}:{$entity_subtype}";
+	if (!elgg_route_exists($route_name)) {
+		return;
+	}
+	
+	$href = elgg_generate_url($route_name, [
 		'guid' => $owner->guid,
 	]);
 	

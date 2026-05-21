@@ -455,6 +455,10 @@ De volgende karakters zijn niet toegestaan: %s',
 	'user:delete:description' => 'Bevestig dat het account van %s verwijderd mag worden. Het verwijderen van het account zal ook alle content van deze gebruiker (inclusief groepen) verwijderen. Mogelijk gerelateerde content, zoals groepscontent, subpagina\'s of reacties op content zullen ook verwijderd worden. Hieronder een overzicht van de content waar deze gebruiker de eigenaar van is.',
 	'user:delete:confirm' => "Ik ga akkoord met het verwijderen van deze gebruiker",
 	
+	'user:color_scheme:label' => "Kleuren schema",
+	'user:color_scheme:browser' => "Browser voorkeur",
+	'user:color_scheme:success' => "Kleuren schema is bijgewerkt",
+	
 	'user:language:label' => "Jouw taal",
 	'user:language:success' => "Je taalinstelling is gewijzigd.",
 
@@ -1543,6 +1547,8 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'config:delayed_email:help' => "Dit geeft gebruikers de mogelijkheid om e-mailnotificaties uit te stellen en gebundeld te ontvangen op een opgegeven frequentie (dagelijks, wekelijks)",
 	'config:message_delay:label' => "Systeemberichten vertraging",
 	'config:message_delay:help' => "Het standaard aantal secondes voordat succes systeemberichten verdwijnen",
+	'config:color_schemes_enabled:label' => "Kleuren schema's zijn ingeschakeld",
+	'config:color_schemes_enabled:help' => "Op basis van de browser voorkeuren van de gebruiker kan het thema worden gewisseld tussen verschillende kleuren schema's zoals donkere modus",
 
 	'upgrading' => 'Bijwerken',
 	'upgrade:core' => 'Je Elgg-installatie is bijgewerkt',
@@ -1824,6 +1830,8 @@ Global variables:
 /**
  * Color schemes
  */
+	'color_scheme:default' => "Standaard (licht)",
+	'color_scheme:dark' => "Donker",
 
 /**
  * Miscellaneous

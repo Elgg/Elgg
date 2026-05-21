@@ -109,6 +109,13 @@ return [
 				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
 			],
 		],
+		'collection:user:user:group_requests' => [
+			'path' => '/groups/requests/{guid}',
+			'resource' => 'groups/requests',
+			'middleware' => [
+				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
+			],
+		],
 		'add:group:group' => [
 			'path' => '/groups/add/{guid}',
 			'resource' => 'groups/add',
@@ -135,13 +142,6 @@ return [
 		'invite:group:group' => [
 			'path' => '/groups/invite/{guid}',
 			'resource' => 'groups/invite',
-			'middleware' => [
-				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
-			],
-		],
-		'requests:group:group' => [
-			'path' => '/groups/requests/{guid}',
-			'resource' => 'groups/requests',
 			'middleware' => [
 				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
 			],

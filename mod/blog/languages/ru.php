@@ -8,6 +8,7 @@
 return array(
 	'item:object:blog' => 'Блог',
 	'collection:object:blog' => 'Блоги',
+	'list:object:blog:no_results' => 'Блоги не найдены',
 	
 	'collection:object:blog:all' => 'Все блоги',
 	'collection:object:blog:owner' => 'Блоги %s',

@@ -10,6 +10,4 @@ if (!$entity instanceof \ElggObject) {
 	return;
 }
 
-$vars['icon'] = $entity->hasIcon('tiny') ? elgg_view_entity_icon($entity, 'tiny') : '';
-
 echo elgg_view('input/autocomplete/default', $vars);

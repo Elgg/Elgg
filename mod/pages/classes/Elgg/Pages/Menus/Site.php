@@ -22,7 +22,7 @@ class Site {
 
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'pages',
-			'icon' => 'file-alt-regular',
+			'icon' => 'file-alt',
 			'text' => elgg_echo('collection:object:page'),
 			'href' => elgg_generate_url('default:object:page'),
 		]);

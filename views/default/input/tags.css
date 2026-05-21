@@ -1,6 +1,6 @@
-:root {
+.tagify__dropdown {
 	--tagify-dd-color-primary: var(--elgg-background-color-highlight);
-	--tagify-dd-bg-color: white;
+	--tagify-dd-bg-color: var(--elgg-layout-background-color);
 }
 .tagify {
 	--tags-border-color: var(--elgg-border-color-mild);
@@ -29,6 +29,8 @@
 	align-items: flex-start;
 	flex-wrap: wrap;
 	border: 1px solid var(--tags-border-color);
+	border-radius: var(--elgg-border-radius-medium);
+	background: var(--elgg-background-color-input);
 	padding: 0;
 	line-height: normal;
 	cursor: text;
@@ -126,7 +128,7 @@
 	color: #000;
 	color: var(--tag-text-color, #000);
 	line-height: inherit;
-	border-radius: 3px;
+	border-radius: var(--elgg-border-radius-small);
 	white-space: nowrap;
 	transition: 0.13s ease-out;
 }
@@ -479,7 +481,7 @@
 	padding: 0.3em 0.5em;
 	margin: 1px;
 	cursor: pointer;
-	border-radius: 2px;
+	border-radius: var(--elgg-border-radius-small);
 	position: relative;
 	outline: 0;
 }

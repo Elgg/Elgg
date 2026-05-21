@@ -107,6 +107,7 @@ Dit kan potentieel non-HTML views niet laten functioneren.",
 
 	'developers:request_stats' => "Request Statistieken (bevat niet het shutdown event)",
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
+	'developers:log_queries' => "DB queries",
 	'developers:boot_cache_rebuilt' => "De boot cache is herbouwd voor deze pagina",
 	'developers:elapsed_time' => "Tijd verstreken (s)",
 

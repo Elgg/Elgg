@@ -35,8 +35,8 @@ class StickyForms {
 		$default_ignored_field_names = [
 			'__elgg_ts', // never store CSRF tokens
 			'__elgg_token', // never store CSRF tokens
-			'_elgg_sticky_form_name', // from sticky form support
-			'_elgg_sticky_ignored_fields', // from sticky form support
+			'__elgg_sticky_form_name', // from sticky form support
+			'__elgg_sticky_ignored_fields', // from sticky form support
 			'_route', // added by router
 		];
 		$ignored_field_names = array_merge($default_ignored_field_names, $ignored_field_names);

@@ -8,9 +8,22 @@
 	Form Elements
 *************************************** */
 .elgg-form-body,
-.elgg-form-body > div,
-.elgg-form-body fieldset:not(.elgg-fieldset) > div,
-.elgg-module > .elgg-body > .elgg-field {
+.elgg-form-footer {
+	&:not(:last-child) {
+		margin-bottom: 1rem;
+	}
+	
+	> div,
+	fieldset:not(.elgg-fieldset) > div {
+		&:not(:last-child) {
+			margin-bottom: 1rem;
+		}
+	}
+}
+
+.elgg-form > .elgg-field,
+.elgg-module > .elgg-body > .elgg-field,
+.elgg-tabs-content > div > .elgg-field {
 	&:not(:last-child) {
 		margin-bottom: 1rem;
 	}
@@ -43,11 +56,12 @@ label, .elgg-field-label {
 input, textarea {
 	border: 1px solid var(--elgg-border-color-mild);
 	color: var(--elgg-text-color-strong);
+	background: var(--elgg-background-color-input);
 	font-size: 1rem;
 	padding: 0.25rem 0.5rem;
 	line-height: normal;
 	width: 100%;
-	border-radius: 3px;
+	border-radius: var(--elgg-border-radius-medium);
 }
 
 input:disabled,
@@ -126,7 +140,7 @@ input[type="number"] {
 	left: 5px;
 	top: 5px;
 	border: 1px solid #000;
-	border-radius: 3px;
+	border-radius: var(--elgg-border-radius-medium);
 }
 
 .elgg-input-color {
@@ -141,10 +155,11 @@ select {
 	max-width: 100%;
 	border: 1px solid var(--elgg-border-color-mild);
 	color: var(--elgg-text-color-strong);
+	background: var(--elgg-background-color-input);
 	padding: 0.25rem 0.5rem;
 	line-height: 1.75rem;
 	vertical-align: middle;
-	border-radius: 3px;
+	border-radius: var(--elgg-border-radius-medium);
 	
 	&:not([multiple]) {
 		height: 2.5rem;

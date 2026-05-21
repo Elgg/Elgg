@@ -12,7 +12,7 @@
 	
 	--ck-color-text: var(--elgg-text-color-strong);
 	
-	--ck-color-base-background: var(--elgg-layout-background-color);
+	--ck-color-base-background: var(--elgg-background-color-input);
 	--ck-color-base-border: var(--elgg-border-color-mild);
 	
 	--ck-color-focus-border: var(--elgg-border-color-strong);
@@ -61,6 +61,10 @@
 	--ck-color-link-default: var(--elgg-anchor-color);
 }
 
+.ck-focused {
+	--ck-color-base-background: var(--elgg-layout-background-color);
+}
+
 .ck-content {
 	blockquote {
 		font-style: normal;
@@ -70,5 +74,18 @@
 		background-color: var(--elgg-state-notice-background-color);
 		border: 1px solid var(--elgg-state-notice-border-color);
 		color: var(--elgg-state-notice-font-color);
+	}
+	
+	ul,
+	ol {
+		margin: 0 0.5rem 0 0.5rem;
+		padding-left: 1rem;
+	}
+	
+	> ul,
+	> ol {
+		&:not(:first-child) {
+			margin-top: 1rem;
+		}
 	}
 }

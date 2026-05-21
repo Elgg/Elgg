@@ -29,7 +29,7 @@
 			display: block;
 			padding: 0.5rem 1rem;
 			text-align: center;
-			height: auto;
+			line-height: 1.5rem;
 			color: var(--elgg-text-color-soft);
 			
 			&:hover {
@@ -40,13 +40,17 @@
 	}
 }
 
+.elgg-menu-navigation-tabs-container {
+	margin-bottom: 1rem;
+}
+
 @media screen and (min-width: 50rem) {
 	.elgg-menu-filter,
 	.elgg-tabs {
 		> li {
 			border-bottom-width: 1px;
 			margin: .25rem 0 0 0.5rem;
-			border-radius: 3px 3px 0 0;
+			border-radius: var(--elgg-border-radius-small) var(--elgg-border-radius-small) 0 0;
 			position: relative;
 			top: 1px;
 			flex-grow: 0;

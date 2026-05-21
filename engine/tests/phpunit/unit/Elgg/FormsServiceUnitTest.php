@@ -66,9 +66,9 @@ class FormsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		// check form contents
 		$this->assertNotEmpty($actual);
-		$this->assertStringContainsString('name="_elgg_sticky_form_name"', $actual);
+		$this->assertStringContainsString('name="__elgg_sticky_form_name"', $actual);
 		$this->assertStringContainsString('value="foo/bar"', $actual);
-		$this->assertStringContainsString('name="_elgg_sticky_ignored_fields"', $actual);
+		$this->assertStringContainsString('name="__elgg_sticky_ignored_fields"', $actual);
 		$this->assertStringContainsString('value="password,some-field"', $actual);
 	}
 
