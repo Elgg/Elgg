@@ -7,6 +7,12 @@
 
 return array(
 	'admin:administer_utilities:logbrowser' => 'Log browser',
+	
+	'system_log:settings:enable_ip_logging' => 'Log client IP adres',
+	'system_log:settings:enable_ip_logging:help' => 'Indien dit is ingeschakeld cal het IP adres van de client worden gelogd die de actie uitvoerd',
+	'system_log:settings:clear_ip_addresses' => 'Verwijder gelogde IP adressen',
+	'system_log:action:clear_ip_addresses:success' => 'IP adressen zijn verwijderd uit de system_log tabel',
+	
 	'logbrowser:search' => 'Verfijn de resultaten',
 	'logbrowser:user' => 'Gebruikersnaam om op te zoeken',
 	'logbrowser:starttime' => 'Starttijd (bijvoorbeeld  "last monday", "1 hour ago")',
