@@ -130,8 +130,6 @@ class GenericContentListing {
 	 * @return string
 	 */
 	protected function listAll(array $options): string {
-		elgg_push_collection_breadcrumbs($options['type'], $options['subtype']);
-		
 		return elgg_view_page('', $this->getPageOptions('all', [
 			'title' => elgg_echo("collection:{$options['type']}:{$options['subtype']}:all"),
 			'content' => elgg_view('page/list/all', [
