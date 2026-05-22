@@ -14,7 +14,7 @@ Within each major version, the last minor release is designated for long term su
 receive bug fixes until 1 year after the release of the next major version and security fixes until the 2nd
 following major version release.
 
-E.g. 2.3 is the last minor release within 2.x. It will receive bug fixes until 1 year aftr 3.0 is released and
+E.g. 2.3 is the last minor release within 2.x. It will receive bug fixes until 1 year after 3.0 is released and
 security fixes until 4.0 is released.
 
 .. seealso::
@@ -78,7 +78,7 @@ Below is a table outlining the specifics for each release (future dates are tent
 +----------+----------------------+--------------------+------------------------+
 | 5.0      | June 2023            | October 2023       |                        |
 +----------+----------------------+--------------------+------------------------+
-| 5.1 LTS  | October 2023         | June 2025          | **Until 7.0**          |
+| 5.1      | October 2023         | June 2025          | May 2026               |
 +----------+----------------------+--------------------+------------------------+
 | 6.0      | June 2024            | November 2024      |                        |
 +----------+----------------------+--------------------+------------------------+
@@ -86,7 +86,9 @@ Below is a table outlining the specifics for each release (future dates are tent
 +----------+----------------------+--------------------+------------------------+
 | 6.2      | April 2025           | September 2025     |                        |
 +----------+----------------------+--------------------+------------------------+
-| 6.3      | September 2025       |                    |                        |
+| 6.3 LTS  | September 2025       | May 2027           | **Until 8.0**          |
 +----------+----------------------+--------------------+------------------------+
-| 7.0      | TBD                  |                    |                        |
+| 7.0      | May 2026             |                    |                        |
++----------+----------------------+--------------------+------------------------+
+| 8.0      | TBD                  |                    |                        |
 +----------+----------------------+--------------------+------------------------+
