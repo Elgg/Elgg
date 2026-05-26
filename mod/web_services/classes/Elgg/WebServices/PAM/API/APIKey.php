@@ -24,8 +24,13 @@ class APIKey {
 		}
 		
 		// check that an API key is present
-		$api_key = (string) get_input('api_key');
-		if ($api_key === '') {
+		$api_key = get_input('api_key');
+		if (!isset($api_key)) {
+			return null;
+		}
+		
+		$api_key = (string) $api_key;
+		if (elgg_is_empty($api_key)) {
 			throw new \APIException(elgg_echo('APIException:MissingAPIKey'));
 		}
 		

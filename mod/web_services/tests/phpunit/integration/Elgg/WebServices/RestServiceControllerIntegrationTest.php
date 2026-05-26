@@ -300,7 +300,7 @@ class RestServiceControllerIntegrationTest extends IntegrationTestCase {
 		
 		$expected_result = json_encode([
 			'status' => \ErrorResult::RESULT_FAIL,
-			'message' => 'Missing API key',
+			'message' => elgg_echo('APIException:APIAuthenticationFailed'),
 		]);
 		$this->assertEquals($expected_result, $response->getContent());
 	}

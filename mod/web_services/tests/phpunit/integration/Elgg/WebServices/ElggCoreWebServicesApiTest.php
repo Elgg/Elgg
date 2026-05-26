@@ -28,6 +28,13 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 	public function testApiAuthKeyNoKey() {
 		$apikey = new APIKey();
 		
+		$this->assertNull($apikey());
+	}
+
+	public function testApiAuthKeyEmptyKey() {
+		$apikey = new APIKey();
+		set_input('api_key', '');
+		
 		$this->expectException(\APIException::class);
 		$this->expectExceptionMessage(elgg_echo('APIException:MissingAPIKey'));
 		$apikey();
