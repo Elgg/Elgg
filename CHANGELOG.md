@@ -1,3 +1,42 @@
+<a name="7.0.0"></a>
+## 7.0.0 (2026-05-22)
+
+#### Contributors
+
+* Jeroen Dalsem (26)
+* Jerôme Bakker (25)
+* Chris Funderburg (2)
+
+#### Features
+
+* **system_log:** setting to enable client IP address logging [146a923f5](https://github.com/Elgg/Elgg/commit/146a923f50bd049b4d9a72cb8f8e00e318a1b6a0)
+* **icons:** FontAwesome icons use .fa class for default icon styling [2cc0b26c8](https://github.com/Elgg/Elgg/commit/2cc0b26c8bf9169336842a7d9809710922cfc1d1)
+* **views:** auto detect listing getter in generic listing [2008c96cb](https://github.com/Elgg/Elgg/commit/2008c96cbf52686a0866e60c1e9057cf6efb01b3)
+
+
+#### Bug fixes
+
+* **plugins:** improved handling of plugin start issues [b9bbf0875](https://github.com/Elgg/Elgg/commit/b9bbf087549374ed9c8274247067f92678e62029) closes [#15040](https://github.com/Elgg/Elgg/issues/15040)
+* **groups:**
+  * search page handles bad input [ec6375239](https://github.com/Elgg/Elgg/commit/ec637523902cefdf858ec83905a3c36d019878d3) closes [#15047](https://github.com/Elgg/Elgg/issues/15047)
+  * use consistent route name for group membership requests [aa60f3ebe](https://github.com/Elgg/Elgg/commit/aa60f3ebe87e58994396df9793bc47dbcd3603c1)
+* **email:** set correct email sender address [fe9050781](https://github.com/Elgg/Elgg/commit/fe9050781d487c67dacf368d3ce36b3e46256a1e)
+* **di:** improved handling of unknown public services [b972e044b](https://github.com/Elgg/Elgg/commit/b972e044bfddbb8a360ff1461b179edfe4c013dd)
+* **forms:** autocomplete item icons behave consistently [f6a0483de](https://github.com/Elgg/Elgg/commit/f6a0483de031439745410975c1215598cd87e90b)
+* **system_log:** handle unknown service during plugin activation [1763d6244](https://github.com/Elgg/Elgg/commit/1763d6244da93bd283d641a551aebf5a8cca7b41)
+* **profile:**
+  * tighten up the check a bit [9e6c294bd](https://github.com/Elgg/Elgg/commit/9e6c294bdb584e65e07f8f460495ce1f6c7ad55d)
+  * handle null ban_reason in profile/wrapper view [8161d3788](https://github.com/Elgg/Elgg/commit/8161d378823c21fd6802b0ee3cea0ee2094432ac)
+* **icons:** no longer mapping OTF files as font awesome zips do not contain them [5f557ed84](https://github.com/Elgg/Elgg/commit/5f557ed84105f53899e801703aa355af3f0f87a6)
+* **css:**
+  * search topbar cancel icon conflicts with search icon [472042a42](https://github.com/Elgg/Elgg/commit/472042a42a171b0c399ac3cf9e3cca4b10ead19e)
+  * font awesome toggle icon now uses a before pseudo element [7bbfe11d5](https://github.com/Elgg/Elgg/commit/7bbfe11d5f00ae4103e5121369222ed8ebea9a10) closes [#15042](https://github.com/Elgg/Elgg/issues/15042)
+  * improved various dark mode colors [9a3b0211a](https://github.com/Elgg/Elgg/commit/9a3b0211a07402363b9bba46e11bf80fe2a1501c)
+* **actions:** JsonDownloadAction controller always pretty prints json [55999b4fa](https://github.com/Elgg/Elgg/commit/55999b4fa1fca2ffae02d67a31aa106ec65ea316)
+* **images:** prevent OOM issues when images are too large to resize [0580c4c1d](https://github.com/Elgg/Elgg/commit/0580c4c1d742357a22a4aba22373ae087df9f15b)
+* **install:** prevent access to elgg-config directory [71d0bb571](https://github.com/Elgg/Elgg/commit/71d0bb571eece1875947a374df8da03989b5a6a1)
+
+
 <a name="7.0.0-rc.1"></a>
 ### 7.0.0-rc.1 (2026-04-01)
 
@@ -59,6 +98,19 @@
 * **cache:** built-in support for Redis and Memcached has been removed [7b2d6158e](https://github.com/Elgg/Elgg/commit/7b2d6158e95d2012e1f9a6895e052983c2858831)
 * **css:** CSS Crush preprocessing has been removed [7301391b5](https://github.com/Elgg/Elgg/commit/7301391b5c0b29e781f54c549b9a5c1cae5f8d1e)
 * **profile:** the Twitter profile field has been removed [6095844fb](https://github.com/Elgg/Elgg/commit/6095844fbebd7f42199d1dae11c8c562f7235d6a) closes [#14925](https://github.com/Elgg/Elgg/issues/14925)
+
+
+<a name="6.3.5"></a>
+### 6.3.5 (2026-05-21)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug fixes
+
+* **images:** prevent OOM issues when images are too large to resize [ab91d59dc](https://github.com/Elgg/Elgg/commit/ab91d59dc2caaa3fdbfe7e9b916fc0cc7e6b323a)
+* **email:** improved error handling when email transport fails [b8cb23916](https://github.com/Elgg/Elgg/commit/b8cb2391653ca7806559d08ebc1808a73224a48a)
 
 
 <a name="6.3.4"></a>

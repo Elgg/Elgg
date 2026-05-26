@@ -71,7 +71,6 @@ final class Email {
 		$headers = elgg_extract('headers', $options, []);
 
 		$email = new self();
-		$email->setSender($from);
 		$email->setFrom(self::prepareFrom($from));
 		$email->setTo($to);
 		$email->setCc($cc);

@@ -425,7 +425,7 @@ class Plugins {
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->register();
-			} catch (\Exception $ex) {
+			} catch (\Throwable $ex) {
 				$this->disable($plugin, $ex);
 			}
 		}
@@ -449,7 +449,7 @@ class Plugins {
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->boot();
-			} catch (\Exception $ex) {
+			} catch (\Throwable $ex) {
 				$this->disable($plugin, $ex);
 			}
 		}
@@ -473,7 +473,7 @@ class Plugins {
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->init();
-			} catch (\Exception $ex) {
+			} catch (\Throwable $ex) {
 				$this->disable($plugin, $ex);
 			}
 		}
@@ -497,7 +497,7 @@ class Plugins {
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->getBootstrap()->ready();
-			} catch (\Exception $ex) {
+			} catch (\Throwable $ex) {
 				$this->disable($plugin, $ex);
 			}
 		}
@@ -521,7 +521,7 @@ class Plugins {
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->getBootstrap()->upgrade();
-			} catch (\Exception $ex) {
+			} catch (\Throwable $ex) {
 				$this->disable($plugin, $ex);
 			}
 		}
@@ -545,7 +545,7 @@ class Plugins {
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->getBootstrap()->shutdown();
-			} catch (\Exception $ex) {
+			} catch (\Throwable $ex) {
 				$this->disable($plugin, $ex);
 			}
 		}
@@ -557,11 +557,11 @@ class Plugins {
 	 * Disable a plugin upon exception
 	 *
 	 * @param \ElggPlugin $plugin   Plugin entity to disable
-	 * @param \Exception  $previous Exception thrown
+	 * @param \Throwable  $previous Throwable thrown
 	 *
 	 * @return void
 	 */
-	protected function disable(\ElggPlugin $plugin, \Exception $previous): void {
+	protected function disable(\ElggPlugin $plugin, \Throwable $previous): void {
 		$this->getLogger()->log(LogLevel::ERROR, $previous, [
 			'context' => [
 				'plugin' => $plugin,

@@ -92,6 +92,9 @@ return [
 		'button-delete-font-color' => '#2d3047',
 		'button-delete-background-color-hover' => '#d33f49',
 		'button-delete-font-color-hover' => '#ffffff',
+
+		'button-disabled-background-color' => '#f3f3f3',
+		'button-disabled-font-color' => '#7d7d7d',
 	
 		'input-switch-checked-background-color' => '#397f2e',
 		'input-switch-unchecked-background-color' => '#b94a48',
@@ -168,5 +171,8 @@ return [
 		'button-delete-font-color' => '#2d3047',
 		'button-delete-background-color-hover' => '#d33f49',
 		'button-delete-font-color-hover' => '#ffffff',
+
+		'button-disabled-background-color' => '#1f2123',
+		'button-disabled-font-color' => '#999083',
 	],
 ];

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-31 11:50+0200\n"
+"POT-Creation-Date: 2026-05-19 15:58+0200\n"
 "PO-Revision-Date: 2026-03-25 09:33+0000\n"
 "Last-Translator: Jerôme Bakker, 2026\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
@@ -3420,7 +3420,7 @@ msgstr "Non compatible avec 1.8"
 #: ../../appendix/upgrade-notes/1.8-to-1.9.rst:114
 #: ../../appendix/upgrade-notes/2.2-to-2.3.rst:102
 #: ../../appendix/upgrade-notes/3.x-to-4.0.rst:120
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:130
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:135
 msgid "Notifications"
 msgstr "Notifications"
 
@@ -4587,7 +4587,7 @@ msgstr ""
 "appartenant aux utilisateurs (y compris ceux créés dans les groupes)."
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:446
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:271
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:279
 msgid "Removed Classes"
 msgstr "Classes supprimées"
 
@@ -15671,7 +15671,7 @@ msgstr ""
 "`` href`` à ``false``."
 
 #: ../../appendix/upgrade-notes/4.1-to-4.2.rst:79
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:214
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:222
 msgid "Groups"
 msgstr "Groupes"
 
@@ -16055,7 +16055,7 @@ msgid "``\\ElggUser->isFriend()`` use ``\\ElggUser->isFriendOf()``"
 msgstr "``\\ElggUser->isFriend()`` utilisez ``\\ElggUser->isFriendOf()``"
 
 #: ../../appendix/upgrade-notes/4.2-to-4.3.rst:90
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:168
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:173
 msgid "Events"
 msgstr "Evénements"
 
@@ -16454,7 +16454,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/4.x-to-5.0.rst:160
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:128
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:254
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:262
 msgid "Changes in functions"
 msgstr "Modification dans les fonctions"
 
@@ -19021,11 +19021,17 @@ msgid ""
 "system:email``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:34
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:35
+msgid ""
+"Because of the switch to the Symfony Mailer you might have to update your "
+"PHP hardening to allow the function ``proc_open`` as it's used by Symfony."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:39
 msgid "Font Awesome"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:36
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:41
 msgid ""
 "The icon library version has been updated to version 7. Lots of things "
 "remain the same, but you might need to validate your use of icons or any "
@@ -19033,76 +19039,76 @@ msgid ""
 " Awesome you need to update your pack to version 7."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:41
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:46
 msgid "Elgg core changes"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:44
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:49
 msgid "Default config changes"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:46
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:51
 msgid "The trash is now enabled by default"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:47
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:52
 msgid "The config option ``min_password_length`` has been changed to 16"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:48
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:53
 msgid "The config option ``css_compiler_options`` has been removed"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:49
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:54
 msgid "The config option ``memcache`` has been removed"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:50
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:55
 msgid "The config option ``memcache_namespace_prefix`` has been removed"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:51
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:56
 msgid "The config option ``memcache_servers`` has been removed"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:52
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:57
 msgid "The config option ``redis`` has been removed"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:53
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:58
 msgid "The config option ``redis_options`` has been removed"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:54
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:59
 msgid "The config option ``redis_servers`` has been removed"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:57
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:62
 msgid "Redis & Memcached"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:59
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:64
 msgid ""
 "Built-in support for caching with Redis and Memcached features have been "
 "removed."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:62
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:67
 msgid "Cron"
 msgstr "Cron"
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:64
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:69
 msgid ""
 "The PHP max execution time during the CRON execution has been set to "
 "'unlimited'. So for developers there is no longer a need to call "
 "``set_time_limit(0);``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:68
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:73
 msgid "CSS Crush has been removed"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:70
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:75
 msgid ""
 "CSS files are no longer preprocessed by CSS Crush. CSS Crush is no longer "
 "maintained and various features are now part of regular CSS (like nesting "
@@ -19114,18 +19120,18 @@ msgid ""
 "has been removed."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:78
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:83
 msgid ""
 "The variables for the ``walled garden`` and ``maintenance`` page background "
 "images have been changed. The variables used for media queries have been "
 "removed and will need to be hardcoded in your CSS files."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:82
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:87
 msgid "Color Scheme changes"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:84
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:89
 msgid ""
 "To be able to correctly support color schemes, some CSS variables have been "
 "introduced and some CSS configurations have been changed to support the "
@@ -19133,28 +19139,28 @@ msgid ""
 " to support color schemes."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:90
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:95
 msgid ""
 "The special button classes for ``elgg-button-special`` and ``elgg-button-"
 "action-done`` have been removed."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:93
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:98
 msgid "Entity restore"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:95
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:100
 msgid ""
 "The ``entity/chooserestoredestination`` form and action now use a singular "
 "parameter value for the ``destination_container_guid`` when selecting a "
 "different entity to restore to."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:99
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:104
 msgid "Entity listings"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:101
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:106
 msgid ""
 "The behaviour of ``elgg_list_entities()`` has been changed. The default "
 "value for the ``limit`` parameter which can be provided by the query "
@@ -19162,32 +19168,32 @@ msgid ""
 "minimum of 1 and a maximum of 100."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:106
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:111
 msgid "River emittable capability"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:108
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:113
 msgid ""
 "If an entity supports river activity this is now controlled by setting the "
 "``river_emittable`` capability. Make sure to add it to the ``capabilities`` "
 "configuration in your ``elgg-plugin.php``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:112
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:117
 msgid "Abstract ElggObject"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:114
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:119
 msgid ""
-"The ElggObject class is now abstract and it is required to have your own "
-"extensions of this class for each custom object."
+"The ``ElggObject`` class is now abstract and it is required to have your own"
+" extensions of this class for each custom object."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:117
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:122
 msgid "Response event"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:119
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:124
 msgid ""
 "The ``response`` and ``ajax_response`` event type has been changed. Besides "
 "the specials for actions and ajax responses the former ``path`` has been "
@@ -19197,76 +19203,76 @@ msgid ""
 "handlers."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:124
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:129
 msgid "Ajax route"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:126
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:131
 msgid ""
 "The definition of the ``ajax`` route has been changed. The ``segments`` has "
 "been split into ``type`` and ``segments``. You might need to update your url"
 " generation."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:132
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:137
 msgid "The following notification handlers have been moved and renamed:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:134
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:139
 msgid ""
 "``Elgg\\Notifications\\CreateCommentEventHandler`` moved to "
 "``Elgg\\Notifications\\Handlers\\CreateComment``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:135
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:140
 msgid ""
 "``Elgg\\Notifications\\MakeAdminUserEventHandler`` moved to "
 "``Elgg\\Notifications\\Handlers\\MakeAdminUser``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:136
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:141
 msgid ""
 "``Elgg\\Notifications\\MentionsEventHandler`` moved to "
 "``Elgg\\Notifications\\Handlers\\Mentions``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:137
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:142
 msgid ""
 "``Elgg\\Notifications\\RemoveAdminUserEventHandler`` moved to "
 "``Elgg\\Notifications\\Handlers\\RemoveAdminUser``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:138
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:143
 msgid ""
 "``Elgg\\Notifications\\UnbanUserEventHandler`` moved to "
 "``Elgg\\Notifications\\Handlers\\UnbanUser``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:140
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:145
 msgid ""
 "The following event handlers related to notifications have been moved and "
 "renamed:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:142
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:147
 msgid ""
 "``Elgg\\Notifications\\CreateContentEventHandler`` moved to "
 "``Elgg\\Notifications\\Events\\CreateContent``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:143
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:148
 msgid ""
 "``Elgg\\Notifications\\EnqueueEventHandler`` moved to "
 "``Elgg\\Notifications\\Events\\Enqueue``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:144
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:149
 msgid ""
 "``Elgg\\Notifications\\MentionsEnqueueEventHandler`` moved to "
 "``Elgg\\Notifications\\Events\\MentionsEnqueue``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:146
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:151
 msgid ""
 "It's now possible to have multiple notification handlers on the same action."
 " An example could be ``'ban', 'user'`` where you need one notification to "
@@ -19276,7 +19282,7 @@ msgid ""
 "distinct notification handlers will make this task easier."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:151
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:156
 msgid ""
 "Because of this change the function parameters for "
 "``elgg_unregister_notification_event()`` have been changed. You now also "
@@ -19284,7 +19290,7 @@ msgid ""
 " unregister."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:154
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:159
 msgid ""
 "Another change to the function parameters of both "
 "``elgg_register_notification_event()`` and "
@@ -19292,204 +19298,211 @@ msgid ""
 " replaced by a single ``string $action``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:158
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:163
 msgid "Widgets Add Panel"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:160
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:165
 msgid "The route for the widget add panel has been replaced by an ajax view."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:163
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:168
 msgid "Actions"
 msgstr "Actions"
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:165
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:170
 msgid ""
 "The ``admin/site/flush_cache`` has been renamed to "
 "``admin/site/cache/clear`` to be consistent with other cache actions."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:170
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:175
 msgid ""
 "Removed the legacy ``forward`` event in favor of the ``response`` event."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:173
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:178
 msgid "Plugin changes"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:176
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:181
 msgid "Entity related forms and actions"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:178
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:183
 msgid ""
 "The entity related forms and actions have been unified. The following forms "
 "were affected:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:180
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:185
 msgid "``forms/blog/save`` is now ``forms/blog/edit``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:181
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:186
 msgid "``forms/bookmarks/save`` is now ``forms/bookmarks/edit``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:182
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:187
 msgid "``forms/discussion/save`` is now ``forms/discussion/edit``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:183
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:188
 msgid "``forms/file/upload`` is now ``forms/file/edit``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:185
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:190
 msgid "The following related actions were affected:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:187
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:192
 msgid "``action/blog/save`` is now ``action/blog/edit``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:188
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:193
 msgid "``action/bookmarks/save`` is now ``action/bookmarks/edit``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:189
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:194
 msgid "``action/discussion/save`` is now ``action/discussion/edit``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:190
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:195
 msgid "``action/file/upload`` is now ``action/file/edit``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:193
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:198
 msgid "Site Pages / External Pages"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:195
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:200
 msgid "This plugin has been rewritten. The most important changes are:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:197
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:202
 msgid ""
 "Separate subtypes for each page has been merged into a single subtype "
 "``external_page``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:198
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:203
 msgid ""
 "``expages/edit`` action has been replaced by generic ``EntityEditAction`` "
 "controller"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:199
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:204
 msgid "``ElggExternalPage`` entity fields are available in the fields service"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:200
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:205
 msgid ""
 "Extra external pages are extendable via the ``'names', 'externalpages'`` "
 "event"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:203
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:208
 msgid "Group route definitions"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:205
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:210
 msgid ""
 "In the group route definition we've dropped the ``subpage`` variable for the"
 " following routes:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:207
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:212
 msgid "``collection:object:blog:group``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:208
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:213
 msgid "``collection:object:bookmarks:group``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:209
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:214
 msgid "``collection:object:page:group``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:211
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:216
 msgid "This could break user favorites to those pages."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:216
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:218
+msgid ""
+"The route definition ``requests:group:group`` has been renamed to "
+"``collection:user:user:group_requests`` for consistency with it's purpose "
+"and other routes within the Groups plugin."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:224
 msgid ""
 "The ``group/edit`` form and action now use a singular parameter value for "
 "the ``owner_guid`` when selecting a different group owner."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:220
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:228
 msgid "Likes"
 msgstr "Likes"
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:222
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:230
 msgid ""
 "By default only content owners can see who likes their content. This can be "
 "made public by a new plugin setting."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:225
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:233
 msgid "Members"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:227
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:235
 msgid ""
 "The names of some routes have been changed to align with the route naming "
 "suggestions"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:229
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:237
 msgid "``collection:user:user`` was changed to ``collection:user:user:all``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:230
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:238
 msgid "``search:user:user`` was changed to ``collection:user:user:search``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:232
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:240
 msgid ""
 "Inline with the route name changes some language keys have been renamed."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:235
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:243
 msgid "Messages"
 msgstr "Messages"
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:237
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:245
 msgid ""
 "The ``messages/send`` form and action parameter ``recipients`` has been "
 "renamed to ``recipient`` and now contains a singular value when selecting a "
 "recipient."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:241
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:249
 msgid "Profile"
 msgstr "Profil"
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:243
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:251
 msgid "The profile field `Twitter` has been removed."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:246
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:254
 msgid "Webservices"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:248
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:256
 msgid ""
 "The responses from the REST API calls now have a ``Content-Disposition: "
 "attachment; filename=\"result.<view>\"`` header."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:250
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:258
 msgid ""
 "Also the HTTP status codes of the error responses better align with the HTTP"
 " standard and are no longer a ``200 OK``, but have different status codes "
@@ -19497,48 +19510,48 @@ msgid ""
 "etc."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:257
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:265
 msgid "Changed function return types"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:259
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:267
 msgid "``elgg_register_external_file()`` now returns void"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:260
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:268
 msgid "``elgg_register_pam_handler()`` now returns void"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:261
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:269
 msgid "``elgg_register_route()`` now returns void"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:262
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:270
 msgid "``elgg_unregister_external_file()`` now returns void"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:263
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:271
 msgid "``elgg_unregister_menu_item()`` now returns void"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:266
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:274
 msgid "Changed class function return types"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:268
-msgid "``\\Elgg\\Traits\\Di\\ServiceFacade`` now returns a ``string``"
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:276
+msgid "``\\Elgg\\Traits\\Di\\ServiceFacade::name()`` now returns a ``string``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:273
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:281
 msgid ""
 "``\\Elgg\\Email\\Address`` has been removed, use "
 "``\\Symfony\\Component\\Mime\\Address``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:274
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:282
 msgid "``\\Elgg\\Email\\HtmlPart.php`` has been removed"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:275
+#: ../../appendix/upgrade-notes/6.x-to-7.0.rst:283
 msgid "``\\Elgg\\Email\\PlainTextPart.php`` has been removed"
 msgstr ""

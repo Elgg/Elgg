@@ -101,8 +101,8 @@ button {
 .elgg-button {
 	&:disabled,
 	&.elgg-state-disabled {
-		background: var(--elgg-background-color-mild);
-		color: var(--elgg-text-color-mild);
+		background: var(--elgg-button-disabled-background-color);
+		color: var(--elgg-button-disabled-font-color);
 		cursor: not-allowed;
 	}
 	
