@@ -21,7 +21,6 @@ return array(
 	'profile:phone' => "Telefon",
 	'profile:mobile' => "Mobiltelefon",
 	'profile:website' => "Webbplats",
-	'profile:twitter' => "Twitter användarnamn",
 	'profile:saved' => "Din profil sparades.",
 
 	'profile:field:text' => 'Kort text',

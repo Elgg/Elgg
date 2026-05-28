@@ -80,7 +80,7 @@ echo elgg_view('core.css');
 .elgg-plugin {
 	border: 1px solid var(--elgg-border-color-mild);
 	padding: 0.5rem;
-	border-radius: 3px;
+	border-radius: var(--elgg-border-radius-small);
 	position: relative;
 	
 	&:hover {
@@ -88,7 +88,7 @@ echo elgg_view('core.css');
 	}
 
 	&.elgg-state-active {
-		background: #fff;
+		background: white;
 	}
 	
 	&.elgg-state-inactive {

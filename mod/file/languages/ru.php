@@ -20,9 +20,7 @@ return array(
 	'item:object:file:video' => 'Видео',
 	'item:object:file:word' => 'Word',
 	'collection:object:file' => 'Файлы',
-	
-	'file:upgrade:2022092801:title' => 'Переместить файлы',
-	'file:upgrade:2022092801:description' => 'Перемещает файлы, загруженные с помощью плагина "Файлы", в папку объекта, а не в папку владельца.',
+	'list:object:file:no_results' => 'Файлы не найдены',
 	
 	'collection:object:file:all' => "Все файлы",
 	'collection:object:file:owner' => "Файлы %s",

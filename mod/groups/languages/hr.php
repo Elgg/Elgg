@@ -41,9 +41,6 @@ return array(
 	'groups:joinrequest' => 'Zatražite članstvo',
 	'groups:join' => 'Pridružite se grupi',
 	'groups:leave' => 'Napustite grupu',
-	'groups:invite' => 'Pozovite prijatelje',
-	'groups:invite:title' => 'Pozovi prijatelje u ovu grupu',
-	'groups:invite:friends:help' => 'Pretraži prijatelja po imenu ili korisničkom imenu i odaberi ga s popisa',
 	'groups:invite:resend' => 'Ponovno pošalji poziv već pozvanim korisnicima',
 
 	'groups:nofriendsatall' => 'Nije moguće pozvati još prijatelja!',

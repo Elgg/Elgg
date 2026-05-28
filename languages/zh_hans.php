@@ -301,7 +301,6 @@ return array(
 
 	'adduser:ok' => "您已经成功添加了一个新用户.",
 	
-	'user:set:name' => "账户名设置",
 	'user:name:label' => "我的名字",
 	'user:name:success' => "名字修改成功.",
 	'user:name:fail' => "名字修改失败.",
@@ -315,8 +314,7 @@ return array(
 	'user:password:success' => "密码修改成功",
 	'user:changepassword:unknown_user' => '无效的用户名',
 	'user:changepassword:change_password_confirm' => '此操作将修改您的密码.',
-
-	'user:set:language' => "语言设置",
+	
 	'user:language:label' => "语言",
 	'user:language:success' => "语言设置成功更新.",
 
@@ -355,7 +353,6 @@ return array(
 	'admin:configuration:success' => "设置已经保存。",
 	'admin:configuration:fail' => "设置保存失败。",
 	'admin:configuration:dataroot:relative_path' => '不能设置"%s" 作为数据库，因为它不是一个绝对路径。',
-	'admin:configuration:default_limit' => '每页的项目数不得少于1个。',
 
 	'admin:unknown_section' => '无效的管理区段。',
 
@@ -1095,7 +1092,6 @@ return array(
 	'default_access:settings' => "你的默认访问级别",
 	'default_access:label' => "默认访问",
 	'user:default_access:success' => "新的默认访问级别保存成功",
-	'user:default_access:failure' => "新的默认访问级别保存失败",
 
 /**
  * Comments
@@ -1163,6 +1159,10 @@ return array(
 	
 /**
  * Trash
+ */
+
+/**
+ * Color schemes
  */
 
 /**

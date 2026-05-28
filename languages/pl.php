@@ -60,7 +60,6 @@ return array(
 	'LoginException:ChangePasswordFailure' => 'Nie powiodła się weryfikacja obecnego hasła.',
 	'LoginException:Unknown' => 'Nie można się zalogować z powodu nieznanego błędu.',
 
-	'viewfailure' => 'Wystąpił wewnętrzny błąd w widoku %s',
 	'changebookmark' => 'Proszę zaktualizować swoją zakładkę dla tej strony',
 	'error:missing_data' => 'Zabrakło pewnych danych w twoim zapytaniu',
 	'save:fail' => 'Zapis danych nie powiódł się',
@@ -185,7 +184,6 @@ return array(
 	'link:view' => 'pokaż link',
 	'link:view:all' => 'Wyświetl wszystkie',
 
-
 /**
  * River
  */
@@ -249,8 +247,7 @@ return array(
 	'registration:usernamenotvalid' => 'Użytkownik którego nazwę podałeś jest niepoprawny dla systemu.',
 
 	'adduser:ok' => "Nowy użytkownik dodany pomyślnie.",
-
-	'user:set:name' => "Ustawienia nazwy konta",
+	
 	'user:name:label' => "Twoje imię",
 	'user:name:success' => "Twoje imię zmieniono pomyślnie.",
 	'user:name:fail' => "Nie można zmienić imienia.",
@@ -262,8 +259,7 @@ return array(
 	'user:password:success' => "Zmiana hasła",
 	'user:changepassword:unknown_user' => 'Niepoprawny użytkownik.',
 	'user:changepassword:change_password_confirm' => 'Twoje hasło zostanie zmienione.',
-
-	'user:set:language' => "Ustawienia języka",
+	
 	'user:language:label' => "Twój język",
 	'user:language:success' => "Ustawienia twojego języka zostały pomyśłnie aktualizowane.",
 
@@ -285,8 +281,10 @@ return array(
  */
 	'menu:page:header:administer' => 'Administracja',
 	'menu:page:header:configure' => 'Konfiguracja',
+	'menu:page:header:utilities' => 'Narzędzia',
 	'menu:page:header:develop' => 'Develop',
 	'menu:page:header:default' => 'Inne',
+	'menu:page:header:plugin_settings' => 'Ustawienia rozszerzenia',
 
 	'admin:view_site' => 'Wyświetl stronę',
 	'admin:loggedin' => 'Zalogowany jako %s',
@@ -406,6 +404,8 @@ return array(
 	'admin:security:settings' => 'Ustawienia',
 	'admin:security:settings:label:account' => 'Konto',
 	'admin:security:settings:label:notifications' => 'Powiadomienia',
+	'admin:security:security_txt:contact' => "Kontakt",
+	'admin:security:security_txt:language' => "Twój język",
 
 /**
  * Plugins
@@ -414,8 +414,6 @@ return array(
 	'plugins:disabled' => 'Rozszerzenia nie są wczytywane, ponieważ plik o nazwie "disabled" jest obecny w katalogu mod.',
 	'plugins:settings:save:ok' => "Ustawienia dla rozszerzenia %s zostały pomyśłnie zapisane.",
 	'plugins:settings:save:fail' => "Wystąpił problem podczas zapisu ustawień dla rozszerzenia %s.",
-	'plugins:usersettings:save:ok' => "Ustawienia użytkownika dla rozszerzenia %s zostały pomyślnie zapisane.",
-	'plugins:usersettings:save:fail' => "Wystąpił problem podczas zapisywania ustawień użytkownika dla rozszerzenia %s.",
 	
 	'item:object:plugin' => 'Rozszerzenie',
 	'collection:object:plugin' => 'Rozszerzenia',
@@ -429,9 +427,12 @@ return array(
 	'admin:plugins:opt:linktext' => "Konfiguracja narzędzi...",
 	'admin:plugins:opt:description' => "Konfigurowanie narzędzi zainstalowanych w serwisie. ",
 	'admin:plugins:label:id' => "ID",
+	'admin:plugins:label:name' => "Nazwa",
 	'admin:plugins:label:categories' => 'Kategorie',
 	'admin:plugins:label:licence' => "Licencja",
 	'admin:plugins:label:website' => "Adres",
+	'admin:plugins:label:info' => "Informacje",
+	'admin:plugins:label:files' => "Pliki",
 	'admin:plugins:label:repository' => "Kod",
 	'admin:plugins:label:bugtracker' => "Zgłoś problem",
 	'admin:plugins:label:donate' => "Wesprzyj",
@@ -468,7 +469,7 @@ return array(
 	'admin:statistics:label:numusers' => "Liczba użytkowników",
 	'admin:statistics:label:numonline' => "Liczba użytkowników online",
 	'admin:statistics:label:onlineusers' => "Użytkownicy online",
-	'admin:statistics:label:admins'=>"Administratorzy",
+	'admin:statistics:label:admins' => "Administratorzy",
 	'admin:statistics:label:version' => "Wersja Elgg",
 	'admin:statistics:label:version:release' => "Wydanie",
 	'admin:statistics:label:version:version' => "Wersja",
@@ -531,7 +532,7 @@ return array(
  * User settings
  */
 
-		'usersettings:statistics' => "Twoje statystyki",
+	'usersettings:statistics' => "Twoje statystyki",
 	'usersettings:statistics:opt:linktext' => "Ustawienia konta",
 	'usersettings:user:opt:linktext' => "Zmień swoje ustawienia",
 
@@ -784,6 +785,7 @@ return array(
 	'date:month:10' => 'Październik %s',
 	'date:month:11' => 'Listopad %s',
 	'date:month:12' => 'Grudzień %s',
+	'date:month:short:05' => 'Maj %s',
 
 	'date:weekday:0' => 'Niedziela',
 	'date:weekday:1' => 'Poniedziałek',
@@ -847,10 +849,13 @@ return array(
 	'admin:legend:system' => 'System',
 	'admin:legend:caching' => 'Pamieć podręczna',
 	'admin:legend:content' => 'Treść',
+	'admin:legend:comments' => 'Komentarze',
 	'admin:legend:content_access' => 'Dostęp do treści',
 	'admin:legend:site_access' => 'Poziom dostępu na stronie',
 	'admin:legend:debug' => 'Odpluskwianie i logowanie',
 	'config:i18n:who_can_change_language:admin_only' => "Tylko administratorzy",
+	'config:content:mentions_display_format:username' => "Użytkownik",
+	'config:content:mentions_display_format:display_name' => "Wyświetlana nazwa",
 	'config:email' => "E-mail",
 
 	'upgrading' => 'Aktualizacja',
@@ -909,7 +914,6 @@ return array(
 	'default_access:settings' => "Twój domyślny poziom dostępu",
 	'default_access:label' => "Domyślny poziom dostępu",
 	'user:default_access:success' => "Twój domyślny poziom dostępu został zapisany.",
-	'user:default_access:failure' => "Zapis domyślnego poziomu dostępu nie powiódł się.",
 
 /**
  * Comments
@@ -921,8 +925,6 @@ return array(
 
 	'generic_comments:add' => "Dodaj komentarz",
 	'generic_comments:edit' => "Edytuj komentarz",
-	'generic_comments:post' => "Dodaj komentarz",
-	'generic_comments:text' => "Komentarz",
 	'generic_comments:latest' => "Najnowsze komentarze",
 	'generic_comment:posted' => "Twój komentarz został dodany.",
 	'generic_comment:updated' => "Twój komentarz został pomyślnie zaktualizowany.",
@@ -931,17 +933,17 @@ return array(
 	'generic_comment:notfound' => "Przepraszamy: nie można znaleźć określonej pozycji.",
 	'generic_comment:failure' => "Wystąpił nieoczekiwany błąd podczas dodawania komentarza.",
 	'generic_comment:none' => 'Brak komentarzy',
-	'generic_comment:title' => 'Komentarz użytkownika %s',
 	'generic_comment:on' => '%s dotyczący %s',
-	'generic_comments:latest:posted' => 'napisał',
 
 /**
  * Entities
  */
 
 	'byline' => 'Przez %s',
+	'byline:ingroup' => 'w grupie %s',
 	'entity:delete:success' => 'Element %s został skasowany',
 	'entity:delete:fail' => 'Element %s nie został skasowany',
+
 
 /**
  * Annotations
@@ -969,10 +971,30 @@ return array(
  */
 	
 /**
+ * Trash
+ */
+
+/**
+ * Color schemes
+ */
+
+/**
  * Miscellaneous
  */
 	'elgg:powered' => "Dostarczone przez Elgg",
-	
+
+/**
+ * Accessibility
+ */
+	'menu:comments:header' => "Komentarze",
+	'menu:filter:header' => "Filtruj",
+	'menu:page:header' => "Strony",
+	'menu:river:header' => "Aktywność",
+	'menu:site:header' => "Strona",
+	'menu:social:header' => "Społeczne",
+	'menu:title:header' => "Tytuł",
+	'menu:topbar:header' => "Górna belka",
+
 /**
  * Cli commands
  */
@@ -1032,7 +1054,6 @@ return array(
 	"id" => "Indonesian",
 	"ie" => "Interlingue",
 	"ik" => "Inupiak",
-	//"in" => "Indonezyjski",
 	"is" => "Icelandic",
 	"it" => "Italian",
 	"iu" => "Inuktitut",
@@ -1126,4 +1147,8 @@ return array(
 	"za" => "Zuang",
 	"zh" => "Chinese",
 	"zu" => "Zulu",
+
+/**
+ * Upgrades
+ */
 );

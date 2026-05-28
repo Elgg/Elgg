@@ -6,16 +6,15 @@
  */
 
 return array(
+	'collection:user:user:all' => 'Все участники',
+	'collection:user:user:online' => 'Участники онлайн',
+	'collection:user:user:popular' => 'Популярные участники',
+	
 	'members:label:online' => 'Онлайн',
 	'members:label:search' => 'Результаты поиска',
 	'members:search' => 'Найти пользователей',
 	'members:aria:label:member_search' => "Поиск участников",
 	'members:title:search' => "Поиск пользователя '%s'",
 	'members:total' => 'Всего пользователей: %s',
-	'collection:user:user:all' => 'Все участники',
-	'members:title:newest' => 'Новые',
-	'collection:user:user:popular' => 'Популярные',
-	'collection:user:user:online' => 'Онлайн',
-	'members:title:alpha' => 'Все участники',
 	'members:list:popular:none' => 'Пользователи не имеют друзей.',
 );

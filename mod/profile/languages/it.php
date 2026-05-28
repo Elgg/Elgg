@@ -21,7 +21,6 @@ return array(
 	'profile:phone' => "Telefono",
 	'profile:mobile' => "Cellulare",
 	'profile:website' => "Sito web",
-	'profile:twitter' => "Nome utente Twitter",
 	'profile:saved' => "Profilo salvato correttamente",
 
 	'profile:field:text' => 'Breve testo',

@@ -13,6 +13,7 @@ return array(
 
 	'item:object:thewire' => "Публикация в ленте",
 	'collection:object:thewire' => 'Публикации в ленте',
+	'list:object:thewire:no_results' => 'Публикаций не найдено',
 	
 	'collection:object:thewire:all' => "Все публикации в ленте",
 	'collection:object:thewire:owner' => "Публикации в ленте пользователя %s",

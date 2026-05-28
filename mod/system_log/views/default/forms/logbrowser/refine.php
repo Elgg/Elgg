@@ -26,12 +26,14 @@ echo elgg_view_field([
 	'value' => elgg_extract('username', $vars),
 ]);
 
-echo elgg_view_field([
-	'#type' => 'text',
-	'#label' => elgg_echo('logbrowser:ip_address'),
-	'name' => 'ip_address',
-	'value' => elgg_extract('ip_address', $vars),
-]);
+if (elgg_get_plugin_setting('enable_ip_logging', 'system_log')) {
+	echo elgg_view_field([
+		'#type' => 'text',
+		'#label' => elgg_echo('logbrowser:ip_address'),
+		'name' => 'ip_address',
+		'value' => elgg_extract('ip_address', $vars),
+	]);
+}
 
 echo elgg_view_field([
 	'#type' => 'number',

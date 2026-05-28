@@ -53,13 +53,10 @@ return [
 			],
 		],
 		'default:services:rest' => [
-			'path' => '/services/api/rest/{view}/{segments?}',
+			'path' => '/services/api/rest/{view}',
 			'controller' => RestServiceController::class,
 			'defaults' => [
 				'view' => 'json',
-			],
-			'requirements' => [
-				'segments' => '.+',
 			],
 			'walled' => false,
 		],

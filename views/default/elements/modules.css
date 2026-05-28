@@ -5,7 +5,10 @@
 *************************************** */
 .elgg-module {
 	display: block;
-	margin-bottom: 2rem;
+	
+	&:not(:last-child) {
+		margin-bottom: 2rem;
+	}
 	
 	> .elgg-head {
 		display: flex;
@@ -30,7 +33,7 @@
 	
 	.elgg-gallery,
 	.elgg-list {
-		background: white;
+		background: var(--elgg-layout-background-color);
 	}
 }
 
@@ -62,11 +65,10 @@
 	POPUP MODULE
 *************************************** */
 .elgg-module-popup {
-	background-color: #ffffff;
+	background: var(--elgg-layout-background-color);
 	margin-bottom: 0;
 	padding: 0.5rem;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-	border-top: 1px solid var(--elgg-border-color-soft);
 	
 	> .elgg-head {
 		margin-bottom: 0.5rem;
@@ -81,7 +83,7 @@
 	DROPDOWN MODULE
 *************************************** */
 .elgg-module-dropdown {
-	background-color: #ffffff;
+	background-color: var(--elgg-layout-background-color);
 	display: none;
 	width: 15rem;
 	padding: 2rem;
@@ -100,7 +102,7 @@
 	
 	> .elgg-head {
 		background-color: var(--elgg-background-color-highlight);
-		color: #ffffff;
+		color: white;
 		padding: 0.5rem 1rem;
 		height: auto;
 		overflow: hidden;

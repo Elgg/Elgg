@@ -1,6 +1,6 @@
-:root {
+.tagify__dropdown {
 	--tagify-dd-color-primary: var(--elgg-background-color-highlight);
-	--tagify-dd-bg-color: white;
+	--tagify-dd-bg-color: var(--elgg-layout-background-color);
 }
 .tagify {
 	--tags-border-color: var(--elgg-border-color-mild);
@@ -8,8 +8,8 @@
 	--tags-focus-border-color: var(--elgg-border-color-strong);
 	--tag-bg: var(--elgg-background-color-mild);
 	--tag-hover: var(--elgg-background-color-strong);
-	--tag-text-color: black;
-	--tag-text-color--edit: black;
+	--tag-text-color: var(--elgg-text-color-strong);
+	--tag-text-color--edit: var(--elgg-text-color-strong);
 	--tag-pad: 0.3em 0.5em;
 	--tag-inset-shadow-size: 1.1em;
 	--tag-invalid-color: #d39494;
@@ -28,8 +28,9 @@
 	display: flex;
 	align-items: flex-start;
 	flex-wrap: wrap;
-	border: 1px solid #ddd;
 	border: 1px solid var(--tags-border-color);
+	border-radius: var(--elgg-border-radius-medium);
+	background: var(--elgg-background-color-input);
 	padding: 0;
 	line-height: normal;
 	cursor: text;
@@ -106,6 +107,7 @@
 	height: 1px !important;
 	padding: 0 !important;
 	margin: -1px 0 0 0 !important;
+	color: transparent !important;
 }
 .tagify__tag {
 	display: inline-flex;
@@ -126,7 +128,7 @@
 	color: #000;
 	color: var(--tag-text-color, #000);
 	line-height: inherit;
-	border-radius: 3px;
+	border-radius: var(--elgg-border-radius-small);
 	white-space: nowrap;
 	transition: 0.13s ease-out;
 }
@@ -275,7 +277,7 @@
 	transition: 0.3s, color 0s;
 }
 .tagify__tag__removeBtn:hover {
-	color: #fff;
+	color: white;
 	background: #c77777;
 	background: var(--tag-remove-btn-bg--hover, #c77777);
 }
@@ -455,7 +457,7 @@
 .tagify__dropdown__wrapper {
 	max-height: 300px;
 	overflow: hidden;
-	background: #fff;
+	background: white;
 	background: var(--tagify-dd-bg-color);
 	border: 1px solid var(--elgg-border-color-strong);
 	border-color: var(--tagify-dd-color-primary);
@@ -479,14 +481,14 @@
 	padding: 0.3em 0.5em;
 	margin: 1px;
 	cursor: pointer;
-	border-radius: 2px;
+	border-radius: var(--elgg-border-radius-small);
 	position: relative;
 	outline: 0;
 }
 .tagify__dropdown__item--active {
 	background: #3595f6;
 	background: var(--tagify-dd-color-primary);
-	color: #fff;
+	color: white;
 }
 .tagify__dropdown__item:active {
 	filter: brightness(105%);

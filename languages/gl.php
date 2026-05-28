@@ -65,10 +65,8 @@ return array(
 	'LoginException:AccountLocked' => 'Bloqueouse a súa conta debido aos repetidos intentos fallidos de acceso.',
 	'LoginException:ChangePasswordFailure' => 'O contrasinal actual introducido non coincide co contrasinal actual real.',
 	'LoginException:Unknown' => 'Non foi posíbel autenticalo debido a un erro descoñecido.',
-
 	'BadRequestException' => 'Solicitude non válida',
 
-	'viewfailure' => 'Produciuse un erro interno na vista «%s».',
 	'changebookmark' => 'Cambie o seu marcador para esta páxina.',
 	'error:missing_data' => 'Faltaban datos na súa solicitude.',
 	'save:fail' => 'Produciuse un erro ao intentar gardar os seus datos.',
@@ -198,7 +196,6 @@ return array(
 	'link:view' => 'Ver a ligazón',
 	'link:view:all' => 'Velo todo',
 
-
 /**
  * River
  */
@@ -265,7 +262,6 @@ return array(
 
 	'adduser:ok' => "Engadiuse o usuario.",
 	
-	'user:set:name' => "Configuración do nome da conta",
 	'user:name:label' => "Nome para mostrar",
 	'user:name:success' => "Cambiouse o nome para mostrar.",
 	'user:name:fail' => "Non foi posíbel cambiar o nome para mostrar.",
@@ -277,8 +273,7 @@ return array(
 	'user:password:success' => "Cambiouse o contrasinal.",
 	'user:changepassword:unknown_user' => 'O usuario non é válido.',
 	'user:changepassword:change_password_confirm' => 'Isto cambiará o seu contrasinal.',
-
-	'user:set:language' => "Configuración do idioma",
+	
 	'user:language:label' => "Idioma",
 	'user:language:success' => "Actualizouse a configuración do idioma.",
 
@@ -300,8 +295,10 @@ return array(
  */
 	'menu:page:header:administer' => 'Administrar',
 	'menu:page:header:configure' => 'Configurar',
+	'menu:page:header:utilities' => 'Utilidades',
 	'menu:page:header:develop' => 'Desenvolver',
 	'menu:page:header:default' => 'Outro',
+	'menu:page:header:plugin_settings' => 'Configuración do complement',
 
 	'admin:view_site' => 'Ver o sitio',
 	'admin:loggedin' => 'Accedeu como %s',
@@ -310,7 +307,6 @@ return array(
 	'admin:configuration:success' => "Gardouse a configuración.",
 	'admin:configuration:fail' => "Non foi posíbel gardar a configuración.",
 	'admin:configuration:dataroot:relative_path' => 'Non é posíbel facer de «%s» a raíz de datos porque non se trata dunha ruta absoluta.',
-	'admin:configuration:default_limit' => 'O número de elementos por páxina debe ser como mínimo 1.',
 
 	'admin:unknown_section' => 'Sección de administración incorrecta.',
 
@@ -323,6 +319,7 @@ return array(
 	'admin:cron:period' => 'Período de Cron',
 	'admin:cron:friendly' => 'Completado por última vez',
 	'admin:cron:date' => 'Data e hora',
+	'admin:cron:msg' => 'Mensaxe',
 
 	'admin:appearance' => 'Aparencia',
 	'admin:administer_utilities' => 'Utilidades',
@@ -423,6 +420,8 @@ return array(
 	'admin:security:settings' => 'Configuración',
 	'admin:security:settings:label:account' => 'Conta',
 	'admin:security:settings:label:notifications' => 'Notificacións',
+	'admin:security:security_txt:contact' => "Contact",
+	'admin:security:security_txt:language' => "Idioma",
 
 /**
  * Plugins
@@ -431,8 +430,6 @@ return array(
 	'plugins:disabled' => 'Non se están a cargar os complementos porque no cartafol «mod» hai un ficheiro chamado «disable» (desactivar).',
 	'plugins:settings:save:ok' => "Gardouse a configuración do complemento «%s».",
 	'plugins:settings:save:fail' => "Non foi posíbel gardar a configuración do complemento «%s».",
-	'plugins:usersettings:save:ok' => "Gardouse a configuración do usuario para o complemento «%s».",
-	'plugins:usersettings:save:fail' => "Non foi posíbel gardar a configuración do usuario para o complemento «%s».",
 	
 	'item:object:plugin' => 'Complementos',
 	'collection:object:plugin' => 'Complementos',
@@ -446,10 +443,13 @@ return array(
 	'admin:plugins:opt:linktext' => "Configurar as ferramentas…",
 	'admin:plugins:opt:description' => "Configurar as ferramentas instaladas no sitio.",
 	'admin:plugins:label:id' => "ID",
+	'admin:plugins:label:name' => "Nome",
 	'admin:plugins:label:copyright' => "Dereitos de autor",
 	'admin:plugins:label:categories' => 'Categorías',
 	'admin:plugins:label:licence' => "Licenza",
 	'admin:plugins:label:website' => "URL",
+	'admin:plugins:label:info' => "Información",
+	'admin:plugins:label:files' => "Ficheiros",
 	'admin:plugins:label:repository' => "Código",
 	'admin:plugins:label:bugtracker' => "Informar dun problema",
 	'admin:plugins:label:donate' => "Doar",
@@ -486,7 +486,7 @@ return array(
 	'admin:statistics:label:numusers' => "Número de usuarios",
 	'admin:statistics:label:numonline' => "Número de usuarios conectados",
 	'admin:statistics:label:onlineusers' => "Usuarios conectados",
-	'admin:statistics:label:admins'=>"Administradores",
+	'admin:statistics:label:admins' => "Administradores",
 	'admin:statistics:label:version' => "Versión de Elgg",
 	'admin:statistics:label:version:release' => "Publicación",
 	'admin:statistics:label:version:version' => "Versión",
@@ -807,6 +807,7 @@ return array(
 	'date:month:10' => '%s de outubro',
 	'date:month:11' => '%s de novembr',
 	'date:month:12' => '%s de decembr',
+	'date:month:short:05' => '%s de mai',
 
 	'date:weekday:0' => 'Doming',
 	'date:weekday:1' => 'Luns',
@@ -871,10 +872,13 @@ return array(
 	'admin:legend:system' => 'Sistema',
 	'admin:legend:caching' => 'Caché',
 	'admin:legend:content' => 'Contido',
+	'admin:legend:comments' => 'Comentarios',
 	'admin:legend:content_access' => 'Acceso a contidos',
 	'admin:legend:site_access' => 'Acceso ao sitio',
 	'admin:legend:debug' => 'Depuración e rexistr',
 	'config:i18n:who_can_change_language:admin_only' => "Só os administradores",
+	'config:content:mentions_display_format:username' => "Nome de usuario",
+	'config:content:mentions_display_format:display_name' => "Nome para mostrar",
 	'config:email' => "Correo",
 
 	'upgrading' => 'Anovando…',
@@ -935,7 +939,6 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
 	'default_access:settings' => "Nivel de acceso predeterminado persoal",
 	'default_access:label' => "Acceso predeterminado",
 	'user:default_access:success' => "Gardouse o seu novo nivel de acceso predeterminado.",
-	'user:default_access:failure' => "Non foi posíbel gardar o seu novo nivel de acceso predeterminado.",
 
 /**
  * Comments
@@ -947,8 +950,6 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
 
 	'generic_comments:add' => "Deixar un comentario",
 	'generic_comments:edit' => "Editar o comentario",
-	'generic_comments:post' => "Publicar o comentario",
-	'generic_comments:text' => "Deixar un comentario",
 	'generic_comments:latest' => "Últimos comentarios",
 	'generic_comment:posted' => "Publicouse o comentario:",
 	'generic_comment:updated' => "Actualizouse o comentario.",
@@ -957,16 +958,20 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
 	'generic_comment:notfound' => "Non se atopou o comentario indicado.",
 	'generic_comment:failure' => "Non foi posíbel gardar o comentario, produciuse un erro inesperado",
 	'generic_comment:none' => 'Non hai comentarios',
-	'generic_comment:title' => 'Comentario de %s',
 	'generic_comment:on' => '%s en %s',
-	'generic_comments:latest:posted' => 'publicou un',
 
 /**
  * Entities
  */
 
 	'byline' => 'De %s',
+	'byline:ingroup' => 'no grupo %s',
 	
+	'entity:delete:item' => 'Item',
+	
+	'entity:restore:item' => 'Item',
+
+
 /**
  * Annotations
  */
@@ -993,10 +998,30 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
  */
 	
 /**
+ * Trash
+ */
+
+/**
+ * Color schemes
+ */
+
+/**
  * Miscellaneous
  */
 	'elgg:powered' => "Construído con Elgg",
-	
+
+/**
+ * Accessibility
+ */
+	'menu:comments:header' => "Comentarios",
+	'menu:filter:header' => "Filtrar",
+	'menu:page:header' => "Páxinas",
+	'menu:river:header' => "Onda",
+	'menu:site:header' => "Sitio",
+	'menu:social:header' => "Social",
+	'menu:title:header' => "Títul",
+	'menu:topbar:header' => "Barra superior",
+
 /**
  * Cli commands
  */
@@ -1153,4 +1178,8 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
 	"zh" => "Chinés",
 	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulú",
+
+/**
+ * Upgrades
+ */
 );

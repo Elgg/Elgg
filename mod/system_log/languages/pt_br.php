@@ -7,6 +7,7 @@
 
 return array(
 	'admin:administer_utilities:logbrowser' => 'Navegador de Logs',
+	
 	'logbrowser:search' => 'Refinar Resultados',
 	'logbrowser:user' => 'Nome de Usuário para buscar',
 	'logbrowser:starttime' => 'Horário de Início (exemplo: "última segunda", "1 hora atrás")',

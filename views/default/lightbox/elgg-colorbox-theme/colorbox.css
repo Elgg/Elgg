@@ -13,7 +13,7 @@
 	position: fixed;
 	width: 100%;
 	height: 100%;
-	background: #fff;
+	background: var(--elgg-layout-background-color);
 }
 
 #cboxMiddleLeft,
@@ -23,9 +23,9 @@
 
 #cboxContent {
 	position: relative;
-	background: #fff;
+	background: var(--elgg-layout-background-color);
 	margin: 20px;
-	border: 10px rgba(204, 204, 204, 0.5) solid;
+	border: 10px var(--elgg-border-color-soft) solid;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
@@ -47,6 +47,14 @@
 	max-height: -webkit-calc(100vh - 60px);
 	max-height: calc(100vh - 60px);
 	box-sizing: border-box !important;
+	
+	> .elgg-module {
+		border: none;
+		
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
 }
 
 #cboxLoadedContent > *:not(.cboxPhoto) {
@@ -91,7 +99,7 @@
 	height: 100%;
 	display: block;
 	border: 0;
-	background: #fff;
+	background: var(--elgg-layout-background-color);
 }
 
 #colorbox,
@@ -129,7 +137,7 @@
 	left: 50%;
 	margin-left: -1.25rem;
 	margin-top: -1.25rem;
-	background-color: #fff;
+	background-color: var(--elgg-layout-background-color);
 	height: 2.5rem;
 	width: 2.5rem;
 	animation: infinite-spinning 1s infinite linear;
@@ -170,9 +178,9 @@
 	-webkit-border-radius: 1000px;
 	border-radius: 1000px;
 	background: #000;
-	color: #fff;
+	color: white;
 	text-align: center;
-	box-shadow: 0 0 0 2px #fff;
+	box-shadow: 0 0 0 2px white;
 }
 
 #cboxPrevious {

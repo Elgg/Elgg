@@ -6,6 +6,6 @@
 
 .elgg-item-object-messages {
 	.message.unread .elgg-listing-summary-title a {
-		color: #D40005;
+		color: var(--elgg-state-danger-font-color);
 	}
 }

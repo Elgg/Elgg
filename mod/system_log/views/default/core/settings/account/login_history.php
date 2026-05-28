@@ -18,21 +18,32 @@ if (empty($log)) {
 	return;
 }
 
-$body = '<table class="elgg-table">';
-$body .= '<thead><tr>';
-$body .= elgg_format_element('th', [], elgg_echo('usersettings:statistics:login_history:date'));
-$body .= elgg_format_element('th', [], elgg_echo('usersettings:statistics:login_history:ip'));
-$body .= '</tr></thead>';
-$body .= '<tbody>';
+$show_ip = (bool) elgg_get_plugin_setting('enable_ip_logging', 'system_log');
 
-foreach ($log as $entry) {
-	$ip_address = $entry->ip_address ?: elgg_echo('unknown');
-		
-	$time = date(elgg_echo('friendlytime:date_format'), $entry->time_created);
-	
-	$body .= "<tr><td>{$time}</td><td>{$ip_address}</td></tr>";
+$header = [];
+$header[] = elgg_format_element('th', [], elgg_echo('usersettings:statistics:login_history:date'));
+if ($show_ip) {
+	$header[] = elgg_format_element('th', [], elgg_echo('usersettings:statistics:login_history:ip'));
 }
 
-$body .= '</tbody></table>';
+$header = elgg_format_element('tr', [], implode(PHP_EOL, $header));
+$header = elgg_format_element('thead', [], $header);
 
-echo elgg_view_module('info', elgg_echo('usersettings:statistics:login_history'), $body);
+$rows = [];
+foreach ($log as $entry) {
+	$row = [];
+	
+	$row[] = elgg_format_element('td', [], date(elgg_echo('friendlytime:date_format'), $entry->time_created));
+	
+	if ($show_ip) {
+		$row[] = elgg_format_element('td', [], $entry->ip_address ?: elgg_echo('unknown'));
+	}
+	
+	$rows[] = elgg_format_element('tr', [], implode(PHP_EOL, $row));
+}
+
+$body = elgg_format_element('tbody', [], implode(PHP_EOL, $rows));
+
+$table = elgg_format_element('table', ['class' => 'elgg-table'], $header . $body);
+
+echo elgg_view_module('info', elgg_echo('usersettings:statistics:login_history'), $table);

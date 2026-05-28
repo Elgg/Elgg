@@ -4,7 +4,7 @@
 .elgg-message {
 	border-width: 1px;
 	border-style: solid;
-	border-radius: 3px;
+	border-radius: var(--elgg-border-radius-small);
 	
 	margin-bottom: 1rem;
 	
@@ -45,7 +45,7 @@
 			display: flex;
 			align-items: center;
 			
-			background-color: rgba(255,255,255,0.7);
+			background-color: var(--elgg-state-header-background-color);
 			
 			padding: 0.5rem 1rem;
 			border-bottom-width: 1px;

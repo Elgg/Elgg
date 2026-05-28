@@ -32,7 +32,7 @@ elgg_set_http_header('Content-type: text/html; charset=utf-8');
 			}
 			#elgg-wrapper {
 				background:white;
-				width:570px;
+				max-width: 570px;
 				margin:auto;
 				padding:10px 40px;
 				margin-bottom:40px;

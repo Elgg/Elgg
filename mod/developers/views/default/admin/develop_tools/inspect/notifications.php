@@ -28,21 +28,30 @@ foreach ($data as $type => $subtypes) {
 	foreach ($subtypes as $subtype => $actions) {
 		ksort($actions, SORT_NATURAL);
 		
-		foreach ($actions as $action => $handler) {
+		foreach ($actions as $action => $handlers) {
+			$count = count($handlers);
+			
 			$row = [
-				elgg_format_element('td', [], $type),
-				elgg_format_element('td', [], $subtype),
-				elgg_format_element('td', [], $action),
-				elgg_format_element('td', [], $handler),
+				elgg_format_element('td', ['rowspan' => $count], $type),
+				elgg_format_element('td', ['rowspan' => $count], $subtype),
+				elgg_format_element('td', ['rowspan' => $count], $action),
 			];
 			
-			if (is_a($handler, InstantNotificationEventHandler::class, true)) {
-				$row[] = elgg_format_element('td', [], elgg_echo('option:yes'));
-			} else {
-				$row[] = elgg_format_element('td', [], '&nbsp;');
+			foreach ($handlers as $index => $handler) {
+				if ($index > 0) {
+					$row = [];
+				}
+				
+				$row[] = elgg_format_element('td', [], $handler);
+				
+				if (is_a($handler, InstantNotificationEventHandler::class, true)) {
+					$row[] = elgg_format_element('td', [], elgg_echo('option:yes'));
+				} else {
+					$row[] = elgg_format_element('td', [], '&nbsp;');
+				}
+				
+				$rows[] = elgg_format_element('tr', [], implode(PHP_EOL, $row));
 			}
-			
-			$rows[] = elgg_format_element('tr', [], implode(PHP_EOL, $row));
 		}
 	}
 }

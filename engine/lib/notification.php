@@ -94,8 +94,14 @@ function elgg_unregister_notification_event(string $object_type, string $object_
  * array (
  * 		<type> => array (
  * 			<subtype> => array (
- * 				<action1>,
- * 				<action2>,
+ *                <action1> => array (
+ *                      <handler1>,
+ *                      <handler2>,
+ *              ),
+ * 				<action2> => array (
+ *                       <handler1>,
+ *                       <handler2>,
+ *               )
  * 			)
  * 		)
  * )

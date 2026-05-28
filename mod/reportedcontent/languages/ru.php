@@ -8,6 +8,7 @@
 return array(
 	'item:object:reported_content' => 'Жалоба',
 	'collection:object:reported_content' => 'Жалобы',
+	'list:object:reported_content:no_results' => 'Жалоб не найдено',
 	
 	'admin:administer_utilities:reportedcontent' => 'Жалобы',
 	'admin:administer_utilities:reportedcontent:archive' => 'Жалобы - архив',

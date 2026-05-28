@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Jerôme Bakker, 2024
+# Jerôme Bakker, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-16 10:07+0100\n"
-"PO-Revision-Date: 2024-04-15 12:07+0000\n"
-"Last-Translator: Jerôme Bakker, 2024\n"
+"POT-Creation-Date: 2026-03-31 11:50+0200\n"
+"PO-Revision-Date: 2026-03-25 09:33+0000\n"
+"Last-Translator: Jerôme Bakker, 2026\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2166,17 +2166,12 @@ msgstr ""
 
 #: ../../admin/performance.rst:123
 msgid ""
-"This is currently stored in files in your dataroot (although later versions "
-"of Elgg may use memcache). As with the simple cache it is flushed when a "
-"plugin is enabled, disabled or reordered, or when upgrade.php is executed."
+"This is currently stored in files in your dataroot. As with the simple cache"
+" it is flushed when a plugin is enabled, disabled or reordered, or when "
+"upgrade.php is executed."
 msgstr ""
-"Les emplacements des vues sont actuellement stockés dans des fichiers placés"
-" dans votre dossier de données (toutefois des versions ultérieures de Elgg "
-"peuvent utiliser memcache). Comme avec le cache simple, le cache système est"
-" automatiquement vidé chaque fois qu'un plugin est activé, désactivé ou "
-"réorganisé, ou quand le script upgrade.php est exécuté."
 
-#: ../../admin/performance.rst:128
+#: ../../admin/performance.rst:127
 msgid ""
 "The system cache can be disabled via the administration menu, and it is "
 "recommended that you do this on your development platform if you are writing"
@@ -2186,11 +2181,11 @@ msgstr ""
 "est recommandé de le faire sur votre plate-forme de développement si vous "
 "écrivez des plugins Elgg."
 
-#: ../../admin/performance.rst:133
+#: ../../admin/performance.rst:132
 msgid "Boot cache"
 msgstr "Cache de démarrage"
 
-#: ../../admin/performance.rst:135
+#: ../../admin/performance.rst:134
 msgid ""
 "Elgg has the ability to cache numerous resources created and fetched during "
 "the boot process. To configure how long this cache is valid you must set a "
@@ -2201,11 +2196,11 @@ msgstr ""
 "validité de ce cache vous devez définir la valeur du TTL dans votre fichier "
 "``settings.php`` : ``$CONFIG->boot_cache_ttl = 3600;``"
 
-#: ../../admin/performance.rst:140
+#: ../../admin/performance.rst:139
 msgid "Database query cache"
 msgstr "Cache des requêtes de base de données"
 
-#: ../../admin/performance.rst:142
+#: ../../admin/performance.rst:141
 msgid ""
 "For the lifetime of a given page's execution, a cache of all ``SELECT`` "
 "queries is kept. This means that for a given page load a given select query "
@@ -2220,7 +2215,7 @@ msgstr ""
 "Toute écriture dans la base de données videra ce cache. Ce cache sera "
 "automatiquement effacé à la fin du chargement d’une page."
 
-#: ../../admin/performance.rst:147
+#: ../../admin/performance.rst:146
 msgid ""
 "You may experience memory problems if you use the Elgg framework as a "
 "library in a PHP CLI script. This can be disabled by setting "
@@ -2230,11 +2225,11 @@ msgstr ""
 "framework Elgg comme bibliothèque dans un script PHP CLI. Ceci peut être "
 "désactivé en définissant ``$CONFIG->db_disable_query_cache = true;``"
 
-#: ../../admin/performance.rst:152
+#: ../../admin/performance.rst:151
 msgid "Etags and Expires headers"
 msgstr "Etags et headers Expires"
 
-#: ../../admin/performance.rst:154
+#: ../../admin/performance.rst:153
 msgid ""
 "These technologies tell your users' browsers to cache static assets (CSS, "
 "JS, images) locally. Having these enabled greatly reduces server load and "
@@ -2245,7 +2240,7 @@ msgstr ""
 "réduit fortement la charge du serveur et améliore la performance perçue par "
 "les utilisateurs."
 
-#: ../../admin/performance.rst:157
+#: ../../admin/performance.rst:156
 msgid ""
 "Use the `Firefox yslow plugin`__ or Chrome DevTools Audits to confirm which "
 "technologies are currently running on your site."
@@ -2254,18 +2249,18 @@ msgstr ""
 "Chrome DevTools Audits pour confirmer quelles technologies sont utilisées "
 "actuellement sur votre serveur."
 
-#: ../../admin/performance.rst:163
+#: ../../admin/performance.rst:162
 msgid "If the static assets aren't being cached:"
 msgstr "Si les actifs statiques ne sont pas mis en cache :"
 
-#: ../../admin/performance.rst:161
+#: ../../admin/performance.rst:160
 msgid ""
 "Verify that you have these extensions installed and enabled on your host"
 msgstr ""
 "Vérifiez que vous avez ces extensions et qu'elles sont activées sur votre "
 "hébergement"
 
-#: ../../admin/performance.rst:162
+#: ../../admin/performance.rst:161
 msgid ""
 "Update your .htaccess file, if you are upgrading from a previous version of "
 "Elgg"
@@ -2273,84 +2268,18 @@ msgstr ""
 "Mettez à jour votre fichier .htaccess, si vous faites une mise à niveau "
 "depuis une version précédente de Elgg"
 
-#: ../../admin/performance.rst:163
+#: ../../admin/performance.rst:162
 msgid ""
 "Enable Simplecache_, which turns select views into browser-cacheable assets"
 msgstr ""
 "Activez Simplecache_, qui transforme les vues sélectionnées en actifs "
 "pouvant être mis en cache par le navigateur"
 
-#: ../../admin/performance.rst:168
-msgid "Memcached"
-msgstr "Memcached"
-
-#: ../../admin/performance.rst:170
-msgid ""
-"Libmemcached was created by Brian Aker and was designed from day one to give"
-" the best performance available to users of Memcached."
-msgstr ""
-"Libmemcached a été créé par Brian Aker et a été conçu dès le départ pour "
-"offrir la meilleure performance possible aux utilisateurs de Memcached."
-
-#: ../../admin/performance.rst:174
-msgid ""
-"http://libmemcached.org/About.html and "
-"https://secure.php.net/manual/en/book.memcached.php"
-msgstr ""
-"http://libmemcached.org/About.html et "
-"https://secure.php.net/manual/en/book.memcached.php"
-
-#: ../../admin/performance.rst:176
-msgid "Installation requirements:"
-msgstr "Pré-requis pour l'installation :"
-
-#: ../../admin/performance.rst:178
-msgid "php-memcached"
-msgstr "php-memcached"
-
-#: ../../admin/performance.rst:179
-msgid "libmemcached"
-msgstr "libmemcached"
-
-#: ../../admin/performance.rst:180
-msgid "memcached"
-msgstr "memcached"
-
-#: ../../admin/performance.rst:182
-msgid "Configuration:"
-msgstr "Configuration :"
-
-#: ../../admin/performance.rst:184
-msgid "Uncomment and populate the following sections in ``settings.php``"
-msgstr ""
-"Dé-commentez et renseignez les sections suivantes dans le fichier "
-"``settings.php``"
-
-#: ../../admin/performance.rst:201
-msgid ""
-"Optionaly if you run multiple Elgg installations but use ony one Memcache "
-"server, you may want to add a namespace prefix. In order to do this, "
-"uncomment the following line"
-msgstr ""
-"De manière optionnelle, si vous avez plusieurs installations Elgg mais "
-"n'utilisez qu'un seul serveur Memcache, vous pouvez vouloir ajouter un "
-"préfixe d'espace de nom. Afin de faire cela, dé-commentez la ligne suivante"
-
-#: ../../admin/performance.rst:209
-msgid "Squid"
-msgstr "Squid"
-
-#: ../../admin/performance.rst:211
-msgid "We have had good results by using `Squid`_ to cache images for us."
-msgstr ""
-"Nous avons obtenu de bons résultats en utilisant `Squid`_ pour mettre en "
-"cache les images."
-
-#: ../../admin/performance.rst:217
+#: ../../admin/performance.rst:167
 msgid "Bytecode caching"
 msgstr "Mise en cache du code exécutable - \"bytecode\""
 
-#: ../../admin/performance.rst:219
+#: ../../admin/performance.rst:169
 msgid ""
 "There are numerous PHP code caches available on the market. These speed up "
 "your site by caching the compiled byte code from your script meaning that "
@@ -2361,11 +2290,11 @@ msgstr ""
 "script, ce qui signifie que votre serveur n'a pas à compiler le code PHP à "
 "chaque fois qu'il est exécuté."
 
-#: ../../admin/performance.rst:225
+#: ../../admin/performance.rst:175
 msgid "Direct file serving"
 msgstr "Servir directement les fichiers"
 
-#: ../../admin/performance.rst:227
+#: ../../admin/performance.rst:177
 msgid ""
 "If your server can be configured to support the X-Sendfile or X-Accel "
 "headers, you can configure it to be used in ``settings.php``. This allows "
@@ -2377,11 +2306,11 @@ msgstr ""
 "Ceci permet à votre serveur web de diffuser directement les fichiers au "
 "client au lieu d'utiliser la fonction PHP ``readfile()``."
 
-#: ../../admin/performance.rst:232
+#: ../../admin/performance.rst:182
 msgid "Composer Autoloader Optimization"
 msgstr "Optimisation de l'Autoloader de  Composer"
 
-#: ../../admin/performance.rst:234
+#: ../../admin/performance.rst:184
 msgid ""
 "The Composer autoloader is responsible for loading classes provided by "
 "dependencies of Elgg. The way the autoloader works is it searches for a "
@@ -2394,7 +2323,7 @@ msgstr ""
 "installées. Bien qu’il s’agisse principalement d’un processus rapide, il "
 "peut être optimisé."
 
-#: ../../admin/performance.rst:237
+#: ../../admin/performance.rst:187
 msgid ""
 "You can optimize the autoloader 2 different ways. The first is in the "
 "commandline, the other is in the ``composer.json`` of your project."
@@ -2403,7 +2332,7 @@ msgstr ""
 "via la ligne de commande, l’autre est d'utiliser le fichier "
 "``composer.json`` de votre projet."
 
-#: ../../admin/performance.rst:239
+#: ../../admin/performance.rst:189
 msgid ""
 "If you want to optimize the autoloader using the commandline use the ``-o`` "
 "flag. The disadvantage is you have to add the ``-o`` flag every time you run"
@@ -2413,7 +2342,7 @@ msgstr ""
 "commande, utilisez le drapeau ``-o``. L’inconvénient est que vous devez "
 "ajouter le drapeau ``-o`` à chaque fois que vous exécutez Composer."
 
-#: ../../admin/performance.rst:250
+#: ../../admin/performance.rst:200
 msgid ""
 "The second option is to add the optimization to your ``composer.json`` file,"
 " that way you never forget it."
@@ -2421,7 +2350,7 @@ msgstr ""
 "La deuxième option consiste à ajouter l’optimisation à votre fichier "
 "``composer.json``, de cette façon vous ne l’oubliez jamais."
 
-#: ../../admin/performance.rst:263
+#: ../../admin/performance.rst:213
 msgid ""
 "Check out the `Autoloader Optimization`__ page for more information about "
 "how to optimize the Composer autoloader."
@@ -2430,7 +2359,7 @@ msgstr ""
 "Optimization`__ pour plus d’informations sur l’optimisation du chargeur "
 "automatique Composer."
 
-#: ../../admin/performance.rst:269
+#: ../../admin/performance.rst:219
 msgid ""
 "As of Elgg 3.0 all the `downloads`__ of Elgg from the website have the "
 "optimized autoloader."
@@ -2438,11 +2367,11 @@ msgstr ""
 "À partir de Elgg 3.0 tous les `téléchargements`__ de Elgg à partir du site "
 "disposent du chargeur automatique optimisé."
 
-#: ../../admin/performance.rst:274
+#: ../../admin/performance.rst:224
 msgid "Hosting"
 msgstr "Hébergement"
 
-#: ../../admin/performance.rst:276
+#: ../../admin/performance.rst:226
 msgid ""
 "Don't expect to run a site catering for millions of users on a cheap shared "
 "host. You will need to have your own host hardware and access over the "
@@ -2453,11 +2382,11 @@ msgstr ""
 "d'hébergement et d'avoir la main sur la configuration, ainsi que de beaucoup"
 " de bande passante et de mémoire disponibles."
 
-#: ../../admin/performance.rst:281
+#: ../../admin/performance.rst:231
 msgid "Memory, CPU and bandwidth"
 msgstr "Mémoire, CPU et bande passante"
 
-#: ../../admin/performance.rst:283
+#: ../../admin/performance.rst:233
 msgid ""
 "Due to the nature of caching, all caching solutions will require memory. It "
 "is a fairly cheap return to throw memory and CPU at the problem."
@@ -2466,7 +2395,7 @@ msgstr ""
 "auront besoin de mémoire. C'est un investissement plutôt économique "
 "d'augmenter la mémoire et le CPU."
 
-#: ../../admin/performance.rst:286
+#: ../../admin/performance.rst:236
 msgid ""
 "On advanced hardware it is likely that bandwidth is going to be your "
 "bottleneck before the server itself. Ensure that your host can support the "
@@ -2477,11 +2406,11 @@ msgstr ""
 "Assurez-vous que votre hébergement peut supporter le trafic que vous "
 "attendez."
 
-#: ../../admin/performance.rst:290
+#: ../../admin/performance.rst:240
 msgid "Configuration"
 msgstr "Configuration"
 
-#: ../../admin/performance.rst:292
+#: ../../admin/performance.rst:242
 msgid ""
 "Lastly, take a look at your configuration as there are a few gotchas that "
 "can catch people."
@@ -2489,7 +2418,7 @@ msgstr ""
 "Enfin, jetez un coup d’œil à votre configuration car il y a quelques points "
 "d'attention qui peuvent surprendre les gens."
 
-#: ../../admin/performance.rst:294
+#: ../../admin/performance.rst:244
 msgid ""
 "For example, out of the box, Apache can handle quite a high load. However, "
 "most distros of Linux come with mysql configured for small sites. This can "
@@ -2501,11 +2430,11 @@ msgstr ""
 "de petits sites. Ceci peut peut donner lieu à des processus Apache bloqués "
 "qui attendent de pouvoir parler à un processus MySQL très surchargé."
 
-#: ../../admin/performance.rst:299
+#: ../../admin/performance.rst:249
 msgid "Check for poorly-behaved plugins"
 msgstr "Vérifiez les plugins ayant un mauvais comportement"
 
-#: ../../admin/performance.rst:301
+#: ../../admin/performance.rst:251
 msgid ""
 "Plugins can be programmed in a very naive way and this can cause your whole "
 "site to feel slow."
@@ -2513,7 +2442,7 @@ msgstr ""
 "Des plugins peuvent être développés d'une manière très naïve et ceci peut "
 "ralentir l'ensemble du site."
 
-#: ../../admin/performance.rst:303
+#: ../../admin/performance.rst:253
 msgid ""
 "Try disabling some plugins to see if that noticeably improves performance. "
 "Once you've found a likely offender, go to the original plugin author and "
@@ -2524,11 +2453,11 @@ msgstr ""
 "potentiel, rendez-vous sur la page de l'auteur du plugin et signalez vos "
 "résultats."
 
-#: ../../admin/performance.rst:307
+#: ../../admin/performance.rst:257
 msgid "Use client-rendered HTML"
 msgstr "Utilisez du HTML rendu côté client"
 
-#: ../../admin/performance.rst:309
+#: ../../admin/performance.rst:259
 msgid ""
 "We've found that at a certain point, much of the time spent on the server is"
 " simply building the HTML of the page with Elgg's views system."
@@ -2537,7 +2466,7 @@ msgstr ""
 "sur le serveur est simplement le temps de construction du HTML de la page "
 "avec le système de vues de Elgg."
 
-#: ../../admin/performance.rst:312
+#: ../../admin/performance.rst:262
 msgid ""
 "It's very difficult to cache the output of templates since they can "
 "generally take arbitrary inputs. Instead of trying to cache the HTML output "
@@ -2555,7 +2484,7 @@ msgstr ""
 "faire le travail de générer le résultat en appliquant des données JSON à ces"
 " modèles."
 
-#: ../../admin/performance.rst:317
+#: ../../admin/performance.rst:267
 msgid ""
 "This can be very effective, but has the downside of being significant extra "
 "development cost. The Elgg team is looking to integrate this strategy into "

@@ -8,6 +8,8 @@
 return array(
 	'annotation:delete:likes:fail' => "A fost o problemă la îndepărtarea aprecierii tale",
 	'annotation:delete:likes:success' => "Aprecierea ta a fost îndepărtată",
+	
+	// settings
 	'likes:deleted' => 'Aprecierea ta a fost îndepărtată',
 	'likes:see' => 'Vezi cine a apreciat asta',
 	'likes:remove' => 'Nu mai aprecia asta',

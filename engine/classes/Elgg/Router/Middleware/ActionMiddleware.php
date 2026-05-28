@@ -56,14 +56,14 @@ class ActionMiddleware {
 	 * @since 5.0
 	 */
 	protected function prepareStickyForm(): void {
-		$this->form_name = $this->request->getParam('_elgg_sticky_form_name');
+		$this->form_name = $this->request->getParam('__elgg_sticky_form_name');
 		
 		if (empty($this->form_name)) {
 			return;
 		}
 		
 		// add user and system ignored fields
-		$ignored_fields = (string) $this->request->getParam('_elgg_sticky_ignored_fields');
+		$ignored_fields = (string) $this->request->getParam('__elgg_sticky_ignored_fields');
 		$ignored_fields = elgg_string_to_array($ignored_fields);
 		
 		_elgg_services()->stickyForms->makeStickyForm($this->form_name, $ignored_fields);

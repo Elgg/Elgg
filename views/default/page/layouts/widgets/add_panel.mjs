@@ -44,7 +44,7 @@ function addWidget(event) {
 			$(selector).append(output);
 		}
 	});
-};
+}
 
 $(document).on('click', '.elgg-widgets-add-panel .elgg-widgets-add-actions .elgg-button-submit', addWidget);
 

@@ -4,18 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Jerôme Bakker, 2024
-# Emmanuel Simond, 2025
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025
+# Jerôme Bakker, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-16 10:07+0100\n"
-"PO-Revision-Date: 2024-04-15 12:07+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2025\n"
+"POT-Creation-Date: 2026-03-31 11:50+0200\n"
+"PO-Revision-Date: 2026-03-25 09:33+0000\n"
+"Last-Translator: Jerôme Bakker, 2026\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -166,12 +164,8 @@ msgstr "Bibliothèques tierces"
 #: ../../intro/development.rst:60
 msgid ""
 "The use of 3rd party libraries in Elgg is managed by using `Composer`_ "
-"dependencies. Examples of 3rd party libraries are jQuery, CSS Crush or "
-"Laminas mail."
+"dependencies. Examples of 3rd party libraries are jQuery or Symfony mail."
 msgstr ""
-"L'utilisation de bibliothèques tierces dans Elgg est gérée à l'aide des "
-"dépendances `Composer`_. Des exemples de bibliothèques tierces sont jQuery, "
-"CSS Crush ou Laminas mail."
 
 #: ../../intro/development.rst:63
 msgid ""
@@ -297,8 +291,8 @@ msgid "MySQL 8.0+ or MariaDB 10.6+"
 msgstr "MySQL 8.0+ ou MariaDB 10.6+"
 
 #: ../../intro/install.rst:14
-msgid "PHP 8.1+ with the following extensions:"
-msgstr "PHP 8.1+ avec les extensions suivantes :"
+msgid "PHP 8.3+ with the following extensions:"
+msgstr ""
 
 #: ../../intro/install.rst:16
 msgid "GD (for graphics processing)"

@@ -98,16 +98,16 @@ Dit kan potentieel non-HTML views niet laten functioneren.",
 	'developers:inspect:handler' => 'Handler',
 	'developers:inspect:controller' => 'Controller',
 	'developers:inspect:file' => 'Bestand',
+	'developers:inspect:middleware' => 'Middleware',
 	'developers:inspect:handler_type' => 'Afhandeling door',
 	'developers:inspect:services' => 'Services',
 	'developers:inspect:service:name' => 'Naam',
 	'developers:inspect:service:path' => 'Definitie',
 	'developers:inspect:service:class' => 'Class',
 
-	// event logging
 	'developers:request_stats' => "Request Statistieken (bevat niet het shutdown event)",
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
-	'developers:log_queries' => "DB queries: %s",
+	'developers:log_queries' => "DB queries",
 	'developers:boot_cache_rebuilt' => "De boot cache is herbouwd voor deze pagina",
 	'developers:elapsed_time' => "Tijd verstreken (s)",
 

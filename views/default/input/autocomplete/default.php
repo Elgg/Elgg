@@ -20,10 +20,14 @@ if (empty($input_name)) {
 
 $input_name .= elgg_extract('save_as_array', $vars, true) ? '[]' : '';
 
-$icon = (string) elgg_extract('icon', $vars) ?: elgg_view_entity_icon($entity, 'tiny');
+$icon = elgg_extract('icon', $vars);
+if (!isset($icon) && $entity->hasIcon('tiny')) {
+	$icon = elgg_view_entity_icon($entity, 'tiny');
+}
+
 $delete_icon = elgg_view_icon('delete', ['class' => 'elgg-autocomplete-item-remove']);
 
-$body = elgg_view_image_block($icon, $entity->getDisplayName(), ['image_alt' => $delete_icon]);
+$body = elgg_view_image_block((string) $icon, $entity->getDisplayName(), ['image_alt' => $delete_icon]);
 $body .= elgg_view('input/hidden', [
 	'name' => $input_name,
 	'value' => $entity->guid,

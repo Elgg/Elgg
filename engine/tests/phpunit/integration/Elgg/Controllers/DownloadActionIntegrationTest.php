@@ -48,7 +48,7 @@ class DownloadActionIntegrationTest extends IntegrationTestCase {
 		$response = $this->executeRequest($request);
 		
 		$this->assertTrue($response->isOk());
-		$this->assertEquals(json_encode(['key' => 'value']), $response->getContent());
+		$this->assertEquals(json_encode(['key' => 'value'], JSON_PRETTY_PRINT), $response->getContent());
 	}	
 	
 	public function testCsvDownloadAction() {

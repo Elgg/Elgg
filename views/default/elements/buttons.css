@@ -10,7 +10,7 @@ button {
 	line-height: 1.75rem;
 	padding: 0.325rem 1rem;
 	cursor: pointer;
-	border-radius: 3px;
+	border-radius: var(--elgg-border-radius-medium);
 	transition: background-color 0.5s, color 0.5s;
 	border: none;
 	white-space: nowrap;
@@ -55,17 +55,6 @@ button {
 	}
 }
 
-.elgg-button-action-done {
-	background: var(--elgg-button-action-background-color-hover);
-	color: var(--elgg-button-action-font-color-hover);
-		
-	&:hover,
-	&:focus {
-		background: var(--elgg-button-action-background-color-hover);
-		color: var(--elgg-button-action-font-color-hover);
-	}
-}
-
 .elgg-button-delete {
 	background: var(--elgg-button-delete-background-color);
 	color: var(--elgg-button-delete-font-color);
@@ -87,7 +76,7 @@ button {
 	display: block;
 	position: relative;
 	margin-left: 0;
-	color: #ffffff;
+	color: white;
 	border: none;
 	box-shadow: none;
 	border-radius: 0;
@@ -95,18 +84,9 @@ button {
 	&:hover,
 	&:focus,
 	&.elgg-state-active {
-		color: #ffffff;
+		color: white;
 		background: #60B8F7;
 		text-decoration: none;
-	}
-}
-
-.elgg-button-special {
-	background: #42C5B8;
-	
-	&:hover,
-	&:focus {
-		background: #5ED9CD;
 	}
 }
 
@@ -121,8 +101,8 @@ button {
 .elgg-button {
 	&:disabled,
 	&.elgg-state-disabled {
-		background: var(--elgg-background-color-mild);
-		color: var(--elgg-text-color-mild);
+		background: var(--elgg-button-disabled-background-color);
+		color: var(--elgg-button-disabled-font-color);
 		cursor: not-allowed;
 	}
 	

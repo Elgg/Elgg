@@ -21,7 +21,6 @@ return array(
 	'profile:phone' => "Telefon",
 	'profile:mobile' => "Handy",
 	'profile:website' => "Webseite",
-	'profile:twitter' => "Twitter-Benutzername",
 	'profile:saved' => "Die Änderungen an Deinem Profil wurden gespeichert.",
 
 	'profile:field:text' => 'Textfeld',

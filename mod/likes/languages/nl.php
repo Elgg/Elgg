@@ -9,6 +9,10 @@ return array(
 	'annotation:delete:likes:fail' => "Er was een probleem tijdens het niet meer leuk vinden",
 	'annotation:delete:likes:success' => "Je vindt dit niet meer leuk",
 	
+	// settings
+	'likes:settings:details' => 'Iedereen kan zien wie de content heeft geliked',
+	'likes:settings:details:help' => 'Indien dit is ingeschakeld kan iedereen zien wie de content heeft geliked. Indien dit is uitgeschakeld kan alleen de content eigenaar dit zien.',
+	
 	'likes:this' => '%s vindt dit leuk',
 	'likes:deleted' => 'Je vindt dit niet meer leuk',
 	'likes:see' => 'Bekijk wie dit leuk vindt',

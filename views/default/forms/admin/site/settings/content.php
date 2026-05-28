@@ -1,12 +1,11 @@
 <?php
 
 $body = elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'label' => elgg_echo('installation:walled_garden:label'),
 	'#help' => elgg_echo('installation:walled_garden:description'),
 	'name' => 'walled_garden',
-	'checked' => (bool) elgg_get_config('walled_garden'),
-	'switch' => true,
+	'value' => elgg_get_config('walled_garden'),
 ]);
 
 $body .= elgg_view_field([
@@ -23,12 +22,11 @@ $body .= elgg_view_field([
 ]);
 
 $body .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'label' => elgg_echo('installation:allow_user_default_access:label'),
 	'#help' => elgg_echo('installation:allow_user_default_access:description'),
 	'name' => 'allow_user_default_access',
-	'checked' => (bool) elgg_get_config('allow_user_default_access'),
-	'switch' => true,
+	'value' => elgg_get_config('allow_user_default_access'),
 ]);
 
 $body .= elgg_view_field([

@@ -1,0 +1,91 @@
+:root,
+:root body {
+	
+	--ck-border-radius: 0;
+	
+	--ck-content-color-mention-background: none;
+	--ck-content-color-mention-text: var(--elgg-anchor-color);
+	
+	--ck-content-font-family: var(--elgg-font-family);
+	--ck-content-font-size: var(--elgg-font-size);
+	--ck-content-font-color: var(--elgg-text-color-strong);
+	
+	--ck-color-text: var(--elgg-text-color-strong);
+	
+	--ck-color-base-background: var(--elgg-background-color-input);
+	--ck-color-base-border: var(--elgg-border-color-mild);
+	
+	--ck-color-focus-border: var(--elgg-border-color-strong);
+	
+	/* -- Overrides the default .ck-button class colors. ---------------------------------------- */
+	--ck-color-button-default-hover-background: var(--elgg-background-color-mild);
+	--ck-color-button-default-active-background: var(--elgg-background-color-mild);
+	--ck-color-button-default-active-shadow: none;
+	
+	--ck-color-button-on-background: var(--elgg-background-color-mild);
+	--ck-color-button-on-hover-background: var(--elgg-background-color-strong);
+	
+	/* -- Overrides the default .ck-dropdown class colors. -------------------------------------- */
+	--ck-color-dropdown-panel-border: var(--elgg-border-color-mild);
+	--ck-color-dropdown-panel-background: var(--elgg-layout-background-color);
+	
+	/* -- Overrides the default .ck-splitbutton class colors. ----------------------------------- */
+	--ck-color-split-button-hover-background: var(--elgg-background-color-strong);
+	--ck-color-split-button-hover-border: var(--elgg-border-color-strong);
+	
+	/* -- Overrides the default .ck-input class colors. ----------------------------------------- */
+	--ck-color-input-border: var(--elgg-border-color-mild);
+	--ck-color-input-text: var(--elgg-text-color-strong);
+	--ck-color-input-background: var(--elgg-layout-background-color);
+	--ck-color-labeled-field-label-background: var(--elgg-layout-background-color);
+	
+	/* -- Overrides the default colors used by the ckeditor5-image package. --------------------- */
+	
+	--ck-content-color-image-caption-background: var(--elgg-background-color-mild);
+	--ck-content-color-image-caption-text: var(--elgg-text-color-mild);
+	
+	/* -- Overrides the default .ck-list class colors. ------------------------------------------ */
+	--ck-color-list-background: var(--elgg-layout-background-color);
+	--ck-color-list-button-hover-background: var(--elgg-background-color-strong);
+	--ck-color-list-button-on-background: var(--elgg-background-color-mild);
+	
+	/* -- Overrides the default .ck-balloon-panel class colors. --------------------------------- */
+	--ck-color-panel-background: var(--elgg-layout-background-color);
+	--ck-color-panel-border: var(--elgg-border-color-strong);
+	
+	/* -- Overrides the default .ck-toolbar class colors. --------------------------------------- */
+	--ck-color-toolbar-background: var(--elgg-layout-background-color);
+	--ck-color-toolbar-border: var(--elgg-border-color-mild);
+	
+	/* -- Overrides the default colors used by the ckeditor5-link package. ---------------------- */
+	--ck-color-link-default: var(--elgg-anchor-color);
+}
+
+.ck-focused {
+	--ck-color-base-background: var(--elgg-layout-background-color);
+}
+
+.ck-content {
+	blockquote {
+		font-style: normal;
+		overflow: unset;
+		padding: 0.5rem 1rem;
+		margin: 0 0 1rem 0;
+		background-color: var(--elgg-state-notice-background-color);
+		border: 1px solid var(--elgg-state-notice-border-color);
+		color: var(--elgg-state-notice-font-color);
+	}
+	
+	ul,
+	ol {
+		margin: 0 0.5rem 0 0.5rem;
+		padding-left: 1rem;
+	}
+	
+	> ul,
+	> ol {
+		&:not(:first-child) {
+			margin-top: 1rem;
+		}
+	}
+}

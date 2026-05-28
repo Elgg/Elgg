@@ -23,14 +23,12 @@ a {
 pre, code {
 	font-family: Monaco, "Courier New", Courier, monospace;
 	font-size: 0.75rem;
-
-	background: #EBF5FF;
-	color: #000;
+	
+	background: var(--elgg-background-color-mild);
+	color: var(--elgg-text-color-strong);
 	overflow: auto;
 
 	white-space: pre-wrap;
-	word-wrap: break-word; /* IE 5.5-7 */
-
 }
 
 pre {
@@ -89,7 +87,6 @@ h6 {
 	font-size: 0.75rem;
 }
 
-time,
 .elgg-river-timestamp,
 .elgg-text-help,
 .elgg-quiet,
@@ -98,6 +95,10 @@ time,
 	color: var(--elgg-text-color-soft);
 	font-size: 0.75rem;
 	line-height: normal;
+}
+
+time {
+	color: var(--elgg-text-color-soft);
 }
 
 .elgg-text-help,

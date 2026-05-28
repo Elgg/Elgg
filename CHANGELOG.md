@@ -1,3 +1,118 @@
+<a name="7.0.0"></a>
+## 7.0.0 (2026-05-22)
+
+#### Contributors
+
+* Jeroen Dalsem (26)
+* Jerôme Bakker (25)
+* Chris Funderburg (2)
+
+#### Features
+
+* **system_log:** setting to enable client IP address logging [146a923f5](https://github.com/Elgg/Elgg/commit/146a923f50bd049b4d9a72cb8f8e00e318a1b6a0)
+* **icons:** FontAwesome icons use .fa class for default icon styling [2cc0b26c8](https://github.com/Elgg/Elgg/commit/2cc0b26c8bf9169336842a7d9809710922cfc1d1)
+* **views:** auto detect listing getter in generic listing [2008c96cb](https://github.com/Elgg/Elgg/commit/2008c96cbf52686a0866e60c1e9057cf6efb01b3)
+
+
+#### Bug fixes
+
+* **plugins:** improved handling of plugin start issues [b9bbf0875](https://github.com/Elgg/Elgg/commit/b9bbf087549374ed9c8274247067f92678e62029) closes [#15040](https://github.com/Elgg/Elgg/issues/15040)
+* **groups:**
+  * search page handles bad input [ec6375239](https://github.com/Elgg/Elgg/commit/ec637523902cefdf858ec83905a3c36d019878d3) closes [#15047](https://github.com/Elgg/Elgg/issues/15047)
+  * use consistent route name for group membership requests [aa60f3ebe](https://github.com/Elgg/Elgg/commit/aa60f3ebe87e58994396df9793bc47dbcd3603c1)
+* **email:** set correct email sender address [fe9050781](https://github.com/Elgg/Elgg/commit/fe9050781d487c67dacf368d3ce36b3e46256a1e)
+* **di:** improved handling of unknown public services [b972e044b](https://github.com/Elgg/Elgg/commit/b972e044bfddbb8a360ff1461b179edfe4c013dd)
+* **forms:** autocomplete item icons behave consistently [f6a0483de](https://github.com/Elgg/Elgg/commit/f6a0483de031439745410975c1215598cd87e90b)
+* **system_log:** handle unknown service during plugin activation [1763d6244](https://github.com/Elgg/Elgg/commit/1763d6244da93bd283d641a551aebf5a8cca7b41)
+* **profile:**
+  * tighten up the check a bit [9e6c294bd](https://github.com/Elgg/Elgg/commit/9e6c294bdb584e65e07f8f460495ce1f6c7ad55d)
+  * handle null ban_reason in profile/wrapper view [8161d3788](https://github.com/Elgg/Elgg/commit/8161d378823c21fd6802b0ee3cea0ee2094432ac)
+* **icons:** no longer mapping OTF files as font awesome zips do not contain them [5f557ed84](https://github.com/Elgg/Elgg/commit/5f557ed84105f53899e801703aa355af3f0f87a6)
+* **css:**
+  * search topbar cancel icon conflicts with search icon [472042a42](https://github.com/Elgg/Elgg/commit/472042a42a171b0c399ac3cf9e3cca4b10ead19e)
+  * font awesome toggle icon now uses a before pseudo element [7bbfe11d5](https://github.com/Elgg/Elgg/commit/7bbfe11d5f00ae4103e5121369222ed8ebea9a10) closes [#15042](https://github.com/Elgg/Elgg/issues/15042)
+  * improved various dark mode colors [9a3b0211a](https://github.com/Elgg/Elgg/commit/9a3b0211a07402363b9bba46e11bf80fe2a1501c)
+* **actions:** JsonDownloadAction controller always pretty prints json [55999b4fa](https://github.com/Elgg/Elgg/commit/55999b4fa1fca2ffae02d67a31aa106ec65ea316)
+* **images:** prevent OOM issues when images are too large to resize [0580c4c1d](https://github.com/Elgg/Elgg/commit/0580c4c1d742357a22a4aba22373ae087df9f15b)
+* **install:** prevent access to elgg-config directory [71d0bb571](https://github.com/Elgg/Elgg/commit/71d0bb571eece1875947a374df8da03989b5a6a1)
+
+
+<a name="7.0.0-rc.1"></a>
+### 7.0.0-rc.1 (2026-04-01)
+
+#### Contributors
+
+* Jeroen Dalsem (54)
+* Jerôme Bakker (37)
+
+#### Features
+
+* **css:**
+  * added dark mode features and color scheme [414199e61](https://github.com/Elgg/Elgg/commit/414199e612fe7c3c85cbc5f0f3152082e1eef877) closes [#14284](https://github.com/Elgg/Elgg/issues/14284)
+  * font awesome icon library updated to v7 [1e7543e4f](https://github.com/Elgg/Elgg/commit/1e7543e4f02a46006d97fa940659f7a4e66c2518) closes [#14847](https://github.com/Elgg/Elgg/issues/14847)
+* **ckeditor:** updated to ckeditor v47 [bebfed236](https://github.com/Elgg/Elgg/commit/bebfed236f4ec3459ea88eb22d1f21cc4b097467)
+* **notifications:** allow multiple notification handler on an event [ff3ab23cc](https://github.com/Elgg/Elgg/commit/ff3ab23cc4daad49584012f6e6a950f8e2ace5aa) closes [#14896](https://github.com/Elgg/Elgg/issues/14896)
+* **webservices:** HTTP response codes reworked [ee72fff37](https://github.com/Elgg/Elgg/commit/ee72fff372cc6f3a8b9d48fc460095477cace076) closes [#14790](https://github.com/Elgg/Elgg/issues/14790)
+* **config:** default minimal password length now is 16 [9e31c3626](https://github.com/Elgg/Elgg/commit/9e31c3626649057f1b46ca8c677125d27b988e79) closes [#14999](https://github.com/Elgg/Elgg/issues/14999)
+* **views:** elgg_view_page shell parameter will auto fallback from walled_garden [3fdf5bc8c](https://github.com/Elgg/Elgg/commit/3fdf5bc8cf490d25912568423c0c7b34e02af1e0)
+* **actions:**
+  * generic Entity Edit action support passing a custom forward_url [0489ba163](https://github.com/Elgg/Elgg/commit/0489ba163141b2a392973d5a173a34388063a950)
+  * added helper classes for download actions [3a3a06eeb](https://github.com/Elgg/Elgg/commit/3a3a06eeb00daa5ab918c104d46a9ac3955ed4a5) closes [#14923](https://github.com/Elgg/Elgg/issues/14923)
+* **routing:** trigger an event when no route could be found [1e4389a96](https://github.com/Elgg/Elgg/commit/1e4389a960caa04ad66401c2adf39449beced3a5) closes [#14932](https://github.com/Elgg/Elgg/issues/14932)
+* **activity:** added entity capability to indicate entities could have activity [f3ec7f94b](https://github.com/Elgg/Elgg/commit/f3ec7f94b111976ce317edfec4faaf6fbb157bf6) closes [#14502](https://github.com/Elgg/Elgg/issues/14502), [#12514](https://github.com/Elgg/Elgg/issues/12514)
+* **email:** you can now pass an array of factory options to elgg_send_email() [73c906841](https://github.com/Elgg/Elgg/commit/73c9068411ea835b5977deddcdd4aa48b9d16876)
+* **mail:** replace laminas/laminas-mail with symfony/mailer [d89f4a348](https://github.com/Elgg/Elgg/commit/d89f4a348ce5780582214d9799597b2b868e6413) closes [#14776](https://github.com/Elgg/Elgg/issues/14776)
+* **tests:** updated PHPUnit to v12.5 [0a8e490ec](https://github.com/Elgg/Elgg/commit/0a8e490ec4b026973fc0006297be83d9857799b9)
+* **php:** updated minimal requirement to PHP 8.3 and added tests for 8.5 [8c696ee8d](https://github.com/Elgg/Elgg/commit/8c696ee8d4a4075874e2812a4ffd71c62fc95fb0)
+* **content:** added generic content controller [d9896aadc](https://github.com/Elgg/Elgg/commit/d9896aadc57f55693f25c3dc2a6f0a990840894f) closes [#14867](https://github.com/Elgg/Elgg/issues/14867)
+* **widgets:** widget controls are now always visible and presented in a dropdown [7af7e6aaf](https://github.com/Elgg/Elgg/commit/7af7e6aafe5358f0de7ae89db5ec95639eb6ffe9) closes [#14927](https://github.com/Elgg/Elgg/issues/14927)
+* **input:**
+  * entity pickers now can have sortable value lists [ab7e695bd](https://github.com/Elgg/Elgg/commit/ab7e695bda0a9800c032fb1aa838a2161ccc27f7) closes [#14933](https://github.com/Elgg/Elgg/issues/14933)
+  * entitypickers now support saving value as a singular instead of array [e7953cf44](https://github.com/Elgg/Elgg/commit/e7953cf44ac87343ec77975b94c504728bbe02fe) closes [#14930](https://github.com/Elgg/Elgg/issues/14930)
+* **likes:** likes details can be enabled for everybody [750abaf1b](https://github.com/Elgg/Elgg/commit/750abaf1bbcb7b4e23b1c8c4887923eb27a0532a) closes [#14943](https://github.com/Elgg/Elgg/issues/14943)
+* **discussions:** automatically close discussions after x days [b8b7a368f](https://github.com/Elgg/Elgg/commit/b8b7a368f92590ce4f56400735894a9504d626cf)
+* **core:**
+  * developer log to screen now goes to browser console [b671a79d0](https://github.com/Elgg/Elgg/commit/b671a79d0c9e1c2ce7e2451f0f907b556c95b516) closes [#14799](https://github.com/Elgg/Elgg/issues/14799)
+  * elgg_entity_gatekeeper now returns entity [0815a6f07](https://github.com/Elgg/Elgg/commit/0815a6f07e7aac69620ae97693c9c979856e3682) closes [#14931](https://github.com/Elgg/Elgg/issues/14931)
+  * added helper function elgg_is_cli() [63f361e92](https://github.com/Elgg/Elgg/commit/63f361e92a0ce4c5e0a7c7acbbee7584c76c1baf) closes [#14922](https://github.com/Elgg/Elgg/issues/14922)
+
+
+#### Bug fixes
+
+* **views:** elgg_get_excerpt removes some useless whitespaces [df0031fae](https://github.com/Elgg/Elgg/commit/df0031fae1aa12e67486fb1d732894ceef965833)
+* **account:** always report success when requesting a new password [e5cb56a8b](https://github.com/Elgg/Elgg/commit/e5cb56a8bfeb859a2db9cd4563e84ed5f7da6e1f) closes [#15000](https://github.com/Elgg/Elgg/issues/15000)
+* **core:** router will throw correct method not allowed exception if needed [1876c2a2a](https://github.com/Elgg/Elgg/commit/1876c2a2af43ae3e10c5c7333c229edf1f7425f0) closes [#15001](https://github.com/Elgg/Elgg/issues/15001)
+* **routing:** apply maintenance gatekeeper on all requests [d4adaa29c](https://github.com/Elgg/Elgg/commit/d4adaa29ce4552d8abe2e6b287388a6e8597fa71)
+
+
+#### Breaking Changes
+
+* **externalpages:** plugin and external page entities have been reworked [9cdf0de89](https://github.com/Elgg/Elgg/commit/9cdf0de89ec8eb16cac36a0c07701c949bbe0856) closes [#7990](https://github.com/Elgg/Elgg/issues/7990)
+* **core:** it is no longer possible to directly create ElggObject entities [2b17076c7](https://github.com/Elgg/Elgg/commit/2b17076c7d6438ee787a4d5be4df4c51f5d1053c)
+* **plugins:** unified entity actions [bb1ea3425](https://github.com/Elgg/Elgg/commit/bb1ea342517f4d8a9f467260cfa220547bfab86d) closes [#14764](https://github.com/Elgg/Elgg/issues/14764)
+
+
+#### Removed
+
+* **webservices:** segments URL part in REST endpoint [29286a5ee](https://github.com/Elgg/Elgg/commit/29286a5eece79906bb258a9d6311bae7ded43efd) closes [#15016](https://github.com/Elgg/Elgg/issues/15016)
+* **cache:** built-in support for Redis and Memcached has been removed [7b2d6158e](https://github.com/Elgg/Elgg/commit/7b2d6158e95d2012e1f9a6895e052983c2858831)
+* **css:** CSS Crush preprocessing has been removed [7301391b5](https://github.com/Elgg/Elgg/commit/7301391b5c0b29e781f54c549b9a5c1cae5f8d1e)
+* **profile:** the Twitter profile field has been removed [6095844fb](https://github.com/Elgg/Elgg/commit/6095844fbebd7f42199d1dae11c8c562f7235d6a) closes [#14925](https://github.com/Elgg/Elgg/issues/14925)
+
+
+<a name="6.3.5"></a>
+### 6.3.5 (2026-05-21)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug fixes
+
+* **images:** prevent OOM issues when images are too large to resize [ab91d59dc](https://github.com/Elgg/Elgg/commit/ab91d59dc2caaa3fdbfe7e9b916fc0cc7e6b323a)
+* **email:** improved error handling when email transport fails [b8cb23916](https://github.com/Elgg/Elgg/commit/b8cb2391653ca7806559d08ebc1808a73224a48a)
+
+
 <a name="6.3.4"></a>
 ### 6.3.4 (2026-03-24)
 

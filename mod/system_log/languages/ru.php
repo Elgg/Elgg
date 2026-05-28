@@ -7,6 +7,7 @@
 
 return array(
 	'admin:administer_utilities:logbrowser' => 'Журнал логов',
+	
 	'logbrowser:search' => 'Уточнить результаты',
 	'logbrowser:user' => 'Имя пользователя для поиска',
 	'logbrowser:starttime' => 'Начальное время (например, "в прошлый понедельник", "1 час назад")',

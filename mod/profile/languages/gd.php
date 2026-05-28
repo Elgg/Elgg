@@ -21,7 +21,6 @@ return array(
 	'profile:phone' => "Fòn",
 	'profile:mobile' => "Fòn-làimhe",
 	'profile:website' => "Làrach-lìn",
-	'profile:twitter' => "Ainm-cleachdaiche Twitter",
 	'profile:saved' => "Chaidh do phròifil a shàbhaladh gu soirbheachail.",
 
 	'profile:field:text' => 'Bogsa-teacsa beag',

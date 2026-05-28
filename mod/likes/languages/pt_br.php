@@ -9,6 +9,8 @@ return array(
 	'annotation:delete:likes:fail' => "Houve um problema ao remover a sua curtida",
 	'annotation:delete:likes:success' => "A sua curtida foi removida com sucesso!",
 	
+	// settings
+	
 	'likes:this' => '%s curtiu',
 	'likes:deleted' => 'A sua curtida foi removida com sucesso!',
 	'likes:see' => 'Ver quem curtiu isso',

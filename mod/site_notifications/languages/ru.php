@@ -11,6 +11,7 @@ return array(
 	'site_notifications:topbar' => 'Уведомления',
 	'item:object:site_notification' => 'Уведомление сайта',
 	'collection:object:site_notification' => 'Уведомления сайта',
+	'list:object:site_notification:no_results' => 'Уведомлений не найдено',
 
 	'site_notifications:unread' => 'Непрочитано',
 	'site_notifications:read' => 'Прочитано',

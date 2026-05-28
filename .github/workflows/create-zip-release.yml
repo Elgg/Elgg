@@ -17,10 +17,10 @@ jobs:
             echo ZIP_FILE=elgg-${GITHUB_REF#refs/tags/}.zip >> $GITHUB_OUTPUT
        
       - name: Checkout Starter Project
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
             repository: Elgg/starter-project
-            ref: 6.x
+            ref: 7.x
             path: ${{ steps.branch.outputs.ZIP_FOLDER }}
 
       - name: Composer Install

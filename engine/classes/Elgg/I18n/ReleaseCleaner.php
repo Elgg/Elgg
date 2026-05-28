@@ -112,6 +112,7 @@ class ReleaseCleaner {
 // 				$this->detectIdenticalTranslations($dir, $code);
 				$this->cleanupMissingTranslationParameters($dir, $code);
 				$this->cleanupEmptyTranslations("{$dir}/{$code}.php");
+				$this->cleanupTranslationsThreshold($dir, $code);
 			}
 		}
 	}
@@ -120,7 +121,7 @@ class ReleaseCleaner {
 	 * Try to cleanup translations with a different argument count than English as this can cause failed translations
 	 *
 	 * @param string $directory     Language directory to use for the English translation
-	 * @param string $language_code Language core to try to cleanup
+	 * @param string $language_code Language core to try to clean up
 	 *
 	 * @return void
 	 */
@@ -188,6 +189,40 @@ class ReleaseCleaner {
 				
 				$this->log[] = "Removed empty translation file {$translation_file}";
 			}
+		}
+	}
+	
+	/**
+	 * Remove translation files with translations below a threshold
+	 *
+	 * @param string $directory      Language directory to use for the English translation
+	 * @param string $language_code  Language core to try to clean up
+	 * @param int    $min_percentage Minimal translated percentage (default: 60)
+	 *
+	 * @return void
+	 */
+	protected function cleanupTranslationsThreshold(string $directory, string $language_code, int $min_percentage = 50): void {
+		if (!file_exists("{$directory}/{$language_code}.php")) {
+			// can happen if cleanupEmptyTranslations() removed the file
+			return;
+		}
+		
+		$english = Includer::includeFile("{$directory}/en.php");
+		$translation = Includer::includeFile("{$directory}/{$language_code}.php");
+		
+		if (empty($translation)) {
+			unlink("{$directory}/{$language_code}.php");
+			
+			$this->log[] = "Removed empty translation file {$directory}/{$language_code}.php";
+			return;
+		}
+		
+		$trans_percentage = (count($translation) / count($english)) * 100;
+		if ($trans_percentage < $min_percentage) {
+			unlink("{$directory}/{$language_code}.php");
+			$trans_percentage = round($trans_percentage, 2);
+			
+			$this->log[] = "Removed translation file {$directory}/{$language_code}.php below minimal threshold ({$trans_percentage} < {$min_percentage})";
 		}
 	}
 	

@@ -1,29 +1,10 @@
-.groups-profile > .elgg-image {
-	margin-right: 1rem;
-}
-
 .groups-profile-fields {
 	border: 1px solid var(--elgg-border-color-soft);
-	background: #fff;
-}
-
-.elgg-listing-summary-subtitle {
-	.groups-membership, .groups-members {
-		margin-right: 10px;
-
-		.elgg-icon {
-			margin-right: 5px;
-		}
-	}
 }
 
 #groups-tools {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
-	grid-gap: 1rem;
+	grid-gap: 0 2rem;
 	margin: 1rem 0 0;
-}
-
-.elgg-module-group {
-	margin-bottom: 0;
 }

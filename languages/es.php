@@ -404,7 +404,6 @@ Para ver el post completo, haz clic en el siguiente enlace:
 
 	'adduser:ok' => "Se agreg&oacute; correctamente un nuevo usuario",
 	
-	'user:set:name' => "Configuraci&oacute;n del nombre de cuenta",
 	'user:name:label' => "Mi nombre para mostrar",
 	'user:name:success' => "Se modific&oacute; correctamente su nombre en la red",
 	'user:name:fail' => "No se pudo modificar su nombre en la red. Por favor, aseg&uacute;rese de que no es demasiado largo e intente nuevamente",
@@ -422,8 +421,7 @@ Para ver el post completo, haz clic en el siguiente enlace:
 	'user:delete:title' => 'Confirmar la eliminación de la cuenta',
 	'user:delete:description' => 'Confirma que deseas eliminar la cuenta de %s. Al eliminar la cuenta también se eliminará todo el contenido (incluidos los grupos) que pertenezca a este usuario. Esto también podría incluir contenido relacionado, como contenido de grupo, subpáginas o comentarios sobre el contenido. A continuación puedes ver una lista de los contenidos que pertenecen al usuario.',
 	'user:delete:confirm' => "Confirmo que deseo eliminar este usuario",
-
-	'user:set:language' => "Configuraci&oacute;n de lenguaje",
+	
 	'user:language:label' => "Su lenguaje",
 	'user:language:success' => "Se actualiz&oacute; su configuraci&oacute;n de lenguaje",
 
@@ -471,7 +469,6 @@ Para ver el post completo, haz clic en el siguiente enlace:
 	'admin:configuration:success' => "Su configuraci&oacute;n ha sido guardada",
 	'admin:configuration:fail' => "No se pudo guardar su configuraci&oacute;n",
 	'admin:configuration:dataroot:relative_path' => 'No se puede configurar "%s" como el directorio de datos raiz ya que la ruta no es absoluta.',
-	'admin:configuration:default_limit' => 'El n&uacute;mero de elementos debe ser de al menos 1.',
 
 	'admin:unknown_section' => 'Secci&oacute;n de administraci&oacute;n inv&aacute;lida',
 
@@ -806,9 +803,6 @@ tres secciones:
 	'admin:server:label:post_max_size' => 'Tama&ntilde;o m&aacute;ximo de las peticiones POST',
 	'admin:server:label:upload_max_filesize' => 'Tama&ntilde; m&aacute;ximo de las subidas',
 	'admin:server:warning:post_max_too_small' => '(Nota: post_max_size debe ser mayor que el tama&ntilde; indicado aqu&iacute; para habilitar las subidas)',
-	'admin:server:label:memcache' => 'Memcache',
-
-	'admin:server:label:redis' => 'Redis',
 
 	'admin:server:label:opcache' => 'OPcache',
 	
@@ -1275,7 +1269,6 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	'default_access:settings' => "Tu nivel de acceso por defecto",
 	'default_access:label' => "Acceso por defecto",
 	'user:default_access:success' => "El nivel de acceso por defecto ha sido guardado",
-	'user:default_access:failure' => "El nivel de acceso por defecto no ha podido ser guardado",
 
 /**
  * Comments
@@ -1339,6 +1332,10 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	
 /**
  * Trash
+ */
+
+/**
+ * Color schemes
  */
 
 /**

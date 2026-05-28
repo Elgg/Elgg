@@ -52,13 +52,10 @@ class ApiAuthenticationIntegrationTest extends IntegrationTestCase {
 		
 		// keep this inline with the route declaration in elgg-plugin.php
 		$app->internal_services->routes->register('default:services:rest', [
-			'path' => '/services/api/rest/{view}/{segments?}',
+			'path' => '/services/api/rest/{view}',
 			'controller' => RestServiceController::class,
 			'defaults' => [
 				'view' => 'json',
-			],
-			'requirements' => [
-				'segments' => '.+',
 			],
 			'walled' => false,
 		]);

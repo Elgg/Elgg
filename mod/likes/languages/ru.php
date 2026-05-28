@@ -9,6 +9,10 @@ return array(
 	'annotation:delete:likes:fail' => "Ошибка при удалении лайка",
 	'annotation:delete:likes:success' => "Лайк удалён",
 	
+	// settings
+	'likes:settings:details' => 'Все смогут увидеть кто лайкает контент',
+	'likes:settings:details:help' => 'Если эта функция включена, все могут видеть, кому понравился контент. Если она отключена, это может видеть только владелец контента.',
+	
 	'likes:this' => '%s понравилось это',
 	'likes:deleted' => 'Лайк удалён',
 	'likes:see' => 'Посмотреть кому нравится это',

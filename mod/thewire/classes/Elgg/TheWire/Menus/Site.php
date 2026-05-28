@@ -22,7 +22,7 @@ class Site {
 		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'thewire',
-			'icon' => 'comments-regular',
+			'icon' => 'comments',
 			'text' => elgg_echo('thewire'),
 			'href' => elgg_generate_url('default:object:thewire'),
 		]);

@@ -7,6 +7,7 @@
 
 return array(
 	'garbagecollector:period' => 'Как часто Вы хотите запускать сборщик мусора?',
+	'garbagecollector:period:optimize' => 'Оптимизируйте таблицы базы данных после запуска сборщика мусора.',
 
 	'garbagecollector:weekly' => 'Раз в неделю',
 	'garbagecollector:monthly' => 'Раз в месяц',

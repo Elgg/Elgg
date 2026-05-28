@@ -97,7 +97,9 @@ class Filter {
 			$menu[] = \ElggMenuItem::factory([
 				'name' => 'membership_requests',
 				'text' => elgg_echo('groups:membershiprequests'),
-				'href' => elgg_generate_entity_url($entity, 'requests'),
+				'href' => elgg_generate_url('collection:user:user:group_requests', [
+					'guid' => $entity->guid,
+				]),
 				'priority' => 300,
 				'badge' => elgg_count_relationships([
 					'relationship' => 'membership_request',

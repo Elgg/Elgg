@@ -20,7 +20,6 @@ return array(
 	'discussion:settings:enable_global_discussions' => 'Habilitar Discussões Globais',
 	'discussion:settings:enable_global_discussions:help' => 'Permitir que discussões sejam criadas fora dos grupos',
 
-	'discussion:latest' => 'Últimas discussões',
 	'discussion:updated' => "Último comentário por %s %s",
 
 	'discussion:topic:created' => 'O tópico de discussão foi criado.',

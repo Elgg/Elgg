@@ -123,7 +123,6 @@ input,
 select,
 textarea {
 	font-family: var(--elgg-font-family);
-
 }
 
 code,
@@ -211,7 +210,7 @@ table th {
 }
 
 table th {
-	color: #363636;
+	color: var(--elgg-text-color-strong);
 }
 
 /* Elgg Reset /**/

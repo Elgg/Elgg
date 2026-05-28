@@ -24,7 +24,12 @@ class Logger {
 	 */
 	public static function log(\Elgg\Event $event): void {
 		$object = $event->getObject();
-		SystemLog::instance()->insert($object['object'], $object['event']);
+		try {
+			SystemLog::instance()->insert($object['object'], $object['event']);
+		} catch (\Throwable $t) {
+			// this can be the case when the plugin is getting activated and not all services
+			// have been registered yet
+		}
 	}
 	
 	/**

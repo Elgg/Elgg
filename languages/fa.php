@@ -74,7 +74,6 @@ return array(
 	'UserFetchFailureException' => 'امکان بررسی دسترسی کاربر [%s] نیست، چون این کاربر وجود ندارد.',
 	'BadRequestException' => 'درخواست اشتباه',
 
-	'viewfailure' => 'خطای داخلی در نمایه %sبه وجود آمد',
 	'changebookmark' => 'لطفا گزیده تان برای این صفحه را تغییر دهید',
 	'error:missing_data' => 'در داده های درخواست شما موارد اجباری یافت نشد.',
 	'save:fail' => 'در ذخیره داده های شما مشکلی پیش آمد',
@@ -210,7 +209,6 @@ return array(
 	'link:view' => 'مشاهده لینک',
 	'link:view:all' => 'مشاهده همه',
 
-
 /**
  * River
  */
@@ -278,7 +276,6 @@ return array(
 
 	'adduser:ok' => "شما با موفقیت یک کاربر جدید اضافه کردید",
 	
-	'user:set:name' => "تنظیمات نام حساب کاربری",
 	'user:name:label' => "نام قابل نمایش",
 	'user:name:success' => "نام با موفقیت تغییر پیدا کرد",
 	'user:name:fail' => "امکان تغییر نام نیست",
@@ -290,8 +287,7 @@ return array(
 	'user:password:success' => "کلمه عبور تغییر کرد",
 	'user:changepassword:unknown_user' => 'کاربر نامعتبر',
 	'user:changepassword:change_password_confirm' => 'این کلمه عبور را تغییر خواهد داد',
-
-	'user:set:language' => "تنظیمات زبان",
+	
 	'user:language:label' => "زبان",
 	'user:language:success' => "تنظیمات زبان بروزرسانی شد",
 
@@ -313,8 +309,10 @@ return array(
  */
 	'menu:page:header:administer' => 'مدیریت',
 	'menu:page:header:configure' => 'تنظیم',
+	'menu:page:header:utilities' => 'ابزار',
 	'menu:page:header:develop' => 'توسعه',
 	'menu:page:header:default' => 'سایر',
+	'menu:page:header:plugin_settings' => 'تنظیمات پلاگین',
 
 	'admin:view_site' => 'مشاهده سایت',
 	'admin:loggedin' => 'وارد شده به عنوان %s',
@@ -323,7 +321,6 @@ return array(
 	'admin:configuration:success' => "تنظیمات شما ذخیره شد",
 	'admin:configuration:fail' => "امکان ذخیره تنظیمات شما نیست",
 	'admin:configuration:dataroot:relative_path' => 'امکان تنظیم "%s" به عنوان مسیر ذخیره داده ها نیست، مسیر باید مطلق باشد',
-	'admin:configuration:default_limit' => 'تعداد موارد نمایش در یک صفحه باید حداقل 1 باشد',
 
 	'admin:unknown_section' => 'قسمت مدیریت معتبر نیست.',
 
@@ -436,6 +433,7 @@ return array(
 	
 	'admin:security:settings' => 'تنظیمات',
 	'admin:security:settings:label:account' => 'حساب کاربری',
+	'admin:security:security_txt:language' => "زبان",
 
 /**
  * Plugins
@@ -444,8 +442,6 @@ return array(
 	'plugins:disabled' => 'به خاطر اینکه فایلی با نام "disabled" در پوشه ماژول ها هست امکان بارگزاری پلاگین ها نیست.',
 	'plugins:settings:save:ok' => "تنظیمات برای پلاگین %s با موفقیت ذخیره شد",
 	'plugins:settings:save:fail' => "برای ذخیره تنظیمات پلاگین %s مشکلی به وجود آمد",
-	'plugins:usersettings:save:ok' => "تنظیمات کاربر برای پلاگین %s با موفقیت ذخیره شد",
-	'plugins:usersettings:save:fail' => "برای ذخیره تنظیمات کاربر برای پلاگین %s مشکلی به وجود آمده است.",
 	
 	'item:object:plugin' => 'پلاگین ها',
 	'collection:object:plugin' => 'پلاگین ها',
@@ -507,7 +503,7 @@ return array(
 	'admin:statistics:label:numusers' => "تعداد کاربران",
 	'admin:statistics:label:numonline' => "تعداد کاربران آنلاین",
 	'admin:statistics:label:onlineusers' => "کاربرانی که هم اکنون آنلاینند",
-	'admin:statistics:label:admins'=>"مدیرها",
+	'admin:statistics:label:admins' => "مدیرها",
 	'admin:statistics:label:version' => "نسخه Elgg",
 	'admin:statistics:label:version:release' => "نسخه",
 	'admin:statistics:label:version:version' => "نسخه",
@@ -918,10 +914,13 @@ return array(
 	'admin:legend:system' => 'سیستم',
 	'admin:legend:caching' => 'کش',
 	'admin:legend:content' => 'محتوا',
+	'admin:legend:comments' => 'نظر',
 	'admin:legend:content_access' => 'دسترس محتوا',
 	'admin:legend:site_access' => 'دسترسی سایت',
 	'admin:legend:debug' => 'رفع خطا و لاگ',
 	'config:i18n:who_can_change_language:admin_only' => "فقط مدیر",
+	'config:content:mentions_display_format:username' => "نام کاربری",
+	'config:content:mentions_display_format:display_name' => "نام قابل نمایش",
 	'config:email' => "ایمیل",
 
 	'upgrading' => 'ارتقاء..',
@@ -981,7 +980,6 @@ return array(
 	'default_access:settings' => "سطح دسترسی پیش فرض شما",
 	'default_access:label' => "سطح دسترسی پیش فرض",
 	'user:default_access:success' => "سطح دسترسی پیش فرض جدید ذخیره شد.",
-	'user:default_access:failure' => "سطح دسترسی جدید امکان ذخیره شدن ندارد.",
 
 /**
  * Comments
@@ -993,8 +991,6 @@ return array(
 
 	'generic_comments:add' => "دیدگاهی بگذارید",
 	'generic_comments:edit' => "ویرایش دیدگاه",
-	'generic_comments:post' => "ارسال دیدگاه",
-	'generic_comments:text' => "دیدگاه",
 	'generic_comments:latest' => "آخرین دیدگاهها",
 	'generic_comment:posted' => "دیدگاه شما با موفقیت ارسال شد",
 	'generic_comment:updated' => "دیدگاه با موفقیت بروزرسانی شد.",
@@ -1002,9 +998,7 @@ return array(
 	'generic_comment:notfound' => "متاسفانه دیدگاه مشخص شده پیدا نشد.",
 	'generic_comment:failure' => "در حین ذخیره دیدگاه خطای ناخواسته ای رخ داد.",
 	'generic_comment:none' => 'هیچ دیدگاهی نیست',
-	'generic_comment:title' => 'دیدگاههای %s',
 	'generic_comment:on' => '%s در %s',
-	'generic_comments:latest:posted' => 'منتشر کرد',
 
 /**
  * Entities
@@ -1018,6 +1012,9 @@ return array(
 	'entity:delete:permission_denied' => 'شما مجوز پاک کردن این مورد را ندارید',
 	'entity:delete:success' => 'مورد %s حذف شد',
 	'entity:delete:fail' => 'امکان حذف %s نیست',
+	
+	'entity:restore:item' => 'آیتم',
+
 
 /**
  * Annotations
@@ -1045,10 +1042,30 @@ return array(
  */
 	
 /**
+ * Trash
+ */
+
+/**
+ * Color schemes
+ */
+
+/**
  * Miscellaneous
  */
 	'elgg:powered' => "نیروگرفته توسط Elgg",
-	
+	'field:required' => "الزامی",
+
+/**
+ * Accessibility
+ */
+	'menu:comments:header' => "نظر",
+	'menu:filter:header' => "فیلتر",
+	'menu:river:header' => "رود",
+	'menu:site:header' => "سایت",
+	'menu:social:header' => "اجتماعی",
+	'menu:title:header' => "عنوان",
+	'menu:topbar:header' => "ستون بالا",
+
 /**
  * Cli commands
  */
@@ -1206,5 +1223,7 @@ return array(
 	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulu",
 
-	"field:required" => 'الزامی',
+/**
+ * Upgrades
+ */
 );

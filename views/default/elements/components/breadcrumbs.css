@@ -5,19 +5,19 @@
 	> li {
 		> a {
 			color: var(--elgg-text-color-soft);
-			background-color: white;
+			background-color: var(--elgg-layout-background-color);
 			
 			font-size: 0.9rem;
 			border: 1px solid var(--elgg-border-color-soft);
-			border-radius: 4px;
+			border-radius: var(--elgg-border-radius-medium);
 			padding: 0.25rem 0.5rem;
 			
 			transition: background-color .5s, color .5s;
 			
 			&:hover {
 				text-decoration: none;
-				background-color: var(--elgg-background-color-mild);
-				color: var(--elgg-text-color-mild);
+				background-color: var(--elgg-background-color-strong);
+				color: var(--elgg-text-color-strong);
 			}
 		}
 	}

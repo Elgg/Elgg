@@ -21,7 +21,7 @@ class Site {
 		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'discussions',
-			'icon' => 'comment-dots-regular',
+			'icon' => 'comment-dots',
 			'text' => elgg_echo('collection:object:discussion'),
 			'href' => elgg_generate_url('default:object:discussion'),
 		]);

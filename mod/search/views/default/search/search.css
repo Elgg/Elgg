@@ -43,7 +43,7 @@ Search plugin
 			box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
 			border: none;
 			background: transparent;
-			color: #fff;
+			color: white;
 			font-size: 0.9rem;
 			
 			&:focus {
@@ -53,7 +53,14 @@ Search plugin
 			}
 
 			&::placeholder {
-				color: #ffffff;
+				color: white;
+			}
+			
+			&::-webkit-search-decoration,
+			&::-webkit-search-cancel-button,
+			&::-webkit-search-results-button,
+			&::-webkit-search-results-decoration {
+				display: none;
 			}
 		}
 		

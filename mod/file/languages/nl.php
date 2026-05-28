@@ -22,9 +22,6 @@ return array(
 	'collection:object:file' => 'Bestanden',
 	'list:object:file:no_results' => 'Geen bestanden gevonden',
 	
-	'file:upgrade:2022092801:title' => 'Verplaats bestanden',
-	'file:upgrade:2022092801:description' => 'Verplaatst bestand die middels de file plugin zijn geüpload bij de eigenaar van de content naar de bestandslocatie van de entiteit zelf.',
-	
 	'collection:object:file:all' => "Alle bestanden",
 	'collection:object:file:owner' => "%s's bestanden",
 	'collection:object:file:friends' => "Bestanden van vrienden",
