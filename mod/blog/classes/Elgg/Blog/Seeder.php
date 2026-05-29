@@ -28,8 +28,7 @@ class Seeder extends Seed {
 				/* @var $blog \ElggBlog */
 				$blog = $this->createObject([
 					'subtype' => 'blog',
-					'status' => $this->getRandomStatus(),
-					'comments_on' => $this->faker()->boolean() ? 'On' : 'Off',
+					'status' => 'published', // so seeding comments works
 					'excerpt' => $this->faker()->sentence(),
 				]);
 			} catch (MaxAttemptsException $e) {
@@ -40,6 +39,9 @@ class Seeder extends Seed {
 			$this->createComments($blog);
 			$this->createLikes($blog);
 
+			$blog->status = $this->getRandomStatus();
+			$blog->comments_on = $this->faker()->boolean() ? 'On' : 'Off';
+			
 			if ($blog->status === 'draft') {
 				$blog->future_access = $blog->access_id;
 				$blog->access_id = ACCESS_PRIVATE;
