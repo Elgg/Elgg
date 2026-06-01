@@ -155,7 +155,7 @@ trait Icons {
 			return [];
 		}
 		
-		$coords = unserialize($this->{"{$type}_coords"}) ?: [];
+		$coords = unserialize($this->{"{$type}_coords"}, ['allowed_classes' => false]) ?: [];
 		
 		// cast to integers
 		array_walk($coords, function(&$value) {
