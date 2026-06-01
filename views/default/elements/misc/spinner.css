@@ -21,6 +21,10 @@
 
 	/* fade out over 300ms, then jump offscreen */
 	transition: opacity 300ms ease-in-out, left 0s linear 300ms;
+	
+	.elgg-spinner-text {
+		color: var(--elgg-text-color-strong);
+	}
 }
 
 .elgg-spinner-active .elgg-spinner {

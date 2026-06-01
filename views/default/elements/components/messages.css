@@ -43,6 +43,7 @@
 	
 		> .elgg-head {
 			display: flex;
+			column-gap: 1rem;
 			align-items: center;
 			
 			background-color: var(--elgg-state-header-background-color);
@@ -54,7 +55,6 @@
 			
 			> .elgg-message-icon,
 			> .elgg-message-title {
-				padding-right: 1rem;
 				font-weight: bold;
 			}
 
