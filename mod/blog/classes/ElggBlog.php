@@ -18,21 +18,6 @@ class ElggBlog extends ElggObject {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	public function canComment(int $user_guid = 0): bool {
-		if (!parent::canComment($user_guid)) {
-			return false;
-		}
-
-		if ($this->comments_on === 'Off' || $this->status !== 'published') {
-			return false;
-		}
-		
-		return true;
-	}
-
-	/**
 	 * Get the excerpt for this blog post
 	 *
 	 * @param int $length Length of the excerpt (optional)
