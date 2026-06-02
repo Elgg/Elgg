@@ -69,7 +69,7 @@ abstract class IntegrationTestCase extends BaseIntegrationTestCase {
 		
 		$application = new Application();
 		$application->setup(_elgg_services()->cli_input, _elgg_services()->cli_output);
-		$application->add($command);
+		$application->addCommand($command);
 		
 		$commandTester = new CommandTester($command);
 		
