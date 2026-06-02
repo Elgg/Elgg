@@ -2,6 +2,9 @@
 
 namespace Elgg;
 
+use Elgg\Controllers\EntityEditAction;
+use Elgg\Exceptions\DomainException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\LogicException;
 
 class FormsServiceUnitTest extends \Elgg\UnitTestCase {
@@ -84,5 +87,78 @@ class FormsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->expectExceptionMessage('Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view events)');
 		
 		_elgg_services()->forms->getFooter();
+	}
+	
+	public function testGetFormViewTypeSubtype() {
+		$forms = _elgg_services()->forms;
+		
+		$this->assertEquals('object/bar/edit', $this->invokeInaccessableMethod($forms, 'getFormView', 'object', 'bar'));
+	}
+	
+	public function testGetFormViewSubtype() {
+		$forms = _elgg_services()->forms;
+		
+		$this->assertEquals('foo/edit', $this->invokeInaccessableMethod($forms, 'getFormView', 'object', 'foo'));
+	}
+	
+	public function testGetFormViewGeneric() {
+		$forms = _elgg_services()->forms;
+		
+		$this->assertEquals('entity/edit', $this->invokeInaccessableMethod($forms, 'getFormView', 'object', 'bar2'));
+	}
+	
+	public function testGetFormActionTypeSubtype() {
+		elgg_register_action('object/bar/edit', EntityEditAction::class);
+		$forms = _elgg_services()->forms;
+		
+		$this->assertStringContainsString('object/bar/edit', $this->invokeInaccessableMethod($forms, 'getFormAction', 'object', 'bar'));
+	}
+	
+	public function testGetFormActionSubtype() {
+		elgg_register_action('bar/edit', EntityEditAction::class);
+		$forms = _elgg_services()->forms;
+		
+		$this->assertStringContainsString('bar/edit', $this->invokeInaccessableMethod($forms, 'getFormAction', 'object', 'bar'));
+	}
+	
+	public function testGetFormActionUnknown() {
+		$forms = _elgg_services()->forms;
+		
+		$this->expectException(DomainException::class);
+		$this->invokeInaccessableMethod($forms, 'getFormAction', 'object', 'bar');
+	}
+	
+	public function testRenderEntityWithoutEntity() {
+		elgg_register_action('bar/edit', EntityEditAction::class);
+		$forms = _elgg_services()->forms;
+		
+		$form = $forms->renderEntity('object', 'bar');
+		$this->assertNotEmpty($form);
+		$this->assertIsString($form);
+	}
+	
+	public function testRenderEntityWithEntity() {
+		elgg_register_action('bar/edit', EntityEditAction::class);
+		$forms = _elgg_services()->forms;
+		
+		$object = $this->createObject([
+			'subtype' => 'bar',
+		]);
+		
+		$form = $forms->renderEntity('object', 'bar', $object);
+		$this->assertNotEmpty($form);
+		$this->assertIsString($form);
+	}
+	
+	public function testRenderEntityWithWrongEntity() {
+		elgg_register_action('bar/edit', EntityEditAction::class);
+		$forms = _elgg_services()->forms;
+		
+		$object = $this->createObject([
+			'subtype' => 'foo',
+		]);
+		
+		$this->expectException(InvalidArgumentException::class);
+		$forms->renderEntity('object', 'bar', $object);
 	}
 }

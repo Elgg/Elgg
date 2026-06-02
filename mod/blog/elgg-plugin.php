@@ -1,6 +1,8 @@
 <?php
 
 use Elgg\Blog\Controllers\ContentListing;
+use Elgg\Blog\Controllers\EditAction;
+use Elgg\Blog\Controllers\Entity;
 use Elgg\Blog\Forms\PrepareFields;
 use Elgg\Blog\GroupToolContainerLogicCheck;
 use Elgg\Blog\Notifications\PublishBlogEventHandler;
@@ -27,7 +29,7 @@ return [
 	],
 	'actions' => [
 		'blog/edit' => [
-			'controller' => \Elgg\Blog\Controllers\EditAction::class,
+			'controller' => EditAction::class,
 			'options' => [
 				'entity_type' => 'object',
 				'entity_subtype' => 'blog',
@@ -68,11 +70,14 @@ return [
 		],
 		'view:object:blog' => [
 			'path' => '/blog/view/{guid}/{title?}',
-			'resource' => 'blog/view',
+			'controller' => Entity::class,
+			'options' => [
+				'sidebar_view' => 'object/blog/elements/sidebar',
+			],
 		],
 		'add:object:blog' => [
 			'path' => '/blog/add/{guid}',
-			'resource' => 'blog/add',
+			'controller' => Entity::class,
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
@@ -80,7 +85,10 @@ return [
 		],
 		'edit:object:blog' => [
 			'path' => '/blog/edit/{guid}/{revision?}',
-			'resource' => 'blog/edit',
+			'controller' => Entity::class,
+			'options' => [
+				'sidebar_view' => 'blog/sidebar/revisions',
+			],
 			'requirements' => [
 				'revision' => '\d+',
 			],
@@ -137,6 +145,11 @@ return [
 		'form:prepare:fields' => [
 			'blog/edit' => [
 				PrepareFields::class => [],
+			],
+		],
+		'form:register:fields' => [
+			'object:blog' => [
+				'Elgg\Forms\RegisterFields::addContainerInput' => ['priority' => 600],
 			],
 		],
 		'register' => [

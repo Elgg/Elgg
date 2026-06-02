@@ -12,7 +12,7 @@ class PrepareFields {
 	/**
 	 * Prepare fields
 	 *
-	 * @param \Elgg\Event $event 'form:prepare:fields', 'pages/edit'
+	 * @param \Elgg\Event $event 'form:prepare:fields', 'page/edit'
 	 *
 	 * @return array
 	 */

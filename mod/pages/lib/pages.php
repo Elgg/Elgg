@@ -41,6 +41,7 @@ function pages_prepare_parent_breadcrumbs(\ElggPage $page): void {
  * @return array
  */
 function pages_get_navigation_tree(\ElggEntity $container): array {
+	/** @var \ElggBatch $top_pages */
 	$top_pages = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => 'page',
@@ -55,15 +56,18 @@ function pages_get_navigation_tree(\ElggEntity $container): array {
 	$tree = [];
 	
 	$get_children = function($parent_guid, $depth = 0) use (&$tree, &$get_children) {
-		$children = new ElggBatch('elgg_get_entities', [
+		/** @var \ElggBatch $children */
+		$children = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'page',
 			'metadata_name_value_pairs' => [
 				'parent_guid' => $parent_guid,
 			],
 			'limit' => false,
+			'batch' => true,
 		]);
 		
+		/** @var \ElggPage $child */
 		foreach ($children as $child) {
 			$tree[] = [
 				'guid' => $child->guid,
@@ -77,7 +81,7 @@ function pages_get_navigation_tree(\ElggEntity $container): array {
 		}
 	};
 	
-	/* @var $page ElggPage */
+	/** @var \ElggPage $page */
 	foreach ($top_pages as $page) {
 		$tree[] = [
 			'guid' => $page->guid,

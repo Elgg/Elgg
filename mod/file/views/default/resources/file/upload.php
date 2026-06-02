@@ -5,6 +5,8 @@
 
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
+elgg_deprecated_notice("The resource view 'file/upload' has been deprecated", '7.1');
+
 $container = elgg_get_page_owner_entity();
 if (!$container->canWriteToContainer(0, 'object', 'file')) {
 	throw new EntityPermissionsException();

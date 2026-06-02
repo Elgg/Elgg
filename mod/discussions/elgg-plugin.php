@@ -74,7 +74,7 @@ return [
 		],
 		'add:object:discussion' => [
 			'path' => '/discussion/add/{guid}',
-			'resource' => 'discussion/add',
+			'controller' => \Elgg\Controllers\GenericEntity::class,
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
@@ -82,14 +82,14 @@ return [
 		],
 		'edit:object:discussion' => [
 			'path' => '/discussion/edit/{guid}',
-			'resource' => 'discussion/edit',
+			'controller' => \Elgg\Controllers\GenericEntity::class,
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
 			],
 		],
 		'view:object:discussion' => [
 			'path' => '/discussion/view/{guid}/{title?}',
-			'resource' => 'discussion/view',
+			'controller' => \Elgg\Controllers\GenericEntity::class,
 		],
 	],
 	'events' => [

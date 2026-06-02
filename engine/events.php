@@ -155,6 +155,12 @@ return [
 			\Elgg\Forms\PrepareFields::class => ['priority' => 9999],
 		],
 	],
+	'form:register:fields' => [
+		'all' => [
+			'Elgg\Forms\RegisterFields::addEntityGUID' => [],
+			'Elgg\Forms\RegisterFields::addEntityToAccessInput' => [],
+		],
+	],
 	'head' => [
 		'page' => [
 			\Elgg\Page\AddFaviconLinksHandler::class => [],

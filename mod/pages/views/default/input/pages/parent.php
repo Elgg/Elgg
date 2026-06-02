@@ -9,19 +9,23 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if ($entity instanceof ElggPage) {
+if ($entity instanceof \ElggPage) {
 	$container = $entity->getContainerEntity();
 } else {
 	$container = elgg_get_page_owner_entity();
 }
 
-if (!$container instanceof ElggEntity) {
+if (!$container instanceof \ElggEntity) {
 	return;
 }
 
 $pages = pages_get_navigation_tree($container);
 
 $options = [];
+$options[] = [
+	'text' => elgg_echo('pages:parent_guid:root'),
+	'value' => '',
+];
 foreach ($pages as $page) {
 	$spacing = str_repeat('--', $page['depth']);
 	

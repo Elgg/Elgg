@@ -2,7 +2,10 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\DomainException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\LogicException;
+use Elgg\Forms\FieldsService;
 use Elgg\Javascript\ESMService;
 use Elgg\Traits\Loggable;
 
@@ -26,11 +29,13 @@ class FormsService {
 	 * @param ViewsService  $views  Views service
 	 * @param EventsService $events Events service
 	 * @param ESMService    $esm    ESM service
+	 * @param FieldsService $fields Fields service
 	 */
 	public function __construct(
 		protected ViewsService $views,
 		protected EventsService $events,
-		protected ESMService $esm
+		protected ESMService $esm,
+		protected FieldsService $fields,
 	) {
 	}
 
@@ -70,7 +75,6 @@ class FormsService {
 	 * @return string The complete form
 	 */
 	public function render(string $action, array $form_vars = [], array $body_vars = []): string {
-
 		$defaults = [
 			'action' => elgg_generate_action_url($action, [], false),
 			'method' => 'post',
@@ -137,6 +141,103 @@ class FormsService {
 		}
 
 		return elgg_view('input/form', $form_vars);
+	}
+	
+	/**
+	 * Render an entity edit/add form
+	 *
+	 * @param string           $entity_type    entity type
+	 * @param string           $entity_subtype entity subtype
+	 * @param \ElggEntity|null $entity         entity
+	 * @param array            $vars           Additional vars:
+	 *                                         - (string) action: which form action to use
+	 *                                         - (array) body_vars: additional body vars
+	 *                                         - (array) form_vars: additional form vars
+	 *                                         - (string) view: which form view to use
+	 *
+	 * @return string
+	 * @throws InvalidArgumentException
+	 * @since 7.1
+	 */
+	public function renderEntity(string $entity_type, string $entity_subtype, ?\ElggEntity $entity = null, array $vars = []): string {
+		if ($entity instanceof \ElggEntity && ($entity->getType() !== $entity_type || $entity->getSubtype() !== $entity_subtype)) {
+			throw new InvalidArgumentException("The provided entity doesn't match the given entity type/subtype");
+		}
+		
+		$view = (string) elgg_extract('view', $vars, $this->getFormView($entity_type, $entity_subtype));
+		$action = (string) elgg_extract('action', $vars, $this->getFormAction($entity_type, $entity_subtype));
+		
+		$fields = $this->fields->get($entity_type, $entity_subtype);
+		$fields = (array) $this->events->triggerResults('form:register:fields', "{$entity_type}:{$entity_subtype}", [
+			'entity' => $entity,
+			'entity_type' => $entity_type,
+			'entity_subtype' => $entity_subtype,
+		], $fields);
+		
+		$default_form_vars = [
+			'sticky_enabled' => true,
+			'action' => $action,
+		];
+		$form_vars = array_merge((array) elgg_extract('form_vars', $vars), $default_form_vars);
+		
+		$default_body_vars = [
+			'entity_type' => $entity_type,
+			'entity_subtype' => $entity_subtype,
+			'entity' => $entity,
+			'fields' => $fields,
+		];
+		$body_vars = array_merge((array) elgg_extract('body_vars', $vars), $default_body_vars);
+		
+		return $this->render($view, $form_vars, $body_vars);
+	}
+	
+	/**
+	 * Get the form view for edit/add of an entity type/subtype
+	 *
+	 * @param string $entity_type    entity type
+	 * @param string $entity_subtype entity subtype
+	 *
+	 * @return string
+	 * @since 7.1
+	 */
+	protected function getFormView(string $entity_type, string $entity_subtype): string {
+		$forms = [
+			"{$entity_type}/{$entity_subtype}/edit",
+			"{$entity_subtype}/edit",
+		];
+		
+		foreach ($forms as $view) {
+			if (elgg_view_exists("forms/{$view}")) {
+				return $view;
+			}
+		}
+		
+		return 'entity/edit';
+	}
+	
+	/**
+	 * Get the form action for edit/add of an entity type/subtype
+	 *
+	 * @param string $entity_type    entity type
+	 * @param string $entity_subtype entity subtype
+	 *
+	 * @return string
+	 * @throws DomainException
+	 * @since 7.1
+	 */
+	protected function getFormAction(string $entity_type, string $entity_subtype): string {
+		$actions = [
+			"{$entity_type}/{$entity_subtype}/edit",
+			"{$entity_subtype}/edit",
+		];
+		
+		foreach ($actions as $action) {
+			if (elgg_action_exists($action)) {
+				return elgg_generate_action_url($action, [], false);
+			}
+		}
+		
+		throw new DomainException("No form action found for {$entity_type}/{$entity_subtype}");
 	}
 
 	/**

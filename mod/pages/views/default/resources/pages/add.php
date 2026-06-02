@@ -5,6 +5,8 @@
 
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
+elgg_deprecated_notice("The resource view 'pages/add' has been deprecated", '7.1');
+
 $container = false;
 
 $parent_guid = (int) elgg_extract('guid', $vars);

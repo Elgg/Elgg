@@ -440,6 +440,68 @@ There are helper function in the controller you can extend if you just need to c
 	If you provide your route definition with an option ``sidebar_view`` that view will be called during the rendering of
 	the page.
 
+Entity controller
+~~~~~~~~~~~~~~~~~
+
+Elgg offers a default entity controller. This controller will render a full page with:
+
+- A title
+- A breadcrumb
+- A view of an entity or the form to create/edit the entity
+
+All of this is done based of the recommended route names.
+
+**add:<entity_type>:<entity_subtype>**
+**edit:<entity_type>:<entity_subtype>**
+**view:<entity_type>:<entity_subtype>**
+
+The title of the page will be the language key ``add:<entity_type>:<entity_subtype>``, ``edit:<entity_type>:<entity_subtype>``
+or the display name of the entity (by calling ``$entity->getDisplayName()``.
+
+For the ``add`` page the permissions will be checked that the logged in user is allowed to create the 
+``<entity_type>:<entity_subtype>`` in the provided container.
+
+For the ``edit`` page the permissions will be checked that the logged in user is allowed to edit the given entity and 
+that the given entity is of the ``<entity_type>:<entity_subtype>`` as defined in the route name.
+
+For the ``view`` page the permissions will be checked that the visitor is allowed to view the given entity and that 
+the given entity is of the ``<entity_type>:<entity_subtype>`` as defined in the route name.
+
+.. code-block:: php
+
+	// elgg-plugin.php
+	return [
+		'routes' => [
+			'add:object:my_content' => [
+				'path' => '/my_path/add/{guid}',
+				'controller' => \Elgg\Controllers\GenericEntity::class,
+				'middleware' => [
+					\Elgg\Router\Middleware\Gatekeeper::class,
+					\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
+				],
+			],
+			'edit:object:my_content' => [
+				'path' => '/my_path/edit/{guid}',
+				'controller' => \Elgg\Controllers\GenericEntity::class,
+				'middleware' => [
+					\Elgg\Router\Middleware\Gatekeeper::class,
+				],
+			],
+			'view:object:my_content' => [
+				'path' => '/my_path/view/{guid}/{title?}',
+				'controller' => \Elgg\Controllers\GenericEntity::class,
+				'options' => [
+					'sidebar_view' => 'my_content/sidebar', // optional
+				],
+			],
+		],
+	];
+
+.. note::
+
+	If you provide your route definition with an option ``sidebar_view`` that view will be called during the rendering of
+	the page.
+
 The ``route:rewrite`` event
 ===========================
 

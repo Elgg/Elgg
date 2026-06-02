@@ -11,29 +11,17 @@ use Elgg\Exceptions\Http\ValidationException;
  *
  * @since 7.0
  */
-class GenericContentListing {
-	
-	protected ?\Elgg\Request $request = null;
-	
-	protected ?\Elgg\Router\Route $route = null;
+class GenericContentListing extends GenericContent {
 	
 	protected ?\ElggEntity $page_owner = null;
 	
 	/**
-	 * Handle a listing request
-	 *
-	 * @param \Elgg\Request $request the Elgg request
-	 *
-	 * @return \Elgg\Http\Response
-	 * @throws ValidationException
+	 * {@inheritdoc}
 	 */
-	final public function __invoke(\Elgg\Request $request): \Elgg\Http\Response {
-		$this->request = $request;
-		$this->route = $request->getHttpRequest()?->getRoute();
+	final protected function handleRequest(\Elgg\Request $request): \Elgg\Http\Response {
 		$this->page_owner = $this->route?->resolvePageOwner();
 		
-		$route_name = $request->getRoute();
-		$parsed_route = $this->parseRoute($route_name);
+		$parsed_route = $this->parseRoute();
 		
 		elgg_register_title_button('add', $parsed_route['type'], $parsed_route['subtype']);
 		
@@ -51,27 +39,36 @@ class GenericContentListing {
 	}
 	
 	/**
+	 * {@inheritdoc}
+	 */
+	protected function assertValidRoute(): void {
+		$route_parts = $this->getRouteParts();
+		
+		if (!in_array($route_parts[0], ['default', 'collection'])) {
+			throw new ValidationException('Unsupported route name configuration');
+		}
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getPage(): string {
+		return $this->getRouteParts()[3] ?? 'all';
+	}
+	
+	/**
 	 * Parse the route name to usable parts
-	 *
-	 * @param string $route_name route name
 	 *
 	 * @return array
 	 * @throws ValidationException
 	 */
-	final protected function parseRoute(string $route_name): array {
-		$name_parts = explode(':', $route_name);
-		if (count($name_parts) < 3) {
-			throw new ValidationException('Unsupported route name configuration');
-		}
-		
-		if (!in_array($name_parts[0], ['default', 'collection'])) {
-			throw new ValidationException('Unsupported route name configuration');
-		}
+	final protected function parseRoute(): array {
+		$route_parts = $this->getRouteParts();
 		
 		return [
-			'type' => $name_parts[1],
-			'subtype' => $name_parts[2],
-			'page' => $name_parts[3] ?? 'all',
+			'type' => $route_parts[1],
+			'subtype' => $route_parts[2],
+			'page' => $route_parts[3] ?? 'all',
 		];
 	}
 	
@@ -98,21 +95,46 @@ class GenericContentListing {
 	}
 	
 	/**
-	 * Get additional options to use when viewing a page
-	 *
-	 * @param string $page    for which page to get the options ('all', 'owner', 'group', 'friends')
-	 * @param array  $options current page options
-	 *
-	 * @return array
-	 * @see elgg_view_page()
+	 * {@inheritdoc}
 	 */
 	protected function getPageOptions(string $page, array $options): array {
-		$sidebar_view = $this->route?->getOption('sidebar_view');
-		if (!empty($sidebar_view) && elgg_view_exists($sidebar_view)) {
-			$options['sidebar'] = elgg_view($sidebar_view, [
-				'page' => $page,
-				'entity' => $this->page_owner,
-			]);
+		if (!isset($options['filter_id']) && $page === 'group') {
+			$options['filter_id'] = "{$this->getEntitySubtype()}/group";
+		}
+		
+		if (!isset($options['filter_value'])) {
+			$filter_value = $page;
+			switch ($page) {
+				case 'friends':
+					$filter_value = $this->page_owner?->guid === elgg_get_logged_in_user_guid() ? 'friends' : 'none';
+					break;
+				case 'group':
+					$filter_value = 'all';
+					break;
+				case 'owner':
+					$filter_value = $this->page_owner?->guid === elgg_get_logged_in_user_guid() ? 'mine' : 'none';
+					break;
+			}
+			
+			$options['filter_value'] = $filter_value;
+		}
+		
+		if (!isset($options['sidebar'])) {
+			$sidebar_view = $this->route?->getOption('sidebar_view');
+			if (!empty($sidebar_view) && elgg_view_exists($sidebar_view)) {
+				$options['sidebar'] = elgg_view($sidebar_view, [
+					'page' => $page,
+					'entity' => $this->page_owner,
+				]);
+			}
+		}
+		
+		if (!isset($options['title'])) {
+			if ($page === 'owner') {
+				$options['title'] = elgg_echo("collection:{$this->getEntityType()}:{$this->getEntitySubtype()}:{$page}", [$this->page_owner?->getDisplayName()]);
+			} else {
+				$options['title'] = elgg_echo("collection:{$this->getEntityType()}:{$this->getEntitySubtype()}:{$page}");
+			}
 		}
 		
 		return $options;
@@ -131,7 +153,6 @@ class GenericContentListing {
 	 */
 	protected function listAll(array $options): string {
 		return elgg_view_page('', $this->getPageOptions('all', [
-			'title' => elgg_echo("collection:{$options['type']}:{$options['subtype']}:all"),
 			'content' => elgg_view('page/list/all', [
 				'options' => $options,
 				'page' => 'all',
@@ -165,13 +186,11 @@ class GenericContentListing {
 		];
 		
 		return elgg_view_page('', $this->getPageOptions('friends', [
-			'title' => elgg_echo("collection:{$options['type']}:{$options['subtype']}:friends"),
 			'content' => elgg_view('page/list/all', [
 				'entity' => $this->page_owner,
 				'options' => array_merge($options, $friends_options),
 				'page' => 'friends',
 			]),
-			'filter_value' => $this->page_owner?->guid === elgg_get_logged_in_user_guid() ? 'friends' : 'none',
 		]));
 	}
 	
@@ -205,14 +224,11 @@ class GenericContentListing {
 		];
 		
 		return elgg_view_page('', $this->getPageOptions('group', [
-			'title' => elgg_echo("collection:{$options['type']}:{$options['subtype']}:group"),
 			'content' => elgg_view('page/list/all', [
 				'entity' => $this->page_owner,
 				'options' => array_merge($options, $group_options),
 				'page' => 'group',
 			]),
-			'filter_id' => "{$options['subtype']}/group",
-			'filter_value' => 'all',
 		]));
 	}
 	
@@ -240,13 +256,11 @@ class GenericContentListing {
 		];
 		
 		return elgg_view_page('', $this->getPageOptions('owner', [
-			'title' => elgg_echo("collection:{$options['type']}:{$options['subtype']}:owner", [$this->page_owner->getDisplayName()]),
 			'content' => elgg_view('page/list/all', [
 				'entity' => $this->page_owner,
 				'options' => array_merge($options, $owner_options),
 				'page' => 'owner',
 			]),
-			'filter_value' => $this->page_owner->guid === elgg_get_logged_in_user_guid() ? 'mine' : 'none',
 		]));
 	}
 }
