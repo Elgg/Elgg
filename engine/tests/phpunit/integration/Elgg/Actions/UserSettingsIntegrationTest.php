@@ -140,7 +140,7 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 	public function testDisplayNameChangeSucceeds() {
 		$user = $this->createUser();
 
-		$new_name = $this->faker->name;
+		$new_name = $this->faker->name();
 
 		_elgg_services()->session_manager->setLoggedInUser($user);
 
