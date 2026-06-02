@@ -38,18 +38,23 @@ class Permissions {
 	 *
 	 * @param \Elgg\Event $event 'container_logic_check', 'object'
 	 *
-	 * @return void|false
+	 * @return null|false
 	 */
-	public static function preventCommentOnClosedDiscussion(\Elgg\Event $event) {
+	public static function preventCommentOnClosedDiscussion(\Elgg\Event $event): ?bool {
+		if ($event->getParam('subtype') !== 'comment') {
+			return null;
+		}
 		
-		$discussion = $event->getEntityParam();
+		$discussion = $event->getParam('container');
 		if (!$discussion instanceof \ElggDiscussion) {
-			return;
+			return null;
 		}
 	
-		if ($discussion->status == 'closed') {
+		if ($discussion->status === 'closed') {
 			// do not allow new comments in closed discussions
 			return false;
 		}
+		
+		return null;
 	}
 }

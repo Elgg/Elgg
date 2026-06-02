@@ -36,11 +36,11 @@ class Seeder extends Seed {
 				continue;
 			}
 			
-			$discussion->setStatus($this->getRandomStatus());
-			
 			$this->createComments($discussion);
 			$this->createLikes($discussion);
 
+			$discussion->setStatus($this->getRandomStatus());
+			
 			elgg_create_river_item([
 				'action_type' => 'create',
 				'subject_guid' => $discussion->owner_guid,

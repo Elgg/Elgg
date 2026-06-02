@@ -125,6 +125,7 @@ return [
 	'events' => [
 		'container_logic_check' => [
 			'object' => [
+				'Elgg\Blog\Permissions::preventCommentsWhenDisabledOnBlog' => [],
 				GroupToolContainerLogicCheck::class => [],
 			],
 		],

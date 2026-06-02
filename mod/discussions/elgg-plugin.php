@@ -96,6 +96,7 @@ return [
 		'container_logic_check' => [
 			'object' => [
 				'Elgg\Discussions\Permissions::containerLogic' => [],
+				'Elgg\Discussions\Permissions::preventCommentOnClosedDiscussion' => [],
 				GroupToolContainerLogicCheck::class => [],
 			],
 		],
@@ -117,11 +118,6 @@ return [
 		'get' => [
 			'subscriptions' => [
 				'Elgg\Discussions\Notifications::addGroupSubscribersToCommentOnDiscussionSubscriptions' => [],
-			],
-		],
-		'permissions_check:comment' => [
-			'object' => [
-				'Elgg\Discussions\Permissions::preventCommentOnClosedDiscussion' => [],
 			],
 		],
 		'prepare' => [
