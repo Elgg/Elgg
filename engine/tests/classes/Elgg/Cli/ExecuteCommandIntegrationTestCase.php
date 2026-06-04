@@ -41,7 +41,7 @@ class ExecuteCommandIntegrationTestCase extends IntegrationTestCase {
 	protected function executeCommand(SymfonyCommand $command, array $input = [], array $options = [], bool $status_code = false): int|string {
 		$application = new Application();
 		$application->setup(_elgg_services()->cli_input, _elgg_services()->cli_output);
-		$application->add($command);
+		$application->addCommand($command);
 		
 		$commandTester = new CommandTester($command);
 		

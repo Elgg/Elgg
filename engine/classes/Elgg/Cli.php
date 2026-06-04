@@ -107,7 +107,7 @@ class Cli {
 		$command->setLogger($this->getLogger());
 		
 		if (!is_subclass_of($command, Command::class)) {
-			$this->console->add($command);
+			$this->console->addCommand($command);
 			return;
 		}
 
@@ -121,7 +121,7 @@ class Cli {
 			elgg_echo('cli:option:language')
 		);
 
-		$this->console->add($command);
+		$this->console->addCommand($command);
 	}
 
 	/**
