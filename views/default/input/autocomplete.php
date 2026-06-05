@@ -77,8 +77,8 @@ echo elgg_format_element('input', $vars);
 
 // inline script in case loaded via ajax
 ?>
-<script>
-	import('input/autocomplete').then((autoc) => {
-		autoc.default.init();
-	});
+<script type="module">
+	import autoc from 'input/autocomplete';
+	
+	autoc.init();
 </script>

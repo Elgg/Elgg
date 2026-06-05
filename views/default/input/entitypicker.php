@@ -91,8 +91,8 @@ $picker .= elgg_format_element('ul', ['class' => $list_class], $items);
 echo elgg_format_element('div', $wrapper_options, $picker);
 
 ?>
-<script>
-	import('input/entitypicker').then((entitypicker) => {
-		entitypicker.default.setup('.elgg-entity-picker[data-name=<?= json_encode($name) ?>]');
-	});
+<script type="module">
+	import entitypicker from 'input/entitypicker';
+	
+	entitypicker.setup('.elgg-entity-picker[data-name=<?= json_encode($name) ?>]');
 </script>
