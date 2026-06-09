@@ -3,7 +3,7 @@
 *************************************** */
 .elgg-table,
 .elgg-table-alt {
-	background-color: white;
+	background-color: var(--elgg-layout-background-color);
 	margin-bottom: 1rem;
 	width: 100%;
 
