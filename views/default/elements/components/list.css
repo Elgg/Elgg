@@ -28,14 +28,6 @@
 	margin-top: 0.5rem;
 }
 
-.elgg-listing-full-header {
-	margin-bottom: 2rem;
-}
-
-.elgg-listing-full-responses {
-	padding-top: 1rem;
-}
-
 .elgg-listing-imprint {
 	display: flex;
 	flex-wrap: wrap;
@@ -44,4 +36,14 @@
 	.elgg-icon {
 		margin-right: 0.5rem;
 	}
+}
+
+/* ***************************************
+	Full
+*************************************** */
+
+.elgg-listing-full {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
 }
