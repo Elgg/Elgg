@@ -8,7 +8,7 @@ $entity = elgg_extract('entity', $vars);
 $container_guid = (int) elgg_extract('container_guid', $vars);
 $container_entity = get_entity($container_guid);
 $show_container_input = true;
-if (!$container_entity instanceof \ElggGroup) {
+if (!$entity instanceof \ElggDiscussion && !$container_entity instanceof \ElggGroup) {
 	$options_values = [$container_guid => ''];
 	$groups = elgg_get_logged_in_user_entity()->getGroups([
 		'limit' => false,
