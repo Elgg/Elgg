@@ -65,14 +65,13 @@
 		}
 		
 		> .elgg-listing-full {
-			.elgg-listing-full-header {
-				margin: 0;
-			}
+			gap: 0;
 			
 			> .elgg-listing-full-responses {
 				padding: 0 0 0 2rem;
-				
 				border-left: 2px dashed var(--elgg-border-color-soft);
+				display: flex;
+				flex-direction: column;
 			}
 		}
 	}
@@ -91,6 +90,7 @@
 #comments {
 	.elgg-form-comment-save {
 		margin-top: 1rem;
+		margin-bottom: 1rem;
 		
 		.elgg-field-label {
 			display: none;

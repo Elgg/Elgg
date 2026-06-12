@@ -153,11 +153,6 @@
 /* ***************************************
 	ENTITY NAVIGATION
 *************************************** */
-
-.elgg-menu-entity-navigation-container {
-	margin-top: 1rem;
-}
-
 .elgg-menu-entity-navigation {
 	flex-direction: row;
 	

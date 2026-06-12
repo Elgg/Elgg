@@ -65,6 +65,8 @@ export default {
 					if ($input.is(':focus')) {
 						editor.focus();
 					}
+					
+					$(window).trigger('resize.lightbox');
 				});
 		});
 	},
