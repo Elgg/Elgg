@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-22 10:18+0200\n"
+"POT-Creation-Date: 2026-06-12 12:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1522,7 +1522,7 @@ msgid "Within each major version, the last minor release is designated for long 
 msgstr ""
 
 #: ../../appendix/support.rst:17
-msgid "E.g. 2.3 is the last minor release within 2.x. It will receive bug fixes until 1 year aftr 3.0 is released and security fixes until 4.0 is released."
+msgid "E.g. 2.3 is the last minor release within 2.x. It will receive bug fixes until 1 year after 3.0 is released and security fixes until 4.0 is released."
 msgstr ""
 
 #: ../../appendix/support.rst:22
@@ -1724,7 +1724,7 @@ msgid "October 2023"
 msgstr ""
 
 #: ../../appendix/support.rst:81
-msgid "5.1 LTS"
+msgid "5.1"
 msgstr ""
 
 #: ../../appendix/support.rst:81
@@ -1732,7 +1732,8 @@ msgid "June 2025"
 msgstr ""
 
 #: ../../appendix/support.rst:81
-msgid "**Until 7.0**"
+#: ../../appendix/support.rst:91
+msgid "May 2026"
 msgstr ""
 
 #: ../../appendix/support.rst:83
@@ -1763,14 +1764,26 @@ msgid "September 2025"
 msgstr ""
 
 #: ../../appendix/support.rst:89
-msgid "6.3"
+msgid "6.3 LTS"
+msgstr ""
+
+#: ../../appendix/support.rst:89
+msgid "May 2027"
+msgstr ""
+
+#: ../../appendix/support.rst:89
+msgid "**Until 8.0**"
 msgstr ""
 
 #: ../../appendix/support.rst:91
 msgid "7.0"
 msgstr ""
 
-#: ../../appendix/support.rst:91
+#: ../../appendix/support.rst:93
+msgid "8.0"
+msgstr ""
+
+#: ../../appendix/support.rst:93
 msgid "TBD"
 msgstr ""
 

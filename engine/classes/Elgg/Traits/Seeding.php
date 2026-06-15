@@ -111,7 +111,7 @@ trait Seeding {
 			}
 
 			if (empty($properties['name'])) {
-				$properties['name'] = $this->faker()->name;
+				$properties['name'] = $this->faker()->name();
 			}
 
 			if (empty($properties['username'])) {
@@ -632,7 +632,7 @@ trait Seeding {
 
 		$make = function($name = null)  {
 			if (!$name) {
-				return elgg_strtolower($this->faker()->firstName . '.' . $this->faker()->lastName);
+				return elgg_strtolower($this->faker()->firstName() . '.' . $this->faker()->lastName());
 			}
 
 			return implode('.', preg_split('/\W/', $name));
@@ -705,7 +705,7 @@ trait Seeding {
 			switch ($name) {
 				case 'phone':
 				case 'mobile':
-					$metadata[$name] = $this->faker()->phoneNumber;
+					$metadata[$name] = $this->faker()->phoneNumber();
 					break;
 
 				default:
@@ -716,7 +716,7 @@ trait Seeding {
 							break;
 
 						case 'text':
-							$metadata[$name] = $this->faker()->sentence;
+							$metadata[$name] = $this->faker()->sentence();
 							break;
 
 						case 'tags':
@@ -724,11 +724,11 @@ trait Seeding {
 							break;
 
 						case 'url':
-							$metadata[$name] = $this->faker()->url;
+							$metadata[$name] = $this->faker()->url();
 							break;
 
 						case 'email':
-							$metadata[$name] = $this->faker()->email;
+							$metadata[$name] = $this->faker()->email();
 							break;
 
 						case 'number':
@@ -736,7 +736,7 @@ trait Seeding {
 							break;
 
 						case 'date':
-							$metadata[$name] = $this->faker()->unixTime;
+							$metadata[$name] = $this->faker()->unixTime();
 							break;
 
 						case 'password':
@@ -744,9 +744,9 @@ trait Seeding {
 							break;
 
 						case 'location':
-							$metadata[$name] = $this->faker()->address;
-							$metadata['geo:lat'] = $this->faker()->latitude;
-							$metadata['geo:long'] = $this->faker()->longitude;
+							$metadata[$name] = $this->faker()->address();
+							$metadata['geo:lat'] = $this->faker()->latitude();
+							$metadata['geo:long'] = $this->faker()->longitude();
 							break;
 
 						default:
@@ -831,7 +831,7 @@ trait Seeding {
 				$comment = new \ElggComment();
 				$comment->owner_guid = $this->getRandomUser()->guid ?: $entity->owner_guid;
 				$comment->container_guid = $entity->guid;
-				$comment->description = $this->faker()->paragraph;
+				$comment->description = $this->faker()->paragraph();
 				$comment->time_created = $this->getRandomCreationTimestamp();
 				$comment->access_id = $entity->access_id;
 	

@@ -36,6 +36,8 @@ function changeTab($link_item, clearing_tab, trigger_open) {
 	if (trigger_open) {
 		$link_item.trigger('open');
 		
+		$(window).trigger('resize.lightbox');
+		
 		// scroll tabs into view if needed
 		var rect = $link_item[0].getBoundingClientRect();
 		

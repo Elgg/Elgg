@@ -87,8 +87,8 @@ if (isset($vars['id'])) {
 	$selector = ".elgg-input-date[name='{$name}']";
 }
 ?>
-<script>
-	import('input/date').then((datepicker) => {
-		datepicker.default.init(<?= json_encode($selector) ?>);
-	});
+<script type="module">
+	import datepicker from 'input/date';
+	
+	datepicker.init(<?= json_encode($selector) ?>);
 </script>

@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v6
         
       - name: Check format
-        uses: gsactions/commit-message-checker@v2
+        uses: ddev/commit-message-checker@v3
         with:
           pattern: '^((Merge )|(Revert )|((\w*)\(([\w]+)\)\: ([^\n]*)(\n\n?(.*))?)$)'
           flags: 'is'
@@ -20,7 +20,7 @@ jobs:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Check line length
-        uses: gsactions/commit-message-checker@v2
+        uses: ddev/commit-message-checker@v3
         with:
           pattern: '^.{1,160}(\n|$)'
           flags: ''
@@ -31,7 +31,7 @@ jobs:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Check type
-        uses: gsactions/commit-message-checker@v2
+        uses: ddev/commit-message-checker@v3
         with:
           pattern: '^((Merge )|(Revert )|(feat(ure)?|fix(es|ed)?|doc(s)?|chore|perf(ormance)?|security|deprecate(s|d)?|break(s)?|removed)?\()'
           flags: 'is'

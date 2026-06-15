@@ -142,9 +142,9 @@ echo elgg_format_element('div', ['class' => ['elgg-entity-edit-icon-crop-input',
 echo elgg_view('entity/edit/icon/crop_messages', $vars);
 
 ?>
-<script>
-	import('entity/edit/icon/crop').then((Cropper) => {
-		var cropper = new Cropper.default();
-		cropper.init('input[type="file"][name="<?php echo elgg_extract('name', $vars, 'icon'); ?>"]');
-	});
+<script type="module">
+	import Cropper from 'entity/edit/icon/crop';
+	
+	var cropper = new Cropper();
+	cropper.init('input[type="file"][name="<?php echo elgg_extract('name', $vars, 'icon'); ?>"]');
 </script>

@@ -51,7 +51,7 @@ class ElggUserIntegrationTest extends IntegrationTestCase {
 		$validate_event = $this->registerTestingEvent('validate:after', 'user', function(\Elgg\Event $event) {});
 		$invalidate_event = $this->registerTestingEvent('invalidate:after', 'user', function(\Elgg\Event $event) {});
 		
-		$name = $this->faker()->name;
+		$name = $this->faker()->name();
 		$username = $this->getRandomUsername($name);
 		
 		$user = $this->user = elgg_register_user([

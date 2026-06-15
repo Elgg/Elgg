@@ -18,6 +18,9 @@ return [
 		'type' => 'site',
 		'subtype' => 'site',
 		'class' => \ElggSite::class,
+		'capabilities' => [
+			'river_emittable' => true,
+		],
 	],
 	[
 		'type' => 'object',

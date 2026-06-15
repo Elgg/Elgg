@@ -1,3 +1,26 @@
+<a name="7.0.1"></a>
+### 7.0.1 (2026-06-12)
+
+#### Contributors
+
+* Jeroen Dalsem (12)
+* Jerôme Bakker (9)
+* XananasX (1)
+
+#### Bug fixes
+
+* **discussion:** don't show group selector on discussion edit form [8a2c95c24](https://github.com/Elgg/Elgg/commit/8a2c95c243f8c45749fe01e4506172e00a7979c4)
+* **river:** user join river items are visible [e2deefd54](https://github.com/Elgg/Elgg/commit/e2deefd54ddd05ac686b26ef9a4c85ca0e7a32bc) closes [#15092](https://github.com/Elgg/Elgg/issues/15092)
+* **js:**
+  * tab switches and ckeditor loading trigger lightbox resize [509c20909](https://github.com/Elgg/Elgg/commit/509c2090955121a3135b3c103810cf58d1f7329d) closes [#15072](https://github.com/Elgg/Elgg/issues/15072), [#15071](https://github.com/Elgg/Elgg/issues/15071)
+  * replaced dynamic imports in inline scripts because of Safari issues [fa114ccf7](https://github.com/Elgg/Elgg/commit/fa114ccf7e777dfa64bebe333cfb4a51a78da66f)
+* **theme:** unable to correctly save theme color as an admin [684b22c6f](https://github.com/Elgg/Elgg/commit/684b22c6fb853feeb9af3ddd0e97ad078ba155e1) closes [#15080](https://github.com/Elgg/Elgg/issues/15080)
+* **css:** table background color not using a css variable [6c1e6e8a9](https://github.com/Elgg/Elgg/commit/6c1e6e8a9d9c902f48fb09f3579cdb6501926ede)
+* **discussions:** comment permissions moved to container logic check [d18a027af](https://github.com/Elgg/Elgg/commit/d18a027affe7faf501fe15e61a16beb22df2e119)
+* **blog:** comment permissions moved to container logic check [6593ac32e](https://github.com/Elgg/Elgg/commit/6593ac32e24ec56df48429a524dd92a1957858c1)
+* **webservices:** improved PAM authentication handling [5f874af27](https://github.com/Elgg/Elgg/commit/5f874af27d2e299255c4cd7f339337008d0b8918)
+
+
 <a name="7.0.0"></a>
 ## 7.0.0 (2026-05-22)
 

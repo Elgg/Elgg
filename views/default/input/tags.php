@@ -55,8 +55,8 @@ if (isset($vars['id'])) {
 }
 
 ?>
-<script>
-	import('input/tags').then((tags) => {
-		tags.default.init(<?= json_encode($selector) ?>);
-	});
+<script type="module">
+	import tags from 'input/tags';
+	
+	tags.init(<?= json_encode($selector) ?>);
 </script>

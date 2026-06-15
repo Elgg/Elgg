@@ -124,7 +124,7 @@ class Gatekeeper {
 				'guid' => $guid,
 				'type' => $type,
 				'subtype' => $subtype,
-				'route' => $this->request->get('_route'),
+				'route' => $this->request->getParam('_route', null, false),
 			]);
 			throw $exception;
 		}
@@ -155,7 +155,7 @@ class Gatekeeper {
 				$exception->setParams([
 					'entity' => $entity,
 					'user' => $user,
-					'route' => $this->request->get('_route'),
+					'route' => $this->request->getParam('_route', null, false),
 				]);
 				throw $exception;
 			}
@@ -167,7 +167,7 @@ class Gatekeeper {
 				$exception->setParams([
 					'entity' => $entity,
 					'user' => $user,
-					'route' => $this->request->get('_route'),
+					'route' => $this->request->getParam('_route', null, false),
 				]);
 				throw $exception;
 			}
@@ -178,7 +178,7 @@ class Gatekeeper {
 				$exception->setParams([
 					'entity' => $entity,
 					'user' => $user,
-					'route' => $this->request->get('_route'),
+					'route' => $this->request->getParam('_route', null, false),
 				]);
 				throw $exception;
 			}
@@ -202,7 +202,7 @@ class Gatekeeper {
 		$params = [
 			'entity' => $entity,
 			'user' => $user,
-			'route' => $this->request->get('_route'),
+			'route' => $this->request->getParam('_route', null, false),
 		];
 
 		$result = _elgg_services()->events->triggerResults('gatekeeper', "{$entity->type}:{$entity->subtype}", $params, $result);
@@ -237,7 +237,7 @@ class Gatekeeper {
 			$exception->setParams([
 				'entity' => $user,
 				'user' => $viewer,
-				'route' => $this->request->get('_route'),
+				'route' => $this->request->getParam('_route', null, false),
 			]);
 			throw $exception;
 		}
@@ -266,7 +266,7 @@ class Gatekeeper {
 		$exception->setParams([
 			'entity' => $group,
 			'user' => $user,
-			'route' => $this->request->get('_route'),
+			'route' => $this->request->getParam('_route', null, false),
 		]);
 		$exception->setRedirectUrl($group->getURL());
 		throw $exception;
