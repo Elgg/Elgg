@@ -21,8 +21,8 @@
 		}
 		
 		&:first-child {
-			border-top-left-radius: 3px;
-			border-bottom-left-radius: 3px;
+			border-top-left-radius: var(--elgg-border-radius-small);
+			border-bottom-left-radius: var(--elgg-border-radius-small);
 		}
 		
 		&.elgg-pagination-previous {
@@ -34,8 +34,8 @@
 		}
 		
 		&:last-child {
-			border-top-right-radius: 3px;
-			border-bottom-right-radius: 3px;
+			border-top-right-radius: var(--elgg-border-radius-small);
+			border-bottom-right-radius: var(--elgg-border-radius-small);
 		}
 		
 		&.elgg-pagination-next {

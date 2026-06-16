@@ -109,9 +109,6 @@
 .elgg-nav-collapsed .elgg-nav-button span {
 	&:nth-child(1) {
 		top: 6px;
-		-moz-transform: rotate(135deg);
-		-ms-transform: rotate(135deg);
-		-webkit-transform: rotate(135deg);
 		transform: rotate(135deg);
 	}
 	
@@ -122,9 +119,6 @@
 	
 	&:nth-child(3) {
 		top: 6px;
-		-moz-transform: rotate(-135deg);
-		-ms-transform: rotate(-135deg);
-		-webkit-transform: rotate(-135deg);
 		transform: rotate(-135deg);
 	}
 }

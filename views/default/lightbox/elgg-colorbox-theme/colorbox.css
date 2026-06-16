@@ -26,9 +26,7 @@
 	background: var(--elgg-layout-background-color);
 	margin: 20px;
 	border: 10px var(--elgg-border-color-soft) solid;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+	border-radius: var(--elgg-border-radius-medium);
 	max-width: 95%;
 	max-width: -webkit-calc(100vw - 60px);
 	max-width: calc(100vw - 60px);

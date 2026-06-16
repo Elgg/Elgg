@@ -664,31 +664,7 @@ Good:
 Vendor prefixes
 ^^^^^^^^^^^^^^^
 
- * Group vendor-prefixes for the same property together
- * Longest vendor-prefixed version first
- * Always include non-vendor-prefixed version
- * Put an extra newline between vendor-prefixed groups and other properties
-
-Bad:
-
-.. code-block:: css
-
-	-moz-border-radius: 5px;
-	border: 1px solid #999999;
-	-webkit-border-radius: 5px;
-	width: auto;
-
-Good:
-
-.. code-block:: css
-
-	border: 1px solid #999999;
-
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-
-	width: auto;
+ * Do not rely on vendor prefixes
 
 Group subproperties
 ^^^^^^^^^^^^^^^^^^^
