@@ -8,16 +8,14 @@ if (!$widget instanceof \ElggWidget) {
 	return;
 }
 
-$entity_stats = elgg_get_entity_statistics();
-
 $registered_entity_types = elgg_entity_types_with_capability('searchable');
 if (empty($registered_entity_types)) {
-	echo elgg_view('output/longtext', [
-		'value' => elgg_echo('notfound'),
-	]);
+	echo elgg_view_no_results();
+	return;
 }
 
 $stats = [];
+$entity_stats = elgg_get_entity_statistics();
 
 foreach ($registered_entity_types as $type => $subtypes) {
 	foreach ($subtypes as $subtype) {

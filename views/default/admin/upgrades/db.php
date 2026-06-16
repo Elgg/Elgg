@@ -12,9 +12,8 @@ $select = \Elgg\Database\Select::fromTable('migrations', 'm');
 $select->select('*');
 
 $result = _elgg_services()->db->getData($select);
-
 if (empty($result)) {
-	echo elgg_echo('notfound');
+	echo elgg_view_no_results();;
 	return;
 }
 
