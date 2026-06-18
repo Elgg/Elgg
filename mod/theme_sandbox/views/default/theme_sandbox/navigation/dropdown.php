@@ -4,7 +4,7 @@ $items = [
 	[
 		'name' => 'parent',
 		'text' => 'Show Submenu',
-		'href' => '#',
+		'href' => false,
 		'child_menu' => [
 			'display' => 'dropdown',
 			'data-position' => json_encode([
@@ -21,29 +21,23 @@ foreach (['bell', 'bank', 'coffee', 'car'] as $icon) {
 		'name' => $icon,
 		'icon' => $icon,
 		'text' => 'Menu item',
-		'href' => '#',
+		'href' => false,
 		'parent_name' => 'parent',
-		'child_menu' => [
-			'display' => 'toggle',
-		],
 	];
 
 
 	foreach (['A', 'B', 'C'] as $letter) {
 		$items[] = [
 			'name' => "{$icon}:{$letter}",
-			'href' => '#',
+			'href' => false,
 			'text' => "Child {$letter}",
 			'parent_name' => $icon,
-			'child_menu' => [
-				'display' => 'toggle',
-			],
 		];
 
 		foreach (['AA', 'BB', 'CC'] as $subletter) {
 			$items[] = [
 				'name' => "{$icon}:{$letter}:{$subletter}",
-				'href' => '#',
+				'href' => false,
 				'text' => "Child {$subletter}",
 				'parent_name' => "{$icon}:{$letter}",
 			];

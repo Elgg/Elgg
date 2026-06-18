@@ -8,7 +8,7 @@ foreach (['cogs', 'support', 'question', 'info'] as $index => $icon) {
 		'icon' => $icon,
 		'badge' => $index ?: null,
 		'text' => 'Menu item',
-		'href' => '#',
+		'href' => false,
 		'link_class' => $icon == 'info' ? 'elgg-state elgg-state-notice' : '',
 	];
 
@@ -16,7 +16,7 @@ foreach (['cogs', 'support', 'question', 'info'] as $index => $icon) {
 	foreach (['A', 'B', 'C'] as $letter) {
 		$items[] = [
 			'name' => "{$icon}:{$letter}",
-			'href' => '#',
+			'href' => false,
 			'text' => "Child {$letter}",
 			'parent_name' => $icon,
 			'link_class' => $icon == 'info' ? 'elgg-state elgg-state-notice' : '',
@@ -25,7 +25,7 @@ foreach (['cogs', 'support', 'question', 'info'] as $index => $icon) {
 		foreach (['AA', 'BB', 'CC'] as $subletter) {
 			$items[] = [
 				'name' => "{$icon}:{$letter}:{$subletter}",
-				'href' => '#',
+				'href' => false,
 				'text' => "Child {$subletter}",
 				'parent_name' => "{$icon}:{$letter}",
 				'link_class' => $icon == 'info' ? 'elgg-state elgg-state-notice' : '',
@@ -34,7 +34,4 @@ foreach (['cogs', 'support', 'question', 'info'] as $index => $icon) {
 	}
 }
 
-echo elgg_view_menu('page', [
-	'items' => $items,
-	'prepare_vertical' => true,
-]);
+echo elgg_view_menu('page', ['items' => $items]);

@@ -9,7 +9,12 @@ echo elgg_view('core/account/login_dropdown');
 echo elgg_format_element('div', ['class' => 'elgg-nav-button'], '<span></span><span></span><span></span>');
 
 $contents = elgg_format_element('div', ['class' => 'elgg-nav-search'], elgg_view('search/search_box'));
-$contents .= elgg_view_menu('site', ['sort_by' => 'text']);
-$contents .= elgg_view_menu('topbar');
+$contents .= elgg_view_menu('site', [
+	'sort_by' => 'text',
+	'prepare_toggle' => false,
+]);
+$contents .= elgg_view_menu('topbar', [
+	'prepare_toggle' => false,
+]);
 
 echo elgg_format_element('div', ['class' => 'elgg-nav-collapse'], $contents);

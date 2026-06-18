@@ -257,6 +257,7 @@ return [
 			'Elgg\Menus\Annotation::registerDelete' => [],
 		],
 		'menu:entity' => [
+			'Elgg\Menus\Entity::registerAdminParent' => [],
 			'Elgg\Menus\Entity::registerDelete' => [],
 			'Elgg\Menus\Entity::registerEdit' => [],
 			'Elgg\Menus\Entity::registerTrash' => ['priority' => 501], // needs to be after registerDelete

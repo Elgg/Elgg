@@ -19,7 +19,7 @@ function _likes_menu_item(\ElggEntity $entity, int $priority = 500): \ElggMenuIt
 
 	return \ElggMenuItem::factory([
 		'name' => 'likes',
-		'href' => '#',
+		'href' => false,
 		'icon' => 'thumbs-up',
 		'class' => $is_liked ? 'elgg-state-active' : '',
 		'text' => elgg_echo($is_liked ? 'likes:remove' : 'likes:likethis'),

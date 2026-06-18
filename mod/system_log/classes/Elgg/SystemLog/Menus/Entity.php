@@ -31,6 +31,7 @@ class Entity {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'administer_utilities:logbrowser',
 			'icon' => 'search',
+			'parent_name' => 'admin',
 			'text' => elgg_echo('logbrowser:explore'),
 			'href' => elgg_http_add_url_query_elements('admin/administer_utilities/logbrowser', $options),
 		]);

@@ -81,8 +81,11 @@ class Title {
 					break;
 				default:
 					if ($menu_item->getSection() === 'default') {
-						$menu_item->setParentName('title-menu-toggle');
 						$menu_item->setSection('z-last');
+						
+						if (empty($menu_item->getParentName())) {
+							$menu_item->setParentName('title-menu-toggle');
+						}
 					} else {
 						$menu_item->addLinkClass('elgg-button');
 						$menu_item->addLinkClass('elgg-button-action');

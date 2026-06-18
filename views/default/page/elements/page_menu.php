@@ -13,7 +13,6 @@ if (!elgg_extract('show_page_menu', $vars, true)) {
 $custom_params = (array) elgg_extract('page_menu_params', $vars, []);
 $default_params = [
 	'sort_by' => 'name',
-	'prepare_vertical' => true,
 ];
 
 $params = array_merge($default_params, $custom_params);

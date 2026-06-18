@@ -102,10 +102,7 @@ class BlogArchive {
 				$return[] = \ElggMenuItem::factory([
 					'name' => $year,
 					'text' => $year,
-					'href' => '#',
-					'child_menu' => [
-						'display' => 'toggle',
-					],
+					'href' => false,
 					'priority' => -(int) "{$year}00", // make negative to be sure 2019 is before 2018
 				]);
 			}

@@ -12,4 +12,4 @@ echo elgg_format_element('div', ['class' => 'elgg-nav-logo'], $logo);
 
 echo elgg_format_element('div', ['class' => 'elgg-nav-button'], '<span></span><span></span><span></span>');
 
-echo elgg_format_element('div', ['class' => 'elgg-nav-collapse'], elgg_view_menu('admin_header'));
+echo elgg_format_element('div', ['class' => 'elgg-nav-collapse'], elgg_view_menu('admin_header', ['prepare_toggle' => false]));

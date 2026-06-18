@@ -22,16 +22,12 @@ $result = elgg_view_entity_icon($user, 'large', [
 	'img_class' => 'photo u-photo',
 ]);
 
-$result .= elgg_view_menu('owner_block', [
-	'entity' => $user,
-	'prepare_vertical' => true,
-]);
+$result .= elgg_view_menu('owner_block', ['entity' => $user]);
 
 if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() !== $user->guid) {
 	$result .= elgg_view_menu('profile_admin', [
 		'entity' => $user,
 		'class' => ['elgg-menu-owner-block'],
-		'prepare_vertical' => true,
 	]);
 }
 

@@ -30,6 +30,7 @@ class Entity {
 			]),
 			'text' => elgg_echo('developers:entity_explorer:inspect_entity'),
 			'icon' => 'search',
+			'parent_name' => 'admin',
 		]);
 		
 		return $return;

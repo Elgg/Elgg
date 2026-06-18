@@ -3,7 +3,7 @@
 $getAnchor = function(array $options = []) {
 	$vars = [
 		'class' => elgg_extract_class($options, ['elgg-button']),
-		'href' => '#',
+		'href' => false,
 		'text' => 'anchor',
 	];
 	unset($options['class']);

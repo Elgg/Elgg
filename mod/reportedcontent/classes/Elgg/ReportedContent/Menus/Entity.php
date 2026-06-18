@@ -56,7 +56,7 @@ class Entity {
 	public static function registerEntityReporting(\Elgg\Event $event) {
 		
 		$entity = $event->getEntityParam();
-		if (!$entity instanceof \ElggEntity || !elgg_is_logged_in()) {
+		if (!$entity instanceof \ElggEntity || !elgg_is_logged_in() || elgg_in_context('admin')) {
 			return;
 		}
 		

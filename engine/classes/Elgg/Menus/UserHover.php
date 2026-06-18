@@ -219,6 +219,7 @@ class UserHover {
 			'href' => elgg_generate_action_url('admin/user/login_as', [
 				'user_guid' => $user->guid,
 			]),
+			'parent_name' => $event->getType() === 'menu:user_hover' ? null : 'admin',
 			'section' => $event->getType() === 'menu:user_hover' ? 'admin' : 'default',
 		]);
 		

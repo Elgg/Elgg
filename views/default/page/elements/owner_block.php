@@ -20,7 +20,6 @@ $body = '';
 if (elgg_extract('show_owner_block_menu', $vars, true)) {
 	$menu_params = elgg_extract('owner_block_menu_params', $vars, []);
 	$menu_params['entity'] = $owner;
-	$menu_params['prepare_vertical'] = true;
 	
 	$body .= elgg_view_menu('owner_block', $menu_params);
 }

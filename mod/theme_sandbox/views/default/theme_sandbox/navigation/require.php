@@ -2,7 +2,7 @@
 
 $item = ElggMenuItem::factory([
 	'name' => 'require',
-	'href' => '#',
+	'href' => false,
 	'text' => 'Try Me!',
 	'deps' => ['theme_sandbox/navigation/require'],
 ]);
