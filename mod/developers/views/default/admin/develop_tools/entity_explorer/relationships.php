@@ -23,7 +23,7 @@ $entity_relationships = elgg_get_relationships([
 ]);
 
 if (empty($entity_relationships)) {
-	$relationship_info = elgg_echo('notfound');
+	$relationship_info = elgg_view_no_results();
 } else {
 	$relationship_columns = ['id', 'time_created', 'guid_one', 'relationship', 'guid_two'];
 

@@ -5,7 +5,7 @@
 
 $log_entries = elgg_extract('log_entries', $vars);
 if (empty($log_entries)) {
-	echo elgg_echo('notfound');
+	echo elgg_view_no_results();
 	return true;
 }
 

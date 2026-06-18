@@ -88,15 +88,10 @@ th {
 html {
 	background-color: white;
 	font-size: var(--elgg-font-size);
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
 	min-width: 300px;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	text-rendering: optimizeLegibility;
-	-webkit-text-size-adjust: 100%;
-	-moz-text-size-adjust: 100%;
-	-ms-text-size-adjust: 100%;
 	text-size-adjust: 100%;
 }
 
@@ -127,8 +122,6 @@ textarea {
 
 code,
 pre {
-	-moz-osx-font-smoothing: auto;
-	-webkit-font-smoothing: auto;
 	font-family: monospace;
 }
 
