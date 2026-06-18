@@ -41,11 +41,20 @@ function removeWidget(event) {
 	// close the dropdown menu
 	popup.close();
 
-	$('#elgg-widget-' + $(this).data().widgetGuid).remove();
+	var $widget = $('#elgg-widget-' + $(this).data().widgetGuid);
+	var $layout = $widget.closest('.elgg-layout-widgets');
+	
+	$widget.remove();
 
 	// delete the widget through ajax
 	var ajax = new Ajax(false);
 	ajax.action($(this).attr('href'));
+	
+	$layout.trigger({
+		type: 'widgetRemove',
+		layout: $layout,
+		widget: $widget
+	});
 };
 
 /**
@@ -59,7 +68,9 @@ function removeWidget(event) {
 function saveWidgetSettings(event) {
 	event.preventDefault();
 			
-	var $widgetContent = $('#elgg-widget-content-' + $(this).find('input[name="guid"]').val());
+	var guid = $(this).find('[name="guid"]').val();
+	var $widget = $('#elgg-widget-' + guid);
+	var $widgetContent = $widget.find('.elgg-widget-content');
 
 	var ajax = new Ajax();
 	ajax.action('widgets/save', {
@@ -69,7 +80,7 @@ function saveWidgetSettings(event) {
 			
 			$widgetContent.html(result.content);
 			if (result.title !== '') {
-				var $widgetTitle = $widgetContent.parent().parent().find('.elgg-widget-title');
+				var $widgetTitle = $widget.find('.elgg-widget-title');
 				
 				var newWidgetTitle = result.title;
 				if (result.href !== '') {
@@ -78,6 +89,11 @@ function saveWidgetSettings(event) {
 				
 				$widgetTitle.html(newWidgetTitle);
 			}
+			
+			$widget.trigger({
+				type: 'saveSettings',
+				widget: $widget
+			});
 		}
 	});
 };
@@ -94,4 +110,4 @@ $('.elgg-widgets').sortable({
 });
 
 $(document).on('click', 'a.elgg-widget-delete-button', removeWidget);
-$(document).on('submit', '.elgg-widget-edit > form ', saveWidgetSettings);
+$(document).on('submit', '.elgg-form-widgets-save', saveWidgetSettings);
