@@ -43,6 +43,12 @@ function addWidget(event) {
 		} else {
 			$(selector).append(output);
 		}
+
+		var $layout = $(selector).closest('.elgg-layout-widgets');
+		$layout.trigger({
+			type: 'widgetAdd',
+			layout: $layout
+		});
 	});
 }
 
