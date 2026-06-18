@@ -3,24 +3,24 @@
 $items = [
 	[
 		'name' => 'hz1',
-		'href' => '#',
+		'href' => false,
 		'text' => 'The first item',
 	],
 	[
 		'name' => 'hz2',
-		'href' => '#',
+		'href' => false,
 		'text' => 'Item with badge',
 		'badge' => 3,
 	],
 	[
 		'name' => 'hz3',
-		'href' => '#',
+		'href' => false,
 		'text' => 'Item with icon',
 		'icon' => 'user',
 	],
 	[
 		'name' => 'hz3',
-		'href' => '#',
+		'href' => false,
 		'text' => 'Item with badge and icon',
 		'icon' => 'user',
 		'badge' => '33',

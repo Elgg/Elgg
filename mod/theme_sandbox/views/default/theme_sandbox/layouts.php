@@ -9,14 +9,14 @@ elgg_push_breadcrumb('Breadcrumb 3');
 
 elgg_register_menu_item('title', [
 	'name' => 'button1',
-	'href' => '#',
+	'href' => false,
 	'text' => 'Button 1',
 	'link_class' => 'elgg-button elgg-button-action',
 ]);
 
 elgg_register_menu_item('title', [
 	'name' => 'button2',
-	'href' => '#',
+	'href' => false,
 	'text' => 'Button 2',
 	'link_class' => 'elgg-button elgg-button-action',
 ]);

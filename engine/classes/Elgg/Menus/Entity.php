@@ -346,4 +346,27 @@ class Entity {
 		
 		return $result;
 	}
+
+	/**
+	 * Adds a menu item with the name 'admin' to the entity menu to serve as a parent for admin items
+	 *
+	 * @param \Elgg\Event $event 'register', 'menu:entity'
+	 *
+	 * @return MenuItems
+	 */
+	public static function registerAdminParent(\Elgg\Event $event): Menuitems {
+		/* @var $result MenuItems */
+		$result = $event->getValue();
+
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'admin',
+			'text' => elgg_echo('admin:options'),
+			'icon' => 'user-cog',
+			'href' => false,
+			'priority' => 9999,
+			'show_with_empty_children' => false,
+		]);
+		
+		return $result;
+	}
 }

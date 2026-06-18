@@ -5,5 +5,4 @@
 
 echo elgg_view_menu('page', [
 	'show_section_headers' => true,
-	'prepare_vertical' => true,
 ]);

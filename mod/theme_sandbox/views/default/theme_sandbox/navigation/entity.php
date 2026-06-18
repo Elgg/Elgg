@@ -11,17 +11,14 @@ foreach (['star', 'trash'] as $icon) {
 		'name' => $icon,
 		'icon' => $icon,
 		'text' => 'Menu item',
-		'href' => '#',
+		'href' => false,
 		'link_class' => $icon == 'trash' ? 'elgg-state elgg-state-danger' : '',
-		'child_menu' => [
-			'display' => 'toggle',
-		]
 	];
 
 	foreach (['A', 'B'] as $letter) {
 		$items[] = [
 			'name' => "{$icon}:{$letter}",
-			'href' => '#',
+			'href' => false,
 			'text' => "Child {$letter}",
 			'parent_name' => $icon,
 			'link_class' => $icon == 'trash' ? 'elgg-state elgg-state-danger' : '',

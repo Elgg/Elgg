@@ -447,9 +447,16 @@ function elgg_view_layout(string $layout_name, array $vars = []): string {
  * @since 1.8.0
  */
 function elgg_view_menu($menu, array $vars = []): string {
-
 	$menu_view = (string) elgg_extract('menu_view', $vars);
 	unset($vars['menu_view']);
+	
+	if (isset($vars['prepare_vertical'])) {
+		$menu_name = is_string($menu) ? $menu : '';
+		elgg_deprecated_notice("Replace 'prepare_vertical' with 'prepare_toggle' when using 'elgg_view_menu('{$menu_name}')'", '7.1');
+		
+		$vars['prepare_toggle'] = elgg_extract('prepare_toggle', $vars, $vars['prepare_vertical']);
+		unset($vars['prepare_vertical']);
+	}
 
 	if (is_string($menu)) {
 		$menu = _elgg_services()->menus->getMenu($menu, $vars);

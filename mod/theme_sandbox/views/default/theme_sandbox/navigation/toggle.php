@@ -7,9 +7,8 @@ $items = [
 	[
 		'name' => 'parent',
 		'text' => $toggle . 'Show Submenu',
-		'href' => '#',
+		'href' => false,
 		'child_menu' => [
-			'display' => 'toggle',
 			'data-toggle-duration' => 500,
 		],
 	],
@@ -20,7 +19,7 @@ foreach (['anchor', 'binoculars', 'building', 'birthday-cake'] as $icon) {
 		'name' => $icon,
 		'icon' => $icon,
 		'text' => 'Menu item',
-		'href' => '#',
+		'href' => false,
 		'parent_name' => 'parent',
 	];
 }

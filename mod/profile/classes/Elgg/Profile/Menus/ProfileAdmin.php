@@ -57,9 +57,6 @@ class ProfileAdmin {
 				'name' => 'admin_toggle',
 				'text' => elgg_echo('admin:options'),
 				'href' => false,
-				'child_menu' => [
-					'display' => 'toggle',
-				],
 			]);
 		}
 		

@@ -7,14 +7,14 @@ foreach (['bell', 'bank', 'coffee', 'trash'] as $icon) {
 		'name' => $icon,
 		'icon' => $icon,
 		'text' => 'Menu item',
-		'href' => '#',
+		'href' => false,
 		'link_class' => $icon == 'trash' ? 'elgg-state elgg-state-danger' : '',
 	];
 
 	foreach (['A', 'B', 'C'] as $letter) {
 		$items[] = [
 			'name' => "{$icon}:{$letter}",
-			'href' => '#',
+			'href' => false,
 			'text' => "Child {$letter}",
 			'parent_name' => $icon,
 			'link_class' => $icon == 'trash' ? 'elgg-state elgg-state-danger' : '',
@@ -23,7 +23,7 @@ foreach (['bell', 'bank', 'coffee', 'trash'] as $icon) {
 		foreach (['AA', 'BB', 'CC'] as $subletter) {
 			$items[] = [
 				'name' => "{$icon}:{$letter}:{$subletter}",
-				'href' => '#',
+				'href' => false,
 				'text' => "Child {$subletter}",
 				'parent_name' => "{$icon}:{$letter}",
 				'link_class' => $icon == 'trash' ? 'elgg-state elgg-state-danger' : '',
@@ -32,7 +32,4 @@ foreach (['bell', 'bank', 'coffee', 'trash'] as $icon) {
 	}
 }
 
-echo elgg_view_menu('owner_block', [
-	'items' => $items,
-	'prepare_vertical' => true,
-]);
+echo elgg_view_menu('owner_block', ['items' => $items]);

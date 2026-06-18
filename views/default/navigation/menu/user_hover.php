@@ -45,9 +45,6 @@ if (elgg_is_admin_logged_in() && !empty($admin)) {
 			'icon' => 'user-cog',
 			'text' => elgg_echo('admin:options'),
 			'href' => false,
-			'child_menu' => [
-				'display' => 'toggle',
-			],
 		]),
 	];
 	

@@ -11,14 +11,14 @@ elgg_register_error_message(['message' => 'Error message registered in PHP that 
 $message = elgg_view('output/url', [
 	'text' => 'Show system message (elgg_register_success_message())',
 	'is_trusted' => true,
-	'href' => '#',
+	'href' => false,
 	'id' => 'theme-sandbox-system-message',
 ]);
 
 $error = elgg_view('output/url', [
 	'text' => 'Show error message (elgg_register_error_message())',
 	'is_trusted' => true,
-	'href' => '#',
+	'href' => false,
 	'id' => 'theme-sandbox-error-message',
 ]);
 

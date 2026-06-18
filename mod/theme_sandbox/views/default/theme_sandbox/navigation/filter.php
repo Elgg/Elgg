@@ -7,7 +7,7 @@ foreach (['heart-regular', 'star-regular', 'bell-regular'] as $icon) {
 		'name' => $icon,
 		'icon' => $icon,
 		'text' => 'Menu item',
-		'href' => '#',
+		'href' => false,
 		'child_menu' => [
 			'display' => 'dropdown',
 			'data-position' => json_encode([
@@ -23,18 +23,15 @@ foreach (['heart-regular', 'star-regular', 'bell-regular'] as $icon) {
 foreach (['A', 'B', 'C'] as $letter) {
 	$items[] = [
 		'name' => "bell-o:{$letter}",
-		'href' => '#',
+		'href' => false,
 		'text' => "Child {$letter}",
 		'parent_name' => $icon,
-		'child_menu' => [
-			'display' => 'toggle',
-		],
 	];
 
 	foreach (['AA', 'BB', 'CC'] as $subletter) {
 		$items[] = [
 			'name' => "bell-o:{$letter}:{$subletter}",
-			'href' => '#',
+			'href' => false,
 			'text' => "Child {$subletter}",
 			'parent_name' => "{$icon}:{$letter}",
 		];

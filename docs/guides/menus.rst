@@ -216,7 +216,7 @@ All other key value pairs will be passed as attributes to the ``ul`` element.
 	// Register a parent menu item that has a dropdown submenu
 	elgg_register_menu_item('my_menu', array(
 		'name' => 'parent_item',
-		'href' => '#',
+		'href' => false,
 		'text' => 'Show dropdown menu',
 		'child_menu' => [
 			'display' => 'dropdown',
@@ -234,7 +234,7 @@ All other key value pairs will be passed as attributes to the ``ul`` element.
 	// Register a parent menu item that has a hidden submenu toggled when item is clicked
 	elgg_register_menu_item('my_menu', array(
 		'name' => 'parent_item',
-		'href' => '#',
+		'href' => false,
 		'text' => 'Show submenu',
 		'child_menu' => [
 			'display' => 'dropdown',
@@ -306,7 +306,7 @@ requirement during the registration.
 
 	elgg_register_menu_item('my_menu', array(
 		'name' => 'hide_on_click',
-		'href' => '#',
+		'href' => false,
 		'text' => elgg_echo('hide:on:click'),
 		'item_class' => '.hide-on-click',
 		'deps' => ['navigation/menu/item/hide_on_click'],
