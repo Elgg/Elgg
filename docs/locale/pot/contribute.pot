@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 12:06+0200\n"
+"POT-Creation-Date: 2026-07-02 10:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -578,7 +578,6 @@ msgstr ""
 #: ../../contribute/code.rst:632
 #: ../../contribute/code.rst:650
 #: ../../contribute/code.rst:672
-#: ../../contribute/code.rst:696
 msgid "Bad:"
 msgstr ""
 
@@ -591,8 +590,7 @@ msgstr ""
 #: ../../contribute/code.rst:619
 #: ../../contribute/code.rst:638
 #: ../../contribute/code.rst:658
-#: ../../contribute/code.rst:681
-#: ../../contribute/code.rst:704
+#: ../../contribute/code.rst:680
 msgid "Good:"
 msgstr ""
 
@@ -802,54 +800,42 @@ msgid "Vendor prefixes"
 msgstr ""
 
 #: ../../contribute/code.rst:667
-msgid "Group vendor-prefixes for the same property together"
-msgstr ""
-
-#: ../../contribute/code.rst:668
-msgid "Longest vendor-prefixed version first"
-msgstr ""
-
-#: ../../contribute/code.rst:669
-msgid "Always include non-vendor-prefixed version"
+msgid "Do not rely on vendor prefixes"
 msgstr ""
 
 #: ../../contribute/code.rst:670
-msgid "Put an extra newline between vendor-prefixed groups and other properties"
-msgstr ""
-
-#: ../../contribute/code.rst:694
 msgid "Group subproperties"
 msgstr ""
 
-#: ../../contribute/code.rst:715
+#: ../../contribute/code.rst:691
 msgid "Javascript guidelines"
 msgstr ""
 
-#: ../../contribute/code.rst:717
+#: ../../contribute/code.rst:693
 msgid "Same formatting standards as PHP apply."
 msgstr ""
 
-#: ../../contribute/code.rst:719
+#: ../../contribute/code.rst:695
 msgid "Related functions should be in a namespaced ``ECMAScript`` module."
 msgstr ""
 
-#: ../../contribute/code.rst:721
+#: ../../contribute/code.rst:697
 msgid "Function expressions should end with a semi-colon."
 msgstr ""
 
-#: ../../contribute/code.rst:724
+#: ../../contribute/code.rst:700
 msgid "Deprecating APIs"
 msgstr ""
 
-#: ../../contribute/code.rst:726
+#: ../../contribute/code.rst:702
 msgid "Occasionally functions and classes must be deprecated in favor of newer replacements. Since 3rd party plugin authors rely on a consistent API, backward compatibility must be maintained, but will not be maintained indefinitely as plugin authors are expected to properly update their plugins. In order to maintain backward compatibility, deprecated APIs will follow these guidelines:"
 msgstr ""
 
-#: ../../contribute/code.rst:733
+#: ../../contribute/code.rst:709
 msgid "Minor version (1.x) that deprecates an API must include a wrapper function/class (or otherwise appropriate means) to maintain backward compatibility, including any bugs in the original function/class. This compatibility layer uses ``elgg_deprecated_notice('...', '1.11')`` to log that the function is deprecated."
 msgstr ""
 
-#: ../../contribute/code.rst:739
+#: ../../contribute/code.rst:715
 msgid "The next major revision (2.0) removes the compatibility layer. Any use of the deprecated API should be corrected before this."
 msgstr ""
 
