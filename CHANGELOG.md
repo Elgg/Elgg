@@ -1,3 +1,16 @@
+<a name="7.0.2"></a>
+### 7.0.2 (2026-07-02)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+* Jeroen Dalsem (2)
+
+#### Update notes
+
+* Several small fixes
+
+
 <a name="7.0.1"></a>
 ### 7.0.1 (2026-06-12)
 
@@ -121,6 +134,18 @@
 * **cache:** built-in support for Redis and Memcached has been removed [7b2d6158e](https://github.com/Elgg/Elgg/commit/7b2d6158e95d2012e1f9a6895e052983c2858831)
 * **css:** CSS Crush preprocessing has been removed [7301391b5](https://github.com/Elgg/Elgg/commit/7301391b5c0b29e781f54c549b9a5c1cae5f8d1e)
 * **profile:** the Twitter profile field has been removed [6095844fb](https://github.com/Elgg/Elgg/commit/6095844fbebd7f42199d1dae11c8c562f7235d6a) closes [#14925](https://github.com/Elgg/Elgg/issues/14925)
+
+
+<a name="6.3.6"></a>
+### 6.3.6 (2026-07-02)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+
+#### Security update
+
+* small security update
 
 
 <a name="6.3.5"></a>

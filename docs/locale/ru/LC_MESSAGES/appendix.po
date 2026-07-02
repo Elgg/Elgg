@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-22 10:18+0200\n"
+"POT-Creation-Date: 2026-06-12 12:06+0200\n"
 "PO-Revision-Date: 2026-03-25 09:33+0000\n"
 "Last-Translator: River Van Rain <vanrain@list.ru>, 2026\n"
 "Language-Team: Russian (https://app.transifex.com/elgg/teams/11337/ru/)\n"
@@ -2420,11 +2420,8 @@ msgstr ""
 #: ../../appendix/support.rst:17
 msgid ""
 "E.g. 2.3 is the last minor release within 2.x. It will receive bug fixes "
-"until 1 year aftr 3.0 is released and security fixes until 4.0 is released."
+"until 1 year after 3.0 is released and security fixes until 4.0 is released."
 msgstr ""
-"Например, 2.3 — это последний минорный выпуск в рамках 2.x. Он будет "
-"получать исправления ошибок в течение 1 года после выпуска 3.0 и исправления"
-" безопасности до выпуска 4.0."
 
 #: ../../appendix/support.rst:22
 msgid ":doc:`releases`"
@@ -2631,16 +2628,16 @@ msgid "October 2023"
 msgstr "Октябрь 2023"
 
 #: ../../appendix/support.rst:81
-msgid "5.1 LTS"
-msgstr "5.1 LTS"
+msgid "5.1"
+msgstr ""
 
 #: ../../appendix/support.rst:81
 msgid "June 2025"
 msgstr "Июнь 2025"
 
-#: ../../appendix/support.rst:81
-msgid "**Until 7.0**"
-msgstr "**До 7.0**"
+#: ../../appendix/support.rst:81 ../../appendix/support.rst:91
+msgid "May 2026"
+msgstr ""
 
 #: ../../appendix/support.rst:83
 msgid "6.0"
@@ -2667,14 +2664,26 @@ msgid "September 2025"
 msgstr "Сентябрь 2025"
 
 #: ../../appendix/support.rst:89
-msgid "6.3"
-msgstr "6.3"
+msgid "6.3 LTS"
+msgstr ""
+
+#: ../../appendix/support.rst:89
+msgid "May 2027"
+msgstr ""
+
+#: ../../appendix/support.rst:89
+msgid "**Until 8.0**"
+msgstr ""
 
 #: ../../appendix/support.rst:91
 msgid "7.0"
 msgstr "7.0"
 
-#: ../../appendix/support.rst:91
+#: ../../appendix/support.rst:93
+msgid "8.0"
+msgstr ""
+
+#: ../../appendix/support.rst:93
 msgid "TBD"
 msgstr "Определяется"
 

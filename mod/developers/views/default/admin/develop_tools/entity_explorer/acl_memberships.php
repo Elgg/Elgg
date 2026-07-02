@@ -13,7 +13,7 @@ if (!$entity instanceof \ElggEntity) {
 $acls = _elgg_services()->accessCollections->getCollectionsByMember($entity->guid);
 
 if (empty($acls)) {
-	$result = elgg_echo('notfound');
+	$result = elgg_view_no_results();
 } else {
 	$acl_columns = ['id', 'owner_guid', 'name', 'subtype'];
 
