@@ -123,6 +123,18 @@
 * **profile:** the Twitter profile field has been removed [6095844fb](https://github.com/Elgg/Elgg/commit/6095844fbebd7f42199d1dae11c8c562f7235d6a) closes [#14925](https://github.com/Elgg/Elgg/issues/14925)
 
 
+<a name="6.3.6"></a>
+### 6.3.6 (2026-07-02)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+
+#### Security update
+
+* small security update
+
+
 <a name="6.3.5"></a>
 ### 6.3.5 (2026-05-21)
 
