@@ -1,3 +1,16 @@
+<a name="7.0.2"></a>
+### 7.0.2 (2026-07-02)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+* Jeroen Dalsem (2)
+
+#### Update notes
+
+* Several small fixes
+
+
 <a name="7.0.1"></a>
 ### 7.0.1 (2026-06-12)
 
