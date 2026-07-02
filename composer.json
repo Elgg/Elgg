@@ -20,7 +20,7 @@
         "eloquent/composer-config-reader": "~3.0.0",
         "fakerphp/faker": "~1.24.0",
         "fortawesome/font-awesome": "~5.14",
-        "guzzlehttp/guzzle": "~7.10.0",
+        "guzzlehttp/guzzle": "~7.12.1",
         "hackzilla/password-generator": "~1.7.0",
         "htmlawed/htmlawed": "~1.2.15",
         "imagine/imagine": "~1.5.0",
