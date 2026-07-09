@@ -24,6 +24,7 @@ return array(
 	'entity:edit:object:blog:success' => 'The blog was saved successfully',
 
 	'blog:revisions' => 'Revisions',
+	'blog:revisions:current' => 'Current version',
 	'blog:archives' => 'Archives',
 
 	'groups:tool:blog' => 'Enable group blog',

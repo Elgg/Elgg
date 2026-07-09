@@ -1,0 +1,33 @@
+From 7.0 to 7.1
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+Generic entity controller
+-------------------------
+
+Because of the introduction of the generic entity controller the following resources have been deprecated:
+
+ * ``resources/blog/add``
+ * ``resources/blog/edit``
+ * ``resources/blog/view``
+ * ``resources/bookmarks/add``
+ * ``resources/bookmarks/edit``
+ * ``resources/bookmarks/view``
+ * ``resources/discussion/add``
+ * ``resources/discussion/edit``
+ * ``resources/discussion/view``
+ * ``resources/file/edit``
+ * ``resources/file/upload``
+ * ``resources/file/view``
+ * ``resources/pages/add``
+ * ``resources/pages/edit``
+ * ``resources/pages/view``
+ * ``resources/thewire/view``
+
+Deprecated Views
+----------------
+
+ * ``forms/pages/edit`` use ``forms/page/edit``

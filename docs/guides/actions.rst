@@ -486,6 +486,33 @@ Elgg offers some helper input types
 * ``input/objectpicker`` - renders an Elgg object autocomplete
 * ``input/location`` renders an Elgg location input
 
+Default entity form
+-------------------
+
+If you wish to render a basic form to edit/create an entity you can use the function ``elgg_view_entity_form($entity_type, $entity_subtype, $entity)``.
+It'll use the fields as defined for the ``<entity_type>:<entity_subtype>``. The function will check for the form view 
+in the following order:
+
+- ``<entity_type>/<entity_subtype>/edit``
+- ``<entity_subtype>/edit``
+- ``entity/edit``
+
+The form will be provided with the following in ``$vars``:
+
+- ``entity_type``: the type of the entity for this form
+- ``entity_subtype``: the subtype of the entity for this form
+- ``entity``: the entity (when editing an entity)
+- ``fields``: the fields for the ``<entity_type>:<entity_subtype>``
+
+The function will also check for the availability of an action in the following order:
+
+- ``<entity_type>/<entity_subtype>/edit``
+- ``<entity_subtype>/edit``
+
+If neither is provided an ``\Elgg\Exceptions\DomainException`` will be thrown.
+
+These actions should work very well with the ``\Elgg\Controllers\EntityEditAction`` controller.
+
 Files and images
 ================
 

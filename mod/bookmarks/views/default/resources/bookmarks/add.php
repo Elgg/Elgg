@@ -5,6 +5,8 @@
 
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
+elgg_deprecated_notice("The resource view 'bookmarks/add' has been deprecated", '7.1');
+
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner->canWriteToContainer(0, 'object', 'bookmarks')) {
 	throw new EntityPermissionsException();

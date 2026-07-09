@@ -1053,6 +1053,42 @@ function elgg_view_form(string $action, array $form_vars = [], array $body_vars 
 }
 
 /**
+ * Render an entity edit/add form
+ *
+ * The default form action is checked in the following format and order:
+ * - <entity_type>/<entity_subtype>/edit
+ * - <entity_subtype>/edit
+ *
+ * The default form view is checked in the following format and order:
+ * - <entity_type>/<entity_subtype>/edit
+ * - <entity_subtype>/edit
+ * - entity/edit
+ *
+ * The form view will get the following provided:
+ * - entity_type: the given entity type
+ * - entity_subtype: the given entity subtype
+ * - entity: the given entity
+ * - fields: the fields for the given entity type/subtype (with an additional hidden input 'guid' if an entity was provided)
+ *
+ * @param string           $entity_type    entity type
+ * @param string           $entity_subtype entity subtype
+ * @param \ElggEntity|null $entity         entity (when editing)
+ * @param array            $vars           additional vars:
+ *                                         - (string) action: which form action to use
+ *                                         - (array) body_vars: additional body vars
+ *                                         - (array) form_vars: additional form vars
+ *                                         - (string) view: which form view to use
+ *
+ * @return string
+ * @throws \Elgg\Exceptions\InvalidArgumentException
+ * @throws \Elgg\Exceptions\DomainException
+ * @since 7.1
+ */
+function elgg_view_entity_form(string $entity_type, string $entity_subtype, ?\ElggEntity $entity = null, array $vars = []): string {
+	return _elgg_services()->forms->renderEntity($entity_type, $entity_subtype, $entity, $vars);
+}
+
+/**
  * Sets form footer and defers its rendering until the form view and extensions have been rendered.
  * Deferring footer rendering allows plugins to extend the form view while maintaining
  * logical DOM structure.

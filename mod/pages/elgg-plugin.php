@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Pages\Controllers\ContentListing;
+use Elgg\Pages\Controllers\Entity;
 use Elgg\Pages\Forms\PrepareFields;
 use Elgg\Pages\GroupToolContainerLogicCheck;
 use Elgg\Pages\Notifications\CreatePageEventHandler;
@@ -28,7 +29,7 @@ return [
 		],
 	],
 	'actions' => [
-		'pages/edit' => [
+		'page/edit' => [
 			'controller' => \Elgg\Pages\Controllers\EditAction::class,
 			'options' => [
 				'entity_type' => 'object',
@@ -37,6 +38,20 @@ return [
 		],
 	],
 	'routes' => [
+		'action:pages/edit' => [
+			'path' => 'action/pages/edit',
+			'deprecated' => '7.1', // @todo remove in Elgg 8.0
+			'controller' => \Elgg\Pages\Controllers\EditAction::class,
+			'options' => [
+				'entity_type' => 'object',
+				'entity_subtype' => 'page',
+			],
+			'middleware' => [
+				\Elgg\Router\Middleware\CsrfFirewall::class,
+				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\ActionMiddleware::class,
+			],
+		],
 		'default:object:page' => [
 			'path' => '/pages',
 			'controller' => ContentListing::class,
@@ -84,7 +99,7 @@ return [
 		],
 		'add:object:page' => [
 			'path' => '/pages/add/{guid}',
-			'resource' => 'pages/add',
+			'controller' => Entity::class,
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
@@ -92,11 +107,14 @@ return [
 		],
 		'view:object:page' => [
 			'path' => '/pages/view/{guid}/{title?}',
-			'resource' => 'pages/view',
+			'controller' => Entity::class,
+			'options' => [
+				'sidebar_view' => 'pages/sidebar/navigation',
+			],
 		],
 		'edit:object:page' => [
 			'path' => '/pages/edit/{guid}',
-			'resource' => 'pages/edit',
+			'controller' => Entity::class,
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
 			],
@@ -148,8 +166,13 @@ return [
 			],
 		],
 		'form:prepare:fields' => [
-			'pages/edit' => [
+			'page/edit' => [
 				PrepareFields::class => [],
+			],
+		],
+		'form:register:fields' => [
+			'object:page' => [
+				'Elgg\Forms\RegisterFields::addContainerInput' => ['priority' => 600],
 			],
 		],
 		'permissions_check' => [
@@ -170,6 +193,9 @@ return [
 			],
 			'menu:site' => [
 				'Elgg\Pages\Menus\Site::register' => [],
+			],
+			'menu:title:object:page' => [
+				'Elgg\Pages\Menus\Title::registerAddSubpage' => [],
 			],
 		],
 		'seeds' => [

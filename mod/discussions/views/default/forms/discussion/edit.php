@@ -5,6 +5,8 @@
 
 $entity = elgg_extract('entity', $vars);
 
+$fields = (array) elgg_extract('fields', $vars);
+
 $container_guid = (int) elgg_extract('container_guid', $vars);
 $container_entity = get_entity($container_guid);
 $show_container_input = true;
@@ -28,7 +30,7 @@ if (!$entity instanceof \ElggDiscussion && !$container_entity instanceof \ElggGr
 	
 	if (count($options_values) > 1) {
 		elgg_import_esm('forms/discussion/edit');
-		echo elgg_view_field([
+		array_unshift($fields, [
 			'#type' => 'select',
 			'#label' => elgg_echo('discussion:topic:container'),
 			'#help' => elgg_echo('discussion:topic:container:help'),
@@ -40,44 +42,26 @@ if (!$entity instanceof \ElggDiscussion && !$container_entity instanceof \ElggGr
 	}
 }
 
-$fields = elgg()->fields->get('object', 'discussion');
-foreach ($fields as $field) {
+foreach ($fields as $index => $field) {
 	$name = elgg_extract('name', $field);
-	if (elgg_extract('#type', $field) === 'access' && $entity instanceof \ElggDiscussion) {
-		$field['entity'] = $entity;
-	}
-	
 	if ($name === 'status' && !$entity instanceof \ElggDiscussion) {
 		// don't show status dropdown for new discussions
-		$field = [
+		$fields[$index] = [
 			'#type' => 'hidden',
 			'name' => $name,
 		];
 	}
-	
-	$field['value'] = elgg_extract($name, $vars);
-	echo elgg_view_field($field);
-}
-
-if ($entity instanceof \ElggDiscussion) {
-	echo elgg_view_field([
-		'#type' => 'hidden',
-		'name' => 'guid',
-		'value' => $entity->guid,
-	]);
 }
 
 if ($show_container_input) {
-	echo elgg_view_field([
+	$fields[] = [
 		'#type' => 'container_guid',
-		'value' => $container_guid,
+		'name' => 'container_guid',
 		'entity_type' => 'object',
 		'entity_subtype' => 'discussion',
-	]);
+	];
 }
 
-$footer = elgg_view_field([
-	'#type' => 'submit',
-	'text' => elgg_echo('save'),
-]);
-elgg_set_form_footer($footer);
+$vars['fields'] = $fields;
+
+echo elgg_view('forms/entity/edit', $vars);

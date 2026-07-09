@@ -1,5 +1,7 @@
 <?php
 
+elgg_deprecated_notice("The resource view 'pages/edit' has been deprecated", '7.1');
+
 $guid = (int) elgg_extract('guid', $vars);
 
 /** @var \ElggPage $entity */

@@ -1,6 +1,5 @@
 <?php
 
-use Elgg\Controllers\GenericContentListing;
 use Elgg\File\FieldsHandler;
 use Elgg\File\Forms\PrepareFields;
 use Elgg\File\GroupToolContainerLogicCheck;
@@ -39,21 +38,21 @@ return [
 	'routes' => [
 		'default:object:file' => [
 			'path' => '/file',
-			'controller' => GenericContentListing::class,
+			'controller' => \Elgg\Controllers\GenericContentListing::class,
 			'options' => [
 				'sidebar_view' => 'file/sidebar',
 			],
 		],
 		'collection:object:file:all' => [
 			'path' => '/file/all',
-			'controller' => GenericContentListing::class,
+			'controller' => \Elgg\Controllers\GenericContentListing::class,
 			'options' => [
 				'sidebar_view' => 'file/sidebar',
 			],
 		],
 		'collection:object:file:owner' => [
 			'path' => '/file/owner/{username}',
-			'controller' => GenericContentListing::class,
+			'controller' => \Elgg\Controllers\GenericContentListing::class,
 			'options' => [
 				'sidebar_view' => 'file/sidebar',
 			],
@@ -63,7 +62,7 @@ return [
 		],
 		'collection:object:file:friends' => [
 			'path' => '/file/friends/{username}',
-			'controller' => GenericContentListing::class,
+			'controller' => \Elgg\Controllers\GenericContentListing::class,
 			'required_plugins' => [
 				'friends',
 			],
@@ -73,7 +72,7 @@ return [
 		],
 		'collection:object:file:group' => [
 			'path' => '/file/group/{guid}',
-			'controller' => GenericContentListing::class,
+			'controller' => \Elgg\Controllers\GenericContentListing::class,
 			'options' => [
 				'group_tool' => 'file',
 				'sidebar_view' => 'file/sidebar',
@@ -84,7 +83,7 @@ return [
 		],
 		'add:object:file' => [
 			'path' => '/file/add/{guid}',
-			'resource' => 'file/upload',
+			'controller' => \Elgg\Controllers\GenericEntity::class,
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\PageOwnerGatekeeper::class,
@@ -92,14 +91,14 @@ return [
 		],
 		'edit:object:file' => [
 			'path' => '/file/edit/{guid}',
-			'resource' => 'file/edit',
+			'controller' => \Elgg\Controllers\GenericEntity::class,
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
 			],
 		],
 		'view:object:file' => [
 			'path' => '/file/view/{guid}/{title?}',
-			'resource' => 'file/view',
+			'controller' => \Elgg\Controllers\GenericEntity::class,
 		],
 	],
 	'events' => [
@@ -128,6 +127,12 @@ return [
 				PrepareFields::class => [],
 			],
 		],
+		'form:register:fields' => [
+			'object:file' => [
+				'Elgg\File\Forms\RegisterFields::changeFileInput' => [],
+				'Elgg\Forms\RegisterFields::addContainerInput' => ['priority' => 600],
+			],
+		],
 		'register' => [
 			'menu:owner_block' => [
 				'Elgg\File\Menus\OwnerBlock::registerUserItem' => [],
@@ -135,6 +140,9 @@ return [
 			],
 			'menu:site' => [
 				'Elgg\File\Menus\Site::register' => [],
+			],
+			'menu:title:object:file' => [
+				'Elgg\File\Menus\Title::registerDownload' => [],
 			],
 		],
 		'seeds' => [

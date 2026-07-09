@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\ReportedContent\Controllers\Entity;
+
 return [
 	'plugin' => [
 		'name' => 'Reported Content',
@@ -32,7 +34,10 @@ return [
 	'routes' => [
 		'view:object:reported_content' => [
 			'path' => '/admin/reportedcontent/view/{guid}',
-			'resource' => 'reportedcontent/view',
+			'controller' => Entity::class,
+			'options' => [
+				'sidebar_view' => 'reportedcontent/sidebar',
+			],
 			'middleware' => [
 				\Elgg\Router\Middleware\AdminGatekeeper::class,
 			],

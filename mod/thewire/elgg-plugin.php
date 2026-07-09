@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\TheWire\Controllers\ContentListing;
+use Elgg\TheWire\Controllers\Entity;
 use Elgg\TheWire\Notifications\CreateTheWireEventHandler;
 
 return [
@@ -88,7 +89,7 @@ return [
 		],
 		'view:object:thewire' => [
 			'path' => '/thewire/view/{guid}',
-			'resource' => 'thewire/view',
+			'controller' => Entity::class,
 		],
 		'reply:object:thewire' => [
 			'path' => '/thewire/reply/{guid}',

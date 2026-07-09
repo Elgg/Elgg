@@ -919,6 +919,15 @@ Views
 	Prepare field values for use in the form. Eg. when editing a blog, fill this with the current values of the blog.
 	Sticky form values will automatically be added to the field values (when available).
 
+**form:register:fields, <entity_type>:<entity_subtype>** |results|
+	Register fields to be drawn on an entity form. This gets prefilled with the registered entity fields.
+	You can add/remove fields when needed.
+	
+	``$params`` array includes:
+	* ``entity_type``: the type of the entity
+	* ``entity_subtype``: the subtype of the entity
+	* ``entity``: the entity being edited or ``null`` when adding a new entity
+
 **head, page** |results|
     In ``elgg_view_page()``, filters ``$vars['head']``
     Return value contains an array with ``title``, ``metas`` and ``links`` keys,
