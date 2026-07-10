@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f07ffaef2e6d635e79558cf8c0618157",
+    "content-hash": "9a67088cefa1357efc69b9ba4c27e47e",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -2311,15 +2311,15 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-adapter-ckfinder",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-adapter-ckfinder/-/ckeditor5-adapter-ckfinder-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-adapter-ckfinder/-/ckeditor5-adapter-ckfinder-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-upload": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-upload": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2328,17 +2328,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-alignment",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-alignment/-/ckeditor5-alignment-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-alignment/-/ckeditor5-alignment-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2347,18 +2347,18 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-autoformat",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-autoformat/-/ckeditor5-autoformat-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-autoformat/-/ckeditor5-autoformat-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-heading": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-heading": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2367,15 +2367,15 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-autosave",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-autosave/-/ckeditor5-autosave-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-autosave/-/ckeditor5-autosave-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -2385,19 +2385,19 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-basic-styles",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-basic-styles/-/ckeditor5-basic-styles-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-basic-styles/-/ckeditor5-basic-styles-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2406,19 +2406,19 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-block-quote",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-block-quote/-/ckeditor5-block-quote-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-block-quote/-/ckeditor5-block-quote-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-enter": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-enter": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2427,19 +2427,19 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-bookmark",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-bookmark/-/ckeditor5-bookmark-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-bookmark/-/ckeditor5-bookmark-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-link": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-widget": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-link": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-widget": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2448,22 +2448,22 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-ckbox",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-ckbox/-/ckeditor5-ckbox-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-ckbox/-/ckeditor5-ckbox-47.6.2.tgz"
             },
             "require": {
                 "npm-asset/blurhash": "2.0.5",
-                "npm-asset/ckeditor--ckeditor5-cloud-services": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-image": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-upload": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-cloud-services": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-image": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-upload": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -2473,18 +2473,18 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-ckfinder",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-ckfinder/-/ckeditor5-ckfinder-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-ckfinder/-/ckeditor5-ckfinder-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-image": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-image": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2493,17 +2493,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-clipboard",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-clipboard/-/ckeditor5-clipboard-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-clipboard/-/ckeditor5-clipboard-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-widget": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-widget": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -2513,15 +2513,15 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-cloud-services",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-cloud-services/-/ckeditor5-cloud-services-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-cloud-services/-/ckeditor5-cloud-services-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2530,20 +2530,20 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-code-block",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-code-block/-/ckeditor5-code-block-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-code-block/-/ckeditor5-code-block-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-clipboard": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-enter": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-enter": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2552,16 +2552,16 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-core",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-core/-/ckeditor5-core-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-core/-/ckeditor5-core-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-watchdog": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-watchdog": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -2571,17 +2571,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-easy-image",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-easy-image/-/ckeditor5-easy-image-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-easy-image/-/ckeditor5-easy-image-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-cloud-services": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-upload": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-cloud-services": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-upload": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2590,17 +2590,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-editor-balloon",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-balloon/-/ckeditor5-editor-balloon-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-balloon/-/ckeditor5-editor-balloon-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -2610,17 +2610,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-editor-classic",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-classic/-/ckeditor5-editor-classic-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-classic/-/ckeditor5-editor-classic-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -2630,17 +2630,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-editor-decoupled",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-decoupled/-/ckeditor5-editor-decoupled-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-decoupled/-/ckeditor5-editor-decoupled-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -2650,17 +2650,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-editor-inline",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-inline/-/ckeditor5-editor-inline-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-inline/-/ckeditor5-editor-inline-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -2670,17 +2670,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-editor-multi-root",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-multi-root/-/ckeditor5-editor-multi-root-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-multi-root/-/ckeditor5-editor-multi-root-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -2690,19 +2690,19 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-emoji",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-emoji/-/ckeditor5-emoji-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-emoji/-/ckeditor5-emoji-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-mention": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-mention": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5",
                 "npm-asset/fuzzysort": "3.1.0"
             },
@@ -2713,13 +2713,13 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-engine",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-engine/-/ckeditor5-engine-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-engine/-/ckeditor5-engine-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -2729,15 +2729,15 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-enter",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-enter/-/ckeditor5-enter-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-enter/-/ckeditor5-enter-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2746,20 +2746,20 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-essentials",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-essentials/-/ckeditor5-essentials-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-essentials/-/ckeditor5-essentials-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-clipboard": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-enter": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-select-all": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-undo": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-enter": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-select-all": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-undo": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2768,17 +2768,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-find-and-replace",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-find-and-replace/-/ckeditor5-find-and-replace-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-find-and-replace/-/ckeditor5-find-and-replace-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -2788,18 +2788,18 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-font",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-font/-/ckeditor5-font-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-font/-/ckeditor5-font-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2808,19 +2808,19 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-fullscreen",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-fullscreen/-/ckeditor5-fullscreen-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-fullscreen/-/ckeditor5-fullscreen-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-editor-classic": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-editor-decoupled": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-editor-classic": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-editor-decoupled": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2829,19 +2829,19 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-heading",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-heading/-/ckeditor5-heading-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-heading/-/ckeditor5-heading-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-paragraph": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-paragraph": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2850,18 +2850,18 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-highlight",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-highlight/-/ckeditor5-highlight-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-highlight/-/ckeditor5-highlight-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2870,18 +2870,18 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-horizontal-line",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-horizontal-line/-/ckeditor5-horizontal-line-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-horizontal-line/-/ckeditor5-horizontal-line-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-widget": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-widget": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2890,18 +2890,18 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-html-embed",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-html-embed/-/ckeditor5-html-embed-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-html-embed/-/ckeditor5-html-embed-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-widget": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-widget": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2910,23 +2910,23 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-html-support",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-html-support/-/ckeditor5-html-support-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-html-support/-/ckeditor5-html-support-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-enter": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-heading": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-image": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-list": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-remove-format": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-table": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-widget": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-enter": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-heading": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-image": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-list": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-remove-format": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-table": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-widget": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -2936,10 +2936,10 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-icons",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-icons/-/ckeditor5-icons-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-icons/-/ckeditor5-icons-47.6.2.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -2948,23 +2948,23 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-image",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-image/-/ckeditor5-image-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-image/-/ckeditor5-image-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-clipboard": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-undo": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-upload": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-widget": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-undo": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-upload": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-widget": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -2974,20 +2974,20 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-indent",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-indent/-/ckeditor5-indent-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-indent/-/ckeditor5-indent-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-heading": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-list": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-heading": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-list": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -2996,17 +2996,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-language",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-language/-/ckeditor5-language-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-language/-/ckeditor5-language-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3015,22 +3015,22 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-link",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-link/-/ckeditor5-link-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-link/-/ckeditor5-link-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-clipboard": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-image": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-widget": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-image": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-widget": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -3040,22 +3040,22 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-list",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-list/-/ckeditor5-list-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-list/-/ckeditor5-list-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-clipboard": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-enter": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-font": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-enter": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-font": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -3065,16 +3065,16 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-markdown-gfm",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-markdown-gfm/-/ckeditor5-markdown-gfm-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-markdown-gfm/-/ckeditor5-markdown-gfm-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-clipboard": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/hast-util-from-dom": "5.0.1",
                 "npm-asset/hast-util-to-html": "9.0.5",
                 "npm-asset/hast-util-to-mdast": "10.1.2",
@@ -3098,22 +3098,22 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-media-embed",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-media-embed/-/ckeditor5-media-embed-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-media-embed/-/ckeditor5-media-embed-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-clipboard": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-undo": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-widget": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-undo": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-widget": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3122,17 +3122,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-mention",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-mention/-/ckeditor5-mention-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-mention/-/ckeditor5-mention-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -3142,17 +3142,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-minimap",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-minimap/-/ckeditor5-minimap-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-minimap/-/ckeditor5-minimap-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3161,18 +3161,18 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-page-break",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-page-break/-/ckeditor5-page-break-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-page-break/-/ckeditor5-page-break-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-widget": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-widget": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3181,17 +3181,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-paragraph",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-paragraph/-/ckeditor5-paragraph-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-paragraph/-/ckeditor5-paragraph-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3200,16 +3200,16 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-paste-from-office",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-paste-from-office/-/ckeditor5-paste-from-office-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-paste-from-office/-/ckeditor5-paste-from-office-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-clipboard": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3218,17 +3218,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-remove-format",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-remove-format/-/ckeditor5-remove-format-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-remove-format/-/ckeditor5-remove-format-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3237,18 +3237,18 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-restricted-editing",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-restricted-editing/-/ckeditor5-restricted-editing-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-restricted-editing/-/ckeditor5-restricted-editing-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3257,17 +3257,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-select-all",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-select-all/-/ckeditor5-select-all-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-select-all/-/ckeditor5-select-all-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3276,17 +3276,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-show-blocks",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-show-blocks/-/ckeditor5-show-blocks-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-show-blocks/-/ckeditor5-show-blocks-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3295,18 +3295,18 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-source-editing",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-source-editing/-/ckeditor5-source-editing-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-source-editing/-/ckeditor5-source-editing-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-theme-lark": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-theme-lark": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3315,18 +3315,18 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-special-characters",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-special-characters/-/ckeditor5-special-characters-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-special-characters/-/ckeditor5-special-characters-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3335,20 +3335,20 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-style",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-style/-/ckeditor5-style-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-style/-/ckeditor5-style-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-html-support": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-list": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-table": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-html-support": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-list": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-table": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -3358,20 +3358,20 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-table",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-table/-/ckeditor5-table-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-table/-/ckeditor5-table-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-clipboard": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-widget": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-widget": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -3381,13 +3381,13 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-theme-lark",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-theme-lark/-/ckeditor5-theme-lark-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-theme-lark/-/ckeditor5-theme-lark-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3396,15 +3396,15 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-typing",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-typing/-/ckeditor5-typing-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-typing/-/ckeditor5-typing-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -3414,17 +3414,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-ui",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-ui/-/ckeditor5-ui-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-ui/-/ckeditor5-ui-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-editor-multi-root": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-editor-multi-root": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
                 "npm-asset/color-convert": "3.1.0",
                 "npm-asset/color-parse": "2.0.2",
                 "npm-asset/es-toolkit": "1.39.5",
@@ -3438,17 +3438,17 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-undo",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-undo/-/ckeditor5-undo-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-undo/-/ckeditor5-undo-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3457,14 +3457,14 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-upload",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-upload/-/ckeditor5-upload-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-upload/-/ckeditor5-upload-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
@@ -3473,13 +3473,13 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-utils",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-utils/-/ckeditor5-utils-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-utils/-/ckeditor5-utils-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -3489,16 +3489,16 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-watchdog",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-watchdog/-/ckeditor5-watchdog-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-watchdog/-/ckeditor5-watchdog-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-editor-multi-root": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-editor-multi-root": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -3508,19 +3508,19 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-widget",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-widget/-/ckeditor5-widget-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-widget/-/ckeditor5-widget-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-enter": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-enter": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -3530,16 +3530,16 @@
         },
         {
             "name": "npm-asset/ckeditor--ckeditor5-word-count",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-word-count/-/ckeditor5-word-count-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-word-count/-/ckeditor5-word-count-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor5": "47.7.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor5": "47.6.2",
                 "npm-asset/es-toolkit": "1.39.5"
             },
             "type": "npm-asset",
@@ -3549,73 +3549,73 @@
         },
         {
             "name": "npm-asset/ckeditor5",
-            "version": "47.7.2",
+            "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/ckeditor5/-/ckeditor5-47.7.2.tgz"
+                "url": "https://registry.npmjs.org/ckeditor5/-/ckeditor5-47.6.2.tgz"
             },
             "require": {
-                "npm-asset/ckeditor--ckeditor5-adapter-ckfinder": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-alignment": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-autoformat": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-autosave": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-basic-styles": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-block-quote": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-bookmark": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ckbox": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ckfinder": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-clipboard": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-cloud-services": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-code-block": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-core": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-easy-image": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-editor-balloon": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-editor-classic": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-editor-decoupled": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-editor-inline": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-editor-multi-root": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-emoji": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-engine": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-enter": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-essentials": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-find-and-replace": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-font": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-fullscreen": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-heading": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-highlight": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-horizontal-line": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-html-embed": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-html-support": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-icons": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-image": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-indent": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-language": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-link": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-list": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-markdown-gfm": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-media-embed": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-mention": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-minimap": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-page-break": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-paragraph": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-paste-from-office": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-remove-format": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-restricted-editing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-select-all": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-show-blocks": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-source-editing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-special-characters": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-style": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-table": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-theme-lark": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-typing": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-ui": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-undo": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-upload": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-utils": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-watchdog": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-widget": "47.7.2",
-                "npm-asset/ckeditor--ckeditor5-word-count": "47.7.2"
+                "npm-asset/ckeditor--ckeditor5-adapter-ckfinder": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-alignment": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-autoformat": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-autosave": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-basic-styles": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-block-quote": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-bookmark": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ckbox": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ckfinder": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-cloud-services": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-code-block": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-easy-image": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-editor-balloon": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-editor-classic": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-editor-decoupled": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-editor-inline": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-editor-multi-root": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-emoji": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-enter": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-essentials": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-find-and-replace": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-font": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-fullscreen": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-heading": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-highlight": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-horizontal-line": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-html-embed": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-html-support": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-icons": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-image": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-indent": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-language": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-link": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-list": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-markdown-gfm": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-media-embed": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-mention": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-minimap": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-page-break": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-paragraph": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-paste-from-office": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-remove-format": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-restricted-editing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-select-all": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-show-blocks": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-source-editing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-special-characters": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-style": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-table": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-theme-lark": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-typing": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-undo": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-upload": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-watchdog": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-widget": "47.6.2",
+                "npm-asset/ckeditor--ckeditor5-word-count": "47.6.2"
             },
             "type": "npm-asset",
             "license": [
