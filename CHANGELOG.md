@@ -1,3 +1,15 @@
+<a name="7.0.3"></a>
+### 7.0.3 (2026-07-10)
+
+#### Contributors
+
+* Jerôme Bakker (1)
+
+#### Bug fixes
+
+* **ckeditor:** use correct version for GPL license [69449138e](https://github.com/Elgg/Elgg/commit/69449138e0c819ee0c718b47f691f21ae88dfca3) closes [#15108](https://github.com/Elgg/Elgg/issues/15108)
+
+
 <a name="7.0.2"></a>
 ### 7.0.2 (2026-07-02)
 
