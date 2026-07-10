@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 
 	/**
@@ -319,6 +321,7 @@ class UserCapabilitiesIntegrationTest extends IntegrationTestCase {
 		});
 	}
 
+	#[AllowMockObjectsWithoutExpectations]
 	public function testDefaultCanCommentPermissions() {
 		_elgg_services()->events->registerHandler('container_logic_check', 'all', \Elgg\Comments\ContainerLogicHandler::class);
 		

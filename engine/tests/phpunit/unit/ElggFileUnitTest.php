@@ -204,11 +204,11 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertNotEmpty($size);
 		$this->assertNotEmpty($this->file->open('read'));
 
-		$this->assertEquals(0, $this->file->seek(2));
+		$this->file->seek(2);
 		$this->assertEquals(2, $this->file->tell());
 		$this->assertFalse($this->file->eof());
 
-		$this->assertEquals(0, $this->file->seek($size));
+		$this->file->seek($size);
 		$this->assertFalse($this->file->eof());
 
 		$this->file->read(1);

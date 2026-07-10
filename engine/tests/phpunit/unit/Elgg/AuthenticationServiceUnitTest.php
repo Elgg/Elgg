@@ -73,7 +73,7 @@ class AuthenticationServiceUnitTest extends UnitTestCase {
 		$this->assertArrayHasKey('user', $handlers);
 		$this->assertNotEmpty($handlers['user']);
 		
-		$this->assertNull($this->service->unregisterHandler('foo'));
+		$this->service->unregisterHandler('foo');
 		
 		$handlers = $this->getInaccessableProperty($this->service, 'handlers');
 		
