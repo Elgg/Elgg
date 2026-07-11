@@ -55,6 +55,39 @@ class ComparisonClauseUnitTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 
+	#[DataProvider('caseSensitiveStringOperators')]
+	public function testCaseSensitiveStringComparisonBinariesValueNotColumn($operator) {
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
+		$qb->where($qb->compare('alias.value', $operator, 'CaseSensitive', ELGG_VALUE_STRING, true));
+
+		$sql = $qb->getSQL();
+		// BINARY is applied to the value so the comparison stays case-sensitive...
+		$this->assertStringContainsString('BINARY', $sql);
+		// ...while the column is never wrapped in CAST(), which would force a scan.
+		$this->assertStringNotContainsString('CAST(', $sql);
+	}
+
+	#[DataProvider('caseSensitiveStringOperators')]
+	public function testCaseInsensitiveStringComparisonHasNeitherBinaryNorCast($operator) {
+		$qb = Select::fromTable(EntityTable::TABLE_NAME, 'alias');
+		$qb->select('*');
+		$qb->where($qb->compare('alias.value', $operator, 'CaseSensitive', ELGG_VALUE_STRING, false));
+
+		$sql = $qb->getSQL();
+		$this->assertStringNotContainsString('BINARY', $sql);
+		$this->assertStringNotContainsString('CAST(', $sql);
+	}
+
+	public static function caseSensitiveStringOperators() {
+		return [
+			['='],
+			['in'],
+			['!='],
+			['not in'],
+		];
+	}
+
 	public function testCanNormalizeDateTime() {
 		$dt = new \DateTime();
 
