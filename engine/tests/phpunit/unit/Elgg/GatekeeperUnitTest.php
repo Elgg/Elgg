@@ -15,27 +15,25 @@ use Elgg\Exceptions\Http\Gatekeeper\LoggedOutGatekeeperException;
 
 class GatekeeperUnitTest extends UnitTestCase {
 
-	/**
-	 * @var Gatekeeper
-	 */
-	protected $gatekeeper;
+	protected ?Gatekeeper $gatekeeper;
 
-	/**
-	 * @var SessionManagerService
-	 */
-	protected $session_manager;
+	protected ?SessionManagerService $session_manager;
 	
-	/**
-	 * @var Invoker
-	 */
-	protected $invoker;
+	protected ?Invoker $invoker;
+
+	protected ?bool $trash_enabled;
 
 	public function up() {
 		$this->session_manager = _elgg_services()->session_manager;
 		$this->gatekeeper = _elgg_services()->gatekeeper;
 		$this->invoker = _elgg_services()->invoker;
+		$this->trash_enabled = _elgg_services()->config->trash_enabled;
 	}
 
+	public function down() {
+		_elgg_services()->config->trash_enabled = $this->trash_enabled;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -142,6 +140,77 @@ class GatekeeperUnitTest extends UnitTestCase {
 		$this->gatekeeper->assertAuthenticatedAdmin();
 	}
 
+	public function testAssertExistsPublicEntity() {
+		$user = $this->createUser();
+		
+		$object = $this->createObject([
+			'access_id' => ACCESS_PUBLIC,
+			'owner_guid' => $user->guid,
+		]);
+		
+		$this->gatekeeper->assertExists($object->guid);
+	}
+	
+	public function testAssertExistsPrivateEntity() {
+		$user = $this->createUser();
+		
+		$object = $this->createObject([
+			'access_id' => ACCESS_PRIVATE,
+			'owner_guid' => $user->guid,
+		]);
+		
+		$this->gatekeeper->assertExists($object->guid);
+	}
+	
+	public function testAssertExistsDisabledEntity() {
+		$user = $this->createUser();
+		
+		$object = $this->createObject([
+			'access_id' => ACCESS_PUBLIC,
+			'owner_guid' => $user->guid,
+		]);
+		$this->invoker->call(ELGG_IGNORE_ACCESS, function () use ($object) {
+			$this->assertTrue($object->disable());
+		});
+		$this->assertFalse($object->isEnabled());
+		
+		$this->gatekeeper->assertExists($object->guid);
+	}
+	
+	public function testAssertExistsDeletedEntity() {
+		$user = $this->createUser();
+		_elgg_services()->config->trash_enabled = true;
+		
+		$object = $this->createObject([
+			'access_id' => ACCESS_PUBLIC,
+			'owner_guid' => $user->guid,
+		]);
+		$this->invoker->call(ELGG_IGNORE_ACCESS, function () use ($object) {
+			$this->assertTrue($object->delete(true, false));
+		});
+		$this->assertTrue($object->isDeleted());
+		
+		$this->gatekeeper->assertExists($object->guid);
+	}
+	
+	public function testAssertExistsNonExistingEntity() {
+		$user = $this->createUser();
+		
+		// need to make sure we have a guid to test with
+		// and not some randomly chosen guid which could exist in some database
+		$object = $this->createObject([
+			'access_id' => ACCESS_PUBLIC,
+			'owner_guid' => $user->guid,
+		]);
+		$guid = $object->guid;
+		$this->invoker->call(ELGG_IGNORE_ACCESS, function () use ($object) {
+			$this->assertTrue($object->delete(true, true));
+		});
+		
+		$this->expectException(EntityNotFoundException::class);
+		$this->gatekeeper->assertExists($guid);
+	}
+	
 	public function testEntityGatekeeperAllowsAccessToPublicEntity() {
 		$user = $this->createUser();
 
@@ -328,9 +397,45 @@ class GatekeeperUnitTest extends UnitTestCase {
 			'enabled' => 'no',
 		]);
 
-		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($object) {
+		$this->invoker->call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($object) {
 			$this->gatekeeper->assertAccessibleEntity($object);
-			$this->addToAssertionCount(1);
+		});
+	}
+
+	public function testEntityGatekeeperPreventsAccessToDeletedEntity() {
+		_elgg_services()->config->trash_enabled = true;
+		$user = $this->createUser();
+		
+		$object = $this->createObject([
+			'access_id' => ACCESS_PUBLIC,
+			'owner_guid' => $user->guid,
+		]);
+		
+		$this->invoker->call(ELGG_IGNORE_ACCESS, function() use ($object) {
+			$this->assertTrue($object->delete(true, false));
+		});
+		$this->assertTrue($object->isDeleted());
+		
+		$this->expectException(EntityNotFoundException::class);
+		$this->gatekeeper->assertAccessibleEntity($object);
+	}
+	
+	public function testEntityGatekeeperAllowsAccessToDeletedEntityWithShownDeletedEntities() {
+		_elgg_services()->config->trash_enabled = true;
+		$user = $this->createUser();
+		
+		$object = $this->createObject([
+			'access_id' => ACCESS_PUBLIC,
+			'owner_guid' => $user->guid,
+		]);
+		
+		$this->invoker->call(ELGG_IGNORE_ACCESS, function() use ($object) {
+			$this->assertTrue($object->delete(true, false));
+		});
+		$this->assertTrue($object->isDeleted());
+		
+		$this->invoker->call(ELGG_SHOW_DELETED_ENTITIES, function() use ($object) {
+			$this->gatekeeper->assertAccessibleEntity($object);
 		});
 	}
 
