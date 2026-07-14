@@ -65,7 +65,7 @@ class ElggPluginDependenciesIntegrationTest extends IntegrationTestCase {
 	public function testAssertDependencies() {
 		$plugin = elgg_get_plugin_from_id('test_plugin');
 		
-		$this->assertEmpty($plugin->assertDependencies());
+		$plugin->assertDependencies();
 	}
 	
 	public function testDoesntAssertDependencies() {

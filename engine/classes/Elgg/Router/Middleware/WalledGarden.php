@@ -33,9 +33,7 @@ class WalledGarden {
 			return;
 		}
 
-		if (!$request->isXhr()) {
-			$request->elgg()->session->set('last_forward_from', $url);
-		}
+		_elgg_services()->redirects->setLastForwardFrom();
 
 		throw new WalledGardenException();
 	}

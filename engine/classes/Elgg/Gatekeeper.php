@@ -114,7 +114,7 @@ class Gatekeeper {
 	 * @throws EntityNotFoundException
 	 */
 	public function assertExists(int $guid, ?string $type = null, ?string $subtype = null): \ElggEntity {
-		$entity = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($guid, $type, $subtype) {
+		$entity = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function () use ($guid, $type, $subtype) {
 			return $this->entities->get($guid, $type, $subtype);
 		});
 
@@ -174,6 +174,17 @@ class Gatekeeper {
 
 			if (!$entity->isEnabled() && !$this->session_manager->getDisabledEntityVisibility()) {
 				// entity exists, but is disabled
+				$exception = new EntityNotFoundException();
+				$exception->setParams([
+					'entity' => $entity,
+					'user' => $user,
+					'route' => $this->request->getParam('_route', null, false),
+				]);
+				throw $exception;
+			}
+			
+			if ($entity->isDeleted() && !$this->session_manager->getDeletedEntityVisibility()) {
+				// entity exists, but is deleted
 				$exception = new EntityNotFoundException();
 				$exception->setParams([
 					'entity' => $entity,

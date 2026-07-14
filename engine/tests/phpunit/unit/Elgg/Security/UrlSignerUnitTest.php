@@ -56,7 +56,7 @@ class UrlSignerUnitTest extends \Elgg\UnitTestCase {
 	public function testCanAssertValidUrl() {
 		$url = $this->service->sign($this->url);
 		
-		$this->assertNull($this->service->assertValid($url));
+		$this->service->assertValid($url);
 	}
 	
 	public function testCanAssertInvalidUrl() {

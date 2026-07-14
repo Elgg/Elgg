@@ -114,6 +114,24 @@ class EntityTable extends DbEntityTable {
 
 		return parent::updateRow($guid, $row);
 	}
+	
+	public function updateTimeDeleted(\ElggEntity $entity, ?int $deleted = null): int {
+		if ($deleted === null) {
+			$deleted = $this->getCurrentTime()->getTimestamp();
+		}
+		
+		// add query spec
+		$qb = Update::table(self::TABLE_NAME);
+		$qb->set('time_deleted', $qb->param($deleted, ELGG_VALUE_TIMESTAMP))
+			->where($qb->compare('guid', '=', $entity->guid, ELGG_VALUE_GUID));
+		
+		$this->query_specs[$entity->guid][] = $this->db->addQuerySpec([
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
+		]);
+		
+		return parent::updateTimeDeleted($entity, $deleted);
+	}
 
 	/**
 	 * Setup a mock entity
