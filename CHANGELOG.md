@@ -1,3 +1,15 @@
+<a name="7.0.4"></a>
+### 7.0.4 (2026-07-30)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+
+#### Bug fixes
+
+* **gatekeeper:** deleted entities exist but are not accessible [501959227](https://github.com/Elgg/Elgg/commit/501959227a45e26c9b71c70d26176cf438748c5e)
+
+
 <a name="7.0.3"></a>
 ### 7.0.3 (2026-07-10)
 
