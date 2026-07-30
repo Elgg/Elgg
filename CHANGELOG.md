@@ -1,3 +1,15 @@
+<a name="6.3.7"></a>
+### 6.3.7 (2026-07-30)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+
+#### Security update
+
+* small security update
+
+
 <a name="6.3.6"></a>
 ### 6.3.6 (2026-07-02)
 
