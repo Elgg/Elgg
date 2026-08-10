@@ -4,6 +4,7 @@ namespace Elgg\Assets;
 
 use Elgg\Cache\SystemCache;
 use Elgg\Config;
+use Elgg\Exceptions\ExceptionInterface;
 use Elgg\Exceptions\InvalidArgumentException;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Exception\TransferException;
@@ -58,8 +59,9 @@ class ImageFetcherService {
 		$image_url = htmlspecialchars_decode($image_url);
 		$image_url = elgg_normalize_url($image_url);
 		
-		$cache = $this->loadFromCache($image_url);
-		if (!empty($cache)) {
+		$cache_key = $this->makeCacheKey($image_url);
+		$cache = $this->cache->load($cache_key);
+		if (isset($cache)) {
 			return $cache;
 		}
 		
@@ -84,46 +86,67 @@ class ImageFetcherService {
 			$response = $this->client->get($image_url, $options);
 		} catch (TransferException $e) {
 			// this shouldn't happen, but just in case
+			$this->cache->save($cache_key, false);
 			return false;
 		}
 		
 		if ($response->getStatusCode() !== ELGG_HTTP_OK) {
+			$this->cache->save($cache_key, false);
+			return false;
+		}
+		
+		$image_contents = $response->getBody()->getContents();
+		if (!$this->validateImageData($image_contents)) {
+			$this->cache->save($cache_key, false);
 			return false;
 		}
 		
 		$result = [
-			'data' => $response->getBody()->getContents(),
+			'data' => $image_contents,
 			'content-type' => $response->getHeaderLine('content-type') ?: 'application/octet-stream',
 			'name' => basename($image_url),
 		];
 		
-		$this->saveToCache($image_url, $result);
+		$this->cache->save($cache_key, $result);
 		
 		return $result;
 	}
 	
 	/**
-	 * Load an image url from cache
+	 * Get the cache key for a given url
 	 *
-	 * @param string $image_url the url to load
+	 * @param string $image_url the image url
 	 *
-	 * @return array
+	 * @return string
 	 */
-	protected function loadFromCache(string $image_url): array {
-		$cache = $this->cache->load(self::CACHE_PREFIX . md5($image_url));
-		
-		return is_array($cache) ? $cache : [];
+	protected function makeCacheKey(string $image_url): string {
+		return self::CACHE_PREFIX . md5($image_url);
 	}
 	
 	/**
-	 * Save image data in system cache for easy reuse
+	 * Validate that the fetched image data is an actual image
 	 *
-	 * @param string $image_url the image url
-	 * @param array  $data      the image data
+	 * @param string $image_data image fetch result
 	 *
 	 * @return bool
 	 */
-	protected function saveToCache(string $image_url, array $data): bool {
-		return $this->cache->save(self::CACHE_PREFIX . md5($image_url), $data);
+	protected function validateImageData(string $image_data): bool {
+		if (empty($image_data)) {
+			return false;
+		}
+		
+		$tmp = new \ElggTempFile();
+		try {
+			$tmp->open('write');
+			$tmp->write($image_data);
+			$tmp->close();
+		} catch (ExceptionInterface $e) {
+			// file error
+			return false;
+		}
+		
+		$info = getimagesize($tmp->getFilenameOnFilestore());
+		
+		return is_array($info);
 	}
 }
