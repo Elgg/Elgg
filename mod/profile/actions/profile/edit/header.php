@@ -5,8 +5,8 @@
 
 $user_guid = (int) get_input('guid');
 $user = get_user($user_guid);
-if (!$user instanceof \ElggUser) {
-	return elgg_error_response(elgg_echo('EntityNotFoundException'));
+if (!$user instanceof \ElggUser || !$user->canEdit()) {
+	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
 if (get_input('header_remove')) {
