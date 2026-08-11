@@ -18,6 +18,7 @@ if (empty($entity_guid) || empty($recipient) || empty($muted_settings) || empty(
 $hmac = elgg_build_hmac([
 	'entity_guid' => $entity_guid,
 	'recipient_guid' => $recipient_guid,
+	'mute_guids' => array_keys($muted_settings),
 ]);
 
 if (!$hmac->matchesToken($hmac_token)) {

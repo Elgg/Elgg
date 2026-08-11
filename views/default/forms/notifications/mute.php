@@ -108,6 +108,7 @@ echo elgg_view_field([
 $hmac = elgg_build_hmac([
 	'entity_guid' => $entity->guid,
 	'recipient_guid' => $recipient->guid,
+	'mute_guids' => $mute_guids,
 ]);
 echo elgg_view_field([
 	'#type' => 'hidden',

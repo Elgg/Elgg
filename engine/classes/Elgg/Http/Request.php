@@ -303,17 +303,17 @@ class Request extends SymfonyRequest {
 	public function getClientIp(): ?string {
 		$ip = parent::getClientIp();
 
-		if ($ip == $this->server->get('REMOTE_ADDR')) {
+		if ($ip === $this->server->get('REMOTE_ADDR')) {
 			// try one more
-			$ip_addresses = $this->server->get('HTTP_X_REAL_IP');
-			if ($ip_addresses) {
+			$ip_addresses = (string) $this->server->get('HTTP_X_REAL_IP');
+			if (!empty($ip_addresses)) {
 				$ip_addresses = explode(',', $ip_addresses);
 
-				return array_pop($ip_addresses);
+				$ip = array_pop($ip_addresses);
 			}
 		}
 
-		return $ip;
+		return filter_var($ip, FILTER_VALIDATE_IP) ?: null;
 	}
 
 	/**

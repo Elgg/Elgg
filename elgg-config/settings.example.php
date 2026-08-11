@@ -32,7 +32,7 @@ if (!isset($CONFIG)) {
  *
  * @global string $CONFIG->dataroot
  */
-$CONFIG->dataroot = "{{dataroot}}";
+$CONFIG->dataroot = '{{dataroot}}';
 
 /**
  * The installation root URL of the site. E.g. "https://example.org/elgg/"
@@ -41,7 +41,7 @@ $CONFIG->dataroot = "{{dataroot}}";
  *
  * @global string $CONFIG->wwwroot
  */
-$CONFIG->wwwroot = "{{wwwroot}}";
+$CONFIG->wwwroot = '{{wwwroot}}';
 
 /**
  * The database username
