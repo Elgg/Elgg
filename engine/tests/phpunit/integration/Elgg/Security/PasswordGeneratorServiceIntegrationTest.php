@@ -96,7 +96,7 @@ class PasswordGeneratorServiceIntegrationTest extends IntegrationTestCase {
 			],
 		]);
 		
-		$this->assertEmpty(_elgg_services()->passwordGenerator->assertValidPassword($password));
+		_elgg_services()->passwordGenerator->assertValidPassword($password);
 	}
 	
 	public static function validPasswordProvider() {
