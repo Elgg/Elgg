@@ -1257,12 +1257,12 @@ class ElggInstaller {
 				case 'dataroot':
 					$v = Paths::sanitize($v);
 					break;
-				case 'dbpassword':
-					$v = addslashes($v);
+				case 'dbport':
+					$v = (int) $v;
 					break;
 			}
 
-			$template = str_replace('{{' . $k . '}}', $v, $template);
+			$template = str_replace('\'{{' . $k . '}}\'', var_export($v, true), $template);
 		}
 
 		$result = file_put_contents(Config::resolvePath(), $template);

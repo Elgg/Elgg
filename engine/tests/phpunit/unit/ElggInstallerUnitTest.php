@@ -86,7 +86,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function createSettingsFile() {
-		$template = file_get_contents(Paths::elgg() . "elgg-config/settings.example.php");
+		$template = file_get_contents(Paths::elgg() . 'elgg-config/settings.example.php');
 
 		$params = [
 			'dbprefix' => getenv('ELGG_DB_PREFIX') !== false ? getenv('ELGG_DB_PREFIX') : 'c_i_elgg_',
@@ -104,7 +104,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		];
 
 		foreach ($params as $k => $v) {
-			$template = str_replace("{{" . $k . "}}", $v, $template);
+			$template = str_replace('\'{{' . $k . '}}\'', var_export($v, true), $template);
 		}
 
 		file_put_contents(Config::resolvePath(), $template);
