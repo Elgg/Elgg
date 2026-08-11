@@ -32,7 +32,10 @@ foreach ($log_entries as $entry) {
 	$user = $entry->performed_by_guid ? get_entity($entry->performed_by_guid) : null;
 	if ($user instanceof \ElggUser) {
 		$user_link = elgg_view_entity_url($user);
-		$user_guid_link = elgg_view_url("admin/administer_utilities/logbrowser?user_guid={$user->guid}", $user->guid);
+		$user_guid_link = elgg_view_url(elgg_generate_url('admin', [
+			'segments' => 'administer_utilities/logbrowser',
+			'user_guid' => $user->guid,
+		]), $user->guid);
 	} else {
 		$user_link = '&nbsp;';
 		$user_guid_link = '&nbsp;';

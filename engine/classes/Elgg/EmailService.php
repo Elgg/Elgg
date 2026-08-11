@@ -392,7 +392,7 @@ class EmailService {
 		
 		// find all matches
 		$matches = [];
-		$pattern = '/\ssrc=([\'"]\S+[\'"])/i';
+		$pattern = '/\ssrc=([\'"]https?:\/\/\S+[\'"])/i';
 		
 		preg_match_all($pattern, $text, $matches);
 		
