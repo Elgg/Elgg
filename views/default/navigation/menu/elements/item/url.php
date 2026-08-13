@@ -35,4 +35,8 @@ if (isset($vars['badge']) && is_numeric($vars['badge'])) {
 	$vars['badge'] = \Elgg\Values::shortFormatOutput($vars['badge'], 1);
 }
 
+if ($item->getSelected()) {
+	$vars['aria-current'] = 'true';
+}
+
 echo elgg_view('output/url', $vars);

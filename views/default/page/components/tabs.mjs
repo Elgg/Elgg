@@ -22,9 +22,12 @@ function changeTab($link_item, clearing_tab, trigger_open) {
 
 	// find the tabs that have the selected state and remove that state
 	var $tabs_component = $target.closest('.elgg-tabs-component');
-	$tabs_component.find('.elgg-tabs').eq(0).find('.elgg-state-selected').removeClass('elgg-state-selected');
+	var $current_active = $tabs_component.find('.elgg-tabs').eq(0).find('.elgg-state-selected');
+	$current_active.removeClass('elgg-state-selected');
+	$current_active.find('> a').removeAttr('aria-current');
 	
 	$link_item.addClass('elgg-state-selected');
+	$link_item.find('> a').attr('aria-current', true);
 	
 	$target.siblings().addClass('hidden').removeClass('elgg-state-active');
 	$target.removeClass('hidden').addClass('elgg-state-active');
