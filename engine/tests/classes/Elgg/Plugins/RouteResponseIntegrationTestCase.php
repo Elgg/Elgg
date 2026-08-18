@@ -27,9 +27,19 @@ abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 
 	/**
 	 * Get object subtype
+	 *
 	 * @return mixed
 	 */
 	abstract protected static function getSubtype();
+	
+	/**
+	 * Get the group tool name which protects the creation of group objects
+	 *
+	 * @return string|null
+	 */
+	protected function getGroupToolName(): ?string {
+		return null;
+	}
 	
 	/**
 	 * {@inheritDoc}
@@ -233,6 +243,15 @@ abstract class RouteResponseIntegrationTestCase extends IntegrationTestCase {
 			'membership' => ACCESS_PUBLIC,
 			'content_access_mode' => \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY,
 		]);
+		
+		$tool = $this->getGroupToolName();
+		if (!empty($tool)) {
+			// make sure tool option is registered
+			elgg()->group_tools->register($tool);
+			
+			// and enabled
+			$this->assertTrue($group->enableTool($tool));
+		}
 
 		$object = $this->createObject([
 			'subtype' => $this->getSubtype(),
