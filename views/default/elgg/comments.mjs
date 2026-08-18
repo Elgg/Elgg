@@ -1,9 +1,29 @@
 import 'jquery';
 
+function update_menu_item_badge(result) {
+	if (result.container_guid === undefined || result.container_comment_count === undefined) {
+		return;
+	}
+	
+	const $menu_items = $(document).find('[data-guid="' + result.container_guid + '"] nav li[data-menu-item="comment"]');
+	$menu_items.each(function(index, elem) {
+		const $badge = $(elem).find('> a > span.elgg-badge');
+		if (result.container_comment_count) {
+			if ($badge.length) {
+				$badge.html(result.container_comment_badge_text);
+			} else {
+				$(elem).find('> a').append('<span class="elgg-badge">' + result.container_comment_badge_text + '</span>');
+			}
+		} else if ($badge.length) {
+			$badge.remove();
+		}
+	});
+}
+
 /* Autofocuses first text input in a comment form when toggled */
 $(document).on('elgg_ui_toggle', function (e, data) {
-	var $toggle = $(e.target);
-	var $elements = data.$toggled_elements;
+	const $toggle = $(e.target);
+	const $elements = data.$toggled_elements;
 
 	if ($elements.is('.elgg-river-responses > .elgg-form-comment-save')) {
 		if ($toggle.hasClass('elgg-state-active')) {
@@ -15,17 +35,17 @@ $(document).on('elgg_ui_toggle', function (e, data) {
 });
 
 $(document).on('click', '.elgg-toggle-comment', function () {
-	var $anchor = $(this);
-	var comment_guid = $anchor.data().loadComment;
+	const $anchor = $(this);
+	const comment_guid = $anchor.data().loadComment;
 	
-	var $placeholder = $('div[data-comments-placeholder=' + comment_guid + ']');
+	const $placeholder = $('div[data-comments-placeholder=' + comment_guid + ']');
 	if (!$placeholder.is(':empty')) {
 		$placeholder.slideToggle('medium');
 		return;
 	}
 	
 	import('elgg/Ajax').then((Ajax) => {
-		var ajax = new Ajax.default();
+		const ajax = new Ajax.default();
 		
 		ajax.form('comment/save', {
 			data: {
@@ -42,26 +62,29 @@ $(document).on('click', '.elgg-toggle-comment', function () {
 });
 
 $(document).on('submit', '.elgg-form-comment-save', function (event) {
-	var $form = $(this);
+	const $form = $(this);
 	
 	$form.find('.elgg-button-submit').prop('disabled', true);
 
 	import('elgg/Ajax').then((Ajax) => {
-		var ajax = new Ajax.default();
+		const ajax = new Ajax.default();
 
 		ajax.action($form.attr('action'), {
 			data: ajax.objectify($form),
 			success: function(result) {
-				var $container = $form.closest('.elgg-comments');
-				var view_name = 'page/elements/comments';
-				var comment_guid = result.guid;
-				var data = {
+				const comment_guid = result.guid;
+				let $container = $form.closest('.elgg-comments');
+				let view_name = 'page/elements/comments';
+				let data = {
 					guid: $form.find('input[name="entity_guid"]').val(),
 					id: $form.attr('id'),
 					show_guid: comment_guid,
 					inline: $form.find('.elgg-input-text').length
 				};
-					
+				
+				// update comment menu items badges
+				update_menu_item_badge(result);
+				
 				if (!$container.length) {
 					$container = $form.closest('.elgg-river-responses');
 					view_name = 'river/elements/responses';
@@ -74,13 +97,13 @@ $(document).on('submit', '.elgg-form-comment-save', function (event) {
 				}
 
 				// the pagination returned will have a non-functional link that points to the current URL,
-				// but we want the the link to reload the page.
+				// but we want the link to reload the page.
 				function fix_pagination($container) {
 					function normalize(url) {
 						return url.replace(/#.*/, '');
 					}
 
-					var base_url = normalize(location.href);
+					const base_url = normalize(location.href);
 
 					$container.find('.elgg-pagination a').each(function () {
 						if (normalize(this.href) === base_url) {
@@ -100,7 +123,7 @@ $(document).on('submit', '.elgg-form-comment-save', function (event) {
 							$container.html($(result).filter('.elgg-comments').html());
 						}
 						
-						var $comment = $container.find('#elgg-object-' + comment_guid);
+						const $comment = $container.find('#elgg-object-' + comment_guid);
 						$comment.addClass('elgg-state-highlight');
 						
 						$comment[0].scrollIntoView({behavior: 'smooth'});
@@ -124,15 +147,15 @@ $(document).on('submit', '.elgg-form-comment-save', function (event) {
 
 
 $(document).on('click', '.elgg-menu-item-edit > a', function () {
-	var $trigger = $(this).closest('.elgg-menu-hover').data('trigger');
+	const $trigger = $(this).closest('.elgg-menu-hover').data('trigger');
 	if ((typeof $trigger === 'undefined') || !$trigger.is('.elgg-item-object-comment a')) {
 		return;
 	}
 
 	// store object as data in the edit link
-	var dc = $(this).data('Comment');
+	let dc = $(this).data('Comment');
 	if (!dc) {
-		var guid = $(this).data().commentGuid;
+		const guid = $(this).data().commentGuid;
 		dc = new Comment(guid, $trigger.closest('.elgg-item-object-comment'));
 		$(this).data('Comment', dc);
 	}
@@ -174,10 +197,10 @@ Comment.prototype = {
 	},
 
 	loadForm: function () {
-		var that = this;
+		const that = this;
 
 		import('elgg/Ajax').then((Ajax) => {
-			var ajax = new Ajax.default();
+			const ajax = new Ajax.default();
 			
 			// Get the form using ajax
 			ajax.view('core/ajax/edit_comment?guid=' + that.guid, {
@@ -187,7 +210,7 @@ Comment.prototype = {
 	
 					that.showForm();
 	
-					var $form = that.getForm();
+					const $form = that.getForm();
 	
 					$form.find('.elgg-button-cancel').on('click', function () {
 						that.hideForm();
@@ -205,11 +228,11 @@ Comment.prototype = {
 	},
 
 	submitForm: function () {
-		var $form = this.getForm();
+		const $form = this.getForm();
 		$form.find('.elgg-button-submit').prop('disabled', true);
 		
 		import('elgg/Ajax').then((Ajax) => {
-			var ajax = new Ajax.default();
+			const ajax = new Ajax.default();
 			
 			ajax.action($form.attr('action'), {
 				data: ajax.objectify($form),
@@ -218,6 +241,9 @@ Comment.prototype = {
 						// Update list item content
 						$form.closest('.elgg-item-object-comment').html(result.output);
 					}
+					
+					// update comment menu items badges
+					update_menu_item_badge(result);
 				},
 				error: function() {
 					$form.find('.elgg-button-submit').prop('disabled', false);
@@ -229,7 +255,7 @@ Comment.prototype = {
 	},
 
 	toggleEdit: function () {
-		var $form = this.getForm();
+		const $form = this.getForm();
 		if ($form.length) {
 			if ($form.hasClass('hidden')) {
 				this.showForm();
