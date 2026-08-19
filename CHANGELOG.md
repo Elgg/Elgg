@@ -1,3 +1,16 @@
+<a name="7.0.5"></a>
+### 7.0.5 (2026-08-19)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+* Jeroen Dalsem (1)
+
+#### Performance
+
+* **likes:** don't generate ajax response data for unsupported entities [bbecce845](https://github.com/Elgg/Elgg/commit/bbecce8454c8a8389333c50c4c77e671a57bba2a)
+
+
 <a name="7.0.4"></a>
 ### 7.0.4 (2026-07-30)
 
