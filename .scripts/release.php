@@ -55,11 +55,14 @@ $branch = "release-{$version}";
 run_commands([
 	// Version checks are here so we fail early if any deps are missing
 	'git --version',
-	'yarn --version',
-	'node --version',
 
 	"cd {$elgg_path}",
 	"git checkout -B {$branch}",
+
+	// update composer dependencies
+	'composer update',
+	'git add .',
+	'git commit -am "chore(composer): updated dependencies"',
 ]);
 
 // Update version in composer.json
