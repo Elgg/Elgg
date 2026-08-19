@@ -3,6 +3,8 @@
  * Action for adding and editing comments
  */
 
+use Elgg\Values;
+
 $entity_guid = (int) get_input('entity_guid', 0, false);
 $comment_guid = (int) get_input('comment_guid', 0, false);
 $comment_text = get_input('generic_comment');
@@ -27,6 +29,7 @@ if ($comment_guid) {
 		return elgg_error_response(elgg_echo('generic_comment:failure'));
 	}
 	
+	$entity = $comment->getContainerEntity();
 	$success_message = elgg_echo('generic_comment:updated');
 } else {
 	// Create a new comment on the target entity
@@ -72,21 +75,14 @@ if ($comment_guid) {
 	$success_message = elgg_echo('generic_comment:posted');
 }
 
-$forward = $comment->getURL();
-
-// return to activity page if posted from there
-// this can be removed once saving new comments is ajaxed
-if (!empty($_SERVER['HTTP_REFERER'])) {
-	// don't redirect to URLs from client without verifying within site
-	$site_url = preg_quote(elgg_get_site_url(), '~');
-	if (preg_match("~^{$site_url}activity(/|\\z)~", $_SERVER['HTTP_REFERER'], $m)) {
-		$forward = "{$m[0]}#elgg-object-{$comment->guid}";
-	}
-}
+$comment_count = $entity->countComments();
 
 $result = [
 	'guid' => $comment->guid,
 	'output' => elgg_view_entity($comment),
+	'container_guid' => $entity->guid,
+	'container_comment_count' => $comment_count,
+	'container_comment_badge_text' => $comment_count ? Values::shortFormatOutput($comment_count, 1) : null,
 ];
 
-return elgg_ok_response($result, $success_message, $forward);
+return elgg_ok_response($result, $success_message, $comment->getURL());

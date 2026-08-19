@@ -6,12 +6,15 @@
  */
 
 $item = elgg_extract('item', $vars);
-if (!$item instanceof ElggRiverItem) {
+if (!$item instanceof \ElggRiverItem) {
 	return;
 }
 
-echo elgg_view('page/components/image_block', [
-	'image' => elgg_view('river/elements/image', $vars),
-	'body' => elgg_view('river/elements/body', $vars),
+$image = elgg_view('river/elements/image', $vars);
+$body = elgg_view('river/elements/body', $vars);
+
+$params = [
 	'class' => 'elgg-river-item',
-]);
+	'data-guid' => $item->object_guid,
+];
+echo elgg_view_image_block($image, $body, $params);
