@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-22 10:18+0200\n"
+"POT-Creation-Date: 2026-07-02 10:43+0200\n"
 "PO-Revision-Date: 2026-03-25 09:33+0000\n"
 "Last-Translator: River Van Rain <vanrain@list.ru>, 2026\n"
 "Language-Team: Russian (https://app.transifex.com/elgg/teams/11337/ru/)\n"
@@ -851,7 +851,7 @@ msgstr ""
 #: ../../contribute/code.rst:512 ../../contribute/code.rst:550
 #: ../../contribute/code.rst:593 ../../contribute/code.rst:613
 #: ../../contribute/code.rst:632 ../../contribute/code.rst:650
-#: ../../contribute/code.rst:672 ../../contribute/code.rst:696
+#: ../../contribute/code.rst:672
 msgid "Bad:"
 msgstr "Плохо:"
 
@@ -859,8 +859,7 @@ msgstr "Плохо:"
 #: ../../contribute/code.rst:492 ../../contribute/code.rst:529
 #: ../../contribute/code.rst:567 ../../contribute/code.rst:603
 #: ../../contribute/code.rst:619 ../../contribute/code.rst:638
-#: ../../contribute/code.rst:658 ../../contribute/code.rst:681
-#: ../../contribute/code.rst:704
+#: ../../contribute/code.rst:658 ../../contribute/code.rst:680
 msgid "Good:"
 msgstr "Хорошо:"
 
@@ -1152,51 +1151,36 @@ msgid "Vendor prefixes"
 msgstr "Префиксы вендоров"
 
 #: ../../contribute/code.rst:667
-msgid "Group vendor-prefixes for the same property together"
-msgstr "Группируйте префиксы вендоров для одного свойства вместе"
-
-#: ../../contribute/code.rst:668
-msgid "Longest vendor-prefixed version first"
-msgstr "Сначала самая длинная версия с префиксом вендора"
-
-#: ../../contribute/code.rst:669
-msgid "Always include non-vendor-prefixed version"
-msgstr "Всегда включайте версию без префикса вендора"
+msgid "Do not rely on vendor prefixes"
+msgstr ""
 
 #: ../../contribute/code.rst:670
-msgid ""
-"Put an extra newline between vendor-prefixed groups and other properties"
-msgstr ""
-"Добавляйте дополнительную пустую строку между группами с префиксами вендоров"
-" и другими свойствами"
-
-#: ../../contribute/code.rst:694
 msgid "Group subproperties"
 msgstr "Группируйте под-свойства"
 
-#: ../../contribute/code.rst:715
+#: ../../contribute/code.rst:691
 msgid "Javascript guidelines"
 msgstr "Рекомендации по JavaScript"
 
-#: ../../contribute/code.rst:717
+#: ../../contribute/code.rst:693
 msgid "Same formatting standards as PHP apply."
 msgstr "Применяются те же стандарты форматирования, что и для PHP."
 
-#: ../../contribute/code.rst:719
+#: ../../contribute/code.rst:695
 msgid "Related functions should be in a namespaced ``ECMAScript`` module."
 msgstr ""
 "Связанные функции должны находиться в модуле ``ECMAScript`` с пространством "
 "имён."
 
-#: ../../contribute/code.rst:721
+#: ../../contribute/code.rst:697
 msgid "Function expressions should end with a semi-colon."
 msgstr "Выражения функций должны заканчиваться точкой с запятой."
 
-#: ../../contribute/code.rst:724
+#: ../../contribute/code.rst:700
 msgid "Deprecating APIs"
 msgstr "Объявление API устаревшими"
 
-#: ../../contribute/code.rst:726
+#: ../../contribute/code.rst:702
 msgid ""
 "Occasionally functions and classes must be deprecated in favor of newer "
 "replacements. Since 3rd party plugin authors rely on a consistent API, "
@@ -1212,7 +1196,7 @@ msgstr ""
 "поддержания обратной совместимости устаревшие API будут следовать этим "
 "рекомендациям:"
 
-#: ../../contribute/code.rst:733
+#: ../../contribute/code.rst:709
 msgid ""
 "Minor version (1.x) that deprecates an API must include a wrapper "
 "function/class (or otherwise appropriate means) to maintain backward "
@@ -1226,7 +1210,7 @@ msgstr ""
 "совместимости использует ``elgg_deprecated_notice('...', '1.11')`` для "
 "логирования устаревания функции."
 
-#: ../../contribute/code.rst:739
+#: ../../contribute/code.rst:715
 msgid ""
 "The next major revision (2.0) removes the compatibility layer. Any use of "
 "the deprecated API should be corrected before this."

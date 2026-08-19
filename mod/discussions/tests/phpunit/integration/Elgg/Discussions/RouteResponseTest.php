@@ -31,6 +31,10 @@ class RouteResponseTest extends RouteResponseIntegrationTestCase {
 		return 'discussion';
 	}
 	
+	protected function getGroupToolName(): ?string {
+		return 'forum';
+	}
+	
 	public static function groupRoutesProtectedByToolOption() {
 		return [
 			[

@@ -166,9 +166,20 @@ select {
 	margin-bottom: 1rem;
 }
 
-.elgg-input-radios label {
-	font-weight: normal;
-	font-size: 100%;
+.elgg-input-radios {
+	&.elgg-vertical {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+	
+	label {
+		font-weight: normal;
+		font-size: 100%;
+		
+		display: flex;
+		align-items: center;
+	}
 }
 
 .elgg-input-checkboxes {

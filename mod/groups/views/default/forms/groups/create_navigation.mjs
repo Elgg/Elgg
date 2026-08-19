@@ -6,16 +6,15 @@ $('#elgg-groups-edit-footer-navigate-next').on('click', function() {
 });
 
 // switch button banks
-$('.elgg-form-groups-edit .elgg-components-tab > a').on('click', function() {
-	var $li = $(this).closest('.elgg-components-tab');
-	var $next_bank = $('.elgg-groups-edit-footer-navigate');
+$('.elgg-form-groups-edit .elgg-tabs-component li.elgg-components-tab').on('open', function() {
+	const $next_bank = $('.elgg-groups-edit-footer-navigate');
 	if ($next_bank.length === 0) {
 		return;
 	}
 	
-	var $submit_bank = $('.elgg-groups-edit-footer-submit');
+	const $submit_bank = $('.elgg-groups-edit-footer-submit');
 	
-	if ($li.is(':last-child')) {
+	if ($(this).is(':last-child')) {
 		$next_bank.addClass('hidden');
 		$submit_bank.removeClass('hidden');
 	} else {
@@ -26,7 +25,7 @@ $('.elgg-form-groups-edit .elgg-components-tab > a').on('click', function() {
 
 // if not on the last tab, click on the next button (if available)
 $('.elgg-form-groups-edit').on('submit', function(event) {
-	var $next_bank = $('.elgg-groups-edit-footer-navigate');
+	const $next_bank = $('.elgg-groups-edit-footer-navigate');
 	if ($next_bank.length === 0 || !$next_bank.is(':visible')) {
 		return;
 	}

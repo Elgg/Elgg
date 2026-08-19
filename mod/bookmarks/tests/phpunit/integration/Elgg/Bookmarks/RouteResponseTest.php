@@ -8,6 +8,10 @@ class RouteResponseTest extends \Elgg\Plugins\RouteResponseIntegrationTestCase {
 		return 'bookmarks';
 	}
 	
+	protected function getGroupToolName(): ?string {
+		return 'bookmarks';
+	}
+	
 	public static function groupRoutesProtectedByToolOption() {
 		return [
 			[

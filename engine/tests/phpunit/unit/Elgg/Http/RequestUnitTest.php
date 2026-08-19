@@ -26,12 +26,42 @@ class RequestUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(['fo<script>alert("', 'ba&r'], $req->getUrlSegments(true));
 	}
 
+	public function testClientIpChecks() {
+		$req = new Request();
+		$req->server->set('REMOTE_ADDR', '127.0.0.1');
+		$this->assertEquals('127.0.0.1', $req->getClientIp());
+	}
+	
+	public function testClientIpChecksIPv6() {
+		$req = new Request();
+		$req->server->set('REMOTE_ADDR', 'fd12:3456:789a:1::1');
+		$this->assertEquals('fd12:3456:789a:1::1', $req->getClientIp());
+	}
+	
 	public function testClientIpChecksXRealIp() {
 		$req = new Request();
 		$req->server->set('HTTP_X_REAL_IP', '127.0.0.1');
 		$this->assertEquals('127.0.0.1', $req->getClientIp());
 	}
-
+	
+	public function testClientIpChecksXRealIpIPv6() {
+		$req = new Request();
+		$req->server->set('HTTP_X_REAL_IP', 'fd12:3456:789a:1::1');
+		$this->assertEquals('fd12:3456:789a:1::1', $req->getClientIp());
+	}
+	
+	public function testClientIpChecksInvalidIp() {
+		$req = new Request();
+		$req->server->set('REMOTE_ADDR', 'dummy');
+		$this->assertNull($req->getClientIp());
+	}
+	
+	public function testClientIpChecksInvalidIpXReal() {
+		$req = new Request();
+		$req->server->set('HTTP_X_REAL_IP', 'dummy');
+		$this->assertNull($req->getClientIp());
+	}
+	
 	public function testDetectsMixedCaseXhrHeader() {
 		$req = new Request();
 		$req->headers->set('X-Requested-With', 'xmlhttprequest');
