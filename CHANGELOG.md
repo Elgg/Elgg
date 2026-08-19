@@ -160,6 +160,23 @@
 * **profile:** the Twitter profile field has been removed [6095844fb](https://github.com/Elgg/Elgg/commit/6095844fbebd7f42199d1dae11c8c562f7235d6a) closes [#14925](https://github.com/Elgg/Elgg/issues/14925)
 
 
+<a name="6.3.8"></a>
+### 6.3.8 (2026-08-19)
+
+#### Contributors
+
+* Jerôme Bakker (9)
+
+#### Bug fixes
+
+* **installer:** improved sanitization of config values [de2fbfbdc](https://github.com/Elgg/Elgg/commit/de2fbfbdc35f306218ddbd0285d7182313deaead)
+* **core:** return a valid IP address for client IP [a86c43ff5](https://github.com/Elgg/Elgg/commit/a86c43ff5b7029d3f04de35a6f1c07cc2cb2c12e)
+* **notifications:**
+	* improved handling of embedded images in emails [425293cd9](https://github.com/Elgg/Elgg/commit/425293cd9827a2192de48305369e714ed8a111e7)
+	* validate mute options during action [912e52531](https://github.com/Elgg/Elgg/commit/912e525319ccab93a6b024ea6736875dd156a227)
+* **profile:** validate permission before changing header image [cd5ce2c10](https://github.com/Elgg/Elgg/commit/cd5ce2c10fc2a1be342a820eac2bbc1b6c088c72)
+
+
 <a name="6.3.7"></a>
 ### 6.3.7 (2026-07-30)
 
