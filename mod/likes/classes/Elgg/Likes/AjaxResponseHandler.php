@@ -16,7 +16,7 @@ class AjaxResponseHandler {
 	 */
 	public function __invoke(\Elgg\Event $event): ?\stdClass {
 		$entity = get_entity((int) get_input('guid'));
-		if (!$entity || elgg_get_viewtype() !== 'default') {
+		if (!$entity instanceof \ElggEntity || !$entity->hasCapability('likeable') || elgg_get_viewtype() !== 'default') {
 			return null;
 		}
 		
