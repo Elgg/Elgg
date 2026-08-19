@@ -14,7 +14,14 @@ $branch = $argv[1];
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-function run_commands($commands) {
+/**
+ * Execute a command in the commandline
+ *
+ * @param array $commands all commands to execute
+ *
+ * @return void
+ */
+function run_commands(array $commands): void {
 	foreach ($commands as $command) {
 		echo $command . PHP_EOL;
 		
@@ -61,7 +68,7 @@ run_commands([
 	
 	// commit everything to GitHub
 	'git add .',
-	"git commit -am \"chore(i18n): update translations\"",
+	'git commit -am "chore(i18n): update translations"',
 ]);
 
 echo "Please submit '{$new_branch}' as a pull request:" . PHP_EOL . PHP_EOL;
