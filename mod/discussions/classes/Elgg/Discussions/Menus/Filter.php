@@ -20,6 +20,14 @@ class Filter {
 	 * @return MenuItems|null
 	 */
 	public static function filterTabsForDiscussions(\Elgg\Event $event): ?MenuItems {
+		$user = elgg_get_logged_in_user_entity();
+		if (!$user instanceof \ElggUser || !elgg_is_active_plugin('groups')) {
+			return null;
+		}
+
+		if (elgg_get_page_owner_guid() && (elgg_get_page_owner_guid() !== $user->guid)) {
+			return null;
+		}
 		
 		$entity_type = $event->getParam('entity_type', '');
 		$entity_subtype = $event->getParam('entity_subtype', '');
@@ -38,12 +46,7 @@ class Filter {
 		if ($entity_type !== 'object' || $entity_subtype !== 'discussion') {
 			return null;
 		}
-		
-		$user = elgg_get_logged_in_user_entity();
-		if (!$user instanceof \ElggUser || !elgg_is_active_plugin('groups')) {
-			return null;
-		}
-		
+				
 		/* @var $result MenuItems */
 		$result = $event->getValue();
 		

@@ -179,9 +179,9 @@ System events
 	If ``filter_id`` is ``filter`` (the default) then the ``all``, ``mine`` and ``friends`` tabs will be generated base on some provided information
 	or be tried for routes similar to the current route.
 	
-	- params['all_link'] will be used for the ``all`` tab
-	- params['mine_link'] will be used for the ``mine`` tab
-	- params['friends_link'] will be used for the ``friend`` tab
+	- params['all_link'] will be used for the ``all`` tab (deprecated)
+	- params['mine_link'] will be used for the ``mine`` tab (deprecated)
+	- params['friend_link'] will be used for the ``friend`` tab (deprecated)
 	
 	If the above are not provided than a route will be tried based on ``params['entity_type']`` and ``params['entity_subtype']``.
 	If not provided ``entity_type`` and ``entity_subtype`` will be based on route detection of the current route. 

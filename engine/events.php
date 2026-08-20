@@ -296,7 +296,8 @@ return [
 			'Elgg\Menus\FilterSortItems::registerSortingDropdown' => ['priority' => 9999],
 		],
 		'menu:filter:filter' => [
-			'Elgg\Menus\Filter::registerFilterTabs' => ['priority' => 1],
+			'Elgg\Menus\Filter::registerAllFilterTab' => ['priority' => 1],
+			'Elgg\Menus\Filter::registerMineFilterTab' => ['priority' => 1],
 		],
 		'menu:filter:profile/edit' => [
 			'Elgg\Menus\Filter::registerAvatarEdit' => [],
