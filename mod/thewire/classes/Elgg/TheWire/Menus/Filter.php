@@ -23,6 +23,10 @@ class Filter {
 		if (!$user instanceof \ElggUser) {
 			return null;
 		}
+
+		if (elgg_get_page_owner_guid() && (elgg_get_page_owner_guid() !== $user->guid)) {
+			return null;
+		}
 		
 		$entity_type = $event->getParam('entity_type', '');
 		$entity_subtype = $event->getParam('entity_subtype', '');

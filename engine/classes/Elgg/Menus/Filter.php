@@ -85,17 +85,18 @@ class Filter {
 			'priority' => 200,
 		]);
 	}
-	
+
 	/**
-	 * Register the default All and Mine filter menu items
+	 * Register the default All filter menu item
 	 *
 	 * @param \Elgg\Event $event 'register', 'menu:filter:filter'
 	 *
-	 * @return MenuItems
+	 * @return MenuItems|null
 	 */
-	public static function registerFilterTabs(\Elgg\Event $event): MenuItems {
-		/* @var $result MenuItems */
-		$result = $event->getValue();
+	public static function registerAllFilterTab(\Elgg\Event $event): ?MenuItems {
+		if (elgg_get_page_owner_guid() && (elgg_get_page_owner_guid() !== elgg_get_logged_in_user_guid())) {
+			return null;
+		}
 		
 		$entity_type = $event->getParam('entity_type', '');
 		$entity_subtype = $event->getParam('entity_subtype', '');
@@ -110,7 +111,7 @@ class Filter {
 				$entity_subtype = elgg_extract(2, $route_parts, '');
 			}
 		}
-		
+
 		$all_link = $event->getParam('all_link');
 		if (empty($all_link)) {
 			if (elgg_route_exists("collection:{$entity_type}:{$entity_subtype}:all")) {
@@ -118,41 +119,86 @@ class Filter {
 			} elseif (elgg_route_exists("collection:{$entity_type}:all")) {
 				$all_link = elgg_generate_url("collection:{$entity_type}:all");
 			}
+		} else {
+			elgg_deprecated_notice("Using the 'all_link' parameter is deprecated. Use correct route names instead.", '7.1');
 		}
-		
-		if (!empty($all_link)) {
-			$result[] = \ElggMenuItem::factory([
-				'name' => 'all',
-				'text' => elgg_echo('all'),
-				'href' => $all_link,
-				'priority' => 200,
-			]);
+
+		if (empty($all_link)) {
+			return null;
 		}
+
+		/* @var $result MenuItems */
+		$result = $event->getValue();
 		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'all',
+			'text' => elgg_echo('all'),
+			'href' => $all_link,
+			'priority' => 200,
+		]);
+		
+		return $result;
+	}
+	
+	/**
+	 * Register the default Mine filter menu item
+	 *
+	 * @param \Elgg\Event $event 'register', 'menu:filter:filter'
+	 *
+	 * @return MenuItems|null
+	 */
+	public static function registerMineFilterTab(\Elgg\Event $event): ?MenuItems {
 		$user = elgg_get_logged_in_user_entity();
-		if ($user instanceof \ElggUser) {
-			$mine_link = $event->getParam('mine_link');
-			if (empty($mine_link)) {
-				if (elgg_route_exists("collection:{$entity_type}:{$entity_subtype}:owner")) {
-					$mine_link = elgg_generate_url("collection:{$entity_type}:{$entity_subtype}:owner", [
-						'username' => $user->username,
-					]);
-				} elseif (elgg_route_exists("collection:{$entity_type}:owner")) {
-					$mine_link = elgg_generate_url("collection:{$entity_type}:owner", [
-						'username' => $user->username,
-					]);
-				}
+		if (!$user instanceof \ElggUser) {
+			return null;
+		}
+		
+		if (elgg_get_page_owner_guid() && (elgg_get_page_owner_guid() !== $user->guid)) {
+			return null;
+		}
+		
+		$entity_type = $event->getParam('entity_type', '');
+		$entity_subtype = $event->getParam('entity_subtype', '');
+		if (empty($entity_type) || empty($entity_subtype)) {
+			$route_name = elgg_get_current_route_name();
+			if (!empty($route_name)) {
+				// assume route name as '<purpose>:<entity type>:<entity subtype>:<sub>'
+				// eg collection:object:blog:owner or view:group:group
+				// @see http://learn.elgg.org/en/stable/guides/routing.html#routes-names
+				$route_parts = explode(':', $route_name);
+				$entity_type = elgg_extract(1, $route_parts, '');
+				$entity_subtype = elgg_extract(2, $route_parts, '');
 			}
-			
-			if (!empty($mine_link)) {
-				$result[] = \ElggMenuItem::factory([
-					'name' => 'mine',
-					'text' => elgg_echo('mine'),
-					'href' => $mine_link,
-					'priority' => 300,
+		}
+
+		$mine_link = $event->getParam('mine_link');
+		if (empty($mine_link)) {
+			if (elgg_route_exists("collection:{$entity_type}:{$entity_subtype}:owner")) {
+				$mine_link = elgg_generate_url("collection:{$entity_type}:{$entity_subtype}:owner", [
+					'username' => $user->username,
+				]);
+			} elseif (elgg_route_exists("collection:{$entity_type}:owner")) {
+				$mine_link = elgg_generate_url("collection:{$entity_type}:owner", [
+					'username' => $user->username,
 				]);
 			}
+		} else {
+			elgg_deprecated_notice("Using the 'mine_link' parameter is deprecated. Use correct route names instead.", '7.1');
 		}
+
+		if (empty($mine_link)) {
+			return null;
+		}
+
+		/* @var $result MenuItems */
+		$result = $event->getValue();
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'mine',
+			'text' => elgg_echo('mine'),
+			'href' => $mine_link,
+			'priority' => 300,
+		]);
 		
 		return $result;
 	}

@@ -21,14 +21,14 @@ class Filter {
 	 * @return MenuItems|null
 	 */
 	public static function registerFilterTabs(\Elgg\Event $event): ?MenuItems {
-		
 		$user = elgg_get_logged_in_user_entity();
 		if (!$user instanceof \ElggUser) {
 			return null;
 		}
-		
-		/* @var $result MenuItems */
-		$result = $event->getValue();
+
+		if (elgg_get_page_owner_guid() && (elgg_get_page_owner_guid() !== $user->guid)) {
+			return null;
+		}
 		
 		$entity_type = $event->getParam('entity_type', '');
 		$entity_subtype = $event->getParam('entity_subtype', '');
@@ -55,11 +55,16 @@ class Filter {
 					'username' => $user->username,
 				]);
 			}
+		} else {
+			elgg_deprecated_notice("Using the 'friend_link' parameter is deprecated. Use correct route names instead.", '7.1');
 		}
 		
 		if (empty($friend_link)) {
 			return null;
 		}
+
+		/* @var $result MenuItems */
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'friends',

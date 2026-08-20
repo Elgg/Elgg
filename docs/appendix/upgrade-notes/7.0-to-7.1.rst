@@ -27,6 +27,16 @@ Because of the introduction of the generic entity controller the following resou
  * ``resources/pages/view``
  * ``resources/thewire/view``
 
+Generic filter menu items
+-------------------------
+
+The generic menu items registered to the default filter menu, like 'All', 'Mine', 'Friends', no longer show on pages with
+an owner different from the logged in user. The event handler for the 'All' and 'Mine' menu items has been split into 
+2 separate event handlers.
+
+Passing custom `elgg_view_page()` variables ('all_link', 'mine_link' and 'friend_link') have been deprecated.
+We encourage developers to leverage the generic route names for these kinds of pages.
+
 Deprecated Views
 ----------------
 
