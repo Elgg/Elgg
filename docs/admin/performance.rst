@@ -44,17 +44,17 @@ There is no point in throwing resources at a problem if you don't know:
 Invest in some kind of profiling to tell you where your bottleneck is,
 especially if you're considering throwing significant money at a problem.
 
-Tune MySQL
-==========
+Tune MariaDB
+============
 
-Elgg makes extensive use of the back end database, making many trips on each pageload.
+Elgg makes extensive use of the backend database, making many trips on each page load.
 This is perfectly normal and a well configured database server will be able to cope with thousands of requests per second.
 
 Here are some configuration tips that might help:
 
- * Make sure that MySQL is configured to use an appropriate my.cnf for the size of your website.
- * Increase the amount of memory available to PHP and MySQL
-   (you will have to increase the amount of memory available to the php process in any case)
+ * Make sure that MariaDB is configured to use an appropriate ``my.cnf`` for the size of your website.
+ * Increase the amount of memory available to PHP and MariaDB
+   (you will have to increase the amount of memory available to the PHP process in any case)
 
 Enable caching
 ==============
@@ -242,8 +242,8 @@ Configuration
 Lastly, take a look at your configuration as there are a few gotchas that can catch people.
 
 For example, out of the box, Apache can handle quite a high load.
-However, most distros of Linux come with mysql configured for small sites.
-This can result in Apache processes getting stalled waiting to talk to one very overloaded MySQL process.
+However, most distros of Linux come with MariaDB configured for small sites.
+This can result in Apache processes getting stalled waiting to talk to one very overloaded MariaDB process.
 
 Check for poorly-behaved plugins
 ================================

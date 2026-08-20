@@ -10,7 +10,7 @@ Get your own instance of Elgg running in no time.
 Requirements
 ============
 
-- MySQL 8.0+ or MariaDB 10.6+
+- MariaDB 10.6+ or MySQL 8.4+
 - PHP 8.3+ with the following extensions:
 
    -  GD (for graphics processing)
@@ -136,13 +136,12 @@ selecting 'properties' or 'Get Info'.
    and is not recommended. If you are unsure how to correctly set
    permissions, contact your host for more information.
 
-Create a MySQL database
------------------------
+Create a database
+-----------------
 
 Using your database administration tool of choice (if you're unsure
-about this, ask your system administrator), create a new MySQL database
-for Elgg. You can create a MySQL database with any of the following
-tools:
+about this, ask your system administrator), create a new database
+for Elgg.
 
 Make sure you add a user to the database with all privileges and record
 the database name, username and password. You will need this information
@@ -189,16 +188,7 @@ won't work, you will need to:
 Other Configurations
 ====================
 
- * :doc:`Cloud9 <./install/cloud9>`
- * :doc:`Homestead <./install/homestead>`
- * :doc:`EasyPHP <./install/easyphp>`
- * :doc:`IIS <./install/iis>`
- * :doc:`MAMP <./install/mamp>`
- * :doc:`MariaDB <./install/mariadb>`
- * :doc:`Nginx <./install/nginx>`
- * :doc:`Ubuntu <./install/ubuntu>`
- * :doc:`Virtual hosts <./install/virtual>`
- * :doc:`XAMPP <./install/xampp>`
+* :doc:`Nginx <./install/nginx>`
 
 Troubleshooting
 ===============
@@ -211,7 +201,7 @@ First:
 -  Recheck that your server meets the technical requirements for Elgg.
 -  Follow the environment-specific instructions if need be
 -  Have you verified that ``mod_rewrite`` is being loaded?
--  Is the mysql apache being loaded?
+-  Is the PHP module ``pdo_mysql`` being loaded?
 
 Keep notes on steps that you take to fix the install. Sometimes changing
 some setting or file to try to fix a problem may cause some other
@@ -342,7 +332,7 @@ the Apache "error.log" file will contain an entry similar to:
 There is a white page after I submit my database settings
 ---------------------------------------------------------
 
-Check that the Apache mysql module is installed and is being loaded.
+Check that the PHP ``pdo_mysql`` module is installed and is being loaded.
 
 I'm getting a 404 error with a really long url
 ----------------------------------------------

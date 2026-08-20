@@ -1,6 +1,6 @@
 <?php
 
-namespace Elgg\Search;
+namespace Elgg\Traits\Search;
 
 use Elgg\IntegrationTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;

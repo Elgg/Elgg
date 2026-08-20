@@ -28,8 +28,12 @@ jobs:
         php-versions: ['8.3', '8.4', '8.5']
         experimental: [false]
         extra-title: ['']
-        db-image: ['mysql:8.0']
+        db-image: ['mariadb:10.6']
         include:
+          - php-versions: '8.3'
+            experimental: false
+            extra-title: ''
+            db-image: 'mariadb:12.3'
           - php-versions: '8.3'
             experimental: false
             extra-title: ''
@@ -37,11 +41,7 @@ jobs:
           - php-versions: '8.3'
             experimental: false
             extra-title: ''
-            db-image: 'mariadb:10.6'
-          - php-versions: '8.3'
-            experimental: false
-            extra-title: ''
-            db-image: 'mariadb:10.11'
+            db-image: 'mysql:9.7'
         
     steps:
       - name: Install PHP

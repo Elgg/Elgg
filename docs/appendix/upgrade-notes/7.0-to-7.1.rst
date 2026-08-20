@@ -5,6 +5,17 @@ From 7.0 to 7.1
    :local:
    :depth: 1
 
+Databases
+---------
+
+We've switched our default database recommendation from MySQL to MariaDB. MariaDB is a more community driven opensource 
+database also MariaDB offers improved performance over MySQL and is fully compatible with the MySQL data and table definitions.
+
+DB Requirements
+~~~~~~~~~~~~~~~
+
+ * The minimal MySQL version is now 8.4
+
 Generic entity controller
 -------------------------
 

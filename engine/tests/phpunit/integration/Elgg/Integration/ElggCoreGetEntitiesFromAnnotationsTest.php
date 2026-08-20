@@ -162,7 +162,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesIntegrat
 	}
 
 	/**
-	 * Get entities ordered by various MySQL calculations on their annotations
+	 * Get entities ordered by various database calculations on their annotations
 	 */
 	#[DataProvider('calculationTypesProvider')]
 	public function testElggGetEntitiesFromAnnotationsCalculateX($type) {
@@ -308,7 +308,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesIntegrat
 	}
 
 	/**
-	 * Get entities ordered by various MySQL calculations on their annotations constrained by a where clause
+	 * Get entities ordered by various database calculations on their annotations constrained by a where clause
 	 */
 	public function testElggGetEntitiesFromAnnotationsCalculateConstrainedByWhere() {
 

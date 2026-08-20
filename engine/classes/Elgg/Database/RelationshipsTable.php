@@ -313,7 +313,7 @@ class RelationshipsTable {
 			$remove_ids[] = $rel->id;
 		}
 		
-		// to prevent MySQL query length issues
+		// to prevent potential database query length issues
 		$chunks = array_chunk($remove_ids, 250);
 		foreach ($chunks as $chunk) {
 			if (empty($chunk)) {
