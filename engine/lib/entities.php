@@ -471,7 +471,7 @@ function elgg_get_site_entity(): \ElggSite {
  * --------------
  *
  * @option bool $distinct                 If set to false, Elgg will drop the DISTINCT clause from
- *                                        the MySQL query, which will improve performance in some situations.
+ *                                        the database query, which will improve performance in some situations.
  *                                        Avoid setting this option without a full understanding of the underlying
  *                                        SQL query Elgg creates.
  *                                        Default: true

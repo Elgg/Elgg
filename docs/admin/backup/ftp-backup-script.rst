@@ -27,11 +27,11 @@ Here is an automated script for backing up an Elgg installation.
    $site_backup_file = "$backup_dest_dir/site_backup-$day-$month-$year.tar.gz";
    $full_backup_file = "$backup_dest_dir/full_site_backup-$day-$month-$year.tar.gz";
    
-   # MYSQL BACKUP PARAMETERS
+   # MariaDB BACKUP PARAMETERS
    $dbhost = 'localhost';
    $dbuser = 'userx_elgg';
    $dbpwd = 'dbpassword';
-   $mysql_backup_file_elgg = "$backup_dest_dir/mysql_elgg-$day-$month-$year.sql.gz";
+   $db_backup_file_elgg = "$backup_dest_dir/db_elgg-$day-$month-$year.sql.gz";
    
    # ENTER DATABASE NAME
    $database_names_elgg = 'userx_elgg';
@@ -44,7 +44,7 @@ Here is an automated script for backing up an Elgg installation.
    $ftp_dir = "/";
     
    # SYSTEM COMMANDS
-   $cmd_mysqldump = '/usr/bin/mysqldump';
+   $cmd_dump = '/usr/bin/mariadb-dump';
    $cmd_gzip = '/usr/bin/gzip';
    
    # CURRENT DATE / TIME
@@ -56,16 +56,16 @@ Here is an automated script for backing up an Elgg installation.
    
    # elgg DATABASE BACKUP
    system($syscmd);
-   $syscmd = "$cmd_mysqldump --host=$dbhost --user=$dbuser --password=$dbpwd --add-drop-table --databases $database_names_elgg -c -l | $cmd_gzip > $mysql_backup_file_elgg";
+   $syscmd = "$cmd_dump --host=$dbhost --user=$dbuser --password=$dbpwd --add-drop-table --databases $database_names_elgg -c -l | $cmd_gzip > $db_backup_file_elgg";
    
    system($syscmd);
    
    # CREATING FULL SITE BACKUP FILE
-   $syscmd = "tar -czf $full_backup_file $mysql_backup_file_elgg $site_backup_file";
+   $syscmd = "tar -czf $full_backup_file $db_backup_file_elgg $site_backup_file";
    system($syscmd);
    
-   # DELETING SITE AND MYSQL BACKUP FILES
-   unlink($mysql_backup_file_elgg);
+   # DELETING SITE AND DATABASE BACKUP FILES
+   unlink($db_backup_file_elgg);
    unlink($site_backup_file);
    
    # UPLOADING FULL SITE BACKUP TO REMOTE FTP SERVER

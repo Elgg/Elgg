@@ -74,7 +74,7 @@ function elgg_create_river_item(array $options = []): ?\ElggRiverItem {
  *   group_by             => STR     Group by clause
  *
  *   distinct             => BOOL    If set to false, Elgg will drop the DISTINCT
- *                                   clause from the MySQL query, which will improve
+ *                                   clause from the database query, which will improve
  *                                   performance in some situations. Avoid setting this
  *                                   option without a full understanding of the
  *                                   underlying SQL query Elgg creates. (true)

@@ -71,7 +71,7 @@ trait Annotations {
 	 * Helper function to return annotation calculation results
 	 *
 	 * @param string $name        The annotation name.
-	 * @param string $calculation A valid MySQL function to run its values through
+	 * @param string $calculation A valid database function to run its values through
 	 *
 	 * @return mixed
 	 */

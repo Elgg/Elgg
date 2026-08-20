@@ -93,7 +93,7 @@ if (empty(ini_get('session.gc_probability')) || empty(ini_get('session.gc_diviso
 // db server information
 $db = _elgg_services()->db;
 $version = $db->getServerVersion();
-$min_version = $db->isMariaDB() ? \ElggInstaller::MARIADB_MINIMAL_VERSION : \ElggInstaller::MYSQL_MINIMAL_VERSION;
+$min_version = $db->isMySQL() ? \ElggInstaller::MYSQL_MINIMAL_VERSION : \ElggInstaller::MARIADB_MINIMAL_VERSION;
 
 if ($db->isMariaDB()) {
 	$server = 'mariadb';

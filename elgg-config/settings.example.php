@@ -107,7 +107,7 @@ $CONFIG->dbencoding = 'utf8mb4';
 /**
  * Multiple database connections
  *
- * Elgg supports master/slave MySQL configurations. The master should be set as
+ * Elgg supports master/slave database configurations. The master should be set as
  * the 'write' connection and the slave(s) as the 'read' connection(s).
  *
  * To use, uncomment the below configuration and update for your site.
