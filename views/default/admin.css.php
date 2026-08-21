@@ -80,7 +80,7 @@ echo elgg_view('core.css');
 .elgg-plugin {
 	border: 1px solid var(--elgg-border-color-mild);
 	padding: 0.5rem;
-	border-radius: var(--elgg-border-radius-small);
+	border-radius: var(--elgg-border-radius-medium);
 	position: relative;
 	
 	&:hover {
@@ -108,7 +108,6 @@ echo elgg_view('core.css');
 	}
 	
 	> .elgg-image {
-		margin-right: .5rem;
 		min-width: 9rem;
 		text-align: center;
 		
@@ -169,10 +168,15 @@ echo elgg_view('core.css');
 #elgg-plugin-list {
 	position: relative;
 	
-	.elgg-list > li {
-		padding: 0;
-		border: none;
-		margin-bottom: 2px;
+	.elgg-list {
+		display: flex;
+		flex-direction: column;
+		row-gap: 8px;
+		
+		> li {
+			padding: 0;
+			border: none;
+		}
 	}
 	
 	.elgg-plugin {

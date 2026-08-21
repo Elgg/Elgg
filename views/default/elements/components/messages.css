@@ -6,11 +6,13 @@
 	border-style: solid;
 	border-radius: var(--elgg-border-radius-small);
 	
-	margin-bottom: 1rem;
-	
 	color: var(--elgg-text-color-strong);
 	background-color: var(--elgg-background-color-soft);
 	border-color: var(--elgg-border-color-strong);
+	
+	&:not(:last-child) {
+		margin-bottom: 1rem;
+	}
 	
 	&.elgg-message-success {
 		color: var(--elgg-state-success-font-color);
