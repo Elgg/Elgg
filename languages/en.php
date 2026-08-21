@@ -1284,6 +1284,9 @@ For improved performance, it is recommended that you enable and configure OPcach
 	'title' => "Title",
 	'description' => "Description",
 	'tags' => "Tags",
+	'url' => "URL",
+	'website' => "Website",
+	
 	'all' => "All",
 	'mine' => "Mine",
 

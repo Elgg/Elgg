@@ -57,7 +57,7 @@ if (!empty($authors)) {
 
 $url = $plugin->getWebsite();
 if (!empty($url)) {
-	$info[elgg_echo('admin:plugins:label:website')] = elgg_view('output/url', [
+	$info[elgg_echo('website')] = elgg_view('output/url', [
 		'href' => $url,
 	]);
 }
