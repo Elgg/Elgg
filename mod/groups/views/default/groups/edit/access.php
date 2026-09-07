@@ -25,8 +25,9 @@ echo elgg_view_field([
 	'id' => 'groups-membership',
 	'value' => $membership,
 	'options_values' => [
-		ACCESS_PRIVATE => elgg_echo('groups:access:private'),
-		ACCESS_PUBLIC => elgg_echo('groups:access:public'),
+		\ElggGroup::MEMBERSHIP_PUBLIC => elgg_echo('groups:access:public'),
+		\ElggGroup::MEMBERSHIP_CLOSED => elgg_echo('groups:access:private'),
+		\ElggGroup::MEMBERSHIP_INVITE_ONLY => elgg_echo('groups:access:invite_only'),
 	],
 ]);
 

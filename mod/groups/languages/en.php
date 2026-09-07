@@ -100,7 +100,8 @@ return array(
 	/**
 	 * Access
 	 */
-	'groups:access:private' => 'Closed - Users must be invited',
+	'groups:access:invite_only' => 'Invite only - Users must be invited',
+	'groups:access:private' => 'Closed - Users must request membership',
 	'groups:access:public' => 'Open - Any user may join',
 	'groups:access:group' => 'Group members only',
 	'groups:closedgroup' => "This group's membership is closed.",
@@ -129,6 +130,7 @@ return array(
 	'groups:joinrequestnotmade' => 'Could not request to join group',
 	'groups:joinrequestmade' => 'Requested to join group',
 	'groups:joinrequest:exists' => 'You already requested membership for this group',
+	'groups:join:invite_only' => 'Membership for this group is by invitation only',
 	'groups:button:joined' => 'Joined',
 	'groups:button:owned' => 'Owned',
 	'groups:joined' => 'Successfully joined group!',

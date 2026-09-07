@@ -33,7 +33,7 @@ class Page {
 		/* @var $return \Elgg\Menu\MenuItems */
 		$return = $event->getValue();
 		
-		if ($page_owner->isPublicMembership()) {
+		if ($page_owner->isPublicMembership() || $page_owner->isInviteOnlyMembership()) {
 			// show link to invited users
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'membership_invites',

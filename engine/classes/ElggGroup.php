@@ -16,6 +16,10 @@ class ElggGroup extends \ElggEntity {
 	const CONTENT_ACCESS_MODE_UNRESTRICTED = 'unrestricted';
 	const CONTENT_ACCESS_MODE_MEMBERS_ONLY = 'members_only';
 
+	const MEMBERSHIP_CLOSED = 0;
+	const MEMBERSHIP_INVITE_ONLY = 1;
+	const MEMBERSHIP_PUBLIC = 2;
+	
 	use PluginSettings;
 	
 	/**
@@ -26,6 +30,7 @@ class ElggGroup extends \ElggEntity {
 		
 		$this->attributes['type'] = 'group';
 		$this->attributes['subtype'] = 'group';
+		$this->attributes['access_id'] = ACCESS_PUBLIC;
 	}
 
 	/**
@@ -53,7 +58,17 @@ class ElggGroup extends \ElggEntity {
 	 * @return bool
 	 */
 	public function isPublicMembership(): bool {
-		return ($this->membership === ACCESS_PUBLIC);
+		return ($this->membership === self::MEMBERSHIP_PUBLIC);
+	}
+	
+	/**
+	 * Returns whether the current group has an invitation only membership
+	 *
+	 * @return bool
+	 * @since 7.1
+	 */
+	public function isInviteOnlyMembership(): bool {
+		return ($this->membership === self::MEMBERSHIP_INVITE_ONLY);
 	}
 
 	/**

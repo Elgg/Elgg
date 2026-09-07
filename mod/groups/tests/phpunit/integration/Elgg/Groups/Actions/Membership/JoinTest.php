@@ -8,15 +8,9 @@ class JoinTest extends ActionResponseTestCase {
 	
 	use \Elgg\MessageTesting;
 	
-	/**
-	 * @var \ElggGroup
-	 */
-	protected $group;
+	protected ?\ElggGroup $group = null;
 	
-	/**
-	 * @var \ElggUser
-	 */
-	protected $user;
+	protected ?\ElggUser $user = null;
 	
 	public function up() {
 		parent::up();
@@ -58,7 +52,7 @@ class JoinTest extends ActionResponseTestCase {
 	}
 	
 	public function testCanJoinPublicGroup() {
-		$this->group->membership = ACCESS_PUBLIC;
+		$this->group->membership = \ElggGroup::MEMBERSHIP_PUBLIC;
 		$this->assertTrue($this->group->isPublicMembership());
 		
 		$response = $this->executeAction('groups/join', [
@@ -74,7 +68,7 @@ class JoinTest extends ActionResponseTestCase {
 	}
 	
 	public function testGroupOwnerCanJoinUserOnPublicGroup() {
-		$this->group->membership = ACCESS_PUBLIC;
+		$this->group->membership = \ElggGroup::MEMBERSHIP_PUBLIC;
 		$this->assertTrue($this->group->isPublicMembership());
 		
 		_elgg_services()->session_manager->setLoggedInUser($this->group->getOwnerEntity());
@@ -92,7 +86,7 @@ class JoinTest extends ActionResponseTestCase {
 	}
 	
 	public function testCanJoinClosedGroupIfInvited() {
-		$this->group->membership = ACCESS_PRIVATE;
+		$this->group->membership = \ElggGroup::MEMBERSHIP_CLOSED;
 		$this->assertFalse($this->group->isPublicMembership());
 		
 		$this->assertTrue($this->group->addRelationship($this->user->guid, 'invited'));
@@ -110,7 +104,7 @@ class JoinTest extends ActionResponseTestCase {
 	}
 	
 	public function testCantHaveMultipleMembershipRequests() {
-		$this->group->membership = ACCESS_PRIVATE;
+		$this->group->membership = \ElggGroup::MEMBERSHIP_CLOSED;
 		$this->assertFalse($this->group->isPublicMembership());
 		
 		$this->assertTrue($this->user->addRelationship($this->group->guid, 'membership_request'));
@@ -124,7 +118,7 @@ class JoinTest extends ActionResponseTestCase {
 	}
 	
 	public function testCanRequestMembershipForClosedGroup() {
-		$this->group->membership = ACCESS_PRIVATE;
+		$this->group->membership = \ElggGroup::MEMBERSHIP_CLOSED;
 		$this->assertFalse($this->group->isPublicMembership());
 		
 		$response = $this->executeAction('groups/join', [
@@ -137,5 +131,35 @@ class JoinTest extends ActionResponseTestCase {
 		$this->assertSystemMessageEmitted(elgg_echo('groups:joinrequestmade'));
 		
 		$this->assertTrue($this->user->hasRelationship($this->group->guid, 'membership_request'));
+	}
+	
+	public function testCantJoinInviteOnlyGroupWithoutInvitation() {
+		$this->group->membership = \ElggGroup::MEMBERSHIP_INVITE_ONLY;
+		$this->assertTrue($this->group->isInviteOnlyMembership());
+		
+		$response = $this->executeAction('groups/join', [
+			'group_guid' => $this->group->guid,
+		]);
+		
+		$this->assertInstanceOf(\Elgg\Http\ErrorResponse::class, $response);
+		$this->assertEquals(elgg_echo('groups:join:invite_only'), $response->getContent());
+	}
+	
+	public function testCanJoinInviteOnlyGroupWithInvitation() {
+		$this->group->membership = \ElggGroup::MEMBERSHIP_INVITE_ONLY;
+		$this->assertTrue($this->group->isInviteOnlyMembership());
+		
+		$this->assertTrue($this->group->addRelationship($this->user->guid, 'invited'));
+		
+		$response = $this->executeAction('groups/join', [
+			'group_guid' => $this->group->guid,
+		]);
+		
+		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
+		$this->assertEquals($this->group->getURL(), $response->getForwardURL());
+		
+		$this->assertSystemMessageEmitted(elgg_echo('groups:joined'));
+		
+		$this->assertTrue($this->group->isMember($this->user));
 	}
 }

@@ -27,18 +27,18 @@ if (!$user->canEdit() && !$group->canEdit()) {
 }
 
 // join or request
-$join = false;
+$can_join = false;
 if ($group->isPublicMembership() || $group->canEdit($user->guid)) {
 	// anyone can join public groups and admins can join any group
-	$join = true;
+	$can_join = true;
 } else {
 	if ($group->hasRelationship($user->guid, 'invited')) {
 		// user has invite to closed group
-		$join = true;
+		$can_join = true;
 	}
 }
 
-if ($join) {
+if ($can_join) {
 	if (!$group->join($user, [
 		'create_river_item' => true,
 		'notify_user_action' => 'join_membership',
@@ -47,6 +47,8 @@ if ($join) {
 	}
 	
 	return elgg_ok_response('', elgg_echo('groups:joined'), $group->getURL());
+} elseif ($group->isInviteOnlyMembership()) {
+	return elgg_error_response(elgg_echo('groups:join:invite_only'));
 }
 
 if ($user->hasRelationship($group->guid, 'membership_request')) {
