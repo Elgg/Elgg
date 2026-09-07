@@ -8,7 +8,7 @@
  * @uses $vars['entity']           (optional) the entity being edited
  * @uses $vars['footer']           (optional) the form footer (false for no footer, is not provided get a default footer)
  * @uses $vars['header']           (optional) header text shown at the top of the form
- * @uses $vars['add_header_image'] (optional) (bool) add an input for an entity header image upload (default: false)
+ * @uses $vars['add_header_image'] (optional) (bool) add an input for an entity header image upload (default: entity capability 'header_image')
  */
 
 $entity_type = elgg_extract('entity_type', $vars);
@@ -25,7 +25,8 @@ if (is_string($header)) {
 	echo $header;
 }
 
-if (elgg_extract('add_header_image', $vars)) {
+$header_default = elgg_entity_has_capability($entity_type, $entity_subtype, 'header_image');
+if (elgg_extract('add_header_image', $vars, $header_default) || $entity?->hasIcon('master', 'header')) {
 	echo elgg_view('entity/edit/header', $vars);
 }
 

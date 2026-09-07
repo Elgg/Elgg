@@ -38,6 +38,5 @@ $footer .= elgg_view_field([
 ]);
 
 $vars['footer'] = $footer;
-$vars['add_header_image'] = true;
 
 echo elgg_view('forms/entity/edit', $vars);
