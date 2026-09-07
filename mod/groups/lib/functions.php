@@ -77,6 +77,8 @@ function groups_get_group_join_menu_item(\ElggGroup $group, ?\ElggUser $user = n
 		// admins can always join
 		// non-admins can join if membership is public
 		$menu_name = 'groups:join';
+	} elseif ($group->isInviteOnlyMembership()) {
+		return false;
 	}
 	
 	return \ElggMenuItem::factory([

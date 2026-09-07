@@ -6,15 +6,9 @@ use Elgg\IntegrationTestCase;
 
 class ElggCoreGroupTest extends IntegrationTestCase {
 
-	/**
-	 * @var \ElggGroup
-	 */
-	protected $group;
+	protected ?\ElggGroup $group = null;
 
-	/**
-	 * @var \ElggUser
-	 */
-	protected $user;
+	protected ?\ElggUser $user = null;
 
 	public function up() {
 		$this->group = $this->createGroup();
@@ -30,7 +24,7 @@ class ElggCoreGroupTest extends IntegrationTestCase {
 
 		// if mode not set, closed groups are members only
 		unset($this->group->content_access_mode);
-		$this->group->membership = ACCESS_PRIVATE;
+		$this->group->membership = \ElggGroup::MEMBERSHIP_CLOSED;
 		$this->assertEquals($membersonly, $this->group->getContentAccessMode());
 
 		// test set

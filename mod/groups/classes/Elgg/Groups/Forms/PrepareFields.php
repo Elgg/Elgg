@@ -22,7 +22,7 @@ class PrepareFields {
 		// input names => defaults
 		$values = [
 			'name' => '',
-			'membership' => ACCESS_PUBLIC,
+			'membership' => \ElggGroup::MEMBERSHIP_PUBLIC,
 			'vis' => ACCESS_PUBLIC,
 			'guid' => null,
 			'owner_guid' => elgg_get_logged_in_user_guid(),

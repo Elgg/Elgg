@@ -66,10 +66,30 @@ class ElggGroupUnitTest extends \Elgg\UnitTestCase {
 	}
 	
 	public function testGetDisplaynameReturnsString() {
-		$group = new ElggGroup();
+		$group = new \ElggGroup();
 		$this->assertEquals('', $group->getDisplayName());
 		
 		$group->name = 'foo';
 		$this->assertEquals('foo', $group->getDisplayName());
+	}
+	
+	public function testIsPublicMembership() {
+		$group = new \ElggGroup();
+		$this->assertFalse($group->isInviteOnlyMembership());
+		$this->assertFalse($group->isPublicMembership());
+		
+		$group->membership = \ElggGroup::MEMBERSHIP_PUBLIC;
+		$this->assertTrue($group->isPublicMembership());
+		$this->assertFalse($group->isInviteOnlyMembership());
+	}
+	
+	public function testIsInviteOnlyMembership() {
+		$group = new \ElggGroup();
+		$this->assertFalse($group->isInviteOnlyMembership());
+		$this->assertFalse($group->isPublicMembership());
+		
+		$group->membership = \ElggGroup::MEMBERSHIP_INVITE_ONLY;
+		$this->assertTrue($group->isInviteOnlyMembership());
+		$this->assertFalse($group->isPublicMembership());
 	}
 }
