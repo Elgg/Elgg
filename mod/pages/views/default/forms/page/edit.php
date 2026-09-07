@@ -40,6 +40,5 @@ foreach ($fields as $key => $field) {
 }
 
 $vars['fields'] = $fields;
-$vars['add_header_image'] = true;
 
 echo elgg_view('forms/entity/edit', $vars);
