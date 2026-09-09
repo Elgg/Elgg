@@ -49,11 +49,8 @@ return array(
 	'install:database:label:dbhost' => 'Hostitel databáze',
 	'install:database:label:dbprefix' => 'Předpona tabulek databáze',
 	'install:database:label:timezone' => "Časová zóna",
-
-	'install:database:help:dbuser' => 'Uživatel s plnými právy k MySQL databázi, kterou jste pro Elgg vytvořil/a',
 	'install:database:help:dbpassword' => 'Heslo výše uvedeného uživatele',
 	'install:database:help:dbname' => 'Jméno databáze projektu Elgg',
-	'install:database:help:dbhost' => 'Jméno hostitele /hostname/ MySQL serveru (obvykle localhost)',
 	'install:database:help:dbprefix' => "Předpona přidaná ke všem tabulkám projektu Elgg (obvykle elgg_)",
 	'install:database:help:timezone' => "Výchozí časová zóna ve které budou stránky provozovány",
 

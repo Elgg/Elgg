@@ -93,7 +93,6 @@ return array(
 	/**
 	 * Access
 	 */
-	'groups:access:private' => 'Stängd - Användare måste bjudas in',
 	'groups:access:public' => 'Öppen - Vilken användare som helst kan gå med',
 	'groups:access:group' => 'Endast gruppmedlemmar',
 	'groups:closedgroup' => "Den här gruppens medlemskap är stängd.",

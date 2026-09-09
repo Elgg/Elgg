@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 10:03+0200\n"
+"POT-Creation-Date: 2026-09-09 14:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,424 +46,406 @@ msgstr ""
 msgid "Shared hosting providers typically don't provide an automated way to backup your Elgg installation. This article will address a method of accomplishing this task."
 msgstr ""
 
-#: ../../admin/backup-restore.rst:16
+#: ../../admin/backup-restore.rst:17
 msgid "In IT there are often many ways to accomplish the same thing. Keep that in mind. This article will explain one method to backup and restore your Elgg installation on a shared hosting provider that uses the CPanel application. However, the ideas presented here can be tailored to other applications as well. The following are typical situations that might require a procedure such as this:"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:18
+#: ../../admin/backup-restore.rst:22
 msgid "Disaster Recovery"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:19
+#: ../../admin/backup-restore.rst:23
 msgid "Moving your Elgg site to a new host"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:20
+#: ../../admin/backup-restore.rst:24
 msgid "Duplicating an installation"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:23
+#: ../../admin/backup-restore.rst:27
 msgid "What"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:25
+#: ../../admin/backup-restore.rst:29
 msgid "Topics covered:"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:27
-msgid "Full backups of the Elgg directories and MySQL databases are performed daily (automated)"
+#: ../../admin/backup-restore.rst:31
+msgid "Full backups of the Elgg directories and databases are performed daily (automated)"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:28
+#: ../../admin/backup-restore.rst:32
 msgid "The backups are sent to an off-site location via FTP (automated)"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:29
+#: ../../admin/backup-restore.rst:33
 msgid "The local backups are deleted after successful transfer to the off-site location (automatic)"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:30
+#: ../../admin/backup-restore.rst:34
 msgid "Five days of backups will be maintained (automated)"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:31
+#: ../../admin/backup-restore.rst:35
 msgid "Restoration of data to the new host (manual)"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:33
+#: ../../admin/backup-restore.rst:37
 msgid "This process was composed with assistance from previous articles in the Elgg documentation wiki."
 msgstr ""
 
-#: ../../admin/backup-restore.rst:36
+#: ../../admin/backup-restore.rst:40
 msgid "Assumptions"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:38
+#: ../../admin/backup-restore.rst:42
 msgid "The following assumptions have been made:"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:40
+#: ../../admin/backup-restore.rst:44
 msgid "The Elgg program directory is ``/home/userx/public_html``"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:41
+#: ../../admin/backup-restore.rst:45
 msgid "The Elgg data directory is ``/home/userx/elggdata``"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:42
+#: ../../admin/backup-restore.rst:46
 msgid "You've created a local directory for your backups at ``/home/userx/sitebackups``"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:43
+#: ../../admin/backup-restore.rst:47
 msgid "You have an off-site FTP server to send the backup files to"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:44
+#: ../../admin/backup-restore.rst:48
 msgid "The directory that you will be saving the off-site backups to is ``/home/usery/sitebackups/``"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:45
+#: ../../admin/backup-restore.rst:49
 msgid "You will be restoring the site to a second shared hosting provider in the ``/home/usery/public_html`` directory"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:49
+#: ../../admin/backup-restore.rst:53
 msgid "Be sure to replace ``userx``, ``usery``, ``http://mynewdomain.com`` and all passwords with values that reflect your actual installation!"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:52
+#: ../../admin/backup-restore.rst:57
 msgid "Creating a usable backup - automatically"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:55
+#: ../../admin/backup-restore.rst:60
 msgid "Customize the backup script"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:57
+#: ../../admin/backup-restore.rst:62
 msgid "The script that you will use can be found :doc:`here <backup/ftp-backup-script>` ."
 msgstr ""
 
-#: ../../admin/backup-restore.rst:59
+#: ../../admin/backup-restore.rst:64
 msgid "Just copy the script to a text file and name the file with a .pl extension. You can use any text editor to update the file."
 msgstr ""
 
-#: ../../admin/backup-restore.rst:61
+#: ../../admin/backup-restore.rst:66
 msgid "Change the following to reflect your directory structure:"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:71
+#: ../../admin/backup-restore.rst:76
 msgid "Change the following to reflect your database parameters:"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:82
+#: ../../admin/backup-restore.rst:87
 msgid "Change the following to reflect your off-site FTP server parameters:"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:92
-msgid "Save the file with the ``.pl`` extension (for the purposes of this article we will name the file: ``elgg-ftp-backup-script.pl``) and upload it to the following directory ``/home/userx/sitebackups``"
+#: ../../admin/backup-restore.rst:97
+msgid "Save the file with the ``.pl`` extension (for the purposes of this article we will name the file:``elgg-ftp-backup-script.pl``) and upload it to the following directory ``/home/userx/sitebackups``"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:94
+#: ../../admin/backup-restore.rst:100
 msgid "Be aware that you can turn off FTP and flip a bit in the script so that it does not delete the local backup file in the event that you don't want to use off-site storage for your backups."
 msgstr ""
 
-#: ../../admin/backup-restore.rst:97
+#: ../../admin/backup-restore.rst:104
 msgid "Configure the backup Cron job"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:99
+#: ../../admin/backup-restore.rst:106
 msgid "Login to your CPanel application and click on the \"Cron Jobs\" link. In the Common Settings dropdown choose \"Once a day\" and type the following in the command field ``/usr/bin/perl /home/userx/sitebackups/elgg-ftp-backup-script.pl``"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:101
+#: ../../admin/backup-restore.rst:109
 msgid "Click on the \"Add New Cron Job\" button. Daily full backups are now scheduled and will be transferred off-site."
 msgstr ""
 
-#: ../../admin/backup-restore.rst:104
+#: ../../admin/backup-restore.rst:112
 msgid "Configure the cleanup Cron job"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:106
+#: ../../admin/backup-restore.rst:114
 msgid "If you are sending your backups, via FTP, to another shared hosting provider that uses the CPanel application or you've turned off FTP altogether you can configure your data retention as follows."
 msgstr ""
 
-#: ../../admin/backup-restore.rst:108
+#: ../../admin/backup-restore.rst:117
 msgid "Login to your CPanel application for your FTP site, or locally if you're not using FTP, and click on the \"Cron Jobs\" link. In the Common Settings dropdown choose \"Once a day\" and type the following in the command field ``find /home/usery/sitebackups/full_* -mtime +4 -exec rm {} \\;``"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:110
+#: ../../admin/backup-restore.rst:121
 msgid "The ``-mtime X`` parameter will set the number of days to retain backups. All files older than ``x`` number of days will be deleted. Click on the \"Add New Cron Job\" button. You have now configured your backup retention time."
 msgstr ""
 
-#: ../../admin/backup-restore.rst:113
+#: ../../admin/backup-restore.rst:125
 msgid "Restoring from backup"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:116
+#: ../../admin/backup-restore.rst:128
 msgid "Prepare your backup files"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:118
+#: ../../admin/backup-restore.rst:130
 msgid "The assumption is that you're restoring your site to another shared hosting provider with CPanel."
 msgstr ""
 
-#: ../../admin/backup-restore.rst:120
+#: ../../admin/backup-restore.rst:132
 msgid "When the script backed the files up the original directory structure was maintained in the zip file. We need to do a little cleanup. Perform the following:"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:122
+#: ../../admin/backup-restore.rst:135
 msgid "Download the backup file that you wish to restore from"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:123
+#: ../../admin/backup-restore.rst:136
 msgid "Extract the contents of the backup file"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:127
+#: ../../admin/backup-restore.rst:140
 msgid "Drill down and you will find your site backup and SQL backup. Extract both of these. You will then have:"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:125
-msgid "a MySQL dump file with a ``.sql`` extension"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:127
-msgid "another directory structure with the contents of:"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:127
-msgid "``/home/userx/public_html``"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:128
-msgid "``/home/userx/elggdata``"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:129
-msgid "Repackage the contents of the ``/home/userx/public_html`` directory as a zip file so that the files are in the root of the zip file"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:130
-msgid "The reason for doing this is simple. It's much more efficient to upload one zip file than it is to ftp the contents of the ``/home/userx/public_html`` directory to your new host."
-msgstr ""
-
-#: ../../admin/backup-restore.rst:131
-msgid "Repackage the contents of the /home/userx/elggdata directory as a zip file so that the files are in the root of the zip file"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:133
-msgid "You should now have the following files:"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:135
-msgid "the ``.sql`` file"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:136
-msgid "the zip file with the contents of ``/home/userx/public_html`` in the root"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:137
-msgid "the zip file with the contents of ``/home/userx/elggdata`` in the root"
+#: ../../admin/backup-restore.rst:138
+msgid "a database dump file with a ``.sql`` extension"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:140
-msgid "Restore the files"
+msgid "another directory structure with the contents of:"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:142
-msgid "This is written with the assumption that you're restoring to a different host but maintaining the original directory structure. Perform the following:"
+#: ../../admin/backup-restore.rst:140
+msgid "``/home/userx/public_html``"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:144
-msgid "Login to the CPanel application on the host that you wish to restore the site to and open the File Manager."
+#: ../../admin/backup-restore.rst:141
+msgid "``/home/userx/elggdata``"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:148
-msgid "Navigate to ``/home/usery/public_html``"
+#: ../../admin/backup-restore.rst:143
+msgid "Repackage the contents of the ``/home/userx/public_html`` directory as a zip file so that the files are in the root of the zip file"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:146
-msgid "Upload the zip file that contains the ``/home/userx/public_html`` files"
+#: ../../admin/backup-restore.rst:143
+msgid "The reason for doing this is simple. It's much more efficient to upload one zip file than it is to ftp the contents of the ``/home/userx/public_html`` directory to your new host."
+msgstr ""
+
+#: ../../admin/backup-restore.rst:145
+msgid "Repackage the contents of the /home/userx/elggdata directory as a zip file so that the files are in the root of the zip file"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:147
-#: ../../admin/backup-restore.rst:152
-msgid "Extract the zip file"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:148
-msgid "You should now see all of the files in ``/home/usery/public_html``"
+msgid "You should now have the following files:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:149
-#: ../../admin/backup-restore.rst:154
-msgid "Delete the zip file"
+msgid "the ``.sql`` file"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:154
-msgid "Navigate to ``/home/usery/elggdata``"
+#: ../../admin/backup-restore.rst:150
+msgid "the zip file with the contents of ``/home/userx/public_html`` in the root"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:151
-msgid "Upload the zip file that contains the ``/home/userx/elggdata`` files"
+msgid "the zip file with the contents of ``/home/userx/elggdata`` in the root"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:153
-msgid "You should now see all of the files in /home/usery/elggdata"
+#: ../../admin/backup-restore.rst:154
+msgid "Restore the files"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:156
-msgid "Program and data file restoration is complete"
+msgid "This is written with the assumption that you're restoring to a different host but maintaining the original directory structure. Perform the following:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:159
-msgid "Restore the MySQL Database"
+msgid "Login to the CPanel application on the host that you wish to restore the site to and open the File Manager."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:163
-msgid "Again, the assumption here is that you're restoring your Elgg installation to a second shared hosting provider. Each shared hosting provider prepends the account holder's name to the databases associated with that account. For example, the username for our primary host is ``userx`` so the host will prepend ``userx_`` to give us a database name of ``userx_elgg``. When we restore to our second shared hosting provider we're doing so with a username of ``usery`` so our database name will be ``usery_elgg``. The hosting providers don't allow you to modify this behavior. So the process here isn't as simple as just restoring the database from backup to the usery account. However, having said that, it's not terribly difficult either."
+msgid "Navigate to ``/home/usery/public_html``"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:161
+msgid "Upload the zip file that contains the ``/home/userx/public_html`` files"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:162
+#: ../../admin/backup-restore.rst:167
+msgid "Extract the zip file"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:163
+msgid "You should now see all of the files in ``/home/usery/public_html``"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:164
+#: ../../admin/backup-restore.rst:169
+msgid "Delete the zip file"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:169
+msgid "Navigate to ``/home/usery/elggdata``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:166
-msgid "Edit the MySQL backup"
+msgid "Upload the zip file that contains the ``/home/userx/elggdata`` files"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:168
-msgid "Open the ``.sql`` file that you extracted from your backup in your favorite text editor. Comment out the following lines with a hash mark:"
+msgid "You should now see all of the files in ``/home/usery/elggdata``"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:175
-msgid "Save the file."
+#: ../../admin/backup-restore.rst:171
+msgid "Program and data file restoration is complete"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:174
+msgid "Restore the Database"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:178
-msgid "Create the new database"
+msgid "Again, the assumption here is that you're restoring your Elgg installation to a second shared hosting provider. Each shared hosting provider prepends the account holder's name to the databases associated with that account. For example, the username for our primary host is ``userx`` so the host will prepend ``userx_`` to give us a database name of ``userx_elgg``. When we restore to our second shared hosting provider we're doing so with a username of ``usery`` so our database name will be ``usery_elgg``. The hosting providers don't allow you to modify this behavior. So the process here isn't as simple as just restoring the database from backup to the ``usery`` account. However, having said that, it's not terribly difficult either."
 msgstr ""
 
-#: ../../admin/backup-restore.rst:180
-msgid "Perform the following:"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:189
-msgid "Login to the CPanel application on the new host and click on the \"MySQL Databases\" icon"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:183
-msgid "Fill in the database name and click the \"create\" button. For our example we are going to stick with ``elgg`` which will give us a database name of ``usery_elgg``"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:185
-msgid "You can associate an existing user with the new database, but to create a new user you will need to:"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:185
-msgid "Go to the \"Add New User\" section of the \"MySQL Databases\" page"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:186
-msgid "Enter the username and password. For our example we're going to keep it simple and use ``elgg`` once again. This will give us a username of ``usery_elgg``"
+#: ../../admin/backup-restore.rst:187
+msgid "Edit the database backup file"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:189
-msgid "Associate the new user with the new database"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:188
-msgid "Go to the \"Add User To Database\" section of the \"MySQL Databases\" page. Add the ``usery_elgg`` user to the ``usery_elgg`` database"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:189
-msgid "Select \"All Privileges\" and click the \"Make Changes\" button"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:192
-msgid "Restore the production database"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:194
-msgid "Now it's time to restore the MySQL backup file by importing it into our new database named \"usery_elgg\"."
-msgstr ""
-
-#: ../../admin/backup-restore.rst:200
-msgid "Login to the CPanel application on the new host and click on the \"phpMyAdmin icon"
+msgid "Open the ``.sql`` file that you extracted from your backup in your favorite text editor. Comment out the following lines with a hash mark:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:197
-msgid "Choose the ``usery_elgg`` database in the left hand column"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:198
-msgid "Click on the \"import\" tab at the top of the page"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:199
-msgid "Browse to the ``.sql`` backup on your local computer and select it"
+msgid "Save the file."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:200
-msgid "Click the \"Go\" button on the bottom right side of the page"
+msgid "Create the new database"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:202
-msgid "You should now see a message stating that the operation was successful"
+msgid "Perform the following:"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:214
+msgid "Login to the CPanel application on the new host and click on the \"MariaDB/MySQL Databases\" icon"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:205
-msgid "Bringing it all together"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:207
-msgid "The restored elgg installation knows **nothing** about the new database name, database username, directory structure, etc. That's what we're going to address here."
+msgid "Fill in the database name and click the \"create\" button. For our example we are going to stick with ``elgg`` which will give us a database name of ``usery_elgg``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:209
-msgid "Edit ``/public_html/elgg-config/settings.php`` on the new hosting provider to reflect the database information for the database that you just created."
+msgid "You can associate an existing user with the new database, but to create a new user you will need to:"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:231
-msgid "Upload the ``settings.php`` file back to the new host - overwriting the existing file."
+#: ../../admin/backup-restore.rst:208
+msgid "Go to the \"Add New User\" section of the \"MariaDB/MySQL Databases\" page"
 msgstr ""
 
-#: ../../admin/backup-restore.rst:233
-msgid "Open the phpMyAdmin tool on the new host from the CPanel. Select the ``usery_elgg`` database on the left and click the SQL tab on the top of the page. Run the following SQL queries against the ``usery_elgg`` database:"
+#: ../../admin/backup-restore.rst:209
+msgid "Enter the username and password. For our example we're going to keep it simple and use ``elgg`` once again. This will give us a username of ``usery_elgg``"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:214
+msgid "Associate the new user with the new database"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:212
+msgid "Go to the \"Add User To Database\" section of the \"MariaDB/MySQL Databases\" page. Add the ``usery_elgg`` user to the ``usery_elgg`` database"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:214
+msgid "Select \"All Privileges\" and click the \"Make Changes\" button"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:217
+msgid "Restore the production database"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:219
+msgid "Now it's time to restore the database backup file by importing it into our new database named ``usery_elgg``."
+msgstr ""
+
+#: ../../admin/backup-restore.rst:225
+msgid "Login to the CPanel application on the new host and click on the \"phpMyAdmin\" icon"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:222
+msgid "Choose the ``usery_elgg`` database in the left hand column"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:223
+msgid "Click on the \"import\" tab at the top of the page"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:224
+msgid "Browse to the ``.sql`` backup on your local computer and select it"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:225
+msgid "Click the \"Go\" button on the bottom right side of the page"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:227
+msgid "You should now see a message stating that the operation was successful"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:230
+msgid "Bringing it all together"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:232
+msgid "The restored Elgg installation knows **nothing** about the new database name, database username, directory structure, etc. That's what we're going to address here."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:235
-#: ../../admin/duplicate-installation.rst:175
-msgid "Change the installation path"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:241
-#: ../../admin/duplicate-installation.rst:182
-msgid "Change the data directory"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:247
-msgid "Change the filestore data directory"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:254
-msgid "Finalizing the new installation"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:256
-msgid "Run the upgrade script by visiting the following URL: ``http://mynewdomain.com/upgrade.php`` . Do this step twice - back to back."
+msgid "Edit ``/public_html/elgg-config/settings.php`` on the new hosting provider to reflect the database information for the database that you just created."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:258
-msgid "Update your DNS records so that your host name resolves to the new host's IP address if this is a permanent move."
+msgid "Upload the ``settings.php`` file back to the new host - overwriting the existing file."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:261
-msgid "Congratulations!"
+msgid "Finalizing the new installation"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:263
-msgid "If you followed the steps outlined here you should now have a fully functional copy of your primary Elgg installation."
+msgid "Run the upgrade script by visiting the following URL: ``http://mynewdomain.com/upgrade.php`` . Do this step twice - back to back."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:266
-#: ../../admin/duplicate-installation.rst:231
+msgid "Update your DNS records so that your host name resolves to the new host's IP address if this is a permanent move."
+msgstr ""
+
+#: ../../admin/backup-restore.rst:269
+msgid "Congratulations!"
+msgstr ""
+
+#: ../../admin/backup-restore.rst:271
+msgid "If you followed the steps outlined here you should now have a fully functional copy of your primary Elgg installation."
+msgstr ""
+
+#: ../../admin/backup-restore.rst:274
+#: ../../admin/duplicate-installation.rst:203
 msgid "Related"
 msgstr ""
 
@@ -647,247 +629,247 @@ msgstr ""
 msgid "There are many reasons you may want to duplicate an Elgg installation: moving the site to another server, creating a test or development server, and creating functional backups are the most common. To create a successful duplicate of an Elgg site, 3 things need to be copied:"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:17
+#: ../../admin/duplicate-installation.rst:18
 msgid "Database"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:18
+#: ../../admin/duplicate-installation.rst:19
 msgid "Data from the data directory"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:19
+#: ../../admin/duplicate-installation.rst:20
 msgid "Code"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:21
+#: ../../admin/duplicate-installation.rst:22
 msgid "Also at least 5 pieces of information must be changed from the copied installation:"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:23
+#: ../../admin/duplicate-installation.rst:24
 msgid "``elgg-config/settings.php`` file which could also be in the pre 2.0 location ``engine/settings.php``"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:24
+#: ../../admin/duplicate-installation.rst:25
 msgid "``.htaccess`` file (Apache) or Nginx configuration depending on server used"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:25
+#: ../../admin/duplicate-installation.rst:26
 msgid "database entry for your site entity"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:26
+#: ../../admin/duplicate-installation.rst:27
 msgid "database entry for the installation path"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:27
+#: ../../admin/duplicate-installation.rst:28
 msgid "database entry for the data path"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:30
+#: ../../admin/duplicate-installation.rst:31
 msgid "What Is Not Covered in This Tutorial"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:32
-msgid "This tutorial expects a basic knowledge of Apache, MySQL, and Linux commands. As such, a few things will not be covered in this tutorial. These include:"
-msgstr ""
-
-#: ../../admin/duplicate-installation.rst:35
-msgid "How to backup and restore MySQL databases"
+#: ../../admin/duplicate-installation.rst:33
+msgid "This tutorial expects a basic knowledge of Apache, MariaDB, and Linux commands. As such, a few things will not be covered in this tutorial. These include:"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:36
-msgid "How to configure Apache to work with Elgg"
+msgid "How to backup and restore MariaDB databases"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:37
+msgid "How to configure Apache to work with Elgg"
+msgstr ""
+
+#: ../../admin/duplicate-installation.rst:38
 msgid "How to transfer files to and from your production server"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:40
+#: ../../admin/duplicate-installation.rst:41
 msgid "Before You Start"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:42
+#: ../../admin/duplicate-installation.rst:43
 msgid "Before you start, make sure the Elgg installation you want to duplicate is fully functional. You will also need the following items:"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:44
+#: ../../admin/duplicate-installation.rst:46
 msgid "A backup of the live Elgg database"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:45
+#: ../../admin/duplicate-installation.rst:47
 msgid "A place to copy the live database"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:47
+#: ../../admin/duplicate-installation.rst:49
 msgid "A server suitable for installing duplicate Elgg site"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:47
+#: ../../admin/duplicate-installation.rst:49
 msgid "(This can be the same server as your production Elgg installation.)"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:49
-msgid "Backups of the database can be obtained various ways, including phpMyAdmin, the MySQL official GUI, and the command line. Talk to your host for information on how to backup and restore databases or use Google to find information on this."
-msgstr ""
-
-#: ../../admin/duplicate-installation.rst:52
-msgid "During this tutorial, we will make these assumptions about the production Elgg site:"
+#: ../../admin/duplicate-installation.rst:51
+msgid "Backups of the database can be obtained various ways, including phpMyAdmin, the MariaDB GUI, and the command line. Talk to your host for information on how to backup and restore databases or use Google to find information on this."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:54
-msgid "The URL is ``http://www.myelgg.org/``"
-msgstr ""
-
-#: ../../admin/duplicate-installation.rst:55
-msgid "The installation path is ``/var/www/elgg/``"
+msgid "During this tutorial, we will make these assumptions about the production Elgg site:"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:56
-msgid "The data directory is ``/var/data/elgg/``"
+msgid "The URL is ``http://www.myelgg.org/``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:57
-#: ../../admin/duplicate-installation.rst:68
-msgid "The database host is ``localhost``"
+msgid "The installation path is ``/var/www/elgg/``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:58
-msgid "The database name is ``production_elgg``"
+msgid "The data directory is ``/var/data/elgg/``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:59
 #: ../../admin/duplicate-installation.rst:70
-msgid "The database user is ``db_user``"
+msgid "The database host is ``localhost``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:60
-#: ../../admin/duplicate-installation.rst:71
-msgid "The database password is ``db_password``"
+msgid "The database name is ``production_elgg``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:61
 #: ../../admin/duplicate-installation.rst:72
-msgid "The database prefix is ``elgg``"
+msgid "The database user is ``db_user``"
+msgstr ""
+
+#: ../../admin/duplicate-installation.rst:62
+#: ../../admin/duplicate-installation.rst:73
+msgid "The database password is ``db_password``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:63
-msgid "At the end of the tutorial, our test Elgg installation details will be:"
+#: ../../admin/duplicate-installation.rst:74
+msgid "The database prefix is ``elgg``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:65
-msgid "The URL is ``http://test.myelgg.org/``"
-msgstr ""
-
-#: ../../admin/duplicate-installation.rst:66
-msgid "The installation path is ``/var/www/elgg_test/``"
+msgid "At the end of the tutorial, our test Elgg installation details will be:"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:67
-msgid "The data directory is ``/var/data/elgg_test/``"
+msgid "The URL is ``http://test.myelgg.org/``"
+msgstr ""
+
+#: ../../admin/duplicate-installation.rst:68
+msgid "The installation path is ``/var/www/elgg_test/``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:69
+msgid "The data directory is ``/var/data/elgg_test/``"
+msgstr ""
+
+#: ../../admin/duplicate-installation.rst:71
 msgid "The database name is ``test_elgg``"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:75
+#: ../../admin/duplicate-installation.rst:77
 msgid "Copy Elgg Code to the Test Server"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:77
+#: ../../admin/duplicate-installation.rst:79
 msgid "The very first step is to duplicate the production Elgg code. In our example, this is as simple as copying ``/var/www/elgg/`` to ``/var/www/elgg_test/``."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:85
+#: ../../admin/duplicate-installation.rst:87
 msgid "Copy Data to the Test Server"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:87
+#: ../../admin/duplicate-installation.rst:89
 msgid "In this example, this is as simple as copying ``/var/data/elgg/`` to ``/var/data/elgg_test/``."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:93
+#: ../../admin/duplicate-installation.rst:95
 msgid "If you don't have shell access to your server and have to ftp the data, you may need to change ownership and permissions on the files."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:97
+#: ../../admin/duplicate-installation.rst:100
 msgid "You also need to delete cache directories from your disk. These correspond to ``cacheroot`` and ``assetroot`` directories in your config."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:100
+#: ../../admin/duplicate-installation.rst:104
 msgid "Edit settings.php"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:102
+#: ../../admin/duplicate-installation.rst:106
 msgid "The ``elgg-config/settings.php`` file contains the database configuration details. These need to be adjusted for your new test Elgg installation. In our example, we'll look in ``/var/www/elgg_test/elgg-config/settings.php`` and find the lines that look like this:"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:127
+#: ../../admin/duplicate-installation.rst:132
 msgid "We need to change these lines to match our new installation:"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:155
+#: ../../admin/duplicate-installation.rst:160
 msgid "Notice the ``$CONFIG->dbname`` has changed to reflect our new database."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:158
+#: ../../admin/duplicate-installation.rst:163
 msgid "Copy Elgg Database"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:160
-msgid "Now the database must be copied from ``elgg_production`` to ``elgg_test``. See your favorite MySQL manager's documentation for how to make a duplicate database. You will generally export the current database tables to a file, create the new database, and then import the tables that you previously exported."
+#: ../../admin/duplicate-installation.rst:165
+msgid "Now the database must be copied from ``elgg_production`` to ``elgg_test``. See your favorite MariaDB manager's documentation for how to make a duplicate database. You will generally export the current database tables to a file, create the new database, and then import the tables that you previously exported."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:164
+#: ../../admin/duplicate-installation.rst:169
 msgid "You have two options on updating the values in the database. You could change the values in the export file or you could import the file and change the values with database queries. One advantage of modifying the dump file is that you can also change links that people have created to content within your site. For example, if people have bookmarked pages using the bookmark plugin, the bookmarks will point to the old site unless your update their URLs."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:170
+#: ../../admin/duplicate-installation.rst:175
 msgid "Database Entries"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:172
+#: ../../admin/duplicate-installation.rst:177
 msgid "We must now change 4 entries in the database. This is easily accomplished with 4 simple SQL commands:"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:189
+#: ../../admin/duplicate-installation.rst:180
 msgid "Check .htaccess"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:191
-msgid "If you have made changes to .htaccess that modify any paths, make sure you update them in the test installation."
+#: ../../admin/duplicate-installation.rst:182
+msgid "If you have made changes to ``.htaccess`` that modify any paths, make sure you update them in the test installation."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:194
+#: ../../admin/duplicate-installation.rst:185
 msgid "Update Webserver Config"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:196
+#: ../../admin/duplicate-installation.rst:187
 msgid "For this example, you must edit the Apache config to enable a subdomain with a document root of ``/var/www/elgg_test/``. If you plan to install into a subdirectory of your document root, this step is unnecessary."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:199
+#: ../../admin/duplicate-installation.rst:190
 msgid "If you're using Nginx, you need to update server config to match new paths based on ``install/config/nginx.dist``."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:202
+#: ../../admin/duplicate-installation.rst:193
 msgid "Run upgrade.php"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:204
+#: ../../admin/duplicate-installation.rst:195
 msgid "To regenerate cached data, make sure to run ``http://test.myelgg.org/upgrade.php``"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:207
+#: ../../admin/duplicate-installation.rst:198
 msgid "Tips"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:209
-msgid "It is a good idea to keep a test server around to experiment with installing new mods and doing development work. If you automate restorations to the ``elgg_test`` database, changing the ``$CONFIG`` values and adding the follow lines to the end of the ``elgg_test/elgg-config/settings.php`` file will allow seamless re-writing of the MySQL database entries."
+#: ../../admin/duplicate-installation.rst:200
+msgid "It is a good idea to keep a test server around to experiment with installing new mods and doing development work."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:235
+#: ../../admin/duplicate-installation.rst:207
 msgid ":doc:`backup-restore`"
 msgstr ""
 
@@ -1232,11 +1214,11 @@ msgid "Invest in some kind of profiling to tell you where your bottleneck is, es
 msgstr ""
 
 #: ../../admin/performance.rst:48
-msgid "Tune MySQL"
+msgid "Tune MariaDB"
 msgstr ""
 
 #: ../../admin/performance.rst:50
-msgid "Elgg makes extensive use of the back end database, making many trips on each pageload. This is perfectly normal and a well configured database server will be able to cope with thousands of requests per second."
+msgid "Elgg makes extensive use of the backend database, making many trips on each page load. This is perfectly normal and a well configured database server will be able to cope with thousands of requests per second."
 msgstr ""
 
 #: ../../admin/performance.rst:53
@@ -1244,11 +1226,11 @@ msgid "Here are some configuration tips that might help:"
 msgstr ""
 
 #: ../../admin/performance.rst:55
-msgid "Make sure that MySQL is configured to use an appropriate my.cnf for the size of your website."
+msgid "Make sure that MariaDB is configured to use an appropriate ``my.cnf`` for the size of your website."
 msgstr ""
 
 #: ../../admin/performance.rst:56
-msgid "Increase the amount of memory available to PHP and MySQL (you will have to increase the amount of memory available to the php process in any case)"
+msgid "Increase the amount of memory available to PHP and MariaDB (you will have to increase the amount of memory available to the PHP process in any case)"
 msgstr ""
 
 #: ../../admin/performance.rst:60
@@ -1440,7 +1422,7 @@ msgid "Lastly, take a look at your configuration as there are a few gotchas that
 msgstr ""
 
 #: ../../admin/performance.rst:244
-msgid "For example, out of the box, Apache can handle quite a high load. However, most distros of Linux come with mysql configured for small sites. This can result in Apache processes getting stalled waiting to talk to one very overloaded MySQL process."
+msgid "For example, out of the box, Apache can handle quite a high load. However, most distros of Linux come with MariaDB configured for small sites. This can result in Apache processes getting stalled waiting to talk to one very overloaded MariaDB process."
 msgstr ""
 
 #: ../../admin/performance.rst:249

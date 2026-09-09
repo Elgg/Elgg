@@ -749,6 +749,9 @@ return array(
 	'title' => "عنوان",
 	'description' => "شرح",
 	'tags' => "برچسب ها",
+	'url' => "URL",
+	'website' => "وبسایت",
+	
 	'all' => "همه",
 	'mine' => "مال من",
 

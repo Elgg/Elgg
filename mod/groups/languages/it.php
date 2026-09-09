@@ -87,7 +87,6 @@ return array(
 	/**
 	 * Access
 	 */
-	'groups:access:private' => 'Chiuso - Gli utenti devono essere invitati',
 	'groups:access:public' => 'Aperto - Tutti gli utenti possono partecipare',
 	'groups:access:group' => 'Solo membri del gruppo',
 	'groups:closedgroup' => "Le iscrizioni a questo gruppo sono chiuse.",

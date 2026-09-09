@@ -49,11 +49,8 @@ return array(
 	'install:database:label:dbhost' => 'Tietokannan sijainti',
 	'install:database:label:dbprefix' => 'Tietokantataulujen etuliite',
 	'install:database:label:timezone' => "Aikavyöhyke",
-
-	'install:database:help:dbuser' => 'Käyttäjä, jolla on täydet oikeudet Elggiä varten luomaasi tietokantaan',
 	'install:database:help:dbpassword' => 'Ylle syöttämäsi käyttäjätilin salasana',
 	'install:database:help:dbname' => 'Elggiä varten luomasi tietokannan nimi',
-	'install:database:help:dbhost' => 'MySQL-palvelimen sijainti (yleensä localhost)',
 	'install:database:help:dbprefix' => "Kaikille Elggin tietokantatauluille annettava etuliite (yleensä elgg_)",
 	'install:database:help:timezone' => "Aikavyöhyke, jossa sivustoa tullaan käyttämään.",
 

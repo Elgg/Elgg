@@ -24,6 +24,7 @@ return array(
 	'entity:edit:object:blog:success' => 'De blog is succesvol opgeslagen',
 
 	'blog:revisions' => 'Revisies',
+	'blog:revisions:current' => 'Huidige versie',
 	'blog:archives' => 'Archieven',
 
 	'groups:tool:blog' => 'Groepsblog inschakelen',

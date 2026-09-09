@@ -749,7 +749,6 @@ return array(
 	'admin:server:label:server' => 'Servidor',
 	'admin:server:label:log_location' => 'Localização dos Logs',
 	'admin:server:label:php_version' => 'Versão do PHP',
-	'admin:server:label:php_version:required' => 'Elgg requer uma versão mínima do PHP 7.1',
 	'admin:server:label:php_version:required_version' => 'Elgg requer uma versão mínima do PHP %s',
 	'admin:server:label:php_ini' => 'Localização do arquivo PHP ini',
 	'admin:server:label:php_log' => 'Log PHP',
@@ -770,7 +769,6 @@ return array(
 	'admin:server:requirements:rewrite:fail' => "Verifique seu .htaccess para as regras de reescrita corretas",
 	
 	'admin:server:requirements:database:server' => "Servidor do Banco de Dados",
-	'admin:server:requirements:database:server:required_version' => "Elgg requer MySQL v%s ou superior para o seu Banco de Dados",
 	'admin:server:requirements:database:client' => "Cliente do Banco de Dados",
 	'admin:server:requirements:database:client:required' => "Elgg requer pdo_mysql para se conectar ao Servidor de Banco de Dados",
 
@@ -1048,6 +1046,8 @@ return array(
 	'title' => "Título",
 	'description' => "Descrição",
 	'tags' => "Tags",
+	'website' => "Site",
+	
 	'all' => "Tudo",
 	'mine' => "Meu",
 

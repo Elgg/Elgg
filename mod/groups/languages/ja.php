@@ -94,7 +94,6 @@ return array(
 	/**
 	 * Access
 	 */
-	'groups:access:private' => 'クローズド - 招待制です。',
 	'groups:access:public' => 'フリー参加 - 誰でも参加できます。',
 	'groups:access:group' => 'グループ参加者のみ',
 	'groups:closedgroup' => "ここは参加者限定のグループ（クローズド・グループ）です。",

@@ -1036,6 +1036,9 @@ tres secciones:
 	'title' => "T&iacute;tulo",
 	'description' => "Descripci&oacute;n",
 	'tags' => "Tags",
+	'url' => "URL",
+	'website' => "Sitio Web",
+	
 	'all' => "Todo",
 	'mine' => "M&iacute;o",
 

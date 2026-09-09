@@ -66,6 +66,7 @@ Om de pagina te bekijken en te reageren, klik hier:
 	'pages:description' => 'Jouw tekst',
 	'pages:tags' => 'Tags',
 	'pages:parent_guid' => 'Hoofdpagina',
+	'pages:parent_guid:root' => 'Bovenste pagina',
 
 	/**
 	 * Status and error messages

@@ -62,7 +62,6 @@ return array(
 	/**
 	 * Access
 	 */
-	'groups:access:private' => 'Zatvoreno - Korisnici trebaju biti pozvani',
 	'groups:access:public' => 'Otvoreno - Svaki korisnik se može pridružiti',
 	'groups:access:group' => 'Samo za članove grupe',
 	'groups:opengroup:membersonly' => "Sadržaju grupe mogu pristpiti samo njezini članovi. ",

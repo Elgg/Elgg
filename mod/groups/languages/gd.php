@@ -69,7 +69,6 @@ return array(
 	/**
 	 * Access
 	 */
-	'groups:access:private' => 'Dùinte - Feumaidh buill cuireadh fhaighinn',
 	'groups:access:public' => 'Fosgailte - Faodaidh ball sam bith gabhail ann',
 	'groups:access:group' => 'Buill a\' bhuidhinn a-mhàin',
 	'groups:closedgroup' => "'S e buidheann dùinte a th' ann.",

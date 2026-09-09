@@ -826,7 +826,6 @@ Siehe die vollständige Liste dieser Benutzer hier:
 	'admin:server:label:server' => 'Server',
 	'admin:server:label:log_location' => 'Speicherort des Logs',
 	'admin:server:label:php_version' => 'PHP-Version',
-	'admin:server:label:php_version:required' => 'Elgg setzt mindestens Version 7.1 von PHP voraus.',
 	'admin:server:label:php_ini' => 'Speicherort der php.ini-Datei',
 	'admin:server:label:php_log' => 'Speicherort des PHP-Logs',
 	'admin:server:label:mem_avail' => 'Verfügbarer Hauptspeicher',
@@ -1101,6 +1100,9 @@ Siehe die vollständige Liste dieser Benutzer hier:
 	'title' => "Titel",
 	'description' => "Beschreibung",
 	'tags' => "Tags",
+	'url' => "URL",
+	'website' => "Webseite",
+	
 	'all' => "Alle",
 	'mine' => "Meine",
 

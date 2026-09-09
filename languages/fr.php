@@ -973,7 +973,6 @@ Voir la liste complète des utilisateurs :
 	'admin:server:label:server' => 'Serveur',
 	'admin:server:label:log_location' => 'Emplacement du journal',
 	'admin:server:label:php_version' => 'Version de PHP',
-	'admin:server:label:php_version:required' => 'Elgg requiert au moins la version PHP 7.1',
 	'admin:server:label:php_version:required_version' => 'Elgg requiert au moins la version PHP %s',
 	'admin:server:label:php_ini' => 'Emplacement du fichier .ini de PHP',
 	'admin:server:label:php_log' => 'Journal PHP',
@@ -995,7 +994,6 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'admin:server:requirements:rewrite:fail' => "Vérifiez  les règles de réécriture de votre fichier .htaccess",
 	
 	'admin:server:requirements:database:server' => "Serveur de base de données",
-	'admin:server:requirements:database:server:required_version' => "Elgg requiert MySQL v%s ou plus pour sa base de données",
 	'admin:server:requirements:database:client' => "Client de la base de données",
 	'admin:server:requirements:database:client:required' => "Elgg a besoin de pdo_mysql pour se connecter au serveur de base de données",
 
@@ -1282,6 +1280,9 @@ Pour des performances améliorées, il est recommandé que vous activiez et conf
 	'title' => "Titre",
 	'description' => "Description",
 	'tags' => "Tags",
+	'url' => "URL",
+	'website' => "Site internet",
+	
 	'all' => "Tout",
 	'mine' => "Moi",
 

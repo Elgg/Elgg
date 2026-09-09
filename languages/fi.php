@@ -758,6 +758,9 @@ return array(
 	'title' => "Otsikko",
 	'description' => "Kuvaus",
 	'tags' => "Tagit",
+	'url' => "URL",
+	'website' => "Nettisivu",
+	
 	'all' => "Kaikki",
 	'mine' => "Omasi",
 

@@ -83,7 +83,6 @@ return array(
 	/**
 	 * Access
 	 */
-	'groups:access:private' => 'Pechado — Só pode unirse mediante invitación',
 	'groups:access:public' => 'Aberto — Calquera pode unirse',
 	'groups:access:group' => 'Só para membros',
 	'groups:closedgroup' => "O grupo está pechado a novos membros.",

@@ -730,6 +730,9 @@ return array(
 	'title' => "Títul",
 	'description' => "Descrición",
 	'tags' => "Etiquetas",
+	'url' => "URL",
+	'website' => "Sitio web",
+	
 	'all' => "Tod",
 	'mine' => "Propio",
 

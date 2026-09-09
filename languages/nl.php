@@ -972,7 +972,6 @@ Bekijk hier de volledige lijst van gebruikers:
 	'admin:server:label:server' => 'Server',
 	'admin:server:label:log_location' => 'Locatie van log',
 	'admin:server:label:php_version' => 'PHP-versie',
-	'admin:server:label:php_version:required' => 'Elgg vereist een minimale PHP versie van 7.1',
 	'admin:server:label:php_version:required_version' => 'Elgg vereist minimaal PHP versie %s',
 	'admin:server:label:php_ini' => 'Locatie van PHP-.inibestand',
 	'admin:server:label:php_log' => 'PHP-log',
@@ -994,7 +993,7 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'admin:server:requirements:rewrite:fail' => "Controleer je .htaccess voor de correcte rewrite rules",
 	
 	'admin:server:requirements:database:server' => "Database server",
-	'admin:server:requirements:database:server:required_version' => "Elgg vereist MySQL versie %s of hoger voor zijn database",
+	'admin:server:requirements:database:server:required_version' => "Elgg vereist MariaDB versie %s of hoger voor zijn database",
 	'admin:server:requirements:database:client' => "Database client",
 	'admin:server:requirements:database:client:required' => "Elgg vereist pdo_mysql om verbinding met de database server te maken",
 
@@ -1281,6 +1280,9 @@ Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en t
 	'title' => "Titel",
 	'description' => "Omschrijving",
 	'tags' => "Tags",
+	'url' => "Website",
+	'website' => "Website",
+	
 	'all' => "Alle",
 	'mine' => "Mijn",
 
