@@ -963,7 +963,6 @@ return array(
 	'admin:server:label:server' => 'Сервер',
 	'admin:server:label:log_location' => 'Расположение логов',
 	'admin:server:label:php_version' => 'Версия PHP',
-	'admin:server:label:php_version:required' => 'Elgg требует минимальную версию PHP 7.1',
 	'admin:server:label:php_version:required_version' => 'Elgg требует минимальную версию PHP %s',
 	'admin:server:label:php_ini' => 'Расположение файла php.ini',
 	'admin:server:label:php_log' => 'Лог PHP',
@@ -985,7 +984,6 @@ return array(
 	'admin:server:requirements:rewrite:fail' => "Проверьте ваш .htaccess на наличие корректных правил перезаписи",
 	
 	'admin:server:requirements:database:server' => "Сервер БД",
-	'admin:server:requirements:database:server:required_version' => "Elgg требует MySQL v%s или выше",
 	'admin:server:requirements:database:client' => "Клиент БД",
 	'admin:server:requirements:database:client:required' => "Elgg требует pdo_mysql для подключения к серверу БД",
 
@@ -1272,6 +1270,9 @@ return array(
 	'title' => "Заголовок",
 	'description' => "Описание",
 	'tags' => "Теги",
+	'url' => "URL",
+	'website' => "Сайт",
+	
 	'all' => "Все",
 	'mine' => "Мои",
 

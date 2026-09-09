@@ -94,7 +94,6 @@ return array(
 	/**
 	 * Access
 	 */
-	'groups:access:private' => 'Închis - Utilizatorii trebuie invitați',
 	'groups:access:public' => 'Deschis - Orice utilizator se poate alătura',
 	'groups:access:group' => 'Numai membri grupului',
 	'groups:closedgroup' => "Apartenență la acest grup este închisă.",

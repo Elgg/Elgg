@@ -795,6 +795,9 @@ Per andare sul sito, clicca qui:
 	'title' => "Titolo",
 	'description' => "Descrizione",
 	'tags' => "Tag",
+	'url' => "URL",
+	'website' => "Sito web",
+	
 	'all' => "Tutti",
 	'mine' => "Mie",
 

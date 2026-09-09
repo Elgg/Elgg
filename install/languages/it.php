@@ -49,11 +49,8 @@ return array(
 	'install:database:label:dbhost' => 'Host del database',
 	'install:database:label:dbprefix' => 'Prefisso delle tabelle del database',
 	'install:database:label:timezone' => "Fuso orario",
-
-	'install:database:help:dbuser' => 'Un utente che abbia privilegi completi sul database MySQL creato per Elgg.',
 	'install:database:help:dbpassword' => 'Password dell\'account utente del database qui sopra',
 	'install:database:help:dbname' => 'Nome del database di Elgg',
-	'install:database:help:dbhost' => 'Nome dell\'host del database di MySQL (normalmente localhost)',
 	'install:database:help:dbprefix' => "Il prefisso preposto a tutte le tabelle di Elgg (normalmente elgg_)",
 	'install:database:help:timezone' => "Il fuso orario predefinito in cui il sito opera",
 

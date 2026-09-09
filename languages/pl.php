@@ -708,6 +708,9 @@ return array(
 	'title' => "Tytuł",
 	'description' => "Opis",
 	'tags' => "Tagi",
+	'url' => "Adres",
+	'website' => "Strona www",
+	
 	'all' => "Wszyscy",
 	'mine' => "Moje",
 

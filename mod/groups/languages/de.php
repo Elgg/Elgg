@@ -94,7 +94,6 @@ return array(
 	/**
 	 * Access
 	 */
-	'groups:access:private' => 'Nicht-öffentliche Gruppe - Gruppenbeitritt nur mit Einladung möglich',
 	'groups:access:public' => 'Öffentliche Gruppe - jeder Benutzer kann der Gruppe beitreten',
 	'groups:access:group' => 'Nur für Gruppenmitglieder',
 	'groups:closedgroup' => "Diese Gruppe ist nicht-öffentlich.",

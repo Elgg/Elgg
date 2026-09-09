@@ -49,11 +49,8 @@ return array(
 	'install:database:label:dbhost' => 'データベースのホスト',
 	'install:database:label:dbprefix' => 'データベースのテーブル名につける接頭辞(Prefix)',
 	'install:database:label:timezone' => "タイムゾーン",
-
-	'install:database:help:dbuser' => 'このユーザはElgg用に作成したMySQLデータベースに対して全ての権限持っていなければいけません。',
 	'install:database:help:dbpassword' => '上のデータベースユーザのアカウントに対するパスワード',
 	'install:database:help:dbname' => 'Elgg用データベースの名前',
-	'install:database:help:dbhost' => 'MySQL serverのあるホスト名(たいていは、localhost)',
 	'install:database:help:dbprefix' => "全てのElgg用テーブル名につける接頭辞(Prefix)(たいていは、elgg_)",
 	'install:database:help:timezone' => "サイトが扱う既定のタイムゾーン",
 

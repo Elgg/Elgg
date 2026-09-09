@@ -842,6 +842,9 @@ return array(
 	'title' => "标题",
 	'description' => "描述",
 	'tags' => "标签",
+	'url' => "网址",
+	'website' => "网站",
+	
 	'all' => "全部",
 	'mine' => "自己",
 

@@ -755,6 +755,9 @@ return array(
 	'title' => "Název",
 	'description' => "Popis",
 	'tags' => "Štítky",
+	'url' => "URL",
+	'website' => "Webové stránky",
+	
 	'all' => "Vše",
 	'mine' => "Moje",
 

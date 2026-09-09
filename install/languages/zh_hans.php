@@ -48,11 +48,8 @@ return array(
 	'install:database:label:dbname' => '資料庫名稱',
 	'install:database:label:dbhost' => '資料庫主機',
 	'install:database:label:dbprefix' => '資料表前綴',
-
-	'install:database:help:dbuser' => '擁有您為 Elgg 所建立的 MySQL 資料庫完整權限的使用者',
 	'install:database:help:dbpassword' => '用於以上資料庫的使用者密碼',
 	'install:database:help:dbname' => 'Elgg 資料庫的名稱',
-	'install:database:help:dbhost' => 'MySQL 伺服器的主機名稱 (通常是 localhost)',
 	'install:database:help:dbprefix' => "賦予所有 Elgg 資料表的前綴 (通常是 elgg_)",
 
 	'install:settings:label:sitename' => '站臺名稱',

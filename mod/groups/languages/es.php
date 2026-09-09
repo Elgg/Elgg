@@ -83,7 +83,6 @@ return array(
 	/**
 	 * Access
 	 */
-	'groups:access:private' => 'Cerrado &mdash; los miembros deben ser invitados',
 	'groups:access:public' => 'Abierto &mdash; cualquiera puede unirse',
 	'groups:access:group' => 'S&oacute;lo miembros del grupo',
 	'groups:closedgroup' => "La membresía de este grupo esta cerrada.",

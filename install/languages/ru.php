@@ -73,12 +73,8 @@ return array(
 	'install:database:label:dbport' => 'Номер порта базы данных',
 	'install:database:label:dbprefix' => 'Префикс таблицы базы данных',
 	'install:database:label:timezone' => "Часовой пояс",
-
-	'install:database:help:dbuser' => 'Пользователь, имеющий полные привилегии к базе данных MySQL, которую вы создали для Elgg',
 	'install:database:help:dbpassword' => 'Пароль для вышеуказанной учетной записи пользователя базы данных',
 	'install:database:help:dbname' => 'Название базы данных Elgg',
-	'install:database:help:dbhost' => 'Имя хоста сервера MySQL (обычно localhost)',
-	'install:database:help:dbport' => 'Номер порта сервера MySQL (обычно 3306)',
 	'install:database:help:dbprefix' => "Префикс, присваиваемый всем таблицам Elgg (обычно elgg_)",
 	'install:database:help:timezone' => "Часовой пояс по умолчанию, в котором будет работать сайт",
 
@@ -137,7 +133,6 @@ return array(
 	'install:error:settings_mismatch' => 'Значение файла настроек для "%s" не соответствует заданному параметру $params. Должно быть: "%s" В действительности: "%s"',
 	'install:error:databasesettings' => 'Невозможно подключиться к базе данных с данными настройками.',
 	'install:error:database_prefix' => 'Недопустимые символы в префиксе базы данных',
-	'install:error:mysql_version' => 'MySQL должен быть версии %s или выше. Ваш сервер использует %s.',
 	'install:error:database_version' => 'База данных должна быть версии %s или выше. Ваш сервер использует %s.',
 	'install:error:nodatabase' => 'Невозможно использовать базу данных %s. Она может не существовать.',
 	'install:error:cannotloadtables' => 'Невозможно загрузить таблицы базы данных',

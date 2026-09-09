@@ -81,7 +81,6 @@ return array(
 	/**
 	 * Access
 	 */
-	'groups:access:private' => 'Затворена - Корисници морају бити позвани',
 	'groups:access:public' => 'Отворена - Свако може да се придружи',
 	'groups:access:group' => 'Само чланови групе',
 	'groups:closedgroup' => "Чланство ове групе је затворено.",
