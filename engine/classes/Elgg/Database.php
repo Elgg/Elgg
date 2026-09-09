@@ -238,8 +238,6 @@ class Database {
 		
 		$this->getLogger()->info("DB insert query {$sql} (params: " . print_r($params, true) . ')');
 
-		$this->query_cache->clear();
-
 		$this->executeQuery($query);
 		
 		try {
@@ -269,8 +267,6 @@ class Database {
 	
 		$this->getLogger()->info("DB update query {$sql} (params: " . print_r($params, true) . ')');
 
-		$this->query_cache->clear();
-
 		$result = $this->executeQuery($query);
 		if (!$get_num_rows) {
 			return true;
@@ -293,8 +289,6 @@ class Database {
 		$sql = $query->getSQL();
 
 		$this->getLogger()->info("DB delete query {$sql} (params: " . print_r($params, true) . ')');
-
-		$this->query_cache->clear();
 
 		$result = $this->executeQuery($query);
 		return ($result instanceof Result) ? (int) $result->rowCount() : $result;

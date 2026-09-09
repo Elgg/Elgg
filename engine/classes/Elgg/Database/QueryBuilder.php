@@ -7,6 +7,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Doctrine\DBAL\Query\QueryBuilder as DbalQueryBuilder;
+use Doctrine\DBAL\Result;
 use Elgg\Database\Clauses\Clause;
 use Elgg\Database\Clauses\ComparisonClause;
 use Elgg\Database\Clauses\JoinClause;
@@ -195,26 +196,37 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Execute the database query for this QueryBuilder
 	 *
 	 * @param bool $track_query should the query be tracked by timers and loggers
+	 *
+	 * @return int|string|Result
 	 */
 	public function execute(bool $track_query = true) {
 		if (!$track_query) {
 			if ($this instanceof Select) {
-				return parent::executeQuery();
+				return $this->executeQuery();
 			} else {
-				return parent::executeStatement();
+				return $this->executeStatement();
 			}
 		}
 		
 		return _elgg_services()->db->trackQuery($this, function() {
 			if ($this instanceof Select) {
-				return parent::executeQuery();
+				return $this->executeQuery();
 			} else {
-				return parent::executeStatement();
+				return $this->executeStatement();
 			}
 		});
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function executeStatement(): int|string {
+		_elgg_services()->queryCache->clear();
+		
+		return parent::executeStatement();
 	}
 	
 	/**
