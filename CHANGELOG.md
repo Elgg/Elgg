@@ -1,3 +1,37 @@
+<a name="7.1.0"></a>
+## 7.1.0 (2026-09-10)
+
+#### Contributors
+
+* Jerôme Bakker (10)
+* Jeroen Dalsem (7)
+
+#### Features
+
+* **entities:** header image capability for generic entity form [ba0896370](https://github.com/Elgg/Elgg/commit/ba08963708049637176e828d70cdccaa1ac57009) closes [#15110](https://github.com/Elgg/Elgg/issues/15110)
+* **groups:** group membership can be by invitation only [c64ed5695](https://github.com/Elgg/Elgg/commit/c64ed5695c98ce8b68fa2d433035b9cd10c5070b)
+* **i18n:** added generic translations keys for url and website [1abe8178f](https://github.com/Elgg/Elgg/commit/1abe8178f9744ea7a3fbaefe7bd700ea90585d26)
+* **db:** mariaDB is the recommended database server [48b7bc7ca](https://github.com/Elgg/Elgg/commit/48b7bc7ca61ab8d47e6c36f590be7e6035168958) closes [#14945](https://github.com/Elgg/Elgg/issues/14945)
+* **menus:**
+  * filter menu items do not show on other user owned pages [7b8464354](https://github.com/Elgg/Elgg/commit/7b84643546529bb184f682663494e8f45b9724bb)
+  * added optional admin parent item in entity menu for admin actions [345a02fe1](https://github.com/Elgg/Elgg/commit/345a02fe1962a703d72c84d4f7151397d6a373df)
+* **comments:** comment count badge updates after ajax comment save [76dc78e2d](https://github.com/Elgg/Elgg/commit/76dc78e2dcfeb1813da6cf6c0a12a0edc4c491d0)
+* **a11y:** set aria-current on selected menu items [1e5c0700c](https://github.com/Elgg/Elgg/commit/1e5c0700c002ec8f6266ab258059821ec15562f6)
+* **content:** add generic entity controller [4afaafb89](https://github.com/Elgg/Elgg/commit/4afaafb89aa3533b1f80ce2cc27b669cd92e283f)
+* **widgets:** added some javascript triggers to widget manipulation [b92688bca](https://github.com/Elgg/Elgg/commit/b92688bca30687a35d3cf405688bc00990a96c80)
+
+
+#### Performance
+
+* **db:** add index to metadata table for entity_guid name [6b95a66ac](https://github.com/Elgg/Elgg/commit/6b95a66ac85d391f834786d96f921a90ce53b465)
+
+
+#### Bug fixes
+
+* **db:** correctly invalidate query cache on insert/delete/update [62de9792c](https://github.com/Elgg/Elgg/commit/62de9792c852eb195529b780c4ddca364bfc8ac2) closes [#15140](https://github.com/Elgg/Elgg/issues/15140)
+* **reportedcontent:** do not show report menu item in admin context [25576cdc7](https://github.com/Elgg/Elgg/commit/25576cdc7feb15d61dcf24a62d5d32dddd92cad4)
+
+
 <a name="7.0.5"></a>
 ### 7.0.5 (2026-08-19)
 

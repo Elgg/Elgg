@@ -1,8 +1,8 @@
 Elgg
 ====
 
-[![PHPUnit test suites](https://github.com/Elgg/Elgg/actions/workflows/phpunit.yml/badge.svg?branch=7.0)](https://github.com/Elgg/Elgg/actions/workflows/phpunit.yml)
-[![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?badge=7.0)](http://learn.elgg.org/en/7.0/)
+[![PHPUnit test suites](https://github.com/Elgg/Elgg/actions/workflows/phpunit.yml/badge.svg?branch=7.1)](https://github.com/Elgg/Elgg/actions/workflows/phpunit.yml)
+[![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?badge=7.1)](http://learn.elgg.org/en/7.1/)
 
 Elgg is an open source rapid development framework for socially aware web applications.
 
