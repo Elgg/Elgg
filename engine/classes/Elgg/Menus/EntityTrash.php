@@ -43,7 +43,9 @@ class EntityTrash {
 				'icon' => 'trash-restore-alt',
 				'text' => elgg_echo('restore:this:move'),
 				'title' => elgg_echo('restore:this'),
-				'href' => elgg_http_add_url_query_elements('ajax/form/entity/chooserestoredestination', [
+				'href' => elgg_generate_url('ajax', [
+					'type' => 'form',
+					'segments' => 'entity/chooserestoredestination',
 					'entity_guid' => $entity->guid,
 				]),
 				'link_class' => 'elgg-lightbox',
