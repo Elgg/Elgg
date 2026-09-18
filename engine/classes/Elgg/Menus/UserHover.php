@@ -77,7 +77,9 @@ class UserHover {
 				'name' => 'change_email',
 				'icon' => 'edit',
 				'text' => elgg_echo('admin:users:unvalidated:change_email'),
-				'href' => elgg_http_add_url_query_elements('ajax/form/admin/user/change_email', [
+				'href' => elgg_generate_url('ajax', [
+					'type' => 'form',
+					'segments' => 'admin/user/change_email',
 					'user_guid' => $user->guid,
 				]),
 				'link_class' => 'elgg-lightbox',

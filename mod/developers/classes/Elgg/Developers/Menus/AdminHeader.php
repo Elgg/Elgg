@@ -65,7 +65,8 @@ class AdminHeader {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'dev_inspect_' . elgg_get_friendly_title($key),
 				'text' => $value,
-				'href' => elgg_http_add_url_query_elements('admin/develop_tools/inspect', [
+				'href' => elgg_generate_url('admin', [
+					'segments' => 'develop_tools/inspect',
 					'inspect_type' => $key,
 				]),
 				'parent_name' => 'inspect',

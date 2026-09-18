@@ -68,7 +68,9 @@ class Entity {
 		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'report_this',
-			'href' => elgg_http_add_url_query_elements('ajax/form/reportedcontent/add', [
+			'href' => elgg_generate_url('ajax', [
+				'type' => 'form',
+				'segments' => 'reportedcontent/add',
 				'address' => $entity->getURL(),
 				'title' => $entity->getDisplayName(),
 				'entity_guid' => $entity->guid,

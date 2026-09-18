@@ -36,7 +36,9 @@ class Widget {
 			'name' => 'settings',
 			'text' => elgg_echo('widget:edit'),
 			'icon' => 'settings-alt',
-			'href' => elgg_http_add_url_query_elements('ajax/view/object/widget/edit', [
+			'href' => elgg_generate_url('ajax', [
+				'type' => 'view',
+				'segments' => 'object/widget/edit',
 				'guid' => $widget->guid,
 				'show_access' => $event->getParam('show_access', true),
 			]),
