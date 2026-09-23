@@ -244,6 +244,11 @@ function elgg_view_page(string $title, string|array $body, string $page_shell = 
 	if (is_array($body)) {
 		$vars['entity'] = elgg_extract('entity', $body, elgg_extract('entity', $vars));
 
+		if (elgg_is_empty($title)) {
+			// try to get a title for the page shell
+			$title = elgg_extract('title', $body);
+		}
+		
 		$body['title'] = elgg_extract('title', $body, $title);
 		$body = elgg_view_layout('default', $body);
 	}
