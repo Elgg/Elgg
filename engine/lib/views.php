@@ -441,7 +441,7 @@ function elgg_view_layout(string $layout_name, array $vars = []): string {
  *    menu_view            => (string) name of the view to be used to render the menu
  *    show_section_headers => (bool) show headers before menu sections
  *    selected_item_name   => (string) the menu item name to be selected
- *    prepare_vertical     => (bool) prepares the menu items for vertical display (default false)
+ *    prepare_toggle       => (bool) prepares the menu items for being toggled (default true)
  *    prepare_dropdown     => (bool) will put all menu items (section=default) behind a dropdown (default false)
  *    item_contents_view   => (string) the view to use for the output of the menu item contents (default: 'navigation/menu/elements/item/url')
  *
