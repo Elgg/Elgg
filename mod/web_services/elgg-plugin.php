@@ -4,8 +4,6 @@ use Elgg\Router\Middleware\AdminGatekeeper;
 use Elgg\WebServices\ApiMethods\AuthGetToken;
 use Elgg\WebServices\ApiMethods\SystemApiList;
 use Elgg\WebServices\Forms\PrepareFields;
-use Elgg\WebServices\Middleware\RestApiOutputMiddleware;
-use Elgg\WebServices\Middleware\ViewtypeMiddleware;
 use Elgg\WebServices\RestServiceController;
 
 require_once(__DIR__ . '/lib/functions.php');
