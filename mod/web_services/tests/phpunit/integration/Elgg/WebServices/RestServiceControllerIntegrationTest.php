@@ -2,6 +2,7 @@
 
 namespace Elgg\WebServices;
 
+use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Http\OkResponse;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\Plugins\IntegrationTestCase;
@@ -158,48 +159,21 @@ class RestServiceControllerIntegrationTest extends IntegrationTestCase {
 		$this->assertArrayNotHasKey(\Elgg\WebServices\PAM\User\AuthToken::class, $pam_handlers['user']);
 	}
 	
-	public function testAuthenticateMethodWithUnknownMethod() {
-		$controller = new RestServiceController();
-		
-		$this->expectException(\APIException::class);
-		$this->expectExceptionMessage(elgg_echo('APIException:MethodCallNotImplemented', ['foo']));
-		$this->invokeInaccessableMethod($controller, 'authenticateMethod', 'foo', 'GET');
-	}
-	
-	public function testAuthenticateMethodWithFailedApiAuthentication() {
-		$controller = new RestServiceController();
-		
-		$api = ApiMethod::factory([
+	public function testApiRequestWithUnknownMethod() {
+		$http_request = $this->prepareHttpRequest(elgg_generate_url('default:services:rest', [
+			'view' => 'json',
 			'method' => 'foo',
-			'callback' => function() {
-				return true;
-			},
-			'require_api_auth' => true,
-		]);
-		$registration = ApiRegistrationService::instance();
-		$registration->registerApiMethod($api);
+		]));
+		$this->createService($http_request);
 		
-		$this->expectException(\APIException::class);
-		$this->expectExceptionMessage(elgg_echo('APIException:APIAuthenticationFailed'));
-		$this->invokeInaccessableMethod($controller, 'authenticateMethod', 'foo', 'GET');
-	}
-	
-	public function testAuthenticateMethodWithFailedUserAuthentication() {
 		$controller = new RestServiceController();
 		
-		$api = ApiMethod::factory([
-			'method' => 'foo',
-			'callback' => function() {
-				return true;
-			},
-			'require_user_auth' => true,
-		]);
-		$registration = ApiRegistrationService::instance();
-		$registration->registerApiMethod($api);
+		$request = $this->getRequest($http_request);
 		
-		$this->expectException(\APIException::class);
-		$this->expectExceptionMessage(elgg_echo('SecurityException:authenticationfailed'));
-		$this->invokeInaccessableMethod($controller, 'authenticateMethod', 'foo', 'GET');
+		$response = $controller($request);
+		
+		$this->assertInstanceOf(OkResponse::class, $response);
+		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
 	}
 	
 	public function testApiRequestSuccess() {
@@ -299,7 +273,7 @@ class RestServiceControllerIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals(ELGG_HTTP_FORBIDDEN, $response->getStatusCode());
 		
 		$expected_result = json_encode([
-			'status' => \ErrorResult::RESULT_FAIL,
+			'status' => \ErrorResult::RESULT_FAIL_APIKEY_INVALID,
 			'message' => elgg_echo('APIException:APIAuthenticationFailed'),
 		]);
 		$this->assertEquals($expected_result, $response->getContent());

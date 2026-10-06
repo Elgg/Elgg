@@ -49,6 +49,11 @@ an owner different from the logged in user. The event handler for the 'All' and 
 Passing custom `elgg_view_page()` variables ('all_link', 'mine_link' and 'friend_link') have been deprecated.
 We encourage developers to leverage the generic route names for these kinds of pages.
 
+Deprecated classes
+------------------
+
+* ``\APIException`` use other ``\Elgg\Exception\`` classes which better suit the need
+
 Deprecated Views
 ----------------
 

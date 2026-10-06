@@ -2,6 +2,7 @@
 
 namespace Elgg\WebServices;
 
+use Elgg\Exceptions\RangeException;
 use Elgg\Traits\TimeUsing;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
@@ -48,8 +49,6 @@ class ElggApiClient {
 	 * @param string $url    Endpoint url
 	 * @param array  $params Parameters for the API call
 	 * @param string $method Call method (GET|POST)
-	 *
-	 * @throws \APIException
 	 */
 	public function __construct(string $url, array $params = [], string $method = 'GET') {
 		$this->url = $url;
@@ -107,16 +106,12 @@ class ElggApiClient {
 	 * @param string $method Call method (GET|POST)
 	 *
 	 * @return self
-	 * @throws \APIException
+	 * @throws RangeException
 	 */
 	public function setMethod(string $method = 'GET') : self {
 		$method = strtoupper($method);
-		switch ($method) {
-			case 'GET':
-			case 'POST':
-				break;
-			default:
-				throw new \APIException(elgg_echo('APIException:CallMethodNotImplemented', [$method]));
+		if (!in_array($method, ['GET', 'POST'])) {
+			throw new RangeException(elgg_echo('APIException:CallMethodNotImplemented', [$method]));
 		}
 		
 		$this->method = $method;
@@ -134,7 +129,7 @@ class ElggApiClient {
 	}
 	
 	/**
-	 * Set public and private API keys for authorisation
+	 * Set public and private API keys for authorization
 	 *
 	 * @param string $public  public API key
 	 * @param string $private private API key (needed for HMAC authorisation)
