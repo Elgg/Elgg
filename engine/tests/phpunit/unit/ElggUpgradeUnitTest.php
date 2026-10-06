@@ -25,32 +25,10 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testThrowsOnSaveWithoutClass() {
-		$this->obj->description = 'Test';
 		$this->obj->id = 'test';
-		$this->obj->title = 'Test';
 		
 		$this->expectException(UnexpectedValueException::class);
 		$this->expectExceptionMessage('ElggUpgrade objects must have a value for the class property.');
-		$this->obj->save();
-	}
-
-	public function testThrowsOnSaveWithoutTitle() {
-		$this->obj->setClass('test');
-		$this->obj->description = 'Test';
-		$this->obj->id = 'test';
-		
-		$this->expectException(UnexpectedValueException::class);
-		$this->expectExceptionMessage('ElggUpgrade objects must have a value for the title property.');
-		$this->obj->save();
-	}
-
-	public function testThrowsOnSaveWithoutDesc() {
-		$this->obj->setClass('test');
-		$this->obj->id = 'test';
-		$this->obj->title = 'Test';
-		
-		$this->expectException(UnexpectedValueException::class);
-		$this->expectExceptionMessage('ElggUpgrade objects must have a value for the description property.');
 		$this->obj->save();
 	}
 

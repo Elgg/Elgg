@@ -8,7 +8,7 @@
 use Elgg\Upgrade\Batch;
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggUpgrade) {
+if (!$entity instanceof \ElggUpgrade) {
 	return;
 }
 
@@ -48,8 +48,6 @@ $errors = elgg_format_element('ul', [
 
 $params = [
 	'entity' => $entity,
-	'title' => $entity->getDisplayName(),
-	'subtitle' => elgg_echo($entity->description),
 	'content' => $data . $counter . $timer . $progressbar . $errors_link . $errors,
 ];
 $params = $params + $vars;

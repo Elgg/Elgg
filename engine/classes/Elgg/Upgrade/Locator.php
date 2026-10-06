@@ -92,8 +92,6 @@ class Locator {
 
 				$upgrade->setId($upgrade_id);
 				$upgrade->setClass($class);
-				$upgrade->title = "{$component_id}:upgrade:{$version}:title";
-				$upgrade->description = "{$component_id}:upgrade:{$version}:description";
 				$upgrade->offset = 0;
 				$upgrade->save();
 

@@ -10,7 +10,7 @@ use Elgg\Traits\TimeUsing;
 use Elgg\Upgrade\Batch;
 
 /**
- * Represents an upgrade that runs outside of the upgrade.php script.
+ * Represents an upgrade that runs outside the upgrade.php script
  *
  * @internal
  *
@@ -29,15 +29,11 @@ class ElggUpgrade extends ElggObject {
 	
 	private $requiredProperties = [
 		'id',
-		'title',
-		'description',
 		'class',
 	];
 
 	/**
-	 * Set subtype to upgrade
-	 *
-	 * @return null
+	 * {@inheritdoc}
 	 */
 	public function initializeAttributes() {
 		parent::initializeAttributes();
@@ -72,19 +68,61 @@ class ElggUpgrade extends ElggObject {
 	}
 
 	/**
-	 * Sets an unique id for the upgrade
+	 * Sets a unique id for the upgrade
 	 *
 	 * @param string $id Upgrade id in format <plugin_name>:<yyymmddhh>
+	 *
 	 * @return void
 	 */
 	public function setID(string $id): void {
 		$this->id = $id;
+	}
+	
+	/**
+	 * Get the unique ID for the upgrade in the format <plugin_name>:<yyymmddhh>
+	 *
+	 * @return string|null
+	 * @since 7.1
+	 */
+	public function getID(): ?string {
+		return $this->id;
+	}
+	
+	/**
+	 * Get the component where the upgrade originated ('core' or a plugin ID)
+	 *
+	 * @return string|null
+	 */
+	public function getComponent(): ?string {
+		if (!isset($this->id)) {
+			return null;
+		}
+		
+		$parts = explode(':', $this->id);
+		
+		return elgg_extract(0, $parts);
+	}
+	
+	/**
+	 * Get the version of the upgrade in the format <yyymmddhh>
+	 *
+	 * @return int|null
+	 */
+	public function getVersion(): ?int {
+		if (!isset($this->id)) {
+			return null;
+		}
+		
+		$parts = explode(':', $this->id);
+		
+		return elgg_extract(1, $parts) ? (int) elgg_extract(1, $parts) : null;
 	}
 
 	/**
 	 * Sets a class for the upgrade
 	 *
 	 * @param string $class Fully qualified class name
+	 *
 	 * @return void
 	 */
 	public function setClass(string $class): void {
@@ -93,6 +131,7 @@ class ElggUpgrade extends ElggObject {
 
 	/**
 	 * Check if the upgrade should be run asynchronously
+	 *
 	 * @return bool
 	 */
 	public function isAsynchronous(): bool {
@@ -186,7 +225,7 @@ class ElggUpgrade extends ElggObject {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 * @throws \Elgg\Exceptions\UnexpectedValueException
 	 */
 	public function save(): bool {
@@ -207,6 +246,9 @@ class ElggUpgrade extends ElggObject {
 	 * {@inheritdoc}
 	 */
 	public function getDisplayName(): string {
-		return elgg_echo($this->title);
+		$component = $this->getComponent();
+		$version = $this->getVersion();
+		
+		return elgg_echo("{$component}:upgrade:{$version}:title");
 	}
 }
