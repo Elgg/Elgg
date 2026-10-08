@@ -4,17 +4,13 @@
 #profile-owner-block {
 	display: flex;
 	flex-direction: column;
+	row-gap: 1rem;
 	
 	.elgg-avatar-large {
-		margin-bottom: 1rem;
 		max-width: 12rem;
 		align-self: center;
 	}
 	
-	.elgg-menu {
-		margin-bottom: 1rem;
-	}
-
 	.elgg-menu-profile-admin-container {
 		li > a {
 			color: var(--elgg-state-danger-font-color);
@@ -31,7 +27,7 @@
 	}
 }
 
-@media screen and (min-width: 50rem) {
+@media screen and (min-width: 80rem) {
 	#profile-owner-block {
 		width: 12rem;
 	}
@@ -39,7 +35,6 @@
 
 #profile-details {
 	border: 1px solid var(--elgg-border-color-soft);
-	margin-bottom: 1rem;
 }
 
 .elgg-form-profile-edit .elgg-form-body {
