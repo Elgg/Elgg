@@ -14,35 +14,43 @@ use Elgg\Upgrade\Batch;
  *
  * @internal
  *
- * @property      bool   $is_completed   Is the upgrade completed yet
- * @property      int    $processed      Number of items processed
- * @property      int    $offset         Offset for batch
- * @property      int    $has_errors     Number of errors
- * @property      int    $completed_time Time when the upgrade finished
- * @property      int    $start_time     Time when the upgrade started
- * @property-read string $id             The ID of the upgrade
- * @property-read string $class          The class which will handle the upgrade
+ * @property bool   $is_completed   Is the upgrade completed yet
+ * @property int    $processed      Number of items processed
+ * @property int    $offset         Offset for batch
+ * @property int    $has_errors     Number of errors
+ * @property int    $completed_time Time when the upgrade finished
+ * @property int    $start_time     Time when the upgrade started
+ * @property string $id             The ID of the upgrade
+ * @property string $class          The class which will handle the upgrade
  */
 class ElggUpgrade extends ElggObject {
 
 	use TimeUsing;
-	
-	private $requiredProperties = [
-		'id',
-		'class',
-	];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function initializeAttributes() {
 		parent::initializeAttributes();
-
+		
+		$site = elgg_get_site_entity();
+		
 		$this->attributes['subtype'] = 'elgg_upgrade';
-
-		// unowned
-		$this->attributes['container_guid'] = 0;
-		$this->attributes['owner_guid'] = 0;
+		$this->attributes['container_guid'] = $site->guid;
+		$this->attributes['owner_guid'] = $site->guid;
+		
+		$this->offset = 0;
+		$this->is_completed = false;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getDisplayName(): string {
+		$component = $this->getComponent();
+		$version = $this->getVersion();
+		
+		return elgg_echo("{$component}:upgrade:{$version}:title");
 	}
 
 	/**
@@ -65,17 +73,6 @@ class ElggUpgrade extends ElggObject {
 	 */
 	public function isCompleted(): bool {
 		return (bool) $this->is_completed;
-	}
-
-	/**
-	 * Sets a unique id for the upgrade
-	 *
-	 * @param string $id Upgrade id in format <plugin_name>:<yyymmddhh>
-	 *
-	 * @return void
-	 */
-	public function setID(string $id): void {
-		$this->id = $id;
 	}
 	
 	/**
@@ -119,23 +116,12 @@ class ElggUpgrade extends ElggObject {
 	}
 
 	/**
-	 * Sets a class for the upgrade
-	 *
-	 * @param string $class Fully qualified class name
-	 *
-	 * @return void
-	 */
-	public function setClass(string $class): void {
-		$this->class = $class;
-	}
-
-	/**
 	 * Check if the upgrade should be run asynchronously
 	 *
 	 * @return bool
 	 */
 	public function isAsynchronous(): bool {
-		return !is_subclass_of($this->class, \Elgg\Upgrade\SystemUpgrade::class);
+		return is_subclass_of($this->class, \Elgg\Upgrade\AsynchronousUpgrade::class);
 	}
 
 	/**
@@ -192,10 +178,11 @@ class ElggUpgrade extends ElggObject {
 	 * @return void
 	 */
 	public function reset(): void {
-		unset($this->is_completed);
+		$this->is_completed = false;
+		$this->offset = 0;
+		
 		unset($this->completed_time);
 		unset($this->processed);
-		unset($this->offset);
 		unset($this->start_time);
 	}
 	
@@ -220,35 +207,7 @@ class ElggUpgrade extends ElggObject {
 	 *
 	 * @return int
 	 */
-	public function getStartTime() {
+	public function getStartTime(): int {
 		return (int) $this->start_time;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 * @throws \Elgg\Exceptions\UnexpectedValueException
-	 */
-	public function save(): bool {
-		if (!isset($this->is_completed)) {
-			$this->is_completed = false;
-		}
-
-		foreach ($this->requiredProperties as $prop) {
-			if (!$this->$prop) {
-				throw new ElggUnexpectedValueException("ElggUpgrade objects must have a value for the {$prop} property.");
-			}
-		}
-
-		return parent::save();
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getDisplayName(): string {
-		$component = $this->getComponent();
-		$version = $this->getVersion();
-		
-		return elgg_echo("{$component}:upgrade:{$version}:title");
 	}
 }

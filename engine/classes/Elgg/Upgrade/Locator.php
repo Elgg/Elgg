@@ -65,15 +65,14 @@ class Locator {
 	}
 
 	/**
-	 * Gets intance of an ElggUpgrade based on the given class and id
+	 * Gets instance of an ElggUpgrade based on the given class and id
 	 *
 	 * @param string $class        Class implementing Elgg\Upgrade\Batch
 	 * @param string $component_id Either plugin_id or "core"
 	 *
 	 * @return \ElggUpgrade
 	 */
-	public function getUpgrade($class, $component_id) {
-
+	public function getUpgrade(string $class, string $component_id): \ElggUpgrade {
 		$batch = $this->getBatch($class);
 
 		$version = $batch->getVersion();
@@ -83,16 +82,11 @@ class Locator {
 
 		if (!$upgrade) {
 			$upgrade = elgg_call(ELGG_IGNORE_ACCESS, function () use ($upgrade_id, $class, $component_id, $version) {
-				$site = elgg_get_site_entity();
-
 				// Create a new ElggUpgrade to represent the upgrade in the database
 				$upgrade = new \ElggUpgrade();
-				$upgrade->owner_guid = $site->guid;
-				$upgrade->container_guid = $site->guid;
 
-				$upgrade->setId($upgrade_id);
-				$upgrade->setClass($class);
-				$upgrade->offset = 0;
+				$upgrade->id = $upgrade_id;
+				$upgrade->class = $class;
 				$upgrade->save();
 
 				return $upgrade;
@@ -111,13 +105,13 @@ class Locator {
 	 * @return Batch
 	 * @throws InvalidArgumentException
 	 */
-	public function getBatch(string $class, ?\ElggUpgrade $upgrade = null) {
+	public function getBatch(string $class, ?\ElggUpgrade $upgrade = null): Batch {
 		if (!class_exists($class)) {
-			throw new InvalidArgumentException("Upgrade class $class was not found");
+			throw new InvalidArgumentException("Upgrade class {$class} was not found");
 		}
 
 		if (!is_subclass_of($class, Batch::class)) {
-			throw new InvalidArgumentException("Upgrade class $class should implement " . Batch::class);
+			throw new InvalidArgumentException("Upgrade class {$class} should implement " . Batch::class);
 		}
 
 		return new $class($upgrade);

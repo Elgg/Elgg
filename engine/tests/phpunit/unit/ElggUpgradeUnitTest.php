@@ -2,15 +2,10 @@
 
 class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 
-	/**
-	 * @var ElggUpgrade
-	 */
-	protected $obj;
+	protected ?\ElggUpgrade $obj = null;
 
 	public function up() {
-		$this->obj = $this->getMockBuilder('\ElggUpgrade')
-			->onlyMethods([])
-			->getMock();
+		$this->obj = new \ElggUpgrade();
 	}
 
 	public function mock_egefps_with_entities() {
@@ -18,45 +13,30 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testDefaultAttrs() {
+		$site = elgg_get_site_entity();
+		
 		$this->assertSame('elgg_upgrade', $this->obj->subtype);
-		$this->assertSame(0, $this->obj->container_guid);
-		$this->assertSame(0, $this->obj->owner_guid);
-		$this->assertSame(null, $this->obj->is_completed);
-	}
-
-	public function testThrowsOnSaveWithoutClass() {
-		$this->obj->id = 'test';
-		
-		$this->expectException(UnexpectedValueException::class);
-		$this->expectExceptionMessage('ElggUpgrade objects must have a value for the class property.');
-		$this->obj->save();
-	}
-
-	public function testThrowsOnSaveWithoutId() {
-		$this->obj->setClass('test');
-		$this->obj->description = 'Test';
-		$this->obj->title = 'Test';
-		
-		$this->expectException(UnexpectedValueException::class);
-		$this->expectExceptionMessage('ElggUpgrade objects must have a value for the id property.');
-		$this->obj->save();
+		$this->assertSame($site->guid, $this->obj->container_guid);
+		$this->assertSame($site->guid, $this->obj->owner_guid);
+		$this->assertFalse($this->obj->is_completed);
+		$this->assertSame(0, $this->obj->offset);
 	}
 
 	public function testCanInstantiateBatchRunner() {
 		_elgg_services()->logger->disable();
 
-		$this->obj->setClass('\InvalidClass');
+		$this->obj->class = '\InvalidClass';
 		$this->assertFalse($this->obj->getBatch());
 
-		$this->obj->setClass(\Elgg\Helpers\Upgrade\InvalidBatch::class);
+		$this->obj->class = \Elgg\Helpers\Upgrade\InvalidBatch::class;
 		$this->assertFalse($this->obj->getBatch());
 
-		$this->obj->setClass(\Elgg\Helpers\Upgrade\TestBatch::class);
+		$this->obj->class = \Elgg\Helpers\Upgrade\TestBatch::class;
 		$this->assertInstanceOf(\Elgg\Helpers\Upgrade\TestBatch::class, $this->obj->getBatch());
 	}
 	
 	public function testSetCompleted() {
-		$upgrade = new ElggUpgrade();
+		$upgrade = new \ElggUpgrade();
 		
 		$upgrade->setCompleted();
 		
@@ -71,7 +51,7 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 	}
 	
 	public function testSetStarttime() {
-		$upgrade = new ElggUpgrade();
+		$upgrade = new \ElggUpgrade();
 		
 		$upgrade->setStartTime();
 		
@@ -87,7 +67,7 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 	}
 	
 	public function testReset() {
-		$upgrade = new ElggUpgrade();
+		$upgrade = new \ElggUpgrade();
 		
 		$upgrade->is_completed = true;
 		$upgrade->completed_time = time();
@@ -97,10 +77,11 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 		
 		$upgrade->reset();
 		
-		$this->assertEmpty($upgrade->is_completed);
-		$this->assertEmpty($upgrade->completed_time);
-		$this->assertEmpty($upgrade->processed);
-		$this->assertEmpty($upgrade->offset);
-		$this->assertEmpty($upgrade->start_time);
+		$this->assertFalse($upgrade->is_completed);
+		$this->assertSame(0, $upgrade->offset);
+		
+		$this->assertNull($upgrade->completed_time);
+		$this->assertNull($upgrade->processed);
+		$this->assertNull($upgrade->start_time);
 	}
 }
