@@ -37,7 +37,9 @@ class UserHover {
 			'name' => 'reportuser',
 			'text' => elgg_echo('reportedcontent:user'),
 			'icon' => 'exclamation-triangle',
-			'href' => elgg_http_add_url_query_elements('ajax/form/reportedcontent/add', [
+			'href' => elgg_generate_url('ajax', [
+				'type' => 'form',
+				'segments' => 'reportedcontent/add',
 				'address' => $user->getURL(),
 				'title' => $user->getDisplayName(),
 			]),

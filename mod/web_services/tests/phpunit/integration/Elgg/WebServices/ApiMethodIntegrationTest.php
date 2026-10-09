@@ -4,6 +4,8 @@ namespace Elgg\WebServices;
 
 use Elgg\Collections\CollectionItemInterface;
 use Elgg\Exceptions\DomainException;
+use Elgg\Exceptions\Http\BadRequestException;
+use Elgg\Exceptions\Http\NotImplementedException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Plugins\IntegrationTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -202,14 +204,14 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 	public function testTypeCastInvalidArray() {
 		$api = $this->getApiMethod();
 		
-		$this->expectException(\APIException::class);
+		$this->expectException(BadRequestException::class);
 		$this->invokeInaccessableMethod($api, 'typeCastParameter', 'foo', '', 'array');
 	}
 	
 	public function testTypeCastInvalidType() {
 		$api = $this->getApiMethod();
 		
-		$this->expectException(\APIException::class);
+		$this->expectException(BadRequestException::class);
 		$this->invokeInaccessableMethod($api, 'typeCastParameter', 'foo', '', 'bar');
 	}
 	
@@ -259,8 +261,38 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 			],
 		];
 		
-		$this->expectException(\APIException::class);
+		$this->expectException(BadRequestException::class);
 		$this->invokeInaccessableMethod($api, 'getParameters', $request);
+	}
+	
+	public function testExecuteWithFailedApiAuthentication() {
+		$http_request = $this->prepareHttpRequest('foo', 'GET', [
+			'username' => 'foo',
+		]);
+		$request = new \Elgg\Request(elgg(), $http_request);
+		
+		$api = $this->getApiMethod();
+		$api->require_api_auth = true;
+		
+		$result = $api->execute($request);
+		
+		$this->assertInstanceOf(\ErrorResult::class, $result);
+		$this->assertEquals(\ErrorResult::RESULT_FAIL_APIKEY_INVALID, $this->invokeInaccessableMethod($result, 'getStatusCode'));
+	}
+	
+	public function testExecuteWithFailedUserAuthentication() {
+		$http_request = $this->prepareHttpRequest('foo', 'GET', [
+			'username' => 'foo',
+		]);
+		$request = new \Elgg\Request(elgg(), $http_request);
+		
+		$api = $this->getApiMethod();
+		$api->require_user_auth = true;
+		
+		$result = $api->execute($request);
+		
+		$this->assertInstanceOf(\ErrorResult::class, $result);
+		$this->assertEquals(\ErrorResult::RESULT_FAIL_AUTHTOKEN, $this->invokeInaccessableMethod($result, 'getStatusCode'));
 	}
 	
 	public function testExecute() {
@@ -349,9 +381,8 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 		
 		$api = new ApiMethod('foo', 'not_callable');
 		
+		$this->expectException(NotImplementedException::class);
 		$result = $api->execute($request);
-		
-		$this->assertInstanceOf(\ErrorResult::class, $result);
 	}
 	
 	public function testExecuteNoResult() {

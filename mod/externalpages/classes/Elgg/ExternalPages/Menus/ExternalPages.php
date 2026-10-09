@@ -27,7 +27,8 @@ class ExternalPages {
 			$return[] = \ElggMenuItem::factory([
 				'name' => $page,
 				'text' => elgg_echo("external_pages:{$page}"),
-				'href' => elgg_http_add_url_query_elements('admin/configure_utilities/external_pages', [
+				'href' => elgg_generate_url('admin', [
+					'segments' => 'configure_utilities/external_pages',
 					'page' => $page,
 				]),
 				'selected' => $page === $selected_page,

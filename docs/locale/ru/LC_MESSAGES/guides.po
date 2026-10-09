@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 10:03+0200\n"
+"POT-Creation-Date: 2026-09-09 14:38+0200\n"
 "PO-Revision-Date: 2026-03-25 09:33+0000\n"
 "Last-Translator: River Van Rain <vanrain@list.ru>, 2026\n"
 "Language-Team: Russian (https://app.transifex.com/elgg/teams/11337/ru/)\n"
@@ -405,7 +405,7 @@ msgstr ""
 "Elgg. Формы Elgg отправляются в действия. Действия определяют поведение при "
 "отправке формы."
 
-#: ../../guides/actions.rst:7 ../../guides/actions.rst:563
+#: ../../guides/actions.rst:7 ../../guides/actions.rst:590
 #: ../../guides/ajax.rst:11 ../../guides/i18n.rst:15
 #: ../../guides/plugins/dependencies.rst:11
 msgid "Overview"
@@ -1009,14 +1009,76 @@ msgid "``input/location`` renders an Elgg location input"
 msgstr "``input/location`` отображает поле ввода местоположения Elgg"
 
 #: ../../guides/actions.rst:490
+msgid "Default entity form"
+msgstr ""
+
+#: ../../guides/actions.rst:492
+msgid ""
+"If you wish to render a basic form to edit/create an entity you can use the "
+"function ``elgg_view_entity_form($entity_type, $entity_subtype, $entity)``. "
+"It'll use the fields as defined for the ``<entity_type>:<entity_subtype>``. "
+"The function will check for the form view in the following order:"
+msgstr ""
+
+#: ../../guides/actions.rst:496 ../../guides/actions.rst:509
+msgid "``<entity_type>/<entity_subtype>/edit``"
+msgstr ""
+
+#: ../../guides/actions.rst:497 ../../guides/actions.rst:510
+msgid "``<entity_subtype>/edit``"
+msgstr ""
+
+#: ../../guides/actions.rst:498
+msgid "``entity/edit``"
+msgstr ""
+
+#: ../../guides/actions.rst:500
+msgid "The form will be provided with the following in ``$vars``:"
+msgstr ""
+
+#: ../../guides/actions.rst:502
+msgid "``entity_type``: the type of the entity for this form"
+msgstr ""
+
+#: ../../guides/actions.rst:503
+msgid "``entity_subtype``: the subtype of the entity for this form"
+msgstr ""
+
+#: ../../guides/actions.rst:504
+msgid "``entity``: the entity (when editing an entity)"
+msgstr ""
+
+#: ../../guides/actions.rst:505
+msgid "``fields``: the fields for the ``<entity_type>:<entity_subtype>``"
+msgstr ""
+
+#: ../../guides/actions.rst:507
+msgid ""
+"The function will also check for the availability of an action in the "
+"following order:"
+msgstr ""
+
+#: ../../guides/actions.rst:512
+msgid ""
+"If neither is provided an ``\\Elgg\\Exceptions\\DomainException`` will be "
+"thrown."
+msgstr ""
+
+#: ../../guides/actions.rst:514
+msgid ""
+"These actions should work very well with the "
+"``\\Elgg\\Controllers\\EntityEditAction`` controller."
+msgstr ""
+
+#: ../../guides/actions.rst:517
 msgid "Files and images"
 msgstr "Файлы и изображения"
 
-#: ../../guides/actions.rst:492
+#: ../../guides/actions.rst:519
 msgid "Use the ``input/file`` view in your form’s content view."
 msgstr "Используйте представление ``input/file`` в содержимом формы."
 
-#: ../../guides/actions.rst:499
+#: ../../guides/actions.rst:526
 msgid ""
 "If you wish to upload an icon for entity you can use the helper view "
 "``entity/edit/icon``. This view shows a file input for uploading a new icon "
@@ -1028,12 +1090,12 @@ msgstr ""
 "показывает поле ввода файла для загрузки новой иконки для сущности, "
 "миниатюру текущей иконки и опцию удаления текущей иконки."
 
-#: ../../guides/actions.rst:503
+#: ../../guides/actions.rst:530
 msgid "The view supports some variables to control the output"
 msgstr ""
 "Представление поддерживает некоторые переменные для управления выводом"
 
-#: ../../guides/actions.rst:505
+#: ../../guides/actions.rst:532
 msgid ""
 "``entity`` - the entity to add/remove the icon for. If provided based on "
 "this entity the thumbnail and remove option wil be shown"
@@ -1042,7 +1104,7 @@ msgstr ""
 "предоставлено, на основе этой сущности будут показаны миниатюра и опция "
 "удаления"
 
-#: ../../guides/actions.rst:506
+#: ../../guides/actions.rst:533
 msgid ""
 "``entity_type`` - the entity type for which the icon will be uploaded. "
 "Plugins could find this useful, maybe to validate icon sizes"
@@ -1050,7 +1112,7 @@ msgstr ""
 "``entity_type`` — тип сущности, для которой будет загружена иконка. Плагины "
 "могут найти это полезным, возможно, для проверки размеров иконок"
 
-#: ../../guides/actions.rst:507
+#: ../../guides/actions.rst:534
 msgid ""
 "``entity_subtype`` - the entity subtype for which the icon will be uploaded."
 " Plugins could find this useful, maybe to validate icon sizes"
@@ -1058,15 +1120,15 @@ msgstr ""
 "``entity_subtype`` — подтип сущности, для которой будет загружена иконка. "
 "Плагины могут найти это полезным, возможно, для проверки размеров иконок"
 
-#: ../../guides/actions.rst:508
+#: ../../guides/actions.rst:535
 msgid "``icon_type`` - the type of the icon (default: icon)"
 msgstr "``icon_type`` — тип иконки (по умолчанию: icon)"
 
-#: ../../guides/actions.rst:509
+#: ../../guides/actions.rst:536
 msgid "``name`` - name of the input/file (default: icon)"
 msgstr "``name`` — имя поля ввода/файла (по умолчанию: icon)"
 
-#: ../../guides/actions.rst:510
+#: ../../guides/actions.rst:537
 msgid ""
 "``remove_name`` - name of the remove icon toggle (default: $vars['name'] . "
 "'_remove')"
@@ -1074,34 +1136,34 @@ msgstr ""
 "``remove_name`` — имя переключателя удаления иконки (по умолчанию: "
 "$vars['name'] . '_remove')"
 
-#: ../../guides/actions.rst:511
+#: ../../guides/actions.rst:538
 msgid "``required`` - is icon upload required (default: false)"
 msgstr "``required`` — требуется ли загрузка иконки (по умолчанию: false)"
 
-#: ../../guides/actions.rst:512
+#: ../../guides/actions.rst:539
 msgid "``cropper_enabled`` - is icon cropping allowed (default: true)"
 msgstr ""
 "``cropper_enabled`` — разрешено ли обрезание иконки (по умолчанию: true)"
 
-#: ../../guides/actions.rst:513
+#: ../../guides/actions.rst:540
 msgid "``show_remove`` - show the remove icon option (default: true)"
 msgstr ""
 "``show_remove`` — показывать опцию удаления иконки (по умолчанию: true)"
 
-#: ../../guides/actions.rst:514
+#: ../../guides/actions.rst:541
 msgid ""
 "``show_thumb`` - show the thumb of the entity if available (default: true)"
 msgstr ""
 "``show_thumb`` — показывать миниатюру сущности, если доступна (по умолчанию:"
 " true)"
 
-#: ../../guides/actions.rst:515
+#: ../../guides/actions.rst:542
 msgid "``thumb_size`` - the icon size to use as the thumb (default: medium)"
 msgstr ""
 "``thumb_size`` — размер иконки для использования в качестве миниатюры (по "
 "умолчанию: medium)"
 
-#: ../../guides/actions.rst:517
+#: ../../guides/actions.rst:544
 msgid ""
 "If using the helper view you can use the following code in you action to "
 "save the icon to the entity or remove the current icon."
@@ -1110,11 +1172,11 @@ msgstr ""
 "следующий код в вашем действии для сохранения иконки в сущность или удаления"
 " текущей иконки."
 
-#: ../../guides/actions.rst:527
+#: ../../guides/actions.rst:554
 msgid "Set the enctype of the form to ``multipart/form-data``:"
 msgstr "Установите enctype формы в ``multipart/form-data``:"
 
-#: ../../guides/actions.rst:537
+#: ../../guides/actions.rst:564
 msgid ""
 "The ``enctype`` of all forms that use the method ``POST`` defaults to "
 "``multipart/form-data``."
@@ -1122,7 +1184,7 @@ msgstr ""
 "``enctype`` всех форм, использующих метод ``POST``, по умолчанию равен "
 "``multipart/form-data``."
 
-#: ../../guides/actions.rst:539
+#: ../../guides/actions.rst:566
 msgid ""
 "In your action file, use ``elgg_get_uploaded_file('your-input-name')`` to "
 "access the uploaded file:"
@@ -1130,11 +1192,11 @@ msgstr ""
 "В вашем файле действия используйте ``elgg_get_uploaded_file('your-input-"
 "name')`` для доступа к загруженному файлу:"
 
-#: ../../guides/actions.rst:546
+#: ../../guides/actions.rst:573
 msgid "Sticky forms"
 msgstr "Липкие формы"
 
-#: ../../guides/actions.rst:548
+#: ../../guides/actions.rst:575
 msgid ""
 "Sticky forms are forms that retain user input if saving fails. They are "
 "\"sticky\" because the user's data \"sticks\" in the form after submitting, "
@@ -1149,15 +1211,15 @@ msgstr ""
 "данных. Elgg включает вспомогательные функции, чтобы вы могли сделать любую "
 "форму липкой."
 
-#: ../../guides/actions.rst:553 ../../guides/helpers.rst:2
+#: ../../guides/actions.rst:580 ../../guides/helpers.rst:2
 msgid "Helper functions"
 msgstr "Вспомогательные функции"
 
-#: ../../guides/actions.rst:555
+#: ../../guides/actions.rst:582
 msgid "Sticky forms are implemented in Elgg by the following functions:"
 msgstr "Липкие формы реализованы в Elgg следующими функциями:"
 
-#: ../../guides/actions.rst:557
+#: ../../guides/actions.rst:584
 msgid ""
 "``elgg_make_sticky_form($name)`` - Tells the engine to make all input on a "
 "form sticky."
@@ -1165,7 +1227,7 @@ msgstr ""
 "``elgg_make_sticky_form($name)`` — сообщает движку сделать весь ввод в форме"
 " липким."
 
-#: ../../guides/actions.rst:558
+#: ../../guides/actions.rst:585
 msgid ""
 "``elgg_clear_sticky_form($name)`` - Tells the engine to discard all sticky "
 "input on a form."
@@ -1173,14 +1235,14 @@ msgstr ""
 "``elgg_clear_sticky_form($name)`` — сообщает движку отбросить весь липкий "
 "ввод в форме."
 
-#: ../../guides/actions.rst:559
+#: ../../guides/actions.rst:586
 msgid ""
 "``elgg_is_sticky_form($name)`` - Checks if ``$name`` is a valid sticky form."
 msgstr ""
 "``elgg_is_sticky_form($name)`` — проверяет, является ли ``$name`` допустимой"
 " липкой формой."
 
-#: ../../guides/actions.rst:560
+#: ../../guides/actions.rst:587
 msgid ""
 "``elgg_get_sticky_values($name)`` - Returns all sticky values saved for "
 "``$name`` by ``elgg_make_sticky_form($name)``."
@@ -1188,11 +1250,11 @@ msgstr ""
 "``elgg_get_sticky_values($name)`` — возвращает все липкие значения, "
 "сохранённые для ``$name`` функцией ``elgg_make_sticky_form($name)``."
 
-#: ../../guides/actions.rst:565
+#: ../../guides/actions.rst:592
 msgid "The basic flow of using sticky forms is:"
 msgstr "Базовый поток использования липких форм:"
 
-#: ../../guides/actions.rst:567
+#: ../../guides/actions.rst:594
 msgid ""
 "Call ``elgg_make_sticky_form($name)`` at the top of actions for forms you "
 "want to be sticky."
@@ -1200,7 +1262,7 @@ msgstr ""
 "Вызовите ``elgg_make_sticky_form($name)`` в начале действий для форм, "
 "которые вы хотите сделать липкими."
 
-#: ../../guides/actions.rst:568
+#: ../../guides/actions.rst:595
 msgid ""
 "Use ``elgg_is_sticky_form($name)`` and ``elgg_get_sticky_values($name)`` to "
 "get sticky values when rendering a form view."
@@ -1209,7 +1271,7 @@ msgstr ""
 "``elgg_get_sticky_values($name)`` для получения липких значений при "
 "отображении представления формы."
 
-#: ../../guides/actions.rst:569
+#: ../../guides/actions.rst:596
 msgid ""
 "Call ``elgg_clear_sticky_form($name)`` after the action has completed "
 "successfully or after data has been loaded by "
@@ -1219,7 +1281,7 @@ msgstr ""
 "действия или после загрузки данных функцией "
 "``elgg_get_sticky_values($name)``."
 
-#: ../../guides/actions.rst:573
+#: ../../guides/actions.rst:600
 msgid ""
 "As of Elgg 5.0 forms rendered with ``elgg_view_form()`` can set the "
 "``$form_vars['sticky_enabled'] = true`` flag to automatically get sticky "
@@ -1231,7 +1293,7 @@ msgstr ""
 " получения поддержки липких форм. Отправленные значения в действие будут "
 "автоматически заполнены в ``$body_vars``, когда в действии произошла ошибка."
 
-#: ../../guides/actions.rst:576
+#: ../../guides/actions.rst:603
 msgid ""
 "``elgg_view_form()`` supports the following ``$form_vars`` to help with "
 "sticky form support:"
@@ -1239,13 +1301,13 @@ msgstr ""
 "``elgg_view_form()`` поддерживает следующие ``$form_vars`` для помощи в "
 "поддержке липких форм:"
 
-#: ../../guides/actions.rst:578
+#: ../../guides/actions.rst:605
 msgid "``sticky_enabled``: a ``bool`` to enable automatic sticky form support"
 msgstr ""
 "``sticky_enabled``: ``bool`` для включения автоматической поддержки липких "
 "форм"
 
-#: ../../guides/actions.rst:579
+#: ../../guides/actions.rst:606
 msgid ""
 "``sticky_form_name``: an optional ``string`` to set where the sticky form "
 "values are saved. This defaults to the ``$action_name`` and should only be "
@@ -1255,7 +1317,7 @@ msgstr ""
 "сохранения значений липкой формы. По умолчанию это ``$action_name`` и должно"
 " изменяться только если ``$action_name`` отличается от фактического действия"
 
-#: ../../guides/actions.rst:580
+#: ../../guides/actions.rst:607
 msgid ""
 "``sticky_ignored_fields``: an ``array`` with the names fo the form fields "
 "that should be saved. For example password fields"
@@ -1263,11 +1325,11 @@ msgstr ""
 "``sticky_ignored_fields``: ``array`` с именами полей формы, которые должны "
 "быть сохранены. Например, поля паролей"
 
-#: ../../guides/actions.rst:583
+#: ../../guides/actions.rst:610
 msgid "Example: User registration"
 msgstr "Пример: Регистрация пользователя"
 
-#: ../../guides/actions.rst:585
+#: ../../guides/actions.rst:612
 msgid ""
 "Simple sticky forms require little logic to determine the input values for "
 "the form. This logic is placed at the top of the form body view itself."
@@ -1275,7 +1337,7 @@ msgstr ""
 "Простые липкие формы требуют мало логики для определения значений ввода для "
 "формы. Эта логика размещается в начале самого представления тела формы."
 
-#: ../../guides/actions.rst:588
+#: ../../guides/actions.rst:615
 msgid ""
 "The registration form view first sets default values for inputs, then checks"
 " if there are sticky values. If so, it loads the sticky values before "
@@ -1285,7 +1347,7 @@ msgstr ""
 "для полей ввода, затем проверяет, есть ли липкие значения. Если да, оно "
 "загружает липкие значения перед очисткой липкой формы:"
 
-#: ../../guides/actions.rst:604
+#: ../../guides/actions.rst:631
 msgid ""
 "The registration action sets creates the sticky form and clears it once the "
 "action is completed:"
@@ -1293,7 +1355,7 @@ msgstr ""
 "Действие регистрации создаёт липкую форму и очищает её после завершения "
 "действия:"
 
-#: ../../guides/actions.rst:622
+#: ../../guides/actions.rst:649
 msgid ""
 "The function ``elgg_make_sticky_form()`` supports an optional second "
 "argument ``$ignored_field_names``. This needs to be an ``array`` of the "
@@ -1305,11 +1367,11 @@ msgstr ""
 "полей, которые вы не хотите делать липкими. Это полезно для полей, "
 "содержащих конфиденциальные данные, такие как пароли."
 
-#: ../../guides/actions.rst:626
+#: ../../guides/actions.rst:653
 msgid "Example: Bookmarks"
 msgstr "Пример: Закладки"
 
-#: ../../guides/actions.rst:628
+#: ../../guides/actions.rst:655
 msgid ""
 "The bundled plugin Bookmarks' save form and action is an example of a "
 "complex sticky form."
@@ -1317,7 +1379,7 @@ msgstr ""
 "Форма сохранения и действие встроенного плагина Bookmarks являются примером "
 "сложной липкой формы."
 
-#: ../../guides/actions.rst:630
+#: ../../guides/actions.rst:657
 msgid ""
 "The form view for the save bookmark action uses ``elgg_extract()`` to pull "
 "values from the ``$vars`` array:"
@@ -1325,7 +1387,7 @@ msgstr ""
 "Представление формы для действия сохранения закладки использует "
 "``elgg_extract()`` для извлечения значений из массива ``$vars``:"
 
-#: ../../guides/actions.rst:644
+#: ../../guides/actions.rst:671
 msgid ""
 "The page handler scripts enables sticky form support by passing the correct "
 "values to ``elgg_view_form()``:"
@@ -1333,7 +1395,7 @@ msgstr ""
 "Скрипты обработчика страниц включают поддержку липких форм, передавая "
 "правильные значения в ``elgg_view_form()``:"
 
-#: ../../guides/actions.rst:651
+#: ../../guides/actions.rst:678
 msgid ""
 "Similarly, ``mod/bookmarks/pages/edit.php`` uses the same sticky support, "
 "but passes the entity that is being edited:"
@@ -1341,7 +1403,7 @@ msgstr ""
 "Аналогично, ``mod/bookmarks/pages/edit.php`` использует ту же поддержку "
 "липкости, но передаёт сущность, которая редактируется:"
 
-#: ../../guides/actions.rst:662
+#: ../../guides/actions.rst:689
 msgid ""
 "The plugin has an event listener on the ``'form:prepare:fields', "
 "'bookmarks/save'`` event and the handler does 2 things:"
@@ -1349,16 +1411,16 @@ msgstr ""
 "Плагин имеет слушатель событий на событии ``'form:prepare:fields', "
 "'bookmarks/save'``, и обработчик делает 2 вещи:"
 
-#: ../../guides/actions.rst:664
+#: ../../guides/actions.rst:691
 msgid "Defines the input names and default values for form inputs."
 msgstr ""
 "Определяет имена полей ввода и значения по умолчанию для полей ввода формы."
 
-#: ../../guides/actions.rst:665
+#: ../../guides/actions.rst:692
 msgid "Extracts the values from a bookmark object if it's passed."
 msgstr "Извлекает значения из объекта закладки, если он передан."
 
-#: ../../guides/actions.rst:712
+#: ../../guides/actions.rst:739
 msgid ""
 "The save action doesn't need to do anything with sticky form support as this"
 " is all handled by the system."
@@ -1366,12 +1428,12 @@ msgstr ""
 "Действию сохранения не нужно ничего делать с поддержкой липких форм, так как"
 " всё это обрабатывается системой."
 
-#: ../../guides/actions.rst:715 ../../guides/ajax.rst:2
+#: ../../guides/actions.rst:742 ../../guides/ajax.rst:2
 #: ../../guides/events-list.rst:845
 msgid "Ajax"
 msgstr "Ajax"
 
-#: ../../guides/actions.rst:717
+#: ../../guides/actions.rst:744
 msgid ""
 "See the :doc:`Ajax guide</guides/ajax>` for instructions on calling actions "
 "from JavaScript."
@@ -1379,11 +1441,11 @@ msgstr ""
 "Смотрите :doc:`Руководство по Ajax</guides/ajax>` для инструкций по вызову "
 "действий из JavaScript."
 
-#: ../../guides/actions.rst:720 ../../guides/web-services.rst:27
+#: ../../guides/actions.rst:747 ../../guides/web-services.rst:27
 msgid "Security"
 msgstr "Безопасность"
 
-#: ../../guides/actions.rst:722
+#: ../../guides/actions.rst:749
 msgid ""
 "For enhanced security, all actions require an CSRF token. Calls to action "
 "URLs that do not include security tokens will be ignored and a warning will "
@@ -1393,30 +1455,30 @@ msgstr ""
 "действий, которые не включают токены безопасности, будут проигнорированы, и "
 "будет сгенерировано предупреждение."
 
-#: ../../guides/actions.rst:725
+#: ../../guides/actions.rst:752
 msgid "A few views and functions automatically generate security tokens:"
 msgstr ""
 "Несколько представлений и функций автоматически генерируют токены "
 "безопасности:"
 
-#: ../../guides/actions.rst:734
+#: ../../guides/actions.rst:761
 msgid "In rare cases, you may need to generate tokens manually:"
 msgstr ""
 "В редких случаях вам может потребоваться сгенерировать токены вручную:"
 
-#: ../../guides/actions.rst:741
+#: ../../guides/actions.rst:768
 msgid "You can also access the tokens from javascript:"
 msgstr "Вы также можете получить доступ к токенам из JavaScript:"
 
-#: ../../guides/actions.rst:748
+#: ../../guides/actions.rst:775
 msgid "These are refreshed periodically so should always be up-to-date."
 msgstr "Они периодически обновляются, поэтому всегда должны быть актуальными."
 
-#: ../../guides/actions.rst:751
+#: ../../guides/actions.rst:778
 msgid "Security Tokens"
 msgstr "Токены безопасности"
 
-#: ../../guides/actions.rst:753
+#: ../../guides/actions.rst:780
 msgid ""
 "On occasion we need to pass data through an untrusted party or generate an "
 "\"unguessable token\" based on some data. The industry-standard `HMAC "
@@ -1433,7 +1495,7 @@ msgstr ""
 "внимание, что даже сильные хеш-функции, такие как SHA-2, *не должны* "
 "использоваться без HMAC для этих задач."
 
-#: ../../guides/actions.rst:758
+#: ../../guides/actions.rst:785
 msgid ""
 "Elgg provides ``elgg_build_hmac()`` to generate and validate HMAC message "
 "authentication codes that are unguessable without the site's private key."
@@ -1442,7 +1504,7 @@ msgstr ""
 "аутентификации сообщений HMAC, которые невозможно угадать без закрытого "
 "ключа сайта."
 
-#: ../../guides/actions.rst:782
+#: ../../guides/actions.rst:809
 msgid ""
 "Note: If you use a non-string as HMAC data, you must use types consistently."
 " Consider the following:"
@@ -1450,11 +1512,11 @@ msgstr ""
 "Примечание: Если вы используете не-строку в качестве данных HMAC, вы должны "
 "последовательно использовать типы. Рассмотрим следующее:"
 
-#: ../../guides/actions.rst:795
+#: ../../guides/actions.rst:822
 msgid "Signed URLs"
 msgstr "Подписанные URL"
 
-#: ../../guides/actions.rst:797
+#: ../../guides/actions.rst:824
 msgid ""
 "Signed URLs offer a limited level of security for situations where action "
 "tokens are not suitable, for example when sending a confirmation link via "
@@ -1468,7 +1530,7 @@ msgstr ""
 "сгенерирован вашей установкой Elgg (с использованием секретного ключа сайта)"
 " и что элементы запроса URL не были изменены."
 
-#: ../../guides/actions.rst:801
+#: ../../guides/actions.rst:828
 msgid ""
 "URLs a signed with an unguessable SHA-256 HMAC key. See `Security Tokens`_ "
 "for more details."
@@ -1476,7 +1538,7 @@ msgstr ""
 "URL подписываются с помощью неугадываемого ключа HMAC SHA-256. См. `Токены "
 "безопасности`_ для получения дополнительной информации."
 
-#: ../../guides/actions.rst:819
+#: ../../guides/actions.rst:846
 msgid ""
 "Signed URLs do not offer CSRF protection and should not be used instead of "
 "action tokens."
@@ -3565,7 +3627,7 @@ msgstr ""
 "имеют события ``:before`` и ``:after``. Также см. :ref:`Последовательность "
 "событий <event-sequence>`"
 
-#: ../../guides/events-list.rst:1329
+#: ../../guides/events-list.rst:1338
 msgid "sequence"
 msgstr "последовательность"
 
@@ -3577,7 +3639,7 @@ msgstr ""
 "Некоторые события помечены |results|, это означает, что эти события "
 "позволяют изменять вывод события"
 
-#: ../../guides/events-list.rst:1330
+#: ../../guides/events-list.rst:1339
 msgid "results"
 msgstr "результаты"
 
@@ -4099,16 +4161,16 @@ msgstr ""
 "текущему маршруту."
 
 #: ../../guides/events-list.rst:182
-msgid "params['all_link'] will be used for the ``all`` tab"
-msgstr "params['all_link'] будет использоваться для вкладки ``all``"
+msgid "params['all_link'] will be used for the ``all`` tab (deprecated)"
+msgstr ""
 
 #: ../../guides/events-list.rst:183
-msgid "params['mine_link'] will be used for the ``mine`` tab"
-msgstr "params['mine_link'] будет использоваться для вкладки ``mine``"
+msgid "params['mine_link'] will be used for the ``mine`` tab (deprecated)"
+msgstr ""
 
 #: ../../guides/events-list.rst:184
-msgid "params['friends_link'] will be used for the ``friend`` tab"
-msgstr "params['friends_link'] будет использоваться для вкладки ``friend``"
+msgid "params['friend_link'] will be used for the ``friend`` tab (deprecated)"
+msgstr ""
 
 #: ../../guides/events-list.rst:186
 msgid ""
@@ -6192,11 +6254,28 @@ msgstr ""
 "редактировании блога заполните это текущими значениями блога. Значения "
 "липкой формы будут автоматически добавлены к значениям полей (при наличии)."
 
-#: ../../guides/events-list.rst:928
+#: ../../guides/events-list.rst:929
+msgid "**form:register:fields, <entity_type>:<entity_subtype>** |results|"
+msgstr ""
+
+#: ../../guides/events-list.rst:923
+msgid ""
+"Register fields to be drawn on an entity form. This gets prefilled with the "
+"registered entity fields. You can add/remove fields when needed."
+msgstr ""
+
+#: ../../guides/events-list.rst:926
+msgid ""
+"``$params`` array includes: * ``entity_type``: the type of the entity * "
+"``entity_subtype``: the subtype of the entity * ``entity``: the entity being"
+" edited or ``null`` when adding a new entity"
+msgstr ""
+
+#: ../../guides/events-list.rst:937
 msgid "**head, page** |results|"
 msgstr "**head, page** |results|"
 
-#: ../../guides/events-list.rst:923
+#: ../../guides/events-list.rst:932
 msgid ""
 "In ``elgg_view_page()``, filters ``$vars['head']`` Return value contains an "
 "array with ``title``, ``metas`` and ``links`` keys, where ``metas`` is an "
@@ -6212,50 +6291,50 @@ msgstr ""
 "``<link>``. Каждый элемент meta и link содержит набор пар ключ/значение, "
 "которые форматируются в атрибуты тегов html, например."
 
-#: ../../guides/events-list.rst:962
+#: ../../guides/events-list.rst:971
 msgid "**layout, page** |results|"
 msgstr "**layout, page** |results|"
 
-#: ../../guides/events-list.rst:957
+#: ../../guides/events-list.rst:966
 msgid ""
 "In ``elgg_view_layout()``, filters the layout name. ``$params`` array "
 "includes:"
 msgstr ""
 "В ``elgg_view_layout()`` фильтрует имя макета. Массив ``$params`` включает:"
 
-#: ../../guides/events-list.rst:960
+#: ../../guides/events-list.rst:969
 msgid "``identifier`` - ID of the page being rendered"
 msgstr "``identifier`` — ID отображаемой страницы"
 
-#: ../../guides/events-list.rst:961
+#: ../../guides/events-list.rst:970
 msgid "``segments`` - URL segments of the page being rendered"
 msgstr "``segments`` — сегменты URL отображаемой страницы"
 
-#: ../../guides/events-list.rst:962
+#: ../../guides/events-list.rst:971
 msgid "other ``$vars`` received by ``elgg_view_layout()``"
 msgstr "другие ``$vars``, полученные ``elgg_view_layout()``"
 
-#: ../../guides/events-list.rst:965
+#: ../../guides/events-list.rst:974
 msgid "**shell, page** |results|"
 msgstr "**shell, page** |results|"
 
-#: ../../guides/events-list.rst:965
+#: ../../guides/events-list.rst:974
 msgid "In ``elgg_view_page()``, filters the page shell name"
 msgstr "В ``elgg_view_page()`` фильтрует имя оболочки страницы"
 
-#: ../../guides/events-list.rst:968
+#: ../../guides/events-list.rst:977
 msgid "**spec, htmlawed** |results|"
 msgstr "**spec, htmlawed** |results|"
 
-#: ../../guides/events-list.rst:968
+#: ../../guides/events-list.rst:977
 msgid "Filter the HTMLawed ``$spec`` string (default empty)."
 msgstr "Фильтрует строку ``$spec`` HTMLawed (по умолчанию пустая)."
 
-#: ../../guides/events-list.rst:974
+#: ../../guides/events-list.rst:983
 msgid "**table_columns:call, <name>** |results|"
 msgstr "**table_columns:call, <name>** |results|"
 
-#: ../../guides/events-list.rst:971
+#: ../../guides/events-list.rst:980
 msgid ""
 "When the method ``elgg()->table_columns->$name()`` is called, this event is "
 "called to allow plugins to override or provide an implementation. Handlers "
@@ -6269,31 +6348,31 @@ msgstr ""
 "``$params['arguments']`` и должны вернуть экземпляр "
 "``Elgg\\Views\\TableColumn``, если они хотят указать столбец напрямую."
 
-#: ../../guides/events-list.rst:977
+#: ../../guides/events-list.rst:986
 msgid "**view, <view_name>** |results|"
 msgstr "**view, <view_name>** |results|"
 
-#: ../../guides/events-list.rst:977
+#: ../../guides/events-list.rst:986
 msgid "Filters the returned content of the view"
 msgstr "Фильтрует возвращаемое содержимое представления"
 
-#: ../../guides/events-list.rst:980
+#: ../../guides/events-list.rst:989
 msgid "**view_vars, <view_name>** |results|"
 msgstr "**view_vars, <view_name>** |results|"
 
-#: ../../guides/events-list.rst:980
+#: ../../guides/events-list.rst:989
 msgid "Filters the ``$vars`` array passed to the view"
 msgstr "Фильтрует массив ``$vars``, переданный в представление"
 
-#: ../../guides/events-list.rst:985 ../../guides/search.rst:2
+#: ../../guides/events-list.rst:994 ../../guides/search.rst:2
 msgid "Search"
 msgstr "Поиск"
 
-#: ../../guides/events-list.rst:990
+#: ../../guides/events-list.rst:999
 msgid "**search:config, search_types** |results|"
 msgstr "**search:config, search_types** |results|"
 
-#: ../../guides/events-list.rst:988
+#: ../../guides/events-list.rst:997
 msgid ""
 "Implemented in the **search** plugin. Filters an array of custom search "
 "types. This allows plugins to add custom search types (e.g. tag or location "
@@ -6306,11 +6385,11 @@ msgstr ""
 "типа поиска расширит пользовательский интерфейс плагина поиска "
 "соответствующими ссылками и списками."
 
-#: ../../guides/events-list.rst:995
+#: ../../guides/events-list.rst:1004
 msgid "**search:config, type_subtype_pairs** |results|"
 msgstr "**search:config, type_subtype_pairs** |results|"
 
-#: ../../guides/events-list.rst:993
+#: ../../guides/events-list.rst:1002
 msgid ""
 "Implemented in the **search** plugin. Filters entity type/subtype pairs "
 "before entity search is performed. Allows plugins to remove certain entity "
@@ -6322,11 +6401,11 @@ msgstr ""
 "типы/подтипы сущности из результатов поиска, группировать несколько подтипов"
 " вместе или переупорядочивать секции поиска."
 
-#: ../../guides/events-list.rst:1000
+#: ../../guides/events-list.rst:1009
 msgid "**search:fields, <entity_type>** |results|"
 msgstr "**search:fields, <entity_type>** |results|"
 
-#: ../../guides/events-list.rst:998
+#: ../../guides/events-list.rst:1007
 msgid ""
 "Triggered by ``elgg_search()``. Filters search fields before search clauses "
 "are prepared. ``$return`` value contains an array of names for each entity "
@@ -6340,23 +6419,23 @@ msgstr ""
 "запросом. Массив ``$params`` содержит массив параметров поиска, переданных и"
 " отфильтрованных ``elgg_search()``."
 
-#: ../../guides/events-list.rst:1011
+#: ../../guides/events-list.rst:1020
 msgid "**search:fields, <entity_type>:<entity_subtype>** |results|"
 msgstr "**search:fields, <entity_type>:<entity_subtype>** |results|"
 
-#: ../../guides/events-list.rst:1011 ../../guides/events-list.rst:1014
+#: ../../guides/events-list.rst:1020 ../../guides/events-list.rst:1023
 msgid "See **search:fields, <entity_type>**"
 msgstr "См. **search:fields, <entity_type>**"
 
-#: ../../guides/events-list.rst:1014
+#: ../../guides/events-list.rst:1023
 msgid "**search:fields, <search_type>** |results|"
 msgstr "**search:fields, <search_type>** |results|"
 
-#: ../../guides/events-list.rst:1019
+#: ../../guides/events-list.rst:1028
 msgid "**search:format, entity** |results|"
 msgstr "**search:format, entity** |results|"
 
-#: ../../guides/events-list.rst:1017
+#: ../../guides/events-list.rst:1026
 msgid ""
 "Implemented in the **search** plugin. Allows plugins to populate entity's "
 "volatile data before it's passed to search view. This is used for "
@@ -6368,11 +6447,11 @@ msgstr ""
 "для выделения совпадений поиска, извлечения соответствующих подстрок в "
 "длинных текстовых полях и т.д."
 
-#: ../../guides/events-list.rst:1022
+#: ../../guides/events-list.rst:1031
 msgid "**search:options, <entity_type>** |results|"
 msgstr "**search:options, <entity_type>** |results|"
 
-#: ../../guides/events-list.rst:1022
+#: ../../guides/events-list.rst:1031
 msgid ""
 "Triggered by ``elgg_search()``. Prepares search clauses (options) to be "
 "passed to ``elgg_get_entities()``."
@@ -6380,23 +6459,23 @@ msgstr ""
 "Запускается ``elgg_search()``. Подготавливает предложения поиска (опции) для"
 " передачи в ``elgg_get_entities()``."
 
-#: ../../guides/events-list.rst:1025
+#: ../../guides/events-list.rst:1034
 msgid "**search:options, <entity_type>:<entity_subtype>** |results|"
 msgstr "**search:options, <entity_type>:<entity_subtype>** |results|"
 
-#: ../../guides/events-list.rst:1025 ../../guides/events-list.rst:1028
+#: ../../guides/events-list.rst:1034 ../../guides/events-list.rst:1037
 msgid "See **search:options, <entity_type>**"
 msgstr "См. **search:options, <entity_type>**"
 
-#: ../../guides/events-list.rst:1028
+#: ../../guides/events-list.rst:1037
 msgid "**search:options, <search_type>** |results|"
 msgstr "**search:options, <search_type>** |results|"
 
-#: ../../guides/events-list.rst:1032
+#: ../../guides/events-list.rst:1041
 msgid "**search:params, <search_type>** |results|"
 msgstr "**search:params, <search_type>** |results|"
 
-#: ../../guides/events-list.rst:1031
+#: ../../guides/events-list.rst:1040
 msgid ""
 "Triggered by ``elgg_search()``. Filters search parameters (query, sorting, "
 "search fields etc) before search clauses are prepared for a given search "
@@ -6407,11 +6486,11 @@ msgstr ""
 "заданного типа поиска. Ядро Elgg предоставляет поддержку только для типа "
 "поиска ``entities``."
 
-#: ../../guides/events-list.rst:1036
+#: ../../guides/events-list.rst:1045
 msgid "**search:results, <search_type>** |results|"
 msgstr "**search:results, <search_type>** |results|"
 
-#: ../../guides/events-list.rst:1035
+#: ../../guides/events-list.rst:1044
 msgid ""
 "Triggered by ``elgg_search()``. Receives normalized options suitable for "
 "``elgg_get_entities()`` call and must return an array of entities matching "
@@ -6424,15 +6503,15 @@ msgstr ""
 "плагинами, интегрирующими сторонние сервисы индексации, такие как Solr и "
 "Elasticsearch."
 
-#: ../../guides/events-list.rst:1041
+#: ../../guides/events-list.rst:1050
 msgid "Other"
 msgstr "Другое"
 
-#: ../../guides/events-list.rst:1045
+#: ../../guides/events-list.rst:1054
 msgid "**config, comments_per_page** |results|"
 msgstr "**config, comments_per_page** |results|"
 
-#: ../../guides/events-list.rst:1044
+#: ../../guides/events-list.rst:1053
 msgid ""
 "Filters the number of comments displayed per page. Default is 25. "
 "``$params['entity']`` will hold the containing entity or null if not "
@@ -6443,11 +6522,11 @@ msgstr ""
 " не предоставлено. Используйте ``elgg_comments_per_page()``, чтобы получить "
 "значение."
 
-#: ../../guides/events-list.rst:1049
+#: ../../guides/events-list.rst:1058
 msgid "**config, comments_latest_first** |results|"
 msgstr "**config, comments_latest_first** |results|"
 
-#: ../../guides/events-list.rst:1048
+#: ../../guides/events-list.rst:1057
 msgid ""
 "Filters the order of comments. Default is ``true`` for latest first. "
 "``$params['entity']`` will hold the containing entity or null if not "
@@ -6457,11 +6536,11 @@ msgstr ""
 "последних первыми. ``$params['entity']`` будет содержать содержащую сущность"
 " или null, если не предоставлено."
 
-#: ../../guides/events-list.rst:1056
+#: ../../guides/events-list.rst:1065
 msgid "**default, access** |results|"
 msgstr "**default, access** |results|"
 
-#: ../../guides/events-list.rst:1052
+#: ../../guides/events-list.rst:1061
 msgid ""
 "In ``elgg_get_default_access()``, this event filters the return value, so it"
 " can be used to alter the default value in the input/access view. For core "
@@ -6478,11 +6557,11 @@ msgstr ""
 "сущности обычно означает, что форма предназначена для создания нового "
 "объекта."
 
-#: ../../guides/events-list.rst:1060
+#: ../../guides/events-list.rst:1069
 msgid "**classes, icon** |results|"
 msgstr "**classes, icon** |results|"
 
-#: ../../guides/events-list.rst:1059
+#: ../../guides/events-list.rst:1068
 msgid ""
 "Can be used to filter CSS classes applied to icon glyphs. By default, Elgg "
 "uses FontAwesome. Plugins can use this event to switch to a different font "
@@ -6493,11 +6572,11 @@ msgstr ""
 " это событие для переключения на другое семейство шрифтов и переназначения "
 "классов иконок."
 
-#: ../../guides/events-list.rst:1064
+#: ../../guides/events-list.rst:1073
 msgid "**entity:icon:sizes, <entity_type>** |results|"
 msgstr "**entity:icon:sizes, <entity_type>** |results|"
 
-#: ../../guides/events-list.rst:1063
+#: ../../guides/events-list.rst:1072
 msgid ""
 "Triggered by ``elgg_get_icon_sizes()`` and sets entity type/subtype specific"
 " icon sizes. ``entity_subtype`` will be passed with the ``$params`` array to"
@@ -6507,11 +6586,11 @@ msgstr ""
 "типа/подтипа сущности размеры иконок. ``entity_subtype`` будет передан с "
 "массивом ``$params`` в обратный вызов."
 
-#: ../../guides/events-list.rst:1081
+#: ../../guides/events-list.rst:1090
 msgid "**entity:<icon_type>:sizes, <entity_type>** |results|"
 msgstr "**entity:<icon_type>:sizes, <entity_type>** |results|"
 
-#: ../../guides/events-list.rst:1067
+#: ../../guides/events-list.rst:1076
 msgid ""
 "Allows filtering sizes for custom icon types, see ``entity:icon:sizes, "
 "<entity_type>``."
@@ -6519,7 +6598,7 @@ msgstr ""
 "Позволяет фильтровать размеры для пользовательских типов иконок, см. "
 "``entity:icon:sizes, <entity_type>``."
 
-#: ../../guides/events-list.rst:1069
+#: ../../guides/events-list.rst:1078
 msgid ""
 "The event must return an associative array where keys are the names of the "
 "icon sizes (e.g. \"large\"), and the values are arrays with the following "
@@ -6528,20 +6607,20 @@ msgstr ""
 "Событие должно вернуть ассоциативный массив, где ключи — это имена размеров "
 "иконок (например, \"large\"), а значения — массивы со следующими ключами:"
 
-#: ../../guides/events-list.rst:1072
+#: ../../guides/events-list.rst:1081
 msgid "``w`` - Width of the image in pixels"
 msgstr "``w`` — ширина изображения в пикселях"
 
-#: ../../guides/events-list.rst:1073
+#: ../../guides/events-list.rst:1082
 msgid "``h`` - Height of the image in pixels"
 msgstr "``h`` — высота изображения в пикселях"
 
-#: ../../guides/events-list.rst:1074
+#: ../../guides/events-list.rst:1083
 msgid "``square`` - Should the aspect ratio be a square (true/false)"
 msgstr ""
 "``square`` — должно ли соотношение сторон быть квадратным (true/false)"
 
-#: ../../guides/events-list.rst:1075
+#: ../../guides/events-list.rst:1084
 msgid ""
 "``upscale`` - Should the image be upscaled in case it is smaller than the "
 "given width and height (true/false)"
@@ -6549,7 +6628,7 @@ msgstr ""
 "``upscale`` — должно ли изображение быть увеличено, если оно меньше заданной"
 " ширины и высоты (true/false)"
 
-#: ../../guides/events-list.rst:1076
+#: ../../guides/events-list.rst:1085
 msgid ""
 "``crop`` - Is cropping allowed on this image size (true/false, default: "
 "true)"
@@ -6557,7 +6636,7 @@ msgstr ""
 "``crop`` — разрешено ли обрезание для этого размера изображения (true/false,"
 " по умолчанию: true)"
 
-#: ../../guides/events-list.rst:1078
+#: ../../guides/events-list.rst:1087
 msgid ""
 "If the configuration array for an image size is empty, the image will be "
 "saved as an exact copy of the source without resizing or cropping."
@@ -6565,17 +6644,17 @@ msgstr ""
 "Если массив конфигурации для размера изображения пуст, изображение будет "
 "сохранено как точная копия исходника без изменения размера или обрезки."
 
-#: ../../guides/events-list.rst:1081 ../../guides/i18n.rst:51
+#: ../../guides/events-list.rst:1090 ../../guides/i18n.rst:51
 #: ../../guides/notifications.rst:22 ../../guides/notifications.rst:326
 #: ../../guides/notifications.rst:350 ../../guides/notifications.rst:398
 msgid "Example:"
 msgstr "Пример:"
 
-#: ../../guides/events-list.rst:1113
+#: ../../guides/events-list.rst:1122
 msgid "**entity:icon:url, <entity_type>** |results|"
 msgstr "**entity:icon:url, <entity_type>** |results|"
 
-#: ../../guides/events-list.rst:1101
+#: ../../guides/events-list.rst:1110
 msgid ""
 "Triggered when entity icon URL is requested, see :ref:`entity icons "
 "<guides/database#entity-icons>`. Callback should return URL for the icon of "
@@ -6587,19 +6666,19 @@ msgstr ""
 "иконки размера ``$params['size']`` для сущности ``$params['entity']``. "
 "Следующие параметры доступны через массив ``$params``:"
 
-#: ../../guides/events-list.rst:1105
+#: ../../guides/events-list.rst:1114
 msgid "entity"
 msgstr "сущность"
 
-#: ../../guides/events-list.rst:1106
+#: ../../guides/events-list.rst:1115
 msgid "Entity for which icon url is requested."
 msgstr "Сущность, для которой запрашивается URL иконки."
 
-#: ../../guides/events-list.rst:1107
+#: ../../guides/events-list.rst:1116
 msgid "viewtype"
 msgstr "тип представления"
 
-#: ../../guides/events-list.rst:1108
+#: ../../guides/events-list.rst:1117
 msgid ""
 "The type of :ref:`view <guides/views#listing-entities>` e.g. ``'default'`` "
 "or ``'json'``."
@@ -6607,11 +6686,11 @@ msgstr ""
 "Тип :ref:`представления <guides/views#listing-entities>`, например "
 "``'default'`` или ``'json'``."
 
-#: ../../guides/events-list.rst:1110
+#: ../../guides/events-list.rst:1119
 msgid "size"
 msgstr "размер"
 
-#: ../../guides/events-list.rst:1110
+#: ../../guides/events-list.rst:1119
 msgid ""
 "Size requested, see :ref:`entity icons <guides/database#entity-icons>` for "
 "possible values."
@@ -6619,7 +6698,7 @@ msgstr ""
 "Запрашиваемый размер, см. :ref:`иконки сущностей <guides/database#entity-"
 "icons>` для возможных значений."
 
-#: ../../guides/events-list.rst:1112
+#: ../../guides/events-list.rst:1121
 msgid ""
 "Example on how one could default to a Gravatar icon for users that have not "
 "yet uploaded an avatar:"
@@ -6627,11 +6706,11 @@ msgstr ""
 "Пример того, как можно использовать иконку Gravatar по умолчанию для "
 "пользователей, которые ещё не загрузили аватар:"
 
-#: ../../guides/events-list.rst:1154
+#: ../../guides/events-list.rst:1163
 msgid "**entity:<icon_type>:url, <entity_type>** |results|"
 msgstr "**entity:<icon_type>:url, <entity_type>** |results|"
 
-#: ../../guides/events-list.rst:1154
+#: ../../guides/events-list.rst:1163
 msgid ""
 "Allows filtering URLs for custom icon types, see ``entity:icon:url, "
 "<entity_type>``"
@@ -6639,11 +6718,11 @@ msgstr ""
 "Позволяет фильтровать URL для пользовательских типов иконок, см. "
 "``entity:icon:url, <entity_type>``"
 
-#: ../../guides/events-list.rst:1159
+#: ../../guides/events-list.rst:1168
 msgid "**entity:icon:file, <entity_type>** |results|"
 msgstr "**entity:icon:file, <entity_type>** |results|"
 
-#: ../../guides/events-list.rst:1157
+#: ../../guides/events-list.rst:1166
 msgid ""
 "Triggered by ``ElggEntity::getIcon()`` and allows plugins to provide an "
 "alternative ``ElggIcon`` object that points to a custom location of the icon"
@@ -6655,11 +6734,11 @@ msgstr ""
 "расположение иконки в хранилище файлов. Обработчик должен вернуть экземпляр "
 "``ElggIcon``, иначе будет выброшено исключение."
 
-#: ../../guides/events-list.rst:1162
+#: ../../guides/events-list.rst:1171
 msgid "**entity:<icon_type>:file, <entity_type>** |results|"
 msgstr "**entity:<icon_type>:file, <entity_type>** |results|"
 
-#: ../../guides/events-list.rst:1162
+#: ../../guides/events-list.rst:1171
 msgid ""
 "Allows filtering icon file object for custom icon types, see "
 "``entity:icon:file, <entity_type>``"
@@ -6667,11 +6746,11 @@ msgstr ""
 "Позволяет фильтровать объект файла иконки для пользовательских типов иконок,"
 " см. ``entity:icon:file, <entity_type>``"
 
-#: ../../guides/events-list.rst:1174
+#: ../../guides/events-list.rst:1183
 msgid "**entity:<icon_type>:prepare, <entity_type>** |results|"
 msgstr "**entity:<icon_type>:prepare, <entity_type>** |results|"
 
-#: ../../guides/events-list.rst:1165
+#: ../../guides/events-list.rst:1174
 msgid ""
 "Triggered by ``ElggEntity::saveIcon*()`` methods and can be used to prepare "
 "an image from uploaded/linked file. This event can be used to e.g. rotate "
@@ -6690,28 +6769,28 @@ msgstr ""
 "передаваемое событию, — это экземпляр ``ElggFile``, указывающий на временную"
 " копию загруженного/связанного файла."
 
-#: ../../guides/events-list.rst:1171 ../../guides/events-list.rst:1272
-#: ../../guides/events-list.rst:1311
+#: ../../guides/events-list.rst:1180 ../../guides/events-list.rst:1281
+#: ../../guides/events-list.rst:1320
 msgid "The ``$params`` array contains:"
 msgstr "Массив ``$params`` содержит:"
 
-#: ../../guides/events-list.rst:1173 ../../guides/events-list.rst:1181
-#: ../../guides/events-list.rst:1191 ../../guides/events-list.rst:1199
+#: ../../guides/events-list.rst:1182 ../../guides/events-list.rst:1190
+#: ../../guides/events-list.rst:1200 ../../guides/events-list.rst:1208
 msgid "``entity`` - entity that owns the icons"
 msgstr "``entity`` — сущность, которой принадлежат иконки"
 
-#: ../../guides/events-list.rst:1174
+#: ../../guides/events-list.rst:1183
 msgid ""
 "``file`` - original input file before it has been modified by other events"
 msgstr ""
 "``file`` — исходный входной файл до того, как он был изменён другими "
 "событиями"
 
-#: ../../guides/events-list.rst:1183
+#: ../../guides/events-list.rst:1192
 msgid "**entity:<icon_type>:save, <entity_type>** |results|"
 msgstr "**entity:<icon_type>:save, <entity_type>** |results|"
 
-#: ../../guides/events-list.rst:1177
+#: ../../guides/events-list.rst:1186
 msgid ""
 "Triggered by ``ElggEntity::saveIcon*()`` methods and can be used to apply "
 "custom image manipulation logic to resizing/cropping icons. The handler must"
@@ -6724,7 +6803,7 @@ msgstr ""
 "предотвратить изменение размера/обрезку иконок основными API. Массив "
 "``$params`` содержит:"
 
-#: ../../guides/events-list.rst:1182
+#: ../../guides/events-list.rst:1191
 msgid ""
 "``file`` - ``ElggFile`` object that points to the image file to be used as "
 "source for icons"
@@ -6732,15 +6811,15 @@ msgstr ""
 "``file`` — объект ``ElggFile``, указывающий на файл изображения, который "
 "будет использоваться как источник для иконок"
 
-#: ../../guides/events-list.rst:1183 ../../guides/events-list.rst:1192
+#: ../../guides/events-list.rst:1192 ../../guides/events-list.rst:1201
 msgid "``x1``, ``y1``, ``x2``, ``y2`` - cropping coordinates"
 msgstr "``x1``, ``y1``, ``x2``, ``y2`` — координаты обрезки"
 
-#: ../../guides/events-list.rst:1192
+#: ../../guides/events-list.rst:1201
 msgid "**entity:<icon_type>:saved, <entity_type>** |results|"
 msgstr "**entity:<icon_type>:saved, <entity_type>** |results|"
 
-#: ../../guides/events-list.rst:1186
+#: ../../guides/events-list.rst:1195
 msgid ""
 "Triggered by ``ElggEntity::saveIcon*()`` methods once icons have been "
 "created. This event can be used by plugins to create river items, update "
@@ -6754,11 +6833,11 @@ msgstr ""
 "Обработчик может получить доступ к созданным иконкам с помощью "
 "``ElggEntity::getIcon()``. Массив ``$params`` содержит:"
 
-#: ../../guides/events-list.rst:1199
+#: ../../guides/events-list.rst:1208
 msgid "**entity:<icon_type>:delete, <entity_type>** |results|"
 msgstr "**entity:<icon_type>:delete, <entity_type>** |results|"
 
-#: ../../guides/events-list.rst:1195
+#: ../../guides/events-list.rst:1204
 msgid ""
 "Triggered by ``ElggEntity::deleteIcon()`` method and can be used for clean "
 "up operations. This event is triggered before the icons are deleted. The "
@@ -6770,11 +6849,11 @@ msgstr ""
 " может вернуть ``false``, чтобы предотвратить удаление иконок. Массив "
 "``$params`` содержит:"
 
-#: ../../guides/events-list.rst:1204
+#: ../../guides/events-list.rst:1213
 msgid "**entity:url, <entity_type>:<entity_subtype>** |results|"
 msgstr "**entity:url, <entity_type>:<entity_subtype>** |results|"
 
-#: ../../guides/events-list.rst:1202 ../../guides/events-list.rst:1207
+#: ../../guides/events-list.rst:1211 ../../guides/events-list.rst:1216
 msgid ""
 "Return the URL for the entity ``$params['entity']``. Note: Generally it is "
 "better to override the ``getUrl()`` method of ElggEntity. This event should "
@@ -6787,23 +6866,23 @@ msgstr ""
 "хотите расширить встроенный плагин без переопределения множества "
 "представлений)."
 
-#: ../../guides/events-list.rst:1209
+#: ../../guides/events-list.rst:1218
 msgid "**entity:url, <entity_type>** |results|"
 msgstr "**entity:url, <entity_type>** |results|"
 
-#: ../../guides/events-list.rst:1212
+#: ../../guides/events-list.rst:1221
 msgid "**extender:url, <annotation|metadata>** |results|"
 msgstr "**extender:url, <annotation|metadata>** |results|"
 
-#: ../../guides/events-list.rst:1212
+#: ../../guides/events-list.rst:1221
 msgid "Return the URL for the annotation or metadata ``$params['extender']``."
 msgstr "Вернуть URL для аннотации или метаданных ``$params['extender']``."
 
-#: ../../guides/events-list.rst:1216
+#: ../../guides/events-list.rst:1225
 msgid "**fields, <entity_type>:<entity_subtype>** |results|"
 msgstr "**fields, <entity_type>:<entity_subtype>** |results|"
 
-#: ../../guides/events-list.rst:1215
+#: ../../guides/events-list.rst:1224
 msgid ""
 "Return an array of fields usable for ``elgg_view_field()``. The result "
 "should be returned as an array of fields. It is required to provide ``name``"
@@ -6813,11 +6892,11 @@ msgstr ""
 "Результат должен быть возвращён в виде массива полей. Для каждого поля "
 "необходимо указать ``name`` и ``#type``."
 
-#: ../../guides/events-list.rst:1231
+#: ../../guides/events-list.rst:1240
 msgid "**get_list, default_widgets** |results|"
 msgstr "**get_list, default_widgets** |results|"
 
-#: ../../guides/events-list.rst:1230
+#: ../../guides/events-list.rst:1239
 msgid ""
 "Filters a list of default widgets to add for newly registered users. The "
 "list is an array of arrays in the format:"
@@ -6826,11 +6905,11 @@ msgstr ""
 "зарегистрированным пользователям. Список представляет собой массив массивов "
 "в формате:"
 
-#: ../../guides/events-list.rst:1249
+#: ../../guides/events-list.rst:1258
 msgid "**handlers, widgets** |results|"
 msgstr "**handlers, widgets** |results|"
 
-#: ../../guides/events-list.rst:1248
+#: ../../guides/events-list.rst:1257
 msgid ""
 "Triggered when a list of available widgets is needed. Plugins can "
 "conditionally add or remove widgets from this list or modify attributes of "
@@ -6840,11 +6919,11 @@ msgstr ""
 "условно добавлять или удалять виджеты из этого списка или изменять атрибуты "
 "существующих виджетов, такие как ``context`` или ``multiple``."
 
-#: ../../guides/events-list.rst:1253
+#: ../../guides/events-list.rst:1262
 msgid "**maintenance:allow, url** |results|"
 msgstr "**maintenance:allow, url** |results|"
 
-#: ../../guides/events-list.rst:1253
+#: ../../guides/events-list.rst:1262
 msgid ""
 "Return boolean if the URL ``$params['current_url']`` and the path "
 "``$params['current_path']``"
@@ -6852,19 +6931,19 @@ msgstr ""
 "Вернуть логическое значение, если URL ``$params['current_url']`` и путь "
 "``$params['current_path']``"
 
-#: ../../guides/events-list.rst:1253
+#: ../../guides/events-list.rst:1262
 msgid "is allowed during maintenance mode."
 msgstr "разрешены в режиме обслуживания."
 
-#: ../../guides/events-list.rst:1264
+#: ../../guides/events-list.rst:1273
 msgid "**plugin_setting, <entity type>** |results|"
 msgstr "**plugin_setting, <entity type>** |results|"
 
-#: ../../guides/events-list.rst:1256
+#: ../../guides/events-list.rst:1265
 msgid "Can be used to change the value of the setting being saved"
 msgstr "Может использоваться для изменения значения сохраняемой настройки"
 
-#: ../../guides/events-list.rst:1258
+#: ../../guides/events-list.rst:1267
 msgid ""
 "Params contains: - ``entity`` - The ``ElggEntity`` where the plugin setting "
 "is being saved - ``plugin_id`` - The ID of the plugin for which the setting "
@@ -6876,7 +6955,7 @@ msgstr ""
 "настройка - ``name`` — имя сохраняемой настройки - ``value`` — исходное "
 "значение сохраняемой настройки"
 
-#: ../../guides/events-list.rst:1264
+#: ../../guides/events-list.rst:1273
 msgid ""
 "Return value should be a scalar in order to be able to save it to the "
 "database. An error will be logged if this is not the case."
@@ -6884,11 +6963,11 @@ msgstr ""
 "Возвращаемое значение должно быть скалярным, чтобы его можно было сохранить "
 "в базе данных. Если это не так, будет записана ошибка."
 
-#: ../../guides/events-list.rst:1274
+#: ../../guides/events-list.rst:1283
 msgid "**public_pages, walled_garden** |results|"
 msgstr "**public_pages, walled_garden** |results|"
 
-#: ../../guides/events-list.rst:1267
+#: ../../guides/events-list.rst:1276
 msgid ""
 "Filters a list of URLs (paths) that can be seen by logged out users in a "
 "walled garden mode. Handlers must return an array of regex strings that will"
@@ -6903,58 +6982,58 @@ msgstr ""
 "значение по умолчанию, и плагины должны следить за тем, чтобы случайно не "
 "переопределить эти значения."
 
-#: ../../guides/events-list.rst:1274
+#: ../../guides/events-list.rst:1283
 msgid "``url`` - URL of the page being tested for public accessibility"
 msgstr "``url`` — URL страницы, проверяемой на общедоступность"
 
-#: ../../guides/events-list.rst:1277
+#: ../../guides/events-list.rst:1286
 msgid "**relationship:url, <relationship_name>** |results|"
 msgstr "**relationship:url, <relationship_name>** |results|"
 
-#: ../../guides/events-list.rst:1277
+#: ../../guides/events-list.rst:1286
 msgid ""
 "Filter the URL for the relationship object ``$params['relationship']``."
 msgstr "Фильтрует URL для объекта отношения ``$params['relationship']``."
 
-#: ../../guides/events-list.rst:1280
+#: ../../guides/events-list.rst:1289
 msgid "**robots.txt, site** |results|"
 msgstr "**robots.txt, site** |results|"
 
-#: ../../guides/events-list.rst:1280
+#: ../../guides/events-list.rst:1289
 msgid "Filter the robots.txt values for ``$params['site']``."
 msgstr "Фильтрует значения robots.txt для ``$params['site']``."
 
-#: ../../guides/events-list.rst:1288
+#: ../../guides/events-list.rst:1297
 msgid "**setting, plugin** |results|"
 msgstr "**setting, plugin** |results|"
 
-#: ../../guides/events-list.rst:1283
+#: ../../guides/events-list.rst:1292
 msgid "Filter plugin settings. ``$params`` contains:"
 msgstr "Фильтрует настройки плагина. ``$params`` содержит:"
 
-#: ../../guides/events-list.rst:1285
+#: ../../guides/events-list.rst:1294
 msgid "``plugin`` - An ElggPlugin instance"
 msgstr "``plugin`` — экземпляр ElggPlugin"
 
-#: ../../guides/events-list.rst:1286
+#: ../../guides/events-list.rst:1295
 msgid "``plugin_id`` - The plugin ID"
 msgstr "``plugin_id`` — ID плагина"
 
-#: ../../guides/events-list.rst:1287
+#: ../../guides/events-list.rst:1296
 msgid "``name`` - The name of the setting"
 msgstr "``name`` — имя настройки"
 
-#: ../../guides/events-list.rst:1288
+#: ../../guides/events-list.rst:1297
 msgid "``value`` - The value to set"
 msgstr "``value`` — значение для установки"
 
-#: ../../guides/events-list.rst:1292
+#: ../../guides/events-list.rst:1301
 msgid ""
 "**to:object, <entity_type|metadata|annotation|relationship|river_item>**"
 msgstr ""
 "**to:object, <entity_type|metadata|annotation|relationship|river_item>**"
 
-#: ../../guides/events-list.rst:1291
+#: ../../guides/events-list.rst:1300
 msgid ""
 "Converts the entity ``$params['entity']`` to a StdClass object. This is used"
 " mostly for exporting entity properties for portable data formats like JSON "
@@ -6964,36 +7043,36 @@ msgstr ""
 "используется в основном для экспорта свойств сущности в переносимые форматы "
 "данных, такие как JSON и XML."
 
-#: ../../guides/events-list.rst:1295 ../../guides/helpers.rst:41
+#: ../../guides/events-list.rst:1304 ../../guides/helpers.rst:41
 #: ../../guides/plugins.rst:2
 msgid "Plugins"
 msgstr "Плагины"
 
-#: ../../guides/events-list.rst:1298
+#: ../../guides/events-list.rst:1307
 msgid "Site Pages"
 msgstr "Страницы сайта"
 
-#: ../../guides/events-list.rst:1301
+#: ../../guides/events-list.rst:1310
 msgid "**names, externalpages** |results|"
 msgstr "**names, externalpages** |results|"
 
-#: ../../guides/events-list.rst:1301
+#: ../../guides/events-list.rst:1310
 msgid "Returns a set of allowed names for external pages"
 msgstr "Возвращает набор разрешённых имён для внешних страниц"
 
-#: ../../guides/events-list.rst:1304
+#: ../../guides/events-list.rst:1313
 msgid "Groups"
 msgstr "Группы"
 
-#: ../../guides/events-list.rst:1313
+#: ../../guides/events-list.rst:1322
 msgid "**tool_options, group** |results|"
 msgstr "**tool_options, group** |results|"
 
-#: ../../guides/events-list.rst:1307
+#: ../../guides/events-list.rst:1316
 msgid "Filters a collection of tools available within a specific group:"
 msgstr "Фильтрует коллекцию инструментов, доступных в определённой группе:"
 
-#: ../../guides/events-list.rst:1309
+#: ../../guides/events-list.rst:1318
 msgid ""
 "The ``$return`` is "
 "``\\Elgg\\Collections\\Collection<\\Elgg\\Groups\\Tool>``, a collection of "
@@ -7002,19 +7081,19 @@ msgstr ""
 "``$return`` — это ``\\Elgg\\Collections\\Collection<\\Elgg\\Groups\\Tool>``,"
 " коллекция групповых инструментов."
 
-#: ../../guides/events-list.rst:1313
+#: ../../guides/events-list.rst:1322
 msgid "``entity`` - ``\\ElggGroup``"
 msgstr "``entity`` — ``\\ElggGroup``"
 
-#: ../../guides/events-list.rst:1316
+#: ../../guides/events-list.rst:1325
 msgid "Web Services"
 msgstr "Веб-сервисы"
 
-#: ../../guides/events-list.rst:1319
+#: ../../guides/events-list.rst:1328
 msgid "**register, api_methods``** |results|"
 msgstr "**register, api_methods``** |results|"
 
-#: ../../guides/events-list.rst:1319
+#: ../../guides/events-list.rst:1328
 msgid ""
 "Triggered when the ApiRegistrationService is constructed which allows to "
 "add/remove/edit webservice configurations"
@@ -7022,11 +7101,11 @@ msgstr ""
 "Запускается при создании ApiRegistrationService, что позволяет "
 "добавлять/удалять/редактировать конфигурации веб-сервисов"
 
-#: ../../guides/events-list.rst:1323
+#: ../../guides/events-list.rst:1332
 msgid "**rest, init** |results|"
 msgstr "**rest, init** |results|"
 
-#: ../../guides/events-list.rst:1322
+#: ../../guides/events-list.rst:1331
 msgid ""
 "Triggered by the web services rest handler. Plugins can set up their own "
 "authentication handlers, then return ``true`` to prevent the default "
@@ -7036,11 +7115,11 @@ msgstr ""
 "собственные обработчики аутентификации, затем вернуть ``true``, чтобы "
 "предотвратить регистрацию обработчиков по умолчанию."
 
-#: ../../guides/events-list.rst:1327
+#: ../../guides/events-list.rst:1336
 msgid "**rest:output, <method_name>** |results|"
 msgstr "**rest:output, <method_name>** |results|"
 
-#: ../../guides/events-list.rst:1326
+#: ../../guides/events-list.rst:1335
 msgid "Filter the result (and subsequently the output) of the API method"
 msgstr "Фильтрует результат (и, соответственно, вывод) метода API"
 
@@ -12061,11 +12140,11 @@ msgstr ""
 "Elgg предлагает контроллер списка по умолчанию. Этот контроллер отрисует "
 "полную страницу с:"
 
-#: ../../guides/routing.rst:375
+#: ../../guides/routing.rst:375 ../../guides/routing.rst:448
 msgid "A title"
 msgstr "Заголовок"
 
-#: ../../guides/routing.rst:376
+#: ../../guides/routing.rst:376 ../../guides/routing.rst:449
 msgid "A breadcrumb"
 msgstr "Навигационная цепочка"
 
@@ -12081,7 +12160,7 @@ msgstr "Кнопка добавления нового контента (есл�
 msgid "The list of content items"
 msgstr "Список элементов контента"
 
-#: ../../guides/routing.rst:381
+#: ../../guides/routing.rst:381 ../../guides/routing.rst:452
 msgid "All of this is done based of the recommended route names."
 msgstr "Всё это делается на основе рекомендованных имён маршрутов."
 
@@ -12129,7 +12208,7 @@ msgstr ""
 "В контроллере есть вспомогательные функции, которые вы можете расширить, "
 "если вам нужно просто изменить некоторые параметры."
 
-#: ../../guides/routing.rst:440
+#: ../../guides/routing.rst:440 ../../guides/routing.rst:502
 msgid ""
 "If you provide your route definition with an option ``sidebar_view`` that "
 "view will be called during the rendering of the page."
@@ -12138,10 +12217,60 @@ msgstr ""
 "представление будет вызвано во время отрисовки страницы."
 
 #: ../../guides/routing.rst:444
+msgid "Entity controller"
+msgstr ""
+
+#: ../../guides/routing.rst:446
+msgid ""
+"Elgg offers a default entity controller. This controller will render a full "
+"page with:"
+msgstr ""
+
+#: ../../guides/routing.rst:450
+msgid "A view of an entity or the form to create/edit the entity"
+msgstr ""
+
+#: ../../guides/routing.rst:454
+msgid ""
+"**add:<entity_type>:<entity_subtype>** "
+"**edit:<entity_type>:<entity_subtype>** "
+"**view:<entity_type>:<entity_subtype>**"
+msgstr ""
+
+#: ../../guides/routing.rst:458
+msgid ""
+"The title of the page will be the language key "
+"``add:<entity_type>:<entity_subtype>``, "
+"``edit:<entity_type>:<entity_subtype>`` or the display name of the entity "
+"(by calling ``$entity->getDisplayName()``."
+msgstr ""
+
+#: ../../guides/routing.rst:461
+msgid ""
+"For the ``add`` page the permissions will be checked that the logged in user"
+" is allowed to create the ``<entity_type>:<entity_subtype>`` in the provided"
+" container."
+msgstr ""
+
+#: ../../guides/routing.rst:464
+msgid ""
+"For the ``edit`` page the permissions will be checked that the logged in "
+"user is allowed to edit the given entity and that the given entity is of the"
+" ``<entity_type>:<entity_subtype>`` as defined in the route name."
+msgstr ""
+
+#: ../../guides/routing.rst:467
+msgid ""
+"For the ``view`` page the permissions will be checked that the visitor is "
+"allowed to view the given entity and that the given entity is of the "
+"``<entity_type>:<entity_subtype>`` as defined in the route name."
+msgstr ""
+
+#: ../../guides/routing.rst:506
 msgid "The ``route:rewrite`` event"
 msgstr "Событие ``route:rewrite``"
 
-#: ../../guides/routing.rst:446
+#: ../../guides/routing.rst:508
 msgid ""
 "For URL rewriting, the ``route:rewrite`` event (with similar arguments as "
 "``route``) is triggered very early, and allows modifying the request URL "
@@ -12151,11 +12280,11 @@ msgstr ""
 "как ``route``) запускается очень рано и позволяет изменять путь запроса URL "
 "(относительно сайта Elgg)."
 
-#: ../../guides/routing.rst:449
+#: ../../guides/routing.rst:511
 msgid "Here we rewrite requests for ``news/*`` to ``blog/*``:"
 msgstr "Здесь мы перезаписываем запросы для ``news/*`` на ``blog/*``:"
 
-#: ../../guides/routing.rst:465
+#: ../../guides/routing.rst:527
 msgid ""
 "The event must be registered directly in your plugin Bootstrap ``boot`` "
 "function. The ``init`` function is too late."
@@ -12163,23 +12292,23 @@ msgstr ""
 "Событие должно быть зарегистрировано напрямую в функции ``boot`` загрузки "
 "вашего плагина. Функция ``init`` слишком поздняя."
 
-#: ../../guides/routing.rst:468
+#: ../../guides/routing.rst:530
 msgid "Routing overview"
 msgstr "Обзор маршрутизации"
 
-#: ../../guides/routing.rst:470
+#: ../../guides/routing.rst:532
 msgid "For regular pages, Elgg's program flow is something like this:"
 msgstr "Для обычных страниц поток программы Elgg выглядит примерно так:"
 
-#: ../../guides/routing.rst:472
+#: ../../guides/routing.rst:534
 msgid "A user requests ``http://example.com/news/owner/jane``."
 msgstr "Пользователь запрашивает ``http://example.com/news/owner/jane``."
 
-#: ../../guides/routing.rst:473
+#: ../../guides/routing.rst:535
 msgid "Plugins are initialized."
 msgstr "Плагины инициализируются."
 
-#: ../../guides/routing.rst:474
+#: ../../guides/routing.rst:536
 msgid ""
 "Elgg parses the URL to identifier ``news`` and segments ``['owner', "
 "'jane']``."
@@ -12187,11 +12316,11 @@ msgstr ""
 "Elgg разбирает URL на идентификатор ``news`` и сегменты ``['owner', "
 "'jane']``."
 
-#: ../../guides/routing.rst:475
+#: ../../guides/routing.rst:537
 msgid "Elgg triggers the event ``route:rewrite, news`` (see above)."
 msgstr "Elgg запускает событие ``route:rewrite, news`` (см. выше)."
 
-#: ../../guides/routing.rst:476
+#: ../../guides/routing.rst:538
 msgid ""
 "Elgg finds a registered route that matches the final route path, and renders"
 " a resource view associated with it. It calls "
@@ -12203,7 +12332,7 @@ msgstr ""
 " ``elgg_view_resource('blog/owner', $vars)``, где ``$vars`` содержит имя "
 "пользователя."
 
-#: ../../guides/routing.rst:478
+#: ../../guides/routing.rst:540
 msgid ""
 "The ``resources/blog/owner`` view gets the username via "
 "``$vars['username']``, and uses many other views and formatting functions "
@@ -12215,15 +12344,15 @@ msgstr ""
 "форматирования, таких как ``elgg_view_layout()`` и ``elgg_view_page()``, для"
 " создания всей страницы HTML."
 
-#: ../../guides/routing.rst:480
+#: ../../guides/routing.rst:542
 msgid "PHP invokes Elgg's shutdown sequence."
 msgstr "PHP вызывает последовательность завершения работы Elgg."
 
-#: ../../guides/routing.rst:481
+#: ../../guides/routing.rst:543
 msgid "The user receives a fully rendered page."
 msgstr "Пользователь получает полностью отрисованную страницу."
 
-#: ../../guides/routing.rst:483
+#: ../../guides/routing.rst:545
 msgid ""
 "Elgg's coding standards suggest a particular URL layout, but there is no "
 "syntax enforced."

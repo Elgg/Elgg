@@ -30,11 +30,8 @@ class UpgradeIntegrationTest extends ActionResponseTestCase {
 		$version = $batch->getVersion();
 
 		$upgrade = new \ElggUpgrade();
-		$upgrade->setClass(UpgradeTestBatch::class);
-		$upgrade->setId("test_plugin:$version");
-		$upgrade->title = "test_plugin:upgrade:$version:title";
-		$upgrade->description = "test_plugin:upgrade:$version:title";
-		$upgrade->access_id = ACCESS_PUBLIC;
+		$upgrade->class = UpgradeTestBatch::class;
+		$upgrade->id = "test_plugin:{$version}";
 		$upgrade->save();
 
 		$this->assertTrue(elgg_admin_notice_exists('pending_upgrades'));

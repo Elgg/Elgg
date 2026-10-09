@@ -2,6 +2,10 @@
 
 namespace Elgg\WebServices\PAM\API;
 
+use Elgg\Exceptions\Http\BadRequestException;
+use Elgg\Exceptions\Http\UnauthorizedException;
+use Elgg\Exceptions\HttpException;
+
 /**
  * Validate an API call with API keys
  * Used for the 'api' policy
@@ -15,7 +19,7 @@ class APIKey {
 	 * Confirm that the call includes a valid API key
 	 *
 	 * @return bool|null
-	 * @throws \APIException
+	 * @throws HttpException
 	 */
 	public function __invoke(): ?bool {
 		if (!elgg_get_plugin_setting('auth_allow_key', 'web_services')) {
@@ -31,14 +35,14 @@ class APIKey {
 		
 		$api_key = (string) $api_key;
 		if (elgg_is_empty($api_key)) {
-			throw new \APIException(elgg_echo('APIException:MissingAPIKey'));
+			throw new BadRequestException(elgg_echo('APIException:MissingAPIKey'));
 		}
 		
 		// check that it is active
 		$api_user = _elgg_services()->apiUsersTable->getApiUser($api_key);
 		if (!$api_user) {
 			// key is not active or does not exist
-			throw new \APIException(elgg_echo('APIException:BadAPIKey'));
+			throw new UnauthorizedException(elgg_echo('APIException:BadAPIKey'));
 		}
 		
 		// can be used for keeping stats

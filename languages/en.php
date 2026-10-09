@@ -1832,6 +1832,7 @@ Global variables:
 	'trash:restore:group' => "Search for a group",
 	'trash:restore:group:help' => "Make sure the selected group has the feature active for the item or an error may occur.",
 	'trash:restore:owner' => "Restore to the owner (%s)",
+	'trash:restore:unknown' => "Because the original group for this content has been removed and no new destination could be found, recovery is not possible.",
 
 /**
  * Color schemes

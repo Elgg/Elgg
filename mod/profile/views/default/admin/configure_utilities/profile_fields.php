@@ -21,9 +21,8 @@ echo elgg_view('admin/configure_utilities/profile_fields/list');
 echo elgg_view('output/url', [
 	'text' => elgg_echo('reset'),
 	'icon' => 'sync-alt',
-	'href' => 'action/profile/fields/reset',
+	'href' => elgg_generate_action_url('profile/fields/reset'),
 	'title' => elgg_echo('profile:resetdefault'),
 	'confirm' => elgg_echo('profile:resetdefault:confirm'),
 	'class' => 'elgg-button elgg-button-cancel',
-	'is_trusted' => 'true',
 ]);
