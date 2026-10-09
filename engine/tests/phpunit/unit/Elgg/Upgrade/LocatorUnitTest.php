@@ -29,14 +29,13 @@ class LocatorUnitTest extends \Elgg\UnitTestCase {
 			$class = TestBatch::class;
 			
 			$upgrade = _elgg_services()->upgradeLocator->getUpgrade($class, 'test_plugin');
-			/* @var $upgrade \ElggUpgrade */
 	
 			$this->assertNotEmpty($upgrade);
 	
 			$this->assertInstanceOf(\ElggUpgrade::class, $upgrade);
 			$this->assertEquals('test_plugin:2016101900', $upgrade->id);
-			$this->assertEquals("test_plugin:upgrade:2016101900:title", $upgrade->title);
-			$this->assertEquals("test_plugin:upgrade:2016101900:description", $upgrade->description);
+			$this->assertEquals('test_plugin', $upgrade->getComponent());
+			$this->assertEquals('2016101900', $upgrade->getVersion());
 			
 			$batch = _elgg_services()->upgradeLocator->getBatch($class, $upgrade);
 			$this->assertInstanceOf(\ElggUpgrade::class, $batch->getUpgrade());

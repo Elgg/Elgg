@@ -6,7 +6,7 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggUpgrade) {
+if (!$entity instanceof \ElggUpgrade) {
 	return;
 }
 
@@ -32,7 +32,7 @@ $imprint[] = [
 	]),
 ];
 
-/* @var $batch Elgg\Upgrade\Batch */
+/** @var \Elgg\Upgrade\Batch $batch */
 $batch = $entity->getBatch();
 if (!empty($batch)) {
 	if ($batch->shouldBeSkipped()) {
@@ -53,8 +53,6 @@ if (!empty($batch)) {
 
 $params = [
 	'entity' => $entity,
-	'title' => $entity->getDisplayName(),
-	'content' => elgg_echo($entity->description),
 	'imprint' => $imprint,
 	'byline' => false,
 	'access' => false,

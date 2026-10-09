@@ -3,7 +3,12 @@
 namespace Elgg\WebServices;
 
 use Elgg\Collections\CollectionItemInterface;
+use Elgg\Exceptions\AuthenticationException;
 use Elgg\Exceptions\DomainException;
+use Elgg\Exceptions\Http\BadRequestException;
+use Elgg\Exceptions\Http\MethodNotAllowedException;
+use Elgg\Exceptions\Http\NotImplementedException;
+use Elgg\Exceptions\HttpException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Request;
 
@@ -206,35 +211,45 @@ class ApiMethod implements CollectionItemInterface {
 	 * @param Request $request the Elgg request
 	 *
 	 * @return \GenericResult The result of the execution
+	 * @throws HttpException
 	 */
 	public function execute(Request $request): \GenericResult {
+		try {
+			$this->assertApiAuthentication();
+		} catch (AuthenticationException $e) {
+			$result = \ErrorResult::getInstance($e->getMessage(), \ErrorResult::RESULT_FAIL_APIKEY_INVALID, $e);
+			$result->setHttpStatus(ELGG_HTTP_FORBIDDEN);
+			
+			return $result;
+		}
+		
+		try {
+			$this->assertUserAuthentication();
+		} catch (AuthenticationException $e) {
+			$result = \ErrorResult::getInstance($e->getMessage(), \ErrorResult::RESULT_FAIL_AUTHTOKEN, $e);
+			$result->setHttpStatus(ELGG_HTTP_FORBIDDEN);
+			
+			return $result;
+		}
+		
 		$handlers = _elgg_services()->handlers;
 		
 		$callable = $handlers->resolveCallable($this->callback);
 		
 		// function must be callable
 		if (empty($callable)) {
-			$error = \ErrorResult::getInstance(elgg_echo('APIException:FunctionDoesNotExist', [$this->method]));
-			$error->setHttpStatus(ELGG_HTTP_NOT_IMPLEMENTED);
-			
-			return $error;
+			throw new NotImplementedException(elgg_echo('APIException:FunctionDoesNotExist', [$this->method]));
 		}
 		
 		// check http call method
 		if ($this->call_method !== $request->getMethod()) {
-			$error = \ErrorResult::getInstance(elgg_echo('APIException:InvalidCallMethod', [$this->method, $this->call_method]));
-			$error->setHttpStatus(ELGG_HTTP_METHOD_NOT_ALLOWED);
-			
-			return $error;
+			throw new MethodNotAllowedException(elgg_echo('APIException:InvalidCallMethod', [$this->method, $this->call_method]));
 		}
 		
 		try {
 			$parameters = $this->getParameters($request);
 		} catch (\APIException $e) {
-			$error = \ErrorResult::getInstance($e->getMessage());
-			$error->setHttpStatus(ELGG_HTTP_BAD_REQUEST);
-			
-			return $error;
+			throw new BadRequestException($e->getMessage(), 0, $e);
 		}
 		
 		if ($this->supply_associative) {
@@ -271,6 +286,49 @@ class ApiMethod implements CollectionItemInterface {
 	}
 	
 	/**
+	 * Check the API authentication
+	 *
+	 * @return void
+	 * @throws AuthenticationException
+	 * @since 7.1
+	 */
+	final protected function assertApiAuthentication(): void {
+		if (!$this->require_api_auth) {
+			return;
+		}
+		
+		if (!elgg_pam_authenticate('api')) {
+			throw new AuthenticationException(elgg_echo('APIException:APIAuthenticationFailed'));
+		}
+	}
+	
+	/**
+	 * Check the user authentication
+	 *
+	 * @return void
+	 * @throws AuthenticationException
+	 * @since 7.1
+	 */
+	final protected function assertUserAuthentication(): void {
+		$exception = null;
+		try {
+			$user_authenticated = elgg_pam_authenticate('user');
+		} catch (AuthenticationException $exception) {
+			// user authentication failed
+			$user_authenticated = false;
+		}
+		
+		// check if user authentication is required
+		if ($this->require_user_auth && $user_authenticated !== true) {
+			if ($exception instanceof AuthenticationException) {
+				throw $exception;
+			}
+			
+			throw new AuthenticationException(elgg_echo('SecurityException:authenticationfailed'));
+		}
+	}
+	
+	/**
 	 * Get a readable version of the api endpoint callable
 	 *
 	 * @return string
@@ -287,7 +345,7 @@ class ApiMethod implements CollectionItemInterface {
 	 * @param Request $request the Elgg request
 	 *
 	 * @return array containing parameters as key => value
-	 * @throws \APIException
+	 * @throws BadRequestException
 	 */
 	protected function getParameters(Request $request): array {
 		$sanitised = [];
@@ -301,7 +359,7 @@ class ApiMethod implements CollectionItemInterface {
 			
 			// check required
 			if ((bool) elgg_extract('required', $settings) && elgg_is_empty($value)) {
-				throw new \APIException(elgg_echo('APIException:MissingParameterInMethod', [$key, $this->method]));
+				throw new BadRequestException(elgg_echo('APIException:MissingParameterInMethod', [$key, $this->method]));
 			}
 			
 			// type cast
@@ -319,7 +377,7 @@ class ApiMethod implements CollectionItemInterface {
 	 * @param string $type  required type
 	 *
 	 * @return mixed
-	 * @throws \APIException
+	 * @throws BadRequestException
 	 */
 	protected function typeCastParameter(string $key, mixed $value, string $type): mixed {
 		if (is_null($value)) {
@@ -350,12 +408,12 @@ class ApiMethod implements CollectionItemInterface {
 			case 'array':
 				// we can handle an array of strings, maybe ints, definitely not booleans or other arrays
 				if (!is_array($value)) {
-					throw new \APIException(elgg_echo('APIException:ParameterNotArray', [$key]));
+					throw new BadRequestException(elgg_echo('APIException:ParameterNotArray', [$key]));
 				}
 				return $value;
 				
 			default:
-				throw new \APIException(elgg_echo('APIException:UnrecognisedTypeCast', [$type, $key, $this->method]));
+				throw new BadRequestException(elgg_echo('APIException:UnrecognisedTypeCast', [$type, $key, $this->method]));
 		}
 	}
 	

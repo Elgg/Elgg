@@ -10,10 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class BatchUpgraderUnitTest extends UnitTestCase {
 	
-	/**
-	 * @var OutputInterface
-	 */
-	protected $backup_cli_output;
+	protected ?OutputInterface $backup_cli_output = null;
 	
 	public function up() {
 		_elgg_services()->logger->disable();
@@ -32,12 +29,12 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 
 	public function testCanRunIncrementedUpgrade() {
 		$upgrade = new \ElggUpgrade();
-		$upgrade->setClass(TestBatch::class);
-		$upgrade->setId("test_plugin:2016101900");
-		$upgrade->title = 'test_plugin:upgrade:2016101900:title';
-		$upgrade->description = 'test_plugin:upgrade:2016101900:title';
-		$upgrade->access_id = ACCESS_PUBLIC;
-		$upgrade->save();
+		$upgrade->class = TestBatch::class;
+		$upgrade->id = 'test_plugin:2016101900';
+		
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($upgrade) {
+			$upgrade->save();
+		});
 
 		$upgrader = _elgg_services()->upgrades;
 		$result = $upgrader->executeUpgrade($upgrade, 30); // added max_duration to prevent deadloops
@@ -56,12 +53,12 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 
 	public function testCanRunIncrementedUpgradeWithInitialOffset() {
 		$upgrade = new \ElggUpgrade();
-		$upgrade->setClass(TestBatch::class);
-		$upgrade->setId("test_plugin:2016101903");
-		$upgrade->title = 'test_plugin:upgrade:2016101903:title';
-		$upgrade->description = 'test_plugin:upgrade:2016101903:title';
-		$upgrade->access_id = ACCESS_PUBLIC;
-		$upgrade->save();
+		$upgrade->class = TestBatch::class;
+		$upgrade->id = 'test_plugin:2016101903';
+		
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($upgrade) {
+			$upgrade->save();
+		});
 
 		$upgrade->processed = 50;
 		$upgrade->offset = 50;
@@ -84,12 +81,12 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 
 	public function testCanRunUnincrementedUpgrade() {
 		$upgrade = new \ElggUpgrade();
-		$upgrade->setClass(TestNoIncrementBatch::class);
-		$upgrade->setId("test_plugin:2016101901");
-		$upgrade->title = 'test_plugin:upgrade:2016101901:title';
-		$upgrade->description = 'test_plugin:upgrade:2016101901:title';
-		$upgrade->access_id = ACCESS_PUBLIC;
-		$upgrade->save();
+		$upgrade->class = TestNoIncrementBatch::class;
+		$upgrade->id = 'test_plugin:2016101901';
+		
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($upgrade) {
+			$upgrade->save();
+		});
 
 		$upgrader = _elgg_services()->upgrades;
 		$result = $upgrader->executeUpgrade($upgrade, 30); // added max_duration to prevent deadloops
@@ -108,12 +105,12 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 
 	public function testCanRunUpgradeWithoutTotal() {
 		$upgrade = new \ElggUpgrade();
-		$upgrade->setClass(UnknownSizeTestBatch::class);
-		$upgrade->setId("test_plugin:2016101902");
-		$upgrade->title = 'test_plugin:upgrade:2016101902:title';
-		$upgrade->description = 'test_plugin:upgrade:2016101902:title';
-		$upgrade->access_id = ACCESS_PUBLIC;
-		$upgrade->save();
+		$upgrade->class = UnknownSizeTestBatch::class;
+		$upgrade->id = 'test_plugin:2016101902';
+		
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($upgrade) {
+			$upgrade->save();
+		});
 
 		$upgrader = _elgg_services()->upgrades;
 		$result = $upgrader->executeUpgrade($upgrade, 30); // added max_duration to prevent deadloops

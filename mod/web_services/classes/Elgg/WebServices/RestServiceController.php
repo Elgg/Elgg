@@ -3,7 +3,9 @@
 namespace Elgg\WebServices;
 
 use Elgg\Exceptions\AuthenticationException;
+use Elgg\Exceptions\BadMethodCallException;
 use Elgg\Exceptions\Http\BadRequestException;
+use Elgg\Exceptions\HttpException;
 use Elgg\Http\ResponseBuilder;
 use Elgg\Request;
 use Elgg\WebServices\Di\ApiRegistrationService;
@@ -26,28 +28,31 @@ class RestServiceController {
 	 * @return ResponseBuilder
 	 */
 	public function __invoke(Request $request): ResponseBuilder {
-		$this->prepareForRequest($request);
-		
-		$this->initApi();
-		
-		// Get parameter variables
 		$method = (string) $request->getParam('method');
 		
-		// this will throw an exception if authentication fails
 		try {
-			$api = $this->authenticateMethod($method, $request->getMethod());
+			$this->prepareForRequest($request);
+			$this->initApi();
 			
-			// execute the api method
-			$result = $api->execute($request);
+			$api = ApiRegistrationService::instance()->getApiMethod($method, $request->getMethod());
+			if ($api instanceof ApiMethod) {
+				$result = $api->execute($request);
+			} else {
+				$result = \ErrorResult::getInstance(elgg_echo('APIException:MethodCallNotImplemented', [$method]));
+				$result->setHttpStatus(ELGG_HTTP_BAD_REQUEST);
+			}
 		} catch (\APIException $e) {
 			$prev = $e->getPrevious();
 			if ($prev instanceof AuthenticationException) {
-				$result = \ErrorResult::getInstance($prev->getMessage());
+				$result = \ErrorResult::getInstance($prev->getMessage(), $e->getCode() ?: null);
 				$result->setHttpStatus(ELGG_HTTP_FORBIDDEN);
 			} else {
-				$result = \ErrorResult::getInstance($e->getMessage());
+				$result = \ErrorResult::getInstance($e->getMessage(), $e->getCode() ?: null);
 				$result->setHttpStatus(ELGG_HTTP_INTERNAL_SERVER_ERROR);
 			}
+		} catch (HttpException $e) {
+			$result = \ErrorResult::getInstance($e->getMessage());
+			$result->setHttpStatus($e->getCode());
 		}
 		
 		// Output the result
@@ -123,60 +128,6 @@ class RestServiceController {
 		
 		// hmac
 		elgg_register_pam_handler(\Elgg\WebServices\PAM\API\Hmac::class, 'sufficient', 'api');
-	}
-	
-	/**
-	 * Check that the method call has the proper API and user authentication
-	 *
-	 * @param string $method              The api name that was exposed
-	 * @param string $http_request_method The HTTP call method (GET|POST|...)
-	 *
-	 * @return ApiMethod
-	 * @throws \APIException
-	 */
-	protected function authenticateMethod(string $method, string $http_request_method): ApiMethod {
-		$api = ApiRegistrationService::instance()->getApiMethod($method, $http_request_method);
-		
-		// method must be exposed
-		if (!$api instanceof ApiMethod) {
-			throw new \APIException(elgg_echo('APIException:MethodCallNotImplemented', [$method]));
-		}
-		
-		// check API authentication if required
-		if ($api->require_api_auth) {
-			try {
-				if (!elgg_pam_authenticate('api')) {
-					throw new AuthenticationException(elgg_echo('APIException:APIAuthenticationFailed'));
-				}
-			} catch (AuthenticationException $api_exception) {
-				// API authentication failed
-				$message = $api_exception->getMessage() ?: elgg_echo('APIException:APIAuthenticationFailed');
-				$code = $api_exception->getCode() ?: \ErrorResult::RESULT_FAIL;
-				throw new \APIException($message, $code, $api_exception);
-			}
-		}
-		
-		// authenticate (and login) user for api call that can handle different results for logged in and out users
-		// eg. blog listing
-		$user_exception = null;
-		try {
-			$user_authenticated = elgg_pam_authenticate('user');
-		} catch (AuthenticationException $user_exception) {
-			// user authentication failed
-			$user_authenticated = false;
-		}
-		
-		// check if user authentication is required
-		if ($api->require_user_auth && $user_authenticated !== true) {
-			$message = elgg_echo('SecurityException:authenticationfailed');
-			if ($user_exception instanceof AuthenticationException) {
-				$message = $user_exception->getMessage();
-			}
-			
-			throw new \APIException($message, \ErrorResult::RESULT_FAIL_AUTHTOKEN, $user_exception);
-		}
-		
-		return $api;
 	}
 	
 	/**
