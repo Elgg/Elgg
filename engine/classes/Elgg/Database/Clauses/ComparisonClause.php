@@ -66,9 +66,13 @@ class ComparisonClause extends Clause {
 			case 'eq':
 			case 'in':
 				if ($this->case_sensitive && $this->type == ELGG_VALUE_STRING) {
-					$x = "CAST($x as BINARY)";
+					// Apply BINARY to the value rather than CAST()ing the column: this
+					// keeps the comparison case-sensitive while still allowing an index
+					// on the column to be used. Wrapping the column in CAST() forces a
+					// full table scan.
+					return $compare_with('eq');
 				}
-				
+
 				if (is_array($y) || $comparison === 'in') {
 					if (!Values::isEmpty($y)) {
 						$param = isset($type) ? $qb->param($y, $type) : $y;
@@ -85,9 +89,11 @@ class ComparisonClause extends Clause {
 			case 'neq':
 			case 'not in':
 				if ($this->case_sensitive && $this->type == ELGG_VALUE_STRING) {
-					$x = "CAST($x as BINARY)";
+					// BINARY on the value (not CAST() on the column) keeps case
+					// sensitivity without defeating an index on the column.
+					return $compare_with('neq', 'AND');
 				}
-				
+
 				if (is_array($y) || $comparison === 'not in') {
 					if (!Values::isEmpty($y)) {
 						$param = isset($type) ? $qb->param($y, $type) : $y;
