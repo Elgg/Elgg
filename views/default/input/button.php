@@ -26,7 +26,7 @@ $vars['type'] = $type;
 $text = (string) elgg_extract('text', $vars);
 unset($vars['text']);
 
-if (!isset($vars['aria-label']) && !isset($vars['aria-labelledby']) && !isset($vars['title']) && empty(elgg_strip_tags($text))) {
+if (!isset($vars['aria-label']) && !isset($vars['aria-labelledby']) && !isset($vars['title']) && elgg_is_empty(elgg_strip_tags($text))) {
 	elgg_log('An input/button should have a discernible text (text, title, aria-label or aria-labelledby)', \Psr\Log\LogLevel::NOTICE);
 }
 

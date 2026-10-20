@@ -13,23 +13,19 @@ $authentication = elgg_view('output/longtext', [
 ]);
 
 $authentication .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('web_services:settings:authentication:allow_key'),
 	'#help' => elgg_echo('web_services:settings:authentication:allow_key:help'),
 	'name' => 'params[auth_allow_key]',
-	'value' => 1,
-	'checked' => (bool) $plugin->auth_allow_key,
-	'switch' => true,
+	'value' => $plugin->auth_allow_key,
 ]);
 
 $authentication .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('web_services:settings:authentication:allow_hmac'),
 	'#help' => elgg_echo('web_services:settings:authentication:allow_hmac:help'),
 	'name' => 'params[auth_allow_hmac]',
-	'value' => 1,
-	'checked' => (bool) $plugin->auth_allow_hmac,
-	'switch' => true,
+	'value' => $plugin->auth_allow_hmac,
 ]);
 
 echo elgg_view_module('info', elgg_echo('web_services:settings:authentication'), $authentication);

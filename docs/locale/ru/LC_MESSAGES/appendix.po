@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 10:03+0200\n"
+"POT-Creation-Date: 2026-09-09 14:38+0200\n"
 "PO-Revision-Date: 2026-03-25 09:33+0000\n"
 "Last-Translator: River Van Rain <vanrain@list.ru>, 2026\n"
 "Language-Team: Russian (https://app.transifex.com/elgg/teams/11337/ru/)\n"
@@ -55,6 +55,7 @@ msgstr "Ниже приведены некоторые часто задавае
 #: ../../appendix/upgrade-notes/6.1-to-6.2.rst:6
 #: ../../appendix/upgrade-notes/6.2-to-6.3.rst:6
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:6
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:6
 msgid "Contents"
 msgstr "Содержание"
 
@@ -91,35 +92,33 @@ msgstr ""
 "создана директория test. В этой директории должен находиться файл "
 "``composer.json`` по пути ``/mod/test/composer.json``."
 
-#: ../../appendix/faqs/general.rst:20 ../../appendix/faqs/general.rst:20
+#: ../../appendix/faqs/general.rst:21 ../../appendix/faqs/general.rst:21
 msgid "If this file does not exist, it could be caused by:"
 msgstr "Если этот файл отсутствует, это может быть вызвано:"
 
-#: ../../appendix/faqs/general.rst:16 ../../appendix/faqs/general.rst:16
+#: ../../appendix/faqs/general.rst:17 ../../appendix/faqs/general.rst:17
 msgid "installing a plugin to the wrong directory"
 msgstr "установкой плагина в неверную директорию"
 
-#: ../../appendix/faqs/general.rst:17 ../../appendix/faqs/general.rst:17
-msgid "creating a directory under /mod that does not contain a plugin"
-msgstr "созданием директории под /mod, которая не содержит плагин"
-
 #: ../../appendix/faqs/general.rst:18 ../../appendix/faqs/general.rst:18
+msgid "creating a directory under ``/mod`` that does not contain a plugin"
+msgstr ""
+
+#: ../../appendix/faqs/general.rst:19 ../../appendix/faqs/general.rst:19
 msgid "a bad ftp transfer"
 msgstr "ошибкой при передаче через ftp"
 
-#: ../../appendix/faqs/general.rst:19 ../../appendix/faqs/general.rst:19
+#: ../../appendix/faqs/general.rst:20 ../../appendix/faqs/general.rst:20
 msgid ""
-"unzipping a plugin into an extra directory (myplugin.zip unzips to "
+"unzipping a plugin into an extra directory (``myplugin.zip`` unzips to "
 "``myplugin/myplugin``)"
 msgstr ""
-"распаковкой плагина в лишнюю директорию (myplugin.zip распаковывается в "
-"``myplugin/myplugin``)"
 
-#: ../../appendix/faqs/general.rst:20 ../../appendix/faqs/general.rst:20
+#: ../../appendix/faqs/general.rst:21 ../../appendix/faqs/general.rst:21
 msgid "incompatible plugin"
 msgstr "несовместимым плагином"
 
-#: ../../appendix/faqs/general.rst:22 ../../appendix/faqs/general.rst:22
+#: ../../appendix/faqs/general.rst:23 ../../appendix/faqs/general.rst:23
 msgid ""
 "If you are on a Unix-based host and the files exist in the correct "
 "directory, check the permissions. Elgg must have read access to the files "
@@ -129,11 +128,11 @@ msgstr ""
 "директории, проверьте права доступа. Elgg должен иметь права на чтение "
 "файлов и права на чтение + выполнение для директорий."
 
-#: ../../appendix/faqs/general.rst:25 ../../appendix/faqs/general.rst:25
+#: ../../appendix/faqs/general.rst:27 ../../appendix/faqs/general.rst:27
 msgid "White Page (WSOD)"
 msgstr "Белая страница (WSOD)"
 
-#: ../../appendix/faqs/general.rst:30 ../../appendix/faqs/general.rst:30
+#: ../../appendix/faqs/general.rst:29 ../../appendix/faqs/general.rst:29
 msgid ""
 "A blank, white page (often called a \"white screen of death\") means there "
 "is a PHP syntax error. There are a few possible causes of this:"
@@ -141,40 +140,31 @@ msgstr ""
 "Пустая белая страница (часто называемая \"белым экраном смерти\") означает "
 "наличие синтаксической ошибки PHP. Возможные причины этого:"
 
-#: ../../appendix/faqs/general.rst:28 ../../appendix/faqs/general.rst:28
-msgid "corrupted file - try transfering the code again to your server"
-msgstr "повреждённый файл — попробуйте снова передать код на ваш сервер"
+#: ../../appendix/faqs/general.rst:32 ../../appendix/faqs/general.rst:32
+msgid "corrupted file: try transferring the code again to your server"
+msgstr ""
 
-#: ../../appendix/faqs/general.rst:29 ../../appendix/faqs/general.rst:29
+#: ../../appendix/faqs/general.rst:33 ../../appendix/faqs/general.rst:33
 msgid ""
-"a call to a php module that was not loaded - this can happen after you "
+"a call to a php module that was not loaded: this can happen after you "
 "install a plugin that requires a specific module."
 msgstr ""
-"вызов модуля php, который не был загружен — это может произойти после "
-"установки плагина, требующего определённый модуль."
 
-#: ../../appendix/faqs/general.rst:30 ../../appendix/faqs/general.rst:30
+#: ../../appendix/faqs/general.rst:34 ../../appendix/faqs/general.rst:34
 msgid ""
-"bad plugin - not all plugins have been written to the same quality so you "
+"bad plugin: not all plugins have been written to the same quality so you "
 "should be careful which ones you install."
 msgstr ""
-"некачественный плагин — не все плагины написаны одинаково качественно, "
-"поэтому следует внимательно относиться к тому, какие из них вы "
-"устанавливаете."
-
-#: ../../appendix/faqs/general.rst:32 ../../appendix/faqs/general.rst:32
-msgid ""
-"To find where the error is occurring, change the .htaccess file to display "
-"errors to the browser. Set display_errors to 1 and load the same page again."
-" You should see a PHP error in your browser. Change the setting back once "
-"you've resolved the problem."
-msgstr ""
-"Чтобы найти, где происходит ошибка, измените файл .htaccess для отображения "
-"ошибок в браузере. Установите display_errors в 1 и снова загрузите ту же "
-"страницу. Вы должны увидеть ошибку PHP в вашем браузере. Верните настройку "
-"обратно после решения проблемы."
 
 #: ../../appendix/faqs/general.rst:36 ../../appendix/faqs/general.rst:36
+msgid ""
+"To find where the error is occurring, change the ``.htaccess`` file to "
+"display errors to the browser. Set ``display_errors`` to 1 and load the same"
+" page again. You should see a PHP error in your browser. Change the setting "
+"back once you've resolved the problem."
+msgstr ""
+
+#: ../../appendix/faqs/general.rst:42 ../../appendix/faqs/general.rst:42
 msgid ""
 "If you are using the Developer's Tools plugin, go to its settings page and "
 "make sure you have \"Display fatal PHP errors\" enabled."
@@ -182,7 +172,7 @@ msgstr ""
 "Если вы используете плагин Developer's Tools, перейдите на страницу его "
 "настроек и убедитесь, что опция \"Display fatal PHP errors\" включена."
 
-#: ../../appendix/faqs/general.rst:38 ../../appendix/faqs/general.rst:38
+#: ../../appendix/faqs/general.rst:45 ../../appendix/faqs/general.rst:45
 msgid ""
 "If the white screen is due to a bad plugin, remove the latest plugins that "
 "you have installed by deleting their directories and then reload the page."
@@ -190,7 +180,7 @@ msgstr ""
 "Если белый экран вызван некачественным плагином, удалите последние "
 "установленные плагины, удалив их директории, а затем перезагрузите страницу."
 
-#: ../../appendix/faqs/general.rst:42 ../../appendix/faqs/general.rst:42
+#: ../../appendix/faqs/general.rst:50 ../../appendix/faqs/general.rst:50
 msgid ""
 "You can temporarily disable all plugins by creating an empty file at "
 "``mod/disabled``. You can then disable the offending module via the "
@@ -200,7 +190,7 @@ msgstr ""
 "``mod/disabled``. Затем вы можете отключить проблемный модуль через панель "
 "инструментов администратора."
 
-#: ../../appendix/faqs/general.rst:44 ../../appendix/faqs/general.rst:44
+#: ../../appendix/faqs/general.rst:53 ../../appendix/faqs/general.rst:53
 msgid ""
 "If you are getting a WSOD when performing an action, like logging in or "
 "posting a blog, but there are no error messages, it's most likely caused by "
@@ -214,11 +204,11 @@ msgstr ""
 "наличие пробелов/символов новой строки после закрывающего тега php (``?>``) "
 "и удалите их."
 
-#: ../../appendix/faqs/general.rst:47 ../../appendix/faqs/general.rst:47
+#: ../../appendix/faqs/general.rst:58 ../../appendix/faqs/general.rst:58
 msgid "Page not found"
 msgstr "Страница не найдена"
 
-#: ../../appendix/faqs/general.rst:49 ../../appendix/faqs/general.rst:49
+#: ../../appendix/faqs/general.rst:60 ../../appendix/faqs/general.rst:60
 msgid ""
 "If you have recently installed your Elgg site, the most likely cause for a "
 "page not found error is that ``mod_rewrite`` is not setup correctly on your "
@@ -232,7 +222,7 @@ msgstr ""
 "странице :doc:`Install Troubleshooting </intro/install>`. Вторая наиболее "
 "вероятная причина — неверный url вашего сайта в базе данных."
 
-#: ../../appendix/faqs/general.rst:51 ../../appendix/faqs/general.rst:51
+#: ../../appendix/faqs/general.rst:64 ../../appendix/faqs/general.rst:64
 msgid ""
 "If you've been running your site for a while and suddenly start getting page"
 " not found errors, you need to ask yourself what has changed. Have you added"
@@ -242,11 +232,11 @@ msgstr ""
 "\"страница не найдена\", вам нужно спросить себя, что изменилось. Добавляли "
 "ли вы какие-либо плагины? Меняли ли вы конфигурацию сервера?"
 
-#: ../../appendix/faqs/general.rst:53 ../../appendix/faqs/general.rst:53
+#: ../../appendix/faqs/general.rst:67 ../../appendix/faqs/general.rst:67
 msgid "To debug a page not found error:"
 msgstr "Для отладки ошибки \"страница не найдена\":"
 
-#: ../../appendix/faqs/general.rst:55 ../../appendix/faqs/general.rst:55
+#: ../../appendix/faqs/general.rst:69 ../../appendix/faqs/general.rst:69
 msgid ""
 "Confirm that the link leading to the missing page is correct. If not, how is"
 " that link being generated?"
@@ -254,44 +244,35 @@ msgstr ""
 "Убедитесь, что ссылка, ведущая к отсутствующей странице, верна. Если нет, "
 "как генерируется эта ссылка?"
 
-#: ../../appendix/faqs/general.rst:56 ../../appendix/faqs/general.rst:56
+#: ../../appendix/faqs/general.rst:70 ../../appendix/faqs/general.rst:70
 msgid "Confirm that the ``.htaccess`` rewrite rules are being picked up."
 msgstr "Убедитесь, что правила перезаписи ``.htaccess`` применяются."
 
-#: ../../appendix/faqs/general.rst:59 ../../appendix/faqs/general.rst:59
+#: ../../appendix/faqs/general.rst:73 ../../appendix/faqs/general.rst:73
 msgid "Login token mismatch"
 msgstr "Несоответствие токена входа"
 
-#: ../../appendix/faqs/general.rst:61 ../../appendix/faqs/general.rst:61
+#: ../../appendix/faqs/general.rst:75 ../../appendix/faqs/general.rst:75
 msgid ""
 "If you have to log in twice to your site and the error message after the "
 "first attempt says there was a token mismatch error, the URL in Elgg's "
 "settings does not match the URL used to access it. The most common cause for"
 " this is adding or removing the \"www\" when accessing the site. For "
-"example, www.elgg.org vs elgg.org. This causes a problem with session "
-"handling because of the way that web browsers save cookies."
+"example, ``www.elgg.org`` vs ``elgg.org``. This causes a problem with "
+"session handling because of the way that web browsers save cookies."
 msgstr ""
-"Если вам приходится входить на сайт дважды, и сообщение об ошибке после "
-"первой попытки говорит о несоответствии токена, URL в настройках Elgg не "
-"совпадает с URL, используемым для доступа к нему. Наиболее частая причина "
-"этого — добавление или удаление \"www\" при доступе к сайту. Например, "
-"www.elgg.org против elgg.org. Это вызывает проблему с обработкой сессий из-"
-"за того, как веб-браузеры сохраняют куки."
 
-#: ../../appendix/faqs/general.rst:63 ../../appendix/faqs/general.rst:63
+#: ../../appendix/faqs/general.rst:80 ../../appendix/faqs/general.rst:80
 msgid ""
-"To fix this, you can add rewrite rules. To redirect from www.elgg.org to "
-"elgg.org in Apache, the rules might look like:"
+"To fix this, you can add rewrite rules. To redirect from ``www.elgg.org`` to"
+" ``elgg.org`` in Apache, the rules might look like:"
 msgstr ""
-"Чтобы исправить это, вы можете добавить правила перезаписи. Для "
-"перенаправления с www.elgg.org на elgg.org в Apache правила могут выглядеть "
-"так:"
 
-#: ../../appendix/faqs/general.rst:71 ../../appendix/faqs/general.rst:71
+#: ../../appendix/faqs/general.rst:88 ../../appendix/faqs/general.rst:88
 msgid "Redirecting from non-www to www could look like this:"
 msgstr "Перенаправление с non-www на www может выглядеть так:"
 
-#: ../../appendix/faqs/general.rst:78 ../../appendix/faqs/general.rst:78
+#: ../../appendix/faqs/general.rst:95 ../../appendix/faqs/general.rst:95
 msgid ""
 "If you don't know how to configure rewrite rules, ask your host for more "
 "information."
@@ -299,11 +280,11 @@ msgstr ""
 "Если вы не знаете, как настроить правила перезаписи, обратитесь к вашему "
 "хостинг-провайдеру за дополнительной информацией."
 
-#: ../../appendix/faqs/general.rst:81 ../../appendix/faqs/general.rst:81
+#: ../../appendix/faqs/general.rst:98 ../../appendix/faqs/general.rst:98
 msgid "Form is missing __token or __ts fields"
 msgstr "В форме отсутствуют поля __token или __ts"
 
-#: ../../appendix/faqs/general.rst:83 ../../appendix/faqs/general.rst:83
+#: ../../appendix/faqs/general.rst:100 ../../appendix/faqs/general.rst:100
 msgid ""
 "All Elgg actions require a security token, and this error occurs when that "
 "token is missing. This is either a problem with your server configuration or"
@@ -313,19 +294,15 @@ msgstr ""
 "этот токен отсутствует. Это либо проблема с конфигурацией вашего сервера, "
 "либо со сторонним плагином."
 
-#: ../../appendix/faqs/general.rst:85 ../../appendix/faqs/general.rst:85
+#: ../../appendix/faqs/general.rst:103 ../../appendix/faqs/general.rst:103
 msgid ""
 "If you experience this on a new installation, make sure that your server is "
 "properly configured and your rewrite rules are correct. If you experience "
 "this on an upgrade, make sure you have updated your rewrite rules either in "
-".htaccess (Apache) or in the server configuration."
+"``.htaccess`` (Apache) or in the server configuration."
 msgstr ""
-"Если вы сталкиваетесь с этим на новой установке, убедитесь, что ваш сервер "
-"правильно настроен и ваши правила перезаписи верны. Если вы сталкиваетесь с "
-"этим при обновлении, убедитесь, что вы обновили правила перезаписи либо в "
-".htaccess (Apache), либо в конфигурации сервера."
 
-#: ../../appendix/faqs/general.rst:87 ../../appendix/faqs/general.rst:87
+#: ../../appendix/faqs/general.rst:107 ../../appendix/faqs/general.rst:107
 msgid ""
 "If you are experiencing this, disable all 3rd party plugins and try again. "
 "Very old plugins for Elgg don't use security tokens. If the problem goes "
@@ -337,25 +314,22 @@ msgstr ""
 " проблема исчезает при отключении плагинов, это связано с плагином, который "
 "должен быть обновлён его автором."
 
-#: ../../appendix/faqs/general.rst:90 ../../appendix/faqs/general.rst:90
+#: ../../appendix/faqs/general.rst:111 ../../appendix/faqs/general.rst:111
 msgid "Maintenance mode"
 msgstr "Режим обслуживания"
 
-#: ../../appendix/faqs/general.rst:92 ../../appendix/faqs/general.rst:92
+#: ../../appendix/faqs/general.rst:113 ../../appendix/faqs/general.rst:113
 msgid ""
-"To take your site temporarily offline, go to Administration -> Utilities -> "
+"To take your site temporarily offline, go to Administration -> Configure -> "
 "Maintenance Mode. Complete the form and hit save to disable your site for "
 "everyone except admin users."
 msgstr ""
-"Чтобы временно отключить ваш сайт, перейдите в Administration -> Utilities "
-"-> Maintenance Mode. Заполните форму и нажмите Сохранить, чтобы отключить "
-"ваш сайт для всех, кроме пользователей с правами администратора."
 
-#: ../../appendix/faqs/general.rst:95 ../../appendix/faqs/general.rst:95
+#: ../../appendix/faqs/general.rst:117 ../../appendix/faqs/general.rst:117
 msgid "Missing email"
 msgstr "Отсутствующее письмо"
 
-#: ../../appendix/faqs/general.rst:97 ../../appendix/faqs/general.rst:97
+#: ../../appendix/faqs/general.rst:119 ../../appendix/faqs/general.rst:119
 msgid ""
 "If your users are reporting that validation emails are not showing up, have "
 "them check their spam folder. It is possible that the emails coming from "
@@ -372,7 +346,7 @@ msgstr ""
 "сервер, или ограничение хостом количества писем, которые вы можете отправить"
 " за час."
 
-#: ../../appendix/faqs/general.rst:99 ../../appendix/faqs/general.rst:99
+#: ../../appendix/faqs/general.rst:124 ../../appendix/faqs/general.rst:124
 msgid ""
 "If no one gets email at all, it is quite likely your server is not "
 "configured properly for email. Your server needs a program to send email "
@@ -384,7 +358,7 @@ msgstr ""
 "отправки писем (называемой Mail Transfer Agent — MTA), и PHP должен быть "
 "настроен для использования MTA."
 
-#: ../../appendix/faqs/general.rst:101 ../../appendix/faqs/general.rst:101
+#: ../../appendix/faqs/general.rst:127 ../../appendix/faqs/general.rst:127
 msgid ""
 "To quickly check if PHP and an MTA are correctly configured, create a file "
 "on your server with the following content:"
@@ -392,38 +366,37 @@ msgstr ""
 "Чтобы быстро проверить, правильно ли настроены PHP и MTA, создайте файл на "
 "вашем сервере со следующим содержимым:"
 
-#: ../../appendix/faqs/general.rst:120 ../../appendix/faqs/general.rst:120
+#: ../../appendix/faqs/general.rst:146 ../../appendix/faqs/general.rst:146
 msgid ""
-"Be sure to replace \"your_email@your_host.com\" with your actual email "
-"address.  Take care to keep quotes around it!  When you access this page "
-"through your web browser, it will attempt to send a test email.  This test "
-"will let you know that PHP and your MTA are correctly configured.  If it "
-"fails--either you get an error or you never receive the email--you will need"
-" to do more investigating and possibly contact your service provider."
+"Be sure to replace ``your_email@your_host.com`` with your actual email "
+"address. Take care to keep quotes around it! When you access this page "
+"through your web browser, it will attempt to send a test email. This test "
+"will let you know that PHP and your MTA are correctly configured. If it "
+"fails:"
 msgstr ""
-"Обязательно замените \"your_email@your_host.com\" на ваш реальный адрес "
-"электронной почты. Не забудьте оставить кавычки вокруг него! Когда вы "
-"откроете эту страницу через веб-браузер, она попытается отправить тестовое "
-"письмо. Этот тест покажет, правильно ли настроены PHP и ваш MTA. Если он не "
-"удастся — либо вы получите ошибку, либо вы никогда не получите письмо — вам "
-"потребуется провести дополнительное расследование и, возможно, связаться с "
-"вашим провайдером услуг."
 
-#: ../../appendix/faqs/general.rst:122 ../../appendix/faqs/general.rst:122
+#: ../../appendix/faqs/general.rst:150 ../../appendix/faqs/general.rst:150
+msgid "either you get an error or you never receive the email"
+msgstr ""
+
+#: ../../appendix/faqs/general.rst:151 ../../appendix/faqs/general.rst:151
+msgid ""
+"you will need to do more investigating and possibly contact your service "
+"provider."
+msgstr ""
+
+#: ../../appendix/faqs/general.rst:153 ../../appendix/faqs/general.rst:153
 msgid ""
 "Fully configuring an MTA and PHP's email functionality is beyond the scope "
-"of this FAQ and you should search the Internet for more resources on this. "
+"of this FAQ and you should search the internet for more resources on this. "
 "Some basic information on php parameters can be found on `PHP's site`__"
 msgstr ""
-"Полная настройка MTA и почтовой функциональности PHP выходит за рамки этого "
-"FAQ, и вам следует поискать в интернете дополнительные ресурсы по этой теме."
-" Некоторую базовую информацию о параметрах php можно найти на `сайте PHP`__"
 
-#: ../../appendix/faqs/general.rst:128 ../../appendix/faqs/general.rst:128
+#: ../../appendix/faqs/general.rst:160 ../../appendix/faqs/general.rst:160
 msgid "Server logs"
 msgstr "Логи сервера"
 
-#: ../../appendix/faqs/general.rst:130 ../../appendix/faqs/general.rst:130
+#: ../../appendix/faqs/general.rst:162 ../../appendix/faqs/general.rst:162
 msgid ""
 "Most likely you are using Apache as your web server. Warnings and errors are"
 " written to a log by the web server and can be useful for debugging "
@@ -436,22 +409,21 @@ msgstr ""
 " для отладки проблем. Обычно вы увидите два типа файлов логов: логи доступа "
 "и логи ошибок. Информация от PHP и Elgg записывается в лог ошибок сервера."
 
-#: ../../appendix/faqs/general.rst:132 ../../appendix/faqs/general.rst:132
+#: ../../appendix/faqs/general.rst:166 ../../appendix/faqs/general.rst:166
 msgid ""
-"Linux -- The error log is probably in /var/log/httpd or /var/log/apache2."
+"Linux -- The error log is probably in ``/var/log/httpd`` or "
+"``/var/log/apache2``."
 msgstr ""
-"Linux — лог ошибок, вероятно, находится в /var/log/httpd или "
-"/var/log/apache2."
 
-#: ../../appendix/faqs/general.rst:133 ../../appendix/faqs/general.rst:133
+#: ../../appendix/faqs/general.rst:167 ../../appendix/faqs/general.rst:167
 msgid "Windows - It is probably inside your Apache directory."
 msgstr "Windows — вероятно, находится внутри вашей директории Apache."
 
-#: ../../appendix/faqs/general.rst:134 ../../appendix/faqs/general.rst:134
-msgid "Mac OS - The error log is probably in /var/log/apache2/error_log"
-msgstr "Mac OS — лог ошибок, вероятно, находится в /var/log/apache2/error_log"
+#: ../../appendix/faqs/general.rst:168 ../../appendix/faqs/general.rst:168
+msgid "Mac OS - The error log is probably in ``/var/log/apache2/error_log``"
+msgstr ""
 
-#: ../../appendix/faqs/general.rst:136 ../../appendix/faqs/general.rst:136
+#: ../../appendix/faqs/general.rst:170 ../../appendix/faqs/general.rst:170
 msgid ""
 "If you are using shared hosting without ssh access, your hosting provider "
 "may provide a mechanism for obtaining access to your server logs. You will "
@@ -461,36 +433,36 @@ msgstr ""
 "может предоставлять механизм для получения доступа к логам вашего сервера. "
 "Вам нужно спросить их об этом."
 
-#: ../../appendix/faqs/general.rst:139 ../../appendix/faqs/general.rst:139
+#: ../../appendix/faqs/general.rst:174 ../../appendix/faqs/general.rst:174
 msgid "How does registration work?"
 msgstr "Как работает регистрация?"
 
-#: ../../appendix/faqs/general.rst:141 ../../appendix/faqs/general.rst:141
+#: ../../appendix/faqs/general.rst:176 ../../appendix/faqs/general.rst:176
 msgid "With a default setup, this is how registration works:"
 msgstr "При настройке по умолчанию регистрация работает следующим образом:"
 
-#: ../../appendix/faqs/general.rst:143 ../../appendix/faqs/general.rst:143
+#: ../../appendix/faqs/general.rst:178 ../../appendix/faqs/general.rst:178
 msgid "User fills out registration form and submits it"
 msgstr "Пользователь заполняет форму регистрации и отправляет её"
 
-#: ../../appendix/faqs/general.rst:144 ../../appendix/faqs/general.rst:144
+#: ../../appendix/faqs/general.rst:179 ../../appendix/faqs/general.rst:179
 msgid "User account is created and disabled until validated"
 msgstr "Учётная запись пользователя создаётся и отключается до подтверждения"
 
-#: ../../appendix/faqs/general.rst:145 ../../appendix/faqs/general.rst:145
+#: ../../appendix/faqs/general.rst:180 ../../appendix/faqs/general.rst:180
 msgid "Email is sent to user with a link to validate the account"
 msgstr ""
 "Пользователю отправляется письмо со ссылкой для подтверждения учётной записи"
 
-#: ../../appendix/faqs/general.rst:146 ../../appendix/faqs/general.rst:146
+#: ../../appendix/faqs/general.rst:181 ../../appendix/faqs/general.rst:181
 msgid "When a user clicks on the link, the account is validated"
 msgstr "Когда пользователь нажимает на ссылку, учётная запись подтверждается"
 
-#: ../../appendix/faqs/general.rst:147 ../../appendix/faqs/general.rst:147
+#: ../../appendix/faqs/general.rst:182 ../../appendix/faqs/general.rst:182
 msgid "The user can now log in"
 msgstr "Теперь пользователь может войти в систему"
 
-#: ../../appendix/faqs/general.rst:149 ../../appendix/faqs/general.rst:149
+#: ../../appendix/faqs/general.rst:184 ../../appendix/faqs/general.rst:184
 msgid ""
 "Failures during this process include the user entering an incorrect email "
 "address, the validation email being marked as spam, or a user never "
@@ -500,30 +472,25 @@ msgstr ""
 "электронной почты, пометку письма с подтверждением как спам, или то, что "
 "пользователь никогда не подтверждает учётную запись."
 
-#: ../../appendix/faqs/general.rst:152 ../../appendix/faqs/general.rst:152
+#: ../../appendix/faqs/general.rst:188 ../../appendix/faqs/general.rst:188
 msgid "User validation"
 msgstr "Подтверждение пользователя"
 
-#: ../../appendix/faqs/general.rst:154 ../../appendix/faqs/general.rst:154
+#: ../../appendix/faqs/general.rst:190 ../../appendix/faqs/general.rst:190
 msgid ""
 "By default, all users who self-register must validate their accounts through"
 " email. If a user has problems validating an account, you can validate users"
-" manually by going to Administration -> Users -> Unvalidated."
+" manually by going to Administration -> Administer -> Users and check the "
+"Unvalidated tab."
 msgstr ""
-"По умолчанию все пользователи, регистрирующиеся самостоятельно, должны "
-"подтвердить свои учётные записи через электронную почту. Если у пользователя"
-" возникают проблемы с подтверждением учётной записи, вы можете подтвердить "
-"пользователей вручную, перейдя в Administration -> Users -> Unvalidated."
 
-#: ../../appendix/faqs/general.rst:157 ../../appendix/faqs/general.rst:157
+#: ../../appendix/faqs/general.rst:193 ../../appendix/faqs/general.rst:193
 msgid ""
-"You can remove this requirement by deactivating the User Validation by Email"
-" plugin."
+"You can remove this requirement by deactivating the \"User Validation by "
+"Email\" plugin."
 msgstr ""
-"Вы можете убрать это требование, деактивировав плагин User Validation by "
-"Email."
 
-#: ../../appendix/faqs/general.rst:161 ../../appendix/faqs/general.rst:161
+#: ../../appendix/faqs/general.rst:197 ../../appendix/faqs/general.rst:197
 msgid ""
 "Removing validation has some consequences: There is no way to know that a "
 "user registered with a working email address, and it may leave you system "
@@ -533,11 +500,11 @@ msgstr ""
 "пользователь зарегистрировался с рабочим адресом электронной почты, и это "
 "может оставить вашу систему открытой для спамеров."
 
-#: ../../appendix/faqs/general.rst:164 ../../appendix/faqs/general.rst:164
+#: ../../appendix/faqs/general.rst:201 ../../appendix/faqs/general.rst:201
 msgid "Manually add user"
 msgstr "Добавить пользователя вручную"
 
-#: ../../appendix/faqs/general.rst:166 ../../appendix/faqs/general.rst:166
+#: ../../appendix/faqs/general.rst:203 ../../appendix/faqs/general.rst:203
 msgid ""
 "To manually add a user, under the Administer controls go to Users. There you"
 " will see a link title \"Add new User\". After you fill out the information "
@@ -549,11 +516,11 @@ msgstr ""
 "информации и отправки формы новый пользователь получит письмо с именем "
 "пользователя и паролем, а также напоминание сменить пароль."
 
-#: ../../appendix/faqs/general.rst:170 ../../appendix/faqs/general.rst:170
+#: ../../appendix/faqs/general.rst:209 ../../appendix/faqs/general.rst:209
 msgid "Elgg does not force the user to change the password."
 msgstr "Elgg не принуждает пользователя сменить пароль."
 
-#: ../../appendix/faqs/general.rst:173 ../../appendix/faqs/general.rst:173
+#: ../../appendix/faqs/general.rst:212 ../../appendix/faqs/general.rst:212
 msgid ""
 "I'm making or just installed a new theme, but graphics or other elements "
 "aren't working"
@@ -561,11 +528,11 @@ msgstr ""
 "Я создаю или только что установил новую тему, но графика или другие элементы"
 " не работают"
 
-#: ../../appendix/faqs/general.rst:175 ../../appendix/faqs/general.rst:175
+#: ../../appendix/faqs/general.rst:214 ../../appendix/faqs/general.rst:214
 msgid "Make sure the theme is at the bottom of the plugin list."
 msgstr "Убедитесь, что тема находится в конце списка плагинов."
 
-#: ../../appendix/faqs/general.rst:177 ../../appendix/faqs/general.rst:177
+#: ../../appendix/faqs/general.rst:216 ../../appendix/faqs/general.rst:216
 msgid ""
 "Clear your browser cache and reload the page. To lighten the load on the "
 "server, Elgg instructs the browser to rarely load the CSS file. A new theme "
@@ -577,7 +544,7 @@ msgstr ""
 "полностью изменит файл CSS, и обновление должно заставить браузер снова "
 "запросить файл CSS."
 
-#: ../../appendix/faqs/general.rst:179 ../../appendix/faqs/general.rst:179
+#: ../../appendix/faqs/general.rst:220 ../../appendix/faqs/general.rst:220
 msgid ""
 "If you're building or modifying a theme, make sure you have disabled the "
 "simple and system caches. This can be done by enabling the Developer Tools "
@@ -589,11 +556,11 @@ msgstr ""
 "перейдя в Administration -> Develop -> Settings. Как только вы будете "
 "довольны изменениями, включите кэши, иначе производительность пострадает."
 
-#: ../../appendix/faqs/general.rst:183 ../../appendix/faqs/general.rst:183
+#: ../../appendix/faqs/general.rst:225 ../../appendix/faqs/general.rst:225
 msgid "Changing profile fields"
 msgstr "Изменение полей профиля"
 
-#: ../../appendix/faqs/general.rst:185 ../../appendix/faqs/general.rst:185
+#: ../../appendix/faqs/general.rst:227 ../../appendix/faqs/general.rst:227
 msgid ""
 "Within the Administration settings of Elgg is a page for replacing the "
 "default profile fields. Elgg by default gives the administrator two choices:"
@@ -601,15 +568,15 @@ msgstr ""
 "В настройках администрирования Elgg есть страница для замены полей профиля "
 "по умолчанию. По умолчанию Elgg предоставляет администратору два варианта:"
 
-#: ../../appendix/faqs/general.rst:187 ../../appendix/faqs/general.rst:187
+#: ../../appendix/faqs/general.rst:230 ../../appendix/faqs/general.rst:230
 msgid "Use the default profile fields"
 msgstr "Использовать поля профиля по умолчанию"
 
-#: ../../appendix/faqs/general.rst:188 ../../appendix/faqs/general.rst:188
+#: ../../appendix/faqs/general.rst:231 ../../appendix/faqs/general.rst:231
 msgid "Replace the default with a set of custom profile fields"
 msgstr "Заменить набор по умолчанию на набор пользовательских полей профиля"
 
-#: ../../appendix/faqs/general.rst:190 ../../appendix/faqs/general.rst:190
+#: ../../appendix/faqs/general.rst:233 ../../appendix/faqs/general.rst:233
 msgid ""
 "You cannot add new profile fields to the default ones. Adding a new profile "
 "field through the replace profile fields option clears the default ones. "
@@ -625,7 +592,7 @@ msgstr ""
 "порядке они должны отображаться. Вы не можете изменить тип поля или порядок "
 "или удалить поля после их создания без полного очищения профиля."
 
-#: ../../appendix/faqs/general.rst:192 ../../appendix/faqs/general.rst:192
+#: ../../appendix/faqs/general.rst:238 ../../appendix/faqs/general.rst:238
 msgid ""
 "More flexibility can be gained through plugins. There is at least two "
 "plugins on the community site that enable you to have more control over "
@@ -639,11 +606,11 @@ msgstr ""
 "Elgg. Он позволяет добавлять новые поля профиля в любое время, изменять "
 "порядок, группировать поля профиля и добавлять их в регистрацию."
 
-#: ../../appendix/faqs/general.rst:197 ../../appendix/faqs/general.rst:197
+#: ../../appendix/faqs/general.rst:245 ../../appendix/faqs/general.rst:245
 msgid "Changing registration"
 msgstr "Изменение регистрации"
 
-#: ../../appendix/faqs/general.rst:199 ../../appendix/faqs/general.rst:199
+#: ../../appendix/faqs/general.rst:247 ../../appendix/faqs/general.rst:247
 msgid ""
 "The registration process can be changed through a plugin. Everything about "
 "registration can be changed: the look and feel, different registration "
@@ -655,7 +622,7 @@ msgstr ""
 "дополнительную валидацию полей, дополнительные шаги и так далее. Такие "
 "изменения требуют базовых знаний HTML, CSS, PHP."
 
-#: ../../appendix/faqs/general.rst:201 ../../appendix/faqs/general.rst:201
+#: ../../appendix/faqs/general.rst:251 ../../appendix/faqs/general.rst:251
 msgid ""
 "Another option is to use the `Profile Manager`_ plugin that lets you add "
 "fields to both user profiles and the registration form."
@@ -663,77 +630,53 @@ msgstr ""
 "Другой вариант — использовать плагин `Profile Manager`_, который позволяет "
 "добавлять поля как в профили пользователей, так и в форму регистрации."
 
-#: ../../appendix/faqs/development.rst:37 ../../appendix/faqs/general.rst:204
-#: ../../appendix/faqs/development.rst:37 ../../appendix/faqs/general.rst:204
+#: ../../appendix/faqs/development.rst:37 ../../appendix/faqs/general.rst:254
+#: ../../appendix/faqs/development.rst:37 ../../appendix/faqs/general.rst:254
 msgid "Create the plugin skeleton"
 msgstr "Создать скелет плагина"
 
-#: ../../appendix/faqs/development.rst:39 ../../appendix/faqs/general.rst:204
-#: ../../appendix/faqs/development.rst:39 ../../appendix/faqs/general.rst:204
+#: ../../appendix/faqs/development.rst:39 ../../appendix/faqs/general.rst:254
+#: ../../appendix/faqs/development.rst:39 ../../appendix/faqs/general.rst:254
 msgid ":doc:`/guides/plugins/plugin-skeleton`"
 msgstr ":doc:`/guides/plugins/plugin-skeleton`"
 
-#: ../../appendix/faqs/general.rst:207 ../../appendix/faqs/general.rst:207
+#: ../../appendix/faqs/general.rst:257 ../../appendix/faqs/general.rst:257
 msgid "Changing registration display"
 msgstr "Изменение отображения регистрации"
 
-#: ../../appendix/faqs/general.rst:207 ../../appendix/faqs/general.rst:207
+#: ../../appendix/faqs/general.rst:257 ../../appendix/faqs/general.rst:257
 msgid "Override the ``account/forms/register`` view"
 msgstr "Переопределить view ``account/forms/register``"
 
-#: ../../appendix/faqs/general.rst:210 ../../appendix/faqs/general.rst:210
+#: ../../appendix/faqs/general.rst:260 ../../appendix/faqs/general.rst:260
 msgid "Changing the registration action handler"
 msgstr "Изменение обработчика действия регистрации"
 
-#: ../../appendix/faqs/general.rst:210 ../../appendix/faqs/general.rst:210
+#: ../../appendix/faqs/general.rst:260 ../../appendix/faqs/general.rst:260
 msgid "You can write your own action to create the user's account"
 msgstr ""
 "Вы можете написать своё собственное действие для создания учётной записи "
 "пользователя"
 
-#: ../../appendix/faqs/general.rst:213 ../../appendix/faqs/general.rst:213
+#: ../../appendix/faqs/general.rst:263 ../../appendix/faqs/general.rst:263
 msgid "How do I change PHP settings using .htaccess?"
 msgstr "Как изменить настройки PHP с помощью .htaccess?"
 
-#: ../../appendix/faqs/general.rst:215 ../../appendix/faqs/general.rst:215
+#: ../../appendix/faqs/general.rst:265 ../../appendix/faqs/general.rst:265
 msgid ""
-"You may want to change php settings in your ``.htaccess`` file. This is "
+"You may want to change PHP settings in your ``.htaccess`` file. This is "
 "especially true if your hosting provider does not give you access to the "
 "server's ``php.ini`` file. The variables could be related to file upload "
-"size limits, security, session length, or any number of other php "
+"size limits, security, session length, or any number of other PHP "
 "attributes. For examples of how to do this, see the `PHP documentation`_ on "
 "this."
 msgstr ""
-"Возможно, вы захотите изменить настройки php в вашем файле ``.htaccess``. "
-"Это особенно актуально, если ваш хостинг-провайдер не предоставляет вам "
-"доступ к файлу ``php.ini`` сервера. Переменные могут быть связаны с "
-"ограничениями размера загружаемых файлов, безопасностью, длительностью "
-"сессии или любым другим количеством атрибутов php. Примеры того, как это "
-"сделать, см. в `документации PHP`_ по этому вопросу."
 
-#: ../../appendix/faqs/general.rst:220 ../../appendix/faqs/general.rst:220
-msgid "HTTPS login turned on accidently"
-msgstr "HTTPS вход случайно включён"
-
-#: ../../appendix/faqs/general.rst:222 ../../appendix/faqs/general.rst:222
-msgid ""
-"If you have turned on HTTPS login but do not have SSL configured, you are "
-"now locked out of your Elgg install. To turn off this configuration "
-"parameter, you will need to edit your database. Use a tool like phpMyAdmin "
-"to view your database. Select the ``config`` table and delete the row that "
-"has the name ``https_login``."
-msgstr ""
-"Если вы включили вход через HTTPS, но не настроили SSL, вы теперь "
-"заблокированы от вашей установки Elgg. Чтобы отключить этот параметр "
-"конфигурации, вам нужно отредактировать вашу базу данных. Используйте такой "
-"инструмент, как phpMyAdmin, для просмотра вашей базы данных. Выберите "
-"таблицу ``config`` и удалите строку с именем ``https_login``."
-
-#: ../../appendix/faqs/general.rst:225 ../../appendix/faqs/general.rst:225
+#: ../../appendix/faqs/general.rst:273 ../../appendix/faqs/general.rst:273
 msgid "Using a test site"
 msgstr "Использование тестового сайта"
 
-#: ../../appendix/faqs/general.rst:227 ../../appendix/faqs/general.rst:227
+#: ../../appendix/faqs/general.rst:275 ../../appendix/faqs/general.rst:275
 msgid ""
 "It is recommended to always try out new releases or new plugins on a test "
 "site before running them on a production site (a site with actual users). "
@@ -748,7 +691,7 @@ msgstr ""
 "важно использовать тестовые учётные записи, не являющиеся администраторами, "
 "чтобы протестировать то, что увидят ваши пользователи."
 
-#: ../../appendix/faqs/general.rst:229 ../../appendix/faqs/general.rst:229
+#: ../../appendix/faqs/general.rst:279 ../../appendix/faqs/general.rst:279
 msgid ""
 "A more realistic test is to mirror the content from your production site to "
 "your test site. Following the instructions for :doc:`duplicating a site "
@@ -771,15 +714,15 @@ msgstr ""
 " задумано и ничего не ломает. Если этот процесс кажется сложным, пожалуйста,"
 " придерживайтесь запуска простого тестового сайта."
 
-#: ../../appendix/faqs/general.rst:232 ../../appendix/faqs/general.rst:232
+#: ../../appendix/faqs/general.rst:287 ../../appendix/faqs/general.rst:287
 msgid "500 - Internal Server Error"
 msgstr "500 — Внутренняя ошибка сервера"
 
-#: ../../appendix/faqs/general.rst:235 ../../appendix/faqs/general.rst:235
+#: ../../appendix/faqs/general.rst:290 ../../appendix/faqs/general.rst:290
 msgid "What is it?"
 msgstr "Что это?"
 
-#: ../../appendix/faqs/general.rst:237 ../../appendix/faqs/general.rst:237
+#: ../../appendix/faqs/general.rst:292 ../../appendix/faqs/general.rst:292
 msgid ""
 "A **500 - Internal Server Error** means the web server experienced a problem"
 " serving a request."
@@ -787,7 +730,7 @@ msgstr ""
 "**500 — Internal Server Error** означает, что веб-сервер столкнулся с "
 "проблемой при обслуживании запроса."
 
-#: ../../appendix/faqs/general.rst:241 ../../appendix/faqs/general.rst:241
+#: ../../appendix/faqs/general.rst:296 ../../appendix/faqs/general.rst:296
 msgid ""
 "`The Wikipedia page on HTTP status codes "
 "<https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_Server_Error>`_"
@@ -795,15 +738,15 @@ msgstr ""
 "`Страница Wikipedia о кодах состояния HTTP "
 "<https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_Server_Error>`_"
 
-#: ../../appendix/faqs/general.rst:244 ../../appendix/faqs/general.rst:244
+#: ../../appendix/faqs/general.rst:299 ../../appendix/faqs/general.rst:299
 msgid "Possible causes"
 msgstr "Возможные причины"
 
-#: ../../appendix/faqs/general.rst:247 ../../appendix/faqs/general.rst:247
+#: ../../appendix/faqs/general.rst:303 ../../appendix/faqs/general.rst:303
 msgid "Web server configuration"
 msgstr "Конфигурация веб-сервера"
 
-#: ../../appendix/faqs/general.rst:247 ../../appendix/faqs/general.rst:247
+#: ../../appendix/faqs/general.rst:302 ../../appendix/faqs/general.rst:302
 msgid ""
 "The most common cause for this is an incorrectly configured server. If you "
 "edited the ``.htaccess`` file and added something incorrect, Apache will "
@@ -813,11 +756,11 @@ msgstr ""
 "отредактировали файл ``.htaccess`` и добавили что-то неверное, Apache "
 "отправит ошибку 500."
 
-#: ../../appendix/faqs/general.rst:250 ../../appendix/faqs/general.rst:250
+#: ../../appendix/faqs/general.rst:307 ../../appendix/faqs/general.rst:307
 msgid "Permissions on files"
 msgstr "Права доступа к файлам"
 
-#: ../../appendix/faqs/general.rst:250 ../../appendix/faqs/general.rst:250
+#: ../../appendix/faqs/general.rst:306 ../../appendix/faqs/general.rst:306
 msgid ""
 "It could also be a permissions problem on a file. Apache needs to be able to"
 " read Elgg's files. Using permissions 755 on directories and 644 on files "
@@ -827,12 +770,12 @@ msgstr ""
 "возможность читать файлы Elgg. Использование прав 755 для директорий и 644 "
 "для файлов позволит Apache читать файлы."
 
-#: ../../appendix/faqs/general.rst:253 ../../appendix/faqs/general.rst:253
+#: ../../appendix/faqs/general.rst:310 ../../appendix/faqs/general.rst:310
 msgid ""
 "When I upload a photo or change my profile picture I get a white screen"
 msgstr "Когда я загружаю фото или меняю аватар профиля, я получаю белый экран"
 
-#: ../../appendix/faqs/general.rst:255 ../../appendix/faqs/general.rst:255
+#: ../../appendix/faqs/general.rst:312 ../../appendix/faqs/general.rst:312
 msgid ""
 "Most likely you don't have the PHP GD library installed or configured "
 "properly. You may need assistance from the administrator of your server."
@@ -840,15 +783,15 @@ msgstr ""
 "Скорее всего, у вас не установлена или неправильно настроена библиотека PHP "
 "GD. Вам может потребоваться помощь администратора вашего сервера."
 
-#: ../../appendix/faqs/general.rst:258 ../../appendix/faqs/general.rst:258
+#: ../../appendix/faqs/general.rst:316 ../../appendix/faqs/general.rst:316
 msgid "CSS is missing"
 msgstr "Отсутствует CSS"
 
-#: ../../appendix/faqs/general.rst:261 ../../appendix/faqs/general.rst:261
+#: ../../appendix/faqs/general.rst:319 ../../appendix/faqs/general.rst:319
 msgid "Wrong URL"
 msgstr "Неверный URL"
 
-#: ../../appendix/faqs/general.rst:263 ../../appendix/faqs/general.rst:263
+#: ../../appendix/faqs/general.rst:321 ../../appendix/faqs/general.rst:321
 msgid ""
 "Sometimes people install Elgg so that the base URL is ``localhost`` and then"
 " try to view the site using a hostname. In this case, the browser won't be "
@@ -864,11 +807,11 @@ msgstr ""
 "вы получите ошибку 404, вероятно, это и есть ваша проблема. Вам нужно будет "
 "изменить базовый URL вашего сайта."
 
-#: ../../appendix/faqs/general.rst:266 ../../appendix/faqs/general.rst:266
+#: ../../appendix/faqs/general.rst:327 ../../appendix/faqs/general.rst:327
 msgid "Syntax error"
 msgstr "Синтаксическая ошибка"
 
-#: ../../appendix/faqs/general.rst:268 ../../appendix/faqs/general.rst:268
+#: ../../appendix/faqs/general.rst:329 ../../appendix/faqs/general.rst:329
 msgid ""
 "Elgg stores its CSS as PHP code to provide flexibility and power. If there "
 "is a syntax error, the CSS file served to the browser may be blank. "
@@ -878,11 +821,11 @@ msgstr ""
 "есть синтаксическая ошибка, файл CSS, отправляемый в браузер, может быть "
 "пустым. Отключение несвязанных плагинов — рекомендуемый первый шаг."
 
-#: ../../appendix/faqs/general.rst:271 ../../appendix/faqs/general.rst:271
+#: ../../appendix/faqs/general.rst:333 ../../appendix/faqs/general.rst:333
 msgid "Rewrite rules errors"
 msgstr "Ошибки правил перезаписи"
 
-#: ../../appendix/faqs/general.rst:273 ../../appendix/faqs/general.rst:273
+#: ../../appendix/faqs/general.rst:335 ../../appendix/faqs/general.rst:335
 msgid ""
 "A bad ``.htaccess`` file could also result in a 404 error when requesting "
 "the CSS file. This could happen when doing an upgrade and forgetting to also"
@@ -892,27 +835,27 @@ msgstr ""
 "запросе файла CSS. Это может произойти при обновлении и забывании также "
 "обновить ``.htaccess``."
 
-#: ../../appendix/faqs/general.rst:276 ../../appendix/faqs/general.rst:276
+#: ../../appendix/faqs/general.rst:339 ../../appendix/faqs/general.rst:339
 msgid "Should I edit the database manually?"
 msgstr "Следует ли мне редактировать базу данных вручную?"
 
-#: ../../appendix/faqs/general.rst:280 ../../appendix/faqs/general.rst:280
+#: ../../appendix/faqs/general.rst:343 ../../appendix/faqs/general.rst:343
 msgid "No, you should never manually edit the database!"
 msgstr "Нет, вам никогда не следует редактировать базу данных вручную!"
 
-#: ../../appendix/faqs/general.rst:283 ../../appendix/faqs/general.rst:283
+#: ../../appendix/faqs/general.rst:346 ../../appendix/faqs/general.rst:346
 msgid "Will editing the database manually break my site?"
 msgstr "Сломает ли ручное редактирование базы данных мой сайт?"
 
-#: ../../appendix/faqs/general.rst:285 ../../appendix/faqs/general.rst:285
+#: ../../appendix/faqs/general.rst:348 ../../appendix/faqs/general.rst:348
 msgid "Yes."
 msgstr "Да."
 
-#: ../../appendix/faqs/general.rst:288 ../../appendix/faqs/general.rst:288
+#: ../../appendix/faqs/general.rst:351 ../../appendix/faqs/general.rst:351
 msgid "Can I add extra fields to tables in the database?"
 msgstr "Могу ли я добавить дополнительные поля в таблицы базы данных?"
 
-#: ../../appendix/faqs/general.rst:290 ../../appendix/faqs/general.rst:290
+#: ../../appendix/faqs/general.rst:353 ../../appendix/faqs/general.rst:353
 msgid ""
 "(AKA: I don't understand the Elgg :doc:`data model </design/database>` so "
 "I'm going to add columns. Will you help?)"
@@ -920,7 +863,7 @@ msgstr ""
 "(Или: я не понимаю :doc:`модель данных </design/database>` Elgg, поэтому "
 "собираюсь добавить столбцы. Вы поможете?)"
 
-#: ../../appendix/faqs/general.rst:292 ../../appendix/faqs/general.rst:292
+#: ../../appendix/faqs/general.rst:355 ../../appendix/faqs/general.rst:355
 msgid ""
 "No, this is a bad idea. Learn the :doc:`data model </design/database>` and "
 "you will see that unless it's a very specific and highly customized "
@@ -932,7 +875,7 @@ msgstr ""
 "установка, вы можете сделать всё, что вам нужно, в рамках текущей модели "
 "данных Elgg."
 
-#: ../../appendix/faqs/general.rst:295 ../../appendix/faqs/general.rst:295
+#: ../../appendix/faqs/general.rst:359 ../../appendix/faqs/general.rst:359
 msgid ""
 "I want to remove users. Can't I just delete them from the elgg_entities "
 "table?"
@@ -940,11 +883,11 @@ msgstr ""
 "Я хочу удалить пользователей. Не могу ли я просто удалить их из таблицы "
 "elgg_entities?"
 
-#: ../../appendix/faqs/general.rst:297 ../../appendix/faqs/general.rst:297
+#: ../../appendix/faqs/general.rst:361 ../../appendix/faqs/general.rst:361
 msgid "No, it will corrupt your database. Delete them through the site."
 msgstr "Нет, это повредит вашу базу данных. Удаляйте их через сайт."
 
-#: ../../appendix/faqs/general.rst:300 ../../appendix/faqs/general.rst:300
+#: ../../appendix/faqs/general.rst:364 ../../appendix/faqs/general.rst:364
 msgid ""
 "I want to remove spam. Can't I just search and delete it from the "
 "elgg_entities table?"
@@ -952,11 +895,11 @@ msgstr ""
 "Я хочу удалить спам. Не могу ли я просто найти и удалить его из таблицы "
 "elgg_entities?"
 
-#: ../../appendix/faqs/general.rst:302 ../../appendix/faqs/general.rst:302
+#: ../../appendix/faqs/general.rst:366 ../../appendix/faqs/general.rst:366
 msgid "No, it will corrupt your database. Delete it through the site."
 msgstr "Нет, это повредит вашу базу данных. Удаляйте его через сайт."
 
-#: ../../appendix/faqs/general.rst:305 ../../appendix/faqs/general.rst:305
+#: ../../appendix/faqs/general.rst:369 ../../appendix/faqs/general.rst:369
 msgid ""
 "Someone on the community site told me to edit the database manually. Should "
 "I?"
@@ -964,7 +907,7 @@ msgstr ""
 "Кто-то на сайте сообщества сказал мне отредактировать базу данных вручную. "
 "Стоит ли?"
 
-#: ../../appendix/faqs/general.rst:307 ../../appendix/faqs/general.rst:307
+#: ../../appendix/faqs/general.rst:371 ../../appendix/faqs/general.rst:371
 msgid ""
 "Who was it? Is it someone experienced with Elgg, like one of the core "
 "developers or a well-known plugin author? Did he or she give you clear and "
@@ -978,15 +921,13 @@ msgstr ""
 "если вы не можете понять или не чувствуете себя комфортно, следуя "
 "инструкциям, не редактируйте базу данных вручную."
 
-#: ../../appendix/faqs/general.rst:310 ../../appendix/faqs/general.rst:310
+#: ../../appendix/faqs/general.rst:376 ../../appendix/faqs/general.rst:376
 msgid ""
-"I know PHP and MySQL and have a legitimate reason to edit the database. Is "
-"it okay to manually edit the database?"
+"I know PHP and MariaDB and have a legitimate reason to edit the database. Is"
+" it okay to manually edit the database?"
 msgstr ""
-"Я знаю PHP и MySQL и у меня есть законная причина редактировать базу данных."
-" Можно ли редактировать базу данных вручную?"
 
-#: ../../appendix/faqs/general.rst:312 ../../appendix/faqs/general.rst:312
+#: ../../appendix/faqs/general.rst:378 ../../appendix/faqs/general.rst:378
 msgid ""
 "Make sure you understand Elgg's :doc:`data model </design/database>` and "
 "schema first. Make a backup, edit carefully, then test copiously."
@@ -995,39 +936,35 @@ msgstr ""
 "и схему Elgg. Сделайте резервную копию, редактируйте осторожно, затем "
 "тщательно протестируйте."
 
-#: ../../appendix/faqs/general.rst:315 ../../appendix/faqs/general.rst:315
+#: ../../appendix/faqs/general.rst:382 ../../appendix/faqs/general.rst:382
 msgid "Internet Explorer (IE) login problem"
 msgstr "Проблема входа в Internet Explorer (IE)"
 
-#: ../../appendix/faqs/general.rst:318 ../../appendix/faqs/general.rst:318
+#: ../../appendix/faqs/general.rst:385 ../../appendix/faqs/general.rst:385
 msgid "Canonical URL"
 msgstr "Канонический URL"
 
-#: ../../appendix/faqs/general.rst:320 ../../appendix/faqs/general.rst:320
+#: ../../appendix/faqs/general.rst:387 ../../appendix/faqs/general.rst:387
 msgid ""
-"IE does not like working with sites that use both http://example.org and "
-"http://www.example.org. It stores multiple cookies and this causes problems."
-" Best to only use one base URL. For details on how to do this see Login "
-"token mismatch error."
+"IE does not like working with sites that use both ``http://example.org`` and"
+" ``http://www.example.org``. It stores multiple cookies and this causes "
+"problems. Best to only use one base URL. For details on how to do this see "
+"Login token mismatch error."
 msgstr ""
-"IE не любит работать с сайтами, которые используют как http://example.org, "
-"так и http://www.example.org. Он сохраняет несколько куки, и это вызывает "
-"проблемы. Лучше использовать только один базовый URL. Подробную информацию о"
-" том, как это сделать, см. в ошибке Login token mismatch."
 
-#: ../../appendix/faqs/general.rst:323 ../../appendix/faqs/general.rst:323
+#: ../../appendix/faqs/general.rst:391 ../../appendix/faqs/general.rst:391
 msgid "Chrome Frame"
 msgstr "Chrome Frame"
 
-#: ../../appendix/faqs/general.rst:325 ../../appendix/faqs/general.rst:325
+#: ../../appendix/faqs/general.rst:393 ../../appendix/faqs/general.rst:393
 msgid "Using the chrome frame within IE can break the login process."
 msgstr "Использование chrome frame внутри IE может нарушить процесс входа."
 
-#: ../../appendix/faqs/general.rst:328 ../../appendix/faqs/general.rst:328
+#: ../../appendix/faqs/general.rst:396 ../../appendix/faqs/general.rst:396
 msgid "Emails don't support non-Latin characters"
 msgstr "Письма не поддерживают нелатинские символы"
 
-#: ../../appendix/faqs/general.rst:330 ../../appendix/faqs/general.rst:330
+#: ../../appendix/faqs/general.rst:398 ../../appendix/faqs/general.rst:398
 msgid ""
 "In order to support non-Latin characters, (such as Cyrillic or Chinese) Elgg"
 " requires `multibyte string support`_ to be compiled into PHP."
@@ -1035,7 +972,7 @@ msgstr ""
 "Для поддержки нелатинских символов (таких как кириллица или китайские) Elgg "
 "требует, чтобы `поддержка многбайтовых строк`_ была скомпилирована в PHP."
 
-#: ../../appendix/faqs/general.rst:332 ../../appendix/faqs/general.rst:332
+#: ../../appendix/faqs/general.rst:401 ../../appendix/faqs/general.rst:401
 msgid ""
 "On many installs (e.g. Debian & Ubuntu) this is turned on by default. If it "
 "is not, you need to turn it on (or recompile PHP to include it). To check "
@@ -1046,27 +983,23 @@ msgstr ""
 "включить это). Чтобы проверить, поддерживает ли ваш сервер многбайтовые "
 "строки, проверьте `phpinfo`_."
 
-#: ../../appendix/faqs/general.rst:338 ../../appendix/faqs/general.rst:338
+#: ../../appendix/faqs/general.rst:408 ../../appendix/faqs/general.rst:408
 msgid "Session length"
 msgstr "Длительность сессии"
 
-#: ../../appendix/faqs/general.rst:340 ../../appendix/faqs/general.rst:340
+#: ../../appendix/faqs/general.rst:410 ../../appendix/faqs/general.rst:410
 msgid ""
-"Session length is controlled by your php configuration. You will first need "
+"Session length is controlled by your PHP configuration. You will first need "
 "to locate your ``php.ini`` file. In that file will be several session "
 "variables. A complete list and what they do can be found in the `php "
 "manual`_."
 msgstr ""
-"Длительность сессии контролируется вашей конфигурацией php. Сначала вам "
-"нужно найти ваш файл ``php.ini``. В этом файле будут несколько переменных "
-"сессии. Полный список и то, что они делают, можно найти в `руководстве "
-"php`_."
 
-#: ../../appendix/faqs/general.rst:345 ../../appendix/faqs/general.rst:345
+#: ../../appendix/faqs/general.rst:416 ../../appendix/faqs/general.rst:416
 msgid "File is missing an owner"
 msgstr "У файла отсутствует владелец"
 
-#: ../../appendix/faqs/general.rst:347 ../../appendix/faqs/general.rst:347
+#: ../../appendix/faqs/general.rst:418 ../../appendix/faqs/general.rst:418
 msgid ""
 "There are three causes for this error. You could have an entity in your "
 "database that has an ``owner_guid`` of ``0``. This should be extremely rare "
@@ -1077,7 +1010,7 @@ msgstr ""
 "произойти только если ваша база данных/сервер аварийно завершает работу во "
 "время операции записи."
 
-#: ../../appendix/faqs/general.rst:349 ../../appendix/faqs/general.rst:349
+#: ../../appendix/faqs/general.rst:421 ../../appendix/faqs/general.rst:421
 msgid ""
 "The second cause would be an entity where the owner no longer exists. This "
 "could occur if a plugin is turned off that was involved in the creation of "
@@ -1093,7 +1026,7 @@ msgstr ""
 "посмотрите в вашей таблице ``entities`` и измените ``owner_guid`` на свой "
 "собственный, а затем вы сможете удалить сущность через Elgg."
 
-#: ../../appendix/faqs/general.rst:353 ../../appendix/faqs/general.rst:353
+#: ../../appendix/faqs/general.rst:428 ../../appendix/faqs/general.rst:428
 msgid ""
 "Reed the section \"Should I edit the database manually?\". Be very carefull "
 "when editing the database directly. It can break your site. **Always** make "
@@ -1103,25 +1036,11 @@ msgstr ""
 "Будьте очень осторожны при прямом редактировании базы данных. Это может "
 "сломать ваш сайт. **Всегда** делайте резервную копию перед этим."
 
-#: ../../appendix/faqs/general.rst:356 ../../appendix/faqs/general.rst:356
-msgid "Fixes"
-msgstr "Исправления"
-
-#: ../../appendix/faqs/general.rst:358 ../../appendix/faqs/general.rst:358
-msgid ""
-"`Database Validator`_ plugin will check your database for these causes and "
-"provide an option to fix them. Be sure to backup the database before you try"
-" the fix option."
-msgstr ""
-"Плагин `Database Validator`_ проверит вашу базу данных на наличие этих "
-"причин и предоставит опцию для их исправления. Обязательно сделайте "
-"резервную копию базы данных перед тем, как попробовать опцию исправления."
-
-#: ../../appendix/faqs/general.rst:363 ../../appendix/faqs/general.rst:363
+#: ../../appendix/faqs/general.rst:432 ../../appendix/faqs/general.rst:432
 msgid "No images"
 msgstr "Нет изображений"
 
-#: ../../appendix/faqs/general.rst:365 ../../appendix/faqs/general.rst:365
+#: ../../appendix/faqs/general.rst:434 ../../appendix/faqs/general.rst:434
 msgid ""
 "If profile images, group images, or other files have stopped working on your"
 " site it is likely due to a misconfiguration, especially if you have "
@@ -1131,7 +1050,7 @@ msgstr ""
 "работать на вашем сайте, это, вероятно, связано с неправильной "
 "конфигурацией, особенно если вы перешли на новый сервер."
 
-#: ../../appendix/faqs/general.rst:367 ../../appendix/faqs/general.rst:367
+#: ../../appendix/faqs/general.rst:437 ../../appendix/faqs/general.rst:437
 msgid ""
 "These are the most common misconfigurations that cause images and other "
 "files to stop working."
@@ -1139,23 +1058,21 @@ msgstr ""
 "Это наиболее распространённые ошибки конфигурации, которые приводят к тому, "
 "что изображения и другие файлы перестают работать."
 
-#: ../../appendix/faqs/general.rst:370 ../../appendix/faqs/general.rst:370
+#: ../../appendix/faqs/general.rst:440 ../../appendix/faqs/general.rst:440
 msgid "Wrong path for data directory"
 msgstr "Неверный путь к директории данных"
 
-#: ../../appendix/faqs/general.rst:372 ../../appendix/faqs/general.rst:372
+#: ../../appendix/faqs/general.rst:442 ../../appendix/faqs/general.rst:442
 msgid ""
-"Make sure the data directory's path is correct in the Site Administration "
-"admin area. It should have a trailing slash."
+"Make sure the data directory's path is correct in the ``settings.php`` file."
+" It should have a trailing slash."
 msgstr ""
-"Убедитесь, что путь к директории данных верен в области администрирования "
-"сайта. Он должен иметь завершающий слэш."
 
-#: ../../appendix/faqs/general.rst:375 ../../appendix/faqs/general.rst:375
+#: ../../appendix/faqs/general.rst:445 ../../appendix/faqs/general.rst:445
 msgid "Wrong permissions on the data directory"
 msgstr "Неверные права доступа к директории данных"
 
-#: ../../appendix/faqs/general.rst:377 ../../appendix/faqs/general.rst:377
+#: ../../appendix/faqs/general.rst:447 ../../appendix/faqs/general.rst:447
 msgid ""
 "Check the permissions for the data directory. The data directory should be "
 "readable and writeable by the web server user."
@@ -1163,31 +1080,17 @@ msgstr ""
 "Проверьте права доступа к директории данных. Директория данных должна быть "
 "доступна для чтения и записи пользователю веб-сервера."
 
-#: ../../appendix/faqs/general.rst:380 ../../appendix/faqs/general.rst:380
-msgid "Migrated installation with new data directory location"
-msgstr "Мигрированная установка с новым расположением директории данных"
-
-#: ../../appendix/faqs/general.rst:382 ../../appendix/faqs/general.rst:382
-msgid ""
-"If you migrated an installation and need to change your data directory path,"
-" be sure to update the SQL for the filestore location as documented in the "
-":doc:`/admin/duplicate-installation` instructions."
-msgstr ""
-"Если вы мигрировали установку и вам нужно изменить путь к директории данных,"
-" обязательно обновите SQL для расположения filestore, как описано в "
-"инструкциях :doc:`/admin/duplicate-installation`."
-
-#: ../../appendix/faqs/general.rst:385 ../../appendix/faqs/general.rst:385
+#: ../../appendix/faqs/general.rst:450 ../../appendix/faqs/general.rst:450
 msgid "Deprecation warnings"
 msgstr "Предупреждения об устаревании"
 
-#: ../../appendix/faqs/general.rst:387 ../../appendix/faqs/general.rst:387
+#: ../../appendix/faqs/general.rst:452 ../../appendix/faqs/general.rst:452
 msgid "If you are seeing many deprecation warnings that say things like"
 msgstr ""
 "Если вы видите много предупреждений об устаревании, которые говорят что-то "
 "вроде"
 
-#: ../../appendix/faqs/general.rst:393 ../../appendix/faqs/general.rst:393
+#: ../../appendix/faqs/general.rst:458 ../../appendix/faqs/general.rst:458
 msgid ""
 "then you are using a plugin that was written for an older version of Elgg. "
 "This means the plugin is using functions that are scheduled to be removed in"
@@ -1201,11 +1104,11 @@ msgstr ""
 "обновлён, или вы можете обновить плагин самостоятельно. Если ни одно из этих"
 " событий маловероятно, не следует использовать этот плагин."
 
-#: ../../appendix/faqs/general.rst:396 ../../appendix/faqs/general.rst:396
+#: ../../appendix/faqs/general.rst:463 ../../appendix/faqs/general.rst:463
 msgid "Javascript not working"
 msgstr "JavaScript не работает"
 
-#: ../../appendix/faqs/general.rst:398 ../../appendix/faqs/general.rst:398
+#: ../../appendix/faqs/general.rst:465 ../../appendix/faqs/general.rst:465
 msgid ""
 "If the user hover menu stops working or you cannot dismiss system messages, "
 "that means JavaScript is broken on your site. This usually due to a plugin "
@@ -1223,7 +1126,7 @@ msgstr ""
 "исчезнет. Другой подход — отключить все сторонние плагины, а затем включать "
 "их по одному, пока проблема не появится снова."
 
-#: ../../appendix/faqs/general.rst:400 ../../appendix/faqs/general.rst:400
+#: ../../appendix/faqs/general.rst:470 ../../appendix/faqs/general.rst:470
 msgid ""
 "Most web browsers will give you a hint as to what is breaking the JavaScript"
 " code. They often have a console for JavaScript errors or an advanced mode "
@@ -1235,21 +1138,18 @@ msgstr ""
 "ошибок. Как только вы увидите сообщение об ошибке, вам будет проще найти "
 "проблему."
 
-#: ../../appendix/faqs/general.rst:403 ../../appendix/faqs/general.rst:403
+#: ../../appendix/faqs/general.rst:475 ../../appendix/faqs/general.rst:475
 msgid "IP addresses in the logs are wrong"
 msgstr "Неверные IP-адреса в логах"
 
-#: ../../appendix/faqs/general.rst:405 ../../appendix/faqs/general.rst:405
+#: ../../appendix/faqs/general.rst:477 ../../appendix/faqs/general.rst:477
 msgid ""
-"When your Elgg installation is behind a proxy server or loadbalancer the IP "
-"addresses logged in the System Log plugin can be wrong. It could show only "
+"When your Elgg installation is behind a proxy server or load balancer the IP"
+" addresses logged in the System Log plugin can be wrong. It could show only "
 "the IP addresses for the proxy server."
 msgstr ""
-"Когда ваша установка Elgg находится за прокси-сервером или балансировщиком "
-"нагрузки, IP-адреса, записываемые в плагине System Log, могут быть "
-"неверными. Они могут показывать только IP-адреса прокси-сервера."
 
-#: ../../appendix/faqs/general.rst:408 ../../appendix/faqs/general.rst:408
+#: ../../appendix/faqs/general.rst:480 ../../appendix/faqs/general.rst:480
 msgid ""
 "In order to solve this you can configure the IP addresses of the proxy "
 "server as a trusted IP address and with that allow the system access to the "
@@ -1259,7 +1159,7 @@ msgstr ""
 "доверенные, что позволит системе получать корректные IP-адреса ваших "
 "пользователей."
 
-#: ../../appendix/faqs/general.rst:411 ../../appendix/faqs/general.rst:411
+#: ../../appendix/faqs/general.rst:483 ../../appendix/faqs/general.rst:483
 msgid ""
 "In the ``settings.php`` file you can configure settings for "
 "``$CONFIG->http_request_trusted_proxy_ips`` and "
@@ -5162,6 +5062,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/2.1-to-2.2.rst:19
 #: ../../appendix/upgrade-notes/2.2-to-2.3.rst:38
 #: ../../appendix/upgrade-notes/5.0-to-5.1.rst:15
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:52
 msgid "Deprecated Views"
 msgstr "Устаревшие представления"
 
@@ -18054,10 +17955,12 @@ msgid "From 5.x to 6.0"
 msgstr "С 5.x до 6.0"
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:9
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:9
 msgid "Databases"
 msgstr "Базы данных"
 
 #: ../../appendix/upgrade-notes/5.x-to-6.0.rst:12
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:15
 msgid "DB Requirements"
 msgstr "Требования к БД"
 
@@ -19271,3 +19174,116 @@ msgstr "``\\Elgg\\Email\\HtmlPart.php`` был удалён"
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:283
 msgid "``\\Elgg\\Email\\PlainTextPart.php`` has been removed"
 msgstr "``\\Elgg\\Email\\PlainTextPart.php`` был удалён"
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:2
+msgid "From 7.0 to 7.1"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:11
+msgid ""
+"We've switched our default database recommendation from MySQL to MariaDB. "
+"MariaDB is a more community driven opensource database also MariaDB offers "
+"improved performance over MySQL and is fully compatible with the MySQL data "
+"and table definitions."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:17
+msgid "The minimal MySQL version is now 8.4"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:20
+msgid "Generic entity controller"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:22
+msgid ""
+"Because of the introduction of the generic entity controller the following "
+"resources have been deprecated:"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:24
+msgid "``resources/blog/add``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:25
+msgid "``resources/blog/edit``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:26
+msgid "``resources/blog/view``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:27
+msgid "``resources/bookmarks/add``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:28
+msgid "``resources/bookmarks/edit``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:29
+msgid "``resources/bookmarks/view``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:30
+msgid "``resources/discussion/add``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:31
+msgid "``resources/discussion/edit``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:32
+msgid "``resources/discussion/view``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:33
+msgid "``resources/file/edit``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:34
+msgid "``resources/file/upload``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:35
+msgid "``resources/file/view``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:36
+msgid "``resources/pages/add``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:37
+msgid "``resources/pages/edit``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:38
+msgid "``resources/pages/view``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:39
+msgid "``resources/thewire/view``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:42
+msgid "Generic filter menu items"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:44
+msgid ""
+"The generic menu items registered to the default filter menu, like 'All', "
+"'Mine', 'Friends', no longer show on pages with an owner different from the "
+"logged in user. The event handler for the 'All' and 'Mine' menu items has "
+"been split into 2 separate event handlers."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:48
+msgid ""
+"Passing custom `elgg_view_page()` variables ('all_link', 'mine_link' and "
+"'friend_link') have been deprecated. We encourage developers to leverage the"
+" generic route names for these kinds of pages."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:54
+msgid "``forms/pages/edit`` use ``forms/page/edit``"
+msgstr ""

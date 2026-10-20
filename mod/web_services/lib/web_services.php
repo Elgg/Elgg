@@ -27,7 +27,7 @@ function elgg_ws_get_post_data(): string|false {
  *
  * @return string The php algorithm
  *
- * @throws APIException if an algorithm is not supported.
+ * @throws \Elgg\Exceptions\RangeException if an algorithm is not supported.
  * @internal
  */
 function elgg_ws_map_api_hash(string $algo): string {
@@ -43,7 +43,7 @@ function elgg_ws_map_api_hash(string $algo): string {
 		return $supported_algos[$algo];
 	}
 
-	throw new APIException(elgg_echo('APIException:AlgorithmNotSupported', [$algo]));
+	throw new \Elgg\Exceptions\RangeException(elgg_echo('APIException:AlgorithmNotSupported', [$algo]));
 }
 
 /**

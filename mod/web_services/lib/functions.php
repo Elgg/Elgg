@@ -3,8 +3,6 @@
  * Helper functions
  */
 
-use Elgg\WebServices\Middleware\ApiContextMiddleware;
-use Elgg\WebServices\Middleware\ViewtypeMiddleware;
 use Elgg\WebServices\Di\ApiRegistrationService;
 
 /**
@@ -33,10 +31,6 @@ function elgg_ws_register_service_handler(string $handler, $function): bool {
 		'path' => "/services/api/{$handler}/{view}/{segments?}",
 		'defaults' => [
 			'view' => 'json',
-		],
-		'middleware' => [
-			ApiContextMiddleware::class,
-			ViewtypeMiddleware::class,
 		],
 		'requirements' => [
 			'segments' => '.+',

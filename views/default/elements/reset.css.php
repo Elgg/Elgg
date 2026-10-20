@@ -86,7 +86,6 @@ th {
 }
 
 html {
-	background-color: white;
 	font-size: var(--elgg-font-size);
 	min-width: 300px;
 	overflow-x: hidden;

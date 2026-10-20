@@ -20,7 +20,7 @@ $site_secret .= elgg_view_message($message_type, $strength_msg, [
 
 $site_secret_link = elgg_view('output/url', [
 	'text' => elgg_echo('admin:security:settings:site_secret:regenerate'),
-	'href' => 'action/admin/security/regenerate_site_secret',
+	'href' => elgg_generate_action_url('admin/security/regenerate_site_secret'),
 	'confirm' => true,
 	'class' => 'elgg-button elgg-button-action',
 ]);

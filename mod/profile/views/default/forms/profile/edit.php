@@ -7,7 +7,7 @@
  * @uses vars['entity']
  */
 
-/* @var ElggUser $entity */
+/** @var \ElggUser $entity */
 $entity = elgg_extract('entity', $vars);
 
 echo elgg_view('forms/profile/edit/name', $vars);
@@ -20,7 +20,7 @@ foreach ($profile_fields as $field) {
 	$valtype = $field['#type'];
 	
 	$annotations = $entity->getAnnotations([
-		'annotation_names' => "profile:$shortname",
+		'annotation_names' => "profile:{$shortname}",
 		'limit' => false,
 	]);
 	
@@ -48,24 +48,24 @@ foreach ($profile_fields as $field) {
 	}
 
 	$id = "profile-{$shortname}";
-	$input = elgg_view("input/{$valtype}", [
+	$input = elgg_format_element('div', ['class' => 'elgg-inner'], elgg_view("input/{$valtype}", [
 		'name' => $shortname,
 		'value' => $value,
 		'id' => $id,
-	]);
-	$access_input = elgg_view('input/access', [
+	]));
+	
+	$input .= elgg_view('input/access', [
 		'name' => "accesslevel[{$shortname}]",
 		'value' => $access_id,
+		'title' => elgg_echo('access:help'),
 	]);
 	
 	echo elgg_view('elements/forms/field', [
-		'input' => elgg_format_element('div', [
-			'class' => 'elgg-field-input',
-		], $input . $access_input),
+		'input' => elgg_format_element('div', ['class' => 'elgg-field-input'], $input),
 		'label' => elgg_view('elements/forms/label', [
 			'label' => $field['#label'],
-			'id' => $id,
-		])
+			'for' => $id,
+		]),
 	]);
 }
 

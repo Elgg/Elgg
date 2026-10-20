@@ -52,7 +52,8 @@ if (empty($entity_relationships)) {
 					$is_text = false;
 					$value = elgg_view('output/url', [
 						'text' => $value,
-						'href' => elgg_http_add_url_query_elements('admin/develop_tools/entity_explorer', [
+						'href' => elgg_generate_url('admin', [
+							'segments' => 'develop_tools/entity_explorer',
 							'guid' => $value,
 						]),
 					]);
@@ -81,7 +82,7 @@ if (empty($entity_relationships)) {
 			'icon' => 'remove',
 			'text' => false,
 			'title' => elgg_echo('delete'),
-			'href' => elgg_http_add_url_query_elements('action/developers/entity_explorer_delete', [
+			'href' => elgg_generate_action_url('developers/entity_explorer_delete', [
 				'guid' => $entity->guid,
 				'type' => 'relationship',
 				'key' => $relationship->id,

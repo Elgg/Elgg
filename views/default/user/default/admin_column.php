@@ -23,7 +23,9 @@ if (!isset($title)) {
 $metadata = elgg_view('output/url', [
 	'icon' => 'info-circle',
 	'text' => elgg_echo('more_info'),
-	'href' => elgg_http_add_url_query_elements('ajax/view/admin/users/listing/details', [
+	'href' => elgg_generate_url('ajax', [
+		'type' => 'view',
+		'segments' => 'admin/users/listing/details',
 		'guid' => $entity->guid,
 	]),
 	'class' => ['elgg-lightbox', 'float-alt'],

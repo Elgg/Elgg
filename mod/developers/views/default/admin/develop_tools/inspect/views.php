@@ -25,7 +25,8 @@ foreach ($viewtypes as $type) {
 	elgg_register_menu_item('developers_inspect_viewtype', [
 		'name' => $type,
 		'text' => $type,
-		'href' => elgg_http_add_url_query_elements('admin/develop_tools/inspect', [
+		'href' => elgg_generate_url('admin', [
+			'segments' => 'develop_tools/inspect',
 			'inspect_type' => 'Views',
 			'type' => $type !== 'default' ? $type : null,
 		]),

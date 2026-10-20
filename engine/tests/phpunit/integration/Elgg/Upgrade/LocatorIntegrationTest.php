@@ -7,23 +7,19 @@ use Elgg\IntegrationTestCase;
 
 class LocatorIntegrationTest extends IntegrationTestCase {
 	
-	/**
-	 * @var \ElggUpgrade
-	 */
-	protected $upgrade_entity;
+	protected ?\ElggUpgrade $upgrade_entity = null;
 	
 	public function up() {
-		
 		$batch = new UpgradeLocatorTestBatch();
 		$version = $batch->getVersion();
 
 		$upgrade = new \ElggUpgrade();
-		$upgrade->setClass(UpgradeLocatorTestBatch::class);
-		$upgrade->setId("test_plugin:$version");
-		$upgrade->title = "test_plugin:upgrade:$version:title";
-		$upgrade->description = "test_plugin:upgrade:$version:title";
-		$upgrade->access_id = ACCESS_PUBLIC;
-		$upgrade->save();
+		$upgrade->class = UpgradeLocatorTestBatch::class;
+		$upgrade->id = "test_plugin:{$version}";
+		
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($upgrade) {
+			$upgrade->save();
+		});
 		
 		$this->upgrade_entity = $upgrade;
 	}

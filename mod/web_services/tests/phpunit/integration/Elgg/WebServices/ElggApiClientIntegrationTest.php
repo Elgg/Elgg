@@ -2,6 +2,7 @@
 
 namespace Elgg\WebServices;
 
+use Elgg\Exceptions\RangeException;
 use Elgg\Plugins\IntegrationTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
@@ -56,7 +57,7 @@ class ElggApiClientIntegrationTest extends IntegrationTestCase {
 
 	#[DataProvider('invalidMethodProvider')]
 	public function testConstructorWithInvalidMethod($method) {
-		$this->expectException(\APIException::class);
+		$this->expectException(RangeException::class);
 		new ElggApiClient('http://localhost', [], $method);
 	}
 
@@ -64,7 +65,7 @@ class ElggApiClientIntegrationTest extends IntegrationTestCase {
 	public function testSetMethodWithInvalidMethod($method) {
 		$client = new ElggApiClient('http://localhost');
 		
-		$this->expectException(\APIException::class);
+		$this->expectException(RangeException::class);
 		$client->setMethod($method);
 	}
 	

@@ -120,13 +120,11 @@ echo elgg_view_field([
 ]);
 
 echo elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('developers:label:enable_error_log'),
 	'#help' => elgg_echo('developers:help:enable_error_log'),
 	'name' => 'params[enable_error_log]',
-	'value' => 1,
-	'checked' => $plugin->enable_error_log === '1',
-	'switch' => true,
+	'value' => $plugin->enable_error_log,
 ]);
 
 echo elgg_view_field([

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-09 14:38+0200\n"
+"POT-Creation-Date: 2026-10-09 09:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1760,11 +1760,20 @@ msgstr ""
 msgid "7.0"
 msgstr ""
 
+#: ../../appendix/support.rst:91
 #: ../../appendix/support.rst:93
-msgid "8.0"
+msgid "September 2026"
 msgstr ""
 
 #: ../../appendix/support.rst:93
+msgid "7.1"
+msgstr ""
+
+#: ../../appendix/support.rst:95
+msgid "8.0"
+msgstr ""
+
+#: ../../appendix/support.rst:95
 msgid "TBD"
 msgstr ""
 
@@ -3498,7 +3507,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/2.1-to-2.2.rst:19
 #: ../../appendix/upgrade-notes/2.2-to-2.3.rst:38
 #: ../../appendix/upgrade-notes/5.0-to-5.1.rst:15
-#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:52
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:58
 msgid "Deprecated Views"
 msgstr ""
 
@@ -11898,6 +11907,7 @@ msgid "``notify_user()`` use ``elgg_notify_user()`` or ``\\ElggUser::notify()``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/6.2-to-6.3.rst:15
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:53
 msgid "Deprecated classes"
 msgstr ""
 
@@ -12450,13 +12460,17 @@ msgid "Generic filter menu items"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:44
-msgid "The generic menu items registered to the default filter menu, like 'All', 'Mine', 'Friends', no longer show on pages with an owner different from the logged in user. The event handler for the 'All' and 'Mine' menu items has been split into 2 separate event handlers."
+msgid "The generic menu items registered to the default filter menu, like 'All', 'Mine', 'Friends', no longer show on pages with an owner different from the logged in user. The event handler for the 'All' and 'Mine' menu items has been split into 2 separate event handlers. The function ``\\Elgg\\Menus\\Filter::registerFilterTabs`` has been replaced by ``\\Elgg\\Menus\\Filter::registerAllFilterTab`` and ``\\Elgg\\Menus\\Filter::registerMineFilterTab``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:48
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:49
 msgid "Passing custom `elgg_view_page()` variables ('all_link', 'mine_link' and 'friend_link') have been deprecated. We encourage developers to leverage the generic route names for these kinds of pages."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:54
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:55
+msgid "``\\APIException`` use other ``\\Elgg\\Exception\\`` classes which better suit the need"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/7.0-to-7.1.rst:60
 msgid "``forms/pages/edit`` use ``forms/page/edit``"
 msgstr ""

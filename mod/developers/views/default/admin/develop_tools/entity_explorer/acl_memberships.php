@@ -35,7 +35,8 @@ if (empty($acls)) {
 			if ($col_name === 'owner_guid') {
 				$value = elgg_view('output/url', [
 					'text' => $value,
-					'href' => elgg_http_add_url_query_elements('admin/develop_tools/entity_explorer', [
+					'href' => elgg_generate_url('admin', [
+						'segments' => 'develop_tools/entity_explorer',
 						'guid' => $value,
 					]),
 				]);

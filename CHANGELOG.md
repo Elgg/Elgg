@@ -1,3 +1,20 @@
+<a name="7.1.1"></a>
+### 7.1.1 (2026-10-09)
+
+#### Contributors
+
+* Jerôme Bakker (10)
+* Jeroen Dalsem (6)
+
+#### Bug fixes
+
+* **upgrade:** show plugin name in upgrade listing [db8f4b270](https://github.com/Elgg/Elgg/commit/db8f4b270c4fbfdefeb8d0cf6c7f31fa010bcdd5) closes [#15159](https://github.com/Elgg/Elgg/issues/15159)
+* **profile:** profile edit form fields show access next to field [408a118ba](https://github.com/Elgg/Elgg/commit/408a118ba6804ec6b4511268aa0662057b2b97dc)
+* **view:** ensure page title when only provided to layout [9b1cc3836](https://github.com/Elgg/Elgg/commit/9b1cc38366b06c43123fefdb8a283e295c39cc46)
+* **trash:** improved recovery destination handling [1bcf1b681](https://github.com/Elgg/Elgg/commit/1bcf1b681885f7cf88e635e3645e0e0240bcd54b)
+* **css:** background color on html element conflicts with colorschemes [2efe4cc4c](https://github.com/Elgg/Elgg/commit/2efe4cc4c3f94fbf6e8ff1ca8b71c70d1de51d4c)
+
+
 <a name="7.1.0"></a>
 ## 7.1.0 (2026-09-10)
 

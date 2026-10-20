@@ -17,14 +17,19 @@ class Entity {
 	 * @return void|\Elgg\Menu\MenuItems
 	 */
 	public static function register(\Elgg\Event $event) {
-		if (!elgg_is_admin_logged_in()) {
+		$entity = $event->getEntityParam();
+		if (!elgg_is_admin_logged_in() || !$entity instanceof \ElggEntity) {
 			return;
 		}
 		
-		$entity = $event->getEntityParam();
-		$options = ['object_id' => $entity->guid];
+		$options = [
+			'segments' => 'administer_utilities/logbrowser',
+		];
+		
 		if ($entity instanceof \ElggUser) {
-			$options = ['user_guid' => $entity->guid];
+			$options['user_guid'] = $entity->guid;
+		} else {
+			$options['object_id'] = $entity->guid;
 		}
 		
 		$return = $event->getValue();
@@ -33,7 +38,7 @@ class Entity {
 			'icon' => 'search',
 			'parent_name' => 'admin',
 			'text' => elgg_echo('logbrowser:explore'),
-			'href' => elgg_http_add_url_query_elements('admin/administer_utilities/logbrowser', $options),
+			'href' => elgg_generate_url('admin', $options),
 		]);
 	
 		return $return;
