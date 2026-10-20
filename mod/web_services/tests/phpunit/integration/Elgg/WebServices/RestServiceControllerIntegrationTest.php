@@ -135,10 +135,10 @@ class RestServiceControllerIntegrationTest extends IntegrationTestCase {
 		$pam_handlers = $this->getInaccessableProperty(_elgg_services()->authentication, 'handlers');
 		
 		$this->assertIsArray($pam_handlers);
-		$this->assertArrayHasKey('user', $pam_handlers);
+		$this->assertArrayHasKey('api:user', $pam_handlers);
 		$this->assertArrayHasKey('api', $pam_handlers);
 		
-		$this->assertArrayHasKey(\Elgg\WebServices\PAM\User\AuthToken::class, $pam_handlers['user']);
+		$this->assertArrayHasKey(\Elgg\WebServices\PAM\User\AuthToken::class, $pam_handlers['api:user']);
 		$this->assertArrayHasKey(\Elgg\WebServices\PAM\API\APIKey::class, $pam_handlers['api']);
 		$this->assertArrayHasKey(\Elgg\WebServices\PAM\API\Hmac::class, $pam_handlers['api']);
 	}
@@ -154,6 +154,7 @@ class RestServiceControllerIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertIsArray($pam_handlers);
 		$this->assertArrayHasKey('user', $pam_handlers);
+		$this->assertArrayNotHasKey('api:user', $pam_handlers);
 		$this->assertArrayNotHasKey('api', $pam_handlers);
 		
 		$this->assertArrayNotHasKey(\Elgg\WebServices\PAM\User\AuthToken::class, $pam_handlers['user']);
