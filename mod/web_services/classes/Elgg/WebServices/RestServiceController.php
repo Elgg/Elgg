@@ -2,10 +2,10 @@
 
 namespace Elgg\WebServices;
 
-use Elgg\Request;
-use Elgg\Http\ResponseBuilder;
-use Elgg\WebServices\Di\ApiRegistrationService;
 use Elgg\Exceptions\AuthenticationException;
+use Elgg\Http\ResponseBuilder;
+use Elgg\Request;
+use Elgg\WebServices\Di\ApiRegistrationService;
 
 /**
  * Handle /services/api/rest/... calls
@@ -25,7 +25,7 @@ class RestServiceController {
 		// plugins should return true to control what API and user authentication handlers are registered
 		if (elgg_trigger_event_results('rest', 'init', [], false) === false) {
 			// user token can also be used for user authentication
-			elgg_register_pam_handler(\Elgg\WebServices\PAM\User\AuthToken::class);
+			elgg_register_pam_handler(\Elgg\WebServices\PAM\User\AuthToken::class, 'sufficient', 'api:user');
 			
 			// simple API key check
 			if (elgg_get_plugin_setting('auth_allow_key', 'web_services')) {
@@ -90,7 +90,7 @@ class RestServiceController {
 		// eg. blog listing
 		$user_exception = null;
 		try {
-			$user_authenticated = elgg_pam_authenticate('user');
+			$user_authenticated = elgg_pam_authenticate('api:user');
 		} catch (AuthenticationException $user_exception) {
 			// user authentication failed
 			$user_authenticated = false;
