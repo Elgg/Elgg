@@ -156,7 +156,7 @@ class ElggAccessCollection extends ElggData {
 	 * @return bool
 	 */
 	public function canEdit(?int $user_guid = null): bool {
-		return _elgg_services()->accessCollections->canEdit($this->id, $user_guid);
+		return _elgg_services()->accessCollections->canEdit($this->id, $user_guid ?? 0);
 	}
 
 	/**

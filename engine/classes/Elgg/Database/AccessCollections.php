@@ -317,12 +317,16 @@ class AccessCollections {
 	 *
 	 * Respects access control disabling for admin users and {@link elgg_call()}
 	 *
-	 * @param int      $collection_id The collection id
-	 * @param null|int $user_guid     The user GUID to check for. Defaults to logged in user.
+	 * @param int $collection_id The collection id
+	 * @param int $user_guid     The user GUID to check for. Defaults to logged in user.
 	 *
 	 * @return bool
 	 */
-	public function canEdit(int $collection_id, ?int $user_guid = null): bool {
+	public function canEdit(int $collection_id, int $user_guid = 0): bool {
+		if ($this->capabilities->canBypassPermissionsCheck($user_guid)) {
+			return true;
+		}
+
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -333,15 +337,6 @@ class AccessCollections {
 			return false;
 		}
 		
-		$collection = $this->get($collection_id);
-		if (!$collection instanceof \ElggAccessCollection) {
-			return false;
-		}
-
-		if ($this->capabilities->canBypassPermissionsCheck($user->guid)) {
-			return true;
-		}
-
 		$write_access = $this->getWriteAccessArray($user->guid, true);
 		return array_key_exists($collection_id, $write_access);
 	}
