@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7caf7b92223eb74f60ba869f545b4234",
+    "content-hash": "6cf6f11b08021a0b0640dfc8d4e6ccf8",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -67,7 +67,7 @@
         },
         {
             "name": "cakephp/core",
-            "version": "5.4.3",
+            "version": "5.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/core.git",
@@ -134,16 +134,16 @@
         },
         {
             "name": "cakephp/database",
-            "version": "5.4.3",
+            "version": "5.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/database.git",
-                "reference": "25abb44fdbb80b0700ae0a8649a19653253940ff"
+                "reference": "515bd17e18490ef20492c6072b7381b37ccf383d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/database/zipball/25abb44fdbb80b0700ae0a8649a19653253940ff",
-                "reference": "25abb44fdbb80b0700ae0a8649a19653253940ff",
+                "url": "https://api.github.com/repos/cakephp/database/zipball/515bd17e18490ef20492c6072b7381b37ccf383d",
+                "reference": "515bd17e18490ef20492c6072b7381b37ccf383d",
                 "shasum": ""
             },
             "require": {
@@ -200,11 +200,11 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/database"
             },
-            "time": "2026-10-03T03:38:06+00:00"
+            "time": "2026-10-24T05:10:44+00:00"
         },
         {
             "name": "cakephp/datasource",
-            "version": "5.4.3",
+            "version": "5.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/datasource.git",
@@ -271,16 +271,16 @@
         },
         {
             "name": "cakephp/event",
-            "version": "5.4.3",
+            "version": "5.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/event.git",
-                "reference": "28e2797bda517cbac7fa683415f7bbc2774de103"
+                "reference": "6dc5fa98e26408cce41ccd7cc19c753754cc11af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/event/zipball/28e2797bda517cbac7fa683415f7bbc2774de103",
-                "reference": "28e2797bda517cbac7fa683415f7bbc2774de103",
+                "url": "https://api.github.com/repos/cakephp/event/zipball/6dc5fa98e26408cce41ccd7cc19c753754cc11af",
+                "reference": "6dc5fa98e26408cce41ccd7cc19c753754cc11af",
                 "shasum": ""
             },
             "require": {
@@ -322,20 +322,20 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/event"
             },
-            "time": "2026-08-24T11:32:41+00:00"
+            "time": "2026-10-09T16:48:13+00:00"
         },
         {
             "name": "cakephp/utility",
-            "version": "5.4.3",
+            "version": "5.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/utility.git",
-                "reference": "20f1749f19ed59b5fbc900e683acc72fa2938c17"
+                "reference": "d16a4e08984b28be9daf111e9f78f38358393d25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/utility/zipball/20f1749f19ed59b5fbc900e683acc72fa2938c17",
-                "reference": "20f1749f19ed59b5fbc900e683acc72fa2938c17",
+                "url": "https://api.github.com/repos/cakephp/utility/zipball/d16a4e08984b28be9daf111e9f78f38358393d25",
+                "reference": "d16a4e08984b28be9daf111e9f78f38358393d25",
                 "shasum": ""
             },
             "require": {
@@ -386,7 +386,7 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/utility"
             },
-            "time": "2026-09-26T06:05:31+00:00"
+            "time": "2026-10-09T17:01:52+00:00"
         },
         {
             "name": "composer/installers",
@@ -842,16 +842,16 @@
         },
         {
             "name": "dragonmantank/cron-expression",
-            "version": "v3.6.0",
+            "version": "v3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dragonmantank/cron-expression.git",
-                "reference": "d61a8a9604ec1f8c3d150d09db6ce98b32675013"
+                "reference": "4189372ffeff09bf14f731f67a9de90c7b413ebe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/d61a8a9604ec1f8c3d150d09db6ce98b32675013",
-                "reference": "d61a8a9604ec1f8c3d150d09db6ce98b32675013",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/4189372ffeff09bf14f731f67a9de90c7b413ebe",
+                "reference": "4189372ffeff09bf14f731f67a9de90c7b413ebe",
                 "shasum": ""
             },
             "require": {
@@ -862,8 +862,8 @@
             },
             "require-dev": {
                 "phpstan/extension-installer": "^1.4.3",
-                "phpstan/phpstan": "^1.12.32|^2.1.31",
-                "phpunit/phpunit": "^8.5.48|^9.0"
+                "phpstan/phpstan": "^2.1.31",
+                "phpunit/phpunit": "^11.5.43 || ^12.4"
             },
             "type": "library",
             "extra": {
@@ -894,7 +894,7 @@
             ],
             "support": {
                 "issues": "https://github.com/dragonmantank/cron-expression/issues",
-                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.6.0"
+                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.6.1"
             },
             "funding": [
                 {
@@ -902,7 +902,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-31T18:51:33+00:00"
+            "time": "2026-10-19T17:53:57+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -1254,22 +1254,22 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.15.5",
+            "version": "7.15.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "ee80339fd9177ba44c49cdb653ff02a4d1106b9a"
+                "reference": "786c876325c5c5a16aa12ac5ee1d77f3bc8604f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/ee80339fd9177ba44c49cdb653ff02a4d1106b9a",
-                "reference": "ee80339fd9177ba44c49cdb653ff02a4d1106b9a",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/786c876325c5c5a16aa12ac5ee1d77f3bc8604f8",
+                "reference": "786c876325c5c5a16aa12ac5ee1d77f3bc8604f8",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/promises": "^2.5.3",
-                "guzzlehttp/psr7": "^2.13.1",
+                "guzzlehttp/psr7": "^2.13.2",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0",
                 "symfony/deprecation-contracts": "^2.5 || ^3.0",
@@ -1362,7 +1362,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.15.5"
+                "source": "https://github.com/guzzle/guzzle/tree/7.15.6"
             },
             "funding": [
                 {
@@ -1378,20 +1378,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-24T09:21:06+00:00"
+            "time": "2026-10-18T12:57:04+00:00"
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "2.5.3",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "cde49999552d185d64715fe9c1f77a2aadd2f9f1"
+                "reference": "3d88c829bd5f13d13847b39067dbf09a60af2154"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/cde49999552d185d64715fe9c1f77a2aadd2f9f1",
-                "reference": "cde49999552d185d64715fe9c1f77a2aadd2f9f1",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/3d88c829bd5f13d13847b39067dbf09a60af2154",
+                "reference": "3d88c829bd5f13d13847b39067dbf09a60af2154",
                 "shasum": ""
             },
             "require": {
@@ -1446,7 +1446,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/2.5.3"
+                "source": "https://github.com/guzzle/promises/tree/2.6.0"
             },
             "funding": [
                 {
@@ -1462,20 +1462,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-24T09:11:28+00:00"
+            "time": "2026-10-18T12:46:59+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.13.1",
+            "version": "2.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "95e7828100de18b4e269fb1703be530082d5166d"
+                "reference": "adee536f95101929f262b8c59e8a61472f347d58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/95e7828100de18b4e269fb1703be530082d5166d",
-                "reference": "95e7828100de18b4e269fb1703be530082d5166d",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/adee536f95101929f262b8c59e8a61472f347d58",
+                "reference": "adee536f95101929f262b8c59e8a61472f347d58",
                 "shasum": ""
             },
             "require": {
@@ -1565,7 +1565,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.13.1"
+                "source": "https://github.com/guzzle/psr7/tree/2.13.2"
             },
             "funding": [
                 {
@@ -1581,7 +1581,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-24T09:13:11+00:00"
+            "time": "2026-10-17T23:49:46+00:00"
         },
         {
             "name": "hackzilla/password-generator",
@@ -2298,7 +2298,8 @@
             "version": "2.0.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/bail/-/bail-2.0.2.tgz"
+                "url": "https://registry.npmjs.org/bail/-/bail-2.0.2.tgz",
+                "shasum": "d26f5cd8fe5d6f832a31517b9f7c356040ba6d5d"
             },
             "type": "npm-asset",
             "license": [
@@ -2310,7 +2311,8 @@
             "version": "2.0.5",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/blurhash/-/blurhash-2.0.5.tgz"
+                "url": "https://registry.npmjs.org/blurhash/-/blurhash-2.0.5.tgz",
+                "shasum": "efde729fc14a2f03571a6aa91b49cba80d1abe4b"
             },
             "type": "npm-asset",
             "license": [
@@ -2322,7 +2324,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/ccount/-/ccount-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/ccount/-/ccount-2.0.1.tgz",
+                "shasum": "17a3bf82302e0870d6da43a01311a8bc02a3ecf5"
             },
             "type": "npm-asset",
             "license": [
@@ -2334,7 +2337,8 @@
             "version": "2.0.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/character-entities/-/character-entities-2.0.2.tgz"
+                "url": "https://registry.npmjs.org/character-entities/-/character-entities-2.0.2.tgz",
+                "shasum": "2d09c2e72cd9523076ccb21157dff66ad43fcc22"
             },
             "type": "npm-asset",
             "license": [
@@ -2346,7 +2350,8 @@
             "version": "2.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/character-entities-html4/-/character-entities-html4-2.1.0.tgz"
+                "url": "https://registry.npmjs.org/character-entities-html4/-/character-entities-html4-2.1.0.tgz",
+                "shasum": "1f1adb940c971a4b22ba39ddca6b618dc6e56b2b"
             },
             "type": "npm-asset",
             "license": [
@@ -2358,7 +2363,8 @@
             "version": "3.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/character-entities-legacy/-/character-entities-legacy-3.0.0.tgz"
+                "url": "https://registry.npmjs.org/character-entities-legacy/-/character-entities-legacy-3.0.0.tgz",
+                "shasum": "76bc83a90738901d7bc223a9e93759fdd560125b"
             },
             "type": "npm-asset",
             "license": [
@@ -2370,7 +2376,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-adapter-ckfinder/-/ckeditor5-adapter-ckfinder-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-adapter-ckfinder/-/ckeditor5-adapter-ckfinder-47.6.2.tgz",
+                "shasum": "87916c1c0afbad41ca5632c6e2a4b9eff2d1c162"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2387,7 +2394,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-alignment/-/ckeditor5-alignment-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-alignment/-/ckeditor5-alignment-47.6.2.tgz",
+                "shasum": "55d636762c6ac545ea322f3dda4e011679ff140c"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2406,7 +2414,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-autoformat/-/ckeditor5-autoformat-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-autoformat/-/ckeditor5-autoformat-47.6.2.tgz",
+                "shasum": "5f14800113b9bf581616eb644d2e39465646cef4"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2426,7 +2435,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-autosave/-/ckeditor5-autosave-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-autosave/-/ckeditor5-autosave-47.6.2.tgz",
+                "shasum": "0fa155cf5f7414fc06e041c050ce5346194b1159"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2444,7 +2454,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-basic-styles/-/ckeditor5-basic-styles-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-basic-styles/-/ckeditor5-basic-styles-47.6.2.tgz",
+                "shasum": "7130d24c7a8ac192e342151b8d140f8775cdb965"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2465,7 +2476,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-block-quote/-/ckeditor5-block-quote-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-block-quote/-/ckeditor5-block-quote-47.6.2.tgz",
+                "shasum": "129577d298c5151d25371529950303ed4c24d8e4"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2486,7 +2498,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-bookmark/-/ckeditor5-bookmark-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-bookmark/-/ckeditor5-bookmark-47.6.2.tgz",
+                "shasum": "00ccacdefb1fff7f76ae7f55f1f59c4b8931803f"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2507,7 +2520,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-ckbox/-/ckeditor5-ckbox-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-ckbox/-/ckeditor5-ckbox-47.6.2.tgz",
+                "shasum": "fbaecba4b9e6e3da21ba141c421bfb1c306a9890"
             },
             "require": {
                 "npm-asset/blurhash": "2.0.5",
@@ -2532,7 +2546,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-ckfinder/-/ckeditor5-ckfinder-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-ckfinder/-/ckeditor5-ckfinder-47.6.2.tgz",
+                "shasum": "39216ae0aa38c20c74026b7a6b09315cafa8ead3"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2552,7 +2567,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-clipboard/-/ckeditor5-clipboard-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-clipboard/-/ckeditor5-clipboard-47.6.2.tgz",
+                "shasum": "9c97879783fc9ec4735ebe58866b80d11afbef9b"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2572,7 +2588,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-cloud-services/-/ckeditor5-cloud-services-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-cloud-services/-/ckeditor5-cloud-services-47.6.2.tgz",
+                "shasum": "a7a0d6118b39a9be28bb6ad651f9d3844787185e"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2589,7 +2606,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-code-block/-/ckeditor5-code-block-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-code-block/-/ckeditor5-code-block-47.6.2.tgz",
+                "shasum": "139966bb1cbc119a1eb6c947fc3d2ca2548c34a4"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
@@ -2611,7 +2629,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-core/-/ckeditor5-core-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-core/-/ckeditor5-core-47.6.2.tgz",
+                "shasum": "a1b304ccd4b46e7123914cac619e630b86e13966"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-engine": "47.6.2",
@@ -2630,7 +2649,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-easy-image/-/ckeditor5-easy-image-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-easy-image/-/ckeditor5-easy-image-47.6.2.tgz",
+                "shasum": "c70e1164fbd920f884f9b80922de04c621e3d938"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-cloud-services": "47.6.2",
@@ -2649,7 +2669,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-balloon/-/ckeditor5-editor-balloon-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-balloon/-/ckeditor5-editor-balloon-47.6.2.tgz",
+                "shasum": "85e684f618453117cac591c91e2a998615dbe3c4"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2669,7 +2690,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-classic/-/ckeditor5-editor-classic-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-classic/-/ckeditor5-editor-classic-47.6.2.tgz",
+                "shasum": "5d315aa0a8a553e538efaa685fc83353bf135592"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2689,7 +2711,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-decoupled/-/ckeditor5-editor-decoupled-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-decoupled/-/ckeditor5-editor-decoupled-47.6.2.tgz",
+                "shasum": "4cd630d122a9f915a271f26650dcaea98ca02d49"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2709,7 +2732,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-inline/-/ckeditor5-editor-inline-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-inline/-/ckeditor5-editor-inline-47.6.2.tgz",
+                "shasum": "4311ce185b414c3f31c03c0be152bfcc19fe1652"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2729,7 +2753,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-multi-root/-/ckeditor5-editor-multi-root-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-editor-multi-root/-/ckeditor5-editor-multi-root-47.6.2.tgz",
+                "shasum": "21575e6eff9863b18308251ee6f25822be4fc2b6"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2749,7 +2774,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-emoji/-/ckeditor5-emoji-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-emoji/-/ckeditor5-emoji-47.6.2.tgz",
+                "shasum": "c229129774408eaeed7b8c3e1141a0e183d3416a"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2772,7 +2798,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-engine/-/ckeditor5-engine-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-engine/-/ckeditor5-engine-47.6.2.tgz",
+                "shasum": "a8a3086a5a9db95334aa524450d6c42459d79f78"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-utils": "47.6.2",
@@ -2788,7 +2815,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-enter/-/ckeditor5-enter-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-enter/-/ckeditor5-enter-47.6.2.tgz",
+                "shasum": "b3ab729099569e7a0f3365c6d7222daf23ac64f8"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2805,7 +2833,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-essentials/-/ckeditor5-essentials-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-essentials/-/ckeditor5-essentials-47.6.2.tgz",
+                "shasum": "7a9c9eeb284820bbb907080b27d1e9d7b8be7483"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
@@ -2827,7 +2856,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-find-and-replace/-/ckeditor5-find-and-replace-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-find-and-replace/-/ckeditor5-find-and-replace-47.6.2.tgz",
+                "shasum": "006683fedf86228e255dc8e24cc4f8fb65c7da3f"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2847,7 +2877,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-font/-/ckeditor5-font-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-font/-/ckeditor5-font-47.6.2.tgz",
+                "shasum": "5fc484691afe3bde3c92554e3c225b7936a38960"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2867,7 +2898,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-fullscreen/-/ckeditor5-fullscreen-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-fullscreen/-/ckeditor5-fullscreen-47.6.2.tgz",
+                "shasum": "1a8a22a85394f78d762efd59a3035a4a53042800"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2888,7 +2920,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-heading/-/ckeditor5-heading-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-heading/-/ckeditor5-heading-47.6.2.tgz",
+                "shasum": "da4c0eb487c3a151c6e830c81a68debfeb9432b6"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2909,7 +2942,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-highlight/-/ckeditor5-highlight-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-highlight/-/ckeditor5-highlight-47.6.2.tgz",
+                "shasum": "3c577d727eda716c19bd7ef269bedb2b5551494b"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2929,7 +2963,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-horizontal-line/-/ckeditor5-horizontal-line-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-horizontal-line/-/ckeditor5-horizontal-line-47.6.2.tgz",
+                "shasum": "98f7be2ca3e325b46325fdcbd71cca92956df823"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2949,7 +2984,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-html-embed/-/ckeditor5-html-embed-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-html-embed/-/ckeditor5-html-embed-47.6.2.tgz",
+                "shasum": "b25cf025213378dedd0e4d45f03541cdc155e3ad"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2969,7 +3005,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-html-support/-/ckeditor5-html-support-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-html-support/-/ckeditor5-html-support-47.6.2.tgz",
+                "shasum": "22b5d8fe8880fbbd258549a2d8d179d304edb67e"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -2995,7 +3032,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-icons/-/ckeditor5-icons-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-icons/-/ckeditor5-icons-47.6.2.tgz",
+                "shasum": "d27f87d0e3a0884c62024c39917e8a3352d6a078"
             },
             "type": "npm-asset",
             "license": [
@@ -3007,7 +3045,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-image/-/ckeditor5-image-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-image/-/ckeditor5-image-47.6.2.tgz",
+                "shasum": "4ea561574731741bb86898c58b8ef404af626db8"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
@@ -3033,7 +3072,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-indent/-/ckeditor5-indent-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-indent/-/ckeditor5-indent-47.6.2.tgz",
+                "shasum": "39757f4cd626ae621248ad38b66d760ee31d945a"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3055,7 +3095,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-language/-/ckeditor5-language-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-language/-/ckeditor5-language-47.6.2.tgz",
+                "shasum": "1cbface222159556aad4347ce829b32f3c664a46"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3074,7 +3115,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-link/-/ckeditor5-link-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-link/-/ckeditor5-link-47.6.2.tgz",
+                "shasum": "5205ca7dc9b7a0f0c0b10bbf9638c1186643cf0a"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
@@ -3099,7 +3141,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-list/-/ckeditor5-list-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-list/-/ckeditor5-list-47.6.2.tgz",
+                "shasum": "3d05b6aa620d81caf4694f56cf2a2d5b7045204c"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
@@ -3124,7 +3167,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-markdown-gfm/-/ckeditor5-markdown-gfm-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-markdown-gfm/-/ckeditor5-markdown-gfm-47.6.2.tgz",
+                "shasum": "adc32f2e73a2b89cf201a6d8601a33ed32692537"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
@@ -3157,7 +3201,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-media-embed/-/ckeditor5-media-embed-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-media-embed/-/ckeditor5-media-embed-47.6.2.tgz",
+                "shasum": "4bf277a5874630133d731843bd1cbf3dbf05fc2f"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
@@ -3181,7 +3226,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-mention/-/ckeditor5-mention-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-mention/-/ckeditor5-mention-47.6.2.tgz",
+                "shasum": "94c0441e7e9cf86df29661e4634763720efaa1e7"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3201,7 +3247,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-minimap/-/ckeditor5-minimap-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-minimap/-/ckeditor5-minimap-47.6.2.tgz",
+                "shasum": "60e3173d34d469e86bf1c93efb28772c0986df4f"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3220,7 +3267,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-page-break/-/ckeditor5-page-break-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-page-break/-/ckeditor5-page-break-47.6.2.tgz",
+                "shasum": "dcd7aa61bda8dbc590f7e1e0c63f031e4cc31271"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3240,7 +3288,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-paragraph/-/ckeditor5-paragraph-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-paragraph/-/ckeditor5-paragraph-47.6.2.tgz",
+                "shasum": "3f8e0cadaf90ad205d51cdf3cd291e17779d234e"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3259,7 +3308,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-paste-from-office/-/ckeditor5-paste-from-office-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-paste-from-office/-/ckeditor5-paste-from-office-47.6.2.tgz",
+                "shasum": "697c121bfa095fe7d20d71656cd9b0e8f429ff95"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
@@ -3277,7 +3327,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-remove-format/-/ckeditor5-remove-format-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-remove-format/-/ckeditor5-remove-format-47.6.2.tgz",
+                "shasum": "bf75a07e49c610bccef31d98503e60a334d17556"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3296,7 +3347,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-restricted-editing/-/ckeditor5-restricted-editing-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-restricted-editing/-/ckeditor5-restricted-editing-47.6.2.tgz",
+                "shasum": "fa9fa8363b5c17f1ff9ce0f48322d8f55fea743f"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3316,7 +3368,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-select-all/-/ckeditor5-select-all-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-select-all/-/ckeditor5-select-all-47.6.2.tgz",
+                "shasum": "c6e0c7d40c4c4e039078b046a017b528c078d9b3"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3335,7 +3388,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-show-blocks/-/ckeditor5-show-blocks-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-show-blocks/-/ckeditor5-show-blocks-47.6.2.tgz",
+                "shasum": "92f48f6be795ebb075417af13ff2cde63dd74ad1"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3354,7 +3408,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-source-editing/-/ckeditor5-source-editing-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-source-editing/-/ckeditor5-source-editing-47.6.2.tgz",
+                "shasum": "4262c717c881f372c2f930f68743d0c0026d19b4"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3374,7 +3429,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-special-characters/-/ckeditor5-special-characters-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-special-characters/-/ckeditor5-special-characters-47.6.2.tgz",
+                "shasum": "4400fd2e479dd088702b2efb415c6aa120f0c28a"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3394,7 +3450,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-style/-/ckeditor5-style-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-style/-/ckeditor5-style-47.6.2.tgz",
+                "shasum": "55c526be8d4f5a4f8b6271ca1492b4a8e1527038"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3417,7 +3474,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-table/-/ckeditor5-table-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-table/-/ckeditor5-table-47.6.2.tgz",
+                "shasum": "448c246731d1cbdee1b44e939dc47c44262f32eb"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-clipboard": "47.6.2",
@@ -3440,7 +3498,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-theme-lark/-/ckeditor5-theme-lark-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-theme-lark/-/ckeditor5-theme-lark-47.6.2.tgz",
+                "shasum": "514e4b0a213b2217fc4af02edc2012e97e32108c"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-ui": "47.6.2"
@@ -3455,7 +3514,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-typing/-/ckeditor5-typing-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-typing/-/ckeditor5-typing-47.6.2.tgz",
+                "shasum": "407b567797e5c5f1f5655e164e4ec6c4a66ecb22"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3473,7 +3533,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-ui/-/ckeditor5-ui-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-ui/-/ckeditor5-ui-47.6.2.tgz",
+                "shasum": "f0909751641c8d737c143b23d4accf02b044b6a8"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3497,7 +3558,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-undo/-/ckeditor5-undo-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-undo/-/ckeditor5-undo-47.6.2.tgz",
+                "shasum": "96259e6b380493894e121a1d2382bef4b54ca621"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3516,7 +3578,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-upload/-/ckeditor5-upload-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-upload/-/ckeditor5-upload-47.6.2.tgz",
+                "shasum": "2328b71e937d8ba0189cd563a3bc88fb1651ce9a"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3532,7 +3595,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-utils/-/ckeditor5-utils-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-utils/-/ckeditor5-utils-47.6.2.tgz",
+                "shasum": "ac8d74cfd061455d5a2e39f1dc45eb83733e0470"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-ui": "47.6.2",
@@ -3548,7 +3612,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-watchdog/-/ckeditor5-watchdog-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-watchdog/-/ckeditor5-watchdog-47.6.2.tgz",
+                "shasum": "a9f67da32099fe7db123b687955347a36a0eb7de"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3567,7 +3632,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-widget/-/ckeditor5-widget-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-widget/-/ckeditor5-widget-47.6.2.tgz",
+                "shasum": "1783ffcb7533ffd3a11b01a383548a27b83a127b"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3589,7 +3655,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-word-count/-/ckeditor5-word-count-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/@ckeditor/ckeditor5-word-count/-/ckeditor5-word-count-47.6.2.tgz",
+                "shasum": "a8f2ba52c5c82b9eace357d70f15f24fd9ff9435"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-core": "47.6.2",
@@ -3608,7 +3675,8 @@
             "version": "47.6.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/ckeditor5/-/ckeditor5-47.6.2.tgz"
+                "url": "https://registry.npmjs.org/ckeditor5/-/ckeditor5-47.6.2.tgz",
+                "shasum": "b13c15a2df9ce455a97ba195bbb13530ace15389"
             },
             "require": {
                 "npm-asset/ckeditor--ckeditor5-adapter-ckfinder": "47.6.2",
@@ -3683,7 +3751,8 @@
             "version": "3.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/color-convert/-/color-convert-3.1.0.tgz"
+                "url": "https://registry.npmjs.org/color-convert/-/color-convert-3.1.0.tgz",
+                "shasum": "ce16ebb832f9d7522649ed9e11bc0ccb9433a524"
             },
             "require": {
                 "npm-asset/color-name": ">=2.0.0,<3.0.0"
@@ -3698,7 +3767,8 @@
             "version": "2.1.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/color-name/-/color-name-2.1.1.tgz"
+                "url": "https://registry.npmjs.org/color-name/-/color-name-2.1.1.tgz",
+                "shasum": "86c00ec98db36705be5bd4428097f13af1175a6d"
             },
             "type": "npm-asset",
             "license": [
@@ -3710,7 +3780,8 @@
             "version": "2.0.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/color-parse/-/color-parse-2.0.2.tgz"
+                "url": "https://registry.npmjs.org/color-parse/-/color-parse-2.0.2.tgz",
+                "shasum": "37b46930424924060988edf25b24e6ffb4a1dc3f"
             },
             "require": {
                 "npm-asset/color-name": ">=2.0.0,<3.0.0"
@@ -3725,7 +3796,8 @@
             "version": "2.0.3",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/comma-separated-tokens/-/comma-separated-tokens-2.0.3.tgz"
+                "url": "https://registry.npmjs.org/comma-separated-tokens/-/comma-separated-tokens-2.0.3.tgz",
+                "shasum": "4e89c9458acb61bc8fef19f4529973b2392839ee"
             },
             "type": "npm-asset",
             "license": [
@@ -3737,7 +3809,8 @@
             "version": "1.6.3",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/cropperjs/-/cropperjs-1.6.3.tgz"
+                "url": "https://registry.npmjs.org/cropperjs/-/cropperjs-1.6.3.tgz",
+                "shasum": "9556a39e3896f5dfa4b5b2649931454f631e9558"
             },
             "type": "npm-asset",
             "license": [
@@ -3749,7 +3822,8 @@
             "version": "4.4.3",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz"
+                "url": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+                "shasum": "c6ae432d9bd9662582fce08709b038c58e9e3d6a"
             },
             "require": {
                 "npm-asset/ms": ">=2.1.3,<3.0.0"
@@ -3764,7 +3838,8 @@
             "version": "1.3.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/decode-named-character-reference/-/decode-named-character-reference-1.3.0.tgz"
+                "url": "https://registry.npmjs.org/decode-named-character-reference/-/decode-named-character-reference-1.3.0.tgz",
+                "shasum": "3e40603760874c2e5867691b599d73a7da25b53f"
             },
             "require": {
                 "npm-asset/character-entities": ">=2.0.0,<3.0.0"
@@ -3779,7 +3854,8 @@
             "version": "2.0.3",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/dequal/-/dequal-2.0.3.tgz"
+                "url": "https://registry.npmjs.org/dequal/-/dequal-2.0.3.tgz",
+                "shasum": "2644214f1997d39ed0ee0ece72335490a7ac67be"
             },
             "type": "npm-asset",
             "license": [
@@ -3791,7 +3867,8 @@
             "version": "1.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/devlop/-/devlop-1.1.0.tgz"
+                "url": "https://registry.npmjs.org/devlop/-/devlop-1.1.0.tgz",
+                "shasum": "4db7c2ca4dc6e0e834c30be70c94bbc976dc7018"
             },
             "require": {
                 "npm-asset/dequal": ">=2.0.0,<3.0.0"
@@ -3806,7 +3883,8 @@
             "version": "1.39.5",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/es-toolkit/-/es-toolkit-1.39.5.tgz"
+                "url": "https://registry.npmjs.org/es-toolkit/-/es-toolkit-1.39.5.tgz",
+                "shasum": "ee2a78a66aafb76c7345af0ea8c06722c78ef1fd"
             },
             "type": "npm-asset",
             "license": [
@@ -3818,7 +3896,8 @@
             "version": "5.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-5.0.0.tgz"
+                "url": "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-5.0.0.tgz",
+                "shasum": "4683126b500b61762f2dbebace1806e8be31b1c8"
             },
             "type": "npm-asset",
             "license": [
@@ -3830,7 +3909,8 @@
             "version": "3.0.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/extend/-/extend-3.0.2.tgz"
+                "url": "https://registry.npmjs.org/extend/-/extend-3.0.2.tgz",
+                "shasum": "f8b1136b4071fbd8eb140aff858b1019ec2915fa"
             },
             "type": "npm-asset",
             "license": [
@@ -3842,7 +3922,8 @@
             "version": "7.6.6",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/focus-trap/-/focus-trap-7.6.6.tgz"
+                "url": "https://registry.npmjs.org/focus-trap/-/focus-trap-7.6.6.tgz",
+                "shasum": "a255c1088ddc8cd4363b3023bf28b224fd38aff2"
             },
             "require": {
                 "npm-asset/tabbable": ">=6.3.0,<7.0.0"
@@ -3857,7 +3938,8 @@
             "version": "3.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/fuzzysort/-/fuzzysort-3.1.0.tgz"
+                "url": "https://registry.npmjs.org/fuzzysort/-/fuzzysort-3.1.0.tgz",
+                "shasum": "4d7832d8fa48ad381753eaa7a7aae9927bdc10a8"
             },
             "type": "npm-asset",
             "license": [
@@ -3869,7 +3951,8 @@
             "version": "3.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hast-util-embedded/-/hast-util-embedded-3.0.0.tgz"
+                "url": "https://registry.npmjs.org/hast-util-embedded/-/hast-util-embedded-3.0.0.tgz",
+                "shasum": "be4477780fbbe079cdba22982e357a0de4ba853e"
             },
             "require": {
                 "npm-asset/hast-util-is-element": ">=3.0.0,<4.0.0",
@@ -3885,7 +3968,8 @@
             "version": "5.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hast-util-from-dom/-/hast-util-from-dom-5.0.1.tgz"
+                "url": "https://registry.npmjs.org/hast-util-from-dom/-/hast-util-from-dom-5.0.1.tgz",
+                "shasum": "c3c92fbd8d4e1c1625edeb3a773952b9e4ad64a8"
             },
             "require": {
                 "npm-asset/hastscript": ">=9.0.0,<10.0.0",
@@ -3902,7 +3986,8 @@
             "version": "3.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hast-util-has-property/-/hast-util-has-property-3.0.0.tgz"
+                "url": "https://registry.npmjs.org/hast-util-has-property/-/hast-util-has-property-3.0.0.tgz",
+                "shasum": "4e595e3cddb8ce530ea92f6fc4111a818d8e7f93"
             },
             "require": {
                 "npm-asset/types--hast": ">=3.0.0,<4.0.0"
@@ -3917,7 +4002,8 @@
             "version": "3.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hast-util-is-body-ok-link/-/hast-util-is-body-ok-link-3.0.1.tgz"
+                "url": "https://registry.npmjs.org/hast-util-is-body-ok-link/-/hast-util-is-body-ok-link-3.0.1.tgz",
+                "shasum": "ef63cb2f14f04ecf775139cd92bda5026380d8b4"
             },
             "require": {
                 "npm-asset/types--hast": ">=3.0.0,<4.0.0"
@@ -3932,7 +4018,8 @@
             "version": "3.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hast-util-is-element/-/hast-util-is-element-3.0.0.tgz"
+                "url": "https://registry.npmjs.org/hast-util-is-element/-/hast-util-is-element-3.0.0.tgz",
+                "shasum": "6e31a6532c217e5b533848c7e52c9d9369ca0932"
             },
             "require": {
                 "npm-asset/types--hast": ">=3.0.0,<4.0.0"
@@ -3947,7 +4034,8 @@
             "version": "1.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hast-util-minify-whitespace/-/hast-util-minify-whitespace-1.0.1.tgz"
+                "url": "https://registry.npmjs.org/hast-util-minify-whitespace/-/hast-util-minify-whitespace-1.0.1.tgz",
+                "shasum": "7588fd1a53f48f1d30406b81959dffc3650daf55"
             },
             "require": {
                 "npm-asset/hast-util-embedded": ">=3.0.0,<4.0.0",
@@ -3966,7 +4054,8 @@
             "version": "4.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hast-util-parse-selector/-/hast-util-parse-selector-4.0.0.tgz"
+                "url": "https://registry.npmjs.org/hast-util-parse-selector/-/hast-util-parse-selector-4.0.0.tgz",
+                "shasum": "352879fa86e25616036037dd8931fb5f34cb4a27"
             },
             "require": {
                 "npm-asset/types--hast": ">=3.0.0,<4.0.0"
@@ -3981,7 +4070,8 @@
             "version": "3.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hast-util-phrasing/-/hast-util-phrasing-3.0.1.tgz"
+                "url": "https://registry.npmjs.org/hast-util-phrasing/-/hast-util-phrasing-3.0.1.tgz",
+                "shasum": "fa284c0cd4a82a0dd6020de8300a7b1ebffa1690"
             },
             "require": {
                 "npm-asset/hast-util-embedded": ">=3.0.0,<4.0.0",
@@ -4000,7 +4090,8 @@
             "version": "4.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hast-util-to-dom/-/hast-util-to-dom-4.0.1.tgz"
+                "url": "https://registry.npmjs.org/hast-util-to-dom/-/hast-util-to-dom-4.0.1.tgz",
+                "shasum": "d57a84b9d320c2ce3dd867cefd7dff34b83c2176"
             },
             "require": {
                 "npm-asset/property-information": ">=7.0.0,<8.0.0",
@@ -4017,7 +4108,8 @@
             "version": "9.0.5",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hast-util-to-html/-/hast-util-to-html-9.0.5.tgz"
+                "url": "https://registry.npmjs.org/hast-util-to-html/-/hast-util-to-html-9.0.5.tgz",
+                "shasum": "ccc673a55bb8e85775b08ac28380f72d47167005"
             },
             "require": {
                 "npm-asset/ccount": ">=2.0.0,<3.0.0",
@@ -4042,7 +4134,8 @@
             "version": "10.1.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hast-util-to-mdast/-/hast-util-to-mdast-10.1.2.tgz"
+                "url": "https://registry.npmjs.org/hast-util-to-mdast/-/hast-util-to-mdast-10.1.2.tgz",
+                "shasum": "bc76f7f5f72f2cde4d6a66ad4cd0aba82bb79909"
             },
             "require": {
                 "npm-asset/hast-util-phrasing": ">=3.0.0,<4.0.0",
@@ -4067,16 +4160,14 @@
         },
         {
             "name": "npm-asset/hast-util-to-text",
-            "version": "4.0.2",
+            "version": "4.0.3",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hast-util-to-text/-/hast-util-to-text-4.0.2.tgz"
+                "url": "https://registry.npmjs.org/hast-util-to-text/-/hast-util-to-text-4.0.3.tgz",
+                "shasum": "0405bfc159113a2df02ae15f3e77685260df4e61"
             },
             "require": {
-                "npm-asset/hast-util-is-element": ">=3.0.0,<4.0.0",
-                "npm-asset/types--hast": ">=3.0.0,<4.0.0",
-                "npm-asset/types--unist": ">=3.0.0,<4.0.0",
-                "npm-asset/unist-util-find-after": ">=5.0.0,<6.0.0"
+                "npm-asset/types--hast": ">=3.0.0,<4.0.0"
             },
             "type": "npm-asset",
             "license": [
@@ -4088,7 +4179,8 @@
             "version": "3.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hast-util-whitespace/-/hast-util-whitespace-3.0.0.tgz"
+                "url": "https://registry.npmjs.org/hast-util-whitespace/-/hast-util-whitespace-3.0.0.tgz",
+                "shasum": "7778ed9d3c92dd9e8c5c8f648a49c21fc51cb621"
             },
             "require": {
                 "npm-asset/types--hast": ">=3.0.0,<4.0.0"
@@ -4103,7 +4195,8 @@
             "version": "9.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/hastscript/-/hastscript-9.0.1.tgz"
+                "url": "https://registry.npmjs.org/hastscript/-/hastscript-9.0.1.tgz",
+                "shasum": "dbc84bef6051d40084342c229c451cd9dc567dff"
             },
             "require": {
                 "npm-asset/comma-separated-tokens": ">=2.0.0,<3.0.0",
@@ -4122,7 +4215,8 @@
             "version": "3.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/html-void-elements/-/html-void-elements-3.0.0.tgz"
+                "url": "https://registry.npmjs.org/html-void-elements/-/html-void-elements-3.0.0.tgz",
+                "shasum": "fc9dbd84af9e747249034d4d62602def6517f1d7"
             },
             "type": "npm-asset",
             "license": [
@@ -4134,7 +4228,8 @@
             "version": "4.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/is-plain-obj/-/is-plain-obj-4.1.0.tgz"
+                "url": "https://registry.npmjs.org/is-plain-obj/-/is-plain-obj-4.1.0.tgz",
+                "shasum": "d65025edec3657ce032fd7db63c97883eaed71f0"
             },
             "type": "npm-asset",
             "license": [
@@ -4146,7 +4241,8 @@
             "version": "3.7.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz"
+                "url": "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz",
+                "shasum": "083ef98927c9a6a74d05a6af02806566d16274de"
             },
             "type": "npm-asset",
             "license": [
@@ -4158,7 +4254,8 @@
             "version": "1.6.4",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/jquery-colorbox/-/jquery-colorbox-1.6.4.tgz"
+                "url": "https://registry.npmjs.org/jquery-colorbox/-/jquery-colorbox-1.6.4.tgz",
+                "shasum": "799452523a6c494839224ef702e807deb9c06cc5"
             },
             "require": {
                 "npm-asset/jquery": ">=1.3.2"
@@ -4173,7 +4270,8 @@
             "version": "1.0.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/jquery-cropper/-/jquery-cropper-1.0.2.tgz"
+                "url": "https://registry.npmjs.org/jquery-cropper/-/jquery-cropper-1.0.2.tgz",
+                "shasum": "ce249d89935978d463e7b443607afa080f27fefd"
             },
             "type": "npm-asset",
             "license": [
@@ -4185,7 +4283,8 @@
             "version": "1.14.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/jquery-ui/-/jquery-ui-1.14.2.tgz"
+                "url": "https://registry.npmjs.org/jquery-ui/-/jquery-ui-1.14.2.tgz",
+                "shasum": "515288b5c730b720acca6e53a0366827ad834053"
             },
             "require": {
                 "npm-asset/jquery": ">=1.12.0,<5.0.0"
@@ -4200,7 +4299,8 @@
             "version": "0.2.3",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/jquery-ui-touch-punch/-/jquery-ui-touch-punch-0.2.3.tgz"
+                "url": "https://registry.npmjs.org/jquery-ui-touch-punch/-/jquery-ui-touch-punch-0.2.3.tgz",
+                "shasum": "eed82242733ba243f46b3e87c1841b308191da68"
             },
             "type": "npm-asset",
             "license": [
@@ -4212,7 +4312,8 @@
             "version": "3.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/longest-streak/-/longest-streak-3.1.0.tgz"
+                "url": "https://registry.npmjs.org/longest-streak/-/longest-streak-3.1.0.tgz",
+                "shasum": "62fa67cd958742a1574af9f39866364102d90cd4"
             },
             "type": "npm-asset",
             "license": [
@@ -4224,7 +4325,8 @@
             "version": "3.0.4",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/markdown-table/-/markdown-table-3.0.4.tgz"
+                "url": "https://registry.npmjs.org/markdown-table/-/markdown-table-3.0.4.tgz",
+                "shasum": "fe44d6d410ff9d6f2ea1797a3f60aa4d2b631c2a"
             },
             "type": "npm-asset",
             "license": [
@@ -4233,16 +4335,17 @@
         },
         {
             "name": "npm-asset/mdast-util-find-and-replace",
-            "version": "3.0.3",
+            "version": "3.0.4",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/mdast-util-find-and-replace/-/mdast-util-find-and-replace-3.0.3.tgz"
+                "url": "https://registry.npmjs.org/mdast-util-find-and-replace/-/mdast-util-find-and-replace-3.0.4.tgz",
+                "shasum": "83c63fd2c87db4b553276a48a6c5aa1b17566f29"
             },
             "require": {
                 "npm-asset/escape-string-regexp": ">=5.0.0,<6.0.0",
                 "npm-asset/types--mdast": ">=4.0.0,<5.0.0",
                 "npm-asset/unist-util-is": ">=6.0.0,<7.0.0",
-                "npm-asset/unist-util-visit-parents": ">=6.0.0,<7.0.0"
+                "npm-asset/unist-util-visit-parents": ">=6.1.0,<7.0.0"
             },
             "type": "npm-asset",
             "license": [
@@ -4254,7 +4357,8 @@
             "version": "2.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/mdast-util-from-markdown/-/mdast-util-from-markdown-2.1.0.tgz"
+                "url": "https://registry.npmjs.org/mdast-util-from-markdown/-/mdast-util-from-markdown-2.1.0.tgz",
+                "shasum": "a92a9130c95e0e137e7cffaf85588a7da9e4bda6"
             },
             "require": {
                 "npm-asset/decode-named-character-reference": ">=1.0.0,<2.0.0",
@@ -4280,7 +4384,8 @@
             "version": "3.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/mdast-util-gfm/-/mdast-util-gfm-3.1.0.tgz"
+                "url": "https://registry.npmjs.org/mdast-util-gfm/-/mdast-util-gfm-3.1.0.tgz",
+                "shasum": "2cdf63b92c2a331406b0fb0db4c077c1b0331751"
             },
             "require": {
                 "npm-asset/mdast-util-from-markdown": ">=2.0.0,<3.0.0",
@@ -4301,7 +4406,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/mdast-util-gfm-autolink-literal/-/mdast-util-gfm-autolink-literal-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/mdast-util-gfm-autolink-literal/-/mdast-util-gfm-autolink-literal-2.0.1.tgz",
+                "shasum": "abd557630337bd30a6d5a4bd8252e1c2dc0875d5"
             },
             "require": {
                 "npm-asset/ccount": ">=2.0.0,<3.0.0",
@@ -4320,7 +4426,8 @@
             "version": "2.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/mdast-util-gfm-footnote/-/mdast-util-gfm-footnote-2.1.0.tgz"
+                "url": "https://registry.npmjs.org/mdast-util-gfm-footnote/-/mdast-util-gfm-footnote-2.1.0.tgz",
+                "shasum": "7778e9d9ca3df7238cc2bd3fa2b1bf6a65b19403"
             },
             "require": {
                 "npm-asset/devlop": ">=1.1.0,<2.0.0",
@@ -4339,7 +4446,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/mdast-util-gfm-strikethrough/-/mdast-util-gfm-strikethrough-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/mdast-util-gfm-strikethrough/-/mdast-util-gfm-strikethrough-2.0.1.tgz",
+                "shasum": "96c7a4924cf5342acb6aefc4cd7893419ac816e8"
             },
             "require": {
                 "npm-asset/mdast-util-from-markdown": ">=2.0.0,<3.0.0",
@@ -4356,7 +4464,8 @@
             "version": "2.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/mdast-util-gfm-table/-/mdast-util-gfm-table-2.0.0.tgz"
+                "url": "https://registry.npmjs.org/mdast-util-gfm-table/-/mdast-util-gfm-table-2.0.0.tgz",
+                "shasum": "7a435fb6223a72b0862b33afbd712b6dae878d38"
             },
             "require": {
                 "npm-asset/devlop": ">=1.0.0,<2.0.0",
@@ -4375,7 +4484,8 @@
             "version": "2.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/mdast-util-gfm-task-list-item/-/mdast-util-gfm-task-list-item-2.0.0.tgz"
+                "url": "https://registry.npmjs.org/mdast-util-gfm-task-list-item/-/mdast-util-gfm-task-list-item-2.0.0.tgz",
+                "shasum": "e68095d2f8a4303ef24094ab642e1047b991a936"
             },
             "require": {
                 "npm-asset/devlop": ">=1.0.0,<2.0.0",
@@ -4393,7 +4503,8 @@
             "version": "2.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/mdast-util-newline-to-break/-/mdast-util-newline-to-break-2.0.0.tgz"
+                "url": "https://registry.npmjs.org/mdast-util-newline-to-break/-/mdast-util-newline-to-break-2.0.0.tgz",
+                "shasum": "4e73ef621b6b1a590240336cfe6c29915e198df0"
             },
             "require": {
                 "npm-asset/mdast-util-find-and-replace": ">=3.0.0,<4.0.0",
@@ -4409,7 +4520,8 @@
             "version": "4.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/mdast-util-phrasing/-/mdast-util-phrasing-4.1.0.tgz"
+                "url": "https://registry.npmjs.org/mdast-util-phrasing/-/mdast-util-phrasing-4.1.0.tgz",
+                "shasum": "7cc0a8dec30eaf04b7b1a9661a92adb3382aa6e3"
             },
             "require": {
                 "npm-asset/types--mdast": ">=4.0.0,<5.0.0",
@@ -4425,7 +4537,8 @@
             "version": "13.2.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/mdast-util-to-hast/-/mdast-util-to-hast-13.2.1.tgz"
+                "url": "https://registry.npmjs.org/mdast-util-to-hast/-/mdast-util-to-hast-13.2.1.tgz",
+                "shasum": "d7ff84ca499a57e2c060ae67548ad950e689a053"
             },
             "require": {
                 "npm-asset/devlop": ">=1.0.0,<2.0.0",
@@ -4445,10 +4558,11 @@
         },
         {
             "name": "npm-asset/mdast-util-to-markdown",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/mdast-util-to-markdown/-/mdast-util-to-markdown-2.2.0.tgz"
+                "url": "https://registry.npmjs.org/mdast-util-to-markdown/-/mdast-util-to-markdown-2.2.1.tgz",
+                "shasum": "8ba6b5fa8590eb480de939ac468970de39d48a76"
             },
             "require": {
                 "npm-asset/longest-streak": ">=3.0.0,<4.0.0",
@@ -4473,7 +4587,8 @@
             "version": "4.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/mdast-util-to-string/-/mdast-util-to-string-4.0.0.tgz"
+                "url": "https://registry.npmjs.org/mdast-util-to-string/-/mdast-util-to-string-4.0.0.tgz",
+                "shasum": "7a5121475556a04e7eddeb67b264aae79d312814"
             },
             "require": {
                 "npm-asset/types--mdast": ">=4.0.0,<5.0.0"
@@ -4488,7 +4603,8 @@
             "version": "4.0.3",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark/-/micromark-4.0.3.tgz"
+                "url": "https://registry.npmjs.org/micromark/-/micromark-4.0.3.tgz",
+                "shasum": "6d29c0a5383c1dda7975a6c897e0e18d5694f10d"
             },
             "require": {
                 "npm-asset/debug": ">=4.0.0,<5.0.0",
@@ -4520,7 +4636,8 @@
             "version": "2.0.4",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-core-commonmark/-/micromark-core-commonmark-2.0.4.tgz"
+                "url": "https://registry.npmjs.org/micromark-core-commonmark/-/micromark-core-commonmark-2.0.4.tgz",
+                "shasum": "ff748f2327717b3675f0864e5aabc4f2a0028da3"
             },
             "require": {
                 "npm-asset/decode-named-character-reference": ">=1.0.0,<2.0.0",
@@ -4551,7 +4668,8 @@
             "version": "3.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-extension-gfm/-/micromark-extension-gfm-3.0.0.tgz"
+                "url": "https://registry.npmjs.org/micromark-extension-gfm/-/micromark-extension-gfm-3.0.0.tgz",
+                "shasum": "3e13376ab95dd7a5cfd0e29560dfe999657b3c5b"
             },
             "require": {
                 "npm-asset/micromark-extension-gfm-autolink-literal": ">=2.0.0,<3.0.0",
@@ -4573,7 +4691,8 @@
             "version": "2.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-extension-gfm-autolink-literal/-/micromark-extension-gfm-autolink-literal-2.1.0.tgz"
+                "url": "https://registry.npmjs.org/micromark-extension-gfm-autolink-literal/-/micromark-extension-gfm-autolink-literal-2.1.0.tgz",
+                "shasum": "6286aee9686c4462c1e3552a9d505feddceeb935"
             },
             "require": {
                 "npm-asset/micromark-util-character": ">=2.0.0,<3.0.0",
@@ -4591,7 +4710,8 @@
             "version": "2.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-extension-gfm-footnote/-/micromark-extension-gfm-footnote-2.1.0.tgz"
+                "url": "https://registry.npmjs.org/micromark-extension-gfm-footnote/-/micromark-extension-gfm-footnote-2.1.0.tgz",
+                "shasum": "4dab56d4e398b9853f6fe4efac4fc9361f3e0750"
             },
             "require": {
                 "npm-asset/devlop": ">=1.0.0,<2.0.0",
@@ -4613,7 +4733,8 @@
             "version": "2.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-extension-gfm-strikethrough/-/micromark-extension-gfm-strikethrough-2.1.0.tgz"
+                "url": "https://registry.npmjs.org/micromark-extension-gfm-strikethrough/-/micromark-extension-gfm-strikethrough-2.1.0.tgz",
+                "shasum": "86106df8b3a692b5f6a92280d3879be6be46d923"
             },
             "require": {
                 "npm-asset/devlop": ">=1.0.0,<2.0.0",
@@ -4633,7 +4754,8 @@
             "version": "2.1.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-extension-gfm-table/-/micromark-extension-gfm-table-2.1.2.tgz"
+                "url": "https://registry.npmjs.org/micromark-extension-gfm-table/-/micromark-extension-gfm-table-2.1.2.tgz",
+                "shasum": "54dc246873c0c0bebd84600e578aeb8a5f5de78d"
             },
             "require": {
                 "npm-asset/devlop": ">=1.0.0,<2.0.0",
@@ -4652,7 +4774,8 @@
             "version": "2.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-extension-gfm-tagfilter/-/micromark-extension-gfm-tagfilter-2.0.0.tgz"
+                "url": "https://registry.npmjs.org/micromark-extension-gfm-tagfilter/-/micromark-extension-gfm-tagfilter-2.0.0.tgz",
+                "shasum": "f26d8a7807b5985fba13cf61465b58ca5ff7dc57"
             },
             "require": {
                 "npm-asset/micromark-util-types": ">=2.0.0,<3.0.0"
@@ -4667,7 +4790,8 @@
             "version": "2.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-extension-gfm-task-list-item/-/micromark-extension-gfm-task-list-item-2.1.0.tgz"
+                "url": "https://registry.npmjs.org/micromark-extension-gfm-task-list-item/-/micromark-extension-gfm-task-list-item-2.1.0.tgz",
+                "shasum": "bcc34d805639829990ec175c3eea12bb5b781f2c"
             },
             "require": {
                 "npm-asset/devlop": ">=1.0.0,<2.0.0",
@@ -4686,7 +4810,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-factory-destination/-/micromark-factory-destination-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-factory-destination/-/micromark-factory-destination-2.0.1.tgz",
+                "shasum": "8fef8e0f7081f0474fbdd92deb50c990a0264639"
             },
             "require": {
                 "npm-asset/micromark-util-character": ">=2.0.0,<3.0.0",
@@ -4703,7 +4828,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-factory-label/-/micromark-factory-label-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-factory-label/-/micromark-factory-label-2.0.1.tgz",
+                "shasum": "5267efa97f1e5254efc7f20b459a38cb21058ba1"
             },
             "require": {
                 "npm-asset/devlop": ">=1.0.0,<2.0.0",
@@ -4721,7 +4847,8 @@
             "version": "2.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-factory-space/-/micromark-factory-space-2.1.0.tgz"
+                "url": "https://registry.npmjs.org/micromark-factory-space/-/micromark-factory-space-2.1.0.tgz",
+                "shasum": "afc208b018c330f17f438731c2014fdff1cd154f"
             },
             "require": {
                 "npm-asset/micromark-util-character": ">=2.0.0,<3.0.0",
@@ -4737,7 +4864,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-factory-title/-/micromark-factory-title-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-factory-title/-/micromark-factory-title-2.0.1.tgz",
+                "shasum": "237e4aa5d58a95863f01032d9ee9b090f1de6e94"
             },
             "require": {
                 "npm-asset/micromark-factory-space": ">=2.0.0,<3.0.0",
@@ -4755,7 +4883,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-factory-whitespace/-/micromark-factory-whitespace-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-factory-whitespace/-/micromark-factory-whitespace-2.0.1.tgz",
+                "shasum": "06b26b2983c4d27bfcc657b33e25134d4868b0b1"
             },
             "require": {
                 "npm-asset/micromark-factory-space": ">=2.0.0,<3.0.0",
@@ -4773,7 +4902,8 @@
             "version": "2.1.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-character/-/micromark-util-character-2.1.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-character/-/micromark-util-character-2.1.1.tgz",
+                "shasum": "2f987831a40d4c510ac261e89852c4e9703ccda6"
             },
             "require": {
                 "npm-asset/micromark-util-symbol": ">=2.0.0,<3.0.0",
@@ -4789,7 +4919,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-chunked/-/micromark-util-chunked-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-chunked/-/micromark-util-chunked-2.0.1.tgz",
+                "shasum": "47fbcd93471a3fccab86cff03847fc3552db1051"
             },
             "require": {
                 "npm-asset/micromark-util-symbol": ">=2.0.0,<3.0.0"
@@ -4804,7 +4935,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-classify-character/-/micromark-util-classify-character-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-classify-character/-/micromark-util-classify-character-2.0.1.tgz",
+                "shasum": "d399faf9c45ca14c8b4be98b1ea481bced87b629"
             },
             "require": {
                 "npm-asset/micromark-util-character": ">=2.0.0,<3.0.0",
@@ -4821,7 +4953,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-combine-extensions/-/micromark-util-combine-extensions-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-combine-extensions/-/micromark-util-combine-extensions-2.0.1.tgz",
+                "shasum": "2a0f490ab08bff5cc2fd5eec6dd0ca04f89b30a9"
             },
             "require": {
                 "npm-asset/micromark-util-chunked": ">=2.0.0,<3.0.0",
@@ -4837,7 +4970,8 @@
             "version": "2.0.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-decode-numeric-character-reference/-/micromark-util-decode-numeric-character-reference-2.0.2.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-decode-numeric-character-reference/-/micromark-util-decode-numeric-character-reference-2.0.2.tgz",
+                "shasum": "fcf15b660979388e6f118cdb6bf7d79d73d26fe5"
             },
             "require": {
                 "npm-asset/micromark-util-symbol": ">=2.0.0,<3.0.0"
@@ -4852,7 +4986,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-decode-string/-/micromark-util-decode-string-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-decode-string/-/micromark-util-decode-string-2.0.1.tgz",
+                "shasum": "6cb99582e5d271e84efca8e61a807994d7161eb2"
             },
             "require": {
                 "npm-asset/decode-named-character-reference": ">=1.0.0,<2.0.0",
@@ -4870,7 +5005,8 @@
             "version": "1.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-edit-map/-/micromark-util-edit-map-1.0.0.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-edit-map/-/micromark-util-edit-map-1.0.0.tgz",
+                "shasum": "0b5dd9ab4295f7389472c5fee2b61ffd45774cb2"
             },
             "require": {
                 "npm-asset/micromark-util-types": ">=2.0.0,<3.0.0"
@@ -4885,7 +5021,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-encode/-/micromark-util-encode-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-encode/-/micromark-util-encode-2.0.1.tgz",
+                "shasum": "0d51d1c095551cfaac368326963cf55f15f540b8"
             },
             "type": "npm-asset",
             "license": [
@@ -4897,7 +5034,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-html-tag-name/-/micromark-util-html-tag-name-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-html-tag-name/-/micromark-util-html-tag-name-2.0.1.tgz",
+                "shasum": "e40403096481986b41c106627f98f72d4d10b825"
             },
             "type": "npm-asset",
             "license": [
@@ -4909,7 +5047,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-normalize-identifier/-/micromark-util-normalize-identifier-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-normalize-identifier/-/micromark-util-normalize-identifier-2.0.1.tgz",
+                "shasum": "c30d77b2e832acf6526f8bf1aa47bc9c9438c16d"
             },
             "require": {
                 "npm-asset/micromark-util-symbol": ">=2.0.0,<3.0.0"
@@ -4924,7 +5063,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-resolve-all/-/micromark-util-resolve-all-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-resolve-all/-/micromark-util-resolve-all-2.0.1.tgz",
+                "shasum": "e1a2d62cdd237230a2ae11839027b19381e31e8b"
             },
             "require": {
                 "npm-asset/micromark-util-types": ">=2.0.0,<3.0.0"
@@ -4939,7 +5079,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-sanitize-uri/-/micromark-util-sanitize-uri-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-sanitize-uri/-/micromark-util-sanitize-uri-2.0.1.tgz",
+                "shasum": "ab89789b818a58752b73d6b55238621b7faa8fd7"
             },
             "require": {
                 "npm-asset/micromark-util-character": ">=2.0.0,<3.0.0",
@@ -4956,7 +5097,8 @@
             "version": "2.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-subtokenize/-/micromark-util-subtokenize-2.1.0.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-subtokenize/-/micromark-util-subtokenize-2.1.0.tgz",
+                "shasum": "d8ade5ba0f3197a1cf6a2999fbbfe6357a1a19ee"
             },
             "require": {
                 "npm-asset/devlop": ">=1.0.0,<2.0.0",
@@ -4974,7 +5116,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-symbol/-/micromark-util-symbol-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-symbol/-/micromark-util-symbol-2.0.1.tgz",
+                "shasum": "e5da494e8eb2b071a0d08fb34f6cefec6c0a19b8"
             },
             "type": "npm-asset",
             "license": [
@@ -4986,7 +5129,8 @@
             "version": "2.0.3",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/micromark-util-types/-/micromark-util-types-2.0.3.tgz"
+                "url": "https://registry.npmjs.org/micromark-util-types/-/micromark-util-types-2.0.3.tgz",
+                "shasum": "e7b04fa58589199c7ef58b37cd696fcb2bce44e7"
             },
             "type": "npm-asset",
             "license": [
@@ -4998,7 +5142,8 @@
             "version": "2.1.3",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz"
+                "url": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+                "shasum": "574c8138ce1d2b5861f0b44579dbadd60c6615b2"
             },
             "type": "npm-asset",
             "license": [
@@ -5010,7 +5155,8 @@
             "version": "8.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/normalize.css/-/normalize.css-8.0.1.tgz"
+                "url": "https://registry.npmjs.org/normalize.css/-/normalize.css-8.0.1.tgz",
+                "shasum": "9b98a208738b9cc2634caacbc42d131c97487bf3"
             },
             "type": "npm-asset",
             "license": [
@@ -5022,7 +5168,8 @@
             "version": "7.2.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/property-information/-/property-information-7.2.0.tgz"
+                "url": "https://registry.npmjs.org/property-information/-/property-information-7.2.0.tgz",
+                "shasum": "0809b34264e995c0bfcd3227028a1e35210af80a"
             },
             "type": "npm-asset",
             "license": [
@@ -5034,7 +5181,8 @@
             "version": "5.0.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/rehype-dom-parse/-/rehype-dom-parse-5.0.2.tgz"
+                "url": "https://registry.npmjs.org/rehype-dom-parse/-/rehype-dom-parse-5.0.2.tgz",
+                "shasum": "358c82e4733c53b3d31c5c0a9d0a15892f04a9fa"
             },
             "require": {
                 "npm-asset/hast-util-from-dom": ">=5.0.0,<6.0.0",
@@ -5051,7 +5199,8 @@
             "version": "4.0.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/rehype-dom-stringify/-/rehype-dom-stringify-4.0.2.tgz"
+                "url": "https://registry.npmjs.org/rehype-dom-stringify/-/rehype-dom-stringify-4.0.2.tgz",
+                "shasum": "8dfd1a7aec5202596f665c14c66f4ab33faac11c"
             },
             "require": {
                 "npm-asset/hast-util-to-dom": ">=4.0.0,<5.0.0",
@@ -5068,7 +5217,8 @@
             "version": "6.0.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/rehype-minify-whitespace/-/rehype-minify-whitespace-6.0.2.tgz"
+                "url": "https://registry.npmjs.org/rehype-minify-whitespace/-/rehype-minify-whitespace-6.0.2.tgz",
+                "shasum": "7dd234ce0775656ce6b6b0aad0a6093de29b2278"
             },
             "require": {
                 "npm-asset/hast-util-minify-whitespace": ">=1.0.0,<2.0.0",
@@ -5084,7 +5234,8 @@
             "version": "10.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/rehype-remark/-/rehype-remark-10.0.1.tgz"
+                "url": "https://registry.npmjs.org/rehype-remark/-/rehype-remark-10.0.1.tgz",
+                "shasum": "f669fa68cfb8b5baaf4fa95476a923516111a43b"
             },
             "require": {
                 "npm-asset/hast-util-to-mdast": ">=10.0.0,<11.0.0",
@@ -5103,7 +5254,8 @@
             "version": "4.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/remark-breaks/-/remark-breaks-4.0.0.tgz"
+                "url": "https://registry.npmjs.org/remark-breaks/-/remark-breaks-4.0.0.tgz",
+                "shasum": "dcc19a2891733906f3b97eaa8acb8621e8da8852"
             },
             "require": {
                 "npm-asset/mdast-util-newline-to-break": ">=2.0.0,<3.0.0",
@@ -5120,7 +5272,8 @@
             "version": "4.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/remark-gfm/-/remark-gfm-4.0.1.tgz"
+                "url": "https://registry.npmjs.org/remark-gfm/-/remark-gfm-4.0.1.tgz",
+                "shasum": "33227b2a74397670d357bf05c098eaf8513f0d6b"
             },
             "require": {
                 "npm-asset/mdast-util-gfm": ">=3.0.0,<4.0.0",
@@ -5140,7 +5293,8 @@
             "version": "11.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/remark-parse/-/remark-parse-11.0.0.tgz"
+                "url": "https://registry.npmjs.org/remark-parse/-/remark-parse-11.0.0.tgz",
+                "shasum": "aa60743fcb37ebf6b069204eb4da304e40db45a1"
             },
             "require": {
                 "npm-asset/mdast-util-from-markdown": ">=2.0.0,<3.0.0",
@@ -5158,7 +5312,8 @@
             "version": "11.1.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/remark-rehype/-/remark-rehype-11.1.2.tgz"
+                "url": "https://registry.npmjs.org/remark-rehype/-/remark-rehype-11.1.2.tgz",
+                "shasum": "2addaadda80ca9bd9aa0da763e74d16327683b37"
             },
             "require": {
                 "npm-asset/mdast-util-to-hast": ">=13.0.0,<14.0.0",
@@ -5177,7 +5332,8 @@
             "version": "11.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/remark-stringify/-/remark-stringify-11.0.0.tgz"
+                "url": "https://registry.npmjs.org/remark-stringify/-/remark-stringify-11.0.0.tgz",
+                "shasum": "4c5b01dd711c269df1aaae11743eb7e2e7636fd3"
             },
             "require": {
                 "npm-asset/mdast-util-to-markdown": ">=2.0.0,<3.0.0",
@@ -5194,7 +5350,8 @@
             "version": "2.0.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/space-separated-tokens/-/space-separated-tokens-2.0.2.tgz"
+                "url": "https://registry.npmjs.org/space-separated-tokens/-/space-separated-tokens-2.0.2.tgz",
+                "shasum": "1ecd9d2350a3844572c3f4a312bceb018348859f"
             },
             "type": "npm-asset",
             "license": [
@@ -5206,7 +5363,8 @@
             "version": "1.1.3",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.1.3.tgz"
+                "url": "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.1.3.tgz",
+                "shasum": "4914b903a2f8b685d17fdf78a70e917e872e444a"
             },
             "type": "npm-asset",
             "license": [
@@ -5218,7 +5376,8 @@
             "version": "4.0.4",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/stringify-entities/-/stringify-entities-4.0.4.tgz"
+                "url": "https://registry.npmjs.org/stringify-entities/-/stringify-entities-4.0.4.tgz",
+                "shasum": "b3b79ef5f277cc4ac73caeb0236c5ba939b3a4f3"
             },
             "require": {
                 "npm-asset/character-entities-html4": ">=2.0.0,<3.0.0",
@@ -5231,10 +5390,11 @@
         },
         {
             "name": "npm-asset/tabbable",
-            "version": "6.5.0",
+            "version": "6.5.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/tabbable/-/tabbable-6.5.0.tgz"
+                "url": "https://registry.npmjs.org/tabbable/-/tabbable-6.5.1.tgz",
+                "shasum": "cfca6f3f397db9edbe08ad35915e0d7807050a18"
             },
             "type": "npm-asset",
             "license": [
@@ -5246,7 +5406,8 @@
             "version": "3.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/trim-lines/-/trim-lines-3.0.1.tgz"
+                "url": "https://registry.npmjs.org/trim-lines/-/trim-lines-3.0.1.tgz",
+                "shasum": "d802e332a07df861c48802c04321017b1bd87338"
             },
             "type": "npm-asset",
             "license": [
@@ -5258,7 +5419,8 @@
             "version": "2.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/trim-trailing-lines/-/trim-trailing-lines-2.1.0.tgz"
+                "url": "https://registry.npmjs.org/trim-trailing-lines/-/trim-trailing-lines-2.1.0.tgz",
+                "shasum": "9aac7e89b09cb35badf663de7133c6de164f86df"
             },
             "type": "npm-asset",
             "license": [
@@ -5270,7 +5432,8 @@
             "version": "2.2.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/trough/-/trough-2.2.0.tgz"
+                "url": "https://registry.npmjs.org/trough/-/trough-2.2.0.tgz",
+                "shasum": "94a60bd6bd375c152c1df911a4b11d5b0256f50f"
             },
             "type": "npm-asset",
             "license": [
@@ -5282,7 +5445,8 @@
             "version": "2.0.4",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@types/color-convert/-/color-convert-2.0.4.tgz"
+                "url": "https://registry.npmjs.org/@types/color-convert/-/color-convert-2.0.4.tgz",
+                "shasum": "843398ae71e951dc5415d202dfd5e43108823eeb"
             },
             "require": {
                 "npm-asset/types--color-name": ">=1.1.0,<2.0.0"
@@ -5297,7 +5461,8 @@
             "version": "1.1.5",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@types/color-name/-/color-name-1.1.5.tgz"
+                "url": "https://registry.npmjs.org/@types/color-name/-/color-name-1.1.5.tgz",
+                "shasum": "3a3510c4e3661f7707c5ae9c67d726986e6e147d"
             },
             "type": "npm-asset",
             "license": [
@@ -5309,7 +5474,8 @@
             "version": "4.1.13",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@types/debug/-/debug-4.1.13.tgz"
+                "url": "https://registry.npmjs.org/@types/debug/-/debug-4.1.13.tgz",
+                "shasum": "22d1cc9d542d3593caea764f974306ab36286ee7"
             },
             "require": {
                 "npm-asset/types--ms": "*"
@@ -5324,7 +5490,8 @@
             "version": "3.0.4",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@types/hast/-/hast-3.0.4.tgz"
+                "url": "https://registry.npmjs.org/@types/hast/-/hast-3.0.4.tgz",
+                "shasum": "1d6b39993b82cea6ad783945b0508c25903e15aa"
             },
             "require": {
                 "npm-asset/types--unist": "*"
@@ -5339,7 +5506,8 @@
             "version": "4.0.4",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@types/mdast/-/mdast-4.0.4.tgz"
+                "url": "https://registry.npmjs.org/@types/mdast/-/mdast-4.0.4.tgz",
+                "shasum": "7ccf72edd2f1aa7dd3437e180c64373585804dd6"
             },
             "require": {
                 "npm-asset/types--unist": "*"
@@ -5354,7 +5522,8 @@
             "version": "2.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@types/ms/-/ms-2.1.0.tgz"
+                "url": "https://registry.npmjs.org/@types/ms/-/ms-2.1.0.tgz",
+                "shasum": "052aa67a48eccc4309d7f0191b7e41434b90bb78"
             },
             "type": "npm-asset",
             "license": [
@@ -5366,7 +5535,8 @@
             "version": "3.0.3",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@types/unist/-/unist-3.0.3.tgz"
+                "url": "https://registry.npmjs.org/@types/unist/-/unist-3.0.3.tgz",
+                "shasum": "acaab0f919ce69cce629c2d4ed2eb4adc1b6c20c"
             },
             "type": "npm-asset",
             "license": [
@@ -5378,7 +5548,8 @@
             "version": "1.4.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@ungap/structured-clone/-/structured-clone-1.4.0.tgz"
+                "url": "https://registry.npmjs.org/@ungap/structured-clone/-/structured-clone-1.4.0.tgz",
+                "shasum": "5e2e1374c0a30b5a42e8b083523a225c6945f88a"
             },
             "type": "npm-asset",
             "license": [
@@ -5390,7 +5561,8 @@
             "version": "11.0.5",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/unified/-/unified-11.0.5.tgz"
+                "url": "https://registry.npmjs.org/unified/-/unified-11.0.5.tgz",
+                "shasum": "f66677610a5c0a9ee90cab2b8d4d66037026d9e1"
             },
             "require": {
                 "npm-asset/bail": ">=2.0.0,<3.0.0",
@@ -5407,27 +5579,12 @@
             ]
         },
         {
-            "name": "npm-asset/unist-util-find-after",
-            "version": "5.0.0",
-            "dist": {
-                "type": "tar",
-                "url": "https://registry.npmjs.org/unist-util-find-after/-/unist-util-find-after-5.0.0.tgz"
-            },
-            "require": {
-                "npm-asset/types--unist": ">=3.0.0,<4.0.0",
-                "npm-asset/unist-util-is": ">=6.0.0,<7.0.0"
-            },
-            "type": "npm-asset",
-            "license": [
-                "MIT"
-            ]
-        },
-        {
             "name": "npm-asset/unist-util-is",
             "version": "6.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/unist-util-is/-/unist-util-is-6.0.1.tgz"
+                "url": "https://registry.npmjs.org/unist-util-is/-/unist-util-is-6.0.1.tgz",
+                "shasum": "d0a3f86f2dd0db7acd7d8c2478080b5c67f9c6a9"
             },
             "require": {
                 "npm-asset/types--unist": ">=3.0.0,<4.0.0"
@@ -5442,7 +5599,8 @@
             "version": "5.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/unist-util-position/-/unist-util-position-5.0.0.tgz"
+                "url": "https://registry.npmjs.org/unist-util-position/-/unist-util-position-5.0.0.tgz",
+                "shasum": "678f20ab5ca1207a97d7ea8a388373c9cf896be4"
             },
             "require": {
                 "npm-asset/types--unist": ">=3.0.0,<4.0.0"
@@ -5457,7 +5615,8 @@
             "version": "4.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/unist-util-stringify-position/-/unist-util-stringify-position-4.0.0.tgz"
+                "url": "https://registry.npmjs.org/unist-util-stringify-position/-/unist-util-stringify-position-4.0.0.tgz",
+                "shasum": "449c6e21a880e0855bf5aabadeb3a740314abac2"
             },
             "require": {
                 "npm-asset/types--unist": ">=3.0.0,<4.0.0"
@@ -5472,7 +5631,8 @@
             "version": "5.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/unist-util-visit/-/unist-util-visit-5.0.0.tgz"
+                "url": "https://registry.npmjs.org/unist-util-visit/-/unist-util-visit-5.0.0.tgz",
+                "shasum": "a7de1f31f72ffd3519ea71814cccf5fd6a9217d6"
             },
             "require": {
                 "npm-asset/types--unist": ">=3.0.0,<4.0.0",
@@ -5486,10 +5646,11 @@
         },
         {
             "name": "npm-asset/unist-util-visit-parents",
-            "version": "6.0.2",
+            "version": "6.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/unist-util-visit-parents/-/unist-util-visit-parents-6.0.2.tgz"
+                "url": "https://registry.npmjs.org/unist-util-visit-parents/-/unist-util-visit-parents-6.1.0.tgz",
+                "shasum": "eff74226782b378957731bcf62cf5e9d8a080606"
             },
             "require": {
                 "npm-asset/types--unist": ">=3.0.0,<4.0.0",
@@ -5505,7 +5666,8 @@
             "version": "0.7.2",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/vanilla-colorful/-/vanilla-colorful-0.7.2.tgz"
+                "url": "https://registry.npmjs.org/vanilla-colorful/-/vanilla-colorful-0.7.2.tgz",
+                "shasum": "3fb1f4b9f15b797e20fd1ce8e0364f33b073f4a2"
             },
             "type": "npm-asset",
             "license": [
@@ -5517,7 +5679,8 @@
             "version": "6.0.3",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/vfile/-/vfile-6.0.3.tgz"
+                "url": "https://registry.npmjs.org/vfile/-/vfile-6.0.3.tgz",
+                "shasum": "3652ab1c496531852bf55a6bac57af981ebc38ab"
             },
             "require": {
                 "npm-asset/types--unist": ">=3.0.0,<4.0.0",
@@ -5533,7 +5696,8 @@
             "version": "4.0.3",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/vfile-message/-/vfile-message-4.0.3.tgz"
+                "url": "https://registry.npmjs.org/vfile-message/-/vfile-message-4.0.3.tgz",
+                "shasum": "87b44dddd7b70f0641c2e3ed0864ba73e2ea8df4"
             },
             "require": {
                 "npm-asset/types--unist": ">=3.0.0,<4.0.0",
@@ -5549,7 +5713,8 @@
             "version": "2.0.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/web-namespaces/-/web-namespaces-2.0.1.tgz"
+                "url": "https://registry.npmjs.org/web-namespaces/-/web-namespaces-2.0.1.tgz",
+                "shasum": "1010ff7c650eccb2592cebeeaf9a1b253fd40692"
             },
             "type": "npm-asset",
             "license": [
@@ -5561,7 +5726,8 @@
             "version": "4.35.6",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@yaireo/tagify/-/tagify-4.35.6.tgz"
+                "url": "https://registry.npmjs.org/@yaireo/tagify/-/tagify-4.35.6.tgz",
+                "shasum": "4dabf9ec4f9bff9f6f2481452df025a50bcc77f3"
             },
             "type": "npm-asset",
             "license": [
@@ -5573,7 +5739,8 @@
             "version": "2.0.4",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/zwitch/-/zwitch-2.0.4.tgz"
+                "url": "https://registry.npmjs.org/zwitch/-/zwitch-2.0.4.tgz",
+                "shasum": "c827d4b0acb76fc3e685a4c6ec2902d51070e9d7"
             },
             "type": "npm-asset",
             "license": [
@@ -6512,12 +6679,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "96cf8b77ade13bb6638d1b26d48a72deec75b7d0"
+                "reference": "7c964bc969c1b16050a4b85b7a55614777a3f597"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/96cf8b77ade13bb6638d1b26d48a72deec75b7d0",
-                "reference": "96cf8b77ade13bb6638d1b26d48a72deec75b7d0",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/7c964bc969c1b16050a4b85b7a55614777a3f597",
+                "reference": "7c964bc969c1b16050a4b85b7a55614777a3f597",
                 "shasum": ""
             },
             "conflict": {
@@ -6525,6 +6692,7 @@
                 "adaptcms/adaptcms": "<=1.3",
                 "adawolfa/isdoc": "<1.4.3|>=1.5,<1.5.1|>=1.6,<1.6.1",
                 "admidio/admidio": "<=5.0.11",
+                "adminneo-org/adminneo": "<5.5.1",
                 "adodb/adodb-php": "<=5.22.9",
                 "aheinze/cockpit": "<2.2",
                 "aimeos/ai-admin-graphql": ">=2022.04.1,<2022.10.10|>=2023.04.1,<2023.10.6|>=2024.04.1,<2024.07.2",
@@ -6547,11 +6715,12 @@
                 "altcha-org/altcha": "<1.3.1",
                 "alterphp/easyadmin-extension-bundle": ">=1.2,<1.2.11|>=1.3,<1.3.1",
                 "amazing/media2click": ">=1,<1.3.3",
+                "ameos/ameos_filemanager": "<3.1.3",
                 "ameos/ameos_tarteaucitron": "<1.2.23",
                 "amphp/artax": "<1.0.6|>=2,<2.0.6",
                 "amphp/http": "<=1.7.2|>=2,<=2.1",
                 "amphp/http-client": ">=4,<4.4",
-                "amphp/http-server": ">=2.0.0.0-RC1-dev,<2.1.10|>=3.0.0.0-beta1,<3.4.4",
+                "amphp/http-server": ">=2.0.0.0-RC1,<2.1.10|>=3.0.0.0-beta1,<3.4.4",
                 "anchorcms/anchor-cms": "<=0.12.7",
                 "andreapollastri/cipi": "<=3.1.15",
                 "andrewhaine/silverstripe-form-capture": ">=0.2,<=0.2.3|>=1,<1.0.2|>=2,<2.2.5",
@@ -6564,6 +6733,7 @@
                 "api-platform/hal": ">=4,<4.1.29|>=4.2,<4.2.25|>=4.3,<4.3.8",
                 "api-platform/json-api": ">=4,<4.1.29|>=4.2,<4.2.25|>=4.3,<4.3.8",
                 "appwrite/server-ce": "<=1.2.1",
+                "aptoma/twig-markdown": "<=3.4.1",
                 "arc/web": "<3",
                 "area17/twill": "<1.2.5|>=2,<2.5.3",
                 "artesaos/seotools": "<0.17.2",
@@ -6607,6 +6777,7 @@
                 "binarytorch/larecipe": "<2.8.1",
                 "bk2k/bootstrap-package": ">=7.1,<7.1.2|>=8,<8.0.8|>=9,<9.0.4|>=9.1,<9.1.3|>=10,<10.0.10|>=11,<11.0.3",
                 "blueimp/jquery-file-upload": "==6.4.4",
+                "blueways/bw-captcha": ">=4,<5.4.2",
                 "bmarshall511/wordpress_zero_spam": "<5.2.13",
                 "bolt/bolt": "<3.7.2",
                 "bolt/core": "<=4.2",
@@ -6633,6 +6804,7 @@
                 "cart2quote/module-quotation": ">=4.1.6,<4.4.6|>=5,<5.4.4",
                 "cartalyst/sentry": "<2.1.7",
                 "catfan/medoo": "<1.7.5",
+                "causal/fal-protect": ">=1.7.1,<1.8.2",
                 "causal/oidc": "<4",
                 "cecil/cecil": "<7.47.1",
                 "centreon/centreon": "<22.10.15",
@@ -6654,7 +6826,9 @@
                 "codeigniter4/shield": "<1.0.0.0-beta8",
                 "codiad/codiad": "<=2.8.4",
                 "codingms/additional-tca": ">=1.7,<1.15.17|>=1.16,<1.16.9",
+                "codingms/fluid-form": "<5.0.10|>=6,<6.0.6",
                 "codingms/modules": "<7.10.4|>=8,<8.1.4",
+                "codingms/shop": "<4.9.4|>=5,<5.21.1|>=6,<6.3",
                 "commerceteam/commerce": ">=0.9.6,<0.9.9",
                 "components/jquery": ">=1.0.3,<3.5",
                 "composer/composer": "<2.2.30|>=2.3,<2.10.3",
@@ -6679,8 +6853,8 @@
                 "craftcms/azure-blob": ">=2.0.0.0-beta1,<=2.1",
                 "craftcms/cms": "<4.18.3|>=5,<5.10.8",
                 "craftcms/commerce": ">=4,<=4.11.1|>=5,<=5.6.4",
-                "craftcms/composer": ">=4.0.0.0-RC1-dev,<=4.10|>=5.0.0.0-RC1-dev,<=5.5.1",
-                "craftcms/craft": ">=3.5,<=4.16.17|>=5.0.0.0-RC1-dev,<=5.8.21",
+                "craftcms/composer": ">=4.0.0.0-RC1,<=4.10|>=5.0.0.0-RC1,<=5.5.1",
+                "craftcms/craft": ">=3.5,<=4.16.17|>=5.0.0.0-RC1,<=5.8.21",
                 "craftcms/google-cloud": ">=2.0.0.0-beta1,<=2.2",
                 "craftcms/webhooks": ">=3,<3.2",
                 "croogo/croogo": "<=4.0.7",
@@ -6722,6 +6896,8 @@
                 "dompdf/dompdf": "<3.1.6",
                 "doublethreedigital/guest-entries": "<3.1.2",
                 "dreamfactory/df-core": "<1.0.4",
+                "drupal-pattern-lab/add-attributes-twig-extension": "<=1.0.1",
+                "drupal-pattern-lab/bem-twig-extension": "<=1.0.1",
                 "drupal-pattern-lab/unified-twig-extensions": "<=0.1",
                 "drupal/access_code": "<2.0.5",
                 "drupal/acquia_dam": "<1.1.5",
@@ -6786,7 +6962,7 @@
                 "ezsystems/ezplatform": "<=1.13.6|>=2,<=2.5.24",
                 "ezsystems/ezplatform-admin-ui": ">=1.3,<1.3.5|>=1.4,<1.4.6|>=1.5,<1.5.29|>=2.3,<2.3.39|>=3.3,<3.3.39",
                 "ezsystems/ezplatform-admin-ui-assets": ">=4,<4.2.1|>=5,<5.0.1|>=5.1,<5.1.1|>=5.3.0.0-beta1,<5.3.5",
-                "ezsystems/ezplatform-graphql": ">=1.0.0.0-RC1-dev,<1.0.13|>=2.0.0.0-beta1,<2.3.12",
+                "ezsystems/ezplatform-graphql": ">=1.0.0.0-RC1,<1.0.13|>=2.0.0.0-beta1,<2.3.12",
                 "ezsystems/ezplatform-http-cache": "<2.3.16",
                 "ezsystems/ezplatform-kernel": "<=1.2.5|>=1.3,<1.3.35",
                 "ezsystems/ezplatform-rest": ">=1.2,<=1.2.2|>=1.3,<1.3.8",
@@ -6805,7 +6981,7 @@
                 "feehi/feehicms": "<=2.1.1",
                 "fenom/fenom": "<=2.12.1",
                 "filament/actions": ">=3.2,<3.2.123|>=4,<=4.11.3|>=5,<=5.6.3",
-                "filament/filament": ">=3,<=3.3.51|>=4,<4.13.2|>=5,<5.8.2",
+                "filament/filament": ">=3,<=3.3.51|>=4,<=4.13.2|>=5,<=5.8.2",
                 "filament/forms": ">=3,<=3.3.52",
                 "filament/infolists": ">=3,<3.2.115|>=4,<=4.11.4|>=5,<=5.6.4",
                 "filament/tables": ">=3,<=3.3.50|>=4,<=4.11.4|>=5,<=5.6.4",
@@ -6926,6 +7102,7 @@
                 "islandora/islandora": ">=2,<2.4.1",
                 "ivankristianto/phpwhois": "<=4.3",
                 "j0k3r/graby": "<=2.5",
+                "j0k3r/httplug-ssrf-plugin": "<=3.0.1",
                 "jackalope/jackalope-doctrine-dbal": "<1.7.4",
                 "jambagecom/div2007": "<0.10.2",
                 "james-heinrich/getid3": "<1.9.21",
@@ -6966,7 +7143,7 @@
                 "kevinpapst/kimai2": "<1.16.7",
                 "khodakhah/nodcms": "<=3.4.1",
                 "kimai/kimai": "<2.59",
-                "kitodo/presentation": "<3.2.3|>=3.3,<3.3.4",
+                "kitodo/presentation": "<6.0.1|>=7,<7.0.2",
                 "klaviyo/magento2-extension": ">=1,<3",
                 "knplabs/knp-snappy": "<=1.7",
                 "kohana/core": "<3.3.3",
@@ -6997,16 +7174,17 @@
                 "league/commonmark": "<=2.10.1",
                 "league/flysystem": "<=3.35.2",
                 "league/oauth2-server": ">=8.3.2,<8.4.2|>=8.5,<8.5.3",
-                "leantime/leantime": "<3.3",
+                "leantime/leantime": "<3.10",
                 "lexik/jwt-authentication-bundle": "<2.10.7|>=2.11,<2.11.3",
                 "libreform/libreform": ">=2,<=2.0.8",
                 "librenms/librenms": "<26.7",
                 "liftkit/database": "<2.13.2",
                 "lightsaml/lightsaml": "<1.3.5",
                 "limesurvey/limesurvey": "<=7.0.0.0-beta1",
+                "litesaml/lightsaml": ">=6,<6.0.1",
                 "livehelperchat/livehelperchat": "<=3.91",
                 "livewire-filemanager/filemanager": "<=1.0.4",
-                "livewire/livewire": "<2.12.7|>=3.0.0.0-beta1,<=3.8.2|>=4.0.0.0-beta1,<=4.3.3",
+                "livewire/livewire": "<2.12.7|>=3.0.0.0-beta1,<=3.8.2|>=4.0.0.0-beta1,<4.4.8",
                 "livewire/volt": "<1.7",
                 "lms/routes": "<2.1.1",
                 "localizationteam/l10nmgr": "<7.4|>=8,<8.7|>=9,<9.2",
@@ -7107,6 +7285,7 @@
                 "neuron-core/neuron-ai": "<=2.8.11",
                 "nilsteampassnet/teampass": "<3.1.3.1-dev",
                 "nitsan/ns-backup": "<13.0.1",
+                "nitsan/ns-t3ai": "<14.0.2",
                 "nonfiction/nterchange": "<4.1.1",
                 "notrinos/notrinos-erp": "<=1",
                 "noumo/easyii": "<=0.9",
@@ -7152,6 +7331,7 @@
                 "paragonie/random_compat": "<2",
                 "paragonie/sodium_compat": "<1.24.1|>=2,<2.5.1",
                 "passbolt/passbolt_api": "<4.6.2",
+                "pattern-lab/drupal-twig-components": "<=2.2",
                 "paymenter/paymenter": "<=1.5.6",
                 "paypal/adaptivepayments-sdk-php": "<=3.9.2",
                 "paypal/invoice-sdk-php": "<=3.9",
@@ -7169,6 +7349,7 @@
                 "phanan/koel": "<=9.7",
                 "pheditor/pheditor": "<2.0.8",
                 "phenx/php-svg-lib": "<0.5.2",
+                "php": "<8.2.35|>=8.3,<8.3.36|>=8.4,<8.4.27|>=8.5,<8.5.12",
                 "php-censor/php-censor": "<2.0.13|>=2.1,<2.1.5",
                 "php-mod/curl": "<2.3.2",
                 "php-standard-library/h2": ">=6.1,<6.1.2|>=6.2,<6.2.1",
@@ -7184,18 +7365,18 @@
                 "phpoffice/common": "<0.2.9",
                 "phpoffice/math": "<=0.2",
                 "phpoffice/phpexcel": "<=1.8.2",
-                "phpoffice/phpspreadsheet": "<=1.30.5|>=2,<=2.1.17|>=2.2,<=2.4.6|>=3,<=3.10.6|>=4,<=5.8",
+                "phpoffice/phpspreadsheet": "<=1.30.6|>=2,<=2.1.18|>=2.2,<=2.4.7|>=3,<=3.10.7|>=4,<=5.9",
                 "phppgadmin/phppgadmin": "<=7.13",
                 "phpseclib/phpseclib": "<3.0.57|>=4,<4.0.1",
                 "phpservermon/phpservermon": "<3.6",
                 "phpsysinfo/phpsysinfo": "<=3.4.5",
-                "phpunit/phpunit": "<8.5.52|>=9,<9.6.33|>=10,<10.5.62|>=11,<11.5.50|>=12,<12.5.8|>=12.5.21,<12.5.22|>=13.1.5,<13.1.6",
+                "phpunit/phpunit": "<8.5.52|>=9,<9.6.33|>=10,<10.5.62|>=11,<11.5.50|>=12,<12.5.8|>=12.5.21,<12.5.22|>=13.1.5,<13.1.6|>=13.4,<13.4.4",
                 "phpwhois/phpwhois": "<=4.2.5",
                 "phpxmlrpc/extras": "<0.6.1",
                 "phpxmlrpc/phpxmlrpc": "<4.9.2",
                 "phraseanet/phraseanet": "==4.0.3",
                 "pi/pi": "<=2.5",
-                "pimcore/admin-ui-classic-bundle": "<1.7.18|>=2.0.0.0-RC1-dev,<=2.3.5",
+                "pimcore/admin-ui-classic-bundle": "<1.7.18|>=2.0.0.0-RC1,<=2.3.5",
                 "pimcore/customer-management-framework-bundle": "<4.2.1",
                 "pimcore/data-hub": "<1.2.4",
                 "pimcore/data-importer": "<1.8.9|>=1.9,<1.9.3",
@@ -7204,17 +7385,17 @@
                 "pimcore/perspective-editor": "<1.5.1",
                 "pimcore/pimcore": "<=12.3.9|>=2026.1,<=2026.1.5",
                 "pimcore/studio-backend-bundle": "<2025.4.6|>=2026.1,<2026.1.6",
-                "pimcore/web2print-tools-bundle": "<=5.2.1|>=6.0.0.0-RC1-dev,<=6.1",
+                "pimcore/web2print-tools-bundle": "<=5.2.1|>=6.0.0.0-RC1,<=6.1",
                 "piwik/piwik": "<1.11",
                 "pixelfed/pixelfed": "<0.12.5",
                 "plank/laravel-mediable": "<7",
                 "plotly/plotly.js": "<2.25.2",
                 "pocketmine/bedrock-protocol": "<8.0.2",
-                "pocketmine/pocketmine-mp": "<5.42.1",
+                "pocketmine/pocketmine-mp": "<5.44.2",
                 "pocketmine/raklib": ">=0.14,<0.14.6|>=0.15,<0.15.1",
                 "pontedilana/php-weasyprint": "<=2.5.1",
                 "poweradmin/poweradmin": "<4.2.5|>=4.3,<4.3.4",
-                "predis/predis": ">=3.0.0.0-RC1-dev,<3.3",
+                "predis/predis": ">=3.0.0.0-RC1,<3.3",
                 "pressbooks/pressbooks": "<5.18",
                 "prestashop/autoupgrade": ">=4,<4.10.1",
                 "prestashop/blockreassurance": "<=5.1.3",
@@ -7234,7 +7415,7 @@
                 "propel/propel1": ">=1,<1.7.2",
                 "psy/psysh": "<=0.11.22|>=0.12,<=0.12.18",
                 "pterodactyl/panel": "<=1.12.4",
-                "ptheofan/yii2-statemachine": ">=2.0.0.0-RC1-dev,<=2",
+                "ptheofan/yii2-statemachine": ">=2.0.0.0-RC1,<=2",
                 "ptrofimov/beanstalk_console": "<1.7.14",
                 "pubnub/pubnub": "<6.1",
                 "punktde/pt_extbase": "<1.5.1",
@@ -7263,7 +7444,7 @@
                 "roadiz/openid": "<2.3.43|>=2.5,<2.5.45|>=2.6,<2.6.31|>=2.7,<2.7.18",
                 "robrichards/xmlseclibs": "<3.1.5",
                 "roots/soil": "<4.1",
-                "roundcube/roundcubemail": "<1.5.10|>=1.6,<1.6.11|>=1.7.0.0-beta,<1.7.0.0-RC5-dev",
+                "roundcube/roundcubemail": "<1.5.10|>=1.6,<1.6.11|>=1.7.0.0-beta,<1.7.0.0-RC5",
                 "rudloff/alltube": "<3.0.3",
                 "rudloff/rtmpdump-bin": "<=2.3.1",
                 "s-cart/core": "<=9.0.5",
@@ -7278,6 +7459,7 @@
                 "serluck/phpwhois": "<=4.2.6",
                 "setasign/fpdi": "<2.6.7",
                 "sfroemken/url_redirect": "<=1.2.1",
+                "sgalinski/sg-cookie-optin": "<7.4.6|>=8,<8.1.12",
                 "sheng/yiicms": "<1.2.1",
                 "shlinkio/shlink": "<=5.0.1",
                 "shopper/cart": "<2.8",
@@ -7299,6 +7481,7 @@
                 "silverstripe/framework": "<6.2.2",
                 "silverstripe/graphql": ">=2,<2.0.5|>=3,<3.8.2|>=4,<4.3.7|>=5,<5.1.3",
                 "silverstripe/hybridsessions": ">=1,<2.4.1|>=2.5,<2.5.1",
+                "silverstripe/mfa": "<6",
                 "silverstripe/recipe-cms": ">=4.5,<4.5.3",
                 "silverstripe/registry": ">=2.1,<2.1.2|>=2.2,<2.2.1",
                 "silverstripe/reports": "<5.2.3",
@@ -7371,7 +7554,7 @@
                 "sylius/mollie-plugin": "<2.2.8|>=3,<3.2.4|>=3.3,<3.3.1",
                 "sylius/paypal-plugin": "<1.6.2|>=1.7,<1.7.2|>=2,<2.0.2",
                 "sylius/resource-bundle": ">=1,<1.3.14|>=1.4,<1.4.7|>=1.5,<1.5.2|>=1.6,<1.6.4",
-                "sylius/sylius": "<1.9.12|>=1.10,<1.10.16|>=1.11,<1.11.17|>=1.12,<=1.12.22|>=1.13,<=1.13.14|>=1.14,<=1.14.17|>=2,<2.0.18|>=2.1,<2.1.15|>=2.2,<2.2.6",
+                "sylius/sylius": "<1.14.21|>=2,<2.1.17|>=2.2,<2.2.12|>=2.3,<2.3.2",
                 "symbiote/silverstripe-advancedworkflow": "<6.4.5|>=7,<7.1.3|>=7.2,<7.2.1",
                 "symbiote/silverstripe-multivaluefield": ">=3,<3.1",
                 "symbiote/silverstripe-queuedjobs": ">=3,<3.0.2|>=3.1,<3.1.4|>=4,<4.0.7|>=4.1,<4.1.2|>=4.2,<4.2.4|>=4.3,<4.3.3|>=4.4,<4.4.3|>=4.5,<4.5.1|>=4.6,<4.6.4",
@@ -7382,11 +7565,12 @@
                 "symfony/dependency-injection": ">=2,<2.0.17|>=2.7,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
                 "symfony/dom-crawler": "<5.4.52|>=6,<6.4.40|>=7,<7.4.12|>=8,<8.0.12",
                 "symfony/error-handler": ">=4.4,<4.4.4|>=5,<5.0.4",
+                "symfony/expression-language": ">=2.4,<5.4.54|>=6,<6.4.48|>=7,<7.4.21|>=8,<8.1.9",
                 "symfony/form": ">=2.3,<2.3.35|>=2.4,<2.6.12|>=2.7,<2.7.50|>=2.8,<2.8.49|>=3,<3.4.20|>=4,<4.0.15|>=4.1,<4.1.9|>=4.2,<4.2.1",
                 "symfony/framework-bundle": ">=2,<2.3.18|>=2.4,<2.4.8|>=2.5,<2.5.2|>=2.7,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7|>=5.3.14,<5.3.15|>=5.4.3,<5.4.4|>=6.0.3,<6.0.4",
                 "symfony/html-sanitizer": ">=6.1,<6.4.41|>=7,<7.4.13|>=8,<8.0.13",
                 "symfony/http-client": ">=4.3,<5.4.53|>=6,<6.4.15|>=7,<7.1.8",
-                "symfony/http-foundation": "<5.4.50|>=6,<6.4.41|>=7,<7.4.13|>=8,<8.0.13",
+                "symfony/http-foundation": "<5.4.54|>=6,<6.4.46|>=7,<7.4.19|>=8,<8.1.7",
                 "symfony/http-kernel": ">=2,<4.4.50|>=5,<5.4.20|>=6,<6.0.20|>=6.1,<6.1.12|>=6.2,<6.2.6|>=7.4,<7.4.12|>=8,<8.0.12",
                 "symfony/intl": ">=2.7,<2.7.38|>=2.8,<2.8.31|>=3,<3.2.14|>=3.3,<3.3.13",
                 "symfony/json-path": ">=7.3,<7.4.12|>=8,<8.0.12",
@@ -7396,7 +7580,7 @@
                 "symfony/mailomat-mailer": ">=7.2,<7.4.13|>=8,<8.0.13",
                 "symfony/mailtrap-mailer": ">=7.2,<7.4.12|>=8,<8.0.12",
                 "symfony/maker-bundle": ">=1.27,<1.29.2|>=1.30,<1.31.1",
-                "symfony/mime": "<5.4.52|>=6,<6.4.40|>=7,<7.4.12|>=8,<8.0.12",
+                "symfony/mime": "<5.4.55|>=6,<6.4.49|>=7,<7.4.22|>=8,<8.1.10",
                 "symfony/monolog-bridge": "<5.4.52|>=6,<6.4.40|>=7,<7.4.12|>=8,<8.0.12",
                 "symfony/phpunit-bridge": ">=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
                 "symfony/polyfill": ">=1,<1.10|>=1.17.1,<1.38.1",
@@ -7413,7 +7597,7 @@
                 "symfony/security-guard": ">=2.8,<3.4.48|>=4,<4.4.23|>=5,<5.2.8",
                 "symfony/security-http": "<5.4.53|>=6,<6.4.41|>=7,<7.4.13|>=8,<8.0.13",
                 "symfony/serializer": ">=2,<2.0.11|>=4.1,<4.4.35|>=5,<5.3.12",
-                "symfony/symfony": "<5.4.53|>=6,<6.4.41|>=7,<7.4.13|>=8,<8.0.13",
+                "symfony/symfony": "<5.4.55|>=6,<6.4.49|>=7,<7.4.22|>=8,<8.1.10",
                 "symfony/translation": ">=2,<2.0.17",
                 "symfony/twig-bridge": ">=2,<4.4.51|>=5,<5.4.31|>=6,<6.3.8|>=6.4.24,<6.4.40",
                 "symfony/twilio-notifier": ">=6.4,<6.4.40|>=7,<7.4.12|>=8,<8.0.12",
@@ -7426,10 +7610,11 @@
                 "symfony/var-exporter": ">=4.2,<4.2.12|>=4.3,<4.3.8",
                 "symfony/web-profiler-bundle": ">=2,<2.3.19|>=2.4,<2.4.9|>=2.5,<2.5.4|>=7.2.9,<7.4.12|>=8,<8.0.12",
                 "symfony/webhook": ">=6.3,<6.3.8",
-                "symfony/yaml": "<5.4.52|>=6,<6.4.40|>=7,<7.4.12|>=8,<8.0.12",
+                "symfony/yaml": "<5.4.54|>=6,<6.4.45|>=7,<7.4.18|>=8,<8.1.6",
                 "symphonycms/symphony-2": "<2.6.4",
                 "syssy/syssy-typo3-extension": "<3.0.6",
                 "t3/dce": "<0.11.5|>=2.2,<2.6.2",
+                "t3g/analytics": "<1.1.1",
                 "t3g/svg-sanitizer": "<1.0.3",
                 "t3s/content-consent": "<1.0.3|>=2,<2.0.2",
                 "tastyigniter/tastyigniter": "<4",
@@ -7444,7 +7629,7 @@
                 "thorsten/phpmyfaq": "<4.2.0.0-alpha",
                 "tikiwiki/tiki-manager": "<=17.1",
                 "timber/timber": ">=0.16.6,<1.23.1|>=1.24,<1.24.1|>=2,<2.1",
-                "tinymce/tinymce": "<7.9.3|>=8,<8.5.1",
+                "tinymce/tinymce": "<7.9.3|==7.9.3|>=8,<8.9.3",
                 "tinymighty/wiki-seo": "<1.2.2",
                 "titon/framework": "<9.9.99",
                 "tltneon/lgsl": "<7",
@@ -7475,7 +7660,7 @@
                 "typo3/cms-felogin": ">=4.2,<4.2.3",
                 "typo3/cms-filelist": ">=11,<11.5.51|>=12,<12.4.46|>=13,<13.4.31|>=14,<14.3.3",
                 "typo3/cms-fluid": "<4.3.4|>=4.4,<4.4.1|>=8,<8.7.23|>=9,<9.5.4",
-                "typo3/cms-form": "<10.4.57|>=11,<11.5.51|>=12,<12.4.46|>=13,<13.4.31|>=14,<14.3.5",
+                "typo3/cms-form": "<10.4.57|>=11,<11.5.51|>=12,<12.4.46|>=13,<13.4.31|>=14,<14.3.9",
                 "typo3/cms-frontend": "<4.3.9|>=4.4,<4.4.5",
                 "typo3/cms-indexed-search": ">=10,<=10.4.47|>=11,<=11.5.41|>=12,<=12.4.24|>=13,<13.4.31|>=14,<14.3.3",
                 "typo3/cms-install": "<4.1.14|>=4.2,<4.2.16|>=4.3,<4.3.9|>=4.4,<4.4.5|>=12.2,<12.4.8|==13.4.2",
@@ -7555,7 +7740,7 @@
                 "wpcloud/wp-stateless": "<3.2",
                 "wpglobus/wpglobus": "<=1.9.6",
                 "wpmetabox/meta-box": "<5.11.2",
-                "wwbn/avideo": "<=29",
+                "wwbn/avideo": "<29.1",
                 "xataface/xataface": "<3",
                 "xpressengine/xpressengine": "<3.0.15",
                 "yab/quarx": "<2.4.5",
@@ -7576,7 +7761,7 @@
                 "yikesinc/yikes-inc-easy-mailchimp-extender": "<6.8.6",
                 "yoast-seo-for-typo3/yoast_seo": "<7.2.3",
                 "yoast/duplicate-post": "<=4.5",
-                "yourls/yourls": "<=1.10.3",
+                "yourls/yourls": "<=1.10.4",
                 "yuan1994/tpadmin": "<=1.3.12",
                 "yungifez/skuul": "<=2.6.5",
                 "z-push/z-push-dev": "<2.7.6",
@@ -7655,7 +7840,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-10-08T22:58:27+00:00"
+            "time": "2026-10-31T00:24:47+00:00"
         },
         {
             "name": "robmorgan/phinx",
@@ -7824,16 +8009,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v7.4.17",
+            "version": "v7.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "696e12da8eea497a1a3808d714b43ff67a7df43e"
+                "reference": "d7f9d7495992429d916aea42d1a4d76a12dfa29f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/696e12da8eea497a1a3808d714b43ff67a7df43e",
-                "reference": "696e12da8eea497a1a3808d714b43ff67a7df43e",
+                "url": "https://api.github.com/repos/symfony/config/zipball/d7f9d7495992429d916aea42d1a4d76a12dfa29f",
+                "reference": "d7f9d7495992429d916aea42d1a4d76a12dfa29f",
                 "shasum": ""
             },
             "require": {
@@ -7879,7 +8064,7 @@
             "description": "Helps you find, load, combine, autofill and validate configuration values of any kind",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/config/tree/v7.4.17"
+                "source": "https://github.com/symfony/config/tree/v7.4.22"
             },
             "funding": [
                 {
@@ -7899,20 +8084,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-20T09:55:18+00:00"
+            "time": "2026-10-25T14:40:16+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v7.4.20",
+            "version": "v7.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "d7bca2fe05241dc7732d0c8b6d551b879f5d0a7d"
+                "reference": "8012f842110b414fd1cc641adb0ed8423353b0bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/d7bca2fe05241dc7732d0c8b6d551b879f5d0a7d",
-                "reference": "d7bca2fe05241dc7732d0c8b6d551b879f5d0a7d",
+                "url": "https://api.github.com/repos/symfony/console/zipball/8012f842110b414fd1cc641adb0ed8423353b0bb",
+                "reference": "8012f842110b414fd1cc641adb0ed8423353b0bb",
                 "shasum": ""
             },
             "require": {
@@ -7977,7 +8162,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v7.4.20"
+                "source": "https://github.com/symfony/console/tree/v7.4.22"
             },
             "funding": [
                 {
@@ -7997,20 +8182,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-18T15:55:00+00:00"
+            "time": "2026-10-28T11:08:27+00:00"
         },
         {
             "name": "symfony/css-selector",
-            "version": "v7.4.18",
+            "version": "v7.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "fecf40067fc8d8880ea87b8ac227600b9aadd1d0"
+                "reference": "4cdbb4a575111d771791339a9d5231155918f699"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/fecf40067fc8d8880ea87b8ac227600b9aadd1d0",
-                "reference": "fecf40067fc8d8880ea87b8ac227600b9aadd1d0",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/4cdbb4a575111d771791339a9d5231155918f699",
+                "reference": "4cdbb4a575111d771791339a9d5231155918f699",
                 "shasum": ""
             },
             "require": {
@@ -8046,7 +8231,7 @@
             "description": "Converts CSS selectors to XPath expressions",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/css-selector/tree/v7.4.18"
+                "source": "https://github.com/symfony/css-selector/tree/v7.4.22"
             },
             "funding": [
                 {
@@ -8066,7 +8251,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-23T10:03:40+00:00"
+            "time": "2026-10-18T14:39:27+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -8306,16 +8491,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v7.4.18",
+            "version": "v7.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "90d412aa5277c6819db39e7605aa46b1019e3232"
+                "reference": "fd0e3462be6d32a0d130e8423e4940a7688162d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/90d412aa5277c6819db39e7605aa46b1019e3232",
-                "reference": "90d412aa5277c6819db39e7605aa46b1019e3232",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/fd0e3462be6d32a0d130e8423e4940a7688162d8",
+                "reference": "fd0e3462be6d32a0d130e8423e4940a7688162d8",
                 "shasum": ""
             },
             "require": {
@@ -8352,7 +8537,7 @@
             "description": "Provides basic utilities for the filesystem",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/v7.4.18"
+                "source": "https://github.com/symfony/filesystem/tree/v7.4.21"
             },
             "funding": [
                 {
@@ -8372,20 +8557,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-23T10:03:40+00:00"
+            "time": "2026-10-06T20:05:19+00:00"
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v7.4.20",
+            "version": "v7.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "9d0761c0da6bd5b801b401666834901a9a1ffc33"
+                "reference": "63eda1d0c4de229d6b3e825709e49dd5c149699a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/9d0761c0da6bd5b801b401666834901a9a1ffc33",
-                "reference": "9d0761c0da6bd5b801b401666834901a9a1ffc33",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/63eda1d0c4de229d6b3e825709e49dd5c149699a",
+                "reference": "63eda1d0c4de229d6b3e825709e49dd5c149699a",
                 "shasum": ""
             },
             "require": {
@@ -8434,7 +8619,7 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-foundation/tree/v7.4.20"
+                "source": "https://github.com/symfony/http-foundation/tree/v7.4.22"
             },
             "funding": [
                 {
@@ -8454,20 +8639,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-24T07:12:44+00:00"
+            "time": "2026-10-27T13:26:03+00:00"
         },
         {
             "name": "symfony/mailer",
-            "version": "v7.4.19",
+            "version": "v7.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mailer.git",
-                "reference": "6f6f2441bef07a42d2617b9b3aadf04a321aa514"
+                "reference": "1aa1e2ee7515826bb17b0ad0d2f16962fcaa7859"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mailer/zipball/6f6f2441bef07a42d2617b9b3aadf04a321aa514",
-                "reference": "6f6f2441bef07a42d2617b9b3aadf04a321aa514",
+                "url": "https://api.github.com/repos/symfony/mailer/zipball/1aa1e2ee7515826bb17b0ad0d2f16962fcaa7859",
+                "reference": "1aa1e2ee7515826bb17b0ad0d2f16962fcaa7859",
                 "shasum": ""
             },
             "require": {
@@ -8518,7 +8703,7 @@
             "description": "Helps sending emails",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/mailer/tree/v7.4.19"
+                "source": "https://github.com/symfony/mailer/tree/v7.4.22"
             },
             "funding": [
                 {
@@ -8538,20 +8723,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-15T06:01:15+00:00"
+            "time": "2026-10-23T16:51:52+00:00"
         },
         {
             "name": "symfony/mime",
-            "version": "v7.4.19",
+            "version": "v7.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",
-                "reference": "f8ac7d0a800bcabbcd1f7de56594cf05e6cd5693"
+                "reference": "94a4c017435bc515f5ac80421a2c555fb9ca3676"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mime/zipball/f8ac7d0a800bcabbcd1f7de56594cf05e6cd5693",
-                "reference": "f8ac7d0a800bcabbcd1f7de56594cf05e6cd5693",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/94a4c017435bc515f5ac80421a2c555fb9ca3676",
+                "reference": "94a4c017435bc515f5ac80421a2c555fb9ca3676",
                 "shasum": ""
             },
             "require": {
@@ -8607,7 +8792,7 @@
                 "mime-type"
             ],
             "support": {
-                "source": "https://github.com/symfony/mime/tree/v7.4.19"
+                "source": "https://github.com/symfony/mime/tree/v7.4.22"
             },
             "funding": [
                 {
@@ -8627,7 +8812,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-04T10:45:44+00:00"
+            "time": "2026-10-28T17:57:58+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -8714,16 +8899,16 @@
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
-            "version": "v1.43.0",
+            "version": "v1.43.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-grapheme.git",
-                "reference": "5cac8f4db97208823aa353f59a01faad2da52c75"
+                "reference": "5a8f33c87aeecffce24e721b5064fab05f4becf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/5cac8f4db97208823aa353f59a01faad2da52c75",
-                "reference": "5cac8f4db97208823aa353f59a01faad2da52c75",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/5a8f33c87aeecffce24e721b5064fab05f4becf8",
+                "reference": "5a8f33c87aeecffce24e721b5064fab05f4becf8",
                 "shasum": ""
             },
             "require": {
@@ -8772,7 +8957,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.43.0"
+                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.43.3"
             },
             "funding": [
                 {
@@ -8792,7 +8977,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-25T15:46:47+00:00"
+            "time": "2026-10-15T09:18:53+00:00"
         },
         {
             "name": "symfony/polyfill-intl-idn",
@@ -8968,16 +9153,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.43.0",
+            "version": "v1.43.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "4d5d331bf731e0aedbc6b2f5e61135b7b7996a72"
+                "reference": "122889ed24dc000165bcbfd77ec412f15cbdfc6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/4d5d331bf731e0aedbc6b2f5e61135b7b7996a72",
-                "reference": "4d5d331bf731e0aedbc6b2f5e61135b7b7996a72",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/122889ed24dc000165bcbfd77ec412f15cbdfc6a",
+                "reference": "122889ed24dc000165bcbfd77ec412f15cbdfc6a",
                 "shasum": ""
             },
             "require": {
@@ -9029,7 +9214,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.43.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.43.3"
             },
             "funding": [
                 {
@@ -9049,7 +9234,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-24T15:19:04+00:00"
+            "time": "2026-10-28T09:35:49+00:00"
         },
         {
             "name": "symfony/polyfill-php80",
@@ -9137,16 +9322,16 @@
         },
         {
             "name": "symfony/routing",
-            "version": "v7.4.20",
+            "version": "v7.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/routing.git",
-                "reference": "2bacb72be5eadeaf9874d5accb75bfb33d21c74b"
+                "reference": "f79ed6fbf60d9e32d358054f1915295f3b8a6f7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/2bacb72be5eadeaf9874d5accb75bfb33d21c74b",
-                "reference": "2bacb72be5eadeaf9874d5accb75bfb33d21c74b",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/f79ed6fbf60d9e32d358054f1915295f3b8a6f7a",
+                "reference": "f79ed6fbf60d9e32d358054f1915295f3b8a6f7a",
                 "shasum": ""
             },
             "require": {
@@ -9198,7 +9383,7 @@
                 "url"
             ],
             "support": {
-                "source": "https://github.com/symfony/routing/tree/v7.4.20"
+                "source": "https://github.com/symfony/routing/tree/v7.4.22"
             },
             "funding": [
                 {
@@ -9218,7 +9403,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-28T19:09:50+00:00"
+            "time": "2026-10-26T21:52:50+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -9309,16 +9494,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v7.4.19",
+            "version": "v7.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "02731ce2bd26514bec9efc0baef2cd0b0cf67f46"
+                "reference": "8dff7da3a56638f1d189c5368183294102de4ced"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/02731ce2bd26514bec9efc0baef2cd0b0cf67f46",
-                "reference": "02731ce2bd26514bec9efc0baef2cd0b0cf67f46",
+                "url": "https://api.github.com/repos/symfony/string/zipball/8dff7da3a56638f1d189c5368183294102de4ced",
+                "reference": "8dff7da3a56638f1d189c5368183294102de4ced",
                 "shasum": ""
             },
             "require": {
@@ -9376,7 +9561,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v7.4.19"
+                "source": "https://github.com/symfony/string/tree/v7.4.22"
             },
             "funding": [
                 {
@@ -9396,20 +9581,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-11T14:46:58+00:00"
+            "time": "2026-10-23T16:51:52+00:00"
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v7.4.18",
+            "version": "v7.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "e088da50b813f32473a76871616cbb8fa54653a8"
+                "reference": "6e6ff33ea8cf5df27f00a5561ebd5ee9bd7f1618"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/e088da50b813f32473a76871616cbb8fa54653a8",
-                "reference": "e088da50b813f32473a76871616cbb8fa54653a8",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/6e6ff33ea8cf5df27f00a5561ebd5ee9bd7f1618",
+                "reference": "6e6ff33ea8cf5df27f00a5561ebd5ee9bd7f1618",
                 "shasum": ""
             },
             "require": {
@@ -9463,7 +9648,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v7.4.18"
+                "source": "https://github.com/symfony/var-dumper/tree/v7.4.22"
             },
             "funding": [
                 {
@@ -9483,7 +9668,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-30T20:10:52+00:00"
+            "time": "2026-10-25T21:04:04+00:00"
         },
         {
             "name": "thecodingmachine/safe",
@@ -10082,16 +10267,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "2.3.6",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "1427af4647235b4a73b13940b1f1258d3584f36e"
+                "reference": "af8e840551031d254cfdb3a18a62c3470a309c10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/1427af4647235b4a73b13940b1f1258d3584f36e",
-                "reference": "1427af4647235b4a73b13940b1f1258d3584f36e",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/af8e840551031d254cfdb3a18a62c3470a309c10",
+                "reference": "af8e840551031d254cfdb3a18a62c3470a309c10",
                 "shasum": ""
             },
             "require": {
@@ -10123,9 +10308,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.3.6"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.4.1"
             },
-            "time": "2026-09-27T20:07:45+00:00"
+            "time": "2026-10-30T19:36:28+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -10486,16 +10671,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "12.5.38",
+            "version": "12.5.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "1e87ad87fe57665a7f6e99a6e467329c11e851cc"
+                "reference": "1d5a4a3c98fa1ca3a51402c74b66c2c8df85e0bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1e87ad87fe57665a7f6e99a6e467329c11e851cc",
-                "reference": "1e87ad87fe57665a7f6e99a6e467329c11e851cc",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1d5a4a3c98fa1ca3a51402c74b66c2c8df85e0bb",
+                "reference": "1d5a4a3c98fa1ca3a51402c74b66c2c8df85e0bb",
                 "shasum": ""
             },
             "require": {
@@ -10564,7 +10749,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.5.38"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.5.43"
             },
             "funding": [
                 {
@@ -10572,7 +10757,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-10-05T05:49:30+00:00"
+            "time": "2026-11-02T07:10:00+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -11775,7 +11960,7 @@
     },
     "platform-dev": {},
     "platform-overrides": {
-        "php": "8.3"
+        "php": "8.3.36"
     },
     "plugin-api-version": "2.9.0"
 }

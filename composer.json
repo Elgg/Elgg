@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "7.1.1",
+    "version": "7.1.2",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0-only",
     "minimum-stability": "dev",
@@ -56,7 +56,7 @@
     "config": {
         "process-timeout": 0,
         "platform": {
-            "php": "8.3"
+            "php": "8.3.36"
         },
         "fxp-asset": {
             "enabled": false

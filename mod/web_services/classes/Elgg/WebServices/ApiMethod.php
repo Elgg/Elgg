@@ -312,7 +312,7 @@ class ApiMethod implements CollectionItemInterface {
 	final protected function assertUserAuthentication(): void {
 		$exception = null;
 		try {
-			$user_authenticated = elgg_pam_authenticate('user');
+			$user_authenticated = elgg_pam_authenticate('api:user');
 		} catch (AuthenticationException $exception) {
 			// user authentication failed
 			$user_authenticated = false;

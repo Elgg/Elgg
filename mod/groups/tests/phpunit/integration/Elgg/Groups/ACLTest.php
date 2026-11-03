@@ -22,6 +22,10 @@ class ACLTest extends IntegrationTestCase {
 		
 		$this->group = $this->createGroup();
 	}
+	
+	public function down() {
+		elgg_set_page_owner_guid(0);
+	}
 
 	public function testCreateDeleteGroupACL() {
 		$acl = $this->group->getOwnedAccessCollection('group_acl');
@@ -115,5 +119,112 @@ class ACLTest extends IntegrationTestCase {
 		
 		$original_page_owner_guid = ($original_page_owner instanceof \ElggEntity) ? $original_page_owner->guid : 0;
 		elgg_set_page_owner_guid($original_page_owner_guid);
+	}
+	
+	public function testACLGetDisplaynameLoggedOut() {
+		_elgg_services()->session_manager->removeLoggedInUser();
+		
+		$acl = $this->group->getOwnedAccessCollection('group_acl');
+		
+		$this->assertInstanceof(\ElggAccessCollection::class, $acl);
+		
+		$this->assertEquals(elgg_echo('access:limited:label'), $acl->getDisplayName());
+		
+		// with ignored access
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($acl) {
+			$this->assertEquals(elgg_echo('groups:acl', [$this->group->getDisplayName()]), $acl->getDisplayName());
+		});
+		
+		// with group page owner
+		elgg_set_page_owner_guid($this->group->guid);
+		
+		$this->assertEquals(elgg_echo('groups:acl:in_context'), $acl->getDisplayName());
+	}
+	
+	public function testACLGetDisplaynameLoggedInNonMember() {
+		_elgg_services()->session_manager->removeLoggedInUser();
+		$user = $this->createUser();
+		_elgg_services()->session_manager->setLoggedInUser($user);
+		
+		$acl = $this->group->getOwnedAccessCollection('group_acl');
+		
+		$this->assertInstanceof(\ElggAccessCollection::class, $acl);
+		
+		$this->assertEquals(elgg_echo('access:limited:label'), $acl->getDisplayName());
+		
+		// with ignored access
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($acl) {
+			$this->assertEquals(elgg_echo('groups:acl', [$this->group->getDisplayName()]), $acl->getDisplayName());
+		});
+		
+		// with group page owner
+		elgg_set_page_owner_guid($this->group->guid);
+		
+		$this->assertEquals(elgg_echo('groups:acl:in_context'), $acl->getDisplayName());
+	}
+	
+	public function testACLGetDisplaynameLoggedInMember() {
+		_elgg_services()->session_manager->removeLoggedInUser();
+		$user = $this->createUser();
+		$this->group->join($user);
+		_elgg_services()->session_manager->setLoggedInUser($user);
+		
+		$acl = $this->group->getOwnedAccessCollection('group_acl');
+		
+		$this->assertInstanceof(\ElggAccessCollection::class, $acl);
+		
+		$this->assertEquals(elgg_echo('groups:acl', [$this->group->getDisplayName()]), $acl->getDisplayName());
+		
+		// with ignored access
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($acl) {
+			$this->assertEquals(elgg_echo('groups:acl', [$this->group->getDisplayName()]), $acl->getDisplayName());
+		});
+		
+		// with group page owner
+		elgg_set_page_owner_guid($this->group->guid);
+		
+		$this->assertEquals(elgg_echo('groups:acl:in_context'), $acl->getDisplayName());
+	}
+	
+	public function testACLGetDisplaynameLoggedInOwner() {
+		$acl = $this->group->getOwnedAccessCollection('group_acl');
+		
+		$this->assertInstanceof(\ElggAccessCollection::class, $acl);
+		
+		$this->assertEquals(elgg_echo('groups:acl', [$this->group->getDisplayName()]), $acl->getDisplayName());
+		
+		// with ignored access
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($acl) {
+			$this->assertEquals(elgg_echo('groups:acl', [$this->group->getDisplayName()]), $acl->getDisplayName());
+		});
+		
+		// with group page owner
+		elgg_set_page_owner_guid($this->group->guid);
+		
+		$this->assertEquals(elgg_echo('groups:acl:in_context'), $acl->getDisplayName());
+	}
+	
+	public function testACLGetDisplaynameLoggedInAdmin() {
+		_elgg_services()->session_manager->removeLoggedInUser();
+		$user = $this->createUser([
+			'admin' => true,
+		]);
+		_elgg_services()->session_manager->setLoggedInUser($user);
+		
+		$acl = $this->group->getOwnedAccessCollection('group_acl');
+		
+		$this->assertInstanceof(\ElggAccessCollection::class, $acl);
+		
+		$this->assertEquals(elgg_echo('groups:acl', [$this->group->getDisplayName()]), $acl->getDisplayName());
+		
+		// with ignored access
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($acl) {
+			$this->assertEquals(elgg_echo('groups:acl', [$this->group->getDisplayName()]), $acl->getDisplayName());
+		});
+		
+		// with group page owner
+		elgg_set_page_owner_guid($this->group->guid);
+		
+		$this->assertEquals(elgg_echo('groups:acl:in_context'), $acl->getDisplayName());
 	}
 }

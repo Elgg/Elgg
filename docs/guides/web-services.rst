@@ -388,7 +388,7 @@ use:
 
     function rest_plugin_setup_pams() {
         // user token can also be used for user authentication
-        elgg_register_pam_handler(\Elgg\WebServices\PAM\UserToken::class);
+        elgg_register_pam_handler(\Elgg\WebServices\PAM\User\AuthToken::class, 'sufficient', 'api:user');
 
         // simple API key check
         elgg_register_pam_handler(\Elgg\WebServices\PAM\APIKey::class, 'sufficient', 'api');

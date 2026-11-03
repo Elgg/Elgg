@@ -146,9 +146,8 @@ class Access {
 	 * @return void|string
 	 */
 	public static function getAccessCollectionName(\Elgg\Event $event) {
-	
 		$access_collection = $event->getParam('access_collection');
-		if (!$access_collection instanceof \ElggAccessCollection) {
+		if (!$access_collection instanceof \ElggAccessCollection || $access_collection->subtype !== 'group_acl') {
 			return;
 		}
 	
@@ -158,17 +157,11 @@ class Access {
 		}
 		
 		$page_owner = elgg_get_page_owner_entity();
-	
 		if ($page_owner && $page_owner->guid === $owner->guid) {
 			return elgg_echo('groups:acl:in_context');
 		}
 	
-		$user = elgg_get_logged_in_user_entity();
-		if (empty($user)) {
-			return;
-		}
-		
-		if ($owner->isMember($user) || $owner->canEdit($user->guid)) {
+		if ($owner->isMember() || $owner->canEdit()) {
 			return elgg_echo('groups:acl', [$owner->getDisplayName()]);
 		}
 	}

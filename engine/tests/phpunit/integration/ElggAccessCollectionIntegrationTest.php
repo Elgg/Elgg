@@ -105,9 +105,15 @@ class ElggAccessCollectionIntegrationTest extends \Elgg\IntegrationTestCase {
 		// should be true since it's the owner
 		$this->assertTrue($acl->canEdit($acl->owner_guid));
 		
-		// should be false as no logged in user
+		// should be false as no logged-in user
 		$this->assertFalse($acl->canEdit());
 		
+		// should true with ignored access
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($acl) {
+			$this->assertTrue($acl->canEdit());
+		});
+		
+		// now with a logged-in user
 		$new_user = $this->createUser();
 		elgg()->session_manager->setLoggedInUser($new_user);
 		

@@ -121,7 +121,7 @@ class RestServiceController {
 		}
 		
 		// user token can also be used for user authentication
-		elgg_register_pam_handler(\Elgg\WebServices\PAM\User\AuthToken::class);
+		elgg_register_pam_handler(\Elgg\WebServices\PAM\User\AuthToken::class, 'sufficient', 'api:user');
 		
 		// simple API key check
 		elgg_register_pam_handler(\Elgg\WebServices\PAM\API\APIKey::class, 'sufficient', 'api');
