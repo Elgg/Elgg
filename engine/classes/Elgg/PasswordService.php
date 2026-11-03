@@ -108,7 +108,7 @@ final class PasswordService {
 			return false;
 		}
 
-		$user->setPassword($password);
+		_elgg_services()->accounts->changePassword($user, $password);
 		
 		unset($user->passwd_conf_code);
 		unset($user->passwd_conf_time);
