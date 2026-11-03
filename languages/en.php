@@ -1829,10 +1829,10 @@ Global variables:
 	'trash:restore:container:owner' => "You can restore this trashed item to your personal section since the original group has also been removed.",
 	'trash:restore:container:choose' => "Since the original group for this item has been removed, you can choose where to restore the item.",
 	'trash:restore:container:group' => "Restore in a different group",
+	'trash:restore:container:unknown' => "Because the original group for this content has been removed and no new destination could be found, recovery is not possible.",
 	'trash:restore:group' => "Search for a group",
 	'trash:restore:group:help' => "Make sure the selected group has the feature active for the item or an error may occur.",
 	'trash:restore:owner' => "Restore to the owner (%s)",
-	'trash:restore:unknown' => "Because the original group for this content has been removed and no new destination could be found, recovery is not possible.",
 
 /**
  * Color schemes
