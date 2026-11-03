@@ -66,8 +66,7 @@ class Settings {
 			return false;
 		}
 	
-		$user->setPassword($password);
-		_elgg_services()->persistentLogin->handlePasswordChange($user, $actor);
+		_elgg_services()->accounts->changePassword($user, $password);
 		
 		if (elgg_get_config('security_notify_user_password')) {
 			// notify the user that their password has changed

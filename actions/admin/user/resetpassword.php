@@ -20,7 +20,7 @@ if (!$user || !$user->canEdit()) {
 
 $password = elgg_generate_password();
 
-$user->setPassword($password);
+elgg()->accounts->changePassword($user, $password);
 
 $user->notify('resetpassword', $user, [
 	'password' => $password,

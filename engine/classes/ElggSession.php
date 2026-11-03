@@ -3,6 +3,7 @@
 use Elgg\Config;
 use Elgg\Database;
 use Elgg\Database\SessionHandler as ElggSessionHandler;
+use Elgg\Exceptions\SecurityException;
 use Elgg\Traits\Debug\Profilable;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -38,11 +39,9 @@ class ElggSession {
 	 * Initializes the session and checks for the remember me cookie
 	 *
 	 * @return void
-	 *
 	 * @internal
 	 */
 	public function boot(): void {
-	
 		$this->beginTimer([__METHOD__]);
 	
 		$this->start();
@@ -52,7 +51,7 @@ class ElggSession {
 		// test whether we have a user session
 		if ($this->has('guid')) {
 			$user = _elgg_services()->entityTable->get($this->get('guid'), 'user');
-			if (!$user instanceof ElggUser) {
+			if (!$user instanceof \ElggUser) {
 				// OMG user has been deleted.
 				$this->invalidate();
 				
@@ -62,18 +61,27 @@ class ElggSession {
 			}
 		} else {
 			$user = _elgg_services()->persistentLogin->bootSession();
-			if ($user instanceof ElggUser) {
+			if ($user instanceof \ElggUser) {
 				_elgg_services()->persistentLogin->updateTokenUsage($user);
 				$migrate_session = true;
 			}
 		}
 	
-		if ($user instanceof ElggUser) {
+		if ($user instanceof \ElggUser) {
 			_elgg_services()->session_manager->setLoggedInUser($user, $migrate_session);
 			$user->setLastAction();
 	
 			// logout a user with open session who has been banned
 			if ($user->isBanned()) {
+				_elgg_services()->session_manager->logout();
+			}
+			
+			// make sure the user hasn't changed in between requests
+			// e.g. password reset
+			try {
+				_elgg_services()->session_manager->validateUserToken($user);
+			} catch (SecurityException $e) {
+				elgg_register_error_message($e->getMessage());
 				_elgg_services()->session_manager->logout();
 			}
 		}

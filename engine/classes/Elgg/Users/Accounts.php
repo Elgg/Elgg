@@ -11,7 +11,7 @@ use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\I18n\Translator;
 use Elgg\PasswordService;
-use Elgg\Security\PasswordGeneratorService;
+use Elgg\PersistentLoginService;
 use Elgg\Validation\ValidationResults;
 
 /**
@@ -22,12 +22,12 @@ class Accounts {
 	/**
 	 * Constructor
 	 *
-	 * @param Config                   $config             Config
-	 * @param Translator               $translator         Translator
-	 * @param PasswordService          $passwords          Passwords
-	 * @param EventsService            $events             Events service
-	 * @param EmailService             $email              Email service
-	 * @param PasswordGeneratorService $password_generator Password generator service
+	 * @param Config                 $config          Config
+	 * @param Translator             $translator      Translator
+	 * @param PasswordService        $passwords       Passwords
+	 * @param EventsService          $events          Events service
+	 * @param EmailService           $email           Email service
+	 * @param PersistentLoginService $persistentLogin Persistent login service
 	 */
 	public function __construct(
 		protected Config $config,
@@ -35,7 +35,7 @@ class Accounts {
 		protected PasswordService $passwords,
 		protected EventsService $events,
 		protected EmailService $email,
-		protected PasswordGeneratorService $password_generator
+		protected PersistentLoginService $persistentLogin,
 	) {
 	}
 
@@ -44,7 +44,7 @@ class Accounts {
 	 *
 	 * @param string       $username              The username of the new user
 	 * @param string|array $password              The password
-	 *                                            Can be an array [$password, $oonfirm_password]
+	 *                                            Can be an array [$password, $confirm_password]
 	 * @param string       $name                  The user's display name
 	 * @param string       $email                 The user's email address
 	 * @param bool         $allow_multiple_emails Allow the same email address to be
@@ -102,7 +102,6 @@ class Accounts {
 	 * @throws RegistrationException
 	 */
 	public function assertValidAccountData(string $username, string|array $password, string $name, string $email, bool $allow_multiple_emails = false): void {
-
 		$results = $this->validateAccountData($username, $password, $name, $email, $allow_multiple_emails);
 
 		foreach ($results->all() as $result) {
@@ -190,7 +189,6 @@ class Accounts {
 	 * @throws RegistrationException
 	 */
 	public function assertValidUsername(string $username, bool $assert_unregistered = false): void {
-
 		if (elgg_strlen($username) < $this->config->minusername) {
 			$msg = $this->translator->translate('registration:usernametooshort', [$this->config->minusername]);
 			throw new RegistrationException($msg);
@@ -262,7 +260,6 @@ class Accounts {
 	 * @throws RegistrationException
 	 */
 	public function assertValidPassword(string|array $password): void {
-
 		if (is_array($password)) {
 			list($password, $password2) = $password;
 
@@ -456,5 +453,19 @@ class Accounts {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Handle all the required steps to change the password of a user
+	 *
+	 * @param \ElggUser $user     User to change the password for
+	 * @param string    $password New password
+	 *
+	 * @return void
+	 * @since 6.3.10
+	 */
+	public function changePassword(\ElggUser $user, string $password): void {
+		$user->setPassword($password);
+		$this->persistentLogin->handlePasswordChange($user);
 	}
 }
