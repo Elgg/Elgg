@@ -63,6 +63,7 @@ class ElggSession {
 			$user = _elgg_services()->persistentLogin->bootSession();
 			if ($user instanceof \ElggUser) {
 				_elgg_services()->persistentLogin->updateTokenUsage($user);
+				_elgg_services()->session_manager->setUserToken($user);
 				$migrate_session = true;
 			}
 		}
