@@ -1,3 +1,16 @@
+<a name="7.1.3"></a>
+### 7.1.3 (2026-11-05)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+
+#### Bug fixes
+
+* **trash:** use correct language key [dbbefa2c6](https://github.com/Elgg/Elgg/commit/dbbefa2c6524605695cf4cfc0d4f7584b4afe504)
+* **access:** correctly check access collection edit rights [749ff98a9](https://github.com/Elgg/Elgg/commit/749ff98a97f46712c6c99d0184464d48e131fc85)
+
+
 <a name="7.1.2"></a>
 ### 7.1.2 (2026-10-21)
 
