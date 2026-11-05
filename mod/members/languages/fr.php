@@ -6,6 +6,9 @@
  */
 
 return array(
+	'collection:user:user:all' => 'Tous les membres',
+	'collection:user:user:online' => 'Membres en ligne',
+	'collection:user:user:popular' => 'Membres les plus populaires',
 	
 	'members:label:online' => 'En ligne',
 	'members:label:search' => 'Résultats de recherche',

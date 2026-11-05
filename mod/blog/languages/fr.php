@@ -24,6 +24,7 @@ return array(
 	'entity:edit:object:blog:success' => 'Le blog a bien été enregistré',
 
 	'blog:revisions' => 'Révisions',
+	'blog:revisions:current' => 'Version actuelle',
 	'blog:archives' => 'Archives',
 
 	'groups:tool:blog' => 'Activer le blog du groupe',

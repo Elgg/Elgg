@@ -456,6 +456,9 @@ Pour voir l'article complet, cliquez sur le lien :
 	'user:delete:description' => 'Veuillez confirmer que vous souhaitez supprimer le compte de %s. La suppression du compte entraînera également la suppression de tout le contenu (y compris les groupes) appartenant à cet utilisateur. Cela peut également inclure du contenu connexe tel que du contenu de groupe, des sous-pages ou des commentaires sur le contenu. Ci-dessous, vous pouvez voir une liste du contenu appartenant à l\'utilisateur.',
 	'user:delete:confirm' => "Par la présente, je déclare vouloir supprimer ce compte utilisateur",
 	
+	'user:color_scheme:label' => "Schéma de couleurs",
+	'user:color_scheme:browser' => "Comme le navigateur",
+	
 	'user:language:label' => "Votre langue",
 	'user:language:success' => "Votre préférence de langue a bien été enregistré.",
 
@@ -1550,6 +1553,7 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'config:delayed_email:help' => "Offre aux utilisateurs des notifications par e-mail différées qui regroupent les notifications reçues au cours d'une période (quotidienne, hebdomadaire)",
 	'config:message_delay:label' => "Délai des messages système",
 	'config:message_delay:help' => "Nombre de secondes par défaut avant qu'un message de réussite ne disparaisse",
+	'config:color_schemes_enabled:label' => "Schémas de couleurs activés",
 
 	'upgrading' => 'Mise à niveau en cours...',
 	'upgrade:core' => 'Votre installation de Elgg a été mise à niveau.',
@@ -1830,6 +1834,8 @@ Variables globales :
 /**
  * Color schemes
  */
+	'color_scheme:default' => "Par défaut (Clair)",
+	'color_scheme:dark' => "Sombre",
 
 /**
  * Miscellaneous
