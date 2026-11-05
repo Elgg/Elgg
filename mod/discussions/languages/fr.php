@@ -12,8 +12,10 @@ return array(
 	
 	'add:object:discussion' => 'Ajouter un sujet de discussion',
 	'edit:object:discussion' => 'Modifier le sujet de discussion',
+	'collection:object:discussion:all' => 'Dernières discussions',
 	'collection:object:discussion:group' => 'Discussions du groupe',
 	'collection:object:discussion:my_groups' => 'Discussions dans mes groupes',
+	'collection:object:discussion:owner' => 'Discussions de %s',
 	
 	'notification:object:discussion:create' => "Envoyer une notification quand une discussion est créée",
 	'notifications:mute:object:discussion' => "à propos de la discussion \"%s'\"",

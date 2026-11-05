@@ -1825,6 +1825,7 @@ Global variables:
 	'trash:restore:container:owner' => "Het item kan eventueel naar je persoonlijke sectie verplaats worden want de oorspronkelijke groep is ook verwijderd.",
 	'trash:restore:container:choose' => "Aangezien de oorspronkelijke groep bijbehorend aan dit item is verwijderd, kun je kiezen waar je het item wilt herstellen.",
 	'trash:restore:container:group' => "Herstel in een andere groep",
+	'trash:restore:container:unknown' => "Aangezien de oorspronkelijke groep bijbehorend aan dit item is verwijderd en er geen andere bestemming kon worden gevonden is herstel niet mogelijk.",
 	'trash:restore:group' => "Zoek een groep",
 	'trash:restore:group:help' => "Zorg er voor dat de geselecteerd groep wel het soort items ondersteunt, anders kan er een foutmelding optreden.",
 	'trash:restore:owner' => "Herstel naar de eigenaar (%s)",
