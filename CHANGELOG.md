@@ -232,6 +232,18 @@
 * **profile:** the Twitter profile field has been removed [6095844fb](https://github.com/Elgg/Elgg/commit/6095844fbebd7f42199d1dae11c8c562f7235d6a) closes [#14925](https://github.com/Elgg/Elgg/issues/14925)
 
 
+<a name="6.3.10"></a>
+### 6.3.10 (2026-11-05)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Breaking Changes
+
+* **php:** updated PHP version requirement to 8.2 [aae7731f9](https://github.com/Elgg/Elgg/commit/aae7731f9a0dcc5353bb7c8f78181e962cfaa5fd)
+
+
 <a name="6.3.9"></a>
 ### 6.3.9 (2026-10-21)
 
