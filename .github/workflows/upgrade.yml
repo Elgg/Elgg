@@ -76,10 +76,10 @@ jobs:
           php ./elgg-cli plugins:activate activity blog bookmarks ckeditor dashboard developers discussions externalpages file friends friends_collections garbagecollector groups invitefriends likes members messageboard messages pages profile reportedcontent search site_notifications system_log tagcloud theme_sandbox thewire uservalidationbyemail web_services custom_index:last --no-ansi
           php ./elgg-cli plugins:list --no-ansi
 
-      - name: Update PHP to 8.1
+      - name: Update PHP to 8.2
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
           coverage: none
           extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring,intl
 

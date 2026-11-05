@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Jerôme Bakker, 2026
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-09 09:25+0200\n"
+"POT-Creation-Date: 2026-10-21 11:20+0200\n"
 "PO-Revision-Date: 2026-03-25 09:33+0000\n"
-"Last-Translator: Jerôme Bakker, 2026\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2026\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2617,7 +2618,7 @@ msgstr "Octobre 2023"
 
 #: ../../appendix/support.rst:81
 msgid "5.1"
-msgstr ""
+msgstr "5.1"
 
 #: ../../appendix/support.rst:81
 msgid "June 2025"
@@ -2625,7 +2626,7 @@ msgstr "Juin 2025"
 
 #: ../../appendix/support.rst:81 ../../appendix/support.rst:91
 msgid "May 2026"
-msgstr ""
+msgstr "Mai 2026"
 
 #: ../../appendix/support.rst:83
 msgid "6.0"
@@ -2653,15 +2654,15 @@ msgstr "Septembre 2025"
 
 #: ../../appendix/support.rst:89
 msgid "6.3 LTS"
-msgstr ""
+msgstr "6.3 LTS"
 
 #: ../../appendix/support.rst:89
 msgid "May 2027"
-msgstr ""
+msgstr "Mai 2027"
 
 #: ../../appendix/support.rst:89
 msgid "**Until 8.0**"
-msgstr ""
+msgstr "**Jusqu'à la 8.0**"
 
 #: ../../appendix/support.rst:91
 msgid "7.0"
@@ -2669,15 +2670,15 @@ msgstr "7.0"
 
 #: ../../appendix/support.rst:91 ../../appendix/support.rst:93
 msgid "September 2026"
-msgstr ""
+msgstr "Septembre 2026"
 
 #: ../../appendix/support.rst:93
 msgid "7.1"
-msgstr ""
+msgstr "7.1"
 
 #: ../../appendix/support.rst:95
 msgid "8.0"
-msgstr ""
+msgstr "8.0"
 
 #: ../../appendix/support.rst:95
 msgid "TBD"
@@ -18869,7 +18870,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/6.2-to-6.3.rst:15
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:53
 msgid "Deprecated classes"
-msgstr ""
+msgstr "Classés obsolètes"
 
 #: ../../appendix/upgrade-notes/6.2-to-6.3.rst:17
 msgid ""
@@ -18889,11 +18890,11 @@ msgstr "``\\Elgg\\Logger::dump()`` utilisez ``\\Elgg\\Logger::error()``"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:2
 msgid "From 6.x to 7.0"
-msgstr ""
+msgstr "De 6.x à 7.0"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:14
 msgid "The minimal PHP version is now 8.3."
-msgstr ""
+msgstr "La version minimale de PHP est maintenant 8.3."
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:19
 msgid "Elgg now uses PHPUnit 12.5. You might need to update your tests."
@@ -18934,7 +18935,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:39
 msgid "Font Awesome"
-msgstr ""
+msgstr "Font Awesome"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:41
 msgid ""
@@ -18954,7 +18955,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:51
 msgid "The trash is now enabled by default"
-msgstr ""
+msgstr "La corbeille est désormais activée par défaut"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:52
 msgid "The config option ``min_password_length`` has been changed to 16"
@@ -19242,19 +19243,19 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:185
 msgid "``forms/blog/save`` is now ``forms/blog/edit``"
-msgstr ""
+msgstr "``forms/blog/save`` est désormais ``forms/blog/edit``"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:186
 msgid "``forms/bookmarks/save`` is now ``forms/bookmarks/edit``"
-msgstr ""
+msgstr "``forms/bookmarks/save`` est désormais ``forms/bookmarks/edit``"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:187
 msgid "``forms/discussion/save`` is now ``forms/discussion/edit``"
-msgstr ""
+msgstr "``forms/discussion/save`` est désormais ``forms/discussion/edit``"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:188
 msgid "``forms/file/upload`` is now ``forms/file/edit``"
-msgstr ""
+msgstr "``forms/file/upload`` est désormais ``forms/file/edit``"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:190
 msgid "The following related actions were affected:"
@@ -19262,19 +19263,19 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:192
 msgid "``action/blog/save`` is now ``action/blog/edit``"
-msgstr ""
+msgstr "``action/blog/save`` est désormais ``action/blog/edit``"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:193
 msgid "``action/bookmarks/save`` is now ``action/bookmarks/edit``"
-msgstr ""
+msgstr "``action/bookmarks/save`` est désormais ``action/bookmarks/edit``"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:194
 msgid "``action/discussion/save`` is now ``action/discussion/edit``"
-msgstr ""
+msgstr "``action/discussion/save`` est désormais ``action/discussion/edit``"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:195
 msgid "``action/file/upload`` is now ``action/file/edit``"
-msgstr ""
+msgstr "``action/file/upload`` est désormais ``action/file/edit``"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:198
 msgid "Site Pages / External Pages"
@@ -19318,15 +19319,15 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:212
 msgid "``collection:object:blog:group``"
-msgstr ""
+msgstr "``collection:object:blog:group``"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:213
 msgid "``collection:object:bookmarks:group``"
-msgstr ""
+msgstr "``collection:object:bookmarks:group``"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:214
 msgid "``collection:object:page:group``"
-msgstr ""
+msgstr "``collection:object:page:group``"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:216
 msgid "This could break user favorites to those pages."
@@ -19357,7 +19358,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:233
 msgid "Members"
-msgstr ""
+msgstr "Membres"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:235
 msgid ""
@@ -19399,7 +19400,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:254
 msgid "Webservices"
-msgstr ""
+msgstr "Webservices"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:256
 msgid ""
@@ -19421,23 +19422,23 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:267
 msgid "``elgg_register_external_file()`` now returns void"
-msgstr ""
+msgstr "``elgg_register_external_file()`` renvoie désormais void"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:268
 msgid "``elgg_register_pam_handler()`` now returns void"
-msgstr ""
+msgstr "``elgg_register_pam_handler()`` renvoie désormais void"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:269
 msgid "``elgg_register_route()`` now returns void"
-msgstr ""
+msgstr "``elgg_register_route()`` renvoie désormais void"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:270
 msgid "``elgg_unregister_external_file()`` now returns void"
-msgstr ""
+msgstr "``elgg_unregister_external_file()`` renvoie désormais void"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:271
 msgid "``elgg_unregister_menu_item()`` now returns void"
-msgstr ""
+msgstr "``elgg_unregister_menu_item()`` renvoie désormais void"
 
 #: ../../appendix/upgrade-notes/6.x-to-7.0.rst:274
 msgid "Changed class function return types"
@@ -19475,7 +19476,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:17
 msgid "The minimal MySQL version is now 8.4"
-msgstr ""
+msgstr "La version minimale de MySQL est maintenant la 8.4."
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:20
 msgid "Generic entity controller"
@@ -19489,67 +19490,67 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:24
 msgid "``resources/blog/add``"
-msgstr ""
+msgstr "``resources/blog/add``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:25
 msgid "``resources/blog/edit``"
-msgstr ""
+msgstr "``resources/blog/edit``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:26
 msgid "``resources/blog/view``"
-msgstr ""
+msgstr "``resources/blog/view``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:27
 msgid "``resources/bookmarks/add``"
-msgstr ""
+msgstr "``resources/bookmarks/add``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:28
 msgid "``resources/bookmarks/edit``"
-msgstr ""
+msgstr "``resources/bookmarks/edit``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:29
 msgid "``resources/bookmarks/view``"
-msgstr ""
+msgstr "``resources/bookmarks/view``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:30
 msgid "``resources/discussion/add``"
-msgstr ""
+msgstr "``resources/discussion/add``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:31
 msgid "``resources/discussion/edit``"
-msgstr ""
+msgstr "``resources/discussion/edit``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:32
 msgid "``resources/discussion/view``"
-msgstr ""
+msgstr "``resources/discussion/view``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:33
 msgid "``resources/file/edit``"
-msgstr ""
+msgstr "``resources/file/edit``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:34
 msgid "``resources/file/upload``"
-msgstr ""
+msgstr "``resources/file/upload``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:35
 msgid "``resources/file/view``"
-msgstr ""
+msgstr "``resources/file/view``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:36
 msgid "``resources/pages/add``"
-msgstr ""
+msgstr "``resources/pages/add``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:37
 msgid "``resources/pages/edit``"
-msgstr ""
+msgstr "``resources/pages/edit``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:38
 msgid "``resources/pages/view``"
-msgstr ""
+msgstr "``resources/pages/view``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:39
 msgid "``resources/thewire/view``"
-msgstr ""
+msgstr "``resources/thewire/view``"
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:42
 msgid "Generic filter menu items"
@@ -19581,4 +19582,4 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/7.0-to-7.1.rst:60
 msgid "``forms/pages/edit`` use ``forms/page/edit``"
-msgstr ""
+msgstr "``forms/pages/edit`` utilisez ``forms/page/edit``"

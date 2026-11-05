@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Jerôme Bakker, 2026
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-09 14:38+0200\n"
+"POT-Creation-Date: 2026-10-21 11:20+0200\n"
 "PO-Revision-Date: 2026-03-25 09:33+0000\n"
-"Last-Translator: Jerôme Bakker, 2026\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2026\n"
 "Language-Team: French (https://app.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1060,15 +1061,15 @@ msgstr ""
 
 #: ../../guides/actions.rst:496 ../../guides/actions.rst:509
 msgid "``<entity_type>/<entity_subtype>/edit``"
-msgstr ""
+msgstr "``<entity_type>/<entity_subtype>/edit``"
 
 #: ../../guides/actions.rst:497 ../../guides/actions.rst:510
 msgid "``<entity_subtype>/edit``"
-msgstr ""
+msgstr "``<entity_subtype>/edit``"
 
 #: ../../guides/actions.rst:498
 msgid "``entity/edit``"
-msgstr ""
+msgstr "``entity/edit``"
 
 #: ../../guides/actions.rst:500
 msgid "The form will be provided with the following in ``$vars``:"
@@ -5967,7 +5968,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:774
 msgid "**message, system:email** |results|"
-msgstr ""
+msgstr "**message, system:email** |results|"
 
 #: ../../guides/events-list.rst:768
 msgid ""
@@ -6147,7 +6148,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:860
 msgid "**ajax_results, <event_type>\\*** |results|"
-msgstr ""
+msgstr "**ajax_results, <event_type>\\*** |results|"
 
 #: ../../guides/events-list.rst:848
 msgid ""
@@ -6182,7 +6183,7 @@ msgstr "path()"
 
 #: ../../guides/events-list.rst:857
 msgid "<route_name>"
-msgstr ""
+msgstr "<route_name>"
 
 #: ../../guides/events-list.rst:858
 msgid "view()"
@@ -6206,7 +6207,7 @@ msgstr "Routage"
 
 #: ../../guides/events-list.rst:869
 msgid "**response, <route_name>** |results|"
-msgstr ""
+msgstr "**response, <route_name>** |results|"
 
 #: ../../guides/events-list.rst:866
 msgid ""
@@ -6281,7 +6282,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:902
 msgid "**route:match, system** |results|"
-msgstr ""
+msgstr "**route:match, system** |results|"
 
 #: ../../guides/events-list.rst:893
 msgid ""
@@ -6348,7 +6349,7 @@ msgstr ""
 
 #: ../../guides/events-list.rst:929
 msgid "**form:register:fields, <entity_type>:<entity_subtype>** |results|"
-msgstr ""
+msgstr "**form:register:fields, <entity_type>:<entity_subtype>** |results|"
 
 #: ../../guides/events-list.rst:923
 msgid ""
@@ -7158,11 +7159,11 @@ msgstr "Plugins"
 
 #: ../../guides/events-list.rst:1307
 msgid "Site Pages"
-msgstr ""
+msgstr "Pages du site"
 
 #: ../../guides/events-list.rst:1310
 msgid "**names, externalpages** |results|"
-msgstr ""
+msgstr "**names, externalpages** |results|"
 
 #: ../../guides/events-list.rst:1310
 msgid "Returns a set of allowed names for external pages"
@@ -11788,7 +11789,7 @@ msgstr ""
 
 #: ../../guides/river.rst:105
 msgid "Capability"
-msgstr ""
+msgstr "Capacités"
 
 #: ../../guides/river.rst:107
 msgid ""
@@ -12173,7 +12174,7 @@ msgstr ""
 
 #: ../../guides/routing.rst:238
 msgid "GroupToolGatekeeper"
-msgstr ""
+msgstr "GroupToolGatekeeper"
 
 #: ../../guides/routing.rst:240
 msgid ""
@@ -12358,11 +12359,11 @@ msgstr ""
 
 #: ../../guides/routing.rst:375 ../../guides/routing.rst:448
 msgid "A title"
-msgstr ""
+msgstr "Un titre"
 
 #: ../../guides/routing.rst:376 ../../guides/routing.rst:449
 msgid "A breadcrumb"
-msgstr ""
+msgstr "Un fil d'Ariane"
 
 #: ../../guides/routing.rst:377
 msgid "The default filter tabs"
@@ -12385,6 +12386,8 @@ msgid ""
 "**collection:<entity_type>:<entity_subtype>:<collection_type>** "
 "**default:<entity_type>:<entity_subtype>**"
 msgstr ""
+"**collection:<entity_type>:<entity_subtype>:<collection_type>** "
+"**default:<entity_type>:<entity_subtype>**"
 
 #: ../../guides/routing.rst:386
 msgid ""
@@ -12418,7 +12421,7 @@ msgstr ""
 
 #: ../../guides/routing.rst:444
 msgid "Entity controller"
-msgstr ""
+msgstr "Contrôleur des entités"
 
 #: ../../guides/routing.rst:446
 msgid ""
@@ -12436,6 +12439,9 @@ msgid ""
 "**edit:<entity_type>:<entity_subtype>** "
 "**view:<entity_type>:<entity_subtype>**"
 msgstr ""
+"**add:<entity_type>:<entity_subtype>** "
+"**edit:<entity_type>:<entity_subtype>** "
+"**view:<entity_type>:<entity_subtype>**"
 
 #: ../../guides/routing.rst:458
 msgid ""
@@ -13304,7 +13310,7 @@ msgstr ""
 
 #: ../../guides/themes.rst:239
 msgid "Dark mode"
-msgstr ""
+msgstr "Mode sombre"
 
 #: ../../guides/themes.rst:241
 msgid ""
@@ -14626,7 +14632,7 @@ msgstr ""
 
 #: ../../guides/views.rst:514
 msgid "No results"
-msgstr ""
+msgstr "Pas de résultat"
 
 #: ../../guides/views.rst:516
 msgid ""
