@@ -31,7 +31,23 @@ class Events {
 		}
 		
 		$to = $email->getTo();
-		$to->setEmail($forward_address);
+		//$to->setEmail($forward_address);
+		if (is_array($to)) {
+				if (!empty($to)) {
+				    $first_to = reset($to);
+				    if (is_object($first_to) && method_exists($first_to, 'setEmail')) {
+				        $first_to->setEmail($forward_address);
+				    } elseif (is_object($first_to) && method_exists($first_to, 'setAddress')) {
+				        $first_to->setAddress($forward_address);
+				    }
+				} else {
+				    $email->to($forward_address);
+				}
+		} else if (is_object($to)) {
+				if (method_exists($to, 'setEmail')) {
+				    $to->setEmail($forward_address);
+				}
+		}
 		
 		$email->setTo($to);
 		
