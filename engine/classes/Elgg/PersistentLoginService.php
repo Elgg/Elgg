@@ -91,6 +91,8 @@ class PersistentLoginService {
 	 */
 	public function handlePasswordChange(\ElggUser $subject, ?\ElggUser $modifier = null): void {
 		$this->cookie_table->deleteAllHashes($subject);
+		
+		$modifier = $modifier ?? _elgg_services()->session_manager->getLoggedInUser();
 		if (!$modifier || ($modifier->guid !== $subject->guid) || !$this->cookie_token) {
 			return;
 		}
