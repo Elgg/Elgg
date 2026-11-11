@@ -2,6 +2,8 @@
 
 namespace Elgg\Developers;
 
+use Symfony\Component\Mime\Address;
+
 /**
  * Event handlers for Developers plugin
  */
@@ -20,8 +22,8 @@ class Events {
 			return;
 		}
 		
-		$forward_address = elgg_get_plugin_setting('forward_email', 'developers');
-		if (empty($forward_address)) {
+		$forward_address = (string) elgg_get_plugin_setting('forward_email', 'developers');
+		if (!elgg_is_valid_email($forward_address)) {
 			return;
 		}
 		
@@ -30,10 +32,24 @@ class Events {
 			return;
 		}
 		
-		$to = $email->getTo();
-		$to->setEmail($forward_address);
+		$change_address = function(array $addresses) use ($forward_address) {
+			$new_addresses = [];
+			/** @var Address $address */
+			foreach ($addresses as $address) {
+				$new_addresses[] = new Address($forward_address, $address->getName());
+			}
+			
+			return $new_addresses;
+		};
 		
-		$email->setTo($to);
+		$addresses = $change_address($email->getTo());
+		$email->setTo($addresses);
+		
+		$addresses = $change_address($email->getCc());
+		$email->setCc($addresses);
+		
+		$addresses = $change_address($email->getBcc());
+		$email->setBcc($addresses);
 		
 		return $email;
 	}
@@ -65,16 +81,36 @@ class Events {
 			return;
 		}
 		
-		$to = $email->getTo();
-		$user = elgg_get_user_by_email($to->getEmail());
-		if (!$user instanceof \ElggUser) {
-			// no user found, so this should be blocked
-			// as this e-mail address doesn't belong to any user
+		$filter = function(Address $address) {
+			$user = elgg_get_user_by_email($address->getAddress());
+			if (!$user instanceof \ElggUser) {
+				// no user found, so filter out this address
+				// as this e-mail address doesn't belong to any user
+				return false;
+			}
+			
+			if (!$user->isAdmin()) {
+				// found a non admin, so filter out the address
+				return false;
+			}
+			
 			return true;
-		}
+		};
 		
-		if (!$user->isAdmin()) {
-			// found a non admin, so block outgoing e-mails
+		$addresses = $email->getTo();
+		$to_addresses = array_filter($addresses, $filter);
+		$email->setTo($to_addresses);
+		
+		$addresses = $email->getCc();
+		$cc_addresses = array_filter($addresses, $filter);
+		$email->setCc($cc_addresses);
+		
+		$addresses = $email->getBcc();
+		$bcc_addresses = array_filter($addresses, $filter);
+		$email->setBcc($bcc_addresses);
+		
+		if (empty($to_addresses) && empty($cc_addresses) && empty($bcc_addresses)) {
+			// filtered out all the recipients, handle as sent
 			return true;
 		}
 	}
