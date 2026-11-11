@@ -15,7 +15,6 @@ if (!$user instanceof \ElggUser) {
 }
 
 $original_user = elgg_get_logged_in_user_entity();
-$original_user_guid = $original_user->guid;
 
 // store the original persistent login state to restore on logout_as.
 $persistent = false;
@@ -27,8 +26,14 @@ if (isset($_COOKIE['elggperm'])) {
 }
 
 $session = elgg_get_session();
-$session->set('login_as_original_user_guid', $original_user_guid);
+$session->set('login_as_original_user_guid', $original_user->guid);
 $session->set('login_as_original_persistent', $persistent);
+
+$hmac = elgg_build_hmac([
+	$original_user->guid,
+	$user->guid,
+]);
+$session->set('login_as_hash', $hmac->getToken());
 
 try {
 	elgg_login($user);
@@ -37,6 +42,7 @@ try {
 } catch (LoginException $exc) {
 	$session->remove('login_as_original_user_guid');
 	$session->remove('login_as_original_persistent');
+	$session->remove('login_as_hash');
 	
 	try {
 		elgg_login($original_user);
