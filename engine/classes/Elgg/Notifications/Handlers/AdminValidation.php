@@ -31,7 +31,9 @@ class AdminValidation extends NonConfigurableNotificationEventHandler {
 		
 		$result = [];
 		
-		$admins = elgg_get_admins([
+		$admins = elgg_get_entities([
+			'type' => 'user',
+			'metadata_name_value_pairs' => ['admin' => 'yes'],
 			'limit' => false,
 			'batch' => true,
 		]);

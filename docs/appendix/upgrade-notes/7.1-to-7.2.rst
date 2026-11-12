@@ -1,0 +1,11 @@
+From 7.1 to 7.2
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+Deprecated APIs
+---------------
+
+* ``elgg_get_admins()`` use ``elgg_get_entities()``
