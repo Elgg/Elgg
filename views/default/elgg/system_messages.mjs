@@ -20,7 +20,9 @@ $('.elgg-system-messages .elgg-message').each(function () {
 	}
 	
 	var $list_item = $message.parent();
-	$list_item.animate({opacity: '1.0'}, delay).fadeOut('slow');
+	$list_item.animate({opacity: '1.0'}, delay).fadeOut('slow', function () {
+		$(this).remove();
+	});
 });
 
 // if the user clicks the before pseudo selector of a system message, make it disappear
@@ -29,7 +31,7 @@ $(document).on('click', '.elgg-system-messages .elgg-message', function(e) {
 
 	// slideUp allows dismissals without notices shifting around unpredictably
 	$this.clearQueue().slideUp(100, function () {
-		$this.remove();
+		$this.parent().remove();
 	});
 });
 
