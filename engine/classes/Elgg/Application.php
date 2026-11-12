@@ -730,6 +730,7 @@ class Application {
 			'configuration.php',
 			'constants.php',
 			'context.php',
+			'deprecated-7.2.php',
 			'entities.php',
 			'external_files.php',
 			'filestore.php',

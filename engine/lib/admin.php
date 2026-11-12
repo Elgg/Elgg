@@ -2,35 +2,12 @@
 /**
  * Elgg admin functions.
  *
- * Admin pages
- * Plugins no not need to provide their own page handler to add a page to the
- * admin area. A view placed at admin/<section>/<subsection> can be access
- * at http://example.org/admin/<section>/<subsection>. The title of the page
- * will be elgg_echo('admin:<section>:<subsection>').
- *
  * Admin notices
  * System messages (success and error messages) are used in both the main site
  * and the admin area. There is a special presistent message for the admin area
  * called an admin notice. It should be used when a plugin requires an
  * administrator to take an action. @see elgg_add_admin_notice()
  */
-
-/**
- * Get the admin users
- *
- * @param array $options Options array, @see elgg_get_entities() for parameters
- *
- * @return mixed Array of admin users or false on failure. If a count, returns int.
- * @since 1.8.0
- */
-function elgg_get_admins(array $options = []) {
-	$options['type'] = 'user';
-	$options['metadata_name_value_pairs'] = elgg_extract('metadata_name_value_pairs', $options, []);
-	
-	$options['metadata_name_value_pairs']['admin'] = 'yes';
-
-	return elgg_get_entities($options);
-}
 
 /**
  * Write a persistent message to the admin view.
