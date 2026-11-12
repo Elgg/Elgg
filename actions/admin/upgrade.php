@@ -13,6 +13,10 @@ if (!$upgrade instanceof \ElggUpgrade) {
 	return elgg_error_response(elgg_echo('admin:upgrades:error:invalid_upgrade', [$guid]), REFERRER, ELGG_HTTP_NOT_FOUND);
 }
 
+if ($upgrade->isCompleted()) {
+	return elgg_error_response(elgg_echo('admin:upgrades:error:completed'));
+}
+
 $result = _elgg_services()->upgrades->executeUpgrade($upgrade);
 
 return elgg_ok_response($result->toArray());
