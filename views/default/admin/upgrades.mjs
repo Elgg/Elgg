@@ -17,16 +17,13 @@ let progressbar;
 let upgradeStartTime;
 let timer;
 let counter;
-let percent;
 let errorCounter;
-let errorMessages = [];
 let numSuccess;
 let numError;
 let numProcessed = 0;
 let total;
 let messages = [];
 let messageList;
-let percentage = 0;
 
 // used to fake the progressbar if we don't know the total
 const FAKE_TOTAL = 1000000;
@@ -81,26 +78,24 @@ function runUpgrade(advanceToNextWhenDone) {
 	upgrade = $(upgrade);
 	progressbar = upgrade.find('.elgg-progressbar');
 	counter = upgrade.find('.upgrade-counter');
-	percent = upgrade.find('.upgrade-percent');
 	timer = upgrade.find('.upgrade-timer');
 	messageList = upgrade.find('.upgrade-messages');
 	errorCounter = upgrade.find('.upgrade-error-counter');
 	const data = upgrade.find('.upgrade-data');
 
 	// The total amount of items to be upgraded
-	total = data.attr('data-total');
+	total = parseInt(data.attr('data-total'));
 
 	// Get the GUID from the element id: elgg-object-123
-	guid = upgrade.attr('id').replace('elgg-object-', '');
+	guid = parseInt(upgrade.attr('id').replace('elgg-object-', ''));
 
 	// Initialize progressbar
-	$(upgrade).find('.elgg-progressbar').progressbar({
+	progressbar.progressbar({
 		value: 0,
 		max: (total == UNKNOWN_COUNT) ? FAKE_TOTAL : total
 	});
 
 	upgradeStartTime = new Date().getTime();
-	percentage = 0;
 
 	processBatch(advanceToNextWhenDone);
 }
@@ -136,6 +131,21 @@ function processBatch(advanceToNextWhenDone) {
 
 			numProcessed += (numSuccess + numError);
 
+			let done;
+			if (total == UNKNOWN_COUNT || result.isComplete) {
+				done = result.isComplete;
+			} else {
+				done = numProcessed >= total;
+			}
+			
+			if (done) {
+				if (total == UNKNOWN_COUNT) {
+					numProcessed = FAKE_TOTAL;
+				} else {
+					numProcessed = total;
+				}
+			}
+
 			// Increase success statistics
 			if (total == UNKNOWN_COUNT) {
 				counter.text(numProcessed + '/???');
@@ -146,10 +156,9 @@ function processBatch(advanceToNextWhenDone) {
 			// Increase the progress bar
 			if (total == UNKNOWN_COUNT) {
 				fakeDone = Math.round(FAKE_TOTAL - (FAKE_TOTAL - fakeDone) / 2);
-				progressbar.progressbar({value: fakeDone});
+				progressbar.progressbar('value', fakeDone);
 			} else {
-				percentage = Math.round(numProcessed * 100 / total);
-				progressbar.progressbar({value: numProcessed});
+				progressbar.progressbar('value', numProcessed);
 			}
 
 			if (numError > 0) {
@@ -158,14 +167,7 @@ function processBatch(advanceToNextWhenDone) {
 					.css('color', 'red');
 			}
 
-			updateCounter();
-
-			let done;
-			if (total == UNKNOWN_COUNT || result.isComplete) {
-				done = result.isComplete;
-			} else {
-				done = numProcessed >= total;
-			}
+			updateTimer();
 
 			if (done) {
 				if (numError > 0) {
@@ -175,14 +177,11 @@ function processBatch(advanceToNextWhenDone) {
 
 				if (total == UNKNOWN_COUNT) {
 					counter.text(numProcessed + '/' + numProcessed);
-					progressbar.progressbar({value: FAKE_TOTAL});
+					progressbar.progressbar('value', FAKE_TOTAL);
 				}
 
-				// Increase percentage
-				percent.html('100%');
-
 				// Reset all counters
-				numSuccess = numError = numProcessed = percentage = 0;
+				numSuccess = numError = numProcessed = 0;
 				messages = [];
 
 				upgrade.fadeOut('slow', function () {
@@ -206,13 +205,6 @@ function processBatch(advanceToNextWhenDone) {
 				return;
 			}
 
-			// carry on...
-			if (total != UNKNOWN_COUNT) {
-				percentage = Math.round(numProcessed * 100 / total);
-				// Increase percentage
-				percent.html(percentage + '%');
-			}
-
 			// Start next upgrade call
 			processBatch(advanceToNextWhenDone);
 		}
@@ -225,7 +217,7 @@ function processBatch(advanceToNextWhenDone) {
 /**
  * Displays estimated amount of time needed for a single upgrade to finish
  */
-function updateCounter() {
+function updateTimer() {
 	const now = new Date().getTime();
 
 	// How many milliseconds ago the last batch was started
@@ -286,8 +278,3 @@ if ($('.elgg-item-object-elgg_upgrade').length) {
 }
 
 $(document).on('click', '.elgg-menu-item-run-upgrade > a', runSingle);
-
-upgrades.each(function(key, value) {
-	// Initialize progressbar
-	$(value).find('.elgg-progressbar').progressbar();
-});
