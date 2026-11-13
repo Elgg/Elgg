@@ -1,5 +1,5 @@
 /**
- * Javascript that takes care of running batch upgrades
+ * JavaScript that takes care of running batch upgrades
  */
 
 import 'jquery';
@@ -9,28 +9,25 @@ import popup from 'elgg/popup';
 import system_messages from 'elgg/system_messages';
 import i18n from 'elgg/i18n';
 
-var UNKNOWN_COUNT = -1;
-var upgrades = $('.elgg-item-object-elgg_upgrade');
-var upgrade;
-var guid;
-var progressbar;
-var upgradeStartTime;
-var timer;
-var counter;
-var percent;
-var errorCounter;
-var errorMessages = [];
-var numSuccess;
-var numError;
-var numProcessed = 0;
-var total;
-var messages = [];
-var messageList;
-var percentage = 0;
+const UNKNOWN_COUNT = -1;
+const upgrades = $('.elgg-item-object-elgg_upgrade');
+let upgrade;
+let guid;
+let progressbar;
+let upgradeStartTime;
+let timer;
+let counter;
+let errorCounter;
+let numSuccess;
+let numError;
+let numProcessed = 0;
+let total;
+let messages = [];
+let messageList;
 
 // used to fake the progressbar if we don't know the total
-var FAKE_TOTAL = 1000000;
-var fakeDone = 0;
+const FAKE_TOTAL = 1000000;
+let fakeDone = 0;
 
 /**
  * Runs all individual upgrades one at a time
@@ -54,7 +51,7 @@ function run(event) {
  * Run a single upgrade
  */
 function runSingle() {
-	var guid = $(this).data().guid;
+	const guid = $(this).data().guid;
 	
 	if (!$('#elgg-object-' + guid).length) {
 		return;
@@ -81,26 +78,24 @@ function runUpgrade(advanceToNextWhenDone) {
 	upgrade = $(upgrade);
 	progressbar = upgrade.find('.elgg-progressbar');
 	counter = upgrade.find('.upgrade-counter');
-	percent = upgrade.find('.upgrade-percent');
 	timer = upgrade.find('.upgrade-timer');
 	messageList = upgrade.find('.upgrade-messages');
 	errorCounter = upgrade.find('.upgrade-error-counter');
-	var data = upgrade.find('.upgrade-data');
+	const data = upgrade.find('.upgrade-data');
 
 	// The total amount of items to be upgraded
-	total = data.attr('data-total');
+	total = parseInt(data.attr('data-total'));
 
 	// Get the GUID from the element id: elgg-object-123
-	guid = upgrade.attr('id').replace('elgg-object-', '');
+	guid = parseInt(upgrade.attr('id').replace('elgg-object-', ''));
 
 	// Initialize progressbar
-	$(upgrade).find('.elgg-progressbar').progressbar({
+	progressbar.progressbar({
 		value: 0,
 		max: (total == UNKNOWN_COUNT) ? FAKE_TOTAL : total
 	});
 
 	upgradeStartTime = new Date().getTime();
-	percentage = 0;
 
 	processBatch(advanceToNextWhenDone);
 }
@@ -108,44 +103,48 @@ function runUpgrade(advanceToNextWhenDone) {
 /**
  * Takes care of upgrading a single batch of items
  *
- * @param {bool} advanceToNextWhenDone when the upgrade is done shoul it continue to the next available
+ * @param {bool} advanceToNextWhenDone when the upgrade is done should it continue to the next available
  */
 function processBatch(advanceToNextWhenDone) {
-	
 	if (typeof advanceToNextWhenDone !== 'boolean') {
 		// IE doesn't support default function params
 		advanceToNextWhenDone = true;
 	}
 	
-	var options = {
+	const options = {
 		data: {
 			guid: guid
 		},
 		error: function(result) {
 			// Append possible errors after the progressbar
-			if (result.system_messages.error.length) {
-				// Display only the errors that haven't already been shown
-				$(result.error).each(function(key, message) {
-					if ($.inArray(message, errorMessages) === -1) {
-						var msg = '<li>' + message + '</li>';
-						messageList.append(msg);
-						messages.push(message);
-					}
-				});
-			}
-
 			$(result.errors).each(function(key, message) {
-				var msg = '<li>' + message + '</li>';
+				const msg = '<li>' + message + '</li>';
 				messageList.append(msg);
 				messages.push(message);
 			});
+			
+			spinner.stop();
 		},
 		success: function(result) {
-
 			numSuccess = parseInt(result.numSuccess);
 			numError = parseInt(result.numErrors);
 
 			numProcessed += (numSuccess + numError);
+
+			let done;
+			if (total == UNKNOWN_COUNT || result.isComplete) {
+				done = result.isComplete;
+			} else {
+				done = numProcessed >= total;
+			}
+			
+			if (done) {
+				if (total == UNKNOWN_COUNT) {
+					numProcessed = FAKE_TOTAL;
+				} else {
+					numProcessed = total;
+				}
+			}
 
 			// Increase success statistics
 			if (total == UNKNOWN_COUNT) {
@@ -157,10 +156,9 @@ function processBatch(advanceToNextWhenDone) {
 			// Increase the progress bar
 			if (total == UNKNOWN_COUNT) {
 				fakeDone = Math.round(FAKE_TOTAL - (FAKE_TOTAL - fakeDone) / 2);
-				progressbar.progressbar({value: fakeDone});
+				progressbar.progressbar('value', fakeDone);
 			} else {
-				percentage = Math.round(numProcessed * 100 / total);
-				progressbar.progressbar({value: numProcessed});
+				progressbar.progressbar('value', numProcessed);
 			}
 
 			if (numError > 0) {
@@ -169,14 +167,7 @@ function processBatch(advanceToNextWhenDone) {
 					.css('color', 'red');
 			}
 
-			updateCounter();
-
-			var done;
-			if (total == UNKNOWN_COUNT || result.isComplete) {
-				done = result.isComplete;
-			} else {
-				done = numProcessed >= total;
-			}
+			updateTimer();
 
 			if (done) {
 				if (numError > 0) {
@@ -186,15 +177,16 @@ function processBatch(advanceToNextWhenDone) {
 
 				if (total == UNKNOWN_COUNT) {
 					counter.text(numProcessed + '/' + numProcessed);
-					progressbar.progressbar({value: FAKE_TOTAL});
+					progressbar.progressbar('value', FAKE_TOTAL);
 				}
 
-				// Increase percentage
-				percent.html('100%');
-
 				// Reset all counters
-				numSuccess = numError = numProcessed = percentage = 0;
+				numSuccess = numError = numProcessed = 0;
 				messages = [];
+
+				upgrade.fadeOut('slow', function () {
+					$(this).remove();
+				});
 
 				if (advanceToNextWhenDone) {
 					// Get next upgrade
@@ -213,60 +205,50 @@ function processBatch(advanceToNextWhenDone) {
 				return;
 			}
 
-			// carry on...
-			if (total != UNKNOWN_COUNT) {
-				percentage = Math.round(numProcessed * 100 / total);
-				// Increase percentage
-				percent.html(percentage + '%');
-			}
-
 			// Start next upgrade call
 			processBatch(advanceToNextWhenDone);
 		}
 	};
 
-	var ajax = new Ajax(false);
+	const ajax = new Ajax(false);
 	return ajax.action('admin/upgrade', options);
 }
 
 /**
  * Displays estimated amount of time needed for a single upgrade to finish
  */
-function updateCounter() {
-	var now = new Date().getTime();
+function updateTimer() {
+	const now = new Date().getTime();
 
 	// How many milliseconds ago the last batch was started
-	var difference = (now - upgradeStartTime) / 1000;
+	const difference = (now - upgradeStartTime) / 1000;
 
 	// How many items are waiting to be processed
-	var unProcessed = total - numProcessed;
+	const unProcessed = total - numProcessed;
 
-	var timeLeft = Math.round((difference / numProcessed) * unProcessed);
+	let timeLeft = Math.round((difference / numProcessed) * unProcessed);
+	let hours = '00';
+	let minutes = '00';
+	let seconds;
 
 	if (timeLeft < 60) {
-		var hours = '00';
-		var minutes = '00';
-		var seconds = timeLeft;
+		seconds = timeLeft;
+	} else if (timeLeft < 3600) {
+		minutes = Math.floor(timeLeft / 60);
+		seconds = timeLeft % 60;
+		hours = '00';
 	} else {
-		if (timeLeft < 3600) {
-			var minutes = Math.floor(timeLeft / 60);
-			var seconds = timeLeft % 60;
-			var hours = '00';
-		} else {
-			var hours = Math.floor(timeLeft / 3600);
-			timeLeft = timeLeft % 3600;
-			var minutes = Math.floor(timeLeft / 60);
-			var seconds = timeLeft % 60;
-		}
+		hours = Math.floor(timeLeft / 3600);
+		timeLeft = timeLeft % 3600;
+		minutes = Math.floor(timeLeft / 60);
+		seconds = timeLeft % 60;
 	}
 
 	hours = formatDigits(hours);
 	minutes = formatDigits(minutes);
 	seconds = formatDigits(seconds);
 
-	var value = hours + ':' + minutes + ':' + seconds;
-
-	timer.html(value);
+	timer.html(hours + ':' + minutes + ':' + seconds);
 }
 
 /**
@@ -296,8 +278,3 @@ if ($('.elgg-item-object-elgg_upgrade').length) {
 }
 
 $(document).on('click', '.elgg-menu-item-run-upgrade > a', runSingle);
-
-upgrades.each(function(key, value) {
-	// Initialize progressbar
-	$(value).find('.elgg-progressbar').progressbar();
-});
