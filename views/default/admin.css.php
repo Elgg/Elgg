@@ -27,9 +27,15 @@ echo elgg_view('core.css');
 	.elgg-module-admin-notices {
 		margin-top: 2rem;
 		
-		> li {
-			padding: 0;
-			border: none;
+		.elgg-admin-notices {
+			display: flex;
+			flex-direction: column;
+			row-gap: 0.5rem;
+			
+			> li {
+				padding: 0;
+				border: none;
+			}
 		}
 	}
 

@@ -12,8 +12,8 @@ function filterPluginCategory(event) {
 	$('.elgg-admin-plugins-categories > a').removeClass('elgg-state-selected');
 
 	// show plugins with the selected category
-	$('.elgg-plugin').hide();
-	$('.elgg-plugin-category-' + $(this).attr('rel')).show();
+	$('.elgg-plugin').parent().hide();
+	$('.elgg-plugin-category-' + $(this).attr('rel')).parent().show();
 	$(this).addClass('elgg-state-selected');
 };
 

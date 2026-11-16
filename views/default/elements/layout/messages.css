@@ -7,7 +7,11 @@
 	right: 1rem;
 	max-width: 30rem;
 	
-	.elgg-message{
+	display: flex;
+	flex-direction: column;
+	row-gap: 0.5rem;
+	
+	.elgg-message {
 		position: relative;
 		
 		&:before {
