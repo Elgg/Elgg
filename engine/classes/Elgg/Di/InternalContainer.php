@@ -78,7 +78,6 @@ use Psr\Container\ContainerInterface;
  * @property-read \Elgg\Notifications\NotificationsService               $notifications
  * @property-read \Elgg\Notifications\NotificationsQueue                 $notificationsQueue
  * @property-read \Elgg\Page\PageOwnerService                            $pageOwner
- * @property-read \Elgg\PasswordService                                  $passwords
  * @property-read \Elgg\Security\PasswordGeneratorService                $passwordGenerator
  * @property-read \Elgg\PersistentLoginService                           $persistentLogin
  * @property-read \Elgg\Database\Plugins                                 $plugins
