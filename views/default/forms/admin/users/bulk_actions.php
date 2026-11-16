@@ -53,9 +53,8 @@ $users = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($options, $gette
 	return elgg_list_entities($options, $getter);
 });
 if (empty($users)) {
-	echo elgg_view('page/components/no_results', [
-		'no_results' => elgg_extract('no_results', $vars, true),
-	]);
+	echo elgg_view_no_results((string) elgg_extract('no_results', $vars, true));
+	
 	return;
 }
 
