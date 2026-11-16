@@ -20,4 +20,5 @@ Deprecated APIs
 * ``elgg_delete_admin_notice()``
 * ``elgg_get_admin_notices()``
 * ``elgg_get_admins()`` use ``elgg_get_entities()``
+* ``elgg_get_view_extensions()``
 * ``elgg_list_entities_from_relationship_count()``

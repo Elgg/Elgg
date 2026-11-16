@@ -107,3 +107,22 @@ function elgg_list_entities_from_relationship_count(array $options): string {
 	
 	return elgg_list_entities($options, 'elgg_get_entities_from_relationship_count');
 }
+
+/**
+ * Get the views (and priorities) that extend a view.
+ *
+ * @note extensions may change anytime, especially during the [init, system] event
+ *
+ * @param string $view View name
+ *
+ * @return string[] Keys returned are view priorities.
+ * @since 2.3
+ * @deprecated 7.2
+ */
+function elgg_get_view_extensions(string $view): array {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '7.2');
+	
+	$list = _elgg_services()->views->getViewList($view);
+	unset($list[500]);
+	return $list;
+}

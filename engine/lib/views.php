@@ -198,22 +198,6 @@ function elgg_unextend_view(string $view, string $view_extension): bool {
 }
 
 /**
- * Get the views (and priorities) that extend a view.
- *
- * @note extensions may change anytime, especially during the [init, system] event
- *
- * @param string $view View name
- *
- * @return string[] Keys returned are view priorities.
- * @since 2.3
- */
-function elgg_get_view_extensions(string $view): array {
-	$list = _elgg_services()->views->getViewList($view);
-	unset($list[500]);
-	return $list;
-}
-
-/**
  * Assembles and outputs a full page.
  *
  * A "page" in Elgg is determined by the current view type and
