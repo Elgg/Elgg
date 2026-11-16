@@ -90,3 +90,20 @@ function elgg_admin_notice_exists(string $id): bool {
 	
 	return _elgg_services()->adminNotices->exists($id);
 }
+
+/**
+ * Returns a list of entities by relationship count
+ *
+ * @see elgg_get_entities_from_relationship_count()
+ *
+ * @param array $options Options array
+ *
+ * @return string
+ * @since 1.8.0
+ * @deprecated 7.2
+ */
+function elgg_list_entities_from_relationship_count(array $options): string {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '7.2');
+	
+	return elgg_list_entities($options, 'elgg_get_entities_from_relationship_count');
+}
