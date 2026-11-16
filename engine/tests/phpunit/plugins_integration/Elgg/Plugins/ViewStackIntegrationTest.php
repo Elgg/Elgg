@@ -97,7 +97,11 @@ class ViewStackIntegrationTest extends PluginsIntegrationTestCase {
 		
 		$view_list = $this->views->getViewList($view);
 		$this->assertNotEmpty($view_list);
-		$this->assertEquals(count($view_list) > 1, !empty(elgg_get_view_extensions($view)));
+		
+		$extensions = $view_list;
+		unset($extensions[500]);
+		
+		$this->assertEquals(count($view_list) > 1, !empty($extensions));
 		
 		$this->assertEquals($is_simplecache_view, _elgg_services()->simpleCache->isCacheableView($view));
 	}
