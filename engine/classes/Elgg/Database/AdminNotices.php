@@ -26,7 +26,7 @@ class AdminNotices {
 			return null;
 		}
 		
-		if (elgg_admin_notice_exists($id)) {
+		if ($this->exists($id)) {
 			return null;
 		}
 

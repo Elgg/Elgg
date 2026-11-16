@@ -10,7 +10,8 @@ echo elgg_view('navigation/filter', [
 
 $upgrades = _elgg_services()->upgrades->getPendingUpgrades();
 if (empty($upgrades)) {
-	echo elgg_echo('admin:upgrades:none');
+	echo elgg_view('page/components/no_results', ['no_results' => elgg_echo('admin:upgrades:none')]);
+	
 	return;
 }
 
@@ -33,3 +34,16 @@ echo elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELE
 		'no_results' => elgg_echo('admin:upgrades:none'),
 	]);
 });
+
+/** @var \ElggUpgrade $upgrade */
+foreach ($upgrades as $upgrade) {
+	if ($upgrade->isCompleted()) {
+		continue;
+	}
+	
+	$batch = $upgrade->getBatch();
+	if ($batch instanceof \Elgg\Upgrade\Batch && $batch->shouldBeSkipped()) {
+		// mark skipped upgrades as completed so they only show up once in the pending list
+		$upgrade->setCompleted();
+	}
+}

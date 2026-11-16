@@ -661,8 +661,7 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 	'admin:widget:admin_welcome:intro' => 'Welcome to Elgg! Right now you are looking at the administration dashboard. It\'s useful for tracking what\'s happening on the site.',
 
 	'admin:widget:admin_welcome:registration' => "Registration for new users is currently disabled! You can enabled this on the %s page.",
-	'admin:widget:admin_welcome:admin_overview' => "Navigation for the administration area is provided by the menu to the right. It is organized into
-three sections:
+	'admin:widget:admin_welcome:admin_overview' => "Navigation for the administration area is organized into multiple sections:
 	<dl>
 		<dt>Administer</dt><dd>Basic tasks like managing users, monitoring reported content and activating plugins.</dd>
 		<dt>Configure</dt><dd>Occasional tasks like setting the site name or configuring security preferences.</dd>
@@ -671,8 +670,8 @@ three sections:
 		<dt>Develop</dt><dd>For developers who are building plugins or debugging the site. (Requires a developer plugin.)</dd>
 	</dl>",
 
-	// argh, this is ugly
-	'admin:widget:admin_welcome:outro' => '<br />Be sure to check out the resources available through the footer links and thank you for using Elgg!',
+	'admin:widget:admin_welcome:custom_index' => 'The Front Page Demo plugin is enabled so you can manage your homepage. Configure it here: %s.',
+	'admin:widget:admin_welcome:outro' => 'Be sure to check out the resources available through the footer links and thank you for using Elgg!',
 
 	'admin:widget:control_panel' => 'Control panel',
 	'admin:widget:control_panel:help' => "Provides easy access to common controls",
@@ -1576,6 +1575,7 @@ Once you have logged in, we highly recommend that you change your password.',
 	'upgrade:finished' => 'Upgrade finished',
 	'upgrade:finished_with_errors' => '<p>Upgrade finished with errors. Refresh the page and try running the upgrade again.</p></p><br />If the error recurs, check the server error log for possible cause. You can seek help for fixing the error from the <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> in the Elgg community.</p>',
 	'upgrade:should_be_skipped' => 'No items to upgrade',
+	'upgrade:should_be_skipped:notice' => 'There are no items to upgrade. This upgrade has been marked as completed.',
 	'upgrade:count_items' => '%d items to upgrade',
 	
 	// Strings specific for the database guid columns reply upgrade

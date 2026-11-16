@@ -10,7 +10,7 @@ import system_messages from 'elgg/system_messages';
 import i18n from 'elgg/i18n';
 
 const UNKNOWN_COUNT = -1;
-const upgrades = $('.elgg-item-object-elgg_upgrade');
+const upgrades = $('.elgg-item-object-elgg_upgrade').has('.elgg-progressbar');
 let upgrade;
 let guid;
 let progressbar;
@@ -194,7 +194,7 @@ function processBatch(advanceToNextWhenDone) {
 					return;
 				}
 				
-				upgrade = upgrade.next();
+				upgrade = upgrade.nextAll().has('.elgg-progressbar').first();
 				if (upgrade.length) {
 					// Continue to next upgrade
 					runUpgrade(advanceToNextWhenDone);
@@ -273,7 +273,7 @@ function formatDigits(time) {
 }
 
 // Display the button only if there are pending upgrades
-if ($('.elgg-item-object-elgg_upgrade').length) {
+if (upgrades.length) {
 	$('#elgg-upgrades-run').removeClass('hidden').click(run);
 }
 

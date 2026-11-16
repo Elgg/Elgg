@@ -52,11 +52,6 @@ return [
 			'\Elgg\Cache\EventHandlers::purge' => [],
 		],
 	],
-	'complete' => [
-		'upgrade' => [
-			\Elgg\Upgrade\UpgradeCompletedAdminNoticeHandler::class => [],
-		],
-	],
 	'container_logic_check' => [
 		'all' => [
 			\Elgg\Comments\ContainerLogicHandler::class => [],
@@ -83,7 +78,6 @@ return [
 		'object' => [
 			\Elgg\Comments\AutoSubscribeHandler::class => [],
 			\Elgg\Notifications\Events\CreateContent::class => [],
-			\Elgg\Upgrade\CreateAdminNoticeHandler::class => [],
 		],
 		'river' => [
 			\Elgg\Comments\UpdateRiverLastActionHandler::class => [],

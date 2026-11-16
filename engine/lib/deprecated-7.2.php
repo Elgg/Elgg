@@ -1,18 +1,6 @@
 <?php
 /**
- * Elgg admin functions.
- *
- * Admin pages
- * Plugins no not need to provide their own page handler to add a page to the
- * admin area. A view placed at admin/<section>/<subsection> can be access
- * at http://example.org/admin/<section>/<subsection>. The title of the page
- * will be elgg_echo('admin:<section>:<subsection>').
- *
- * Admin notices
- * System messages (success and error messages) are used in both the main site
- * and the admin area. There is a special presistent message for the admin area
- * called an admin notice. It should be used when a plugin requires an
- * administrator to take an action. @see elgg_add_admin_notice()
+ * Bundle all functions which have been deprecated in Elgg 7.2
  */
 
 /**
@@ -22,11 +10,14 @@
  *
  * @return mixed Array of admin users or false on failure. If a count, returns int.
  * @since 1.8.0
+ * @deprecated 7.2 Use elgg_get_entities()
  */
 function elgg_get_admins(array $options = []) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg_get_entities().', '7.2');
+	
 	$options['type'] = 'user';
 	$options['metadata_name_value_pairs'] = elgg_extract('metadata_name_value_pairs', $options, []);
-	
+
 	$options['metadata_name_value_pairs']['admin'] = 'yes';
 
 	return elgg_get_entities($options);
@@ -47,8 +38,11 @@ function elgg_get_admins(array $options = []) {
  *
  * @return ElggAdminNotice|null
  * @since 1.8.0
+ * @deprecated 7.2
  */
 function elgg_add_admin_notice(string $id, string $message): ?\ElggAdminNotice {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '7.2');
+	
 	return _elgg_services()->adminNotices->add($id, $message);
 }
 
@@ -59,8 +53,11 @@ function elgg_add_admin_notice(string $id, string $message): ?\ElggAdminNotice {
  *
  * @return bool
  * @since 1.8.0
+ * @deprecated 7.2
  */
 function elgg_delete_admin_notice(string $id): bool {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '7.2');
+	
 	return _elgg_services()->adminNotices->delete($id);
 }
 
@@ -71,8 +68,11 @@ function elgg_delete_admin_notice(string $id): bool {
  *
  * @return \ElggObject[]|int|mixed Admin notices
  * @since 1.8.0
+ * @deprecated 7.2
  */
 function elgg_get_admin_notices(array $options = []) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '7.2');
+	
 	return _elgg_services()->adminNotices->find($options);
 }
 
@@ -83,7 +83,10 @@ function elgg_get_admin_notices(array $options = []) {
  *
  * @return bool
  * @since 1.8.0
+ * @deprecated 7.2
  */
 function elgg_admin_notice_exists(string $id): bool {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated.', '7.2');
+	
 	return _elgg_services()->adminNotices->exists($id);
 }

@@ -97,7 +97,9 @@ class RemoveAdminUser extends NonConfigurableNotificationEventHandler {
 		
 		if (_elgg_services()->config->security_notify_admins) {
 			// add the current site admins to the subscribers
-			$admin_batch = elgg_get_admins([
+			$admin_batch = elgg_get_entities([
+				'type' => 'user',
+				'metadata_name_value_pairs' => ['admin' => 'yes'],
 				'limit' => false,
 				'wheres' => [
 					function (QueryBuilder $qb, $main_alias) use ($user) {

@@ -33,15 +33,6 @@ foreach ($plugin_guids as $guid) {
 		continue;
 	}
 	
-	$ids = [
-		'cannot_start' . $plugin->getID(),
-		'invalid_and_deactivated_' . $plugin->getID()
-	];
-
-	foreach ($ids as $id) {
-		elgg_delete_admin_notice($id);
-	}
-	
 	$activated_plugins[] = $plugin;
 }
 

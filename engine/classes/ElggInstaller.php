@@ -625,16 +625,6 @@ class ElggInstaller {
 	 * @return \Elgg\Http\ResponseBuilder
 	 */
 	protected function runComplete(): \Elgg\Http\ResponseBuilder {
-
-		// nudge to check out settings
-		$link = elgg_view_url(elgg_normalize_url('admin/site_settings'), elgg_echo('install:complete:admin_notice:link_text'));
-		$notice = elgg_format_element('p', [], elgg_echo('install:complete:admin_notice', [$link]));
-
-		$custom_index_link = elgg_view_url(elgg_normalize_url('admin/plugin_settings/custom_index'), elgg_echo('admin:plugin_settings'));
-		$notice .= elgg_format_element('p', [], elgg_echo('install:complete:admin_notice:custom_index', [$custom_index_link]));
-
-		elgg_add_admin_notice('fresh_install', $notice);
-
 		$result = $this->render('complete');
 
 		elgg_delete_directory(Paths::sanitize(sys_get_temp_dir()) . 'elgginstaller/');
@@ -1462,7 +1452,6 @@ class ElggInstaller {
 			}
 
 			// Wo don't need to run upgrades on new installations
-			$app->internal_services->events->unregisterHandler('create:after', 'object', \Elgg\Upgrade\CreateAdminNoticeHandler::class);
 			$upgrades = $app->internal_services->upgradeLocator->locate();
 			foreach ($upgrades as $upgrade) {
 				$upgrade->setCompleted();

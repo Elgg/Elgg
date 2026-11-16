@@ -74,7 +74,9 @@ trait Testing {
 	public function getAdmin() {
 		$admin = $this->_testing_admin;
 		if (!$admin) {
-			$admins = elgg_get_admins([
+			$admins = elgg_get_entities([
+				'type' => 'user',
+				'metadata_name_value_pairs' => ['admin' => 'yes'],
 				'limit' => 1,
 				'order_by' => 'e.time_created ASC',
 			]);
