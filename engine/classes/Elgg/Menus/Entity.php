@@ -275,6 +275,11 @@ class Entity {
 		if (!$entity instanceof \ElggUpgrade || !$entity->canEdit()) {
 			return;
 		}
+
+		$batch = $entity->getBatch();
+		if (!$batch instanceof Batch || $batch->shouldBeSkipped()) {
+			return;
+		}
 		
 		/* @var $return MenuItems */
 		$result = $event->getValue();
@@ -292,19 +297,15 @@ class Entity {
 				'priority' => 600,
 			]);
 		} else {
-			$batch = $entity->getBatch();
-			if ($batch instanceof Batch && !$batch->shouldBeSkipped()) {
-				// only show reset if it will have an effect
-				$result[] = \ElggMenuItem::factory([
-					'name' => 'reset',
-					'icon' => 'sync',
-					'text' => elgg_echo('reset'),
-					'href' => elgg_generate_action_url('admin/upgrade/reset', [
-						'guid' => $entity->guid,
-					]),
-					'priority' => 600,
-				]);
-			}
+			$result[] = \ElggMenuItem::factory([
+				'name' => 'reset',
+				'icon' => 'sync',
+				'text' => elgg_echo('reset'),
+				'href' => elgg_generate_action_url('admin/upgrade/reset', [
+					'guid' => $entity->guid,
+				]),
+				'priority' => 600,
+			]);
 		}
 		
 		return $result;

@@ -9,7 +9,7 @@ if (!elgg_is_admin_logged_in() || !elgg_in_context('admin')) {
 	return;
 }
 
-$count = elgg_get_admin_notices([
+$count = _elgg_services()->adminNotices->find([
 	'count' => true,
 ]);
 
@@ -28,7 +28,7 @@ if ($count > 5) {
 	]);
 }
 
-$notices = elgg_get_admin_notices([
+$notices = _elgg_services()->adminNotices->find([
 	'limit' => 5,
 ]);
 

@@ -15,13 +15,13 @@ class AdminNoticesIntegrationTest extends ActionResponseTestCase {
 
 	public function testDeletesSingleAdminNotice() {
 
-		elgg_delete_admin_notice('zen');
+		_elgg_services()->adminNotices->delete('zen');
 
-		$notice = elgg_add_admin_notice('zen', 'Maybe the forces of the universe be with you');
+		$notice = _elgg_services()->adminNotices->add('zen', 'Maybe the forces of the universe be with you');
 		$this->assertInstanceOf(\ElggAdminNotice::class, $notice);
 		$this->assertEquals('zen', $notice->admin_notice_id);
 
-		$this->assertTrue(elgg_admin_notice_exists('zen'));
+		$this->assertTrue(_elgg_services()->adminNotices->exists('zen'));
 
 		$response = $this->executeAction('entity/delete', [
 			'guid' => $notice->guid,
@@ -29,17 +29,17 @@ class AdminNoticesIntegrationTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(OkResponse::class, $response);
 
-		$this->assertFalse(elgg_admin_notice_exists('zen'));
+		$this->assertFalse(_elgg_services()->adminNotices->exists('zen'));
 	}
 
 	public function testDeletesBatchAdminNotices() {
 
-		elgg_add_admin_notice('zen1', 'Maybe the forces of the universe be with you');
-		elgg_add_admin_notice('zen2', 'Maybe the forces of the universe be with you');
-		elgg_add_admin_notice('zen3', 'Maybe the forces of the universe be with you');
+		_elgg_services()->adminNotices->add('zen1', 'Maybe the forces of the universe be with you');
+		_elgg_services()->adminNotices->add('zen2', 'Maybe the forces of the universe be with you');
+		_elgg_services()->adminNotices->add('zen3', 'Maybe the forces of the universe be with you');
 
 		$count_zens = function() {
-			return elgg_get_admin_notices([
+			return _elgg_services()->adminNotices->find([
 				'metadata_name_value_pairs' => [
 					'name' => 'admin_notice_id',
 					'value' => 'zen%',

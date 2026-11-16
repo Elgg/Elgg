@@ -24,8 +24,6 @@ class UpgradeIntegrationTest extends ActionResponseTestCase {
 	}
 
 	public function testUpgradeSucceeds() {
-		elgg_delete_admin_notice('pending_upgrades');
-
 		$batch = new UpgradeTestBatch();
 		$version = $batch->getVersion();
 
@@ -33,8 +31,6 @@ class UpgradeIntegrationTest extends ActionResponseTestCase {
 		$upgrade->class = UpgradeTestBatch::class;
 		$upgrade->id = "test_plugin:{$version}";
 		$upgrade->save();
-
-		$this->assertTrue(elgg_admin_notice_exists('pending_upgrades'));
 
 		$response = $this->executeAction('admin/upgrade', [
 			'guid' => $upgrade->guid,
@@ -50,8 +46,5 @@ class UpgradeIntegrationTest extends ActionResponseTestCase {
 		], $response->getContent());
 
 		$this->assertTrue($upgrade->isCompleted());
-		if (!_elgg_services()->upgrades->getPendingUpgrades()) {
-			$this->assertFalse(elgg_admin_notice_exists('pending_upgrades'));
-		}
 	}
 }

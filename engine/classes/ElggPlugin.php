@@ -13,6 +13,8 @@ use Elgg\Traits\Loggable as ElggLoggable;
 /**
  * Plugin class containing helper functions for plugin activation/deactivation,
  * dependency checking capabilities and (user)pluginsettings.
+ *
+ * @property string $last_error_message If the plugin has been auto-disabled this metadata holds the last error message
  */
 class ElggPlugin extends ElggObject {
 
@@ -559,7 +561,7 @@ class ElggPlugin extends ElggObject {
 		if ($return === false) {
 			$this->deactivate();
 		} else {
-			elgg_delete_admin_notice("cannot_start {$this->getID()}");
+			unset($this->last_error_message);
 
 			elgg_invalidate_caches();
 			_elgg_services()->logger->notice("Plugin {$this->getID()} has been activated");
