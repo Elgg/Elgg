@@ -2,8 +2,12 @@
 
 namespace Elgg\Database;
 
+use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\ParameterType;
 use Elgg\Exceptions\DomainException;
 use Elgg\UnitTestCase;
+use Elgg\Values;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class QueryBuilderUnitTest extends UnitTestCase {
 
@@ -53,6 +57,84 @@ class QueryBuilderUnitTest extends UnitTestCase {
 		$this->assertNotEquals($key1, $key2);
 		$this->assertEquals(1, $this->qb->getParameter(ltrim($key1,':')));
 		$this->assertEquals([1, 2], $this->qb->getParameter(ltrim($key2,':')));
+	}
+	
+	#[DataProvider('parameterTypeProvider')]
+	public function testParameterTypeConversion(mixed $value, string $type, mixed $expected_value, mixed $expected_type) {
+		$key = $this->qb->param($value, $type);
+		
+		$this->assertEquals($expected_value, $this->qb->getParameter(ltrim($key, ':')));
+		$this->assertEquals($expected_type, $this->qb->getParameterType(ltrim($key, ':')));
+	}
+	
+	public static function parameterTypeProvider() {
+		return [
+			// GUIDs
+			[0, ELGG_VALUE_GUID, 0, ParameterType::INTEGER],
+			[1, ELGG_VALUE_GUID, 1, ParameterType::INTEGER],
+			[[1], ELGG_VALUE_GUID, 1, ParameterType::INTEGER],
+			['1234', ELGG_VALUE_GUID, 1234, ParameterType::INTEGER],
+			[['1234'], ELGG_VALUE_GUID, 1234, ParameterType::INTEGER],
+			[[1, 234], ELGG_VALUE_GUID, [1, 234], ArrayParameterType::INTEGER],
+			[[1, '234'], ELGG_VALUE_GUID, [1, 234], ArrayParameterType::INTEGER],
+			[['1', 234], ELGG_VALUE_GUID, [1, 234], ArrayParameterType::INTEGER],
+			// IDs
+			[0, ELGG_VALUE_ID, 0, ParameterType::INTEGER],
+			[1, ELGG_VALUE_ID, 1, ParameterType::INTEGER],
+			[[1], ELGG_VALUE_ID, 1, ParameterType::INTEGER],
+			['1234', ELGG_VALUE_ID, 1234, ParameterType::INTEGER],
+			[['1234'], ELGG_VALUE_ID, 1234, ParameterType::INTEGER],
+			[[1, 234], ELGG_VALUE_ID, [1, 234], ArrayParameterType::INTEGER],
+			[[1, '234'], ELGG_VALUE_ID, [1, 234], ArrayParameterType::INTEGER],
+			[['1', 234], ELGG_VALUE_ID, [1, 234], ArrayParameterType::INTEGER],
+			// ints
+			[0, ELGG_VALUE_INTEGER, 0, ParameterType::INTEGER],
+			[1, ELGG_VALUE_INTEGER, 1, ParameterType::INTEGER],
+			[[1], ELGG_VALUE_INTEGER, 1, ParameterType::INTEGER],
+			['1234', ELGG_VALUE_INTEGER, 1234, ParameterType::INTEGER],
+			[['1234'], ELGG_VALUE_INTEGER, 1234, ParameterType::INTEGER],
+			[[1, 234], ELGG_VALUE_INTEGER, [1, 234], ArrayParameterType::INTEGER],
+			[[1, '234'], ELGG_VALUE_INTEGER, [1, 234], ArrayParameterType::INTEGER],
+			[['1', 234], ELGG_VALUE_INTEGER, [1, 234], ArrayParameterType::INTEGER],
+			// booleans
+			[0, ELGG_VALUE_BOOL, 0, ParameterType::INTEGER],
+			[1, ELGG_VALUE_BOOL, 1, ParameterType::INTEGER],
+			[false, ELGG_VALUE_BOOL, 0, ParameterType::INTEGER],
+			[true, ELGG_VALUE_BOOL, 1, ParameterType::INTEGER],
+			[[0], ELGG_VALUE_BOOL, 0, ParameterType::INTEGER],
+			[[1], ELGG_VALUE_BOOL, 1, ParameterType::INTEGER],
+			[[false], ELGG_VALUE_BOOL, 0, ParameterType::INTEGER],
+			[[true], ELGG_VALUE_BOOL, 1, ParameterType::INTEGER],
+			['1234', ELGG_VALUE_BOOL, 1, ParameterType::INTEGER],
+			[['1234'], ELGG_VALUE_BOOL, 1, ParameterType::INTEGER],
+			[[1, 234], ELGG_VALUE_BOOL, [1, 1], ArrayParameterType::INTEGER],
+			[[1, '234'], ELGG_VALUE_BOOL, [1, 1], ArrayParameterType::INTEGER],
+			[['1', 234], ELGG_VALUE_BOOL, [1, 1], ArrayParameterType::INTEGER],
+			[[0, 1], ELGG_VALUE_BOOL, [0, 1], ArrayParameterType::INTEGER],
+			[[true, true], ELGG_VALUE_BOOL, [1, 1], ArrayParameterType::INTEGER],
+			[[false, false], ELGG_VALUE_BOOL, [0, 0], ArrayParameterType::INTEGER],
+			[[true, false], ELGG_VALUE_BOOL, [1, 0], ArrayParameterType::INTEGER],
+			// strings
+			[0, ELGG_VALUE_STRING, '0', ParameterType::STRING],
+			[1, ELGG_VALUE_STRING, '1', ParameterType::STRING],
+			[[1], ELGG_VALUE_STRING, '1', ParameterType::STRING],
+			['1234', ELGG_VALUE_STRING, '1234', ParameterType::STRING],
+			[['1234'], ELGG_VALUE_STRING, '1234', ParameterType::STRING],
+			[[1, 234], ELGG_VALUE_STRING, ['1', '234'], ArrayParameterType::STRING],
+			[[1, '234'], ELGG_VALUE_STRING, ['1', '234'], ArrayParameterType::STRING],
+			[['1', 234], ELGG_VALUE_STRING, ['1', '234'], ArrayParameterType::STRING],
+			// timestamps
+			[0, ELGG_VALUE_TIMESTAMP, 0, ParameterType::INTEGER],
+			[1, ELGG_VALUE_TIMESTAMP, 1, ParameterType::INTEGER],
+			[[1], ELGG_VALUE_TIMESTAMP, 1, ParameterType::INTEGER],
+			['1234', ELGG_VALUE_TIMESTAMP, 1234, ParameterType::INTEGER],
+			[['1234'], ELGG_VALUE_TIMESTAMP, 1234, ParameterType::INTEGER],
+			[[1, 234], ELGG_VALUE_TIMESTAMP, [1, 234], ArrayParameterType::INTEGER],
+			[[1, '234'], ELGG_VALUE_TIMESTAMP, [1, 234], ArrayParameterType::INTEGER],
+			[['1', 234], ELGG_VALUE_TIMESTAMP, [1, 234], ArrayParameterType::INTEGER],
+			['today', ELGG_VALUE_TIMESTAMP, Values::normalizeTimestamp('today'), ParameterType::INTEGER],
+			[['today', 'tomorrow'], ELGG_VALUE_TIMESTAMP, [Values::normalizeTimestamp('today'), Values::normalizeTimestamp('tomorrow')], ArrayParameterType::INTEGER],
+		];
 	}
 
 	public function testCanJoinEntitiesTableWithAlias() {
