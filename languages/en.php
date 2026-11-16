@@ -589,6 +589,7 @@ Since Elgg has a lot of file access this will negatively impact performance. Als
 	'admin:upgrades:run' => 'Run upgrades now',
 	'admin:upgrades:error:invalid_upgrade' => 'Entity %s does not exist or not a valid instance of ElggUpgrade',
 	'admin:upgrades:error:invalid_batch' => 'Batch runner for the upgrade %s (%s) could not be instantiated',
+	'admin:upgrades:error:completed' => 'This upgrade was already completed',
 	'admin:upgrades:completed' => 'Upgrade "%s" completed at %s',
 	'admin:upgrades:completed:errors' => 'Upgrade "%s" completed at %s but encountered %s errors',
 	'admin:upgrades:failed' => 'Upgrade "%s" failed',
