@@ -1,6 +1,6 @@
 <?php
 
-$batch = elgg_get_admin_notices([
+$batch = _elgg_services()->adminNotices->find([
 	'limit' => false,
 	'batch' => true,
 	'batch_inc_offset' => false,

@@ -576,12 +576,11 @@ class Plugins {
 			$id = $plugin->getID();
 			$plugin->deactivate();
 
-			$msg = $this->translator->translate(
-				'PluginException:CannotStart',
-				[$id, $plugin->guid, $previous->getMessage()]
-			);
-
-			elgg_add_admin_notice("cannot_start {$id}", $msg);
+			$plugin->last_error_message = $this->translator->translate('PluginException:CannotStart', [
+				$id,
+				$plugin->guid,
+				$previous->getMessage(),
+			]);
 		} catch (PluginException $ex) {
 			$this->getLogger()->log(LogLevel::ERROR, $ex, [
 				'context' => [

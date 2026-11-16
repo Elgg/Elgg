@@ -4,8 +4,19 @@ From 7.1 to 7.2
 .. contents:: Contents
    :local:
    :depth: 1
+   
+Admin notices
+-------------
+
+The admin notices feature has been deprecated and will be removed in the next major version. Notices have been replaced
+with alternative ways of communicating information to admins. Plugin developers that rely on admin notice features to
+communicate with administrators should also change to alternative ways of communicating.
 
 Deprecated APIs
 ---------------
 
+* ``elgg_add_admin_notice()``
+* ``elgg_admin_notice_exists()``
+* ``elgg_delete_admin_notice()``
+* ``elgg_get_admin_notices()``
 * ``elgg_get_admins()`` use ``elgg_get_entities()``

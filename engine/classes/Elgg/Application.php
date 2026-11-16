@@ -723,7 +723,6 @@ class Application {
 			'events.php',
 			'access.php',
 			'actions.php',
-			'admin.php',
 			'annotations.php',
 			'breadcrumbs.php',
 			'cache.php',

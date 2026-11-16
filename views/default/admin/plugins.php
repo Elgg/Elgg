@@ -9,10 +9,8 @@
 
 elgg_import_esm('admin/plugins');
 
-$list_only = (bool) elgg_extract('list_only', $vars, false);
 $active_filter = elgg_strtolower(get_input('filter', 'all'));
 
-// @todo this should occur in the controller code
 _elgg_services()->plugins->generateEntities();
 
 $installed_plugins = elgg_get_plugins('all');
@@ -32,10 +30,26 @@ $plugins_list .= elgg_format_element('div', ['id' => 'elgg-plugin-list-cover']);
 
 elgg_pop_context();
 
-if ($list_only) {
+if ((bool) elgg_extract('list_only', $vars, false)) {
 	echo $plugins_list;
 	return;
 }
+
+elgg_register_menu_item('title', [
+	'name' => 'activate-all',
+	'href' => elgg_generate_action_url('admin/plugins/activate_all'),
+	'text' => elgg_echo('admin:plugins:activate_all'),
+	'link_class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
+	'data-desired-state' => 'active',
+]);
+
+elgg_register_menu_item('title', [
+	'name' => 'deactivate-all',
+	'href' => elgg_generate_action_url('admin/plugins/deactivate_all'),
+	'text' => elgg_echo('admin:plugins:deactivate_all'),
+	'link_class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
+	'data-desired-state' => 'inactive',
+]);
 
 $categories = [];
 
@@ -47,7 +61,7 @@ foreach ($installed_plugins as $plugin) {
 					// force disable and warn
 					$plugin->deactivate();
 					
-					elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(), elgg_echo('ElggPlugin:InvalidAndDeactivated', [$plugin->getID()]));
+					elgg_register_error_message(elgg_echo('ElggPlugin:InvalidAndDeactivated', [$plugin->getID()]));
 				} catch (\Elgg\Exceptions\PluginException $e) {
 					// do nothing
 				}
@@ -63,21 +77,6 @@ foreach ($installed_plugins as $plugin) {
 echo elgg_view('admin/plugins/categories', [
 	'categories' => $categories,
 	'active_filter' => $active_filter,
-]);
-
-elgg_register_menu_item('title', [
-	'name' => 'activate-all',
-	'href' => elgg_generate_action_url('admin/plugins/activate_all'),
-	'text' => elgg_echo('admin:plugins:activate_all'),
-	'link_class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
-	'data-desired-state' => 'active',
-]);
-elgg_register_menu_item('title', [
-	'name' => 'deactivate-all',
-	'href' => elgg_generate_action_url('admin/plugins/deactivate_all'),
-	'text' => elgg_echo('admin:plugins:deactivate_all'),
-	'link_class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
-	'data-desired-state' => 'inactive',
 ]);
 
 echo elgg_format_element('div', ['id' => 'elgg-plugin-list'], $plugins_list);

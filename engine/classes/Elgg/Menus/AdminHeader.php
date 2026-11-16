@@ -168,9 +168,16 @@ class AdminHeader {
 			'parent_name' => 'administer',
 		]);
 		
+		$unfinished_upgrades_count = elgg_count_entities([
+			'type' => 'object',
+			'subtype' => 'elgg_upgrade',
+			'metadata_name_value_pairs' => ['is_completed' => false],
+		]);
+		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'upgrades',
 			'text' => elgg_echo('admin:upgrades'),
+			'badge' => $unfinished_upgrades_count ?: null,
 			'href' => 'admin/upgrades',
 			'priority' => 600,
 			'parent_name' => 'administer',
