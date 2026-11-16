@@ -50,7 +50,7 @@ class BootHandler {
 
 		if (!$this->app->internal_services->db) {
 			// no database boot!
-			elgg_views_boot();
+			$this->registerViews();
 			$this->app->internal_services->session->start();
 			$this->app->internal_services->translator->bootTranslations();
 
@@ -88,7 +88,9 @@ class BootHandler {
 
 		$events = $this->app->internal_services->events;
 
-		$events->registerHandler('plugins_load:before', 'system', 'elgg_views_boot');
+		$events->registerHandler('plugins_load:before', 'system', function() {
+			$this->registerViews();
+		});
 		$events->registerHandler('plugins_load:after', 'system', function() {
 			$this->app->internal_services->session->boot();
 		});
@@ -142,6 +144,43 @@ class BootHandler {
 		$events->triggerSequence('ready', 'system');
 
 		$this->app->setBootStatus('application_boot_completed', true);
+	}
+
+	/**
+	 * Initialize views
+	 *
+	 * @return void
+	 */
+	protected function registerViews(): void {
+		$views = $this->app->internal_services->views;
+		$simple_cache = $this->app->internal_services->simpleCache;
+		$esm = $this->app->internal_services->esm;
+		$external_files = $this->app->internal_services->externalFiles;
+		
+		$views->registerCoreViews();
+
+		$external_files->register('css', 'font-awesome', $simple_cache->getUrl('font-awesome/css/all.min.css'), 'head');
+		$external_files->load('css', 'font-awesome');
+
+		$views->extendView('elgg.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
+		$views->extendView('elgg.css', 'entity/edit/icon/crop.css');
+
+		$external_files->register('css', 'elgg', $simple_cache->getUrl('elgg.css'), 'head');
+		$external_files->load('css', 'elgg');
+
+		$esm->register('cropperjs', $simple_cache->getUrl('cropperjs/cropper.esm.js'));
+		$esm->register('jquery', $simple_cache->getUrl('elgg/jquery.mjs'));
+		$esm->register('jquery-ui', $simple_cache->getUrl('jquery-ui.js'));
+		$esm->register('jquery-cropper/jquery-cropper', $simple_cache->getUrl('jquery-cropper/jquery-cropper.esm.js'));
+
+		$esm->import('elgg');
+		$esm->import('elgg/lightbox');
+		$esm->import('elgg/security');
+
+		$views->extendView('jquery-ui.js', 'jquery.ui.touch-punch.js');
+		$views->extendView('initialize_elgg.js', 'elgg/prevent_clicks.js', 1);
+
+		$this->app->internal_services->ajax->registerView('languages.js');
 	}
 
 	/**
