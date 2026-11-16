@@ -10,7 +10,7 @@ echo elgg_view('navigation/filter', [
 
 $upgrades = _elgg_services()->upgrades->getPendingUpgrades();
 if (empty($upgrades)) {
-	echo elgg_view('page/components/no_results', ['no_results' => elgg_echo('admin:upgrades:none')]);
+	echo elgg_view_no_results(elgg_echo('admin:upgrades:none'));
 	
 	return;
 }
