@@ -97,34 +97,6 @@ function elgg_get_user_by_email(string $email): ?\ElggUser {
 }
 
 /**
- * Generate and send a password request email to a given user's registered email address.
- *
- * @param \ElggUser $user the user to notify
- *
- * @return void
- *
- * @since 4.3
- */
-function elgg_request_new_password(\ElggUser $user): void {
-	_elgg_services()->passwords->requestNewPassword($user);
-}
-
-/**
- * Validate and change password for a user.
- *
- * @param \ElggUser   $user      The user
- * @param string      $conf_code Confirmation code as sent in the request email.
- * @param null|string $password  Optional new password, if not randomly generated.
- *
- * @return bool
- *
- * @since 4.3
- */
-function elgg_save_new_password(\ElggUser $user, string $conf_code, ?string $password = null): bool {
-	return _elgg_services()->passwords->saveNewPassword($user, $conf_code, $password);
-}
-
-/**
  * Generate a random 16 character clear text password.
  *
  * @return string

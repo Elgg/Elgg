@@ -32,20 +32,6 @@ function elgg_get_entities_from_relationship_count(array $options = []) {
 }
 
 /**
- * Returns a list of entities by relationship count
- *
- * @see elgg_get_entities_from_relationship_count()
- *
- * @param array $options Options array
- *
- * @return string
- * @since 1.8.0
- */
-function elgg_list_entities_from_relationship_count(array $options): string {
-	return elgg_list_entities($options, 'elgg_get_entities_from_relationship_count');
-}
-
-/**
  * Fetch relationships or perform a calculation on them
  *
  * Accepts all options supported by {@link elgg_get_entities()}

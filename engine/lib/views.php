@@ -198,22 +198,6 @@ function elgg_unextend_view(string $view, string $view_extension): bool {
 }
 
 /**
- * Get the views (and priorities) that extend a view.
- *
- * @note extensions may change anytime, especially during the [init, system] event
- *
- * @param string $view View name
- *
- * @return string[] Keys returned are view priorities.
- * @since 2.3
- */
-function elgg_get_view_extensions(string $view): array {
-	$list = _elgg_services()->views->getViewList($view);
-	unset($list[500]);
-	return $list;
-}
-
-/**
  * Assembles and outputs a full page.
  *
  * A "page" in Elgg is determined by the current view type and
@@ -1344,39 +1328,6 @@ function _elgg_has_rss_link(): bool {
 	}
 
 	return (bool) _elgg_services()->config->_elgg_autofeed;
-}
-
-/**
- * Initialize viewtypes on system boot event
- * This ensures simplecache is cleared during upgrades. See #2252
- *
- * @return void
- * @internal
- */
-function elgg_views_boot(): void {
-	_elgg_services()->views->registerCoreViews();
-
-	elgg_register_external_file('css', 'font-awesome', elgg_get_simplecache_url('font-awesome/css/all.min.css'));
-	elgg_load_external_file('css', 'font-awesome');
-
-	elgg_extend_view('elgg.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
-	elgg_extend_view('elgg.css', 'entity/edit/icon/crop.css');
-	
-	elgg_require_css('elgg');
-	
-	elgg_register_esm('cropperjs', elgg_get_simplecache_url('cropperjs/cropper.esm.js'));
-	elgg_register_esm('jquery', elgg_get_simplecache_url('elgg/jquery.mjs'));
-	elgg_register_esm('jquery-ui', elgg_get_simplecache_url('jquery-ui.js'));
-	elgg_register_esm('jquery-cropper/jquery-cropper', elgg_get_simplecache_url('jquery-cropper/jquery-cropper.esm.js'));
-	
-	elgg_import_esm('elgg');
-	elgg_import_esm('elgg/lightbox');
-	elgg_import_esm('elgg/security');
-
-	elgg_extend_view('jquery-ui.js', 'jquery.ui.touch-punch.js');
-	elgg_extend_view('initialize_elgg.js', 'elgg/prevent_clicks.js', 1);
-
-	elgg_register_ajax_view('languages.js');
 }
 
 /**

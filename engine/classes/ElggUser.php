@@ -380,7 +380,7 @@ class ElggUser extends \ElggEntity {
 	 * @since 1.10.0
 	 */
 	public function setPassword(string $password): void {
-		$this->setMetadata('password_hash', _elgg_services()->passwords->generateHash($password));
+		$this->setMetadata('password_hash', password_hash($password, PASSWORD_DEFAULT));
 		if ($this->guid === elgg_get_logged_in_user_guid()) {
 			// update the session user token, so this session remains valid
 			// other sessions for this user will be invalidated

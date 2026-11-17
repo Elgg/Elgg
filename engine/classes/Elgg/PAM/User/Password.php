@@ -32,21 +32,20 @@ class Password {
 				throw new LoginException(_elgg_services()->translator->translate('LoginException:UsernameFailure'));
 			}
 			
-			$password_svc = _elgg_services()->passwords;
-			$password = (string) $credentials['password'];
-			$hash = (string) $user->password_hash;
-			
 			if (elgg_is_authentication_failure_limit_reached($user)) {
 				throw new LoginException(_elgg_services()->translator->translate('LoginException:AccountLocked'));
 			}
 			
-			if (!$password_svc->verify($password, $hash)) {
+			$password = (string) $credentials['password'];
+			$hash = (string) $user->password_hash;
+			
+			if (!password_verify($password, $hash)) {
 				elgg_register_authentication_failure($user);
 				
 				throw new LoginException(_elgg_services()->translator->translate('LoginException:PasswordFailure'));
 			}
 			
-			if ($password_svc->needsRehash($hash)) {
+			if (password_needs_rehash($hash, PASSWORD_DEFAULT)) {
 				$user->setPassword($password);
 			}
 			

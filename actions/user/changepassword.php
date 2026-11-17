@@ -22,9 +22,31 @@ if ($password !== $password_repeat) {
 }
 
 $user = get_user($user_guid);
-if (!$user instanceof \ElggUser || !elgg_save_new_password($user, $code, $password)) {
+if (!$user instanceof \ElggUser) {
 	return elgg_error_response(elgg_echo('user:changepassword:unknown_user'));
 }
+
+$saved_code = $user->passwd_conf_code;
+$codes_match = _elgg_services()->crypto->areEqual($saved_code, $code);
+
+if (!$saved_code || !$codes_match) {
+	return elgg_error_response(elgg_echo('user:changepassword:unknown_user'));
+}
+
+// Discard for security if it is 24h old
+$code_time = (int) $user->passwd_conf_time;
+if (!$code_time || $code_time < time() - 24 * 60 * 60) {
+	return elgg_error_response(elgg_echo('user:changepassword:unknown_user'));
+}
+
+elgg()->accounts->changePassword($user, $password);
+
+unset($user->passwd_conf_code);
+unset($user->passwd_conf_time);
+
+$user->notify('changepassword', $user, [
+	'password' => $password,
+]);
 
 try {
 	elgg_login($user);

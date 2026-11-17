@@ -9,7 +9,6 @@ use Elgg\EventsService;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\I18n\Translator;
-use Elgg\PasswordService;
 use Elgg\PersistentLoginService;
 use Elgg\Validation\ValidationResults;
 use Symfony\Component\Mime\Address;
@@ -24,7 +23,6 @@ class Accounts {
 	 *
 	 * @param Config                 $config          Config
 	 * @param Translator             $translator      Translator
-	 * @param PasswordService        $passwords       Passwords
 	 * @param EventsService          $events          Events service
 	 * @param EmailService           $email           Email service
 	 * @param PersistentLoginService $persistentLogin Persistent login service
@@ -32,7 +30,6 @@ class Accounts {
 	public function __construct(
 		protected Config $config,
 		protected Translator $translator,
-		protected PasswordService $passwords,
 		protected EventsService $events,
 		protected EmailService $email,
 		protected PersistentLoginService $persistentLogin,
@@ -294,7 +291,7 @@ class Accounts {
 	 * @throws RegistrationException
 	 */
 	public function assertCurrentPassword(\ElggUser $user, string $password): void {
-		if (!$this->passwords->verify($password, $user->password_hash)) {
+		if (!password_verify($password, $user->password_hash)) {
 			throw new RegistrationException($this->translator->translate('LoginException:PasswordFailure'));
 		}
 	}
@@ -467,5 +464,6 @@ class Accounts {
 	public function changePassword(\ElggUser $user, string $password): void {
 		$user->setPassword($password);
 		$this->persistentLogin->handlePasswordChange($user);
+		$this->resetAuthenticationFailures($user);
 	}
 }
