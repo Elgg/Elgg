@@ -10,10 +10,7 @@
  * @property-read string $name Name of the cookie
  */
 class ElggCookie {
-	
-	/** @var string */
-	private $name;
-	
+
 	/** @var string */
 	public $value = '';
 	
@@ -37,8 +34,7 @@ class ElggCookie {
 	 *
 	 * @param string $name The name of the cookie.
 	 */
-	public function __construct($name) {
-		$this->name = $name;
+	public function __construct(protected string $name) {
 	}
 
 	/**
@@ -62,7 +58,7 @@ class ElggCookie {
 	 * @param string $time A time string appropriate for strtotime()
 	 * @return void
 	 */
-	public function setExpiresTime($time) {
+	public function setExpiresTime($time): void {
 		$this->expire = strtotime($time);
 	}
 }

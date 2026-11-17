@@ -11,26 +11,6 @@ use Elgg\Database\QueryBuilder;
 class JoinClause extends Clause {
 
 	/**
-	 * @var string
-	 */
-	public $joined_table;
-
-	/**
-	 * @var string
-	 */
-	public $joined_alias;
-
-	/**
-	 * @var CompositeExpression|\Closure|string
-	 */
-	public $condition;
-
-	/**
-	 * @var string
-	 */
-	public $join_type;
-
-	/**
 	 * Constructor
 	 *
 	 * @param string                              $joined_table Table to join
@@ -38,11 +18,7 @@ class JoinClause extends Clause {
 	 * @param CompositeExpression|\Closure|string $condition    On expression
 	 * @param string                              $join_type    Join type INNER|LEFT|RIGHT
 	 */
-	public function __construct($joined_table, $joined_alias = null, $condition = null, $join_type = 'inner') {
-		$this->joined_table = $joined_table;
-		$this->joined_alias = $joined_alias;
-		$this->condition = $condition;
-		$this->join_type = $join_type;
+	public function __construct(public $joined_table, public $joined_alias = null, public $condition = null, public $join_type = 'inner') {
 	}
 
 	/**

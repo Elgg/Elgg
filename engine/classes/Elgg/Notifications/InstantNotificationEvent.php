@@ -22,27 +22,13 @@ class InstantNotificationEvent implements NotificationEvent {
 	protected $action;
 
 	/**
-	 * @var \ElggData Action's object
-	 */
-	protected $object;
-
-	/**
-	 * @var \ElggEntity User who triggered the event
-	 */
-	protected $actor;
-
-	/**
 	 * Constructor
 	 *
 	 * @param \ElggData|null   $object The object of the event (ElggEntity)
-	 * @param string|null      $action The name of the action (default: create)
+	 * @param string|null      $action The name of the action (default: notify_user)
 	 * @param \ElggEntity|null $actor  The entity that caused the event (default: logged in user)
 	 */
-	public function __construct(?\ElggData $object = null, ?string $action = null, ?\ElggEntity $actor = null) {
-
-		$this->object = $object;
-
-		$this->actor = $actor;
+	public function __construct(protected ?\ElggData $object = null, ?string $action = null, protected ?\ElggEntity $actor = null) {
 		if (!isset($actor)) {
 			$this->actor = _elgg_services()->session_manager->getLoggedInUser();
 		}

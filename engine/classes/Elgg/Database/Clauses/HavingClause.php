@@ -11,17 +11,11 @@ use Elgg\Database\QueryBuilder;
 class HavingClause extends Clause {
 
 	/**
-	 * @var \Closure|CompositeExpression|string
-	 */
-	public $expr;
-
-	/**
 	 * Constructor
 	 *
 	 * @param CompositeExpression|\Closure|string $expr Expression
 	 */
-	public function __construct($expr) {
-		$this->expr = $expr;
+	public function __construct(public $expr) {
 	}
 
 	/**
