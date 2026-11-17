@@ -13,11 +13,6 @@ use Elgg\Exceptions\InvalidArgumentException;
 class WidgetDefinition {
 
 	/**
-	 * @var string Identifier of the widget
-	 */
-	public $id;
-
-	/**
 	 * @var string Readable name of the widget
 	 */
 	public $name;
@@ -49,12 +44,10 @@ class WidgetDefinition {
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct($id) {
+	public function __construct(public $id) {
 		if (empty($id)) {
 			throw new InvalidArgumentException('"id" missing for ' . __CLASS__);
 		}
-		
-		$this->id = $id;
 	}
 	
 	/**

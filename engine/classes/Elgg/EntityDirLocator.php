@@ -20,11 +20,6 @@ class EntityDirLocator {
 	 * Number of entries per matrix dir. DO NOT CHANGE!
 	 */
 	const BUCKET_SIZE = 5000;
-	
-	/**
-	 * @var int
-	 */
-	protected $guid;
 
 	/**
 	 * Find an entity's data dir.
@@ -33,12 +28,10 @@ class EntityDirLocator {
 	 *
 	 * @throws RangeException
 	 */
-	public function __construct(int $guid) {
+	public function __construct(protected int $guid) {
 		if ($guid < 1) {
 			throw new RangeException('"guid" must be greater than 0');
 		}
-
-		$this->guid = $guid;
 	}
 	
 	/**

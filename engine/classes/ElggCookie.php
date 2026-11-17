@@ -11,34 +11,24 @@
  */
 class ElggCookie {
 	
-	/** @var string */
-	private $name;
+	public string $value = '';
 	
-	/** @var string */
-	public $value = '';
+	public int $expire = 0;
 	
-	/** @var int */
-	public $expire = 0;
+	public string $path = '/';
 	
-	/** @var string */
-	public $path = '/';
+	public string $domain = '';
 	
-	/** @var string */
-	public $domain = '';
+	public bool $secure = false;
 	
-	/** @var bool */
-	public $secure = false;
-	
-	/** @var bool */
-	public $httpOnly = false;
+	public bool $httpOnly = false;
 	
 	/**
 	 * Constructor
 	 *
 	 * @param string $name The name of the cookie.
 	 */
-	public function __construct($name) {
-		$this->name = $name;
+	public function __construct(protected string $name) {
 	}
 
 	/**
@@ -62,7 +52,7 @@ class ElggCookie {
 	 * @param string $time A time string appropriate for strtotime()
 	 * @return void
 	 */
-	public function setExpiresTime($time) {
+	public function setExpiresTime($time): void {
 		$this->expire = strtotime($time);
 	}
 }

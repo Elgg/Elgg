@@ -50,13 +50,6 @@ class Application {
 	use Loggable;
 
 	/**
-	 * @var InternalContainer
-	 *
-	 * @internal DO NOT USE
-	 */
-	public $internal_services;
-
-	/**
 	 * @var PublicContainer
 	 *
 	 * @internal DO NOT USE
@@ -115,8 +108,7 @@ class Application {
 	 *
 	 * @param InternalContainer $internal_services Elgg internal services
 	 */
-	public function __construct(InternalContainer $internal_services) {
-		$this->internal_services = $internal_services;
+	public function __construct(public InternalContainer $internal_services) {
 		$this->public_services = PublicContainer::factory();
 	}
 

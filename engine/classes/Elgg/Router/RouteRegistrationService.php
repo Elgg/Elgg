@@ -195,9 +195,7 @@ class RouteRegistrationService {
 		if (!in_array($access, $access_levels)) {
 			throw new DomainException("Unrecognized value '{$access}' for \$access in " . __METHOD__);
 		}
-
-		// plugins are encouraged to call actions with a trailing / to prevent 301
-		// redirects but we store the actions without it
+		
 		$action = trim($action, '/');
 
 		if (empty($handler)) {

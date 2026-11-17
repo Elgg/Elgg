@@ -9,41 +9,6 @@ namespace Elgg\Notifications;
  */
 #[\AllowDynamicProperties]
 class Notification {
-	
-	/**
-	 * @var \ElggEntity The entity causing or creating the notification
-	 */
-	protected $from;
-
-	/**
-	 * @var \ElggEntity The user receiving the notification
-	 */
-	protected $to;
-
-	/**
-	 * @var string A single sentence summary string
-	 */
-	public $summary;
-
-	/**
-	 * @var string The subject of the notification. Email subject is one use.
-	 */
-	public $subject;
-
-	/**
-	 * @var string The body of the notification. Email body is one use.
-	 */
-	public $body;
-
-	/**
-	 * @var string The language of the notification
-	 */
-	public $language;
-
-	/**
-	 * @var array Additional parameters
-	 */
-	public $params;
 
 	/**
 	 * @var string Target URL
@@ -61,15 +26,15 @@ class Notification {
 	 * @param string      $summary  Optional summary of the notification
 	 * @param array       $params   Optional array of parameters
 	 */
-	public function __construct(\ElggEntity $from, \ElggEntity $to, $language, $subject, $body, $summary = '', array $params = []) {
-		$this->from = $from;
-		$this->to = $to;
-		$this->language = $language;
-		$this->subject = $subject;
-		$this->body = $body;
-		$this->summary = $summary;
-		$this->params = $params;
-
+	public function __construct(
+		protected \ElggEntity $from,
+		protected \ElggEntity $to,
+		public $language,
+		public $subject,
+		public $body,
+		public $summary = '',
+		public array $params = []
+	) {
 		if (isset($this->params['url'])) {
 			$this->url = $this->params['url'];
 		}

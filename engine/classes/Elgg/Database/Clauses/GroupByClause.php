@@ -9,19 +9,13 @@ use Elgg\Database\QueryBuilder;
  * Extends QueryBuilder with GROUP BY statements
  */
 class GroupByClause extends Clause {
-
-	/**
-	 * @var \Closure|CompositeExpression|string
-	 */
-	public $expr;
-
+	
 	/**
 	 * Constructor
 	 *
 	 * @param CompositeExpression|\Closure|string $expr Expression
 	 */
-	public function __construct($expr) {
-		$this->expr = $expr;
+	public function __construct(public $expr) {
 	}
 
 	/**
