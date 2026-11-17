@@ -14,12 +14,7 @@ class UnpreparedMenu {
 	/**
 	 * @var MenuItems
 	 */
-	private $items;
-
-	/**
-	 * @var array
-	 */
-	private $params;
+	protected $items;
 
 	/**
 	 * Constructor
@@ -28,9 +23,7 @@ class UnpreparedMenu {
 	 *                                          Must include value for "name".
 	 * @param \ElggMenuItem[]|MenuItems $items  Menu items
 	 */
-	public function __construct(array $params, $items) {
-		$this->params = $params;
-
+	public function __construct(protected array $params, $items) {
 		if (is_array($items)) {
 			$items = new MenuItems($items);
 		}

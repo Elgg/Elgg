@@ -22,17 +22,11 @@ class ElggSession {
 	use Profilable;
 
 	/**
-	 * @var SessionInterface
-	 */
-	protected $storage;
-
-	/**
 	 * Constructor
 	 *
 	 * @param SessionInterface $storage The underlying Session implementation
 	 */
-	public function __construct(SessionInterface $storage) {
-		$this->storage = $storage;
+	public function __construct(protected SessionInterface $storage) {
 	}
 	
 	/**
