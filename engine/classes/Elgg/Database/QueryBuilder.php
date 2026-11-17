@@ -150,13 +150,15 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 
 		switch ($type) {
 			case ELGG_VALUE_GUID:
-				$value = Values::normalizeGuids($value);
 				$type = ParameterType::INTEGER;
+				
+				$value = Values::normalizeGuids($value);
 				
 				break;
 			case ELGG_VALUE_ID:
-				$value = Values::normalizeIds($value);
 				$type = ParameterType::INTEGER;
+				
+				$value = Values::normalizeIds($value);
 				
 				break;
 			case ELGG_VALUE_INTEGER:
@@ -165,7 +167,14 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 				break;
 			case ELGG_VALUE_BOOL:
 				$type = ParameterType::INTEGER;
-				$value = (int) $value;
+				
+				if (!is_array($value)) {
+					$value = [$value];
+				}
+				
+				$value = array_map(function($temp_value) {
+					return (int) (bool) $temp_value;
+				}, $value);
 				
 				break;
 			case ELGG_VALUE_STRING:
@@ -173,9 +182,13 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 				
 				break;
 			case ELGG_VALUE_TIMESTAMP:
-				$value = Values::normalizeTimestamp($value);
 				$type = ParameterType::INTEGER;
 				
+				if (!is_array($value)) {
+					$value = [$value];
+				}
+				
+				$value = array_map('\Elgg\Values::normalizeTimestamp', $value);
 				break;
 		}
 		
