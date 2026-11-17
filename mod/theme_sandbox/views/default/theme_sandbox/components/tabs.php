@@ -8,7 +8,10 @@ echo elgg_view('page/components/tabs', [
 		],
 		'ajax' => [
 			'text' => 'Ajax [selected]',
-			'href' => 'ajax/view/theme_sandbox/components/tabs/ajax',
+			'href' => elgg_generate_url('ajax', [
+				'type' => 'view',
+				'segments' => 'theme_sandbox/components/tabs/ajax',
+			]),
 			'selected' => true,
 			'data-ajax-reload' => false,
 			'data-ajax-query' => json_encode([
@@ -26,7 +29,10 @@ echo elgg_view('page/components/tabs', [
 		],
 		'ajax2' => [
 			'text' => 'Ajax [data-ajax-reload]',
-			'href' => 'ajax/view/theme_sandbox/components/tabs/ajax',
+			'href' => elgg_generate_url('ajax', [
+				'type' => 'view',
+				'segments' => 'theme_sandbox/components/tabs/ajax',
+			]),
 			'data-ajax-reload' => true,
 			'data-ajax-query' => json_encode([
 				'content' => 'This tab reloads every time you click on it',
@@ -35,7 +41,10 @@ echo elgg_view('page/components/tabs', [
 		'ajax3' => [
 			'text' => 'Ajax [data-ajax-href]',
 			'href' => elgg_generate_url('default:river'),
-			'data-ajax-href' => 'ajax/view/theme_sandbox/components/tabs/ajax',
+			'data-ajax-href' => elgg_generate_url('ajax', [
+				'type' => 'view',
+				'segments' => 'theme_sandbox/components/tabs/ajax',
+			]),
 			'data-ajax-reload' => false,
 			'data-ajax-query' => json_encode([
 				'content' => 'If you right click on the tab and open it in a new tab, you will end up on the activity page',
@@ -43,7 +52,10 @@ echo elgg_view('page/components/tabs', [
 		],
 		'callback' => [
 			'text' => 'Click Me',
-			'href' => 'ajax/view/theme_sandbox/components/tabs/ajax',
+			'href' => elgg_generate_url('ajax', [
+				'type' => 'view',
+				'segments' => 'theme_sandbox/components/tabs/ajax',
+			]),
 			'data-ajax-query' => json_encode([
 				'content' => 'This tab has events attached to it.',
 			]),
