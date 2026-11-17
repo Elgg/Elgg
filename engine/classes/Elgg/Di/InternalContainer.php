@@ -17,7 +17,6 @@ use Psr\Container\ContainerInterface;
  *
  * @property-read \Elgg\Database\AccessCollections                       $accessCollections
  * @property-read \Elgg\Cache\AccessCache                                $accessCache
- * @property-read \Elgg\ActionsService                                   $actions
  * @property-read \Elgg\Users\Accounts                                   $accounts
  * @property-read \Elgg\Database\AdminNotices                            $adminNotices
  * @property-read \Elgg\Ajax\Service                                     $ajax

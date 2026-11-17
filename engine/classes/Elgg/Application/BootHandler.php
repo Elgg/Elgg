@@ -279,7 +279,7 @@ class BootHandler {
 			unset($action_spec['controller']);
 			unset($action_spec['filename']);
 			
-			$this->app->internal_services->actions->register($action, $handler, $access, $action_spec);
+			$this->app->internal_services->routes->registerAction($action, $handler, $access, $action_spec);
 		}
 	}
 }

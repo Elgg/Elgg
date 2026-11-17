@@ -66,7 +66,18 @@ class AdminHeader {
 			'parent_name' => 'develop',
 		]);
 		
-		$inspect_options = self::getInspectOptions();
+		$inspect_options = [
+			'Events' => elgg_echo('developers:inspect:events'),
+			'Menus' => elgg_echo('developers:inspect:menus'),
+			'Notifications' => elgg_echo('developers:inspect:notifications'),
+			'Routes' => elgg_echo('developers:inspect:routes'),
+			'Seeders' => elgg_echo('developers:inspect:seeders'),
+			'Services' => elgg_echo('developers:inspect:services'),
+			'Simple Cache' => elgg_echo('developers:inspect:simplecache'),
+			'Views' => elgg_echo('developers:inspect:views'),
+			'Widgets' => elgg_echo('developers:inspect:widgets'),
+		];
+		
 		foreach ($inspect_options as $key => $value) {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'dev_inspect_' . elgg_get_friendly_title($key),
@@ -80,29 +91,5 @@ class AdminHeader {
 		}
 		
 		return $return;
-	}
-	
-	/**
-	 * Get the available inspect options
-	 *
-	 * @return array
-	 */
-	protected static function getInspectOptions(): array {
-		$options = [
-			'Actions' => elgg_echo('developers:inspect:actions'),
-			'Events' => elgg_echo('developers:inspect:events'),
-			'Menus' => elgg_echo('developers:inspect:menus'),
-			'Notifications' => elgg_echo('developers:inspect:notifications'),
-			'Routes' => elgg_echo('developers:inspect:routes'),
-			'Seeders' => elgg_echo('developers:inspect:seeders'),
-			'Services' => elgg_echo('developers:inspect:services'),
-			'Simple Cache' => elgg_echo('developers:inspect:simplecache'),
-			'Views' => elgg_echo('developers:inspect:views'),
-			'Widgets' => elgg_echo('developers:inspect:widgets'),
-		];
-		
-		ksort($options);
-		
-		return $options;
 	}
 }

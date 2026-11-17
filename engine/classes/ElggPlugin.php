@@ -937,7 +937,7 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 */
 	protected function registerActions(): void {
-		$actions = _elgg_services()->actions;
+		$routes = _elgg_services()->routes;
 		$root_path = $this->getPath();
 
 		$spec = (array) $this->getStaticConfig('actions', []);
@@ -961,7 +961,7 @@ class ElggPlugin extends ElggObject {
 			unset($action_spec['controller']);
 			unset($action_spec['filename']);
 
-			$actions->register($action, $handler, $access, $action_spec);
+			$routes->registerAction($action, $handler, $access, $action_spec);
 		}
 	}
 
