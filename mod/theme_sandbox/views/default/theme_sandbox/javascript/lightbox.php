@@ -2,7 +2,10 @@
 
 echo elgg_view('output/url', [
 	'text' => 'Open lightbox',
-	'href' => 'ajax/view/theme_sandbox/demo/ajax',
+	'href' => elgg_generate_url('ajax', [
+		'type' => 'view',
+		'segments' => 'theme_sandbox/demo/ajax',
+	]),
 	'class' => 'elgg-lightbox'
 ]);
 

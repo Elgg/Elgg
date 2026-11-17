@@ -26,10 +26,13 @@ class Footer {
 		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'report_this',
-			'href' => 'ajax/form/reportedcontent/add',
-			'title' => elgg_echo('reportedcontent:this:tooltip'),
-			'text' => elgg_echo('reportedcontent:this'),
 			'icon' => 'exclamation-triangle',
+			'text' => elgg_echo('reportedcontent:this'),
+			'href' => elgg_generate_url('ajax', [
+				'type' => 'form',
+				'segments' => 'reportedcontent/add',
+			]),
+			'title' => elgg_echo('reportedcontent:this:tooltip'),
 			'priority' => 500,
 			'link_class' => 'elgg-lightbox',
 			'deps' => 'elgg/reportedcontent',

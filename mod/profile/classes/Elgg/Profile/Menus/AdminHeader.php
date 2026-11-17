@@ -57,7 +57,9 @@ class AdminHeader {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'configure_utilities:profile_fields',
 			'text' => elgg_echo('admin:configure_utilities:profile_fields'),
-			'href' => 'admin/configure_utilities/profile_fields',
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'configure_utilities/profile_fields',
+			]),
 			'parent_name' => 'utilities',
 		]);
 		

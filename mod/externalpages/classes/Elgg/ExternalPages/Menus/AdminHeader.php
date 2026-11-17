@@ -28,7 +28,9 @@ class AdminHeader {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'configure_utilities:external_pages',
 			'text' => elgg_echo('collection:object:external_page'),
-			'href' => 'admin/configure_utilities/external_pages',
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'configure_utilities/external_pages',
+			]),
 			'parent_name' => 'utilities',
 		]);
 	
