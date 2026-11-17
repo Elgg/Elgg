@@ -243,7 +243,7 @@ class UpgradeService {
 					'limit' => false,
 					'batch' => true,
 				]);
-				/* @var $upgrade \ElggUpgrade */
+				/** @var \ElggUpgrade $upgrade */
 				foreach ($upgrades as $upgrade) {
 					$batch = $upgrade->getBatch();
 					if (!$batch) {

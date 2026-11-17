@@ -328,7 +328,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
-		/* @var $object \ElggObject */
+		/** @var \ElggObject $object */
 		$object = $event->getObject();
 		$container = $object->getContainerEntity();
 		$this->assertTrue($container->addSubscription($user->guid, 'apples'));
@@ -349,7 +349,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
-		/* @var $object \ElggObject */
+		/** @var \ElggObject $object */
 		$object = $event->getObject();
 		$container = $object->getContainerEntity();
 		$this->assertTrue($container->addSubscription($user->guid, 'apples'));
@@ -370,7 +370,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
-		/* @var $object \ElggObject */
+		/** @var \ElggObject $object */
 		$object = $event->getObject();
 		$container = $object->getContainerEntity();
 		$this->assertTrue($container->addSubscription($user->guid, 'apples'));
@@ -397,7 +397,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
-		/* @var $object \ElggObject */
+		/** @var \ElggObject $object */
 		$object = $event->getObject();
 		$container = $object->getContainerEntity();
 		$this->assertTrue($container->addSubscription($user->guid, 'apples'));
@@ -417,7 +417,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
-		/* @var $object \ElggObject */
+		/** @var \ElggObject $object */
 		$object = $event->getObject();
 		$owner = $object->getOwnerEntity();
 		$this->assertTrue($owner->addSubscription($user->guid, 'apples'));
@@ -435,7 +435,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
-		/* @var $object \ElggObject */
+		/** @var \ElggObject $object */
 		$object = $event->getObject();
 		$container = $object->getContainerEntity();
 		$this->assertTrue($container->addSubscription($user->guid, 'apples'));
@@ -453,7 +453,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		
 		$event = $this->getSubscriptionNotificationEvent();
 		
-		/* @var $object \ElggObject */
+		/** @var \ElggObject $object */
 		$object = $event->getObject();
 		$this->assertTrue($object->addSubscription($user->guid, 'apples'));
 		
@@ -471,7 +471,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$user = $this->createUser();
 		$actor = $event->getActor();
 		
-		/* @var $object \ElggObject */
+		/** @var \ElggObject $object */
 		$object = $event->getObject();
 		$container = $object->getContainerEntity();
 		$this->assertTrue($container->addSubscription($actor->guid, 'apples'));
@@ -492,7 +492,7 @@ class SubscriptionServiceIntegrationTest extends IntegrationTestCase {
 		$user1 = $this->createUser();
 		$user2 = $this->createUser();
 		
-		/* @var $object \ElggObject */
+		/** @var \ElggObject $object */
 		$object = $event->getObject();
 		$container = $object->getContainerEntity();
 		

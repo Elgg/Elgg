@@ -25,7 +25,7 @@ class UserHover {
 			return;
 		}
 		
-		/* @var $return \Elgg\Menu\MenuItems */
+		/** @var \Elgg\Menu\MenuItems $return */
 		$return = $event->getValue();
 		
 		$menu_items = _elgg_friends_get_add_friend_menu_items($user);

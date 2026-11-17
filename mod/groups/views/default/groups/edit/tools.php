@@ -13,7 +13,7 @@ if ($entity instanceof \ElggGroup) {
 	$tools = elgg()->group_tools->all();
 }
 
-/* @var $tools \Elgg\Groups\Tool[] */
+/** @var \Elgg\Groups\Tool[] $tools */
 $tools = $tools->sort(function (\Elgg\Groups\Tool $a, \Elgg\Groups\Tool $b) {
 	return strcmp($a->getLabel(), $b->getLabel());
 })->all();

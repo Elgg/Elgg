@@ -47,7 +47,7 @@ class EditAction extends \Elgg\Controllers\EntityEditAction {
 					'batch_inc_offset' => false,
 				]);
 				
-				/* @var $child \ElggPage */
+				/** @var \ElggPage $child */
 				foreach ($children as $child) {
 					$child->setParentByGUID($previous_parent);
 				}

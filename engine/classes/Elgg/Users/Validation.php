@@ -138,7 +138,7 @@ class Validation {
 		}
 		
 		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($days) {
-			/* @var $users \ElggBatch */
+			/** @var \ElggBatch $users */
 			$users = elgg_get_entities([
 				'type' => 'user',
 				'metadata_name_value_pairs' => [
@@ -150,7 +150,7 @@ class Validation {
 				'batch_inc_offset' => false,
 			]);
 			
-			/* @var $user \ElggUser */
+			/** @var \ElggUser $user */
 			foreach ($users as $user) {
 				if (!$user->delete()) {
 					// make sure the batch skips over the failed user in the next iteration

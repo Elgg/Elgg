@@ -1,7 +1,7 @@
 <?php
 
 elgg_register_event_handler('ajax_results', 'action:theme_sandbox/ajax_demo', function(\Elgg\Event $event) {
-	/* @var $results \stdClass */
+	/** @var \stdClass $results */
 	$results = $event->getValue();
 	
 	// check data added by client event

@@ -5,7 +5,7 @@
  * @uses $vars['entity'] the plugin entity
  */
 
-/* @var $plugin ElggPlugin */
+/** @var ElggPlugin $plugin */
 $plugin = elgg_extract('entity', $vars);
 
 $authentication = elgg_view('output/longtext', [

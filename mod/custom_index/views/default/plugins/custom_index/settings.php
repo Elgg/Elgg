@@ -1,6 +1,6 @@
 <?php
 
-/* @var $custom_index \ElggPlugin */
+/** @var \ElggPlugin $custom_index */
 $custom_index = elgg_extract('entity', $vars);
 
 echo elgg_view_field([

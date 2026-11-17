@@ -8,7 +8,7 @@ if (empty($user_guids)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
-/* @var $users \ElggBatch */
+/** @var \ElggBatch $users */
 $users = elgg_get_entities([
 	'type' => 'user',
 	'guids' => $user_guids,
@@ -20,7 +20,7 @@ $users = elgg_get_entities([
 	],
 ]);
 
-/* @var $user \ElggUser */
+/** @var \ElggUser $user */
 $count = 0;
 foreach ($users as $user) {
 	if ($user->guid === elgg_get_logged_in_user_guid()) {

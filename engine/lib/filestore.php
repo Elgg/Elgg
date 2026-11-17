@@ -59,7 +59,7 @@ function elgg_delete_directory(string $directory, bool $leave_base_directory = f
 	}
 	
 	$dh = new \DirectoryIterator($directory);
-	/* @var $file_info \DirectoryIterator */
+	/** @var \DirectoryIterator $file_info */
 	foreach ($dh as $file_info) {
 		if ($file_info->isDot()) {
 			continue;

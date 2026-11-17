@@ -25,7 +25,7 @@ class Seeder extends Seed {
 
 		while ($this->getCount() < $this->limit) {
 			try {
-				/* @var $blog \ElggBlog */
+				/** @var \ElggBlog $blog */
 				$blog = $this->createObject([
 					'subtype' => 'blog',
 					'status' => 'published', // so seeding comments works
@@ -75,7 +75,7 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
-		/* @var $blogs \ElggBatch */
+		/** @var \ElggBatch $blogs */
 		$blogs = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'blog',
@@ -85,7 +85,7 @@ class Seeder extends Seed {
 			'batch_inc_offset' => false,
 		]);
 
-		/* @var $blog \ElggBlog */
+		/** @var \ElggBlog $blog */
 		foreach ($blogs as $blog) {
 			if ($blog->delete()) {
 				$this->log("Deleted blog {$blog->guid}");

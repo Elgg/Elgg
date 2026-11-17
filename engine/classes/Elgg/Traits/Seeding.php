@@ -186,7 +186,7 @@ trait Seeding {
 				$user->setNotificationSetting('site', true);
 
 				$profile_fields = elgg_extract('profile_fields', $options, []);
-				/* @var $user \ElggUser */
+				/** @var \ElggUser $user */
 				$user = $this->populateMetadata($user, $profile_fields, $properties);
 
 				$user->save();
@@ -295,7 +295,7 @@ trait Seeding {
 			}
 
 			$tool_options = elgg_extract('group_tool_options', $options, []);
-			/* @var $tool_options Collection|Tool[] */
+			/** @var Collection|Tool[] $tool_options */
 
 			foreach ($tool_options as $group_option) {
 				$prop_name = $group_option->mapMetadataName();

@@ -41,12 +41,12 @@ class RemoveIcontime extends SystemUpgrade {
 	 * {@inheritdoc}
 	 */
 	public function run(Result $result, $offset): Result {
-		/* @var $metadata \ElggBatch */
+		/** @var \ElggBatch $metadata */
 		$metadata = elgg_get_metadata($this->getOptions([
 			'offset' => $offset,
 		]));
 		
-		/* @var $md \ElggMetadata */
+		/** @var \ElggMetadata $md */
 		foreach ($metadata as $md) {
 			if (!$md->delete()) {
 				$metadata->reportFailure();

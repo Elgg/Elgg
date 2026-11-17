@@ -9,7 +9,7 @@ if (!elgg_get_config('trash_enabled')) {
 	throw new PageNotFoundException();
 }
 
-/* @var $user \ElggUser */
+/** @var \ElggUser $user */
 $user = elgg_get_page_owner_entity();
 
 $title = elgg_echo('trash:owner:title');

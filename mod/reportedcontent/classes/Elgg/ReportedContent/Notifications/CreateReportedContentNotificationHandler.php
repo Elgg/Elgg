@@ -35,7 +35,7 @@ class CreateReportedContentNotificationHandler extends NonConfigurableNotificati
 		]);
 		
 		$subscriptions = [];
-		/* @var $admin \ElggUser */
+		/** @var \ElggUser $admin */
 		foreach ($admins as $admin) {
 			$settings = $admin->getNotificationSettings('reportedcontent', true);
 			if (empty($settings)) {

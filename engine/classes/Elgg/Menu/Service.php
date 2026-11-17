@@ -162,9 +162,9 @@ class Service {
 			}
 		};
 		
-		/* @var $section MenuSection */
+		/** @var MenuSection $section */
 		foreach ($menu as $section) {
-			/* @var $menu_item \ElggMenuItem */
+			/** @var \ElggMenuItem $menu_item */
 			foreach ($section as $menu_item) {
 				$prepare($menu_item);
 			}
@@ -261,9 +261,9 @@ class Service {
 			}
 		};
 		
-		/* @var $section MenuSection */
+		/** @var MenuSection $section */
 		foreach ($menu as $section) {
-			/* @var $menu_item \ElggMenuItem */
+			/** @var \ElggMenuItem $menu_item */
 			foreach ($section as $menu_item) {
 				$prepare($menu_item);
 			}
@@ -294,7 +294,7 @@ class Service {
 		foreach ($names as $name) {
 			$items = $this->getUnpreparedMenu($name, $params)->getItems();
 
-			/* @var $item \ElggMenuItem */
+			/** @var \ElggMenuItem $item */
 			foreach ($items as $item) {
 				$section = $item->getSection();
 				if ($section === 'default') {

@@ -28,7 +28,7 @@ class ProfileAdmin {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		// get the admin section of the user_hover menu
@@ -38,7 +38,7 @@ class ProfileAdmin {
 		]);
 		
 		$add_admin_toggle = false;
-		/* @var $menu_item \ElggMenuItem */
+		/** @var \ElggMenuItem $menu_item */
 		foreach ($user_hover->getItems() as $menu_item) {
 			if ($menu_item->getSection() !== 'admin') {
 				continue;

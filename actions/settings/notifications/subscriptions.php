@@ -26,7 +26,7 @@ $targets = elgg_get_entities([
 	'batch' => true,
 ]);
 
-/* @var $target \ElggEntity */
+/** @var \ElggEntity $target */
 foreach ($targets as $target) {
 	$keys = $subscriptions[$target->guid];
 	

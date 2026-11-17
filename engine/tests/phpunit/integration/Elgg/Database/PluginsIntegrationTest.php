@@ -18,7 +18,7 @@ class PluginsIntegrationTest extends IntegrationTestCase {
 		$this->backup_plugins = [];
 		
 		$plugins = $this->getAllPlugins();
-		/* @var $plugin \ElggPlugin */
+		/** @var \ElggPlugin $plugin */
 		foreach ($plugins as $plugin) {
 			$this->backup_plugins[$plugin->guid] = [
 				'priority' => $plugin->getPriority(),
@@ -39,7 +39,7 @@ class PluginsIntegrationTest extends IntegrationTestCase {
 	public function down() {
 		elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_IGNORE_ACCESS | ELGG_DISABLE_SYSTEM_LOG, function() {
 			$plugins = $this->getAllPlugins();
-			/* @var $plugin \ElggPlugin */
+			/** @var \ElggPlugin $plugin */
 			foreach ($plugins as $plugin) {
 				if (!isset($this->backup_plugins[$plugin->guid])) {
 					// testing plugin, should be removed

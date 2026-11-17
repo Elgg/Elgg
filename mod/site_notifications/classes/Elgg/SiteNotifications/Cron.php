@@ -38,7 +38,7 @@ class Cron {
 	 * @return void
 	 */
 	public static function cleanupSiteNotificationsWithRemovedLinkedEntities(\Elgg\Event $event): void {
-		/* @var $cron_logger \Elgg\Logger\Cron */
+		/** @var \Elgg\Logger\Cron $cron_logger */
 		$cron_logger = $event->getParam('logger');
 		
 		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES | ELGG_DISABLE_SYSTEM_LOG, function() {
@@ -46,7 +46,7 @@ class Cron {
 			$max_runtime = 120; // 2 minutes
 			$start_time = microtime(true);
 			
-			/* @var $batch \ElggBatch */
+			/** @var \ElggBatch $batch */
 			$batch = elgg_get_entities([
 				'type' => 'object',
 				'subtype' => 'site_notification',
@@ -69,7 +69,7 @@ class Cron {
 				'batch_size' => 100,
 			]);
 			
-			/* @var $entity \ElggEntity */
+			/** @var \ElggEntity $entity */
 			foreach ($batch as $entity) {
 				if (!$entity->delete(true, true)) {
 					$batch->reportFailure();
@@ -104,7 +104,7 @@ class Cron {
 			return;
 		}
 		
-		/* @var $cron_logger \Elgg\Logger\Cron */
+		/** @var \Elgg\Logger\Cron $cron_logger */
 		$cron_logger = $event->getParam('logger');
 		
 		$max_runtime = static::CLEANUP_MAX_DURATION[$event->getType()];
@@ -113,7 +113,7 @@ class Cron {
 			$count = 0;
 			$start_time = microtime(true);
 			
-			/* @var $batch \ElggBatch */
+			/** @var \ElggBatch $batch */
 			$batch = elgg_get_entities([
 				'type' => 'object',
 				'subtype' => 'site_notification',
@@ -171,7 +171,7 @@ class Cron {
 			return;
 		}
 		
-		/* @var $cron_logger \Elgg\Logger\Cron */
+		/** @var \Elgg\Logger\Cron $cron_logger */
 		$cron_logger = $event->getParam('logger');
 		
 		$max_runtime = static::CLEANUP_MAX_DURATION[$event->getType()];
@@ -180,7 +180,7 @@ class Cron {
 			$count = 0;
 			$start_time = microtime(true);
 			
-			/* @var $batch \ElggBatch */
+			/** @var \ElggBatch $batch */
 			$batch = elgg_get_entities([
 				'type' => 'object',
 				'subtype' => 'site_notification',

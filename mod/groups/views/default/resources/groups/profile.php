@@ -2,7 +2,7 @@
 
 elgg_register_rss_link();
 
-/* @var $group ElggGroup */
+/** @var ElggGroup $group */
 $group = elgg_get_page_owner_entity();
 
 elgg_push_context('group_profile');

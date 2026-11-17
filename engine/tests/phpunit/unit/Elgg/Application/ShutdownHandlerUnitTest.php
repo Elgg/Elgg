@@ -49,7 +49,7 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 		]);
 
 		$db = $app->internal_services->db;
-		/* @var $db \Elgg\Mocks\Database */
+		/** @var \Elgg\Mocks\Database $db */
 
 		$db->addQuerySpec([
 			'sql' => $qb->getSQL(),

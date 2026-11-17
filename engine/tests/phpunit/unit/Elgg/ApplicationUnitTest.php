@@ -241,7 +241,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
 		ob_start();
 		$response = $app->upgrade();
-		/* @var $response \Symfony\Component\HttpFoundation\RedirectResponse */
+		/** @var \Symfony\Component\HttpFoundation\RedirectResponse $response */
 
 		$output = ob_get_clean();
 
@@ -263,7 +263,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
 		ob_start();
 		$response = $app->upgrade();
-		/* @var $response \Symfony\Component\HttpFoundation\RedirectResponse */
+		/** @var \Symfony\Component\HttpFoundation\RedirectResponse $response */
 
 		$output = ob_get_clean();
 
@@ -309,7 +309,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
 		ob_start();
 		$response = $app->index();
-		/* @var $response \Symfony\Component\HttpFoundation\BinaryFileResponse */
+		/** @var \Symfony\Component\HttpFoundation\BinaryFileResponse $response */
 		$output = ob_get_clean();
 
 		$this->assertInstanceOf(BinaryFileResponse::class, $response);

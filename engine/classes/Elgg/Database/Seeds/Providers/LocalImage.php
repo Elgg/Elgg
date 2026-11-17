@@ -32,7 +32,7 @@ class LocalImage extends Image {
 		
 		// read files in folder
 		$dir = new \DirectoryIterator($local_folder);
-		/* @var $file \SplFileInfo */
+		/** @var \SplFileInfo $file */
 		foreach ($dir as $file) {
 			if (!$file->isFile()) {
 				continue;

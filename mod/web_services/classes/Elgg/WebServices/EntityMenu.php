@@ -25,7 +25,7 @@ class EntityMenu {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$edit = $return->get('edit');

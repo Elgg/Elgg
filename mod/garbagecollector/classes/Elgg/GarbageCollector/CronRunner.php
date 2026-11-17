@@ -20,7 +20,7 @@ class CronRunner {
 			return;
 		}
 		
-		/* @var $cron_logger \Elgg\Logger\Cron */
+		/** @var \Elgg\Logger\Cron $cron_logger */
 		$cron_logger = $event->getParam('logger');
 		
 		// Now, because we are nice, trigger an event to let other plugins do some GC

@@ -46,7 +46,7 @@ class MigrateEntities extends AsynchronousUpgrade {
 	public function run(Result $result, $offset): Result {
 		$batch = elgg_get_entities($this->getOptions(['offset' => $offset]));
 
-		/* @var $entity \ElggEntity */
+		/** @var \ElggEntity $entity */
 		foreach ($batch as $entity) {
 			$entity->title = $entity->getSubtype();
 			

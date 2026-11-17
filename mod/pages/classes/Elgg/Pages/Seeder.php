@@ -20,7 +20,7 @@ class Seeder extends Seed {
 
 		$create_page = function () {
 			try {
-				/* @var $age \ElggPage */
+				/** @var \ElggPage $age */
 				$page = $this->createObject([
 					'subtype' => 'page',
 					'write_access_id' => ACCESS_LOGGED_IN,
@@ -70,7 +70,7 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
-		/* @var $pages \ElggBatch */
+		/** @var \ElggBatch $pages */
 		$pages = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'page',
@@ -80,7 +80,7 @@ class Seeder extends Seed {
 			'batch_inc_offset' => false,
 		]);
 
-		/* @var $page \ElggPage */
+		/** @var \ElggPage $page */
 		foreach ($pages as $page) {
 			if ($page->delete()) {
 				$this->log("Deleted page {$page->guid}");

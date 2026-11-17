@@ -24,7 +24,7 @@ class Entity {
 			return;
 		}
 		
-		/* @var $return \Elgg\Menu\MenuItems */
+		/** @var \Elgg\Menu\MenuItems $return */
 		$return = $event->getValue();
 		
 		$return->remove('edit');

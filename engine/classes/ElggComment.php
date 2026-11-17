@@ -58,7 +58,7 @@ class ElggComment extends \ElggObject {
 		if ($result) {
 			// restore threaded comments
 			elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($recursive) {
-				/* @var $children \ElggBatch */
+				/** @var \ElggBatch $children */
 				$children = elgg_get_entities([
 					'type' => 'object',
 					'subtype' => 'comment',
@@ -70,7 +70,7 @@ class ElggComment extends \ElggObject {
 					],
 				]);
 				
-				/* @var $child \ElggComment */
+				/** @var \ElggComment $child */
 				foreach ($children as $child) {
 					$child->restore($recursive);
 				}
@@ -91,7 +91,7 @@ class ElggComment extends \ElggObject {
 	 */
 	protected function deleteThreadedComments(bool $recursive, bool $persistent): void {
 		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($recursive, $persistent) {
-			/* @var $children \ElggBatch */
+			/** @var \ElggBatch $children */
 			$children = elgg_get_entities([
 				'type' => 'object',
 				'subtype' => 'comment',
@@ -104,7 +104,7 @@ class ElggComment extends \ElggObject {
 				],
 			]);
 			
-			/* @var $child \ElggComment */
+			/** @var \ElggComment $child */
 			foreach ($children as $child) {
 				if (!$child->delete($recursive, $persistent) && $persistent) {
 					$children->reportFailure();

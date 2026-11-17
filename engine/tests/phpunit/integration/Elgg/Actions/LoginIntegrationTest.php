@@ -129,7 +129,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 			$user->save();
 		});
 		
-		/* @var $user \ElggUser */
+		/** @var \ElggUser $user */
 		$user = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($username) {
 			return elgg_get_user_by_username($username);
 		});
@@ -282,7 +282,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		
 		$persistent_cookie = false;
 		$persistent_cookie_name = elgg()->config->getCookieConfig()['remember_me']['name'];
-		/* @var $cookie \Symfony\Component\HttpFoundation\Cookie */
+		/** @var \Symfony\Component\HttpFoundation\Cookie $cookie */
 		foreach ($response_cookies as $cookie) {
 			if ($cookie->getName() !== $persistent_cookie_name) {
 				continue;
