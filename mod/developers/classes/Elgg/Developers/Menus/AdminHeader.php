@@ -32,7 +32,9 @@ class AdminHeader {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'dev_settings',
 			'text' => elgg_echo('settings'),
-			'href' => 'admin/plugin_settings/developers',
+			'href' => elgg_generate_url('admin:plugin_settings', [
+				'plugin_id' => 'developers',
+			]),
 			'priority' => 10,
 			'parent_name' => 'develop',
 		]);
@@ -41,7 +43,9 @@ class AdminHeader {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'error_log',
 				'text' => elgg_echo('admin:develop_tools:error_log'),
-				'href' => 'admin/develop_tools/error_log',
+				'href' => elgg_generate_url('admin', [
+					'segments' => 'develop_tools/error_log',
+				]),
 				'parent_name' => 'develop',
 			]);
 		}
@@ -49,7 +53,9 @@ class AdminHeader {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'develop_tools:entity_explorer',
 			'text' => elgg_echo('admin:develop_tools:entity_explorer'),
-			'href' => 'admin/develop_tools/entity_explorer',
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'develop_tools/entity_explorer',
+			]),
 			'parent_name' => 'develop',
 		]);
 		

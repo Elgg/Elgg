@@ -3,7 +3,9 @@
 echo elgg_format_element('p', [], elgg_echo('developers:entity_explorer:help'));
 
 echo elgg_view_form('developers/entity_explorer', [
-	'action' => 'admin/develop_tools/entity_explorer',
+	'action' => elgg_generate_url('admin', [
+		'segments' => 'develop_tools/entity_explorer',
+	]),
 	'method' => 'GET',
 	'disable_security' => true,
 	'class' => 'mbm',
