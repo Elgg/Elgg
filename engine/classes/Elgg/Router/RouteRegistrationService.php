@@ -4,8 +4,15 @@ namespace Elgg\Router;
 
 use Elgg\Database\Plugins;
 use Elgg\EventsService;
+use Elgg\Exceptions\DomainException;
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Project\Paths;
+use Elgg\Router\Middleware\ActionMiddleware;
+use Elgg\Router\Middleware\AdminGatekeeper;
+use Elgg\Router\Middleware\CsrfFirewall;
+use Elgg\Router\Middleware\Gatekeeper;
 use Elgg\Router\Middleware\GroupToolGatekeeper;
+use Elgg\Router\Middleware\LoggedOutGatekeeper;
 use Elgg\Router\Middleware\WalledGarden;
 use Elgg\SessionManagerService;
 use Elgg\Traits\Loggable;
@@ -166,6 +173,73 @@ class RouteRegistrationService {
 		$this->routes->add($name, $route, $priority);
 
 		return $route;
+	}
+
+	/**
+	 * Registers an action
+	 *
+	 * @param string $action  The name of the action (eg "register", "account/settings/save")
+	 * @param string $handler Optionally, the filename where this action is located. If not specified,
+	 *                        will assume the action is in elgg/actions/<action>.php
+	 * @param string $access  Who is allowed to execute this action: public, logged_in, logged_out, admin. (default: logged_in)
+	 * @param array  $params  Additional params for the action route registration:
+	 *                        - middleware: additional middleware on the action route
+	 *                        - options: additional route options
+	 *
+	 * @return void
+	 * @throws \Elgg\Exceptions\DomainException
+	 * @see elgg_register_action()
+	 */
+	public function registerAction(string $action, string $handler = '', string $access = 'logged_in', array $params = []): void {
+		$access_levels = ['public', 'logged_in', 'logged_out', 'admin'];
+		if (!in_array($access, $access_levels)) {
+			throw new DomainException("Unrecognized value '{$access}' for \$access in " . __METHOD__);
+		}
+
+		// plugins are encouraged to call actions with a trailing / to prevent 301
+		// redirects but we store the actions without it
+		$action = trim($action, '/');
+
+		if (empty($handler)) {
+			$handler = Paths::sanitize(Paths::elgg() . "actions/{$action}.php", false);
+		}
+
+		if (str_ends_with($handler, '.php')) {
+			$file = $handler;
+			$controller = null;
+		} else {
+			$file = null;
+			$controller = $handler;
+		}
+
+		$middleware = [];
+		
+		$unprotected_actions = ['logout'];
+		if (!in_array($action, $unprotected_actions)) {
+			$middleware[] = CsrfFirewall::class;
+		}
+
+		if ($access === 'admin') {
+			$middleware[] = AdminGatekeeper::class;
+		} elseif ($access === 'logged_in') {
+			$middleware[] = Gatekeeper::class;
+		} elseif ($access === 'logged_out') {
+			$middleware[] = LoggedOutGatekeeper::class;
+		}
+
+		$middleware[] = ActionMiddleware::class;
+
+		$additional_middleware = (array) elgg_extract('middleware', $params);
+		$middleware = array_merge($middleware, $additional_middleware);
+
+		$this->register("action:{$action}", [
+			'path' => "/action/{$action}",
+			'file' => $file,
+			'controller' => $controller,
+			'middleware' => $middleware,
+			'options' => (array) elgg_extract('options', $params),
+			'walled' => false,
+		]);
 	}
 
 	/**

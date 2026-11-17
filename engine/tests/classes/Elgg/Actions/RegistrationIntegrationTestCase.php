@@ -26,7 +26,6 @@ abstract class RegistrationIntegrationTestCase extends ActionResponseTestCase {
 		// Logging in admin so all actions are accessible
 		_elgg_services()->session_manager->setLoggedInUser($this->getAdmin());
 		
-		_elgg_services()->reset('actions');
 		_elgg_services()->reset('routes');
 		_elgg_services()->reset('routeCollection');
 	}

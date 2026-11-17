@@ -3,6 +3,9 @@
 namespace Elgg\Plugins;
 
 use Elgg\Actions\RegistrationIntegrationTestCase;
+use Elgg\Router\Middleware\AdminGatekeeper;
+use Elgg\Router\Middleware\Gatekeeper as MiddlewareGateKeeper;
+use Elgg\Router\Middleware\LoggedOutGatekeeper;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 class ActionsRegistrationIntegrationTest extends RegistrationIntegrationTestCase {
@@ -23,13 +26,12 @@ class ActionsRegistrationIntegrationTest extends RegistrationIntegrationTestCase
 		
 		$plugins = elgg_get_plugins();
 		foreach ($plugins as $plugin) {
-			_elgg_services()->reset('actions');
 			_elgg_services()->reset('routes');
 			_elgg_services()->reset('routeCollection');
 			
 			self::registerPluginActions($plugin);
 			
-			$actions = _elgg_services()->actions->getAllActions();
+			$actions = self::getAllActions();
 			foreach ($actions as $name => $params) {
 				$result[] = [$name, $params['access'], $plugin];
 			}
@@ -41,6 +43,41 @@ class ActionsRegistrationIntegrationTest extends RegistrationIntegrationTestCase
 		}
 		
 		return $result;
+	}
+
+	/**
+	 * Get all actions
+	 *
+	 * @return array
+	 */
+	protected static function getAllActions(): array {
+		$actions = [];
+		$routes = _elgg_services()->routes->all();
+		foreach ($routes as $name => $route) {
+			if (!str_starts_with($name, 'action:')) {
+				continue;
+			}
+
+			$action = substr($name, strlen('action:'));
+
+			$access = 'public';
+			$middleware = (array) $route->getDefault('_middleware');
+			if (in_array(MiddlewareGateKeeper::class, $middleware)) {
+				$access = 'logged_in';
+			} elseif (in_array(LoggedOutGatekeeper::class, $middleware)) {
+				$access = 'logged_out';
+			} elseif (in_array(AdminGatekeeper::class, $middleware)) {
+				$access = 'admin';
+			}
+
+			$actions[$action] = array_filter([
+				'file' => $route->getDefault('_file'),
+				'controller' => $route->getDefault('_controller'),
+				'access' => $access,
+			]);
+		}
+
+		return $actions;
 	}
 
 	#[DataProvider('actionsProvider')]

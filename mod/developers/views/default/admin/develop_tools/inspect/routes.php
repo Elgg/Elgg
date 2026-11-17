@@ -5,10 +5,14 @@ if (empty($data)) {
 	return;
 }
 
+uasort($data, function ($a, $b) {
+	return strnatcasecmp($a[0], $b[0]);
+});
+
 echo "<table class='elgg-table-alt'>";
 echo '<thead><tr>';
-echo elgg_format_element('th', [], elgg_echo('developers:inspect:route'));
 echo elgg_format_element('th', [], elgg_echo('developers:inspect:path'));
+echo elgg_format_element('th', [], elgg_echo('developers:inspect:route'));
 echo elgg_format_element('th', [], elgg_echo('developers:inspect:handler_type'));
 echo elgg_format_element('th', [], elgg_echo('developers:inspect:middleware'));
 echo '</tr></thead>';
@@ -16,8 +20,8 @@ echo '<tbody>';
 
 foreach ($data as $key => $arr) {
 	echo '<tr>';
-	echo elgg_format_element('td', [], $key);
 	echo elgg_format_element('td', [], $arr[0]);
+	echo elgg_format_element('td', [], $key);
 	echo '<td>';
 	if ($arr[1]) {
 		$view_id = 'z' . md5("resources/{$arr[1]}");

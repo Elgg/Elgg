@@ -722,7 +722,6 @@ class Application {
 			'elgglib.php',
 			'events.php',
 			'access.php',
-			'actions.php',
 			'annotations.php',
 			'breadcrumbs.php',
 			'cache.php',

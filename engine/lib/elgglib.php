@@ -349,3 +349,14 @@ function _elgg_services(): \Elgg\Di\InternalContainer {
 	// reduces false positives in xdebug's infinite recursion protection.
 	return \Elgg\Application::$_instance->internal_services;
 }
+
+/**
+ * Get an HMAC token builder/validator object
+ *
+ * @param mixed $data HMAC data string or serializable data
+ * @return \Elgg\Security\Hmac
+ * @since 1.11
+ */
+function elgg_build_hmac($data): \Elgg\Security\Hmac {
+	return _elgg_services()->hmac->getHmac($data);
+}

@@ -76,7 +76,7 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 		$inspector = new Inspector();
 		$events = $inspector->getEvents();
 		$views = $inspector->getViews();
-		$actions = $inspector->getActions();
+		$routes = $inspector->getRoutes();
 		$entity_types = elgg_entity_types_with_capability('searchable');
 		$widget_types = elgg_get_widget_types();
 		
@@ -98,7 +98,7 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 
 		$this->assertEquals($events, $inspector->getEvents());
 		$this->assertEquals($views, $inspector->getViews());
-		$this->assertEquals($actions, $inspector->getActions());
+		$this->assertEquals($routes, $inspector->getRoutes());
 		$this->assertEquals($entity_types, elgg_entity_types_with_capability('searchable'));
 		$this->assertEquals($widget_types, elgg_get_widget_types());
 	}
