@@ -29,6 +29,37 @@ function elgg_register_route(string $name, array $params = []): void {
 }
 
 /**
+ * Registers an action.
+ *
+ * Actions are registered to a script in the system and are executed
+ * by the URL http://elggsite.org/action/action_name/.
+ *
+ * $filename must be the full path of the file to register or a path relative
+ * to the core actions/ dir.
+ *
+ * Actions should be namespaced for your plugin.  Example:
+ * <code>
+ * elgg_register_action('myplugin/save_settings', ...);
+ * </code>
+ *
+ * @tip Put action files under the actions/<plugin_name> directory of your plugin.
+ *
+ * @param string $action   The name of the action (eg "register", "account/settings/save")
+ * @param string $filename Optionally, the filename where this action is located. If not specified,
+ *                         will assume the action is in elgg/actions/<action>.php
+ * @param string $access   Who is allowed to execute this action: public, logged_in, admin.
+ *                         (default: logged_in)
+ * @param array  $params   Additional params for the action route registration:
+ *                         - middleware: additional middleware on the action route
+ *                         - options: additional route options
+ *
+ * @return void
+ */
+function elgg_register_action(string $action, string $filename = '', string $access = 'logged_in', array $params = []): void {
+	_elgg_services()->routes->registerAction($action, $filename, $access, $params);
+}
+
+/**
  * Unregister a route by its name
  *
  * @param string $name Name of the route
@@ -37,6 +68,19 @@ function elgg_register_route(string $name, array $params = []): void {
  */
 function elgg_unregister_route(string $name): void {
 	_elgg_services()->routes->unregister($name);
+}
+
+/**
+ * Unregisters an action
+ *
+ * @param string $action Action name
+ * @return void
+ * @since 1.8.1
+ */
+function elgg_unregister_action(string $action): void {
+	$action = trim($action, '/');
+	
+	_elgg_services()->routes->unregister("action:{$action}");
 }
 
 /**
@@ -110,6 +154,20 @@ function elgg_get_current_route_name(): string {
  */
 function elgg_route_exists(string $name): bool {
 	return _elgg_services()->routes->get($name) instanceof \Elgg\Router\Route;
+}
+
+/**
+ * Check if an action is registered and its script exists.
+ *
+ * @param string $action Action name
+ *
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_action_exists(string $action): bool {
+	$action = trim($action, '/');
+	
+	return _elgg_services()->routes->get("action:{$action}") instanceof \Elgg\Router\Route;
 }
 
 /**
@@ -288,4 +346,14 @@ function elgg_download_response(string $content, string $filename = '', bool $in
 	$response->setFilename($filename, $inline);
 	
 	return $response;
+}
+
+/**
+ * Checks whether the request was requested via ajax
+ *
+ * @return bool whether page was requested via ajax
+ * @since 1.8.0
+ */
+function elgg_is_xhr(): bool {
+	return _elgg_services()->request->isXmlHttpRequest();
 }

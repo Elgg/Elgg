@@ -12,7 +12,6 @@ return [
 	'autoloadManager' => DI\autowire(\Elgg\AutoloadManager::class),
 	'accessCache' => DI\autowire(\Elgg\Cache\AccessCache::class),
 	'accessCollections' => DI\autowire(\Elgg\Database\AccessCollections::class),
-	'actions' => DI\autowire(\Elgg\ActionsService::class),
 	'accounts' => DI\autowire(\Elgg\Users\Accounts::class),
 	'adminNotices' => DI\autowire(\Elgg\Database\AdminNotices::class),
 	'ajax' => DI\autowire(\Elgg\Ajax\Service::class),
@@ -171,7 +170,6 @@ return [
 	
 	// map classes to alias to allow autowiring
 	\ElggSession::class => DI\get('session'),
-	\Elgg\ActionsService::class => DI\get('actions'),
 	\Elgg\Ajax\Service::class => DI\get('ajax'),
 	\Elgg\Application\CacheHandler::class => DI\get('cacheHandler'),
 	\Elgg\Application\Database::class => DI\get('publicDb'),
