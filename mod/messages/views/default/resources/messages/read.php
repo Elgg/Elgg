@@ -24,7 +24,7 @@ if ($inbox) {
 	$form_params = [
 		'id' => 'messages-reply-form',
 		'class' => 'hidden mtl',
-		'action' => 'action/messages/send',
+		'action' => elgg_generate_action_url('messages/send', [], false),
 	];
 	$body_params = ['message' => $entity];
 	$content .= elgg_view_form('messages/reply', $form_params, $body_params);
