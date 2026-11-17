@@ -25,7 +25,7 @@ class Title {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
@@ -61,7 +61,7 @@ class Title {
 			'entity' => $entity,
 		]);
 		
-		/* @var $menu_item \ElggmenuItem */
+		/** @var \ElggmenuItem $menu_item */
 		foreach ($entity_menu->getItems() as $menu_item) {
 			if ($return->has($menu_item->getName())) {
 				if ($menu_item->getName() === 'edit') {

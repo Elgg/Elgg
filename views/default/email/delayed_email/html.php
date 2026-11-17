@@ -19,9 +19,9 @@ if (empty($notifications) || !$recipient instanceof \ElggEntity) {
 // sort by content type
 $sorted = [];
 
-/* @var $notification Notification */
+/** @var Notification $notification */
 foreach ($notifications as $index => $notification) {
-	/* @var $event \Elgg\Notifications\NotificationEvent */
+	/** @var \Elgg\Notifications\NotificationEvent $event */
 	$event = elgg_extract('event', $notification->params);
 	
 	$category = 'other';
@@ -84,9 +84,9 @@ foreach ($sorted as $category => $sorted_notifications) {
 	$body .= elgg_format_element('strong', [], elgg_echo($category, [], (string) $recipient->language)) . PHP_EOL;
 	
 	$lis = [];
-	/* @var $notification Notification */
+	/** @var Notification $notification */
 	foreach ($sorted_notifications as $notification) {
-		/* @var $event \Elgg\Notifications\NotificationEvent */
+		/** @var \Elgg\Notifications\NotificationEvent $event */
 		$event = elgg_extract('event', $notification->params);
 		
 		$text = $notification->summary ?: $notification->subject;

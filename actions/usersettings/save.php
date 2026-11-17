@@ -9,7 +9,7 @@
 use Elgg\Exceptions\Http\EntityNotFoundException;
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
-/* @var $request \Elgg\Request */
+/** @var \Elgg\Request $request */
 
 $guid = $request->getParam('guid');
 if (isset($guid)) {

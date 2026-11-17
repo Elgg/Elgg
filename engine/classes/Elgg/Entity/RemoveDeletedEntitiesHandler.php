@@ -24,7 +24,7 @@ class RemoveDeletedEntitiesHandler {
 		}
 		
 		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($retention) {
-			/* @var $entities \ElggBatch */
+			/** @var \ElggBatch $entities */
 			$entities = elgg_get_entities([
 				'limit' => false,
 				'batch' => true,
@@ -56,7 +56,7 @@ class RemoveDeletedEntitiesHandler {
 			
 			$starttime = microtime(true);
 			
-			/* @var $entity \ElggEntity */
+			/** @var \ElggEntity $entity */
 			foreach ($entities as $entity) {
 				if ((microtime(true) - $starttime) > 300) {
 					// limit the cleanup to 5 minutes

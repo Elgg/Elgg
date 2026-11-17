@@ -323,7 +323,7 @@ class EntityTable {
 			return [];
 		}
 
-		/* @var $preload \ElggEntity[] */
+		/** @var \ElggEntity[] $preload */
 		$preload = array_filter($results, function ($e) {
 			return $e instanceof \ElggEntity;
 		});
@@ -578,7 +578,7 @@ class EntityTable {
 	protected function deleteRelatedEntities(\ElggEntity $entity): void {
 		// Temporarily overriding access controls
 		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($entity) {
-			/* @var $batch \ElggBatch */
+			/** @var \ElggBatch $batch */
 			$batch = elgg_get_entities([
 				'wheres' => function (QueryBuilder $qb, $main_alias) use ($entity) {
 					$ors = $qb->merge([
@@ -596,7 +596,7 @@ class EntityTable {
 				'batch_inc_offset' => false,
 			]);
 			
-			/* @var $e \ElggEntity */
+			/** @var \ElggEntity $e */
 			foreach ($batch as $e) {
 				if (in_array($e->guid, $this->deleted_guids)) {
 					// prevent deadloops, doing this here in case of large deletes which could cause query length issues
@@ -621,7 +621,7 @@ class EntityTable {
 	protected function trashRelatedEntities(\ElggEntity $entity): void {
 		// Temporarily overriding access controls
 		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($entity) {
-			/* @var $batch \ElggBatch */
+			/** @var \ElggBatch $batch */
 			$batch = elgg_get_entities([
 				'wheres' => function (QueryBuilder $qb, $main_alias) use ($entity) {
 					$ors = $qb->merge([
@@ -639,7 +639,7 @@ class EntityTable {
 				'batch_inc_offset' => false,
 			]);
 			
-			/* @var $e \ElggEntity */
+			/** @var \ElggEntity $e */
 			foreach ($batch as $e) {
 				if (in_array($e->guid, $this->trashed_guids)) {
 					// prevent deadloops, doing this here in case of large deletes which could cause query length issues

@@ -43,7 +43,7 @@ class Group {
 	 */
 	public static function updateGroup(\Elgg\Event $event) {
 	
-		/* @var $group \ElggGroup */
+		/** @var \ElggGroup $group */
 		$group = $event->getObject();
 		$original_attributes = $group->getOriginalAttributes();
 	

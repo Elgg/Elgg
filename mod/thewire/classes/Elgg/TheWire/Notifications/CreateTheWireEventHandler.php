@@ -47,7 +47,7 @@ class CreateTheWireEventHandler extends NotificationEventHandler {
 			return $subscriptions;
 		}
 		
-		/* @var $parent_owner \ElggUser */
+		/** @var \ElggUser $parent_owner */
 		$parent_owner = $parent->getOwnerEntity();
 		
 		$subscriptions[$parent_owner->guid] = $parent_owner->getNotificationSettings('default', true);

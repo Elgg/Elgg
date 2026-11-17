@@ -35,7 +35,7 @@ class AdminValidation extends NonConfigurableNotificationEventHandler {
 			'limit' => false,
 			'batch' => true,
 		]);
-		/* @var $admin \ElggUser */
+		/** @var \ElggUser $admin */
 		foreach ($admins as $admin) {
 			$notification_preferences = $admin->getNotificationSettings('admin_validation_notification', true);
 			if (empty($notification_preferences)) {

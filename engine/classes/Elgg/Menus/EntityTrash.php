@@ -22,7 +22,7 @@ class EntityTrash {
 			return null;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$container = $entity->getContainerEntity();

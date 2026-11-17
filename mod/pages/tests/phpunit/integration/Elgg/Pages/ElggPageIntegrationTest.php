@@ -65,7 +65,7 @@ class ElggPageIntegrationTest extends IntegrationTestCase {
 
 	public function testCreateObjectToClass() {
 		
-		/* @var $page \ElggPage */
+		/** @var \ElggPage $page */
 		$page = $this->createObject([
 			'subtype' => 'page',
 			'owner_guid' => $this->user->guid,

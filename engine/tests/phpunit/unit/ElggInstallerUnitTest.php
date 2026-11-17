@@ -112,7 +112,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 	public function testWelcome() {
 
-		/* @var $mock ElggInstaller */
+		/** @var ElggInstaller $mock */
 		$mock = $this->getMock(['checkDatabaseSettings' => function() { return false;}]);
 
 		$response = $mock->run();
@@ -149,7 +149,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->request->setParam('step', 'requirements');
 
-		/* @var $mock ElggInstaller */
+		/** @var ElggInstaller $mock */
 		$mock = $this->getMock(['checkDatabaseSettings' => function() { return false;}]);
 
 		$response = $mock->run();
@@ -210,7 +210,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->request->setParam('step', 'database');
 
-		/* @var $mock ElggInstaller */
+		/** @var ElggInstaller $mock */
 		$mock = $this->getMock([
 			'checkDatabaseSettings' => function() { return false;},
 			'checkSettingsFile' => function() { return false;},
@@ -319,7 +319,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->set('request', $request);
 
-		/* @var $mock ElggInstaller */
+		/** @var ElggInstaller $mock */
 		$mock = $this->getMock(['checkDatabaseSettings' => function() { return false;}]);
 
 		$response = $mock->run();
@@ -352,7 +352,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->set('request', $request);
 
-		/* @var $mock ElggInstaller */
+		/** @var ElggInstaller $mock */
 		$mock = $this->getMock(['checkDatabaseSettings' => function() { return false;}]);
 
 		$response = $mock->run();
@@ -366,7 +366,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 	public function testSettings() {
 
 		$db = $this->getApp()->internal_services->db;
-		/* @var $db \Elgg\Mocks\Database */
+		/** @var \Elgg\Mocks\Database $db */
 
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
@@ -379,7 +379,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->request->setParam('step', 'settings');
 
-		/* @var $mock ElggInstaller */
+		/** @var ElggInstaller $mock */
 		$mock = $this->getMock();
 
 		$response = $mock->run();
@@ -433,7 +433,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 	public function testSettingsAction() {
 
 		$db = $this->getApp()->internal_services->db;
-		/* @var $db \Elgg\Mocks\Database */
+		/** @var \Elgg\Mocks\Database $db */
 
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
@@ -454,7 +454,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->set('request', $request);
 
-		/* @var $mock ElggInstaller */
+		/** @var ElggInstaller $mock */
 		$mock = $this->getMock();
 
 		$response = $mock->run();
@@ -466,7 +466,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 	public function testAdmin() {
 
 		$db = $this->getApp()->internal_services->db;
-		/* @var $db \Elgg\Mocks\Database */
+		/** @var \Elgg\Mocks\Database $db */
 
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
@@ -481,7 +481,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->request->setParam('step', 'admin');
 
-		/* @var $mock ElggInstaller */
+		/** @var ElggInstaller $mock */
 		$mock = $this->getMock();
 
 		$response = $mock->run();
@@ -546,7 +546,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 	public function testAdminAction() {
 
 		$db = $this->getApp()->internal_services->db;
-		/* @var $db \Elgg\Mocks\Database */
+		/** @var \Elgg\Mocks\Database $db */
 
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',
@@ -571,7 +571,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->getApp()->internal_services->set('request', $request);
 
-		/* @var $mock ElggInstaller */
+		/** @var ElggInstaller $mock */
 		$mock = $this->getMock();
 
 		$response = $mock->run();
@@ -585,7 +585,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 	public function testBatchInstall() {
 
 		$db = $this->getApp()->internal_services->db;
-		/* @var $db \Elgg\Mocks\Database */
+		/** @var \Elgg\Mocks\Database $db */
 
 		$db->addQuerySpec([
 			'sql' => 'SHOW TABLES',

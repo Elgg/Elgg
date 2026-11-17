@@ -9,7 +9,7 @@ if (empty($notification_guids)) {
 	return elgg_error_response(elgg_echo('site_notifications:error:notifications_not_selected'));
 }
 
-/* @var $batch \ElggBatch */
+/** @var \ElggBatch $batch */
 $batch = elgg_get_entities([
 	'type' => 'object',
 	'subtype' => 'site_notification',
@@ -17,7 +17,7 @@ $batch = elgg_get_entities([
 	'limit' => false,
 	'batch' => true,
 ]);
-/* @var $entity \SiteNotification */
+/** @var \SiteNotification $entity */
 foreach ($batch as $entity) {
 	if (!$entity->canEdit()) {
 		$batch->reportFailure();

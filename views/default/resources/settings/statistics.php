@@ -3,7 +3,7 @@
  * Elgg user statistics.
  */
 
-/* @var $user \ElggUser */
+/** @var \ElggUser $user */
 $user = elgg_get_page_owner_entity();
 
 if ($user->guid === elgg_get_logged_in_user_guid()) {

@@ -189,7 +189,7 @@ class SimpleCache {
 		
 		$di = new \DirectoryIterator($this->getPath());
 		
-		/* @var $file_info \DirectoryIterator */
+		/** @var \DirectoryIterator $file_info */
 		foreach ($di as $file_info) {
 			if (!$file_info->isDir() || $file_info->isDot()) {
 				continue;

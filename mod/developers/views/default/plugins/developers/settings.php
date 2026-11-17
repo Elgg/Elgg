@@ -2,7 +2,7 @@
 
 elgg_import_esm('plugins/developers/settings');
 
-/* @var $plugin \ElggPlugin */
+/** @var \ElggPlugin $plugin */
 $plugin = elgg_extract('entity', $vars);
 
 $config = elgg()->config;

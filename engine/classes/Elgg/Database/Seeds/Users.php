@@ -91,7 +91,7 @@ class Users extends Seed {
 						'subject_guid' => $user->guid,
 						'object_guid' => $friend->guid,
 					]);
-					/* @var $item \ElggRiverItem */
+					/** @var \ElggRiverItem $item */
 					foreach ($river as $item) {
 						$update = Update::table(RiverTable::TABLE_NAME);
 						$update->set('posted', $update->param($this->getRandomCreationTimestamp(), ELGG_VALUE_TIMESTAMP))
@@ -112,7 +112,7 @@ class Users extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
-		/* @var $users \ElggBatch */
+		/** @var \ElggBatch $users */
 		$users = elgg_get_entities([
 			'type' => 'user',
 			'metadata_name' => '__faker',
@@ -121,7 +121,7 @@ class Users extends Seed {
 			'batch_inc_offset' => false,
 		]);
 
-		/* @var $user \ElggUser */
+		/** @var \ElggUser $user */
 		foreach ($users as $user) {
 			if ($user->delete(true, true)) {
 				$this->log("Deleted user {$user->guid}");

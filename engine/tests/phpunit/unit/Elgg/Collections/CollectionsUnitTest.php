@@ -290,7 +290,7 @@ class CollectionsUnitTest extends UnitTestCase {
 		$collection = new Collection($items);
 		
 		$result = [];
-		/* @var $value TestItem */
+		/** @var TestItem $value */
 		foreach ($collection as $key => $value) {
 			if ($key === 'e') {
 				unset($collection[$key]);

@@ -211,7 +211,7 @@ class Cron {
 		
 		$dh = new \DirectoryIterator($dir);
 		$files = [];
-		/* @var $file \DirectoryIterator */
+		/** @var \DirectoryIterator $file */
 		foreach ($dh as $file) {
 			if ($file->isDot() || !$file->isFile() || $file->getExtension() !== 'log') {
 				continue;

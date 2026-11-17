@@ -43,7 +43,7 @@ class TranslationsIntegrationTest extends PluginsIntegrationTestCase {
 			}
 			
 			$dh = new \DirectoryIterator($languages_path);
-			/* @var $file_info \DirectoryIterator */
+			/** @var \DirectoryIterator $file_info */
 			foreach ($dh as $file_info) {
 				if (!$file_info->isFile() || $file_info->getExtension() !== 'php') {
 					continue;

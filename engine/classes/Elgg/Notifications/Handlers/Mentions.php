@@ -44,7 +44,7 @@ class Mentions extends NonConfigurableNotificationEventHandler {
 				],
 			],
 		]);
-		/* @var $user \ElggUser */
+		/** @var \ElggUser $user */
 		foreach ($users as $user) {
 			$preference = $user->getNotificationSettings('mentions', true);
 			if (empty($preference)) {

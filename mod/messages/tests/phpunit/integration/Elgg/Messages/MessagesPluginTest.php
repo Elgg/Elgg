@@ -35,7 +35,7 @@ class MessagesPluginTest extends IntegrationTestCase {
 			$count = messages_count_unread($sender->guid);
 			$this->assertEquals(0, $count);
 	
-			/* @var $message \ElggMessage */
+			/** @var \ElggMessage $message */
 			$message = get_entity($sent_guid);
 			$this->assertInstanceOf(\ElggMessage::class, $message);
 	

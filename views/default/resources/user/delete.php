@@ -1,6 +1,6 @@
 <?php
 
-/* @var $user \ElggUser */
+/** @var \ElggUser $user */
 $user = elgg_get_page_owner_entity();
 
 $content = elgg_view_image_block(elgg_view_entity_icon($user, 'medium'), elgg_view('output/longtext', [

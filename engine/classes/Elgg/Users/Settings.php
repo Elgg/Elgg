@@ -89,7 +89,7 @@ class Settings {
 	
 		$user = $event->getUserParam();
 		
-		/* @var $request \Elgg\Request */
+		/** @var \Elgg\Request $request */
 		$request = $event->getParam('request');
 		
 		$name = $request->getParam('name');

@@ -39,14 +39,14 @@ class MigrateAdminValidationNotificationPreference extends AsynchronousUpgrade {
 	 * {@inheritdoc}
 	 */
 	public function run(Result $result, $offset): Result {
-		/* @var $batch \ElggBatch */
+		/** @var \ElggBatch $batch */
 		$batch = elgg_get_entities($this->getOptions([
 			'offset' => $offset,
 		]));
 		
 		$methods = elgg_get_notification_methods();
 		
-		/* @var $user \ElggUser */
+		/** @var \ElggUser $user */
 		foreach ($batch as $user) {
 			// disable for all methods
 			foreach ($methods as $method) {

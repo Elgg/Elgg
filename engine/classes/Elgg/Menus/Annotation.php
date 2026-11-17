@@ -25,7 +25,7 @@ class Annotation {
 			return;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([

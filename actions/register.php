@@ -6,7 +6,7 @@
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\Http\LoginException;
 
-/* @var $request \Elgg\Request */
+/** @var \Elgg\Request $request */
 
 // Get variables
 $username = (string) $request->getParam('username');

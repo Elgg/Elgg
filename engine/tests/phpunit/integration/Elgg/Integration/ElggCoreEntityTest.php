@@ -341,7 +341,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 		$metadata_called = false;
 		$metadata_event_handler = function (\Elgg\Event $event) use (&$metadata_called) {
-			/* @var $metadata \ElggMetadata */
+			/** @var \ElggMetadata $metadata */
 			$metadata = $event->getObject();
 			$entity = get_entity($metadata->entity_guid);
 			$this->assertEquals($metadata->entity_guid, $entity->guid);
@@ -350,7 +350,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 		$annotation_called = false;
 		$annotation_event_handler = function (\Elgg\Event $event) use (&$annotation_called) {
-			/* @var $annotation \ElggAnnotation */
+			/** @var \ElggAnnotation $annotation */
 			$annotation = $event->getObject();
 			$entity = get_entity($annotation->entity_guid);
 			$this->assertEquals($annotation->entity_guid, $entity->guid);
@@ -387,7 +387,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 		$metadata_called = false;
 		$metadata_event_handler = function (\Elgg\Event $event) use (&$metadata_called) {
-			/* @var $metadata \ElggMetadata */
+			/** @var \ElggMetadata $metadata */
 			$metadata = $event->getObject();
 			$entity = get_entity($metadata->entity_guid);
 			$this->assertEquals($metadata->entity_guid, $entity->guid);
@@ -396,7 +396,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 		$annotation_called = false;
 		$annotation_event_handler = function (\Elgg\Event $event) use (&$annotation_called) {
-			/* @var $metadata \ElggAnnotation */
+			/** @var \ElggAnnotation $metadata */
 			$annotation = $event->getObject();
 			$entity = get_entity($annotation->entity_guid);
 			$this->assertEquals($annotation->entity_guid, $entity->guid);
@@ -433,7 +433,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 		$metadata_called = false;
 		$metadata_event_handler = function (\Elgg\Event $event) use (&$metadata_called) {
-			/* @var $metadata \ElggMetadata */
+			/** @var \ElggMetadata $metadata */
 			$metadata = $event->getObject();
 			$entity = get_entity($metadata->entity_guid);
 			$this->assertEquals($metadata->entity_guid, $entity->guid);
@@ -442,7 +442,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 		$annotation_called = false;
 		$annotation_event_handler = function (\Elgg\Event $event) use (&$annotation_called) {
-			/* @var $metadata \ElggAnnotation */
+			/** @var \ElggAnnotation $metadata */
 			$annotation = $event->getObject();
 			$entity = get_entity($annotation->entity_guid);
 			$this->assertEquals($annotation->entity_guid, $entity->guid);
@@ -503,7 +503,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 			$guid_column = $event->getParam('guid_column');
 
 			$qb = $event->getParam('query_builder');
-			/* @var $qb \Elgg\Database\QueryBuilder */
+			/** @var \Elgg\Database\QueryBuilder $qb */
 
 			$qb->joinMetadataTable($alias, $guid_column, 'foo', 'inner', 'md');
 

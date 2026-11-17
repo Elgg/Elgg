@@ -89,7 +89,7 @@ trait PluginTesting {
 			// @todo Decouple plugin injection logic from this trait
 
 			$svc = _elgg_services()->plugins;
-			/* @var $svc \Elgg\Mocks\Database\Plugins */
+			/** @var \Elgg\Mocks\Database\Plugins $svc */
 
 			$svc->addTestingPlugin($plugin);
 		}

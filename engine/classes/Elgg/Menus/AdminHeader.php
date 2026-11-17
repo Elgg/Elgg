@@ -27,7 +27,7 @@ class AdminHeader {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$admin = elgg_get_logged_in_user_entity();
@@ -107,7 +107,7 @@ class AdminHeader {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
@@ -134,7 +134,7 @@ class AdminHeader {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
@@ -191,18 +191,18 @@ class AdminHeader {
 			return null;
 		}
 		
-		/* @var $result PreparedMenu */
+		/** @var PreparedMenu $result */
 		$result = $event->getValue();
 		
 		$default = $result->getSection('default');
 		
-		/* @var $administer \ElggMenuItem */
+		/** @var \ElggMenuItem $administer */
 		$administer = $default->get('administer');
 		if (!$administer instanceof \ElggMenuItem || empty($administer->getChildren())) {
 			return null;
 		}
 		
-		/* @var $users \ElggMenuItem */
+		/** @var \ElggMenuItem $users */
 		$users = null;
 		foreach ($administer->getChildren() as $child) {
 			if ($child->getID() === 'users') {
@@ -250,7 +250,7 @@ class AdminHeader {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
@@ -323,7 +323,7 @@ class AdminHeader {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
@@ -359,7 +359,7 @@ class AdminHeader {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
@@ -384,7 +384,7 @@ class AdminHeader {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([

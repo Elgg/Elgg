@@ -26,7 +26,7 @@ class ExceptionInstanceUnitTest extends UnitTestCase {
 		
 		$directory = new \RecursiveDirectoryIterator($path);
 		$iterator = new \RecursiveIteratorIterator($directory);
-		/* @var $file_info \SplFileInfo */
+		/** @var \SplFileInfo $file_info */
 		foreach ($iterator as $file_info) {
 			if (!$file_info->isFile()) {
 				continue;

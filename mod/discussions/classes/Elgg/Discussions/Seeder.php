@@ -25,7 +25,7 @@ class Seeder extends Seed {
 
 		while ($this->getCount() < $this->limit) {
 			try {
-				/* @var $discussion \ElggDiscussion */
+				/** @var \ElggDiscussion $discussion */
 				$discussion = $this->createObject([
 					'subtype' => 'discussion',
 					'container_guid' => $this->getRandomGroup()->guid,
@@ -57,7 +57,7 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
-		/* @var $discussions \ElggBatch */
+		/** @var \ElggBatch $discussions */
 		$discussions = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'discussion',
@@ -67,7 +67,7 @@ class Seeder extends Seed {
 			'batch_inc_offset' => false,
 		]);
 
-		/* @var $discussion \ElggDiscussion */
+		/** @var \ElggDiscussion $discussion */
 		foreach ($discussions as $discussion) {
 			if ($discussion->delete()) {
 				$this->log("Deleted discussion {$discussion->guid}");
