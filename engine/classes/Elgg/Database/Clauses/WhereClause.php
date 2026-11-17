@@ -11,17 +11,11 @@ use Elgg\Database\QueryBuilder;
 class WhereClause extends Clause {
 
 	/**
-	 * @var \Closure|CompositeExpression|null|string
-	 */
-	public $expr;
-
-	/**
 	 * Constructor
 	 *
-	 * @param CompositeExpression|\Closure|string $expr Expression
+	 * @param CompositeExpression|\Closure|string|null $expr Expression
 	 */
-	public function __construct($expr = null) {
-		$this->expr = $expr;
+	public function __construct(public $expr = null) {
 	}
 
 	/**
