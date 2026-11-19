@@ -145,11 +145,9 @@ class SystemLogApiTest extends IntegrationTestCase {
 			$this->markTestSkipped();
 		}
 
-		$cron_class = new \Elgg\SystemLog\Cron();
+		$this->assertTrue($this->invokeInaccessableMethod(\Elgg\SystemLog\Cron::class, 'archiveLog', -1)); // using -1 to make sure all entries are archived
 		
-		$this->assertTrue($this->invokeInaccessableMethod($cron_class, 'archiveLog', -1)); // using -1 to make sure all entries are archived
-
-		$this->assertTrue($this->invokeInaccessableMethod($cron_class, 'deleteLog', 0));
+		$this->assertTrue($this->invokeInaccessableMethod(\Elgg\SystemLog\Cron::class, 'deleteLog', 0));
 		
 		$entries = SystemLog::instance()->getAll();
 
