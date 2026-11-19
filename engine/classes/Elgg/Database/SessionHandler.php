@@ -30,7 +30,7 @@ class SessionHandler implements \SessionHandlerInterface {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	#[\ReturnTypeWillChange]
 	public function open($path, $name) {
@@ -38,7 +38,7 @@ class SessionHandler implements \SessionHandlerInterface {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	#[\ReturnTypeWillChange]
 	public function read($id) {
@@ -52,7 +52,7 @@ class SessionHandler implements \SessionHandlerInterface {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	#[\ReturnTypeWillChange]
 	public function write($id, $data) {
@@ -94,7 +94,7 @@ class SessionHandler implements \SessionHandlerInterface {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	#[\ReturnTypeWillChange]
 	public function close() {
@@ -102,7 +102,7 @@ class SessionHandler implements \SessionHandlerInterface {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	#[\ReturnTypeWillChange]
 	public function destroy($id) {
@@ -115,7 +115,7 @@ class SessionHandler implements \SessionHandlerInterface {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	#[\ReturnTypeWillChange]
 	public function gc($max_lifetime) {
@@ -123,5 +123,35 @@ class SessionHandler implements \SessionHandlerInterface {
 		$delete->where($delete->compare('ts', '<', $this->getCurrentTime("-{$max_lifetime} seconds")->getTimestamp(), ELGG_VALUE_TIMESTAMP));
 		
 		return (bool) $this->db->deleteData($delete);
+	}
+	
+	/**
+	 * Create Session ID
+	 *
+	 * @return string
+	 * @since 7.2
+	 */
+	public function create_sid(): string {
+		return (string) session_create_id();
+	}
+	
+	/**
+	 * Validate that the given session ID is valid and not used
+	 *
+	 * @param string $id session ID
+	 *
+	 * @return bool
+	 * @since 7.2
+	 */
+	public function validateId(string $id): bool {
+		if (empty($id)) {
+			return false;
+		}
+		
+		$select = Select::fromTable(self::TABLE_NAME);
+		$select->select('*')
+			->where($select->compare('session', '=', $id, ELGG_VALUE_STRING));
+		
+		return empty($this->db->getDataRow($select));
 	}
 }

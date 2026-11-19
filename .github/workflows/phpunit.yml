@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.3', '8.4', '8.5']
+        php-versions: ['8.3', '8.4', '8.5', '8.6']
         experimental: [false]
         extra-title: ['']
         db-image: ['mariadb:10.6']
