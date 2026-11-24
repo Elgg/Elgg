@@ -150,6 +150,7 @@ return [
 		],
 		'form:register:fields' => [
 			'object:blog' => [
+				'Elgg\Blog\Forms\RegisterFields::registerGUID' => [],
 				'Elgg\Forms\RegisterFields::addContainerInput' => ['priority' => 600],
 			],
 		],
