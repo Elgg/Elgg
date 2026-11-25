@@ -17,19 +17,13 @@ use Elgg\Notifications\Notification;
  * @internal
  */
 class DatabaseRecord {
-	
-	/**
-	 * @var \stdClass
-	 */
-	protected $row;
-	
+		
 	/**
 	 * Create a new record
 	 *
 	 * @param \stdClass $row the database record
 	 */
-	public function __construct(\stdClass $row) {
-		$this->row = $row;
+	public function __construct(protected \stdClass $row) {
 	}
 	
 	/**

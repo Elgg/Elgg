@@ -11,24 +11,12 @@ use Elgg\Database\QueryBuilder;
 class OrderByClause extends Clause {
 
 	/**
-	 * @var \Closure|CompositeExpression|null|string
-	 */
-	public $expr;
-
-	/**
-	 * @var null|string
-	 */
-	public $direction;
-
-	/**
 	 * Constructor
 	 *
 	 * @param CompositeExpression|\Closure|string $expr      Expression
 	 * @param string                              $direction Direction
 	 */
-	public function __construct($expr = null, $direction = null) {
-		$this->expr = $expr;
-		$this->direction = $direction;
+	public function __construct(public $expr = null, public $direction = null) {
 	}
 
 	/**

@@ -15,26 +15,6 @@ class Csrf {
 	use TimeUsing;
 
 	/**
-	 * @var Config
-	 */
-	protected $config;
-
-	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
-
-	/**
-	 * @var Crypto
-	 */
-	protected $crypto;
-
-	/**
-	 * @var HmacFactory
-	 */
-	protected $hmac;
-
-	/**
 	 * Constructor
 	 *
 	 * @param Config       $config  Elgg config
@@ -43,16 +23,11 @@ class Csrf {
 	 * @param HmacFactory  $hmac    HMAC service
 	 */
 	public function __construct(
-		Config $config,
-		\ElggSession $session,
-		Crypto $crypto,
-		HmacFactory $hmac
+		protected Config $config,
+		protected \ElggSession $session,
+		protected Crypto $crypto,
+		protected HmacFactory $hmac
 	) {
-
-		$this->config = $config;
-		$this->session = $session;
-		$this->crypto = $crypto;
-		$this->hmac = $hmac;
 	}
 
 	/**

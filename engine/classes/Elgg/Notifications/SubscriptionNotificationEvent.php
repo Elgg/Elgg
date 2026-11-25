@@ -14,21 +14,11 @@ use Elgg\Traits\Notifications\EventSerialization;
 class SubscriptionNotificationEvent implements NotificationEvent {
 	
 	use EventSerialization;
-	
+
 	/**
-	 * @var string The name of the action/event
+	 * @var \ElggData|null Action's object
 	 */
-	protected $action;
-	
-	/**
-	 * @var \ElggData Action's object
-	 */
-	protected $object;
-	
-	/**
-	 * @var \ElggEntity User who triggered the event
-	 */
-	protected $actor;
+	protected ?\ElggData $object;
 	
 	/**
 	 * Create a notification event
@@ -39,19 +29,16 @@ class SubscriptionNotificationEvent implements NotificationEvent {
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct(\ElggData $object, string $action, ?\ElggEntity $actor = null) {
+	public function __construct(\ElggData $object, protected string $action, protected ?\ElggEntity $actor = null) {
 		if (!$action) {
 			throw new InvalidArgumentException(__METHOD__ . ' expects a valid action name');
 		}
 		
 		$this->object = $object;
 		
-		$this->actor = $actor;
 		if (!isset($actor)) {
 			$this->actor = _elgg_services()->session_manager->getLoggedInUser();
 		}
-		
-		$this->action = $action;
 	}
 	
 	/**
@@ -87,7 +74,7 @@ class SubscriptionNotificationEvent implements NotificationEvent {
 	 * may have been deleted/disabled since the event was serialized and
 	 * stored in the database.
 	 *
-	 * @return \ElggData|false|null
+	 * @return \ElggData|null
 	 */
 	public function getObject() {
 		return $this->object;

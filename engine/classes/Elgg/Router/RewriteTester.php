@@ -12,20 +12,13 @@ use Elgg\Project\Paths;
  */
 class RewriteTester {
 	
-	protected string $webserver;
+	protected string $webserver = 'unknown';
 	
 	protected bool $serverSupportsRemoteRead;
 	
 	protected bool $rewriteTestPassed;
 	
 	protected string $htaccessIssue;
-
-	/**
-	 * Set the webserver as unknown.
-	 */
-	public function __construct() {
-		$this->webserver = 'unknown';
-	}
 
 	/**
 	 * Run the rewrite test and return a status array

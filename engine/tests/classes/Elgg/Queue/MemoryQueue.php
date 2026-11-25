@@ -10,16 +10,8 @@ namespace Elgg\Queue;
  */
 class MemoryQueue implements \Elgg\Queue\Queue {
 
-	/* @var array */
-	protected $queue = [];
-
-	/**
-	 * Create a queue
-	 */
-	public function __construct() {
-		$this->queue = [];
-	}
-
+	protected array $queue = [];
+	
 	/**
 	 * {@inheritdoc}
 	 */
