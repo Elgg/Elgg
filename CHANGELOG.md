@@ -1,3 +1,15 @@
+<a name="6.3.11"></a>
+### 6.3.11 (2026-11-25)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug fixes
+
+* **developers:** correctly block and forward emails [876792c6b](https://github.com/Elgg/Elgg/commit/876792c6bcaaed2c79077cb4617b6912a479c967) closes [#15191](https://github.com/Elgg/Elgg/issues/15191)
+
+
 <a name="6.3.10"></a>
 ### 6.3.10 (2026-11-05)
 
