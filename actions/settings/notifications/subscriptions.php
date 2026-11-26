@@ -20,6 +20,8 @@ if (empty($subscriptions)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
+$cleanup_subscriptions = (bool) get_input('cleanup_subscriptions', false);
+
 $targets = elgg_get_entities([
 	'guids' => array_keys($subscriptions),
 	'limit' => false,
@@ -29,7 +31,8 @@ $targets = elgg_get_entities([
 /** @var \ElggEntity $target */
 foreach ($targets as $target) {
 	$keys = $subscriptions[$target->guid];
-	
+
+	$saved_relationships = [];
 	foreach ($keys as $key => $preferred_methods) {
 		list (, $type, $subtype, $action) = array_pad(explode(':', $key), 4, null); // array_pad() is to prevent PHP notice undefined index in list()
 		
@@ -40,9 +43,21 @@ foreach ($targets as $target) {
 		foreach ($methods as $method) {
 			if (in_array($method, $preferred_methods)) {
 				$target->addSubscription($user->guid, $method, $type, $subtype, $action);
+				$saved_relationships[] = _elgg_services()->subscriptions->getSubscriptionRelationshipName($method, $type, $subtype, $action);
 			} else {
 				$target->removeSubscription($user->guid, $method, $type, $subtype, $action);
 			}
+		}
+	}
+	
+	if (!$cleanup_subscriptions) {
+		continue;
+	}
+	
+	$all_subscriptions = $target->getSubscriptions($user->guid);
+	foreach ($all_subscriptions as $subscription) {
+		if (!in_array($subscription->relationship, $saved_relationships)) {
+			$subscription->delete();
 		}
 	}
 }
