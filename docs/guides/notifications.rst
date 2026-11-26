@@ -463,7 +463,7 @@ Users can temporarily disable all notifications by going to the Notification set
 Notification settings
 =====================
 
-You can store and retreive notification settings of users with ``\ElggUser::setNotificationSetting()`` and ``\ElggUser::getNotificationSettings()``.
+You can store and retrieve notification settings of users with ``\ElggUser::setNotificationSetting()`` and ``\ElggUser::getNotificationSettings()``.
 
 .. code-block:: php
 
