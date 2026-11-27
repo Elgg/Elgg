@@ -41,11 +41,11 @@ class RemoveOrphanedThreadedComments extends AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 */
 	public function run(Result $result, $offset): Result {
-		/* @var $batch \ElggBatch */
+		/** @var \ElggBatch $batch */
 		$batch = elgg_get_entities($this->getOptions([
 			'offset' => $offset,
 		]));
-		/* @var $comment \ElggComment */
+		/** @var \ElggComment $comment */
 		foreach ($batch as $comment) {
 			if ($comment->delete()) {
 				$result->addSuccesses();

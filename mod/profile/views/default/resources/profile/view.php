@@ -1,6 +1,6 @@
 <?php
 
-/* @var $user \ElggUser */
+/** @var \ElggUser $user */
 $user = elgg_get_page_owner_entity();
 
 $content = elgg_view('profile/wrapper', [

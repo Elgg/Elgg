@@ -53,7 +53,7 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 	
 	public function testApiAuthKeyDisabled() {
 		$apikey = new APIKey();
-		/* @var $entity \ElggApiKey */
+		/** @var \ElggApiKey $entity */
 		$entity = $this->createObject([
 			'subtype' => \ElggApiKey::SUBTYPE,
 		]);

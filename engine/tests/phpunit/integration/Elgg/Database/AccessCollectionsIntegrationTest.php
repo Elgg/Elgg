@@ -50,7 +50,7 @@ class AccessCollectionsIntegrationTest extends IntegrationTestCase {
 		$this->assertTrue($this->service->update($acl));
 		$this->assertNotEmpty($acl->id);
 		
-		/* @var $loaded \ElggAccessCollection */
+		/** @var \ElggAccessCollection $loaded */
 		$loaded = $this->service->get($acl->id);
 		$this->assertInstanceOf(\ElggAccessCollection::class, $loaded);
 		$this->assertEquals($acl->owner_guid, $loaded->owner_guid);
@@ -62,7 +62,7 @@ class AccessCollectionsIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertTrue($this->service->create($acl));
 		
-		/* @var $loaded \ElggAccessCollection */
+		/** @var \ElggAccessCollection $loaded */
 		$loaded = $this->service->get($acl->id);
 		$this->assertInstanceOf(\ElggAccessCollection::class, $loaded);
 		$this->assertEquals($acl->owner_guid, $loaded->owner_guid);

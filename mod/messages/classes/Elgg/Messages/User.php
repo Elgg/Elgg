@@ -25,7 +25,7 @@ class User {
 	
 		// make sure we delete them all
 		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function() use ($user) {
-			/* @var $batch \ElggBatch */
+			/** @var \ElggBatch $batch */
 			$batch = elgg_get_entities([
 				'type' => 'object',
 				'subtype' => 'messages',
@@ -36,7 +36,7 @@ class User {
 				'batch_inc_offset' => false,
 				'limit' => false,
 			]);
-			/* @var $e \ElggMessage */
+			/** @var \ElggMessage $e */
 			foreach ($batch as $e) {
 				$e->delete(true, true);
 			}

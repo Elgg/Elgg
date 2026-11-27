@@ -62,7 +62,7 @@ class Page {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		ksort($plugins_with_settings);
@@ -89,7 +89,7 @@ class Page {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
@@ -146,7 +146,7 @@ class Page {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([

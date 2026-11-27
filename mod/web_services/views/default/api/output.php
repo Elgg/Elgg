@@ -4,7 +4,7 @@
  * This outputs the api in a human readable way.
  */
 
-/* @var $result GenericResult */
+/** @var GenericResult $result */
 $result = elgg_extract('result', $vars);
 
 $export = $result->export();

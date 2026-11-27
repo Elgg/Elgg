@@ -27,7 +27,7 @@ class Entity {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		if ($return->get('edit')) {
@@ -77,7 +77,7 @@ class Entity {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
@@ -119,7 +119,7 @@ class Entity {
 			return null;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 
 		// replace the delete menu item with the trash action
@@ -153,7 +153,7 @@ class Entity {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
@@ -182,7 +182,7 @@ class Entity {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		if (elgg_view_exists("plugins/{$entity->getID()}/settings")) {
@@ -281,7 +281,7 @@ class Entity {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$result = $event->getValue();
 		
 		if (!$entity->isCompleted()) {
@@ -332,10 +332,10 @@ class Entity {
 			'entity' => $entity,
 		]);
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
-		/* @var $menu_item \ElggMenuItem */
+		/** @var \ElggMenuItem $menu_item */
 		foreach ($user_hover->getItems() as $menu_item) {
 			if ($menu_item->getSection() !== 'admin') {
 				continue;
@@ -356,7 +356,7 @@ class Entity {
 	 * @return MenuItems
 	 */
 	public static function registerAdminParent(\Elgg\Event $event): Menuitems {
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 
 		$result[] = \ElggMenuItem::factory([

@@ -5,7 +5,7 @@
 
 echo elgg_view_page(elgg_echo('groups:usersettings:notifications:title'), [
 	'content' => elgg_view_form('settings/notifications/groups', [
-		'action' => 'action/settings/notifications/subscriptions',
+		'action' => elgg_generate_action_url('settings/notifications/subscriptions', [], false),
 	], [
 		'entity' => elgg_get_page_owner_entity(),
 	]),

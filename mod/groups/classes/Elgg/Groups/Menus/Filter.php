@@ -54,7 +54,7 @@ class Filter {
 			return;
 		}
 		
-		/* @var $return \Elgg\Menu\MenuItems */
+		/** @var \Elgg\Menu\MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([

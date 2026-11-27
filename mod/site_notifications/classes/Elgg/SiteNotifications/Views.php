@@ -30,7 +30,7 @@ class Views {
 			return;
 		}
 		
-		/* @var $batch \ElggBatch */
+		/** @var \ElggBatch $batch */
 		$batch = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'site_notification',
@@ -49,7 +49,7 @@ class Views {
 				],
 			],
 		]);
-		/* @var $entity \SiteNotification */
+		/** @var \SiteNotification $entity */
 		foreach ($batch as $entity) {
 			$entity->read = true;
 		}

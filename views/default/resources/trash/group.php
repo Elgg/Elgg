@@ -9,7 +9,7 @@ if (!elgg_get_config('trash_enabled')) {
 	throw new PageNotFoundException();
 }
 
-/* @var $group \ElggGroup */
+/** @var \ElggGroup $group */
 $group = elgg_get_page_owner_entity();
 
 elgg_push_entity_breadcrumbs($group);

@@ -10,7 +10,7 @@ if (!is_dir($dir)) {
 }
 
 $directory = new \DirectoryIterator($dir);
-/* @var $file_info \SplFileInfo */
+/** @var \SplFileInfo $file_info */
 foreach ($directory as $file_info) {
 	if (!$file_info->isFile()) {
 		continue;

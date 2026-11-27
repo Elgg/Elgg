@@ -26,7 +26,9 @@ class AdminHeader {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'administer_utilities:reportedcontent',
 			'text' => elgg_echo('admin:administer_utilities:reportedcontent'),
-			'href' => 'admin/administer_utilities/reportedcontent',
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'administer_utilities/reportedcontent',
+			]),
 			'parent_name' => 'administer',
 		]);
 	

@@ -3,7 +3,7 @@
  * Group activity widget settings
  */
 
-/* @var $widget \ElggWidget */
+/** @var \ElggWidget $widget */
 $widget = elgg_extract('entity', $vars);
 
 // Widget owner might not be a user entity (e.g. on default widgets config page it's an ElggSite entity)
@@ -12,7 +12,7 @@ if (!$owner instanceof \ElggUser) {
 	$owner = elgg_get_logged_in_user_entity();
 }
 
-/* @var $groups \ElggBatch */
+/** @var \ElggBatch $groups */
 $groups = $owner->getGroups([
 	'limit' => false,
 	'batch' => true,
@@ -27,7 +27,7 @@ if (!$widget->group_guid) {
 	$mygroups[0] = '';
 }
 
-/* @var $group \ElggGroup */
+/** @var \ElggGroup $group */
 foreach ($groups as $group) {
 	if (!$group->isToolEnabled('activity')) {
 		continue;

@@ -25,7 +25,7 @@ class EntityNavigation {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$options = [

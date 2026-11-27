@@ -8,7 +8,7 @@ class ElggApiKeyIntegrationTest extends IntegrationTestCase {
 
 	public function testGetKeyFunctions() {
 		
-		/* @var $entity \ElggApiKey */
+		/** @var \ElggApiKey $entity */
 		$entity = $this->createObject([
 			'subtype' => \ElggApiKey::SUBTYPE,
 		]);
@@ -24,7 +24,7 @@ class ElggApiKeyIntegrationTest extends IntegrationTestCase {
 	
 	public function testRegenerateKeys() {
 		
-		/* @var $entity \ElggApiKey */
+		/** @var \ElggApiKey $entity */
 		$entity = $this->createObject([
 			'subtype' => \ElggApiKey::SUBTYPE,
 		]);
@@ -53,7 +53,7 @@ class ElggApiKeyIntegrationTest extends IntegrationTestCase {
 		$admin = $this->getAdmin();
 		_elgg_services()->session_manager->setLoggedInUser($admin);
 		
-		/* @var $entity \ElggApiKey */
+		/** @var \ElggApiKey $entity */
 		$entity = $this->createObject([
 			'subtype' => \ElggApiKey::SUBTYPE,
 		]);
@@ -70,7 +70,7 @@ class ElggApiKeyIntegrationTest extends IntegrationTestCase {
 	
 	public function testEnableDisableKeys() {
 		
-		/* @var $entity \ElggApiKey */
+		/** @var \ElggApiKey $entity */
 		$entity = $this->createObject([
 			'subtype' => \ElggApiKey::SUBTYPE,
 		]);

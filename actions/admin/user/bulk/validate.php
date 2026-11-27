@@ -14,7 +14,7 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($user_guids) {
 		'guids' => $user_guids,
 		'limit' => false,
 	]);
-	/* @var $user \ElggUser */
+	/** @var \ElggUser $user */
 	foreach ($users as $user) {
 		if ($user->isValidated()) {
 			continue;

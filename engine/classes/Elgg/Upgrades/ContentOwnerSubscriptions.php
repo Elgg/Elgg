@@ -53,7 +53,7 @@ class ContentOwnerSubscriptions extends AsynchronousUpgrade {
 	 */
 	public function run(Result $result, $offset): Result {
 		
-		/* @var $entities \ElggBatch */
+		/** @var \ElggBatch $entities */
 		$entities = elgg_get_entities($this->getOptions([
 			'offset' => $offset,
 		]));
@@ -66,7 +66,7 @@ class ContentOwnerSubscriptions extends AsynchronousUpgrade {
 			$result->addSuccesses();
 		};
 		
-		/* @var $entity \ElggEntity */
+		/** @var \ElggEntity $entity */
 		foreach ($entities as $entity) {
 			$owner = $entity->getOwnerEntity();
 			if (!$owner instanceof \ElggUser) {

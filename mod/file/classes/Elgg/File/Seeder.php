@@ -20,7 +20,7 @@ class Seeder extends Seed {
 		
 		while ($this->getCount() < $this->limit) {
 			try {
-				/* @var $file \ElggFile */
+				/** @var \ElggFile $file */
 				$file = $this->createObject([
 					'subtype' => 'file',
 				]);
@@ -57,7 +57,7 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
-		/* @var $files \ElggBatch */
+		/** @var \ElggBatch $files */
 		$files = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'file',
@@ -67,7 +67,7 @@ class Seeder extends Seed {
 			'batch_inc_offset' => false,
 		]);
 
-		/* @var $file \ElggFile */
+		/** @var \ElggFile $file */
 		foreach ($files as $file) {
 			if ($file->delete()) {
 				$this->log("Deleted file {$file->guid}");

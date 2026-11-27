@@ -18,9 +18,9 @@ class Notifications {
 	 * @return void|true
 	 */
 	public static function createSiteNotifications(\Elgg\Event $elgg_event) {
-		/* @var $notification \Elgg\Notifications\Notification */
+		/** @var \Elgg\Notifications\Notification $notification */
 		$notification = $elgg_event->getParam('notification');
-		/* @var $event \Elgg\Notifications\NotificationEvent */
+		/** @var \Elgg\Notifications\NotificationEvent $event */
 		$event = $elgg_event->getParam('event');
 		
 		$note = elgg_call(ELGG_IGNORE_ACCESS | ELGG_DISABLE_SYSTEM_LOG, function() use ($notification, $event) {

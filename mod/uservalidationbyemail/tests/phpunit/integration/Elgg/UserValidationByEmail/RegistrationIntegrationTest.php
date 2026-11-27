@@ -39,7 +39,7 @@ class RegistrationIntegrationTest extends ActionResponseTestCase {
 		
 		$this->assertInstanceOf(OkResponse::class, $response);
 		
-		/* @var $user \ElggUser */
+		/** @var \ElggUser $user */
 		$user = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($username) {
 			return elgg_get_user_by_username($username);
 		});
@@ -94,7 +94,7 @@ class RegistrationIntegrationTest extends ActionResponseTestCase {
 		
 		$this->assertInstanceOf(OkResponse::class, $response);
 		
-		/* @var $user \ElggUser */
+		/** @var \ElggUser $user */
 		$user = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($username) {
 			return elgg_get_user_by_username($username);
 		});

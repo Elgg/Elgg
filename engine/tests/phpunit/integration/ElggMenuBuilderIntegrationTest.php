@@ -163,7 +163,7 @@ class ElggMenuBuilderIntegrationTest extends IntegrationTestCase {
 		$default_section = $sorted->get('default');
 		$this->assertInstanceOf(MenuSection::class, $default_section);
 		
-		/* @var $menu_item ElggMenuItem */
+		/** @var ElggMenuItem $menu_item */
 		foreach ($default_section as $menu_item) {
 			$this->assertEmpty($menu_item->getParentName());
 		}

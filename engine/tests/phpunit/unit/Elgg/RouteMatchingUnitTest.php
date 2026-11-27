@@ -188,7 +188,7 @@ class RouteMatchingUnitTest extends \Elgg\UnitTestCase {
 		ob_get_clean();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
-		/* @var $response Response */
+		/** @var Response $response */
 
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(200, $response->getStatusCode());
@@ -222,7 +222,7 @@ class RouteMatchingUnitTest extends \Elgg\UnitTestCase {
 		ob_get_clean();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
-		/* @var $response Response */
+		/** @var Response $response */
 
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(200, $response->getStatusCode());

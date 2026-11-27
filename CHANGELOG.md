@@ -1,3 +1,24 @@
+<a name="7.1.4"></a>
+### 7.1.4 (2026-11-27)
+
+#### Contributors
+
+* Jerôme Bakker (13)
+* Jeroen Dalsem (4)
+
+#### Bug fixes
+
+* **notifications:** remove all obsolete preferences when saving them [72e4ceb76](https://github.com/Elgg/Elgg/commit/72e4ceb7696fd1e7038eaf41ac764c43b25312a3)
+* **email:** sanitize the name of email addresses [6bf810368](https://github.com/Elgg/Elgg/commit/6bf8103681df39d8222e89289e9a4fb15a01781f)
+* **blog:** preview should only create one blog [47848f30d](https://github.com/Elgg/Elgg/commit/47848f30dd9d9f72df59fe7d5dee91cbd8a0942f)
+* **database:** correctly convert query parameters types [8c73a64f8](https://github.com/Elgg/Elgg/commit/8c73a64f8c7f43634bf2a0b5268ecbd62f930358) closes [#15170](https://github.com/Elgg/Elgg/issues/15170)
+* **upgrades:**
+  * correctly format upgrade progress [44439742d](https://github.com/Elgg/Elgg/commit/44439742d91c039378b1d15124c544d942b13dd1) closes [#15160](https://github.com/Elgg/Elgg/issues/15160)
+  * prevent restarting completed upgrades [9212772e3](https://github.com/Elgg/Elgg/commit/9212772e3973538a59254c8a7bd9021fce89d612) closes [#15161](https://github.com/Elgg/Elgg/issues/15161)
+* **plugins:** filtering plugins does not hide list items correctly [5674fcda5](https://github.com/Elgg/Elgg/commit/5674fcda52586b227397ab4cd1f16da2aafec1df)
+* **css:** added row gap between system messages [f7abb19b7](https://github.com/Elgg/Elgg/commit/f7abb19b7c0090fcf2d4149585a4d28d5d7df4e0) closes [#15178](https://github.com/Elgg/Elgg/issues/15178)
+
+
 <a name="7.1.3"></a>
 ### 7.1.3 (2026-11-05)
 
@@ -245,6 +266,18 @@
 * **profile:** the Twitter profile field has been removed [6095844fb](https://github.com/Elgg/Elgg/commit/6095844fbebd7f42199d1dae11c8c562f7235d6a) closes [#14925](https://github.com/Elgg/Elgg/issues/14925)
 
 
+<a name="6.3.11"></a>
+### 6.3.11 (2026-11-25)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+
+#### Bug fixes
+
+* **developers:** correctly block and forward emails [876792c6b](https://github.com/Elgg/Elgg/commit/876792c6bcaaed2c79077cb4617b6912a479c967) closes [#15191](https://github.com/Elgg/Elgg/issues/15191)
+
+
 <a name="6.3.10"></a>
 ### 6.3.10 (2026-11-05)
 
@@ -277,8 +310,8 @@
 * **installer:** improved sanitization of config values [de2fbfbdc](https://github.com/Elgg/Elgg/commit/de2fbfbdc35f306218ddbd0285d7182313deaead)
 * **core:** return a valid IP address for client IP [a86c43ff5](https://github.com/Elgg/Elgg/commit/a86c43ff5b7029d3f04de35a6f1c07cc2cb2c12e)
 * **notifications:**
-	* improved handling of embedded images in emails [425293cd9](https://github.com/Elgg/Elgg/commit/425293cd9827a2192de48305369e714ed8a111e7)
-	* validate mute options during action [912e52531](https://github.com/Elgg/Elgg/commit/912e525319ccab93a6b024ea6736875dd156a227)
+  * improved handling of embedded images in emails [425293cd9](https://github.com/Elgg/Elgg/commit/425293cd9827a2192de48305369e714ed8a111e7)
+  * validate mute options during action [912e52531](https://github.com/Elgg/Elgg/commit/912e525319ccab93a6b024ea6736875dd156a227)
 * **profile:** validate permission before changing header image [cd5ce2c10](https://github.com/Elgg/Elgg/commit/cd5ce2c10fc2a1be342a820eac2bbc1b6c088c72)
 
 

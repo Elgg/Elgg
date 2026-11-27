@@ -80,7 +80,7 @@ class EventsService {
 		// This starts as a string, but if a handler type-hints an object we convert it on-demand inside
 		// \Elgg\HandlersService::call and keep it alive during all handler calls. We do this because
 		// creating objects for every triggering is expensive.
-		/* @var $event Event|string */
+		/** @var Event|string $event */
 		$event = 'event';
 		$event_args = [
 			$name,
@@ -135,7 +135,7 @@ class EventsService {
 		// This starts as a string, but if a handler type-hints an object we convert it on-demand inside
 		// \Elgg\HandlersService::call and keep it alive during all handler calls. We do this because
 		// creating objects for every triggering is expensive.
-		/* @var $event Event|string */
+		/** @var Event|string $event */
 		$event = 'event';
 		foreach ($this->getOrderedHandlers($name, $type) as $handler) {
 			try {

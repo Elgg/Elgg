@@ -220,4 +220,22 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 			[null, 'foo', 'bar'],
 		];
 	}
+
+	#[DataProvider('relationshipNameProvider')]
+	public function testGetSubscriptionRelationshipName($expected, $method, $type = null, $subtype = null, $action = null) {
+		$this->assertEquals($expected, $this->service->getSubscriptionRelationshipName($method, $type, $subtype, $action));
+	}
+
+	public static function relationshipNameProvider() {
+		return [
+			['notify:site', 'site'],
+			['notify:site', 'site', 'type', null, null],
+			['notify:site', 'site', null, 'subtype', null],
+			['notify:site', 'site', null, null, 'action'],
+			['notify:site', 'site', 'type', 'subtype', null],
+			['notify:site', 'site', 'type', null, 'action'],
+			['notify:site', 'site', null, 'subtype', 'action'],
+			['notify:type:subtype:action:site', 'site', 'type', 'subtype', 'action'],
+		];
+	}
 }

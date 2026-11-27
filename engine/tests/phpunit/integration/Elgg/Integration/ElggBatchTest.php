@@ -151,11 +151,11 @@ class ElggBatchTest extends IntegrationTestCase {
 		$count = elgg_count_entities($options);
 		$this->assertEquals(5, $count);
 		
-		/* @var $batch \ElggBatch */
+		/** @var \ElggBatch $batch */
 		$batch = elgg_get_entities($options);
 		$this->assertInstanceOf('\ElggBatch', $batch);
 		
-		/* @var $entity \ElggObject */
+		/** @var \ElggObject $entity */
 		foreach ($batch as $index => $entity) {
 			if ($index < 2) {
 				$batch->reportFailure();
@@ -206,11 +206,11 @@ class ElggBatchTest extends IntegrationTestCase {
 		
 		$cache_size = count($this->getInaccessableProperty($queryCache, 'keys'));
 		
-		/* @var $batch \ElggBatch */
+		/** @var \ElggBatch $batch */
 		$batch = elgg_get_entities($options);
 		$this->assertInstanceOf('\ElggBatch', $batch);
 		
-		/* @var $entity \ElggObject */
+		/** @var \ElggObject $entity */
 		foreach ($batch as $entity) {
 			// do nothing, just loop
 			// the entities query shouldn't end up in the cache

@@ -73,7 +73,7 @@ class MigrateACLNotificationPreferences extends AsynchronousUpgrade {
 			}
 		};
 		
-		/* @var $md \ElggMetadata */
+		/** @var \ElggMetadata $md */
 		foreach ($metadata as $md) {
 			if ($md->value !== -1) {
 				// preference for an access collection which isn't migrated

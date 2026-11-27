@@ -22,7 +22,7 @@ class Seeder extends Seed {
 		
 		while ($this->getCount() < $this->limit) {
 			try {
-				/* @var $notification \SiteNotification */
+				/** @var \SiteNotification $notification */
 				$notification = $this->createObject([
 					'subtype' => 'site_notification',
 					'access_id' => ACCESS_PRIVATE,
@@ -58,7 +58,7 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
-		/* @var $notifications \ElggBatch */
+		/** @var \ElggBatch $notifications */
 		$notifications = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'site_notification',
@@ -68,7 +68,7 @@ class Seeder extends Seed {
 			'batch_inc_offset' => false,
 		]);
 		
-		/* @var $notification \SiteNotification */
+		/** @var \SiteNotification $notification */
 		foreach ($notifications as $notification) {
 			if ($notification->delete()) {
 				$this->log("Deleted site notification {$notification->guid}");

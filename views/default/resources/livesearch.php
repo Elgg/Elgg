@@ -8,7 +8,7 @@
 use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Exceptions\Http\PageNotFoundException;
 
-/* @var $request \Elgg\Http\Request */
+/** @var \Elgg\Http\Request $request */
 $request = elgg_extract('request', $vars);
 
 // pass all input params (GET & POST) into $vars

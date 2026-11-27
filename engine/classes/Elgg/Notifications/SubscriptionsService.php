@@ -176,10 +176,6 @@ class SubscriptionsService {
 	public function addSubscription(int $user_guid, string $method, int $target_guid, ?string $type = null, ?string $subtype = null, ?string $action = null) {
 		$this->assertValidTypeSubtypeActionForSubscription($type, $subtype, $action);
 		
-		$rel = [
-			self::RELATIONSHIP_PREFIX,
-		];
-		
 		if (!_elgg_services()->notifications->isRegisteredMethod($method)) {
 			return false;
 		}
@@ -187,20 +183,36 @@ class SubscriptionsService {
 		// remove the muted notification relationship
 		$this->unmuteNotifications($user_guid, $target_guid);
 		
+		$relationship = new \ElggRelationship();
+		$relationship->guid_one = $user_guid;
+		$relationship->relationship = $this->getSubscriptionRelationshipName($method, $type, $subtype, $action);
+		$relationship->guid_two = $target_guid;
+		
+		return $relationship->save();
+	}
+
+	/**
+	 * @param string      $method  The delivery method of the notifications
+	 * @param null|string $type    (optional) entity type
+	 * @param null|string $subtype (optional) entity subtype
+	 * @param null|string $action  (optional) notification action (eg. 'create')
+	 *
+	 * @return string
+	 */
+	public function getSubscriptionRelationshipName(string $method, ?string $type = null, ?string $subtype = null, ?string $action = null): string {
+		$rel = [
+			self::RELATIONSHIP_PREFIX,
+		];
+
 		if (!empty($type) && !empty($subtype) && !empty($action)) {
 			$rel[] = $type;
 			$rel[] = $subtype;
 			$rel[] = $action;
 		}
-		
+
 		$rel[] = $method;
-		
-		$relationship = new \ElggRelationship();
-		$relationship->guid_one = $user_guid;
-		$relationship->relationship = implode(':', $rel);
-		$relationship->guid_two = $target_guid;
-		
-		return $relationship->save();
+
+		return implode(':', $rel);
 	}
 	
 	/**
@@ -219,20 +231,8 @@ class SubscriptionsService {
 	 */
 	public function hasSubscription(int $user_guid, string $method, int $target_guid, ?string $type = null, ?string $subtype = null, ?string $action = null): bool {
 		$this->assertValidTypeSubtypeActionForSubscription($type, $subtype, $action);
-		
-		$rel = [
-			self::RELATIONSHIP_PREFIX,
-		];
-		
-		if (!empty($type) && !empty($subtype) && !empty($action)) {
-			$rel[] = $type;
-			$rel[] = $subtype;
-			$rel[] = $action;
-		}
-		
-		$rel[] = $method;
-		
-		return $this->relationshipsTable->check($user_guid, implode(':', $rel), $target_guid) instanceof \ElggRelationship;
+				
+		return $this->relationshipsTable->check($user_guid, $this->getSubscriptionRelationshipName($method, $type, $subtype, $action), $target_guid) instanceof \ElggRelationship;
 	}
 	
 	/**
@@ -290,24 +290,13 @@ class SubscriptionsService {
 	public function removeSubscription(int $user_guid, string $method, int $target_guid, ?string $type = null, ?string $subtype = null, ?string $action = null) {
 		$this->assertValidTypeSubtypeActionForSubscription($type, $subtype, $action);
 		
-		$rel = [
-			self::RELATIONSHIP_PREFIX,
-		];
-		
-		if (!empty($type) && !empty($subtype) && !empty($action)) {
-			$rel[] = $type;
-			$rel[] = $subtype;
-			$rel[] = $action;
-		}
-		
-		$rel[] = $method;
-		
-		if (!$this->relationshipsTable->check($user_guid, implode(':', $rel), $target_guid)) {
+		$relationship_name = $this->getSubscriptionRelationshipName($method, $type, $subtype, $action);
+		if (!$this->relationshipsTable->check($user_guid, $relationship_name, $target_guid)) {
 			// subscription doesn't exist
 			return true;
 		}
 		
-		return $this->relationshipsTable->remove($user_guid, implode(':', $rel), $target_guid);
+		return $this->relationshipsTable->remove($user_guid, $relationship_name, $target_guid);
 	}
 	
 	/**

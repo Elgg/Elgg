@@ -23,7 +23,7 @@ class NotificationEventHandlerIntegrationTest extends IntegrationTestCase {
 		$subscribed = $this->createUser();
 		$muted = $this->createUser();
 		
-		/* @var $object \ElggObject */
+		/** @var \ElggObject $object */
 		$object = $event->getObject();
 		$owner = $object->getOwnerEntity();
 		

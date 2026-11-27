@@ -145,7 +145,7 @@ class Accounts {
 			}
 		}
 
-		/* @var $user \ElggUser */
+		/** @var \ElggUser $user */
 		$user = new $constructor();
 		
 		if (isset($subtype)) {

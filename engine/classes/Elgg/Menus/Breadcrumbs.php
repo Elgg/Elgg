@@ -20,7 +20,7 @@ class Breadcrumbs {
 	 * @return void
 	 */
 	public static function cleanupBreadcrumbs(\Elgg\Event $event): void {
-		/* @var $breadcrumbs PreparedMenu */
+		/** @var PreparedMenu $breadcrumbs */
 		$breadcrumbs = $event->getValue();
 		
 		$items = $breadcrumbs->getItems('default');
@@ -52,10 +52,10 @@ class Breadcrumbs {
 	 * @return null|PreparedMenu
 	 */
 	public static function addHomeItem(\Elgg\Event $event): ?PreparedMenu {
-		/* @var $return PreparedMenu */
+		/** @var PreparedMenu $return */
 		$return = $event->getValue();
 		
-		/* @var $items \ElggMenuItem[] */
+		/** @var \ElggMenuItem[] $items */
 		$items = $return->getItems('default');
 		if (empty($items)) {
 			return null;

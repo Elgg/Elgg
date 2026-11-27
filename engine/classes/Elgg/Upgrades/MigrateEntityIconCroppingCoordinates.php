@@ -38,11 +38,11 @@ class MigrateEntityIconCroppingCoordinates extends \Elgg\Upgrade\SystemUpgrade {
 	 * {@inheritdoc}
 	 */
 	public function run(Result $result, $offset): Result {
-		/* @var $entities \ElggBatch */
+		/** @var \ElggBatch $entities */
 		$entities = elgg_get_entities($this->getOptions([
 			'offset' => $offset,
 		]));
-		/* @var $entity \ElggEntity */
+		/** @var \ElggEntity $entity */
 		foreach ($entities as $entity) {
 			$coords = [
 				'x1' => (int) $entity->x1,

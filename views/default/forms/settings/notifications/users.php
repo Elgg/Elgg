@@ -19,6 +19,12 @@ echo elgg_view_field([
 	'value' => $user->guid,
 ]);
 
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'cleanup_subscriptions',
+	'value' => 1,
+]);
+
 echo elgg_view('output/longtext', [
 	'value' => elgg_echo('usersettings:notifications:users:description'),
 ]);

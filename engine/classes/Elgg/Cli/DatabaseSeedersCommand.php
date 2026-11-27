@@ -34,7 +34,7 @@ class DatabaseSeedersCommand extends Command {
 			$seeders = _elgg_services()->seeder->getSeederClasses();
 			
 			foreach ($seeders as $seeder) {
-				/* @var $seed Seed */
+				/** @var Seed $seed */
 				$seed = new $seeder();
 				
 				$table->addRow([

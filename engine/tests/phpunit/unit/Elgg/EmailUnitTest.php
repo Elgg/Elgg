@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Email\Attachment;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Mime\Address;
 
 class EmailUnitTest extends UnitTestCase {
@@ -309,5 +310,39 @@ class EmailUnitTest extends UnitTestCase {
 		// with microtime
 		$result = $email->createEntityMessageID($entity, true);
 		$this->assertMatchesRegularExpression('/\S+\.entity\.[0-9]+\.[0-9\.]+@\S+/', $result);
+	}
+	
+	#[DataProvider('emailNameProvider')]
+	public function testSanitizeEmailName($input_name, $expected_name) {
+		$email = new Email();
+		
+		$address = new Address('from@elgg.org', $input_name);
+		$result = $this->invokeInaccessableMethod($email, 'sanitizeAddressName', $address);
+		
+		$this->assertEquals('from@elgg.org', $result->getAddress());
+		$this->assertEquals($expected_name, $result->getName());
+		
+		if ($input_name !== $expected_name) {
+			// a new Address should have been created, so check
+			$this->assertNotEquals($address, $result);
+		}
+	}
+	
+	public static function emailNameProvider(): array {
+		return [
+			['', ''],
+			['No special characters', 'No special characters'],
+			['Test & case', 'Test & case'],
+			['Test &amp; case', 'Test & case'],
+			['Test < case', 'Test < case'],
+			['Test &lt; case', 'Test < case'],
+			['Test > case', 'Test > case'],
+			['Test &gt; case', 'Test > case'],
+			["Elgg's website", "Elgg's website"],
+			["Elgg&#39;s website", "Elgg's website"],
+			['Elgg"s website', 'Elgg"s website'],
+			["Elgg&quot;s website", 'Elgg"s website'],
+			["Elgg&#34;s website", 'Elgg"s website'],
+		];
 	}
 }

@@ -47,7 +47,7 @@ class Filter {
 		}
 		
 		// register mentions tab
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([

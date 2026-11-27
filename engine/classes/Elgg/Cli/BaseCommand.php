@@ -42,7 +42,7 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 	 * @return mixed
 	 */
 	public function ask($question, $default = null, $hidden = false, $required = true) {
-		/* @var $helper QuestionHelper */
+		/** @var QuestionHelper $helper */
 		$helper = $this->getHelper('question');
 
 		$question = trim($question);

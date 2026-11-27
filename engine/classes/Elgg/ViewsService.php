@@ -198,7 +198,7 @@ class ViewsService {
 			return false;
 		}
 
-		/* @var $file \SplFileInfo */
+		/** @var \SplFileInfo $file */
 		foreach ($dir as $file) {
 			$path = $file->getPath() .  '/' . $file->getBasename('.php');
 			$path = Paths::sanitize($path, false);

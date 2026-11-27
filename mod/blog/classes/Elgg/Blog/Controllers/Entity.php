@@ -17,14 +17,14 @@ class Entity extends GenericEntity {
 	 */
 	protected function getPageOptions(string $page, array $options): array {
 		if ($page === 'edit') {
+			$revision = $this->getRevision();
+			if ($revision instanceof \ElggAnnotation) {
+				$options['title'] = elgg_echo('edit:object:blog') . ' ' . elgg_echo('blog:edit_revision_notice');
+			}
+			
 			$sidebar_view = $this->route?->getOption('sidebar_view');
 			if (!empty($sidebar_view) && elgg_view_exists($sidebar_view)) {
 				$entity = $this->getEntity(true);
-				$revision = $this->getRevision();
-				
-				if ($revision instanceof \ElggAnnotation) {
-					$options['title'] .= ' ' . elgg_echo('blog:edit_revision_notice');
-				}
 				
 				$options['sidebar'] = elgg_view($sidebar_view, [
 					'entity' => $entity,

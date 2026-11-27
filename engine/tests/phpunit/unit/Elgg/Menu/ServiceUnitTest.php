@@ -230,9 +230,9 @@ class ServiceUnitTest extends UnitTestCase {
 			}
 		};
 		
-		/* @var $section MenuSection */
+		/** @var MenuSection $section */
 		foreach ($menu as $section) {
-			/* @var $menu_item \ElggMenuItem */
+			/** @var \ElggMenuItem $menu_item */
 			foreach ($section as $menu_item) {
 				$checkItemView($menu_item);
 			}
@@ -256,9 +256,9 @@ class ServiceUnitTest extends UnitTestCase {
 			}
 		};
 		
-		/* @var $section MenuSection */
+		/** @var MenuSection $section */
 		foreach ($menu as $section) {
-			/* @var $menu_item \ElggMenuItem */
+			/** @var \ElggMenuItem $menu_item */
 			foreach ($section as $menu_item) {
 				$checkItemView($menu_item);
 			}

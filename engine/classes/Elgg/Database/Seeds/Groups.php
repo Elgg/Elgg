@@ -106,7 +106,7 @@ class Groups extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
-		/* @var $groups \ElggBatch */
+		/** @var \ElggBatch $groups */
 		$groups = elgg_get_entities([
 			'type' => 'group',
 			'metadata_name' => '__faker',
@@ -115,7 +115,7 @@ class Groups extends Seed {
 			'batch_inc_offset' => false,
 		]);
 
-		/* @var $group \ElggGroup */
+		/** @var \ElggGroup $group */
 		foreach ($groups as $group) {
 			if ($group->delete(true, true)) {
 				$this->log("Deleted group {$group->guid}");

@@ -29,7 +29,7 @@ class PagesNav {
 				
 		$next_level_guids = [$top->guid];
 		while (!empty($next_level_guids)) {
-			/* @var $children \ElggBatch */
+			/** @var \ElggBatch $children */
 			$children = elgg_get_entities([
 				'type' => 'object',
 				'subtype' => 'page',
@@ -43,7 +43,7 @@ class PagesNav {
 			]);
 			
 			$next_level_guids = [];
-			/* @var $child \ElggPage */
+			/** @var \ElggPage $child */
 			foreach ($children as $child) {
 				$return[] = \ElggMenuItem::factory([
 					'name' => $child->guid,

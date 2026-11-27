@@ -33,7 +33,7 @@ class Social {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$comment_count = $entity->countComments();
