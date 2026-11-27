@@ -1,3 +1,24 @@
+<a name="7.1.4"></a>
+### 7.1.4 (2026-11-27)
+
+#### Contributors
+
+* Jerôme Bakker (13)
+* Jeroen Dalsem (4)
+
+#### Bug fixes
+
+* **notifications:** remove all obsolete preferences when saving them [72e4ceb76](https://github.com/Elgg/Elgg/commit/72e4ceb7696fd1e7038eaf41ac764c43b25312a3)
+* **email:** sanitize the name of email addresses [6bf810368](https://github.com/Elgg/Elgg/commit/6bf8103681df39d8222e89289e9a4fb15a01781f)
+* **blog:** preview should only create one blog [47848f30d](https://github.com/Elgg/Elgg/commit/47848f30dd9d9f72df59fe7d5dee91cbd8a0942f)
+* **database:** correctly convert query parameters types [8c73a64f8](https://github.com/Elgg/Elgg/commit/8c73a64f8c7f43634bf2a0b5268ecbd62f930358) closes [#15170](https://github.com/Elgg/Elgg/issues/15170)
+* **upgrades:**
+  * correctly format upgrade progress [44439742d](https://github.com/Elgg/Elgg/commit/44439742d91c039378b1d15124c544d942b13dd1) closes [#15160](https://github.com/Elgg/Elgg/issues/15160)
+  * prevent restarting completed upgrades [9212772e3](https://github.com/Elgg/Elgg/commit/9212772e3973538a59254c8a7bd9021fce89d612) closes [#15161](https://github.com/Elgg/Elgg/issues/15161)
+* **plugins:** filtering plugins does not hide list items correctly [5674fcda5](https://github.com/Elgg/Elgg/commit/5674fcda52586b227397ab4cd1f16da2aafec1df)
+* **css:** added row gap between system messages [f7abb19b7](https://github.com/Elgg/Elgg/commit/f7abb19b7c0090fcf2d4149585a4d28d5d7df4e0) closes [#15178](https://github.com/Elgg/Elgg/issues/15178)
+
+
 <a name="7.1.3"></a>
 ### 7.1.3 (2026-11-05)
 
