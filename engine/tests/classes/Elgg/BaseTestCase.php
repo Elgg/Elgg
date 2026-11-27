@@ -267,6 +267,11 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	protected static function invokeInaccessableMethod($argument, string $method, ...$args) {
 		$reflector = new \ReflectionClass($argument);
 		
+		if (is_string($argument)) {
+			// further use doesn't expect a value for non instantiated class (static function)
+			$argument = null;
+		}
+		
 		return $reflector->getMethod($method)->invoke($argument, ...$args);
 	}
 	
@@ -280,6 +285,11 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	 */
 	protected static function getInaccessableProperty($argument, string $property) {
 		$reflector = new \ReflectionClass($argument);
+		
+		if (is_string($argument)) {
+			// further use doesn't expect a value for non instantiated class (static property)
+			$argument = null;
+		}
 		
 		if ($reflector->hasProperty($property)) {
 			return $reflector->getProperty($property)->getValue($argument);

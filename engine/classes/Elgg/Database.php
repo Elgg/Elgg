@@ -300,18 +300,18 @@ class Database {
 	 * This is used to cache queries whose results were transformed by the callback. If the callback involves
 	 * object method calls of the same class, different instances will return different values.
 	 *
-	 * @param callable $callback The callable value to fingerprint
+	 * @param mixed $callback The callable value to fingerprint
 	 *
 	 * @return string A string that is unique for each callable passed in
 	 * @since 1.9.4
 	 */
-	protected function fingerprintCallback($callback): string {
+	protected function fingerprintCallback(mixed $callback): string {
 		if (is_string($callback)) {
 			return $callback;
 		}
 
 		if (is_object($callback)) {
-			return spl_object_hash($callback) . '::__invoke';
+			return spl_object_id($callback) . '::__invoke';
 		}
 
 		if (is_array($callback)) {
@@ -319,7 +319,7 @@ class Database {
 				return "{$callback[0]}::{$callback[1]}";
 			}
 
-			return spl_object_hash($callback[0]) . "::{$callback[1]}";
+			return spl_object_id($callback[0]) . "::{$callback[1]}";
 		}
 
 		// this should not happen

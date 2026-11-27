@@ -6,10 +6,7 @@ use Elgg\IntegrationTestCase;
 
 class SessionHandlerIntegrationTest extends IntegrationTestCase {
 	
-	/**
-	 * @var SessionHandler
-	 */
-	protected $handler;
+	protected ?SessionHandler $handler = null;
 	
 	public function up() {
 		$this->handler = new SessionHandler(_elgg_services()->db);
@@ -74,5 +71,39 @@ class SessionHandlerIntegrationTest extends IntegrationTestCase {
 		foreach ($active_ids as $id) {
 			$this->assertNotEmpty($this->handler->read($id), "Session data for ID: {$id} was cleaned");
 		}
+	}
+	
+	public function testCreateSID() {
+		$id1 = $this->handler->create_sid();
+		$this->assertNotEmpty($id1);
+		
+		$id2 = $this->handler->create_sid();
+		$this->assertNotEmpty($id2);
+		
+		$this->assertNotEquals($id1, $id2);
+	}
+	
+	public function testValidateIdEmptyId() {
+		$this->assertFalse($this->handler->validateId(''));
+	}
+	
+	public function testValidateIdExistingId() {
+		$id = md5(microtime(true));
+		$data = $this->faker()->text();
+		
+		$this->handler->write($id, $data);
+		
+		$this->assertFalse($this->handler->validateId($id));
+	}
+	
+	public function testValidateIdUniqueId() {
+		$id = md5(microtime(true));
+		$data = $this->faker()->text();
+		
+		$this->handler->write($id, $data);
+		
+		$id2 = md5(microtime(true));
+		
+		$this->assertTrue($this->handler->validateId($id2));
 	}
 }
