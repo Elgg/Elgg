@@ -25,16 +25,13 @@ $export = $result->export();
 			</td>
 		</tr>
 
-		<?php if ($export->message != '') { ?>
+		<?php if (isset($export->message)) { ?>
 		<tr><td width="100" valign="top"><b>Message:</b></td> <td><?php echo $export->message; ?></td></tr>
 		<?php } ?>
-		<?php if ($export->result) { ?>
+		<?php if (isset($export->result)) { ?>
 		<tr><td width="100" valign="top"><b>Result:</b></td> <td><pre><?php print_r($export->result); ?></pre></td></tr>
 		<?php } ?>
-		<?php if ($export->pam) { ?>
-		<tr><td width="100" valign="top"><b>PAM:</b></td> <td><pre><?php print_r($export->pam); ?></pre></td></tr>
-		<?php } ?>
-		<?php if ($export->runtime_errors) { ?>
+		<?php if (isset($export->runtime_errors)) { ?>
 		<tr><td width="100" valign="top"><b>Runtime:</b></td> <td><pre><?php print_r($export->runtime_errors); ?></pre></td></tr>
 		<?php } ?>
 	</table>
