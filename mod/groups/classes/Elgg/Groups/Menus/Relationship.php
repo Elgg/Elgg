@@ -73,7 +73,7 @@ class Relationship {
 			return;
 		}
 		
-		/* @var $result \Elgg\Menu\MenuItems */
+		/** @var \Elgg\Menu\MenuItems $result */
 		$result = $event->getValue();
 		
 		$page_owner = elgg_get_page_owner_entity();
@@ -125,7 +125,7 @@ class Relationship {
 			return;
 		}
 		
-		/* @var $result \Elgg\Menu\MenuItems */
+		/** @var \Elgg\Menu\MenuItems $result */
 		$result = $event->getValue();
 		
 		$page_owner = elgg_get_page_owner_entity();

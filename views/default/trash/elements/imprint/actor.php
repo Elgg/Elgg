@@ -17,7 +17,7 @@ if (!isset($actor_text)) {
 			'limit' => 1,
 		]);
 		if (!empty($actors)) {
-			/* @var $actor \ElggUser */
+			/** @var \ElggUser $actor */
 			$actor = $actors[0];
 			
 			if (!$actor->isDeleted()) {

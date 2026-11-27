@@ -396,7 +396,7 @@ class MetadataTable {
 		}
 
 		$success = 0;
-		/* @var $md \ElggMetadata */
+		/** @var \ElggMetadata $md */
 		foreach ($metadata as $md) {
 			if ($md->delete()) {
 				$success++;

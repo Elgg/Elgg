@@ -26,7 +26,9 @@ class AdminHeader {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'administer_utilities:logbrowser',
 			'text' => elgg_echo('admin:administer_utilities:logbrowser'),
-			'href' => 'admin/administer_utilities/logbrowser',
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'administer_utilities/logbrowser',
+			]),
 			'parent_name' => 'utilities',
 		]);
 	

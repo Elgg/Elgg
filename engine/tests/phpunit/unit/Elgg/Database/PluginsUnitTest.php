@@ -8,7 +8,7 @@ class PluginsUnitTest extends \Elgg\UnitTestCase {
 		
 		$plugins = $this->getNonMockedPluginService();
 		
-		/* @var $plugin_high_priority \ElggPlugin */
+		/** @var \ElggPlugin $plugin_high_priority */
 		$plugin_high_priority = $this->createObject([
 			'subtype' => 'plugin',
 			'title' => 'high_priority_plugin',
@@ -19,7 +19,7 @@ class PluginsUnitTest extends \Elgg\UnitTestCase {
 		// because of mocking issues don't use ->setPriority()
 		$plugin_high_priority->setMetadata($priority_name, 100);
 		
-		/* @var $plugin_low_priority \ElggPlugin */
+		/** @var \ElggPlugin $plugin_low_priority */
 		$plugin_low_priority = $this->createObject([
 			'subtype' => 'plugin',
 			'title' => 'low_priority_plugin',

@@ -99,7 +99,7 @@ class Seeder {
 					continue;
 				}
 				
-				/* @var $seeder Seed */
+				/** @var Seed $seeder */
 				$seeder = new $seed($seed_options);
 
 				$progress_bar = $this->progress->start($seed, $seed_options['limit']);
@@ -139,7 +139,7 @@ class Seeder {
 					continue;
 				}
 
-				/* @var $seeder Seed */
+				/** @var Seed $seeder */
 				$seeder = new $seed();
 
 				$progress_bar = $this->progress->start($seed, $seeder->getCount());

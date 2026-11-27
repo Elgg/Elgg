@@ -300,7 +300,7 @@ class RelationshipsTable {
 		
 		$relationships = $this->db->getData($select, [$this, 'rowToElggRelationship']);
 		
-		/* @var $rel \ElggRelationship */
+		/** @var \ElggRelationship $rel */
 		foreach ($relationships as $rel) {
 			if (!$this->events->triggerBefore('delete', 'relationship', $rel)) {
 				continue;
@@ -326,7 +326,7 @@ class RelationshipsTable {
 			$this->db->deleteData($delete);
 		}
 		
-		/* @var $rel \ElggRelationship */
+		/** @var \ElggRelationship $rel */
 		foreach ($relationships as $rel) {
 			if (!in_array($rel->id, $remove_ids)) {
 				continue;

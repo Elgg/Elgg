@@ -71,7 +71,7 @@ final class Email {
 		$headers = elgg_extract('headers', $options, []);
 
 		$email = new self();
-		$email->setFrom(self::prepareFrom($from));
+		$email->setFrom($email->prepareFrom($from));
 		$email->setTo($to);
 		$email->setCc($cc);
 		$email->setBcc($bcc);
@@ -112,8 +112,7 @@ final class Email {
 			return $this->sender;
 		}
 		
-		$site = elgg_get_site_entity();
-		return new Address($site->getEmailAddress(), $site->getDisplayName());
+		return $this->prepareFrom();
 	}
 
 	/**
@@ -124,7 +123,7 @@ final class Email {
 	 * @return self
 	 */
 	public function setFrom(Address $from): self {
-		$this->from = $from;
+		$this->from = $this->prepareFrom($from);
 		return $this;
 	}
 
@@ -361,7 +360,7 @@ final class Email {
 	 * @return Address
 	 * @throws InvalidArgumentException
 	 */
-	protected static function prepareFrom(mixed $from): Address {
+	protected function prepareFrom(mixed $from = null): Address {
 		if (empty($from)) {
 			// get the site email address
 			$site = elgg_get_site_entity();
@@ -387,7 +386,29 @@ final class Email {
 			throw new InvalidArgumentException('From address is not in a valid format');
 		}
 		
-		return $from;
+		return $this->sanitizeAddressName($from);
+	}
+	
+	/**
+	 * Sanitize the name of an address
+	 * - html decode the name (&amp; => &)
+	 *
+	 * @param Address $address the address to sanitize
+	 *
+	 * @return Address
+	 * @since 7.1
+	 */
+	protected function sanitizeAddressName(Address $address): Address {
+		if (empty($address->getName())) {
+			return $address;
+		}
+		
+		$decoded_name = html_entity_decode($address->getName(), ENT_QUOTES, 'UTF-8');
+		if ($address->getName() !== $decoded_name) {
+			return new Address($address->getAddress(), $decoded_name);
+		}
+		
+		return $address;
 	}
 
 	/**
@@ -426,7 +447,7 @@ final class Email {
 				throw new InvalidArgumentException('Recipient address is not in a valid format');
 			}
 			
-			$result[] = $recipient;
+			$result[] = $this->sanitizeAddressName($recipient);
 		}
 		
 		return $result;

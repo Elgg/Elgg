@@ -3,7 +3,7 @@
  * Elgg user account settings.
  */
 
-/* @var $user \ElggUser */
+/** @var \ElggUser $user */
 $user = elgg_get_page_owner_entity();
 
 echo elgg_view_page(elgg_echo('usersettings:user', [$user->getDisplayName()]), [

@@ -3,7 +3,7 @@
  * Elgg messages inbox page
  */
 
-/* @var $page_owner \ElggUser */
+/** @var \ElggUser $page_owner */
 $page_owner = elgg_get_page_owner_entity();
 
 elgg_push_collection_breadcrumbs('object', 'messages', $page_owner);

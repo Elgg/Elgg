@@ -50,7 +50,7 @@ class ThreadPreloaderService {
 			'preload_owners' => true,
 		]);
 		
-		/* @var $comment \ElggComment */
+		/** @var \ElggComment $comment */
 		foreach ($batch as $comment) {
 			$parent_guid = (int) $comment->parent_guid;
 			if (!isset($this->children[$parent_guid])) {

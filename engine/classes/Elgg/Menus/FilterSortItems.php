@@ -25,7 +25,7 @@ class FilterSortItems {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
@@ -75,7 +75,7 @@ class FilterSortItems {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
@@ -110,7 +110,7 @@ class FilterSortItems {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
@@ -144,7 +144,7 @@ class FilterSortItems {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
@@ -196,7 +196,7 @@ class FilterSortItems {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
@@ -249,7 +249,7 @@ class FilterSortItems {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$first_menu_name = $event->getParam('filter_sorting_selected');
@@ -260,7 +260,7 @@ class FilterSortItems {
 		if (!isset($first_menu_name)) {
 			$result->sort([\ElggMenuBuilder::class, 'compareByPriority']);
 			
-			/* @var $menu_item \ElggMenuItem */
+			/** @var \ElggMenuItem $menu_item */
 			foreach ($result as $menu_item) {
 				if ($menu_item->getParentName() !== 'sort:parent') {
 					continue;

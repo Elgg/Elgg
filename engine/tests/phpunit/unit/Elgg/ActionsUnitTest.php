@@ -533,7 +533,7 @@ class ActionsUnitTest extends \Elgg\UnitTestCase {
 		$this->addCsrfTokens($request);
 
 		_elgg_services()->events->registerHandler('ajax_results', 'action:output3', function (\Elgg\Event $event) {
-			/* @var $results \stdClass */
+			/** @var \stdClass $results */
 			$results = $event->getValue();
 
 			$results->value = 'output3_modified';

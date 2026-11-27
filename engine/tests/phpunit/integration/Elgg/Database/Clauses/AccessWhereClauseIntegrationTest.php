@@ -24,7 +24,7 @@ class AccessWhereClauseIntegrationTest extends IntegrationTestCase {
 		$viewer = $session->getLoggedInUser();
 		$owner = $this->createUser();
 
-		/* @var $object \ElggObject */
+		/** @var \ElggObject $object */
 		$object = elgg_call(ELGG_IGNORE_ACCESS, function() use ($owner) {
 			return $this->createObject([
 				'owner_guid' => $owner->guid,

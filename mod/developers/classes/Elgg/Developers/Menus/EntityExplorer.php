@@ -22,7 +22,7 @@ class EntityExplorer {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		// link to entity

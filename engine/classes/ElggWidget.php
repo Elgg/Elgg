@@ -43,7 +43,7 @@ class ElggWidget extends \ElggObject {
 	 * @since 1.8.0
 	 */
 	public function move(int $column, int $rank): void {
-		/* @var $widgets \ElggWidget[] */
+		/** @var \ElggWidget[] $widgets */
 		$widgets = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'widget',

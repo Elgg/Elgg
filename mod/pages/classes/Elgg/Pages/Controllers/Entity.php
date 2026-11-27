@@ -55,7 +55,7 @@ class Entity extends GenericEntity {
 		$options = parent::getPageOptions($page, $options);
 		
 		if (!str_starts_with((string) elgg_extract('filter_id', $options), 'pages/')) {
-			$options['filter_id'] = "pages/{$this->getPage()}";
+			$options['filter_id'] = "pages/{$page}";
 		}
 		
 		return $options;

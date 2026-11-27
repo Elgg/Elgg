@@ -30,7 +30,7 @@ class Page {
 			return;
 		}
 		
-		/* @var $return \Elgg\Menu\MenuItems */
+		/** @var \Elgg\Menu\MenuItems $return */
 		$return = $event->getValue();
 		
 		if ($page_owner->isPublicMembership() || $page_owner->isInviteOnlyMembership()) {

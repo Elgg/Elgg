@@ -31,7 +31,7 @@ class ElggCommentUnitTest extends \Elgg\UnitTestCase {
 			'owner_guid' => $user_1->guid,
 		]);
 		
-		/* @var $owner_comment \ElggComment */
+		/** @var \ElggComment $owner_comment */
 		$owner_comment = $this->createObject([
 			'subtype' => 'comment',
 			'container_guid' => $content->guid,
@@ -40,7 +40,7 @@ class ElggCommentUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertTrue($owner_comment->isCreatedByContentOwner());
 		
-		/* @var $other_comment \ElggComment */
+		/** @var \ElggComment $other_comment */
 		$other_comment = $this->createObject([
 			'subtype' => 'comment',
 			'container_guid' => $content->guid,

@@ -26,7 +26,7 @@ class AdminUsersBulk {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		if ((bool) $event->getParam('show_ban', true)) {
@@ -97,9 +97,9 @@ class AdminUsersBulk {
 			}
 		};
 		
-		/* @var $section MenuSection */
+		/** @var MenuSection $section */
 		foreach ($menu as $section) {
-			/* @var $menu_item \ElggMenuItem */
+			/** @var \ElggMenuItem $menu_item */
 			foreach ($section as $menu_item) {
 				$disable($menu_item);
 			}

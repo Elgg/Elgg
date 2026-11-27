@@ -20,7 +20,7 @@ class AjaxResponseHandler {
 			return null;
 		}
 		
-		/* @var $results \stdClass */
+		/** @var \stdClass $results */
 		$results = $event->getValue();
 
 		$results->likes_status = [

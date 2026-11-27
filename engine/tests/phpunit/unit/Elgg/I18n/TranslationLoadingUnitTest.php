@@ -39,7 +39,7 @@ class TranslationLoadingUnitTest extends UnitTestCase {
 		$provides = [];
 		$codes = elgg()->locale->getLanguageCodes();
 		$dh = new \DirectoryIterator($path);
-		/* @var $file_info \DirectoryIterator */
+		/** @var \DirectoryIterator $file_info */
 		foreach ($dh as $file_info) {
 			if (!$file_info->isFile() || $file_info->getExtension() !== 'php') {
 				continue;
@@ -66,7 +66,7 @@ class TranslationLoadingUnitTest extends UnitTestCase {
 		$provides = [];
 		$codes = elgg()->locale->getLanguageCodes();
 		$dh = new \DirectoryIterator($path);
-		/* @var $file_info \DirectoryIterator */
+		/** @var \DirectoryIterator $file_info */
 		foreach ($dh as $file_info) {
 			if (!$file_info->isFile() || $file_info->getExtension() !== 'php') {
 				continue;

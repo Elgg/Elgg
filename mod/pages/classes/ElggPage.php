@@ -148,7 +148,7 @@ class ElggPage extends ElggObject {
 	 */
 	protected function moveChildPages(int $parent_guid): void {
 		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES | ELGG_SHOW_DELETED_ENTITIES, function () use ($parent_guid) {
-			/* @var $children \ElggBatch */
+			/** @var \ElggBatch $children */
 			$children = elgg_get_entities([
 				'type' => 'object',
 				'subtype' => 'page',
@@ -160,7 +160,7 @@ class ElggPage extends ElggObject {
 				'batch_inc_offset' => false,
 			]);
 			
-			/* @var $child ElggPage */
+			/** @var ElggPage $child */
 			foreach ($children as $child) {
 				if (!$child->setParentByGUID($parent_guid)) {
 					$children->reportFailure();

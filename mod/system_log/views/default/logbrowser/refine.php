@@ -5,7 +5,9 @@
 
 $form_vars = [
 	'method' => 'get',
-	'action' => 'admin/administer_utilities/logbrowser',
+	'action' => elgg_generate_url('admin', [
+		'segments' => 'administer_utilities/logbrowser',
+	]),
 	'disable_security' => true,
 ];
 $form = elgg_view_form('logbrowser/refine', $form_vars, $vars);

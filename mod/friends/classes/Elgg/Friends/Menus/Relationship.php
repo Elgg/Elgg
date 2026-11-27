@@ -31,7 +31,7 @@ class Relationship {
 			return;
 		}
 		
-		/* @var $result \Elgg\Menu\MenuItems */
+		/** @var \Elgg\Menu\MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
@@ -80,7 +80,7 @@ class Relationship {
 			return;
 		}
 		
-		/* @var $result \Elgg\Menu\MenuItems */
+		/** @var \Elgg\Menu\MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([

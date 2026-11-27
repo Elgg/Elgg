@@ -28,7 +28,9 @@ class Title {
 			'name' => 'add_user',
 			'icon' => 'user-plus',
 			'text' => elgg_echo('admin:users:add'),
-			'href' => 'admin/users/add',
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'users/add',
+			]),
 			'context' => 'members',
 			'link_class' => 'elgg-button elgg-button-action',
 		]);

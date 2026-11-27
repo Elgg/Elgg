@@ -24,7 +24,7 @@ class Filter {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
@@ -64,7 +64,7 @@ class Filter {
 			return;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
@@ -127,7 +127,7 @@ class Filter {
 			return null;
 		}
 
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
@@ -190,7 +190,7 @@ class Filter {
 			return null;
 		}
 
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
@@ -211,7 +211,7 @@ class Filter {
 	 * @return MenuItems
 	 */
 	public static function registerAdminUsers(\Elgg\Event $event): MenuItems {
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
@@ -277,7 +277,7 @@ class Filter {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([

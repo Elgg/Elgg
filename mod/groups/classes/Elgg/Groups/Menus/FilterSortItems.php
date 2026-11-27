@@ -25,7 +25,7 @@ class FilterSortItems {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		// add sorting based on relationship time_created
@@ -61,7 +61,7 @@ class FilterSortItems {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		// add sorting based on relationship time_created

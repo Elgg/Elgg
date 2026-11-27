@@ -61,7 +61,7 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 		}
 
 		$plugin = false;
-		/* @var $potential_plugin \ElggPlugin */
+		/** @var \ElggPlugin $potential_plugin */
 		foreach ($plugins as $potential_plugin) {
 			// Find a plugin which can be deactivated (has no dependant plugins)
 			if (!$potential_plugin->canDeactivate()) {

@@ -20,7 +20,7 @@ class Seeder extends Seed {
 
 		while ($this->getCount() < $this->limit) {
 			try {
-				/* @var $bookmark \ElggBookmark */
+				/** @var \ElggBookmark $bookmark */
 				$bookmark = $this->createObject([
 					'subtype' => 'bookmarks',
 					'address' => $this->faker()->url,
@@ -50,7 +50,7 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
-		/* @var $bookmarks \ElggBatch */
+		/** @var \ElggBatch $bookmarks */
 		$bookmarks = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'bookmarks',
@@ -60,7 +60,7 @@ class Seeder extends Seed {
 			'batch_inc_offset' => false,
 		]);
 
-		/* @var $boolmark \ElggBookmark */
+		/** @var \ElggBookmark $boolmark */
 		foreach ($bookmarks as $bookmark) {
 			if ($bookmark->delete()) {
 				$this->log("Deleted bookmark {$bookmark->guid}");

@@ -917,7 +917,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals(1, count($options['relationship_pairs']));
 
 		$pair = array_shift($options['relationship_pairs']);
-		/* @var $pair \Elgg\Database\Clauses\RelationshipWhereClause */
+		/** @var \Elgg\Database\Clauses\RelationshipWhereClause $pair */
 
 		$this->assertInstanceOf(RelationshipWhereClause::class, $pair);
 		$this->assertEquals([1, 2, 3], $pair->ids);
@@ -946,7 +946,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals(1, count($options['relationship_pairs']));
 
 		$pair = array_shift($options['relationship_pairs']);
-		/* @var $pair \Elgg\Database\Clauses\RelationshipWhereClause */
+		/** @var \Elgg\Database\Clauses\RelationshipWhereClause $pair */
 
 		$this->assertInstanceOf(RelationshipWhereClause::class, $pair);
 		$this->assertEquals([1, 2, 3], $pair->ids);
@@ -1050,7 +1050,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		]);
 
 		$join = array_shift($options['joins']);
-		/* @var $join \Elgg\Database\Clauses\JoinClause */
+		/** @var \Elgg\Database\Clauses\JoinClause $join */
 
 		$this->assertInstanceOf(JoinClause::class, $join);
 		$this->assertEquals('table_a', $join->joined_table);
@@ -1100,7 +1100,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals(3, count($options['order_by']));
 
 		$clause = array_shift($options['order_by']);
-		/* @var $clause \Elgg\Database\Clauses\OrderByClause */
+		/** @var \Elgg\Database\Clauses\OrderByClause $clause */
 
 		$this->assertInstanceOf(OrderByClause::class, $clause);
 		$this->assertEquals('foo.bar', $clause->expr);
@@ -1132,7 +1132,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals(2, count($options['order_by']));
 
 		$clause = array_shift($options['order_by']);
-		/* @var $clause \Elgg\Database\Clauses\OrderByClause */
+		/** @var \Elgg\Database\Clauses\OrderByClause $clause */
 
 		$this->assertInstanceOf(OrderByClause::class, $clause);
 		$this->assertEquals('foo.bar', $clause->expr);
@@ -1154,7 +1154,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals(1, count($options['order_by']));
 
 		$clause = array_shift($options['order_by']);
-		/* @var $clause \Elgg\Database\Clauses\OrderByClause */
+		/** @var \Elgg\Database\Clauses\OrderByClause $clause */
 
 		$this->assertInstanceOf(OrderByClause::class, $clause);
 		$this->assertEquals('foo.baz', $clause->expr);
@@ -1183,7 +1183,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals(2, count($options['order_by']));
 		
 		$clause = array_shift($options['order_by']);
-		/* @var $clause \Elgg\Database\Clauses\EntitySortByClause */
+		/** @var \Elgg\Database\Clauses\EntitySortByClause $clause */
 		
 		$this->assertInstanceOf(EntitySortByClause::class, $clause);
 		$this->assertEquals('attribute', $clause->property_type);
@@ -1216,7 +1216,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertCount(1, $options['order_by']);
 
 		$clause = array_shift($options['order_by']);
-		/* @var $clause \Elgg\Database\Clauses\EntitySortByClause */
+		/** @var \Elgg\Database\Clauses\EntitySortByClause $clause */
 
 		$this->assertInstanceOf(EntitySortByClause::class, $clause);
 		$this->assertEquals('attribute', $clause->property_type);
@@ -1235,7 +1235,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals(1, count($options['having']));
 
 		$clause = array_shift($options['having']);
-		/* @var $clause \Elgg\Database\Clauses\HavingClause */
+		/** @var \Elgg\Database\Clauses\HavingClause $clause */
 
 		$this->assertInstanceOf(HavingClause::class, $clause);
 		$this->assertEquals('foo.bar = 1', $clause->expr);
@@ -1243,7 +1243,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals(1, count($options['group_by']));
 
 		$clause = array_shift($options['group_by']);
-		/* @var $clause \Elgg\Database\Clauses\GroupByClause */
+		/** @var \Elgg\Database\Clauses\GroupByClause $clause */
 
 		$this->assertInstanceOf(GroupByClause::class, $clause);
 		$this->assertEquals('foo.bar', $clause->expr);
@@ -1261,7 +1261,7 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals(1, count($options['having']));
 
 		$clause = array_shift($options['having']);
-		/* @var $clause \Elgg\Database\Clauses\HavingClause */
+		/** @var \Elgg\Database\Clauses\HavingClause $clause */
 
 		$this->assertInstanceOf(HavingClause::class, $clause);
 		$this->assertEquals('foo.bar = 1', $clause->expr);
@@ -1269,13 +1269,13 @@ class QueryOptionsUnitTest extends UnitTestCase {
 		$this->assertEquals(2, count($options['group_by']));
 
 		$clause = array_shift($options['group_by']);
-		/* @var $clause \Elgg\Database\Clauses\GroupByClause */
+		/** @var \Elgg\Database\Clauses\GroupByClause $clause */
 
 		$this->assertInstanceOf(GroupByClause::class, $clause);
 		$this->assertEquals('foo.bar', $clause->expr);
 
 		$clause = array_shift($options['group_by']);
-		/* @var $clause \Elgg\Database\Clauses\GroupByClause */
+		/** @var \Elgg\Database\Clauses\GroupByClause $clause */
 
 		$this->assertInstanceOf(GroupByClause::class, $clause);
 		$this->assertEquals('foo.baz', $clause->expr);

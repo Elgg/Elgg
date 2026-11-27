@@ -276,7 +276,7 @@ class WidgetsService {
 		}
 		
 		$widgets = [];
-		/* @var $widget_definition \Elgg\WidgetDefinition */
+		/** @var \Elgg\WidgetDefinition $widget_definition */
 		foreach ($available_widgets as $widget_definition) {
 			if (!$widget_definition instanceof WidgetDefinition) {
 				continue;

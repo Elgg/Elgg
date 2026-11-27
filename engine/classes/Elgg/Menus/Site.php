@@ -26,7 +26,7 @@ class Site {
 			return;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		// add custom menu items
@@ -51,7 +51,7 @@ class Site {
 	 * @return void|PreparedMenu
 	 */
 	public static function reorderItems(\Elgg\Event $event) {
-		/* @var $menu PreparedMenu */
+		/** @var PreparedMenu $menu */
 		$menu = $event->getValue();
 		
 		$featured_menu_names = array_values((array) elgg_get_config('site_featured_menu_names'));

@@ -911,7 +911,7 @@ abstract class ElggEntity extends \ElggData {
 					$options[$db_column] = $guid;
 
 					$subentities = elgg_get_entities($options);
-					/* @var $subentity \ElggEntity */
+					/** @var \ElggEntity $subentity */
 					foreach ($subentities as $subentity) {
 						if (!$subentity->isEnabled()) {
 							continue;
@@ -1107,7 +1107,7 @@ abstract class ElggEntity extends \ElggData {
 				
 				set_time_limit(0);
 				
-				/* @var $deleted_with_it \ElggBatch */
+				/** @var \ElggBatch $deleted_with_it */
 				$deleted_with_it = elgg_get_entities([
 					'relationship' => 'deleted_with',
 					'relationship_guid' => $this->guid,
@@ -1117,7 +1117,7 @@ abstract class ElggEntity extends \ElggData {
 					'batch_inc_offset' => false,
 				]);
 				
-				/* @var $e \ElggEntity */
+				/** @var \ElggEntity $e */
 				foreach ($deleted_with_it as $e) {
 					if (!$e->restore($recursive)) {
 						$deleted_with_it->reportFailure();

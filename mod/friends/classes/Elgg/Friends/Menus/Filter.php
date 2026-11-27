@@ -63,7 +63,7 @@ class Filter {
 			return null;
 		}
 
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
@@ -94,7 +94,7 @@ class Filter {
 			return;
 		}
 		
-		/* @var $result \Elgg\Menu\MenuItems */
+		/** @var \Elgg\Menu\MenuItems $result */
 		$result = $event->getValue();
 		
 		// add friends

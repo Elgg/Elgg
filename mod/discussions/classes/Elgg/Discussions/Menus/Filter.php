@@ -47,7 +47,7 @@ class Filter {
 			return null;
 		}
 				
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		// add discussions in my groups
